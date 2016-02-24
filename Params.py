@@ -5,45 +5,78 @@ from MomParams import *
 from MiscFuns import *
 import operator as op
 import socket
+import os
 import re
 
 ##CHANGE StringFix.py FUNCTION##
 
-THISMACHINE = socket.gethostname()
 
-if 'erwin' in THISMACHINE:
-    scriptdir = "/home/accounts/jdragos/scripts/LQCDPythonAnalysis/"
-    datadir = '/raid/jdragos/data/'
-    AnaProc = 60 # number of max processors (computer specific)
-elif 'henley' in THISMACHINE:
-    datadir = '/home/henley/jdragos/PHD/ErwinBackup/'
-    scriptdir = datadir + "LQCDPythonAnalysis/"
-    AnaProc = 10 # number of max processors (computer specific)
-elif 'JackLappyUbu' in THISMACHINE:
-    datadir = '/home/jackdra/PHD/DataAnalysis/'
-    scriptdir = datadir + "LQCDPythonAnalysis/"
-    AnaProc = 10 # number of max processors (computer specific)
-else:
-    raise EnvironmentError('Machine not recongnised: \n'+THISMACHINE+'\nplease add to Params.py')
 
-## kappa values, pick your kappa
-kappa = 12090
-# kappa = 12104
-# ListOrSet = 'ReadList'
-ListOrSet = 'ReadSet'
+# THISMACHINE = socket.gethostname()
 
-## PoF is pencil of function method, you can set VarPref to what you want, and set PoFShifts to 0 if you want regular variational method
-if kappa == 12104:
-    PoFShifts = 1
-    PoFOrSum = 'PoF'
-    VarPref = PoFOrSum+str(PoFShifts)
-elif kappa == 12090:
-    VarPref = 'sum'
-    PoFOrSum = VarPref
-    PoFShifts = 0
-PoFShifts = 1
-PoFOrSum = 'PoF'
-VarPref = PoFOrSum+str(PoFShifts)
+# if 'erwin' in THISMACHINE:
+#     scriptdir = "/home/accounts/jdragos/scripts/LQCDPythonAnalysis/"
+#     datadir = '/raid/jdragos/data/'
+#     AnaProc = 60 # number of max processors (computer specific)
+# elif 'henley' in THISMACHINE:
+#     datadir = '/home/henley/jdragos/PHD/ErwinBackup/'
+#     scriptdir = datadir + "LQCDPythonAnalysis/"
+#     AnaProc = 10 # number of max processors (computer specific)
+# elif 'JackLappyUbu' in THISMACHINE:
+    # datadir = '/home/jackdra/PHD/DataAnalysis/'
+    # scriptdir = datadir + "LQCDPythonAnalysis/"
+    # AnaProc = 10 # number of max processors (computer specific)
+# else:
+#     raise EnvironmentError('Machine not recongnised: \n'+THISMACHINE+'\nplease add to Params.py')
+
+# ## kappa values, pick your kappa
+# kappa = 12090
+# # kappa = 12104
+# # ListOrSet = 'ReadList'
+# ListOrSet = 'ReadSet'
+
+# ## PoF is pencil of function method, you can set VarPref to what you want, and set PoFShifts to 0 if you want regular variational method
+# if kappa == 12104:
+#     PoFShifts = 1
+#     PoFOrSum = 'PoF'
+#     VarPref = PoFOrSum+str(PoFShifts)
+# elif kappa == 12090:
+#     VarPref = 'sum'
+#     PoFOrSum = VarPref
+#     PoFShifts = 0
+# PoFShifts = 1
+# PoFOrSum = 'PoF'
+# VarPref = PoFOrSum+str(PoFShifts)
+
+
+if not os.path.isfile('./setup.cfg'): raise EnvironmentError('Please Run Setup.py to create setup.cfg')
+with open('./setup.cfg','r') as f:
+    thisread = ''
+    for line in f:
+        thisline = line.strip()
+        if len(thisline) > 0:
+            if thisline[-1] == ':':
+                thisread = thisline[:-1]
+            else:
+                if 'scriptdir' in thisread:
+                    scriptdir = thisline
+                elif 'datadir' in thisread:
+                    datadir = thisline
+                elif 'AnaProc' in thisread:
+                    AnaProc = int(thisline)
+                elif 'ListOrSet' in thisread:
+                    ListOrSet = thisline
+                elif 'PoFOrSum' in thisread:
+                    PoFOrSum = thisline
+                elif 'PoFShifts' in thisread:
+                    PoFShifts = int(thisline)
+                elif 'VarPref' in thisread:
+                    VarPref = thisline
+                elif 'kappa' in thisread:
+                    kappa = int(thisline)
+                
+
+        
 PoFC2C3Dis = '665.'
 
 myeps = np.finfo(0.0).eps
