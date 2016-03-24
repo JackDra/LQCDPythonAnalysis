@@ -1,0 +1,402 @@
+#!/usr/bin/env python
+
+import numpy as np
+from scipy.linalg import eigh,eig,eigvals,inv
+# from numpy.linalg import eigh,eig,inv
+from Params import *
+from copy import deepcopy
+import operator as opp
+from ReadTxt import ReadLREM
+import time
+
+# ## Cfun[t]
+# def ProjectCorrJustPoF2pt(LEvec,Cfun,REvec,Booted=False,thisPoFShifts=1):
+#     CMCfun = []
+#     CfunShift = np.roll(Cfun,-1)
+#     CfunShift2 = np.roll(CfunShift,-1)
+#     CfunShift3 = np.roll(CfunShift2,-1)
+#     CfunShift4 = np.roll(CfunShift3,-1)
+#     if PoFShifts==1:
+#         CfunExt = np.array([[Cfun,CfunShift],[CfunShift,CfunShift2]])
+#     elif PoFShifts==2:
+#         CfunExt = np.array([[Cfun,CfunShift,CfunShift2],[CfunShift,CfunShift2,CfunShift3],[CfunShift2,CfunShift3,CfunShift4]])
+#     for istate,(stateRE,stateLE) in enumerate(zip(REvec,LEvec)):
+#         CMCfun.append(np.dot(stateRE,np.dot(stateLE,CfunExt)))
+#         if Booted:
+#             for it,itCM in enumerate(CMCfun[istate]):
+#                 CMCfun[istate][it].Stats()
+#     return CMCfun
+
+
+# #Cfun [ t ]
+# def GetJustPoF(Cfunin,thistodtvals,Booted=False,thisPoFShifts=1):
+#     thisto,thisdt = thistodtvals
+#     Cfun = np.array(Cfunin)
+#     if Booted:
+#         Cfunto = Pullflag(Cfun[thisto],'Avg')
+#         Cfuntop1 = Pullflag(Cfun[thisto+1],'Avg')
+#         Cfuntop2 = Pullflag(Cfun[thisto+2],'Avg')
+#         Cfuntop3 = Pullflag(Cfun[thisto+3],'Avg')
+#         Cfuntop4 = Pullflag(Cfun[thisto+4],'Avg')
+#         Cfuntodt = Pullflag(Cfun[thisto+thisdt],'Avg')
+#         Cfuntodtp1 = Pullflag(Cfun[thisto+1+thisdt],'Avg')
+#         Cfuntodtp2 = Pullflag(Cfun[thisto+2+thisdt],'Avg')
+#         Cfuntodtp3 = Pullflag(Cfun[thisto+3+thisdt],'Avg')
+#         Cfuntodtp4 = Pullflag(Cfun[thisto+4+thisdt],'Avg')
+#     else:
+#         Cfunto = Cfun[thisto]
+#         Cfuntop1 = Cfun[thisto+1]
+#         Cfuntop2 = Cfun[thisto+2]
+#         Cfuntop3 = Cfun[thisto+3]
+#         Cfuntop4 = Cfun[thisto+4]
+#         Cfuntodt = Cfun[thisto+thisdt]
+#         Cfuntodtp1 = Cfun[thisto+1+thisdt]
+#         Cfuntodtp2 = Cfun[thisto+2+thisdt]
+#         Cfuntodtp3 = Cfun[thisto+3+thisdt]
+#         Cfuntodtp4 = Cfun[thisto+4+thisdt]
+#     if thisPoFShifts==1:
+#         Cfuntoout = np.array([[Cfunto,Cfuntop1],[Cfuntop1,Cfuntop2]])
+#         Cfuntodtout = np.array([[Cfuntodt,Cfuntodtp1],[Cfuntodtp1,Cfuntodtp2]])
+#     elif thisPoFShifts==2:
+#         Cfuntoout = np.array([[Cfunto,Cfuntop1,Cfuntop2],[Cfuntop1,Cfuntop2,Cfuntop3],[Cfuntop2,Cfuntop3,Cfuntop4]])
+#         Cfuntodtout = np.array([[Cfuntodt,Cfuntodtp1,Cfuntodtp2],[Cfuntodtp1,Cfuntodtp2,Cfuntodtp3],[Cfuntodtp2,Cfuntodtp3,Cfuntodtp4]])
+#     [Emass,LEvec,REvec] = CreateLREves(Cfuntoout,Cfuntodtout,thisdt)
+#     return Emass,LEvec,REvec
+
+
+## Emass = 101 is invalid eigenvalue out
+## Emass = 202 is b matrix not positive definite, removing higher smearings.
+
+## Evec = [weights][state]
+## SEmass = [state]
+
+def AddNullState(Em,Le,Re,buffindex,thisdt=1):
+    for ibuff in buffindex:
+    # for ibuff in reversed(buffindex):
+        Em = np.insert(Em,ibuff,np.exp(-202.0*thisdt))
+        Le = [np.insert(iLe,ibuff,0.0) for iLe in Le]
+        Re = [np.insert(iRe,ibuff,0.0) for iRe in Re]
+        Le = np.insert(Le,ibuff,[0.0]*len(Em),axis=0)
+        Re = np.insert(Re,ibuff,[0.0]*len(Em),axis=0)
+    return Em,Le,Re
+    
+
+#sourts Evec and Emass with respect to Emass lowest to highest
+def sortEvec(Evals,LEvec,REvec,thisdt):
+    # for ice,iev in enumerate(Evals):
+    #     if abs(iev.imag) > myeps:
+    #         Evals[ice] = np.exp(101)+0j
+    #     elif iev.real < 0.0:
+    #         Evals[ice] = -iev
+    Emass = -np.log(abs(Evals))/float(thisdt)
+    # for ice,iem in enumerate(Emass):
+    #     if iem < VarMassCutoff:
+    #         Emass[ice] = 101
+    sortindex = Emass.argsort()
+    Emass = Emass[sortindex]
+    LEvec = np.swapaxes(LEvec,0,1)[sortindex,:]
+    REvec = np.swapaxes(REvec,0,1)[sortindex,:]
+    return Emass,LEvec,REvec
+
+# Mat*Evec = Evals * Evec
+# Mat = C(to)^-1 * C(to+dt)
+def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
+    # Ctoinv = inv(Cfunto)
+    # Mat = np.dot(Ctoinv,Cfuntodt)
+    # [Evals,REvec] = eig(Mat,right=True,left=False)
+    # LEvec = REvec
+    # [Evals,LEvec,REvec] = eig(Cfuntodt,b=Cfunto,left=True,right=True)
+    Simto = np.array(Cfunto)
+    Simtodt = np.array(Cfuntodt)
+    buffindex = []
+    ci = np.array([0])
+    for cutindex in range(1,len(Cfunto)):
+        ci = np.append(ci,cutindex)
+        thiseig = eigvals(Simtodt[ci[:,None],ci],b=Simto[ci[:,None],ci])
+        posdef = eigvals(Simto[ci[:,None],ci])
+        if any(-np.log(abs(thiseig))/float(thisdt) < VarMassCutoff) or any(posdef < 0):
+            # ibad = [ie < 0 for ie in thiseig].index(True)
+            ci = np.delete(ci,ci.tolist().index(cutindex))
+            buffindex.append(cutindex)
+    # Simto = Cfunto
+    # Simtodt = Cfuntodt
+    # buffindex = []
+    # for cutindex in range(len(Cfunto)-1):
+    #     thiseig = eigvals(Simtodt,b=Simto)
+    #     posdef = eigvals(Simto)
+    #     if all(-np.log(abs(thiseig))/float(thisdt) > masscutoff) and all(posdef > 0):
+    #         break
+    #     else:
+    #         # ibad = [ie < 0 for ie in thiseig].index(True)
+    #         ibad = cutcmList[cutindex]
+    #         buffindex.append(ibad)
+    #         Simto = np.delete(np.delete(Simto,ibad,0),ibad,1)
+    #         Simtodt = np.delete(np.delete(Simtodt,ibad,0),ibad,1)
+    if len(ci) < 2:
+        Evals,LEvec,REvec = AddNullState(np.ones(1),np.array([[1]]),np.array([[1]]),buffindex,thisdt=thisdt)
+    else:
+        Simto = np.array(Cfunto)[ci[:,None],ci]
+        Simtodt = np.array(Cfuntodt)[ci[:,None],ci]
+        [Evals,REvec] = eigh(Simtodt,b=Simto)
+        LEvec = REvec
+        Evals,LEvec,REvec = AddNullState(Evals,LEvec,REvec,buffindex,thisdt=thisdt)
+    return sortEvec(Evals,LEvec,REvec,thisdt)
+
+
+# Mat*Evec = Evals * Evec
+# Mat = C(to)^-1* C(to+dt)
+# def CreateLREvesSum(Mat):
+#     [Evals,LEvec] = eig(Mat)
+#     REvec = LEvec
+#     return sortEvec(Evals,LEvec,REvec,thisdt)
+
+## Cfun[ism,jsm,tcurr]
+def ProjectCorr(LEvec,Cfun,REvec):
+    CMCfun = []
+    for istate,(stateRE,stateLE) in enumerate(zip(REvec,LEvec)):
+        CMCfun.append(np.dot(stateRE,np.dot(stateLE,Cfun)))
+        for it,itCM in enumerate(CMCfun[istate]):
+            CMCfun[istate][it].Stats()
+    return CMCfun
+
+## Cfun[ism,jsm,tcurr]
+def ProjectCorrPoF2pt(LEvec,Cfun,REvec):
+    CMCfun = []
+    CfunShift = np.roll(Cfun,-1,axis=2)
+    CfunShift2 = np.roll(CfunShift,-1,axis=2)
+    if PoFShifts==0:
+        CfunExt = Cfun
+    elif PoFShifts==1:
+        CfunExt = np.concatenate((np.concatenate((Cfun,CfunShift),1),np.concatenate((CfunShift,CfunShift2),1)))
+    elif PoFShifts==2:
+        CfunShift3 = np.roll(CfunShift2,-1,axis=2)
+        CfunShift4 = np.roll(CfunShift3,-1,axis=2)
+        CfunExt = np.concatenate((np.concatenate((Cfun,CfunShift,CfunShift2),1),
+                                  np.concatenate((CfunShift,CfunShift2,CfunShift3),1),
+                                  np.concatenate((CfunShift2,CfunShift3,CfunShift4),1)))
+
+    for ic,(iRE,iCfun) in enumerate(zip(REvec[0],np.dot(LEvec[0],CfunExt))):
+        iCfun[26].Stats()
+        print ic,iRE,iCfun[26].Avg
+    print ''
+    for istate,(stateRE,stateLE) in enumerate(zip(REvec,LEvec)):
+        CMCfun.append(np.dot(stateRE,np.dot(stateLE,CfunExt)))
+        for it,itCM in enumerate(CMCfun[istate]):
+            CMCfun[istate][it].Stats()
+    return CMCfun
+
+
+## Cfun[ism,1,tcurr]
+def ProjectREvecCorr(Cfun,REvec):
+    CMCfun = []
+    Cfunjsm = np.array(Cfun)[:,0,:]
+    for istate,stateRE in enumerate(REvec):
+        CMCfun.append(np.dot(stateRE,Cfunjsm))
+        for it,itCM in enumerate(CMCfun[istate]):
+            CMCfun[istate][it].Stats()
+    return CMCfun
+
+
+## Cfun[ism,1,tcurr]
+def ProjectREvecCorrPoF(Cfun,CfunShift,REvec):
+    CMCfun = []
+    Cfunjsm = np.array(Cfun)[:,0,:]
+    CfunjsmShift = np.array(CfunShift)[:,0,:]
+    CfunjsmShift = np.roll(CfunjsmShift,-1,axis=1)
+    if PoFShifts==0:
+        CfunExt = Cfunjsm
+    elif PoFShifts==1:
+        CfunExt = np.concatenate((Cfunjsm,CfunjsmShift))
+    elif PoFShifts==2:
+        CfunjsmShift2 = np.roll(CfunjsmShift,-1,axis=1)
+        CfunExt = np.concatenate((Cfunjsm,CfunjsmShift,CfunjsmShift2))
+    print 'ThreePoint Run:'
+    for ic,(iRE,iCfun) in enumerate(zip(REvec[0],CfunExt)):
+        print ic,iRE,iCfun[24].Avg
+    print ''
+    for istate,stateRE in enumerate(REvec):
+        CMCfun.append(np.dot(stateRE,CfunExt))
+        for it,itCM in enumerate(CMCfun[istate]):
+            CMCfun[istate][it].Stats()
+    return CMCfun
+
+def GetTvarREves(Cfunin,thistodtvals,masscut):
+    thisto,thisdt = thistodtvals
+    Cfun = np.array(Cfunin)
+    Cfunto = Pullflag(Cfun[:,:,thisto-1],'Avg')
+    Cfuntodt = Pullflag(Cfun[:,:,thisto-1+thisdt],'Avg')
+    [Emass,LEvec,REvec] = CreateLREves(Cfunto,Cfuntodt,thisdt,masscut)
+    return Emass,LEvec,REvec
+
+
+
+#Cfun [ t , ism , jsm ]
+def GetTvarREvesPoF(Cfunin,thistodtvals,masscut):
+    thisto,thisdt = thistodtvals
+    Cfun = np.array(Cfunin)
+    Cfunto = Pullflag(Cfun[:,:,thisto-1],'Avg')
+    Cfuntop1 = Pullflag(Cfun[:,:,thisto],'Avg')
+    Cfuntop2 = Pullflag(Cfun[:,:,thisto+1],'Avg')
+    Cfuntodt = Pullflag(Cfun[:,:,thisto-1+thisdt],'Avg')
+    Cfuntodtp1 = Pullflag(Cfun[:,:,thisto+thisdt],'Avg')
+    Cfuntodtp2 = Pullflag(Cfun[:,:,thisto+1+thisdt],'Avg')
+    if PoFShifts==0:
+        Cfuntoout = Cfunto
+        Cfuntodtout = Cfuntodt
+    elif PoFShifts==1:
+        Cfuntoout = np.concatenate((np.concatenate((Cfunto,Cfuntop1),1),np.concatenate((Cfuntop1,Cfuntop2),1)))
+        Cfuntodtout = np.concatenate((np.concatenate((Cfuntodt,Cfuntodtp1),1),np.concatenate((Cfuntodtp1,Cfuntodtp2),1)))
+    elif PoFShifts==2:
+        Cfuntop3 = Pullflag(Cfun[:,:,thisto+2],'Avg')
+        Cfuntop4 = Pullflag(Cfun[:,:,thisto+3],'Avg')
+        Cfuntodtp3 = Pullflag(Cfun[:,:,thisto+2+thisdt],'Avg')
+        Cfuntodtp4 = Pullflag(Cfun[:,:,thisto+3+thisdt],'Avg')
+        Cfuntoout = np.concatenate((np.concatenate((Cfunto,Cfuntop1,Cfuntop2),1),
+                                    np.concatenate((Cfuntop1,Cfuntop2,Cfuntop3),1),
+                                    np.concatenate((Cfuntop2,Cfuntop3,Cfuntop4),1)))
+        Cfuntodtout = np.concatenate((np.concatenate((Cfuntodt,Cfuntodtp1,Cfuntodtp2),1),
+                                      np.concatenate((Cfuntodtp1,Cfuntodtp2,Cfuntodtp3),1),
+                                      np.concatenate((Cfuntodtp2,Cfuntodtp3,Cfuntodtp4),1)))
+    [Emass,LEvec,REvec] = CreateLREves(Cfuntoout,Cfuntodtout,thisdt,masscut)
+    return Emass,LEvec,REvec
+
+# #Cfuns2pt [ ism , jsm , ip , it ]  = bootstrap1 class (.Avg, .Std, .values, .nboot)
+# #CMCfun2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+# R/L Evecs [ ip , istate , ival ]
+# Emass [ ip , istate ]
+
+def CreateCM2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=True):
+    start = time.time()
+    Cfuns2pt = np.array(Cfuns2pt)
+    CMCfun2pt = []
+    Emass,LEvec,REvec = [],[],[]
+    ##if ip**2 > pcutoff, make cfuns exclude sm128
+    for ip,thisp in enumerate(thisMomList):
+        if DoPoF:
+            Emasshold,LEvechold,REvechold = GetTvarREvesPoF(Cfuns2pt[:,:,ip],todtvals,ipTOE(thisp,VarMassCutoff))
+            # for istate in range(len(Emasshold)):
+            #     print ' '.join(map(str,LEvechold[istate])) , Emasshold[istate]
+        else:
+            Emasshold,LEvechold,REvechold = GetTvarREves(Cfuns2pt[:,:,ip],todtvals,ipTOE(thisp,VarMassCutoff))
+        Emass.append(Emasshold)
+        LEvec.append(LEvechold)
+        REvec.append(REvechold)
+    LEvec,REvec = SignEvec(np.array(LEvec),np.array(REvec))
+    for ip,thisp in enumerate(thisMomList):
+        if DoPoF:
+            CMCfun2pt.append(ProjectCorrPoF2pt(LEvec[ip],Cfuns2pt[:,:,ip],REvec[ip]))
+        else:
+            CMCfun2pt.append(ProjectCorr(LEvec[ip],Cfuns2pt[:,:,ip],REvec[ip]))
+    if printout:  print 'CM Creation PoFto'+str(todtvals[0])+'dt'+str(todtvals[1])+ ' took: ' , GetTimeStr(time.time()-start)
+    return [np.rollaxis(np.array(CMCfun2pt),1),LEvec,REvec,Emass]
+
+# #Cfuns3pt [ tsink , ism , 1 , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+# #CMCfun3pt  [ istate , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+def CreateREvecCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
+    LEvec,REvec,Emass = ReadLREM(todtvals,thisMomList)
+    if REvec == None:
+        CMCfun2pt,LEvec,REvec,Emass = CreateCM2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=False,printout=False)
+        LEvec,REvec = SignEvec(np.array(LEvec),np.array(REvec))
+    else:
+        CMCfun2pt = []
+        for ip,thisp in enumerate(thisMomList):
+            CMCfun2pt.append(ProjectCorr(LEvec[ip],Cfuns2pt[:,:,ip],REvec[ip]))
+        CMCfun2pt = np.rollaxis(np.array(CMCfun2pt),1)
+    CMCfun3pt = []
+    for igamma,gammaCfun in enumerate(np.rollaxis(np.array(Cfuns3pt),2)):
+        CMCfun3pt.append([])
+        for ip,pCfun in enumerate(np.rollaxis(gammaCfun,2)): 
+            CMCfun3pt[igamma].append(ProjectREvecCorr(pCfun,REvec[ip]))
+    return [np.array(CMCfun2pt),np.rollaxis(np.array(CMCfun3pt),2)]
+
+
+# #Cfuns3pt [ tsink , ism , 1 , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+# #CMCfun3pt  [ istate , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+def CreateREPoFCfuns(Cfuns3pt,Cfuns3ptp1,Cfuns2pt,todtvals,thisMomList):
+    LEvec,REvec,Emass = ReadLREM(todtvals,thisMomList)
+    if REvec == None:
+        CMCfun2pt,LEvec,REvec,Emass = CreateCM2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=False)
+        LEvec,REvec = SignEvec(np.array(LEvec),np.array(REvec))
+    else:
+        CMCfun2pt = []
+        for ip,thisp in enumerate(thisMomList):
+            CMCfun2pt.append(ProjectCorrPoF2pt(LEvec[ip],Cfuns2pt[:,:,ip],REvec[ip]))
+        CMCfun2pt = np.rollaxis(np.array(CMCfun2pt),1)
+    CMCfun3pt = []
+    for igamma,(gammaCfun,gammaCfunp1) in enumerate(zip(np.rollaxis(np.array(Cfuns3pt),2),np.rollaxis(np.array(Cfuns3ptp1),2))):
+        CMCfun3pt.append([])
+        for ip,(pCfun,pCfunp1) in enumerate(zip(np.rollaxis(gammaCfun,2),np.rollaxis(gammaCfunp1,2))): 
+            print 'Three Point :(igamma,ip) ',igamma , ip
+            CMCfun3pt[igamma].append(ProjectREvecCorrPoF(pCfun,pCfunp1,REvec[ip]))
+    return [np.array(CMCfun2pt),np.rollaxis(np.array(CMCfun3pt),2)]
+
+
+# #Cfuns3pt [ ism , jsm , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+# #CMCfun3pt  [ istate , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+
+def CreateCMCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
+    CMCfun2pt,LEvec,REvec,Emass = CreateCM2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=False,printout=False)
+    CMCfun3pt = []
+    for igamma,gammaCfun in enumerate(np.rollaxis(np.array(Cfuns3pt),2)):
+        CMCfun3pt.append([])
+        for ip,pCfun in enumerate(np.rollaxis(gammaCfun,2)):
+            CMCfun3pt[igamma].append(ProjectCorr(LEvec[0],pCfun,REvec[ip]))
+            
+    return [np.array(CMCfun2pt),np.rollaxis(np.array(CMCfun3pt),2)]
+
+
+def SignEvec(LEvec,REvec):
+    LEvecOut = LEvec
+    REvecOut = REvec
+    for ip,(pLE,pRE) in enumerate(zip(LEvec,REvec)):
+        for istate,(stateLE,stateRE) in enumerate(zip(pLE,pRE)):
+            LMaxI = stateLE.tolist().index(max(stateLE,key=abs))
+            RMaxI = stateRE.tolist().index(max(stateRE,key=abs))
+            ZMLsign = np.sign(LEvec[0][istate][LMaxI]*stateLE[LMaxI])
+            ZMRsign = np.sign(REvec[0][istate][RMaxI]*stateRE[RMaxI])
+            # normL,normR = np.sum(stateLE),np.sum(stateRE)
+            for ival,(LEvecVal,REvecVal) in enumerate(zip(stateLE,stateRE)):
+                LEvecOut[ip][istate][ival] = ZMLsign*LEvecVal
+                REvecOut[ip][istate][ival] = ZMRsign*REvecVal
+    return LEvecOut,REvecOut
+
+def Normalise(data2pt,tval):
+    dataout = deepcopy(data2pt)
+    for ism,dataism in enumerate(data2pt):
+        for jsm,datajsm in enumerate(dataism):
+            for ip,datap in enumerate(datajsm):
+                norm = np.sqrt(data2pt[ism][ism][ip][tval].Avg*data2pt[jsm][jsm][ip][tval].Avg)
+                for it,datat in enumerate(datap):
+                    dataout[ism][jsm][ip][it] = datat/norm
+                    dataout[ism][jsm][ip][it].Stats()
+    return dataout
+
+def NormaliseNoP(data2pt,tval):
+    dataout = deepcopy(data2pt)
+    for ism,dataism in enumerate(data2pt):
+        for jsm,datajsm in enumerate(dataism):
+            norm = np.sqrt(data2pt[ism][ism][tval].Avg*data2pt[jsm][jsm][tval].Avg)
+            for it,datat in enumerate(datajsm):
+                dataout[ism][jsm][it] = datat/norm
+                dataout[ism][jsm][it].Stats()
+    return dataout
+
+def Symmetrize(data2pt):
+    dataout = deepcopy(data2pt)
+    for ism,dataism in enumerate(data2pt):
+        for jsm,datajsm in enumerate(dataism):
+            for ip,datap in enumerate(datajsm):
+                dataout[ism][jsm][ip] = (datap+data2pt[jsm][ism][ip])/2.0
+    GetBootStats(dataout)
+    return dataout
+
+def PreptwoptCorr(data2pt):
+    if DoNorm: return Symmetrize(Normalise(np.array(data2pt),tsource))
+    # else: return data2pt
+    else: return Symmetrize(np.array(data2pt))
+    # else: return np.array(data2pt)
+
+
+
+
+#  LocalWords:  thisMomList

@@ -1,0 +1,70 @@
+----------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
+Tsink run
+Creating SetList
+
+nboot = 200
+All Sets:
+tsink26sm32
+tsink29sm32
+tsink32sm32
+tsink35sm32
+tsink38sm32
+
+Reading Data
+
+Reading at:  0 %     Reading at:  33 %     Reading at:  66 %                                            
+Combining  doubP4giDi   singP4giDi                                                                  
+All Opperators: 
+
+
+Projectors: 
+DS: 
+Run: real, 
+Extras: P4giDi, doubP4giDi, singP4giDi, twopt
+
+Data Read is: Boot
+Running multiprocessor fits
+Traceback (most recent call last):
+  File "/home/accounts/jdragos/scripts/PythonAnalysis/TryOneStateFit.py", line 110, in <module>
+    makeContextFunctions(OneStateSetFit)
+  File "/home/accounts/jdragos/scripts/PythonAnalysis/MultiWrap.py", line 14, in makeContextFunctions
+    newName = thisf.__name__
+NameError: global name 'thisf' is not defined
+----------------------------------------------------------------------------------
+Creating SetList
+
+nboot = 200
+All Sets:
+tsink29sm32
+tsink29sm64
+tsink29sm128
+tsink29state1sum18to19dt4
+tsink29state1sum18to20dt4
+tsink29state1sum18to22dt4
+tsink29state1sum20to21dt4
+tsink29state1sum20to22dt4
+tsink29state1sum20to23dt4
+tsink29state1sum22to23dt4
+tsink29state1sum22to24dt4
+
+Reading Data
+
+Reading at:  0 %     Reading at:  33 %     Reading at:  66 %                                            
+Combining  doubP4giDi   singP4giDi                                                                  
+All Opperators: 
+
+
+Projectors: 
+DS: 
+Run: real, 
+Extras: P4giDi, doubP4giDi, singP4giDi, twopt
+
+Data Read is: Boot
+Running multiprocessor fits
+Traceback (most recent call last):
+  File "/home/accounts/jdragos/scripts/PythonAnalysis/TryOneStateFit.py", line 110, in <module>
+    makeContextFunctions(OneStateSetFit)
+  File "/home/accounts/jdragos/scripts/PythonAnalysis/MultiWrap.py", line 14, in makeContextFunctions
+    newName = f.__name__
+NameError: global name 'thisf' is not defined

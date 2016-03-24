@@ -31,7 +31,7 @@ else:
     raise IOError('Input y or n')
     
 print ''
-thiskappa = int(raw_input("Kappa Value: (0.XXXXX)\n"))
+thiskappa = int(raw_input("Kappa Value:\n"))
 
 
 print ''
@@ -46,29 +46,29 @@ else:
 
 
 f = open(thisscriptdir+'/setup.cfg','w')
-f.write('\nscriptdir:\n')
+f.write('scriptdir:\n')
 f.write(thisscriptdir+'/\n')
-f.write('\ndatadir:\n')
+f.write('datadir:\n')
 f.write(thisdatadir+'\n')
-f.write('\nAnaProc:\n')
+f.write('AnaProc:\n')
 f.write(str(thisAnaProc)+'\n')
-f.write('\nListOrSet:\n')
+f.write('ListOrSet:\n')
 f.write(thisListOrSet+'\n')
-f.write('\nkappa:\n')
+f.write('kappa:\n')
 f.write(str(thiskappa)+'\n')
 if thisBoolPoF == 'y':
-    f.write('\nPoFOrSum:\n')
+    f.write('PoFOrSum:\n')
     f.write('PoF\n')
-    f.write('\nPoFShifts:\n')
+    f.write('PoFShifts:\n')
     f.write(str(thisNShifts)+'\n')
-    f.write('\nVarPref:\n')
+    f.write('VarPref:\n')
     f.write('PoF'+str(thisNShifts)+'\n')
 else:
-    f.write('\nPoFOrSum:\n')
+    f.write('PoFOrSum:\n')
     f.write('sum\n')
-    f.write('\nPoFShifts:\n')
+    f.write('PoFShifts:\n')
     f.write(str(thisNShifts)+'\n')
-    f.write('\nVarPref:\n')
+    f.write('VarPref:\n')
     f.write('sum\n')
 
 f.close()

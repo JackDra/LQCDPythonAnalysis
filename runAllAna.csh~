@@ -1,0 +1,19 @@
+#! /bin/tcsh
+
+set currdir = `pwd`
+
+set colllist = 'CM Tsink test32 Small'
+
+# echo "running TwoPt"
+# ${currdir}/RunCorrAnaCurr.py TwoPt 
+
+foreach icoll ( ${colllist} )
+    
+    echo "running Fits ${icoll} SmallSet"
+    ${currdir}/TryTwoStateFit.py ${icoll} SmallSet 
+
+end
+
+    echo "running Summation"
+    ${currdir}/TrySummation.py SmallSet
+    

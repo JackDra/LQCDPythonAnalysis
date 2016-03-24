@@ -1,0 +1,148 @@
+#!/usr/bin/env python
+import numpy as np
+import sys
+from Params import *
+from FitParams import *
+from Fitting import OneStateSetFit
+from ReadTxt import ReadCfunsnp
+from SetLists import *
+from OutputData import PrintOSFMassToFile,PrintOSFToFile
+from CreateCombs import MakeUmD
+from OppFuns import CreateGammaList,PrintOpps,WipeSFSet
+from FFParams import *
+# from multiprocessing import Pool
+# from multiprocessing.map import ThreadPool
+# from MultiWrap import *
+import time
+import datetime
+import cPickle as pickle
+# import pickle
+
+# sys.stdout = open(logfile,'a',0)
+# sys.stderr = sys.stdout
+
+print '----------------------------------------------------------------------------------'
+
+if len(sys.argv) < 2: raise IOError('Input CM, Tsink or Sm as first arg')
+outfile = sys.argv[1]
+thisReadMomList = qvecSet
+# thisReadMomList = ['q = 0 0 0']
+print 'Gamma Input (For re-running): ' , sys.argv[2:]
+ReadGammaList = CreateGammaList(sys.argv[2:],twopt=True)
+
+OSFColList = ['Tsink','CM']
+
+if outfile == 'Tsink':
+    print 'Tsink run'
+    ReadSmearList = ['32']
+    ReadTSinkList = AllTSinkList
+    ReadTvarList = []
+    ReadREvecTSinkList = []
+    ReadREvecTvarList = []
+elif outfile == 'CM':
+    ReadSmearList = DefSmearList
+    ReadTSinkList = [29]
+    ReadTvarList = AnaTvarList
+    ReadREvecTSinkList = []
+    ReadREvecTvarList = []
+elif outfile == 'REvec':
+    ReadSmearList = []
+    ReadTSinkList = []
+    ReadTvarList = []
+    ReadREvecTSinkList = REvecTSinkList
+    ReadREvecTvarList = REvecTvarList
+elif outfile == 'All':
+    for iCol in OSFColList:
+        if ReadGammaList == DefGammaList:
+            os.system(scriptdir+"TryOneStateFit.py " + iCol)
+        else:
+            os.system(scriptdir+"TryOneStateFit.py " + iCol+' ' +' '.join(ReadGammaList))
+    exit()
+else:
+    raise SyntaxError('Input CM or Tsink')
+
+thisFitOSFR = CreateFitList(OSF2ptMinStart,OSF2ptMinEnd,OSF2ptMaxStart,OSF2ptMaxEnd,OSF3ptCutMin,OSF3ptCutMax)
+
+print 'Creating SetList'
+[ReadSetList,ReadSet2pt,SetTsink] = CreateSet(thisSmearL=ReadSmearList,thisTvarL=ReadTvarList,thisTSinkL=ReadTSinkList,
+                                              thisREvecTvarL=ReadREvecTvarList,thisREvecTSinkL=ReadREvecTSinkList)
+print ''
+print 'nboot = ' + str(nboot)
+
+
+def DoOSF(thisSetList):
+    print 'All Sets:\n' + '\n'.join(thisSetList)+'\n'
+    print 'Reading Data'
+    [data3pt,data2pt,thisGammaMomList,BorA] = ReadCfunsnp(ReadGammaList,thisSetList,thisMomList=thisReadMomList)
+    thisGammaList = thisGammaMomList.keys()
+    PrintOpps(thisGammaList)
+    print 'Data Read is: ' + BorA
+    thisGammaList.remove('twopt')
+    ## data2pt = [ ip , iset2pt , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+    ## data3pt = [ igamma , ip , iset , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+
+
+    start = time.time()
+    # thisFitOSFR = [thisFitOSFR[0]]
+    for icf,ifit2pt in enumerate(thisFitOSFR):
+        thispicklefile = pickledir+'tempOSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+'.p'
+        if not os.path.isfile(thispicklefile):
+            perdone = (icf+1)/float(len(thisFitOSFR))
+            tempout = OneStateSetFit(data2pt,data3pt,OSF3ptCutList,thisSetList,thisGammaMomList,[ifit2pt,int(perdone*100)])
+            pfile = open( thispicklefile, "wb" )
+            pickle.dump( tempout, pfile )
+            pfile.close()
+            timeleft = (time.time()-start)*((1-perdone)/perdone)
+            print 'Current Fit Time: ' , str(datetime.timedelta(seconds=(time.time()-start))) ,' h:m:s  Time Remaining: ' , str(datetime.timedelta(seconds=timeleft)) , ' h:m:s'
+            print ''
+    print 'Fitting took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
+
+    del data3pt
+    del data2pt
+
+    start = time.time()
+    OneFit2pt = []
+    OneFit3pt = []
+    OneFit2ptAvg = []
+    OneFit3ptAvg = []
+    OneFit2ptChi = []
+    OneFit3ptChi = []
+    for icf,ifit2pt in enumerate(thisFitOSFR):
+        thispicklefile = pickledir+'tempOSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+'.p'
+        print 'Reading Picked file: ' , thispicklefile , '                                \r',
+        if os.path.isfile(thispicklefile):
+            pfile = open( thispicklefile, "rb" )
+            [OSF2pt,OSF3pt,OSF2ptAvg,OSF3ptAvg,OSF2ptChi,OSF3ptChi] = pickle.load( pfile )
+            pfile.close()
+            OneFit2pt.append(OSF2pt)
+            OneFit3pt.append(OSF3pt)
+            OneFit2ptAvg.append(OSF2ptAvg)
+            OneFit3ptAvg.append(OSF3ptAvg)
+            OneFit2ptChi.append(OSF2ptChi)
+            OneFit3ptChi.append(OSF3ptChi)
+        else:
+            raise IOError('Pickled file not found: ' + thispicklefile)
+
+    print 'Reading Pickled files took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
+
+    #OneFit2pt    = [ ifit2pt , ip , ism  , params ] bs1
+    #OneFit2ptAvg = [ ifit2pt , ip , ism  , params ]
+    #OneFit2ptChi = [ ifit2pt , ip , ism  ]
+    #OneFit3pt    = [ ifit2pt , igamma , ip , iset , ifit3pt , params ] bs1
+    #OneFit3ptAvg = [ ifit2pt , igamma , ip , iset , ifit3pt , params ]
+    #OneFit3ptChi = [ ifit2pt , igamma , ip , iset , ifit3pt ]
+
+    start = time.time()
+    print 'Printing OSF Results to file: \r',
+    WipeSFSet(outputdir,thisGammaList+['twopt'],'OSF'+outfile,'One',setlist=thisSetList)
+    PrintOSFMassToFile(OneFit2pt,OneFit2ptChi,thisSetList,thisFitOSFR,outfile,thisGammaMomList['twopt'])
+    PrintOSFToFile(OneFit3pt,OneFit3ptChi,thisGammaMomList,thisSetList,thisFitOSFR,outfile)
+
+    for icf,ifit2pt in enumerate(thisFitOSFR):
+        thispicklefile = pickledir+'tempOSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+'.p'
+        print 'Removing Picked file: ' , thispicklefile , '                                \r',
+        os.remove(thispicklefile)
+
+    print 'Printting OSF Results to file  took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
+
+DoOSF(ReadSetList)

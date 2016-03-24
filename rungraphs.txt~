@@ -1,0 +1,2 @@
+scripts ; ./TryGraph.py cut012345 All TSF sum ; graphs ; cd ../ ; tar cf Graphs.tar ./graphs/ ; scp Graphs.tar henley:/home/henley/jdragos/PHD/ErwinGraphs/ ; ssh henley -Y 'erwingraphs ; tar xf Graphs.tar ; evince graphs/P4I/*' ; scripts
+scripts ; ./TrySummaryPlot.py ; graphs ; cd ../ ; tar cf Graphs.tar ./graphs/ ; scp Graphs.tar henley:/home/henley/jdragos/PHD/ErwinGraphs/ ; ssh henley -Y 'erwingraphs ; tar xf Graphs.tar ; evince graphs/*/Test.pdf' ; scripts

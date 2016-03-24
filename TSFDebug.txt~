@@ -1,0 +1,55 @@
+import numpy as np
+A0 = 4.71522985e-06
+m0 = 4.77369451e-01
+A1 = 3.95927841e+00
+Dm = 4.58124661e-01
+import itertools
+tf = 10
+tc = 3
+val = 9.51817567728e-08
+res = val - A0*np.exp(-m0*tf)
+res
+res = val / A0*np.exp(-m0*tf)
+res
+res = val / (A0*np.exp(-m0*tf))
+res
+tf,tc = 22,10
+val = 3.6069595546e-10
+res = val / (A0*np.exp(-m0*tf))
+res
+A0 = 3.64353419e-06
+m0 = 4.58575331e-01
+A1 = 3.73785002e+00
+Dm = 3.51333388e-01
+tf = 13
+tc = np.array([4,5,6,7])
+res = 2.22819563368e-08
+res = val / (A0*np.exp(-m0*tf))
+res
+val = 2.22819563368e-08
+res = val / (A0*np.exp(-m0*tf))
+res
+res = val / (A0*np.exp(-m0*(tf-1)))
+res
+res = val / (A0*np.exp(-m0*tf))
+res
+res = val / (A0*np.exp(-m0*tf)) - 2.30
+res
+tf = np.array([10.13,16,19,22])
+res = val / (A0*np.exp(-m0*tf))
+res
+val = np.array(9.52977181575e-08,2.22911409909e-08,5.57294277175e-09,1.4114914941e-09,3.6069595546e-10])
+val = np.array([9.52977181575e-08,2.22911409909e-08,5.57294277175e-09,1.4114914941e-09,3.6069595546e-10])
+res = val / (A0*np.exp(-m0*tf))
+tf
+tf = np.array([10,13,16,19,22])
+res = val / (A0*np.exp(-m0*tf))
+res
+res = val / (A0*np.exp(-m0*tf)) - 2.30
+res
+res = (val / (A0*np.exp(-m0*tf)) - 2.30 )/(np.exp(-Dm*tf))
+res
+%save
+save
+import readline
+readline.write_history_file('./TSFDebug.txt')

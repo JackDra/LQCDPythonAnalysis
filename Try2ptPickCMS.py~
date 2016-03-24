@@ -1,0 +1,67 @@
+#!/usr/bin/env python
+
+from array import array
+from os import walk
+import os
+import numpy as np
+import sys
+from Params import *
+from ReadCMCfuns import ReadSet,ReadList
+from CMSTech import CreateCM2ptCfuns,PreptwoptCorr
+from OutputData import PrintSetToFile,PrintLREvecMassToFile,PrintCfunToFile
+from CreateCombs import CreategiDi
+from SetLists import CreateMassSet
+from MiscFuns import *
+import time,datetime
+from MultiWrap import *
+from multiprocessing import Pool
+
+def CreateTwoPt(thisMomList,thisSmearList):
+    logfile = logdir+'LogTwoPt.log'
+    errfile = logdir+'LogTwoPt.log'
+    touch(logfile)
+    touch(errfile)
+    sys.stdout = open(logfile,'a',0)
+    sys.stderr = open(errfile,'a',0)
+    # print 'Running ' + ipTOqstr(thisMomList[0]) + ' ' +  str(int((thisMomList[0]*100)/float(len(qvecSet))))+'%' 
+
+    if ListOrSet == 'ReadList':
+        [data2pt,data3pt,filelist] = ReadList(thisSmearList,thisMomList,{},{},[],[],
+                                              conflist,[],Interps=DefInterpList)
+    elif ListOrSet == 'ReadSet':
+        [data2pt,data3pt,filelist] = ReadSet(thisSmearList,thisMomList,{},{},[],[],
+                                             dirread,[],Interps=DefInterpList)
+
+    data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
+    ncon = np.size(filelist)
+    print 'ncon = ' + str(ncon)
+    # print 'nboot = ' + str(nboot)
+## data2pt = [ ism , jsm , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+    C2out = DiagSmear(data2pt).tolist()
+
+    start = time.time()
+    makeContextFunctions(CreateCM2ptCfuns)
+    inputparams = []
+    for icount,itodt in enumerate(DeftodtList):
+        inputparams.append((data2pt,itodt,thisMomList))
+
+    # output = []
+    # for iin in inputparams: output.append(CreateCM2ptCfuns(*iin))
+    thisPool = Pool(min(len(inputparams),AnaProc))
+    output = thisPool.map(CreateCM2ptCfuns.mapper,inputparams)
+    thisPool.close()
+    thisPool.join()
+    
+    for iout,iTvar in zip(output,DefTvarList):
+        [CMdata2pt,LEvec,REvec,Emass] = iout
+## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+        C2out += CMdata2pt.tolist()
+        PrintLREvecMassToFile(LEvec,REvec,Emass,thisMomList,iTvar)
+    print 'CMTech Total Time Taken: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
+    start = time.time()
+    print 'Printing to file \r',
+    SetList = CreateMassSet(thisSmearList,StateSet,DefTvarList,flipord=True)
+    PrintCfunToFile([C2out],SetList,thisMomList,['twopt'])
+    PrintSetToFile([C2out],SetList,thisMomList,['Mass'],0)
+    print 'Printing took ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
+    # print 'Completed ' + ipTOqstr(thisMomList[0])

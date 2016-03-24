@@ -1,0 +1,11 @@
+#!/usr/bin/env python
+
+import time
+from Params import *
+import numpy as np
+
+print 'start'
+for i in range(0,10):
+    print '\x',str(int(np.exp(10-i))), '\r',
+    time.sleep(1)
+    

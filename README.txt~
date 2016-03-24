@@ -1,0 +1,20 @@
+(n.b. read files for more information)
+
+### Parameter Files ###
+
+Params.py: Holds most parameters, read file for information.
+
+FitParams.py: Mainly fit ranges for different methods
+
+MomParams.py: Momenta parameters and function
+
+FFParams.py: Parameters for form factor calculations (mainly operators matricies in particular form factors)
+
+
+
+### Main Executables ###
+
+RunMcorrAna.py:
+	Runs off correlators from binary correlators to bootstrapped results.
+
+	./RunMcorrAna.py TwoPt will
