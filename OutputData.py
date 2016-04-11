@@ -12,7 +12,6 @@ from FormFactors import NoFFPars
 
 def PrintToFile(thisdata,filename,thisTList,thisMomList,frmtflag='f'):
     frmtstr = '{0} {1:20.10'+frmtflag+'} {2:20.10'+frmtflag+'}'
-    print filename+'.txt'
     with open(filename+'.txt','a+') as f:
         for ip,pdata in zip(thisMomList,thisdata):
             f.write(ipTOqstr(ip)+'\n')
