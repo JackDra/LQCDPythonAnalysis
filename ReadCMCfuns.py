@@ -50,8 +50,13 @@ def ReadSet(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList, thisDSL
                     f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
                     thisfilelist.append(directory+'/'+isource+'/@/'+fileprefix)
     f.close()
-    for ifile in thisfilelist:
-        print ifile
+    if ShowConfNum:
+        print 'number of configs = ' , len(thisfilelist)
+        print ''
+        for ifile in thisfilelist:
+            print ifile
+        print ''
+        
     data2pt,randlist = Read2ptSet(thisfilelist,thisSmearList,thisMomList,Interps)
     # print ''
     data3pt = []
