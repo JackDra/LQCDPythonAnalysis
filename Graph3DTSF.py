@@ -25,7 +25,7 @@ thisres = 1
 thisalpha = .4
 thisSetList = CreateSet(thisSmearL=['32'],thisStateL=[])[0]
 
-
+THISMACHINE = 'JackLapppy'
 
 if 'erwin' in THISMACHINE:
     datadict = ReadSetFitRFDict(outputdir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)

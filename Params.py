@@ -91,20 +91,19 @@ DefWipe = True # Wipes sets before running RunMcorr, only doing if debugging, if
 PrintRead = False # Screws up output if on and doing mulitcore reading
 OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
 DoNorm = False # normalises the 2 point function (see CMSTech.py)
-DoCmplx = True # does complex values, should be on
+DoCmplx = True # reads complex opperator values as well as real values, should be on
 
     
 
-VarMassCutoff = 0.4 # used in correlation matrix for cutting artifacts out of eigenmass
+VarMassCutoff = 0.4 # used in correlation matrix for cutting artifacts out of eigenmass sorting.
 
 dirread = datadir+'/cfuns/k'+str(kappa)
-# dirread = dir+'/k'+str(kappa)
 outputdir = datadir+'results/'+ListOrSet+'k'+str(kappa)+'/'
-# outputdir = dir+'/results/'+ListOrSet+'k'+str(kappa)+'/'
 logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 pickledir = datadir+"pickledir/"
 REvecDir = scriptdir+'REvecSave/k'+str(kappa)+'/'
 # RunMomList = qvecSet 
+# For Debuggin, only use zero momenta
 RunMomList = [qvecSet[iqTOip(0)]]
 mkdir_p(outputdir)
 mkdir_p(pickledir)
@@ -112,6 +111,7 @@ mkdir_p(logdir)
 mkdir_p(REvecDir)
 nt = 64
 ns = 4
+
 if ListOrSet == 'ReadList':
     nboot = 2
 elif ListOrSet == 'ReadSet':
@@ -133,6 +133,7 @@ for ider in DerSet:
     for igamma in GammaSet:
         DGSet.append(igamma+ider)
 
+#this part is for ReadList (used for analying only specific configurations#
 if kappa == 12104:
     FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+".687."
     filelist = dirread+"/source1/@/"+FileStruct+"*"
@@ -161,11 +162,6 @@ SourceList = ['source10',
               'source9']
 
 
-# DefMomList = [iqTOip(0),iqTOip(1),qvecTOip([-1,0,0]),qvecTOip([0,1,0]),qvecTOip([1,1,0]),
-#               qvecTOip([0,0,2]),qvecTOip([2,0,-1]),qvecTOip([1,-2,1]),qvecTOip([1,-1,-1]),qvecTOip([2,-2,0]),qvecTOip([0,0,-3])]
-# DefMomList = [iqTOip(0),iqTOip(1),qvecTOip([-1,0,0]),qvecTOip([0,1,0])]
-# DefMomList = [iqTOip(0)]
-# DefProjGammaList = { 'GMA4' : ['I','g4'] ,'GMA3' :['g1g2','g3g5'] }
 DefProjGammaList = { 'GMA4' : AllGammaSet ,'GMA3' : AllGammaSet }
 ReadProjDerList = {'GMA4' :['g4D4','g1D1','g2D2','g3D3']}
 DefProjDerList = {'GMA4' :['giDi']}
