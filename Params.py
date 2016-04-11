@@ -141,7 +141,10 @@ if kappa == 12104:
 elif kappa == 12090:
     ##CHECK THIS DEBUG##
     # FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."
-    FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."+PoFC2C3Dis
+    if ListOrSet == 'ReadList':
+        FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."+PoFC2C3Dis
+    elif ListOrSet == 'ReadSet':
+        FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."    
     filelist = dirread+"/source1/@/"+FileStruct+"*"
 conflist = ['00105',
             '00115',
