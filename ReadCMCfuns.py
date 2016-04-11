@@ -96,7 +96,7 @@ def CheckSet(FilePrefix,directory,thisSmearList,thisProjGammaList,thisProjDerLis
             elif 'PoF' in iFlag:
                 Jsmlist = ['RE'+PoFReadTvarList[0]]
                 thisFlag = 'RE'+PoFTvarList[0].replace(VarPref,VarPref[:-1])
-                if ListOrSet == 'ReadList': C2C3Dis = PoFC2C3Dis
+                C2C3Dis = PoFC2C3Dis
             else:
                 Jsmlist = ['Xsm'+jsm for jsm in thisSmearList]
             for jcsm,(jsm3pt,jsm) in enumerate(zip(Jsmlist,thisSmearList)):
@@ -149,7 +149,7 @@ def Read3ptSet(readfilelist,thisSmearList,thisMomList,thisProjGammaList,thisProj
         elif iFlag == 'PoF':
             Jsmlist = ['RE'+PoFReadTvarList[0]]
             thisFlag = 'RE'+PoFTvarList[0].replace(VarPref,VarPref[:-1])
-            if ListOrSet == 'ReadList': C2C3Dis = PoFC2C3Dis
+            C2C3Dis = PoFC2C3Dis
         else:
             Jsmlist = ['Xsm'+jsm for jsm in thisSmearList]
         for jcsm,jsm in enumerate(Jsmlist):
