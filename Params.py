@@ -85,6 +85,7 @@ PsScalarNorm = 0.4948 # normalisation for Pseudo Scalar current
 VectorNorm = 0.8574 # normalisation for Vector Current
 PsVectorNorm = 0.8728 # normalisation for Pseudo Vector current
 TensorNorm = 0.9945 # normalisation for Tensor Current
+DebugCM = False # for debugging Correlation Matrix stuff
 ShowConfNum = False # debugging, show number of configs during read
 MultiCoreFitting = False # Multicore for Boot Fitting, not needed in current build
 DoMulticore = True # Runs multicore wherever implemented

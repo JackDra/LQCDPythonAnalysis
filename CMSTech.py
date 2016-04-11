@@ -176,11 +176,12 @@ def ProjectCorrPoF2pt(LEvec,Cfun,REvec):
                                   np.concatenate((CfunShift2,CfunShift3,CfunShift4),1)))
 
     ##DEBUG##
-    print 'TwoPoint Run:'
-    for ic,(iRE,iCfun) in enumerate(zip(REvec[0],np.dot(LEvec[0],CfunExt))):
-        iCfun[28].Stats()
-        print '28',ic,iRE,iCfun[28].Avg
-    print ''
+    if DebugCM:
+        print 'TwoPoint Run:'
+        for ic,(iRE,iCfun) in enumerate(zip(REvec[0],np.dot(LEvec[0],CfunExt))):
+            iCfun[28].Stats()
+            print '28',ic,iRE,iCfun[28].Avg
+        print ''
     for istate,(stateRE,stateLE) in enumerate(zip(REvec,LEvec)):
         CMCfun.append(np.dot(stateRE,np.dot(stateLE,CfunExt)))
         for it,itCM in enumerate(CMCfun[istate]):
@@ -213,10 +214,11 @@ def ProjectREvecCorrPoF(Cfun,CfunShift,REvec):
         CfunjsmShift2 = np.roll(CfunjsmShift,-1,axis=1)
         CfunExt = np.concatenate((Cfunjsm,CfunjsmShift,CfunjsmShift2))
     ##DEBUG##
-    print 'ThreePoint Run:'
-    for ic,(iRE,iCfun) in enumerate(zip(REvec[0],CfunExt)):
-        print ic,iRE,iCfun[24].Avg
-    print ''
+    if DebugCM:
+        print 'ThreePoint Run:'
+        for ic,(iRE,iCfun) in enumerate(zip(REvec[0],CfunExt)):
+            print ic,iRE,iCfun[24].Avg
+        print ''
     for istate,stateRE in enumerate(REvec):
         CMCfun.append(np.dot(stateRE,CfunExt))
         for it,itCM in enumerate(CMCfun[istate]):
@@ -330,7 +332,7 @@ def CreateREPoFCfuns(Cfuns3pt,Cfuns3ptp1,Cfuns2pt,todtvals,thisMomList):
         CMCfun3pt.append([])
         for ip,(pCfun,pCfunp1) in enumerate(zip(np.rollaxis(gammaCfun,2),np.rollaxis(gammaCfunp1,2))): 
             ##DEBUG##
-            print 'Three Point :(igamma,ip) ',igamma , ip
+            if DebugCM: print 'Three Point :(igamma,ip) ',igamma , ip
             CMCfun3pt[igamma].append(ProjectREvecCorrPoF(pCfun,pCfunp1,REvec[ip]))
     return [np.array(CMCfun2pt),np.rollaxis(np.array(CMCfun3pt),2)]
 
