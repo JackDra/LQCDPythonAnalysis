@@ -93,7 +93,7 @@ def CheckSet(FilePrefix,directory,thisSmearList,thisProjGammaList,thisProjDerLis
             C2C3Dis = ''
             if iFlag == 'REvec':
                 Jsmlist = ['REvec']
-            elif iFlag == 'PoF':
+            elif 'PoF' in iFlag:
                 Jsmlist = ['RE'+PoFReadTvarList[0]]
                 thisFlag = 'RE'+PoFTvarList[0].replace(VarPref,VarPref[:-1])
                 C2C3Dis = PoFC2C3Dis
