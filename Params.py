@@ -88,7 +88,7 @@ TensorNorm = 0.9945 # normalisation for Tensor Current
 DebugCM = False # for debugging Correlation Matrix stuff
 ShowConfNum = False # debugging, show number of configs during read
 MultiCoreFitting = False # Multicore for Boot Fitting, not needed in current build
-DoMulticore = False # Runs multicore wherever implemented
+DoMulticore = True # Runs multicore wherever implemented
 DefWipe = True # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
 PrintRead = False # Screws up output if on and doing mulitcore reading
 OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
@@ -104,9 +104,9 @@ outputdir = datadir+'results/'+ListOrSet+'k'+str(kappa)+'/'
 logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 pickledir = datadir+"pickledir/"
 REvecDir = scriptdir+'REvecSave/k'+str(kappa)+'/'
-# RunMomList = qvecSet 
+RunMomList = qvecSet 
 # For Debuggin, only use zero momenta
-RunMomList = [qvecSet[iqTOip(0)]]
+# RunMomList = [qvecSet[iqTOip(0)]]
 mkdir_p(outputdir)
 mkdir_p(pickledir)
 mkdir_p(logdir)
