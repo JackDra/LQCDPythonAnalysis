@@ -178,6 +178,7 @@ def PlotCMSFData(data,data2pt,thisSetList,thisGamma,thisMom,thistsink='tsink29',
 
 
 def PlotCol(data,thisSetList,thisflag,thisGamma,thisMom,TitlePref):
+    print SiftAndSort(thisSetList,thisflag,nocm=False)
     PlotRFSet(data,SiftAndSort(thisSetList,thisflag,nocm=False),legrem=thisflag)
     pl.savefig(CreateFile(thisflag,thisGamma,thisMom,TitlePref)+'.pdf')
     pl.clf()
