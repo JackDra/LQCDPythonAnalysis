@@ -277,7 +277,6 @@ def ReadSetAndCfunsDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisM
 
 def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=[]):
     if 'twopt' not in thisGammaList: raise IOError('twopt needed in set list')
-    print thisSetList
     datadict = ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
     data3ptdict = ReadCfunsDict(thisindir,thisSetList,thisGammaList,thisMomList=thisMomList)
     zmomstr = 'q = 0 0 0'
