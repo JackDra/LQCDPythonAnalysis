@@ -5,7 +5,7 @@ from SetLists import *
 
 def InputGammaAndSet(inputparams):
     feedsetlist = DefSetList
-    feedgammalist = CreateGammaList()
+    feedgammalist = ''
     for isys in inputparams:
         if isys[0] != '-':
             raise IOError("input arguments are specified with -")
