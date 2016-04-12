@@ -85,14 +85,16 @@ PsScalarNorm = 0.4948 # normalisation for Pseudo Scalar current
 VectorNorm = 0.8574 # normalisation for Vector Current
 PsVectorNorm = 0.8728 # normalisation for Pseudo Vector current
 TensorNorm = 0.9945 # normalisation for Tensor Current
-DebugCM = True # for debugging Correlation Matrix stuff
-ShowConfNum = False # debugging, show number of configs during read
 MultiCoreFitting = False # Multicore for Boot Fitting, not needed in current build
 DoMulticore = True # Runs multicore wherever implemented
 DefWipe = True # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
-PrintRead = False # Screws up output if on and doing mulitcore reading
 OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
 DoNorm = False # normalises the 2 point function (see CMSTech.py)
+
+##DEBUG toggles (True/False):
+DebugCM = False # for debugging Correlation Matrix stuff
+ShowConfNum = False # debugging, show number of configs during read
+PrintRead = False # Screws up output if on and doing mulitcore reading
 DoCmplx = True # reads complex opperator values as well as real values, should be on
 
     

@@ -130,5 +130,6 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
     ## RFr = [  iset , igamma , ip , it ] bs1
     PrintSetToFile(np.rollaxis(RFr,1),SetList,thisMomList,thisGammaList,thisTSinkList[0])
 
+    print 'Finished '+ RunType + ' tsink='+str(thisTSinkList[0]) + ' '+iglog
     sys.stdout = open(logfileend,'a',0)
     print 'Finished '+ RunType + ' tsink='+str(thisTSinkList[0]) + ' '+iglog
