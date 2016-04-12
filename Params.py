@@ -166,10 +166,6 @@ SourceList = ['source10',
               'source8',
               'source9']
 
-SourceList = ['source6',
-              'source7',
-              'source8',
-              'source9']
 
 
 DefProjGammaList = { 'GMA4' : AllGammaSet ,'GMA3' : AllGammaSet }
