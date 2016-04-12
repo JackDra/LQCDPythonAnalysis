@@ -54,7 +54,8 @@ def SortMySet(SLin,massset=False):
                     SLout.append(iSLin)
                     TSinkLout.append(itint)
         for itsink,itint in zip(AllTSinkStrList,AllTSinkList):
-            for ism in DefSmList + DefTvarList:
+            # for ism in DefSmList + DefTvarList:
+            for ism in DefSmList:
                 for iSLin in SLin:
                     if itsink in iSLin and ism in iSLin:
                         TSinkLout.append(itint)
