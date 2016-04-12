@@ -13,6 +13,7 @@ def InputGammaAndSet(inputparams):
             print 'commands are (with comma separated lists):'
             print '-gamma= or -g= specifies gamma matricies (see gammaopp file)'
             print '-set= or -s= specifies set list to use'
+            exit()
         elif '-g' in isys:
             feedgammalist = isys.replace('-g=','').split(',')
         elif '-s' in isys:
