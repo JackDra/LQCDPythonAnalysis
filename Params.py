@@ -155,18 +155,16 @@ conflist = ['00105',
             '00285']
             
 
-# SourceList = ['source10',
-#               'source1',
-#               'source2',
-#               'source3',
-#               'source4',
-#               'source5',
-#               'source6',
-#               'source7',
-#               'source8',
-#               'source9']
-
-SourceList = ['source8']
+SourceList = ['source10',
+              'source1',
+              'source2',
+              'source3',
+              'source4',
+              'source5',
+              'source6',
+              'source7',
+              'source8',
+              'source9']
 
 
 DefProjGammaList = { 'GMA4' : AllGammaSet ,'GMA3' : AllGammaSet }
