@@ -116,7 +116,7 @@ def CreateREvecSet(TSinkList,thisStateList,TvarList):
         
 
 def CreateSet(thisSmearL=DefSmearList,thisStateL=['1'],thisTvarL=AnaTvarList,thisTSinkL=AllTSinkList,
-              thisREvecTvarL=REvecTvarList,thisREvecTSinkL=REvecTSinkList,thisPoFTvarL=PoFTvarList,thisPoFTSinkList=PoFTSinkList):
+              thisREvecTvarL=REvecTvarList,thisREvecTSinkL=REvecTSinkList,thisPoFTvarL=PoFTvarL,thisPoFTSinkL=PoFTSinkList):
     SetGraph,SetMassGraph = [],set([])
     SetTsink = []
     SetMassGraph = CreateMassSet(thisSmearL,thisStateL,thisTvarL)
