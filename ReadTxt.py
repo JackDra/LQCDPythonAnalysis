@@ -285,6 +285,7 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
         if igamma == 'twopt': continue
         if PrintRead: print 'Constructing Fitted RF Values: ' , igamma , '     \r',
         if zmomstr not in datadict[igamma].keys(): continue
+        print datadict[igamma][zmomstr]['RF'].keys()
         for iset in datadict[igamma][zmomstr]['RF'].keys():
             if 'RF' not in datadict['twopt'][zmomstr].keys(): continue
             if RemoveTSink(iset) not in datadict['twopt'][zmomstr]['RF'].keys(): continue
