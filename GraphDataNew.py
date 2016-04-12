@@ -88,7 +88,7 @@ def CreateFFFile(thisCol,thisCurr,thisFF):
     return thisdir + thisfile
 
 def CreateFile(thisflag,thisGamma,thisMom,TitlePref,subdir=''):
-    thistitle = thisGamma+' '+TitlePref+' and '.join(thisflag)
+    thistitle = thisGamma+' '+TitlePref+' '+thisflag
     if 'q = 0 0 0' not in thisMom: thistitle += ' '+thisMom
     pl.title(thistitle)
     thisdir = outputdir + 'graphs/'+CreateOppDir(thisGamma)
@@ -179,7 +179,7 @@ def PlotCMSFData(data,data2pt,thisSetList,thisGamma,thisMom,thistsink='tsink29',
 
 def PlotCol(data,thisSetList,thisflag,thisGamma,thisMom,TitlePref):
     PlotRFSet(data,SiftAndSort(thisSetList,thisflag,nocm=False),legrem=thisflag)
-    pl.savefig(CreateFile(thisflag,thisGamma,thisMom,TitlePref)+'.pdf')
+    pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+'.pdf')
     pl.clf()
 
 def PlotColTSF(data,data2pt,thisSetList,thisflag,thisGamma,thisMom,TitlePref,TSFcut,thisTSF):
