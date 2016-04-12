@@ -12,6 +12,7 @@ from OppFuns import CreateGammaList
 import time,datetime
 from MultiWrap import *
 from multiprocessing import Pool
+from InputArgs import InputGammaAndSet
 
 ##Hard Code lists:
 thisMethodList = ['RF']
@@ -96,7 +97,10 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList):
             print 'Graphing Operator: ' + igamma + imom + ' took: ' , str(datetime.timedelta(seconds=(time.time()-gammastart))) ,' h:m:s                      '
                     
 
-thisGammaList = CreateGammaList(sys.argv[1:],twopt=True)
+
+feedgammalist,feedsetlist = InputGammaAndSet(sys.argv[1:]
+            
+thisGammaList = CreateGammaList(feedgammalist,twopt=True)
 
 if thisGammaList == ['twopt']:
     # thisMethodList = ['RF','OSFCM','TSFCM']
