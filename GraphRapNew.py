@@ -53,7 +53,6 @@ def ReadAndPlotMass(thisMomList,thisSmearList,thisSetList,thisSetPoFLists,thisMe
     
     
 def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList):
-    print thisSetList
     datadict = ReadSetFitRFDict(outputdir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
     thisGammaList = datadict.keys()
     thisMassdict = datadict['twopt']['q = 0 0 0']

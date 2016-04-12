@@ -269,7 +269,7 @@ REvecTSinkStrList = ['tsink'+str(its) for its in REvecTSinkList]
 DefREvecVarList = [18,2]
 REvecTvarList = ['to'+str(DefREvecVarList[0])+'dt'+str(DefREvecVarList[1])]
 DefPoFVarList = [16,2]
-AllPoFTSinkList = {'12104':[],'12090':[26,27,28]}
+AllPoFTSinkList = {'12104':[],'12090':[26,27]}
 PoFTSinkList = AllPoFTSinkList[str(kappa)]
 PoFTSinkStrList = ['tsink'+str(its) for its in PoFTSinkList]
 ##DEBUG##
