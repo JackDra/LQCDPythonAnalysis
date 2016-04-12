@@ -104,7 +104,6 @@ def CreateStateTsinkSet(thisState,tsinkL):
     return ['tsink'+str(itsink)+thisState for itsink in tsinkL]
 
 
-
 def CreateREvecSet(TSinkList,thisStateList,TvarList):
     SetGraph = []
     SetTsink = []
