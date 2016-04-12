@@ -11,8 +11,8 @@ def InputGammaAndSet(inputparams):
             raise IOError("input arguments are specified with -")
         elif '-h' in isys:
             print 'commands are (with comma separated lists):'
-            print '-gamma= or -g= specifies gamma matricies (see gammaopp file)'
-            print '-set= or -s= specifies set list to use'
+            print '-g= specifies gamma matricies (see OppFuns.py)'
+            print '-s= specifies set list to use (see SetLists.py)'
             exit()
         elif '-g' in isys:
             feedgammalist = isys.replace('-g=','').split(',')
