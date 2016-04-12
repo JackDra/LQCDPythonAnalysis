@@ -116,7 +116,7 @@ def CreateREvecSet(TSinkList,thisStateList,TvarList):
         
 
 def CreateSet(thisSmearL=DefSmearList,thisStateL=['1'],thisTvarL=AnaTvarList,thisTSinkL=AllTSinkList,
-              thisREvecTvarL=REvecTvarList,thisREvecTSinkL=REvecTSinkList):
+              thisREvecTvarL=REvecTvarList,thisREvecTSinkL=REvecTSinkList,thisPoFTvarL=PoFTvarList,thisPoFTSinkList=PoFTSinkList):
     SetGraph,SetMassGraph = [],set([])
     SetTsink = []
     SetMassGraph = CreateMassSet(thisSmearL,thisStateL,thisTvarL)
@@ -128,6 +128,8 @@ def CreateSet(thisSmearL=DefSmearList,thisStateL=['1'],thisTvarL=AnaTvarList,thi
                 SetGraph.append('tsink'+str(itsink)+'sm32')
     for itsink in thisREvecTSinkL:
         SetGraph += CreateTSinkStateSet(itsink,[],thisStateL,thisREvecTvarL)        
+    for itsink in thisPoFTSinkL:
+        SetGraph += CreateTSinkStateSet(itsink,[],thisStateL,thisPoFTvarL)        
     SetGraph,SetTsink = SortMySet(SetGraph,massset=False)
     return [SetGraph,SortMySet(list(SetMassGraph))[0],SetTsink]
 
