@@ -258,7 +258,7 @@ def PlotRFSet(data,thisSetList,legrem=[''],MassDt = False):
         if not CheckDict(data,'RF',iset): continue
         redset = iset
         for ilegrem in legrem:
-            redset = regset.replace(ilegrem,'')
+            redset = redset.replace(ilegrem,'')
         if MassDt == False:
             PlotRF(data['RF'][iset],thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(redset))
         else:
