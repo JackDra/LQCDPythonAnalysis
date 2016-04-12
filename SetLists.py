@@ -123,7 +123,7 @@ def CreateSet(thisSmearL=DefSmearList,thisStateL=['1'],thisTvarL=AnaTvarList,thi
     SetMassGraph = CreateMassSet(thisSmearL,thisStateL,thisTvarL)
     for itsink in thisTSinkL:
         if '29' == str(itsink):
-            SetGraph += CreateTSinkStateSet(itsink,thisSmearL,thisStateL,thisTvarL)
+            SetGraph += CreateTSinkStateSet(itsink,thisSmearL,thisStateL,'')
         else:
             if '32' in thisSmearL:
                 SetGraph.append('tsink'+str(itsink)+'sm32')
