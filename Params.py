@@ -263,14 +263,14 @@ AllTSinkList = [26,29,32,35,38]
 AllTSinkShift = [it-tsource for it in AllTSinkList]
 AllTSinkStrList = ['tsink'+str(its) for its in AllTSinkList]
 
-AllREvecTSinkList = {'12104':[29],'12090':[26,32]}
+AllREvecTSinkList = {'12104':[29],'12090':[]}
 REvecTSinkList = AllREvecTSinkList[str(kappa)]
 REvecTSinkStrList = ['tsink'+str(its) for its in REvecTSinkList]
 DefREvecVarList = [18,2]
 # REvecTvarList = ['to'+str(DefREvecVarList[0])+'dt'+str(DefREvecVarList[1])]
 REvecTvarList = []
 DefPoFVarList = [16,2]
-AllPoFTSinkList = {'12104':[],'12090':[]}
+AllPoFTSinkList = {'12104':[],'12090':[26,27]}
 PoFTSinkList = AllPoFTSinkList[str(kappa)]
 PoFTSinkStrList = ['tsink'+str(its) for its in PoFTSinkList]
 ##DEBUG##
