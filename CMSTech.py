@@ -179,8 +179,8 @@ def ProjectCorrPoF2pt(LEvec,Cfun,REvec):
     if DebugCM:
         print 'TwoPoint Run:'
         for ic,(iRE,iCfun) in enumerate(zip(REvec[0],np.dot(LEvec[0],CfunExt))):
-            iCfun[28].Stats()
-            print '28',ic,iRE,iCfun[28].Avg
+            iCfun[26].Stats()
+            print '26',ic,iRE,iCfun[26].Avg
         print ''
     for istate,(stateRE,stateLE) in enumerate(zip(REvec,LEvec)):
         CMCfun.append(np.dot(stateRE,np.dot(stateLE,CfunExt)))
