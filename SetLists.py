@@ -44,10 +44,10 @@ def SortMySet(SLin,massset=False):
             for iSLin in SLin:
                 if ism in iSLin and 'tsink' not in iSLin:
                     SLout.append(iSLin)
-        for ism in REvecTvarList:
-            for iSLin in SLin:
-                if ism in iSLin and 'tsink' not in iSLin and VarPref not in iSLin:
-                    SLout.append(iSLin)
+        # for ism in REvecTvarList:
+        #     for iSLin in SLin:
+        #         if ism in iSLin and 'tsink' not in iSLin and VarPref not in iSLin:
+        #             SLout.append(iSLin)
         for itsink,itint in zip(AllTSinkStrList,AllTSinkList):
             for iSLin in SLin:
                 if itsink in iSLin and 'sm' not in iSLin and 'to' not in iSLin:
