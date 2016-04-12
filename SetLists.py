@@ -59,18 +59,19 @@ def SortMySet(SLin,massset=False):
                     if itsink in iSLin and ism in iSLin:
                         TSinkLout.append(itint)
                         SLout.append(iSLin)
-        for itsink,itint in zip(REvecTSinkStrList,REvecTSinkList):
-            for ism in REvecTvarList:
-                for iSLin in SLin:
-                    if itsink in iSLin and ism in iSLin and VarPref not in iSLin:
-                        TSinkLout.append(itint)
-                        SLout.append(iSLin)
+        # for itsink,itint in zip(REvecTSinkStrList,REvecTSinkList):
+        #     for ism in REvecTvarList:
+        #         for iSLin in SLin:
+        #             if itsink in iSLin and ism in iSLin and VarPref not in iSLin:
+        #                 TSinkLout.append(itint)
+        #                 SLout.append(iSLin)
         for itsink,itint in zip(PoFTSinkStrList,PoFTSinkList):
             for ism in PoFTvarList:
                 for iSLin in SLin:
                     if itsink in iSLin and ism in iSLin and 'PoF' in iSLin:
                         TSinkLout.append(itint)
                         SLout.append(iSLin)
+                    
     if any(['SumMeth' in iSL for iSL in SLin]): SLout = SortSum(SLout)
     return SLout,TSinkLout
 
