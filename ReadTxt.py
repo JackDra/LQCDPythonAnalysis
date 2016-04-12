@@ -476,6 +476,7 @@ def CombSetBoot(data,opp):
 
 
 def MakeMethodsDict(readdir,readfile,thisMethodList,thisSetList,thisMomList=[]):
+    print thisSetList
     MethDict = OrderedDict()
     for iMeth in thisMethodList:
         if iMeth == 'RF':
@@ -483,7 +484,6 @@ def MakeMethodsDict(readdir,readfile,thisMethodList,thisSetList,thisMomList=[]):
             RFSetList = thisSetList
             if 'twopt' in readfile: RFSetList = ReduceTsink(thisSetList)
             for iSet in RFSetList:
-                print iSet
                 filename = readdir+iSet+readfile
                 bootfn = readdir+'boots/'+iSet+readfile.replace('.txt','.boot.txt')
                 thisDict[iSet] = ReadRFFile(filename,bootfn=bootfn,thisMomList=thisMomList)
