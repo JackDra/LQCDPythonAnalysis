@@ -18,4 +18,4 @@ def InputGammaAndSet(inputparams):
             feedgammalist = isys.replace('-g=','').split(',')
         elif '-s' in isys:
             feedsetlist = isys.replace('-s=','').split(',')
-        return feedgammalist,feedsetlist
+    return feedgammalist,feedsetlist
