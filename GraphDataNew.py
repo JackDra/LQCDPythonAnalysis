@@ -178,7 +178,6 @@ def PlotCMSFData(data,data2pt,thisSetList,thisGamma,thisMom,thistsink='tsink29',
 
 
 def PlotCol(data,thisSetList,thisflag,thisGamma,thisMom,TitlePref):
-    print SiftAndSort(thisSetList,thisflag,nocm=False)
     PlotRFSet(data,SiftAndSort(thisSetList,thisflag,nocm=False),legrem=thisflag)
     pl.savefig(CreateFile(thisflag,thisGamma,thisMom,TitlePref)+'.pdf')
     pl.clf()
@@ -255,6 +254,9 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
         iterSetList = SortMySet(thisSetList)[0]
     else:
         iterSetList = SortMySet(ReduceTsink(thisSetList))[0]
+    print thisSetList
+    print iterSetList
+    print ''
     for iset in iterSetList:
         if not CheckDict(data,'RF',iset): continue
         if MassDt == False:
