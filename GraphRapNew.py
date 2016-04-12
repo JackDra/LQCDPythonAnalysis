@@ -99,9 +99,9 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList):
                     
 
 
-print sys.argv[1:]
 feedgammalist,feedsetlist = InputGammaAndSet(sys.argv[1:])
-            
+print feedsetlist
+
 thisGammaList = CreateGammaList(feedgammalist,twopt=True)
 
 if thisGammaList == ['twopt']:
