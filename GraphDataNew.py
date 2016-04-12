@@ -254,9 +254,6 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
         iterSetList = SortMySet(thisSetList)[0]
     else:
         iterSetList = SortMySet(ReduceTsink(thisSetList))[0]
-    print thisSetList
-    print iterSetList
-    print ''
     for iset in iterSetList:
         if not CheckDict(data,'RF',iset): continue
         if MassDt == False:
