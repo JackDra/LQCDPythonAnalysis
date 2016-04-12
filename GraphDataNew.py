@@ -72,7 +72,7 @@ def PullThisDicts(datadict,igamma,imom):
 def SiftAndSort(thisSetList,comp,nocm=True):
     SetListOut = []
     for iset in thisSetList:
-        if comp in iset: 
+        if any([icomp in iset for icomp in comp]): 
             if 'state' not in iset or not nocm:
                 SetListOut.append(iset)
     # SetListOut.sort()
@@ -128,7 +128,7 @@ def SetLogAxies():
 
 
 def PlotTSinkData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
-    PlotCol(data,thisSetList,thissm,thisGamma,thisMom,'TSink Comparison ')
+    PlotCol(data,thisSetList,[thissm],thisGamma,thisMom,'TSink Comparison ')
 
 def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
     for ifitr in SumFitRList:
@@ -143,7 +143,7 @@ def PlotTSinkSFData(data,data2pt,thisSetList,thisGamma,thisMom,thisSF='TSFTsink'
             PlotColOSF(data,data2pt,thisSetList,thissm,thisGamma,thisMom,thisSF+' Comparison ',icut,thisSF)
         
 def PlotCMData(data,thisSetList,thisGamma,thisMom,thistsink='tsink29'):
-    PlotCol(data,thisSetList,thistsink,thisGamma,thisMom,'Variational Comparison ')
+    PlotCol(data,thisSetList,[thistsink,'PoF'],thisGamma,thisMom,'Variational Comparison ')
 
 
 def PlotMassData(data,thisSetList,thisMom,TitleFlag=''):
@@ -248,7 +248,7 @@ def PlotRFSetSum(data,thisSetList,thisTsinkR,legrem=''):
 
 
 
-def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
+def PlotRFSet(data,thisSetList,legrem=[''],MassDt = False):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     if MassDt == False:
         iterSetList = SortMySet(thisSetList)[0]
@@ -256,13 +256,16 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
         iterSetList = SortMySet(ReduceTsink(thisSetList))[0]
     for iset in iterSetList:
         if not CheckDict(data,'RF',iset): continue
+        redset = iset
+        for ilegrem in legrem:
+            redset = regset.replace(ilegrem,'')
         if MassDt == False:
-            PlotRF(data['RF'][iset],thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset.replace(legrem,'')))
+            PlotRF(data['RF'][iset],thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(redset))
         else:
             dataplot = deepcopy(data['RF'][iset])
             dataplot['Boot'] = MassFun(dataplot['Boot'],MassDt)
             dataplot['tVals'] = dataplot['tVals'][:-MassDt]
-            PlotRF(dataplot,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset.replace(legrem,'')),MP=True)
+            PlotRF(dataplot,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(redset),MP=True)
     if not MassDt:
         SetRFAxies()
     else:
