@@ -267,6 +267,7 @@ def ReadRFnp(thisGammaList,thisSetList,thisMomList=[]):
     return SetRFDictToList(datadict)
 
 def ReadSetAndCfunsDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=[]):
+    print thisSetList
     datadict = ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
     data3ptdict = ReadCfunsDict(thisindir,thisSetList,thisGammaList,thisMomList=thisMomList)
     for igamma in datadict.keys():
@@ -476,7 +477,6 @@ def CombSetBoot(data,opp):
 
 
 def MakeMethodsDict(readdir,readfile,thisMethodList,thisSetList,thisMomList=[]):
-    print thisSetList
     MethDict = OrderedDict()
     for iMeth in thisMethodList:
         if iMeth == 'RF':
