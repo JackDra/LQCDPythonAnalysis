@@ -88,7 +88,7 @@ def CreateFFFile(thisCol,thisCurr,thisFF):
     return thisdir + thisfile
 
 def CreateFile(thisflag,thisGamma,thisMom,TitlePref,subdir=''):
-    thistitle = thisGamma+' '+TitlePref+' '+thisflag
+    thistitle = thisGamma+' '+TitlePref+' and '.join(thisflag)
     if 'q = 0 0 0' not in thisMom: thistitle += ' '+thisMom
     pl.title(thistitle)
     thisdir = outputdir + 'graphs/'+CreateOppDir(thisGamma)
