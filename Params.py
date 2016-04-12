@@ -166,6 +166,11 @@ SourceList = ['source10',
               'source8',
               'source9']
 
+SourceList = ['source6',
+              'source7',
+              'source8',
+              'source9']
+
 
 DefProjGammaList = { 'GMA4' : AllGammaSet ,'GMA3' : AllGammaSet }
 ReadProjDerList = {'GMA4' :['g4D4','g1D1','g2D2','g3D3']}
