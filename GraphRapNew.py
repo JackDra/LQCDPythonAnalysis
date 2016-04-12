@@ -98,7 +98,7 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList):
                     
 
 
-feedgammalist,feedsetlist = InputGammaAndSet(sys.argv[1:]
+feedgammalist,feedsetlist = InputGammaAndSet(sys.argv[1:])
             
 thisGammaList = CreateGammaList(feedgammalist,twopt=True)
 
@@ -132,24 +132,24 @@ if thisGammaList == ['twopt']:
         thisPool.close()
         thisPool.join()
     else:
-        ReadAndPlotMass(thisGammaList,thisMomList,DefSetList,thisMethodList)
+        ReadAndPlotMass(thisGammaList,thisMomList,feedsetlist,thisMethodList)
 else:
     if thisMomList != ['q = 0 0 0']:
         thisMethodList = ['RF']
     print 'MethodList:\n' + '\n'.join(thisMethodList)
-    print 'thisSetList:\n' + '\n'.join(DefSetList)
+    print 'thisSetList:\n' + '\n'.join(feedsetlist)
     if DoMulticore:
         inputparams = []
         for igamma in thisGammaList:
             if any([idst in igamma for idst in ['doub','sing','twopt']]): continue
-            inputparams.append((['doub'+igamma,'sing'+igamma,igamma,'twopt'],thisMomList,DefSetList,thisMethodList))
+            inputparams.append((['doub'+igamma,'sing'+igamma,igamma,'twopt'],thisMomList,feedsetlist,thisMethodList))
         makeContextFunctions(ReadAndPlotDict)
         thisPool = Pool(min(len(inputparams),AnaProc))
         output = thisPool.map(ReadAndPlotDict.mapper,inputparams)
         thisPool.close()
         thisPool.join()
     else:
-        ReadAndPlotDict(thisGammaList,thisMomList,DefSetList,thisMethodList)
+        ReadAndPlotDict(thisGammaList,thisMomList,feedsetlist,thisMethodList)
         
 print 'Graphing all complete'
     
