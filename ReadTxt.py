@@ -308,7 +308,9 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
                             data2ptZ =  ff.C2TSFLineFun(GetintTSink(iset)-tsource,pars2pt)
                         if 'RF'+iSF not in datadict[igamma][zmomstr].keys(): datadict[igamma][zmomstr]['RF'+iSF] = OrderedDict()
                         if iset not in datadict[igamma][zmomstr]['RF'+iSF].keys(): datadict[igamma][zmomstr]['RF'+iSF][iset] = OrderedDict()
-                        datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'] = [idata3pt/data2ptZ for idata3pt in data3pt[tsource-1:GetintTSink(iset)]]
+                        # datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'] = [idata3pt/data2ptZ for idata3pt in data3pt[tsource-1:GetintTSink(iset)]]
+                        ##DEBUGGING##
+                        datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'] = [idata3pt for idata3pt in data3pt[tsource-1:GetintTSink(iset)]]
                         datadict[igamma][zmomstr]['RF'+iSF][iset]['tVals'] = datadict[igamma][zmomstr]['RF'][iset]['tVals']
                         GetBootStats(datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'])
                         datadict[igamma][zmomstr]['RF'+iSF][iset]['Vals'] = Pullflag(datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'],'Avg')
