@@ -277,8 +277,10 @@ def ReadSetAndCfunsDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisM
 
 def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=[]):
     if 'twopt' not in thisGammaList: raise IOError('twopt needed in set list')
-    datadict = ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
     data3ptdict = ReadCfunsDict(thisindir,thisSetList,thisGammaList,thisMomList=thisMomList)
+    # datadict = ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
+    ##DEBUG##
+    datadict = data3ptdict
     zmomstr = 'q = 0 0 0'
     start = time.time()
     for igamma in datadict.keys():
@@ -308,9 +310,7 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
                             data2ptZ =  ff.C2TSFLineFun(GetintTSink(iset)-tsource,pars2pt)
                         if 'RF'+iSF not in datadict[igamma][zmomstr].keys(): datadict[igamma][zmomstr]['RF'+iSF] = OrderedDict()
                         if iset not in datadict[igamma][zmomstr]['RF'+iSF].keys(): datadict[igamma][zmomstr]['RF'+iSF][iset] = OrderedDict()
-                        # datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'] = [idata3pt/data2ptZ for idata3pt in data3pt[tsource-1:GetintTSink(iset)]]
-                        ##DEBUGGING##
-                        datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'] = [idata3pt for idata3pt in data3pt[tsource-1:GetintTSink(iset)]]
+                        datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'] = [idata3pt/data2ptZ for idata3pt in data3pt[tsource-1:GetintTSink(iset)]]
                         datadict[igamma][zmomstr]['RF'+iSF][iset]['tVals'] = datadict[igamma][zmomstr]['RF'][iset]['tVals']
                         GetBootStats(datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'])
                         datadict[igamma][zmomstr]['RF'+iSF][iset]['Vals'] = Pullflag(datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'],'Avg')
