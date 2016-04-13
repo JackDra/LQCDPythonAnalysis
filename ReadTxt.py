@@ -294,6 +294,7 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
             data3pt = data3ptdict[igamma][zmomstr]['RF'][iset]['Boot']
             for iSF in ['OSF'+iOSF for iOSF in OSFFileFlags]+['TSF'+iTSF for iTSF in TSFFileFlags]:
                 #DEBUG#
+                print data3ptdict.keys()
                 data3ptdict[igamma][zmomstr]['RF'][iset]['Boot'] = data3pt/data3ptdict['P4g4'][zmomstr]['RF'][iset]['Boot'][21]
                 if iSF in datadict['twopt'][zmomstr].keys():
                     if RemoveTSink(iset) in datadict['twopt'][zmomstr][iSF].keys():
