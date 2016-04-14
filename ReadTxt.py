@@ -274,15 +274,21 @@ def ReadSetAndCfunsDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisM
             datadict[igamma][imom]['C3pt'] = data3ptdict[igamma][imom]['RF']
     return datadict
 
-
+def RewriteRF(RFdict,threeptdict,thisopp,thismom):
+    if CheckDict(RFdict,thisopp,thismom,'RF') and CheckDict(threeptdict,thisopp,thismom,'RF'):
+        for igamma in RFdict.keys():
+            for it,(iRF,i3pt) in enumerate(zip(RFdict[igamma][thismom]['RF'],threeptdict[thisopp][thismom]['RF'][tsource-1:GetintTSink(iset)])):
+                RFdict[igamma][thismom]['RF'][it].values = iRF.values/i3pt.values
+                GetBootStats(RFdict[igamma][thismom]['RF'][it])
+    return RFdict
+                
 def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=[]):
     if 'twopt' not in thisGammaList: raise IOError('twopt needed in set list')
     data3ptdict = ReadCfunsDict(thisindir,thisSetList,thisGammaList,thisMomList=thisMomList)
-    # datadict = ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
-    ##DEBUG##
-    datadict = data3ptdict
+    datadict = ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
     zmomstr = 'q = 0 0 0'
     start = time.time()
+    datadict = RewriteRF(datadict,data3ptdict,'P4g4',zmomstr)
     for igamma in datadict.keys():
         if igamma == 'twopt': continue
         if PrintRead: print 'Constructing Fitted RF Values: ' , igamma , '     \r',
@@ -293,9 +299,6 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
                 # if PrintRead: print RemoveTSink(iset)+' not in two point set list, not constructing RF'
             data3pt = data3ptdict[igamma][zmomstr]['RF'][iset]['Boot']
             for iSF in ['OSF'+iOSF for iOSF in OSFFileFlags]+['TSF'+iTSF for iTSF in TSFFileFlags]:
-                #DEBUG#
-                print data3ptdict.keys()
-                data3ptdict[igamma][zmomstr]['RF'][iset]['Boot'] = data3pt/data3ptdict['P4g4'][zmomstr]['RF'][iset]['Boot'][21]
                 if iSF in datadict['twopt'][zmomstr].keys():
                     if RemoveTSink(iset) in datadict['twopt'][zmomstr][iSF].keys():
                         pars2pt = []
