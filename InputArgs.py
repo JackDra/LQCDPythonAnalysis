@@ -45,6 +45,7 @@ def InputParams(inputparams):
             feedout['gamma'] = isys.replace('-g=','').split(',')
         elif '-s' in isys:
             feedout['set'] = ExpandSetList(isys.replace('-s=','').split(','))
+            print feedout['set'],isys.replace('-s=','').split(',')
             for isl in feedout['set']:
                 if isl not in DefSetList:
                     print 'Warning, ' + isl + ' not found in set list, skipping.'
