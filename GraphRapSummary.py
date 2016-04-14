@@ -22,6 +22,7 @@ thisGammaList = CreateGammaList(feedin['gamma'],twopt=False)
 
 print 'SetLists:\n','\n'.join(feedin['set']) + '\n'
 print 'MomList:\n','\n'.join(feedin['mom']) + '\n'
+feedin['method'].remove('RF')
 
 if DoMulticore:
     inputparams = []
