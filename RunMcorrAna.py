@@ -60,6 +60,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
         thisPrefList = ['cm' for s in thisTSinkList]
         thisTvarList = DefTvarList
         thisREvecTvarList = []
+        thisPoFTvarList = []
     elif 'REvec' in RunType:
         thisTSinkList = RunTSinkList
         thisSmearList = DefSmearList
@@ -86,6 +87,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
             else: thisPrefList.append('tsink')
         thisTvarList = []
         thisREvecTvarList = []
+        thisPoFTvarList = []
     elif 'TwoPt' in RunType:
         DoTwoPt = True
     else:
