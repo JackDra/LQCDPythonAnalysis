@@ -21,15 +21,18 @@ MethodList.remove('OSFCM')
 MethodList.remove('OSFTsink')
 print 'SetLists:\n','\n'.join(DefSetList) + '\n'
 
-inputparams = []
-for igamma in thisGammaList:
-    inputparams.append((MethodList,[igamma,'twopt'],DefSetList,thisMomList))
-makeContextFunctions(ReadAndPlotSummary)
-thisPool = Pool(min(len(inputparams),AnaProc))
-thisPool.map(ReadAndPlotSummary.mapper,inputparams)
-thisPool.close()
-thisPool.join()
-
+if DoMulticore:
+    inputparams = []
+    for igamma in thisGammaList:
+        inputparams.append((MethodList,[igamma,'twopt'],DefSetList,thisMomList))
+    makeContextFunctions(ReadAndPlotSummary)
+    thisPool = Pool(min(len(inputparams),AnaProc))
+    thisPool.map(ReadAndPlotSummary.mapper,inputparams)
+    thisPool.close()
+    thisPool.join()
+else:
+    ReadAndPlotSummary(MethodList,thisGammaList,DefSetList,thisMomList)    
+    
 
 # for iin in inputparams: ReadAndPlotSummary(*iin)
 
