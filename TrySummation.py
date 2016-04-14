@@ -13,6 +13,7 @@ from OutputData import PrintSumSetToFile
 from FFParams import *
 import time,datetime
 import copy
+from InputArgs import *
 
 
 
@@ -39,9 +40,10 @@ def FitSumWrap(thisGammaList,thisReadSetList,thisTSinkList,this2ptSetList,thisRe
 # if len(sys.argv) < 2: raise IOError("Enter gamma matrix stuff (See OppFuns.py : CreateGammaList)")
 ReadSmearList = ['32']
 ReadTSinkList = [26,29,32,35,38]
-thisGammaList = CreateGammaList(sys.argv[1:])
-# thisReadMomList = ['q = 0 0 0']
-thisReadMomList = qvecSet
+feedin = InputParams(sys.argv[1:])
+
+thisGammaList = CreateGammaList(feedin['gamma'])
+
 [thisReadSetList,thisReadSet2pt,thisTSinkList] = CreateSet(thisSmearL=ReadSmearList,thisTvarL=[],thisTSinkL=ReadTSinkList)
 
 start = time.time()
@@ -49,9 +51,9 @@ print 'Running multiprocessor fits'
 inputparams = []
 for igamma in thisGammaList:
     if 'doub' not in igamma and 'sing' not in igamma and 'twopt' not in igamma:
-        inputparams.append((['doub'+igamma,'sing'+igamma,igamma],thisReadSetList,thisTSinkList,thisReadSet2pt,thisReadMomList))
+        inputparams.append((['doub'+igamma,'sing'+igamma,igamma],thisReadSetList,thisTSinkList,thisReadSet2pt,feedin['mom']))
     elif igamma.replace('sing','').replace('doub','') not in thisGammaList and 'twopt' not in igamma:
-        inputparams.append(([igamma],thisReadSetList,thisTSinkList,thisReadSet2pt,thisReadMomList))        
+        inputparams.append(([igamma],thisReadSetList,thisTSinkList,thisReadSet2pt,feedin['mom']))        
 makeContextFunctions(FitSumWrap)
 
 if DoMulticore:

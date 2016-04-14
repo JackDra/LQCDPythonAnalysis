@@ -19,6 +19,7 @@ import os
 import cPickle as pickle
 # import pickle
 import warnings
+from InputArgs import *
 
 print '----------------------------------------------------------------------------------'
 
@@ -31,11 +32,11 @@ with warnings.catch_warnings():
 
 
 if len(sys.argv) < 2: raise IOError('Input CM, Tsink or Sm as first arg')
-thisReadMomList = qvecSet
-# thisReadMomList = ['q = 0 0 0']
 outfile = sys.argv[1]
-print 'Gamma Input (For re-running): ' , sys.argv[2:]
-thisGammaList = CreateGammaList(sys.argv[2:],twopt=True)
+feedin = InputParams(sys.argv[2:])
+
+print 'Gamma Input (For re-running): -g=' , feedin['gamma']
+thisGammaList = CreateGammaList(feedin['gamma'],twopt=True)
 
 TSFColList = ['Tsink','test32','Small','CM']
 thisFitTSFR = CreateFitList(TSF2ptMinStart,TSF2ptMinEnd,TSF2ptMaxStart,TSF2ptMaxEnd,TSF3ptCutMin,TSF3ptCutMax)
@@ -101,7 +102,7 @@ print 'All Sets:\n' + '\n'.join(ReadSetList)+'\n'
 
 print 'Reading Data'
 
-[data3pt,data2pt,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,ReadSetList,thisMomList=thisReadMomList)
+[data3pt,data2pt,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,ReadSetList,thisMomList=feedin['mom'])
 thisGammaList = thisGammaMomList.keys()
 PrintOpps(thisGammaList)
 print 'Data Read is: ' + BorA

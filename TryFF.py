@@ -112,6 +112,8 @@ if len(thisCurrList) == 0:
     print 'No Current Type Selected, doing all'
     thisCurrList = CurrTypes
 
+
+    
 print 'CurrList:\n' , '\n'.join(thisCurrList)
 print ''
 print 'MethodList:\n' , '\n'.join(thisMethodList)

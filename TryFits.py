@@ -17,6 +17,7 @@ import itertools as it
 import sys
 import time
 import datetime
+from InputArgs import *
 
 # if len(sys.argv) < 2:
 #     thisGammaList = DefGammaList
@@ -66,20 +67,20 @@ def TryFitsFun(thisGammaList,thisSetList,thisReadMomList,thisTSinkList,thischunk
 
 
 thisTSinkStrList = map(str,DefTSinkSetList)
-thisReadMomList = ['q = 0 0 0']
-# thisReadMomList = qvecSet
 
-thisGammaList = CreateGammaList(sys.argv[1:])
+feedin = InputParams(sys.argv[1:])
 
-print 'Set List: \n'+ '\n'.join(DefSetList)
+thisGammaList = CreateGammaList(feedin['gamma'])
+
+print 'Set List: \n'+ '\n'.join(feedin['set'])
 
 totstart = time.time()
 inputparams = []
 nchunk = 1
 for igamma in thisGammaList:
     if 'doub' not in igamma and 'sing' not in igamma:
-        for iChunk,(iSetChunk,iTSChunks) in enumerate(zip(chunks(DefSetList,nchunk),chunks(DefTSinkSetList,nchunk))):
-            inputparams.append((['doub'+igamma,'sing'+igamma,igamma],iSetChunk,thisReadMomList,iTSChunks,(iChunk*100)/float(len(chunks(DefSetList,nchunk)))))
+        for iChunk,(iSetChunk,iTSChunks) in enumerate(zip(chunks(feedin['set'],nchunk),chunks(DefTSinkSetList,nchunk))):
+            inputparams.append((['doub'+igamma,'sing'+igamma,igamma],iSetChunk,feedin['mom'],iTSChunks,(iChunk*100)/float(len(chunks(feedin['set'],nchunk)))))
 
 if DoMulticore:
     makeContextFunctions(TryFitsFun)
@@ -94,9 +95,9 @@ else:
         print int((icount*100)/float(len(inputparams))) , '% done'
 
 
-WipeSet(outputdir,thisGammaList,DefSetList,filepref='Fits/')
+WipeSet(outputdir,thisGammaList,feedin['set'],filepref='Fits/')
 for iout in output:
-    FitDataBoot,FitDataChi,thisGammaMomList,thisSetList,FitCutList = iout
+    FitDataBoot,FitDataChi,thisGammaMomList,feedin['set'],FitCutList = iout
     PrintFitSetToFile(*iout)
 
 print 'Total fit time took: ' , str(datetime.timedelta(seconds=time.time()-totstart)) , ' h:m:s '

@@ -17,6 +17,7 @@ import time
 import datetime
 import cPickle as pickle
 # import pickle
+from InputArgs import *
 
 # sys.stdout = open(logfile,'a',0)
 # sys.stderr = sys.stdout
@@ -25,15 +26,15 @@ print '-------------------------------------------------------------------------
 
 if len(sys.argv) < 2: raise IOError('Input CM, Tsink or Sm as first arg')
 outfile = sys.argv[1]
-thisReadMomList = qvecSet
-# thisReadMomList = ['q = 0 0 0']
-print 'Gamma Input (For re-running): ' , sys.argv[2:]
-ReadGammaList = CreateGammaList(sys.argv[2:],twopt=True)
+
+feedin = InputParams(sys.argv[2:])
+
+print 'Gamma Input (For re-running): -g=' , feedin['gamma']
+ReadGammaList = CreateGammaList(feedin['gamma'],twopt=True)
 
 OSFColList = ['Tsink','CM']
 
 if outfile == 'Tsink':
-    print 'Tsink run'
     ReadSmearList = ['32']
     ReadTSinkList = AllTSinkList
     ReadTvarList = []
@@ -80,7 +81,7 @@ print 'nboot = ' + str(nboot)
 def DoOSF(thisSetList):
     print 'All Sets:\n' + '\n'.join(thisSetList)+'\n'
     print 'Reading Data'
-    [data3pt,data2pt,thisGammaMomList,BorA] = ReadCfunsnp(ReadGammaList,thisSetList,thisMomList=thisReadMomList)
+    [data3pt,data2pt,thisGammaMomList,BorA] = ReadCfunsnp(ReadGammaList,thisSetList,thisMomList=feedin['mom'])
     thisGammaList = thisGammaMomList.keys()
     PrintOpps(thisGammaList)
     print 'Data Read is: ' + BorA

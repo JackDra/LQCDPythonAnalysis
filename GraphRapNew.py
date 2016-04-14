@@ -14,12 +14,6 @@ from MultiWrap import *
 from multiprocessing import Pool
 from InputArgs import InputGammaAndSet
 
-##Hard Code lists:
-thisMethodList = ['RF']
-# thisMethodList = MethodList
-# thisMomList = ['q = 0 0 0', 'q = -1 0 0', 'q = -1 -1 0','q = -1 -1 -1','q = -2 0 0' , 'q = -2 0 -1', 'q = -2 -1 -1','q = -2 -2 0','q = -2 -2 -1','q = -3 0 0'   ]
-thisMomList = ['q = 0 0 0']
-##
 
 
 ##datadict = { gamma } { mom } { method } { set }
@@ -101,13 +95,12 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList):
                     
 
 
-feedgammalist,feedsetlist = InputGammaAndSet(sys.argv[1:])
+feedin = InputGammaAndSet(sys.argv[1:])
 
-
-thisGammaList = CreateGammaList(feedgammalist,twopt=True)
+thisGammaList = CreateGammaList(feedin['gamma'],twopt=True)
 
 if thisGammaList == ['twopt']:
-    # thisMethodList = ['RF','OSFCM','TSFCM']
+    # feedin['method'] = ['RF','OSFCM','TSFCM']
     TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],[DefTvarPicked])]
     thisSmList = ['tsink29'+str(ism) for ism in CreateMassSet(DefSmearList,['1'],[])]
     # TvarLists = []
@@ -122,38 +115,38 @@ if thisGammaList == ['twopt']:
                  (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto20)],'PoFto20')]
     thisAllSetList = thisSmList+TvarPicked
     print 'AllSetList:\n' + '\n'.join(thisAllSetList)
-    print 'MethodList:\n' + '\n'.join(thisMethodList)
+    print 'MethodList:\n' + '\n'.join(feedin['method'])
     if DoMulticore:
         inputparams = []
-        for imom in thisMomList:
+        for imom in feedin['mom']:
             if imom == 'q = 0 0 0':
-                inputparams.append(([imom],thisSmList,TvarPicked,TvarLists,thisMethodList))
+                inputparams.append(([imom],thisSmList,TvarPicked,TvarLists,feedin['method']))
             else:
-                inputparams.append((['q = 0 0 0',imom],thisSmList,TvarPicked,TvarLists,thisMethodList))                
+                inputparams.append((['q = 0 0 0',imom],thisSmList,TvarPicked,TvarLists,feedin['method']))                
         makeContextFunctions(ReadAndPlotMass)
         thisPool = Pool(min(len(inputparams),AnaProc))
         output = thisPool.map(ReadAndPlotMass.mapper,inputparams)
         thisPool.close()
         thisPool.join()
     else:
-        ReadAndPlotMass(thisGammaList,thisMomList,feedsetlist,thisMethodList)
+        ReadAndPlotMass(thisGammaList,feedin['mom'],feedin['set'],feedin['method'])
 else:
-    if thisMomList != ['q = 0 0 0']:
-        thisMethodList = ['RF']
-    print 'MethodList:\n' + '\n'.join(thisMethodList)
-    print 'thisSetList:\n' + '\n'.join(feedsetlist)
+    if feedin['mom'] != ['q = 0 0 0']:
+        feedin['method'] = ['RF']
+    print 'MethodList:\n' + '\n'.join(feedin['method'])
+    print 'thisSetList:\n' + '\n'.join(feedin['set'])
     if DoMulticore:
         inputparams = []
         for igamma in thisGammaList:
             if any([idst in igamma for idst in ['doub','sing','twopt']]): continue
-            inputparams.append((['doub'+igamma,'sing'+igamma,igamma,'twopt'],thisMomList,feedsetlist,thisMethodList))
+            inputparams.append((['doub'+igamma,'sing'+igamma,igamma,'twopt'],feedin['mom'],feedin['set'],feedin['method']))
         makeContextFunctions(ReadAndPlotDict)
         thisPool = Pool(min(len(inputparams),AnaProc))
         output = thisPool.map(ReadAndPlotDict.mapper,inputparams)
         thisPool.close()
         thisPool.join()
     else:
-        ReadAndPlotDict(thisGammaList,thisMomList,feedsetlist,thisMethodList)
+        ReadAndPlotDict(thisGammaList,feedin['mom'],feedin['set'],feedin['method'])
         
 print 'Graphing all complete'
     
