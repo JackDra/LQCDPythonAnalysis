@@ -11,28 +11,28 @@ from multiprocessing import Pool
 from MultiWrap import *
 
 
+feedin = InputParams(sys.argv[1:])
 
-thisMomList = ['q = 0 0 0']
-# thisMomList = ['q = 0 0 0','q = -1 0 0' , 'q = -2 0 -1' , 'q = -2 -2 0' ]
-thisGammaList = CreateGammaList(sys.argv[1:],twopt=False)
+thisGammaList = CreateGammaList(feedin['gamma'],twopt=False)
 
-MethodList.remove('RF')
-MethodList.remove('OSFCM')
-MethodList.remove('OSFTsink')
-print 'SetLists:\n','\n'.join(DefSetList) + '\n'
-print 'MomList:\n','\n'.join(thisMomList) + '\n'
+# MethodList.remove('RF')
+# MethodList.remove('OSFCM')
+# MethodList.remove('OSFTsink')
+
+print 'SetLists:\n','\n'.join(feedin['set']) + '\n'
+print 'MomList:\n','\n'.join(feedin['mom']) + '\n'
 
 if DoMulticore:
     inputparams = []
     for igamma in thisGammaList:
-        inputparams.append((MethodList,[igamma,'twopt'],DefSetList,thisMomList))
+        inputparams.append((feedin['method'],[igamma,'twopt'],feedin['set'],feedin['mom']))
     makeContextFunctions(ReadAndPlotSummary)
     thisPool = Pool(min(len(inputparams),AnaProc))
     thisPool.map(ReadAndPlotSummary.mapper,inputparams)
     thisPool.close()
     thisPool.join()
 else:
-    ReadAndPlotSummary(MethodList,thisGammaList,DefSetList,thisMomList)    
+    ReadAndPlotSummary(feedin['method'],thisGammaList,feedin['set'],feedin['mom'])    
     
 
 # for iin in inputparams: ReadAndPlotSummary(*iin)
