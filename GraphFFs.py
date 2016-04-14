@@ -122,6 +122,7 @@ if DoMulticore:
     thisPool.close()
     thisPool.join()
     if kappa == 12090:
+        thisPool = Pool(min(len(output),AnaProc))
         makeContextFunctions(PlotFFqPick)
         thisPool.map(PlotFFqPick.mapper,output)
         thisPool.close()
