@@ -53,7 +53,10 @@ def InputParams(inputparams):
                 print 'Nothing found for set list, using default list'
                 feedout['set'] = DefSetList
         elif '-p' in isys:
-            feedout['mom'] = isys.replace('-p=','').split(',')
+            momhold = isys.replace('-p=','').split(',')
+            feedout['mom'] = []
+            for imom in momhold:
+                feedout['mom'] += [' '.join(imom).replace('- ','-')]
             for ipl in feedout['mom']:            
                 if ipl not in qvecSet:                        
                     feedout['mom'].remove(ipl)
