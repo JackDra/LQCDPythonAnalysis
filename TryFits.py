@@ -66,8 +66,8 @@ def TryFitsFun(thisGammaList,thisSetList,thisReadMomList,thisTSinkList,thischunk
 
 
 thisTSinkStrList = map(str,DefTSinkSetList)
-# thisReadMomList = ['q = 0 0 0']
-thisReadMomList = qvecSet
+thisReadMomList = ['q = 0 0 0']
+# thisReadMomList = qvecSet
 
 thisGammaList = CreateGammaList(sys.argv[1:])
 
