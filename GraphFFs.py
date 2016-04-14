@@ -114,8 +114,8 @@ thisCurrDict = GetCurrDict(feedin['current'])
 
 if DoMulticore:
     inputparams = []
-    for icurr,idata in thisCurrDict.iteritems():
-        inputparams.append(({icurr:idata}))
+    for icurr in thisCurrDict:
+        inputparams.append((icurr,))
     makeContextFunctions(ReadAndPlotFFs)
     thisPool = Pool(min(len(inputparams),AnaProc))
     output = thisPool.map(ReadAndPlotFFs.mapper,inputparams)
