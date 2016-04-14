@@ -277,9 +277,13 @@ def ReadSetAndCfunsDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisM
 def RewriteRF(RFdict,threeptdict,thisopp,thismom):
     if CheckDict(RFdict,thisopp,thismom,'RF') and CheckDict(threeptdict,thisopp,thismom,'RF'):
         for igamma in RFdict.keys():
-            for it,(iRF,i3pt) in enumerate(zip(RFdict[igamma][thismom]['RF'],threeptdict[thisopp][thismom]['RF'][tsource-1:GetintTSink(iset)])):
-                RFdict[igamma][thismom]['RF'][it].values = iRF.values/i3pt.values
-                GetBootStats(RFdict[igamma][thismom]['RF'][it])
+            for iset in RFdict[igamma].keys():
+                for it,(iRF,i3pt) in enumerate(zip(RFdict[igamma][thismom]['RF'][iset]['Boots'],
+                                                   threeptdict[thisopp][thismom]['RF'][iset]['Boots'][tsource-1:GetintTSink(iset)])):
+                    RFdict[igamma][thismom]['RF'][iset]['Boots'][it].values = iRF.values/i3pt.values
+                    GetBootStats(RFdict[igamma][thismom]['RF'][iset]['Boots'][it])
+                    RFdict[igamma][thismom]['RF'][iset]['Vals'][it] = RFdict[igamma][thismom]['RF'][iset]['Boots'][it].Avg
+                    RFdict[igamma][thismom]['RF'][iset]['Valserr'][it] = RFdict[igamma][thismom]['RF'][iset]['Boots'][it].Std
     return RFdict
                 
 def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=[]):
