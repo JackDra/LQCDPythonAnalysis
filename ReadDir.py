@@ -12,7 +12,8 @@ def ReadSetDir(thisdir,thisgamma=''):
     if OnlySelVar:
         SetOut = []
         for iSet in thisSetList:
-            print iSet
+            print iSet, PoFTvarList
+            print 
             if (VarPref not in iSet) or (DefTvarPicked in iSet) or (PoFTvarList[0] in iSet):
                 SetOut.append(iSet)
     else:
