@@ -118,12 +118,12 @@ if DoMulticore:
     output = thisPool.map(ReadAndPlotFFs.mapper,thisCurrDict)
     thisPool.close()
     thisPool.join()
-    if kappa == 12090:
-        thisPool = Pool(min(len(output),AnaProc))
-        makeContextFunctions(PlotFFqPick)
-        thisPool.map(PlotFFqPick.mapper,output)
-        thisPool.close()
-        thisPool.join()        
+    # if kappa == 12090:
+    #     thisPool = Pool(min(len(output),AnaProc))
+    #     makeContextFunctions(PlotFFqPick)
+    #     thisPool.map(PlotFFqPick.mapper,output)
+    #     thisPool.close()
+    #     thisPool.join()        
 else:
     datadict,currPSL = ReadAndPlotFFs(thisCurrDict)
     if kappa == 12090: PlotFFqPick(datadict,currPSL)
