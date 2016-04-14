@@ -14,6 +14,8 @@ from FitParams import *
 from GraphSummary import PlotFFSummary
 import time,datetime
 from InputArgs import *
+from MultiWrap import *
+from multiprocessing import Pool
 
 def FlagList(AllSetList,*flag):
     SLOut = []
