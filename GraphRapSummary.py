@@ -12,8 +12,8 @@ from MultiWrap import *
 
 
 
-# thisMomList = ['q = 0 0 0']
-thisMomList = ['q = 0 0 0','q = -1 0 0' , 'q = -2 0 -1' , 'q = -2 -2 0' ]
+thisMomList = ['q = 0 0 0']
+# thisMomList = ['q = 0 0 0','q = -1 0 0' , 'q = -2 0 -1' , 'q = -2 -2 0' ]
 thisGammaList = CreateGammaList(sys.argv[1:],twopt=False)
 
 MethodList.remove('RF')
