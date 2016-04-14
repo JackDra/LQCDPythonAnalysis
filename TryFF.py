@@ -107,7 +107,7 @@ thisGammaList = []
 for thisCurr in feedin['current']:
     thisGammaList = CurrOpps[thisCurr] + [iC+'cmplx' for iC in CurrOpps[thisCurr]] + ['twopt']
     for imeth in feedin['method']:
-        for iSet in DefSetList:
+        for iSet in feedin['set']:
             print 'Adding to queue FF: ' , imeth , thisCurr , iSet
             inputparams.append(([imeth],thisCurr,[iSet],thisGammaList))
 
