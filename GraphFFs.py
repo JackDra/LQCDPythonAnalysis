@@ -113,7 +113,7 @@ feedin = InputParams(sys.argv[1:])
 thisCurrDict = GetCurrDict(feedin['current'])
 
 if DoMulticore:
-    thisCurrDict = [(icurr,) for icurr in thisCurrDict]
+    thisCurrDict = [[icurr] for icurr in thisCurrDict]
     thisPool = Pool(min(len(thisCurrDict),AnaProc))
     # makeContextFunctions(ReadAndPlotFF)
     output = thisPool.map(ReadAndPlotFF,thisCurrDict)
