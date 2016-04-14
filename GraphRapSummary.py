@@ -9,6 +9,7 @@ from FFParams import *
 import time,datetime
 from multiprocessing import Pool
 from MultiWrap import *
+from InputArgs import *
 
 
 feedin = InputParams(sys.argv[1:])
