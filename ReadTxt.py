@@ -282,7 +282,7 @@ def RewriteRF(RFdict,threeptdict,thisopp,thismom):
                 for iset in RFdict[igamma][thismom]['RF'].keys():
                     print igamma , iset
                     for it,(i3pt,i3ptopp) in enumerate(zip(threeptdict[igamma][thismom]['RF'][iset]['Boot'],
-                                                       threeptdict[thisopp][thismom]['RF'][iset]['Boot'][tsource-1:GetintTSink(iset)])):
+                                                           threeptdict[thisopp][thismom]['RF'][iset]['Boot'])):
                         RFdict[igamma][thismom]['RF'][iset]['Boot'][it].values = i3pt.values/i3ptopp.values
                         GetBootStats(RFdict[igamma][thismom]['RF'][iset]['Boot'][it])
                         RFdict[igamma][thismom]['RF'][iset]['Vals'][it] = RFdict[igamma][thismom]['RF'][iset]['Boot'][it].Avg
