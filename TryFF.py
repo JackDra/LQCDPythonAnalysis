@@ -16,6 +16,7 @@ import time
 import datetime
 # from guppy import hpy; h=hpy()
 import resource
+from InputArgs import *
 
 
 
@@ -90,39 +91,22 @@ def DoFF(thisMethodList,thisCurr,thisSetList,thisGammaList):
 #         thisTvarList = DefTvarList
 #     thisTSinkList = REvecTSinkList
 #     thisStateList = ['1']
-thisGammaList = []
 
 # if len(sys.argv) == 1:
 #     raise IOError('please select valid current type :\n' + '\n'.join(CurrTypes)+'\n or MethodType:\n'+'\n'.join(MethodList))
 
-thisCurrList,thisMethodList = [],[]
-for isys in sys.argv[1:]:
-    if isys in MethodList:
-        thisMethodList.append(isys)
-    elif isys in CurrOpps.keys():
-        thisCurrList.append(isys)
-    else:
-        print isys , ' Not valid current or method type, skipping'
+feedin = InputParams(sys.argv[1:])
 
-if len(thisMethodList) == 0:
-    print 'No Method Selected, doing all'
-    thisMethodList = MethodList
-
-if len(thisCurrList) == 0:
-    print 'No Current Type Selected, doing all'
-    thisCurrList = CurrTypes
-
-
-    
-print 'CurrList:\n' , '\n'.join(thisCurrList)
+print 'CurrList:\n' , '\n'.join(feedin['current'])
 print ''
-print 'MethodList:\n' , '\n'.join(thisMethodList)
+print 'MethodList:\n' , '\n'.join(feedin['method'])
 print ''
 
 inputparams = []
-for thisCurr in thisCurrList:
+thisGammaList = []
+for thisCurr in feedin['current']:
     thisGammaList = CurrOpps[thisCurr] + [iC+'cmplx' for iC in CurrOpps[thisCurr]] + ['twopt']
-    for imeth in thisMethodList:
+    for imeth in feedin['method']:
         for iSet in DefSetList:
             print 'Adding to queue FF: ' , imeth , thisCurr , iSet
             inputparams.append(([imeth],thisCurr,[iSet],thisGammaList))
