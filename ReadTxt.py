@@ -280,15 +280,12 @@ def RewriteRF(RFdict,threeptdict,thisopp,thismom):
             if 'twopt' in igamma: continue
             if CheckDict(RFdict,igamma,thismom,'RF'):
                 for iset in RFdict[igamma][thismom]['RF'].keys():
-                    print igamma , iset
                     for it,(i3pt,i3ptopp) in enumerate(zip(threeptdict[igamma][thismom]['RF'][iset]['Boot'][tsource-1:GetintTSink(iset)],
                                                            threeptdict[thisopp][thismom]['RF'][iset]['Boot'][tsource-1:GetintTSink(iset)])):
                         RFdict[igamma][thismom]['RF'][iset]['Boot'][it].values = i3pt.values/i3ptopp.values
                         GetBootStats(RFdict[igamma][thismom]['RF'][iset]['Boot'][it])
                         RFdict[igamma][thismom]['RF'][iset]['Vals'][it] = RFdict[igamma][thismom]['RF'][iset]['Boot'][it].Avg
                         RFdict[igamma][thismom]['RF'][iset]['Valserr'][it] = RFdict[igamma][thismom]['RF'][iset]['Boot'][it].Std
-                        if igamma == 'P4g4' and 'tsink26state1PoF' in iset:
-                            print it , RFdict[igamma][thismom]['RF'][iset]['Vals'][it] , RFdict[igamma][thismom]['RF'][iset]['Valserr'][it]
     return RFdict
                 
 def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=[]):
