@@ -82,7 +82,7 @@ def PickFFFewSets(currdata,thiscurr,thisSetList):
     PickedSetList += FlagList(thisSetList,'TSFTsink',TSFCutPicked)
     return PickedSetList
 
-def ReadAndPlotFFs(thisCurrDict):
+def ReadAndPlotFF(thisCurrDict):
     datadict = ReadFFDict(outputdir,thisCurrDict)
     start = time.time()
     currPSL = []
@@ -114,8 +114,8 @@ thisCurrDict = GetCurrDict(feedin['current'])
 
 if DoMulticore:
     thisPool = Pool(min(len(thisCurrDict),AnaProc))
-    makeContextFunctions(ReadAndPlotFFs)
-    output = thisPool.map(ReadAndPlotFFs.mapper,thisCurrDict)
+    makeContextFunctions(ReadAndPlotFF)
+    output = thisPool.map(ReadAndPlotFF.mapper,thisCurrDict)
     thisPool.close()
     thisPool.join()
     if kappa == 12090:
@@ -125,7 +125,7 @@ if DoMulticore:
         thisPool.close()
         thisPool.join()        
 else:
-    datadict,currPSL = ReadAndPlotFFs(thisCurrDict)
+    datadict,currPSL = ReadAndPlotFF(thisCurrDict)
     if kappa == 12090: PlotFFqPick(datadict,currPSL)
 
 print 'All Plotting Complete'
