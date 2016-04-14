@@ -109,6 +109,18 @@ def PlotFFqPick(datadict,thisPSL):
 feedin = InputParams(sys.argv[1:])
 
 thisCurrDict = GetCurrDict(feedin['current'])
-datadict,currPSL = ReadAndPlotFFs(thisCurrDict)
-if kappa == 12090: PlotFFqPick(datadict,currPSL)
+
+if DoMulticore:
+    inputparams = []
+    for icurr,idata in thisCurrDict.iteritems():
+        inputparams.append(({icurr:idata}))
+    makeContextFunctions(ReadAndPlotFFs)
+    thisPool = Pool(min(len(inputparams),AnaProc))
+    output = thisPool.map(ReadAndPlotFFs.mapper,inputparams)
+    thisPool.close()
+    thisPool.join()
+else:
+    datadict,currPSL = ReadAndPlotFFs(thisCurrDict)
+    if kappa == 12090: PlotFFqPick(datadict,currPSL)
+
 print 'All Plotting Complete'
