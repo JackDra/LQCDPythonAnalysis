@@ -13,6 +13,7 @@ from FFParams import *
 from FitParams import *
 from GraphSummary import PlotFFSummary
 import time,datetime
+from InputArgs import *
 
 def FlagList(AllSetList,*flag):
     SLOut = []
@@ -105,15 +106,9 @@ def PlotFFqPick(datadict,thisPSL):
         print 'Plotting Summary for qsqrd ' , thiscurr ,'Complete, took: ', GetTimeStr(time.time()-start)
 
 
-if len(sys.argv) < 2: raise IOError('Error, please specify current types (Vector etc..)')
-thisCL = []
-for iin in sys.argv[1:]:
-    if iin in CurrTypes:
-        thisCL.append(iin)
-    else:
-        print iin , 'Not recognised, ommitting'
-        
-thisCurrDict = GetCurrDict(thisCL)
+feedin = InputParams(sys.argv[1:])
+
+thisCurrDict = GetCurrDict(feedin['current'])
 datadict,currPSL = ReadAndPlotFFs(thisCurrDict)
 if kappa == 12090: PlotFFqPick(datadict,currPSL)
 print 'All Plotting Complete'
