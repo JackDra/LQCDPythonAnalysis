@@ -294,7 +294,7 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
     datadict = ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
     zmomstr = 'q = 0 0 0'
     start = time.time()
-    datadict = RewriteRF(datadict,data3ptdict,'P4g4',zmomstr)
+    if ScaleByP4g4: datadict = RewriteRF(datadict,data3ptdict,'P4g4',zmomstr)
     for igamma in datadict.keys():
         if igamma == 'twopt': continue
         if PrintRead: print 'Constructing Fitted RF Values: ' , igamma , '     \r',
