@@ -277,7 +277,7 @@ def ReadSetAndCfunsDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisM
 def RewriteRF(RFdict,threeptdict,thisopp,thismom):
     if CheckDict(threeptdict,thisopp,thismom,'RF'):
         for igamma in RFdict.keys():
-            if 'twopt' in igamma: continue
+            if 'twopt' in igamma or 'P4g4' in igamma: continue
             if CheckDict(RFdict,igamma,thismom,'RF'):
                 for iset in RFdict[igamma][thismom]['RF'].keys():
                     for it,(i3pt,i3ptopp) in enumerate(zip(threeptdict[igamma][thismom]['RF'][iset]['Boot'][tsource-1:GetintTSink(iset)],
