@@ -12,7 +12,7 @@ from OppFuns import CreateGammaList
 import time,datetime
 from MultiWrap import *
 from multiprocessing import Pool
-from InputArgs import InputGammaAndSet
+from InputArgs import *
 
 
 
@@ -95,7 +95,7 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList):
                     
 
 
-feedin = InputGammaAndSet(sys.argv[1:])
+feedin = InputParams(sys.argv[1:])
 
 thisGammaList = CreateGammaList(feedin['gamma'],twopt=True)
 
