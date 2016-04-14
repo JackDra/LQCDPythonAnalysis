@@ -45,7 +45,6 @@ def InputParams(inputparams):
             feedout['gamma'] = isys.replace('-g=','').split(',')
         elif '-s' in isys:
             feedout['set'] = ExpandSetList(isys.replace('-s=','').split(','))
-            print feedout['set'],isys.replace('-s=','').split(',')
             for isl in feedout['set']:
                 if isl not in DefSetList:
                     print 'Warning, ' + isl + ' not found in set list, skipping.'
@@ -60,14 +59,15 @@ def InputParams(inputparams):
                 if 'zmom' not in imom:
                     feedout['mom'] += [' '.join(imom).replace('- ','-')]
             for ipl in feedout['mom']:            
+                thispl = ipl
                 if ipl not in qvecSet:                        
                     feedout['mom'].remove(ipl)
-                    if 'zmom' in ipl:
+                    if 'zmom' in thispl:
                         feedout['mom'] += ['q = 0 0 0']
                     else:
                         print 'Warning, ' + ipl + ' not found in qvecSet list, skipping.'
             if len(feedout['mom']) == 0:
-                print 'Nothing found for set list, using default list'
+                print 'Nothing found for mom list, using default list'
                 feedout['set'] = RunMomList
         elif '-m' in isys:
             feedout['method'] = isys.replace('-m=','').split(',')
