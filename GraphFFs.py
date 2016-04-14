@@ -82,21 +82,26 @@ def PickFFFewSets(currdata,thiscurr,thisSetList):
     PickedSetList += FlagList(thisSetList,'TSFTsink',TSFCutPicked)
     return PickedSetList
 
-def ReadAndPlotFF(thisCurrDict):
+def ReadAndPlotFF(thisCurrDict,DoList='All'):
     datadict = ReadFFDict(outputdir,thisCurrDict)
     start = time.time()
     currPSL = []
     for thiscurr,currdata in datadict.iteritems():
-        print 'Plotting ' , thiscurr ,'1/5 TSF             \r',
-        PlotTSFSets(currdata,thiscurr,thisCurrDict[thiscurr])
-        print 'Plotting ' , thiscurr ,'2/5 OSF             \r',
-        PlotOSFSets(currdata,thiscurr,thisCurrDict[thiscurr])
-        print 'Plotting ' , thiscurr ,'3/5 Summation       \r',
-        PlotSumMethSets(currdata,thiscurr,thisCurrDict[thiscurr])
-        print 'Plotting ' , thiscurr ,'4/5 Fits            \r',
-        PlotFitMethSets(currdata,thiscurr,thisCurrDict[thiscurr])
-        print 'Plotting ' , thiscurr ,'5/5 Fits            \r',
-        currPSL.append(PickFFAllSets(currdata,thiscurr,thisCurrDict[thiscurr]))
+        if 'TSF' in DoList or 'All' in DoList:
+            print 'Plotting ' , thiscurr ,'1/5 TSF             \r',
+            PlotTSFSets(currdata,thiscurr,thisCurrDict[thiscurr])
+        if 'OSF' in DoList or 'All' in DoList:
+            print 'Plotting ' , thiscurr ,'2/5 OSF             \r',
+            PlotOSFSets(currdata,thiscurr,thisCurrDict[thiscurr])
+        if 'Sum' in DoList or 'All' in DoList:
+            print 'Plotting ' , thiscurr ,'3/5 Summation       \r',
+            PlotSumMethSets(currdata,thiscurr,thisCurrDict[thiscurr])
+        if 'Fits' in DoList or 'All' in DoList:
+            print 'Plotting ' , thiscurr ,'4/5 Fits            \r',
+            PlotFitMethSets(currdata,thiscurr,thisCurrDict[thiscurr])
+        if 'Fits' in DoList or 'All' in DoList:
+            print 'Plotting ' , thiscurr ,'5/5 Fits            \r',
+            currPSL.append(PickFFAllSets(currdata,thiscurr,thisCurrDict[thiscurr]))
         PlotFFs(currdata,thiscurr,PickFFFewSets(currdata,thiscurr,thisCurrDict[thiscurr]),'Summary')
         print 'Plotting ' , thiscurr ,'Complete, took: ', GetTimeStr(time.time()-start)
     return datadict,currPSL
@@ -112,21 +117,8 @@ feedin = InputParams(sys.argv[1:])
 
 thisCurrDict = GetCurrDict(feedin['current'])
 
-if DoMulticore:
-    thisCurrDict = [[icurr] for icurr in thisCurrDict]
-    thisPool = Pool(min(len(thisCurrDict),AnaProc))
-    # makeContextFunctions(ReadAndPlotFF)
-    output = thisPool.map(ReadAndPlotFF,thisCurrDict)
-    thisPool.close()
-    thisPool.join()
-    # if kappa == 12090:
-    #     thisPool = Pool(min(len(output),AnaProc))
-    #     makeContextFunctions(PlotFFqPick)
-    #     thisPool.map(PlotFFqPick.mapper,output)
-    #     thisPool.close()
-    #     thisPool.join()        
-else:
-    datadict,currPSL = ReadAndPlotFF(thisCurrDict)
-    if kappa == 12090: PlotFFqPick(datadict,currPSL)
+datadict,currPSL = ReadAndPlotFF(thisCurrDict,['Fits','Sum'])
+datadict,currPSL = ReadAndPlotFF(thisCurrDict)
+if kappa == 12090: PlotFFqPick(datadict,currPSL)
 
 print 'All Plotting Complete'
