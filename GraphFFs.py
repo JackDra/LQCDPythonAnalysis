@@ -113,17 +113,18 @@ feedin = InputParams(sys.argv[1:])
 thisCurrDict = GetCurrDict(feedin['current'])
 
 if DoMulticore:
+    thisCurrDict = [(icurr,) for icurr in thisCurrDict]
     thisPool = Pool(min(len(thisCurrDict),AnaProc))
-    # makeContextFunctions(ReadAndPlotFF)
-    output = thisPool.map(ReadAndPlotFF,thisCurrDict)
+    makeContextFunctions(ReadAndPlotFF)
+    output = thisPool.map(ReadAndPlotFF.mapper,thisCurrDict)
     thisPool.close()
     thisPool.join()
-    if kappa == 12090:
-        thisPool = Pool(min(len(output),AnaProc))
-        makeContextFunctions(PlotFFqPick)
-        thisPool.map(PlotFFqPick.mapper,output)
-        thisPool.close()
-        thisPool.join()        
+    # if kappa == 12090:
+    #     thisPool = Pool(min(len(output),AnaProc))
+    #     makeContextFunctions(PlotFFqPick)
+    #     thisPool.map(PlotFFqPick.mapper,output)
+    #     thisPool.close()
+    #     thisPool.join()        
 else:
     datadict,currPSL = ReadAndPlotFF(thisCurrDict)
     if kappa == 12090: PlotFFqPick(datadict,currPSL)
