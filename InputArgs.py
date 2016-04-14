@@ -56,7 +56,8 @@ def InputParams(inputparams):
             momhold = isys.replace('-p=','').split(',')
             feedout['mom'] = []
             for imom in momhold:
-                feedout['mom'] += [' '.join(imom).replace('- ','-')]
+                if 'zmom' not in imom:
+                    feedout['mom'] += [' '.join(imom).replace('- ','-')]
             for ipl in feedout['mom']:            
                 if ipl not in qvecSet:                        
                     feedout['mom'].remove(ipl)
