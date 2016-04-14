@@ -287,7 +287,7 @@ def RewriteRF(RFdict,threeptdict,thisopp,thismom):
                         GetBootStats(RFdict[igamma][thismom]['RF'][iset]['Boot'][it])
                         RFdict[igamma][thismom]['RF'][iset]['Vals'][it] = RFdict[igamma][thismom]['RF'][iset]['Boot'][it].Avg
                         RFdict[igamma][thismom]['RF'][iset]['Valserr'][it] = RFdict[igamma][thismom]['RF'][iset]['Boot'][it].Std
-                        if igamma == 'doubP4g4' and 'tsink26PoF' in iset:
+                        if igamma == 'doubP4g4' and 'tsink26state1PoF' in iset:
                             print it , RFdict[igamma][thismom]['RF'][iset]['Vals'][it] , RFdict[igamma][thismom]['RF'][iset]['Valserr'][it]
     return RFdict
                 
