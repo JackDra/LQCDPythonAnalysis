@@ -67,13 +67,15 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
         thisPrefList = ['REvec' for s in thisTSinkList]
         thisTvarList = []
         thisREvecTvarList = REvecTvarList
+        thisPoFTvarList = []
     elif 'PoF' in RunType:
         thisTSinkList = RunTSinkList
         thisSmearList = DefSmearList
         wipeSL = []
         thisPrefList = ['PoF' for s in thisTSinkList]
         thisTvarList = []
-        thisREvecTvarList = PoFTvarList
+        thisREvecTvarList = []
+        thisPoFTvarList = PoFTvarList
     elif 'TSink' in RunType:
         thisTSinkList = RunTSinkList
         thisSmearList = ['32']
@@ -108,8 +110,8 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
             else:
                 itsinkList,iPrefList = [itsink],[thisPrefList[it]]
             thisSetList,this2ptSetList,dump = CreateSet(thisSmearL=wipeSL,thisStateL=StateSet,thisTvarL=thisTvarList,thisTSinkL=map(str,itsinkList),
-                                                                 thisREvecTvarL=thisREvecTvarList,thisREvecTSinkL=map(str,itsinkList))
-            print thisSetList
+                                                        thisREvecTvarL=thisREvecTvarList,thisREvecTSinkL=map(str,itsinkList),
+                                                        thisPoFTvarL=thisPoFTvarList,thisPoFTSinkL=map(str,itsinkList))
             if 'giDi' == Curr:
                 if WipeThisSet:
                     WipeSet(outputdir,['doubP4giDi','singP4giDi'],thisSetList)
