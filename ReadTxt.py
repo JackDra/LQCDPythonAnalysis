@@ -278,7 +278,7 @@ def RewriteRF(RFdict,threeptdict,thisopp,thismom):
     if CheckDict(threeptdict,thisopp,thismom,'RF'):
         for igamma in RFdict.keys():
             if CheckDict(RFdict,igamma,thismom,'RF'):
-                for iset in RFdict[igamma].keys():
+                for iset in RFdict[igamma][thismom]['RF'].keys():
                     for it,(iRF,i3pt) in enumerate(zip(RFdict[igamma][thismom]['RF'][iset]['Boots'],
                                                        threeptdict[thisopp][thismom]['RF'][iset]['Boots'][tsource-1:GetintTSink(iset)])):
                         RFdict[igamma][thismom]['RF'][iset]['Boots'][it].values = iRF.values/i3pt.values
