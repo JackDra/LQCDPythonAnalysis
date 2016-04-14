@@ -210,7 +210,7 @@ def PlotSummaryMethods(data,thisMethodSetList,igamma,iq,outputdir,dirpref=''):
         
 def PlotSummarySet(igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
     dataval,dataerr,Xlables = [],[],[]
-    keylist = SortMySet(data.keys())
+    keylist = SortMySet(data.keys())[0]
     for datakey in keylist:
         idata = data[datakey]
         for iSet in thisSetList:
