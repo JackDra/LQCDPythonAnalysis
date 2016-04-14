@@ -115,8 +115,8 @@ thisCurrDict = GetCurrDict(feedin['current'])
 if DoMulticore:
     thisCurrDict = [(icurr,) for icurr in thisCurrDict]
     thisPool = Pool(min(len(thisCurrDict),AnaProc))
-    makeContextFunctions(ReadAndPlotFF)
-    output = thisPool.map(ReadAndPlotFF.mapper,thisCurrDict)
+    # makeContextFunctions(ReadAndPlotFF)
+    output = thisPool.map(ReadAndPlotFF,thisCurrDict)
     thisPool.close()
     thisPool.join()
     # if kappa == 12090:
