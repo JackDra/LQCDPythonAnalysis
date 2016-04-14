@@ -20,6 +20,7 @@ MethodList.remove('RF')
 MethodList.remove('OSFCM')
 MethodList.remove('OSFTsink')
 print 'SetLists:\n','\n'.join(DefSetList) + '\n'
+print 'MomList:\n','\n'.join(thisMomList) + '\n'
 
 if DoMulticore:
     inputparams = []
