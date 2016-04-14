@@ -56,16 +56,14 @@ def InputParams(inputparams):
             momhold = isys.replace('-p=','').split(',')
             feedout['mom'] = []
             for imom in momhold:
-                if 'zmom' not in imom:
+                if 'zmom' in imom:
+                    feedout['mom'] += ['q = 0 0 0']
+                else:
                     feedout['mom'] += [' '.join(imom).replace('- ','-')]
             for ipl in feedout['mom']:            
-                thispl = ipl
                 if ipl not in qvecSet:                        
                     feedout['mom'].remove(ipl)
-                    if 'zmom' in thispl:
-                        feedout['mom'] += ['q = 0 0 0']
-                    else:
-                        print 'Warning, ' + ipl + ' not found in qvecSet list, skipping.'
+                    print 'Warning, ' + ipl + ' not found in qvecSet list, skipping.'
             if len(feedout['mom']) == 0:
                 print 'Nothing found for mom list, using default list'
                 feedout['set'] = RunMomList
