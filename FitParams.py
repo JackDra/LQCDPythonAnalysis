@@ -24,7 +24,9 @@ FitCutPicked =  {'tsink26sm32':'cut4',
                  'tsink32sm32':'cut6',
                  'tsink32state1to18dt2':'cut6',
                  'tsink35sm32':'cut6',
-                 'tsink38sm32':'cut6'}
+                 'tsink38sm32':'cut6',
+                 'tsink26state1PoF1to16dt2':'cut4',
+                 'tsink27state1PoF1to16dt2':'cut4'}
 ##
 
 
