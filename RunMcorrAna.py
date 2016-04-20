@@ -47,7 +47,7 @@ def CRFWrap(RunType,itsinkList,thisSmearList,iPrefList,thisMomList,iProj,igamma)
              DragpZ([qstrTOip(iq) for iq in thisMomList]),thisPGList={iProj:[igamma]},DontWriteZero=DRZ)
 
 
-def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
+def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,DoPoF=True):
 
     # print "running " + Curr + ' ' + thisCol + ' tsinks: ' + ' '.join(RunTSinkList)
     sys.stdout = sys.__stdout__
@@ -99,7 +99,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
         print 'Two Point Analysis'
         if WipeThisSet: Wipe2pt(outputdir,statelist=StateSet,todtlist=DefTvarList,smlist=DefSmearList)
         thisMomList = Get2ptSetMoms(outputdir,RunMomList,statelist=StateSet,todtlist=DefTvarList,smlist=DefSmearList)
-        CreateTwoPt(DragpZ([qstrTOip(iq) for iq in thisMomList]),DefSmearList)
+        CreateTwoPt(DragpZ([qstrTOip(iq) for iq in thisMomList]),DefSmearList,DoPoF=DoPoF)
         print 'Two Point Analysis Complete'
     else:
         print 'Three Point Analysis '+Curr + ' ' + RunType + ' tsinks: ' + ' '.join(RunTSinkList)
@@ -181,7 +181,12 @@ CurrIn = sys.argv[1]
 
 thisPool = False
 if CurrIn == 'TwoPt':
-    RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe)
+    if len(sys.argv) < 3: raise IOError("input Do Pencil of Function? (T/F) (shifts is in setup file)")
+    if sys.argv[2] == 'T':
+        RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe)
+    elif sys.argv[2] == 'F':
+        RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe,DoPoF=False)
+    else: raise IOError("input Do Pencil of Function? (T/F) (shifts is in setup file)")
 else:
     if len(sys.argv) < 3: raise IOError("input Collection of Data To compute as second argument (CM,TSink,REvec)")
     thisColIn = sys.argv[2]

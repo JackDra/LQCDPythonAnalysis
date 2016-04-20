@@ -7,7 +7,7 @@ import numpy as np
 import sys
 from Params import *
 from ReadCMCfuns import ReadSet,ReadList
-from CMSTech import CreateCM2ptCfuns,PreptwoptCorr
+from CMSTech import CreateCM2ptCfuns,CreatePoF2ptCfuns,PreptwoptCorr
 from OutputData import PrintSetToFile,PrintLREvecMassToFile,PrintCfunToFile
 from CreateCombs import CreategiDi
 from SetLists import CreateMassSet
@@ -16,7 +16,7 @@ import time,datetime
 from MultiWrap import *
 from multiprocessing import Pool
 
-def CreateTwoPt(thisMomList,thisSmearList):
+def CreateTwoPt(thisMomList,thisSmearList,DoPoF=True):
     logfile = logdir+'LogTwoPt.log'
     errfile = logdir+'LogTwoPt.log'
     touch(logfile)
@@ -40,7 +40,6 @@ def CreateTwoPt(thisMomList,thisSmearList):
     C2out = DiagSmear(data2pt).tolist()
 
     start = time.time()
-    makeContextFunctions(CreateCM2ptCfuns)
     inputparams = []
     for icount,itodt in enumerate(DeftodtList):
         inputparams.append((data2pt,itodt,thisMomList))
@@ -48,22 +47,37 @@ def CreateTwoPt(thisMomList,thisSmearList):
 
     if DoMulticore:
         thisPool = Pool(min(len(inputparams),AnaProc))
-        output = thisPool.map(CreateCM2ptCfuns.mapper,inputparams)
-        thisPool.close()
-        thisPool.join()
+        if DoPoF:
+            makeContextFunctions(CreatePoF2ptCfuns)
+            output = thisPool.map(CreatePoF2ptCfuns.mapper,inputparams)
+            thisPool.close()
+            thisPool.join()
+        else:
+            makeContextFunctions(CreateCM2ptCfuns)
+            output = thisPool.map(CreateCM2ptCfuns.mapper,inputparams)
+            thisPool.close()
+            thisPool.join()
     else:
         output = []
-        for iin in inputparams: output.append(CreateCM2ptCfuns(*iin))
+        if DoPoF:
+            for iin in inputparams: output.append(CreatePoF2ptCfuns(*iin))
+        else:
+            for iin in inputparams: output.append(CreateCM2ptCfuns(*iin))
     
-    for iout,iTvar in zip(output,DefTvarList):
+    
+    if DoPoF:
+        thisTvarList = ['PoF'+str(PoFShifts)+iTvar for iTvar in DefTvarList]
+    else:
+        thisTvarList = ['CM'+iTvar for iTvar in DefTvarList]
+    for iout,iTvar in zip(output,thisTvarList):
         [CMdata2pt,LEvec,REvec,Emass] = iout
 ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
         C2out += CMdata2pt.tolist()
-        PrintLREvecMassToFile(LEvec,REvec,Emass,thisMomList,iTvar)
+        PrintLREvecMassToFile(LEvec,REvec,Emass,thisMomList,iTvar,DoPoF=DoPoF)
     print 'CMTech Total Time Taken: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
     start = time.time()
     print 'Printing to file \r',
-    SetList = CreateMassSet(thisSmearList,StateSet,DefTvarList,flipord=True)
+    SetList = CreateMassSet(thisSmearList,StateSet,thisTvarList,flipord=True)
     PrintCfunToFile([C2out],SetList,thisMomList,['twopt'])
     PrintSetToFile([C2out],SetList,thisMomList,['Mass'],0)
     print 'Printing took ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '

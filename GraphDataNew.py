@@ -390,7 +390,7 @@ def PlotFF(data,col,sym,shift,lab):
 
 def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
     if MP:
-        if 'sm' not in lab and not Log:
+        if 'PoF' in lab and not Log:
             tvals = np.array(data['tVals'])+1+(2*PoFShifts) + shift
         else:
             tvals = np.array(data['tVals'])+1 + shift            
@@ -518,9 +518,16 @@ def PlotTSFMassLine(data2pt,col,smear,thisdt):
 
 def PlotOSFMassValue(data,col,smear,thisdt):
     smearindex,deltashift = smear,0
-    if 'sum' in smear:
-        deltashift = PoFShifts*2
-        smearindex = PickedStateStr+'sum'
+    if 'sm' not in smear:
+        if 'PoF' in smear:
+            deltashift = PoFShifts*2
+            smearindex = PickedStateStr+'PoF'
+        elif 'REvec' in smear:
+            deltashift = 0
+            smearindex = PickedStateStr+'REvec'
+        else:
+            deltashift = 0
+            smearindex = PickedStateStr+'CM'
     if CheckDict(data,'m0',OSFfitr[smearindex],'Boot'): 
         databoot = data['m0'][OSFfitr[smearindex]]['Boot']
         dataval = abs(databoot.Avg)

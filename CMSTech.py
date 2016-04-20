@@ -270,7 +270,7 @@ def GetTvarREvesPoF(Cfunin,thistodtvals,masscut,thisPoFShifts=PoFShifts):
 # R/L Evecs [ ip , istate , ival ]
 # Emass [ ip , istate ]
 
-def CreateCM2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=True):
+def CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=True):
     start = time.time()
     Cfuns2pt = np.array(Cfuns2pt)
     CMCfun2pt = []
@@ -295,12 +295,16 @@ def CreateCM2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=True):
     if printout:  print 'CM Creation PoFto'+str(todtvals[0])+'dt'+str(todtvals[1])+ ' took: ' , GetTimeStr(time.time()-start)
     return [np.rollaxis(np.array(CMCfun2pt),1),LEvec,REvec,Emass]
 
+
+def CreateCM2ptCfuns(Cfuns2pt,todtvals,thisMomList):
+    return CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=False)
+
 # #Cfuns3pt [ tsink , ism , 1 , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 # #CMCfun3pt  [ istate , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 def CreateREvecCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
     LEvec,REvec,Emass = ReadLREM(todtvals,thisMomList,'')
     if REvec == None:
-        CMCfun2pt,LEvec,REvec,Emass = CreateCM2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=False,printout=False)
+        CMCfun2pt,LEvec,REvec,Emass = CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=False,printout=False)
         LEvec,REvec = SignEvec(np.array(LEvec),np.array(REvec))
     else:
         CMCfun2pt = []
@@ -320,7 +324,7 @@ def CreateREvecCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
 def CreateREPoFCfuns(Cfuns3pt,Cfuns3ptp1,Cfuns2pt,todtvals,thisMomList):
     LEvec,REvec,Emass = ReadLREM(todtvals,thisMomList,'PoF1')
     if REvec == None:
-        CMCfun2pt,LEvec,REvec,Emass = CreateCM2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=False)
+        CMCfun2pt,LEvec,REvec,Emass = CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=False)
         LEvec,REvec = SignEvec(np.array(LEvec),np.array(REvec))
     else:
         CMCfun2pt = []
@@ -341,7 +345,7 @@ def CreateREPoFCfuns(Cfuns3pt,Cfuns3ptp1,Cfuns2pt,todtvals,thisMomList):
 # #CMCfun3pt  [ istate , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 
 def CreateCMCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
-    CMCfun2pt,LEvec,REvec,Emass = CreateCM2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=False,printout=False)
+    CMCfun2pt,LEvec,REvec,Emass = CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=False,printout=False)
     CMCfun3pt = []
     for igamma,gammaCfun in enumerate(np.rollaxis(np.array(Cfuns3pt),2)):
         CMCfun3pt.append([])

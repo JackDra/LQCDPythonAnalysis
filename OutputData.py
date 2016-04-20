@@ -101,18 +101,24 @@ def PrintSumBootToFile(data,datafit,filename,thisFitList,thisMomList,thisTSinkLi
 
 
 
-def PrintLREvecMassToFile(thisLE,thisRE,thisEMass,thisMomList,thisTvar):
+def PrintLREvecMassToFile(thisLE,thisRE,thisEMass,thisMomList,thisTvar,DoPoF=True):
     mkdir_p(outputdir+'/Mass/')
     with open(outputdir+'/Mass/'+thisTvar+'LREM.txt','a+') as f:
         for ip,pLE,pRE,pEMass in zip(thisMomList,thisLE,thisRE,thisEMass):
             f.write(ipTOqstr(ip)+'\n')
-            f.write('         '+''.join([' {0:>20}'.format('sm'+DefSmearList[i]) for i in range(len(pLE[0])//(PoFShifts+1))])+' {0:>20}'.format('E-Mass')+'\n')
-            for istate,iLE,iRE,iEM in zip(StateSet,pLE,pRE,pEMass):
-                for iPoF in range(PoFShifts+1):
-                    thisnsmears = len(iLE)//(PoFShifts+1)
-                    f.write( 'L/R'+istate+' PoF'+str(iPoF)+''.join(' {0:20.10f}'.format(k.real) for k in iLE.tolist()[iPoF*thisnsmears:(iPoF+1)*thisnsmears])+
-                             ' {0:20.10f}'.format(iEM) + '\n' )
-                f.write('\n')
+            if DoPoF:
+                f.write('         '+''.join([' {0:>20}'.format('sm'+DefSmearList[i]) for i in range(len(pLE[0])//(PoFShifts+1))])+' {0:>20}'.format('E-Mass')+'\n')
+                for istate,iLE,iRE,iEM in zip(StateSet,pLE,pRE,pEMass):
+                    for iPoF in range(PoFShifts+1):
+                        thisnsmears = len(iLE)//(PoFShifts+1)
+                        f.write( 'L/R'+istate+' PoF'+str(iPoF)+''.join(' {0:20.10f}'.format(k.real) for k in iLE.tolist()[iPoF*thisnsmears:(iPoF+1)*thisnsmears])+
+                                 ' {0:20.10f}'.format(iEM) + '\n' )
+                    f.write('\n')
+            else:
+                f.write('         '+''.join([' {0:>20}'.format('sm'+DefSmearList[i]) for i in range(len(pLE[0]))])+' {0:>20}'.format('E-Mass')+'\n')
+                for istate,iLE,iRE,iEM in zip(StateSet,pLE,pRE,pEMass):
+                    f.write( 'L/R'+istate+' '+''.join(' {0:20.10f}'.format(k.real) for k in iLE.tolist())+' {0:20.10f}'.format(iEM) + '\n' )
+
                 # for iPoF in range(PoFShifts+1):
                 #     thisnsmears = len(iRE)//(PoFShifts+1)
                 #     f.write( 'R'+istate + ' PoF'+str(iPoF)+' '+ ''.join(' {0:20.10f}'.format(k.real) for k in iRE.tolist()[iPoF:iPoF+thisnsmears])+

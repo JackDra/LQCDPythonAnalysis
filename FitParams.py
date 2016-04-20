@@ -56,12 +56,14 @@ OneStateParList = {'C2':['Am','m0'] , 'C3':['B00']}
 #picked for plotting
 OSFCutList = ['cut4','cut5','cut6']
 OSFCutPicked = 'cut5'
-OSFfitvals = {'sm32': [26,31], 'sm64': [25,31] , 'sm128':[23,31], PickedStateStr+DefTvarPicked:[20,25],PickedStateStr+REvecTvarList[0]:[23,31]}
+OSFfitvals = {'sm32': [26,31], 'sm64': [25,31] , 'sm128':[23,31], PickedStateStr+DefTvarPicked:[20,25],
+              PickedStateStr+REvecTvarList[0]:[23,31],PickedStateStr+PoFTvarList[0]:[23,31]}
 OSFfitr = {'sm32':str(OSFfitvals['sm32'][0])+'-'+str(OSFfitvals['sm32'][1]),
            'sm64':str(OSFfitvals['sm64'][0])+'-'+str(OSFfitvals['sm64'][1]),
            'sm128':str(OSFfitvals['sm128'][0])+'-'+str(OSFfitvals['sm128'][1]),
-           PickedStateStr+'to18dt2':str(OSFfitvals[PickedStateStr+REvecTvarList[0]][0])+'-'+str(OSFfitvals[PickedStateStr+REvecTvarList[0]][1]),
-           PickedStateStr+'sum':str(OSFfitvals[PickedStateStr+DefTvarPicked][0])+'-'+str(OSFfitvals[PickedStateStr+DefTvarPicked][1])}
+           PickedStateStr+'REvec':str(OSFfitvals[PickedStateStr+REvecTvarList[0]][0])+'-'+str(OSFfitvals[PickedStateStr+REvecTvarList[0]][1]),
+           PickedStateStr+'PoF':str(OSFfitvals[PickedStateStr+PoFTvarList[0]][0])+'-'+str(OSFfitvals[PickedStateStr+PoFTvarList[0]][1]),
+           PickedStateStr+'CM':str(OSFfitvals[PickedStateStr+DefTvarPicked][0])+'-'+str(OSFfitvals[PickedStateStr+DefTvarPicked][1])}
 
 
 
