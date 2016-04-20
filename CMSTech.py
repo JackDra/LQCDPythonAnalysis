@@ -298,7 +298,7 @@ def CreateCM2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=True):
 # #Cfuns3pt [ tsink , ism , 1 , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 # #CMCfun3pt  [ istate , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 def CreateREvecCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
-    LEvec,REvec,Emass = ReadLREM(todtvals,thisMomList)
+    LEvec,REvec,Emass = ReadLREM(todtvals,thisMomList,'')
     if REvec == None:
         CMCfun2pt,LEvec,REvec,Emass = CreateCM2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=False,printout=False)
         LEvec,REvec = SignEvec(np.array(LEvec),np.array(REvec))
@@ -318,7 +318,7 @@ def CreateREvecCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
 # #Cfuns3pt [ tsink , ism , 1 , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 # #CMCfun3pt  [ istate , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 def CreateREPoFCfuns(Cfuns3pt,Cfuns3ptp1,Cfuns2pt,todtvals,thisMomList):
-    LEvec,REvec,Emass = ReadLREM(todtvals,thisMomList)
+    LEvec,REvec,Emass = ReadLREM(todtvals,thisMomList,'PoF1')
     if REvec == None:
         CMCfun2pt,LEvec,REvec,Emass = CreateCM2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=False)
         LEvec,REvec = SignEvec(np.array(LEvec),np.array(REvec))

@@ -61,15 +61,11 @@ if thisBoolPoF == 'y':
     f.write('PoF\n')
     f.write('\nPoFShifts:\n')
     f.write(str(thisNShifts)+'\n')
-    f.write('\nVarPref:\n')
-    f.write('PoF'+str(thisNShifts)+'\n')
 else:
     f.write('\nPoFOrSum:\n')
     f.write('sum\n')
     f.write('\nPoFShifts:\n')
     f.write(str(thisNShifts)+'\n')
-    f.write('\nVarPref:\n')
-    f.write('sum\n')
 
 f.close()
 

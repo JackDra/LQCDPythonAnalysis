@@ -9,13 +9,17 @@ def ExpandSetList(thisSL):
     SLout = []
     for iset in thisSL:
         if 'SMSET' in iset:
-            SLout += CreateTSinkStateSet(DefTSinkList[0],DefSmearList,[],[])
+            SLout += CreateGenericSet(CMTSinkList,DefSmearList,[],[])
         elif 'TSINKSET' in iset:
             SLout += CreateStateTsinkSet('sm32',AllTSinkList)
         elif 'PoFSET' in iset:
-            SLout += CreateREvecSet(PoFTSinkList,[1],PoFTvarList)[0]
+            SLout += CreateREvecSet(PoFTSinkList,[PickedState],PoFTvarList)[0]
         elif 'REvecSET' in iset:
-            SLout += CreateREvecSet(REvecTSinkList,[1],REvecTvarList)[0]
+            SLout += CreateREvecSet(REvecTSinkList,[PickedState],REvecTvarList)[0]
+        elif 'CMSET' in iset:
+            SLout += CreateREvecSet(CMTSinkList,[PickedState],AnaTvarList)[0]
+        elif 'ALL' in iset:
+            SLout += DefSetList
     return SortMySet(SLout)[0]
 
 

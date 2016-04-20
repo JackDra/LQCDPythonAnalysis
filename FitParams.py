@@ -16,17 +16,17 @@ FitCutList = range(FitCutMin,FitCutMax+1)
 FitCutArgs = ['cut'+str(ic) for ic in FitCutList]
 ##TryFits.py
 FitCutPicked =  {'tsink26sm32':'cut4',
-                 'tsink26state1to18dt2':'cut4',
+                 'tsink26'+PickedStateStr+REvecTvarList[0]:'cut4',
                  'tsink29sm32':'cut5',
                  'tsink29sm64':'cut5',
                  'tsink29sm128':'cut5',
-                 'tsink29state1'+VarPref:'cut5',
+                 'tsink29'+PickedStateStr+DefTvarPicked:'cut5',
                  'tsink32sm32':'cut6',
-                 'tsink32state1to18dt2':'cut6',
+                 'tsink32'+PickedStateStr+REvecTvarList[0]:'cut6',
                  'tsink35sm32':'cut6',
                  'tsink38sm32':'cut6',
-                 'tsink26state1PoF1to16dt2':'cut4',
-                 'tsink27state1PoF1to16dt2':'cut4'}
+                 'tsink26'+PickedStateStr+'PoF'+str(PoFShifts)+PoFTvarList[0]:'cut4',
+                 'tsink27'+PickedStateStr+'PoF'+str(PoFShifts)+PoFTvarList[0]:'cut4'}
 ##
 
 
@@ -56,12 +56,12 @@ OneStateParList = {'C2':['Am','m0'] , 'C3':['B00']}
 #picked for plotting
 OSFCutList = ['cut4','cut5','cut6']
 OSFCutPicked = 'cut5'
-OSFfitvals = {'sm32': [26,31], 'sm64': [25,31] , 'sm128':[23,31], 'state1'+VarPref:[20,25],'state1to18dt2':[23,31]}
+OSFfitvals = {'sm32': [26,31], 'sm64': [25,31] , 'sm128':[23,31], PickedStateStr+DefTvarPicked:[20,25],PickedStateStr+REvecTvarList[0]:[23,31]}
 OSFfitr = {'sm32':str(OSFfitvals['sm32'][0])+'-'+str(OSFfitvals['sm32'][1]),
            'sm64':str(OSFfitvals['sm64'][0])+'-'+str(OSFfitvals['sm64'][1]),
            'sm128':str(OSFfitvals['sm128'][0])+'-'+str(OSFfitvals['sm128'][1]),
-           'state1to18dt2':str(OSFfitvals['state1to18dt2'][0])+'-'+str(OSFfitvals['state1to18dt2'][1]),
-           'state1'+VarPref:str(OSFfitvals['state1'+VarPref][0])+'-'+str(OSFfitvals['state1'+VarPref][1])}
+           PickedStateStr+'to18dt2':str(OSFfitvals[PickedStateStr+REvecTvarList[0]][0])+'-'+str(OSFfitvals[PickedStateStr+REvecTvarList[0]][1]),
+           PickedStateStr+'sum':str(OSFfitvals[PickedStateStr+DefTvarPicked][0])+'-'+str(OSFfitvals[PickedStateStr+DefTvarPicked][1])}
 
 
 
@@ -121,7 +121,7 @@ def FitDefGuess(Fun,Len=1):
 
 
 ##GraphData.py
-FitMassPicked = {'sm32':(15,18),'sm64':(14,18),'sm128':(14,18),'state1to18dt2':(10,19)} ## GraphData.py
+FitMassPicked = {'sm32':(15,18),'sm64':(14,18),'sm128':(14,18),PickedStateStr+'to18dt2':(10,19)} ## GraphData.py
 
 PickedTwoMax = 29
 

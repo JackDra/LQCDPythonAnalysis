@@ -20,8 +20,8 @@ import datetime
 
 # R/L Evecs [ ip , istate , ival ]
 # Emass [ ip , istate ]
-def ReadLREM(todtval,thisMomList):
-    filename = REvecDir+VarPref+'to'+str(todtval[0])+'dt'+str(todtval[1])+'LREM.txt'
+def ReadLREM(todtval,thisMomList,filepref):
+    filename = REvecDir+filepref+'to'+str(todtval[0])+'dt'+str(todtval[1])+'LREM.txt'
     # filename = REvecDir+VarPref+'TestLREM.txt'
     readmom = False
     LEvec,REvec,Emass = [],[],[]
@@ -71,7 +71,7 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
             if not CheckDict(readdata,igamma,zmom): continue
             for iMeth,Methdata in readdata[igamma][zmom].iteritems():
                 for ism,thismassdict in Methdata.iteritems():
-                    if VarPref in ism: ism = 'state1'+VarPref
+                    if DefTvarPicked in ism: ism = PickedStateStr+DefTvarPicked
                     if 'TSF' in iMeth:
                         if CheckDict(thismassdict,'m0',TSFfitr):
                             datamassout[ism+iMeth] = thismassdict['m0'][TSFfitr]
@@ -83,7 +83,7 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                 for iMeth,Methdata in momdata.iteritems():
                     for iSet,thisdict in Methdata.iteritems():
                         itsink,ism = SplitTSinkString(iSet)
-                        if VarPref in ism: ism = 'state1'+VarPref
+                        if DefTvarPicked in ism: ism = PickedStateStr+DefTvarPicked
                         if 'TSF' in iMeth:
                             for icut in TSFCutList:
                                 if CheckDict(thisdict,'B00',TSFfitr,icut):
@@ -312,7 +312,7 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
                             if not all([iState in datadict['twopt'][zmomstr][iSF][RemoveTSink(iset)].keys() for iState in StateParList['One']['C2']]): continue
                             for ipar in StateParList['One']['C2']:
                                 fitrkey = RemoveTSink(iset)
-                                if VarPref in fitrkey: fitrkey = 'state1'+VarPref
+                                if DefTvarPicked in fitrkey: fitrkey = PickedStateStr+DefTvarPicked
                                 pars2pt.append(datadict['twopt'][zmomstr][iSF][RemoveTSink(iset)][ipar][OSFfitr[fitrkey]]['Boot'])
                             data2ptZ =  pars2pt[0]*(pars2pt[1]*(-GetintTSink(iset)+tsource)).exp(1)
                         elif 'TSF' in iSF:

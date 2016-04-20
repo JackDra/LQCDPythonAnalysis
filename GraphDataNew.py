@@ -518,9 +518,9 @@ def PlotTSFMassLine(data2pt,col,smear,thisdt):
 
 def PlotOSFMassValue(data,col,smear,thisdt):
     smearindex,deltashift = smear,0
-    if VarPref in smear:
+    if 'sum' in smear:
         deltashift = PoFShifts*2
-        smearindex = 'state1'+VarPref
+        smearindex = PickedStateStr+'sum'
     if CheckDict(data,'m0',OSFfitr[smearindex],'Boot'): 
         databoot = data['m0'][OSFfitr[smearindex]]['Boot']
         dataval = abs(databoot.Avg)
@@ -543,7 +543,7 @@ def PlotTSFMassValue(data,thisdt):
 
 def PlotOSFLog(data,col,smear,norm):
     smearindex = smear
-    if VarPref in smear: smearindex = 'state1'+VarPref    
+    if 'sum' in smear: smearindex = PickedStateStr+'sum'    
     if not CheckDict(data,'m0',OSFfitr[smearindex],'Boot'): return
     if not CheckDict(data,'Am',OSFfitr[smearindex],'Boot'): return
     parm0 = data['m0'][OSFfitr[smearindex]]['Boot']

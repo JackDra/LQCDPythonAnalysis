@@ -70,8 +70,6 @@ with open('./setup.cfg','r') as f:
                     PoFOrSum = thisline
                 elif 'PoFShifts' in thisread:
                     PoFShifts = int(thisline)
-                elif 'VarPref' in thisread:
-                    VarPref = thisline
                 elif 'kappa' in thisread:
                     kappa = int(thisline)
                 
@@ -192,14 +190,9 @@ for iDS in DefDSList:
 DefCombGammaList,dump = UDIndex(DefGammaList)
 DefRedGammaList = DefCombGammaList[len(DefGammaList):]
 
-if VarPref == 'sum':
-    DeftoList = [17,18,19,20,21,22,23]
-    DefdtList = [2,3,4]
-    DefTvarPicked = VarPref+'18to18dt2'    
-else:
-    DeftoList = [16,17,18]
-    DefdtList = [1,2,3]
-    DefTvarPicked = VarPref+'to16dt2'
+DeftoList = [17,18,19,20,21,22,23]
+DefdtList = [2,3,4]
+DefTvarPicked = 'to18dt2'    
 
 DeftodtList = []
 DefTvarList = []
@@ -208,40 +201,24 @@ DefTvarDt2 = []
 DefTvarDt3 = []
 DefTvarDt4 = []
 for ito in DeftoList:
-    if VarPref == 'sum':
-        DefTvarDt1.append(VarPref+str(ito)+'to'+str(ito)+'dt1')
-        DefTvarDt2.append(VarPref+str(ito)+'to'+str(ito)+'dt2')
-        DefTvarDt3.append(VarPref+str(ito)+'to'+str(ito)+'dt3')
-        DefTvarDt4.append(VarPref+str(ito)+'to'+str(ito)+'dt4')
-    else:
-        DefTvarDt1.append(VarPref+'to'+str(ito)+'dt1')
-        DefTvarDt2.append(VarPref+'to'+str(ito)+'dt2')
-        DefTvarDt3.append(VarPref+'to'+str(ito)+'dt3')
-        DefTvarDt4.append(VarPref+'to'+str(ito)+'dt4')
+    DefTvarDt1.append('to'+str(ito)+'dt1')
+    DefTvarDt2.append('to'+str(ito)+'dt2')
+    DefTvarDt3.append('to'+str(ito)+'dt3')
+    DefTvarDt4.append('to'+str(ito)+'dt4')
     for idt in DefdtList:
         DeftodtList.append((ito,idt))
-        if VarPref == 'sum':
-            DefTvarList.append(VarPref+str(ito)+'to'+str(ito)+'dt'+str(idt))
-        else:
-            DefTvarList.append(VarPref+'to'+str(ito)+'dt'+str(idt))
+        DefTvarList.append('to'+str(ito)+'dt'+str(idt))
 DefTvarto16 = []
 DefTvarto17 = []
 DefTvarto18 = []
 DefTvarto19 = []
 DefTvarto20 = []
 for idt in DefdtList:
-    if VarPref == 'sum':
-        DefTvarto16.append(VarPref+'16to16dt'+str(idt))
-        DefTvarto17.append(VarPref+'17to17dt'+str(idt))
-        DefTvarto18.append(VarPref+'18to18dt'+str(idt))
-        DefTvarto19.append(VarPref+'19to19dt'+str(idt))
-        DefTvarto20.append(VarPref+'20to20dt'+str(idt))
-    else:
-        DefTvarto16.append(VarPref+'to16dt'+str(idt))
-        DefTvarto17.append(VarPref+'to17dt'+str(idt))
-        DefTvarto18.append(VarPref+'to18dt'+str(idt))
-        DefTvarto19.append(VarPref+'to19dt'+str(idt))
-        DefTvarto20.append(VarPref+'to20dt'+str(idt))
+    DefTvarto16.append('to16dt'+str(idt))
+    DefTvarto17.append('to17dt'+str(idt))
+    DefTvarto18.append('to18dt'+str(idt))
+    DefTvarto19.append('to19dt'+str(idt))
+    DefTvarto20.append('to20dt'+str(idt))
             
 if OnlySelVar:
     AnaTvarList = [DefTvarPicked]
@@ -252,34 +229,38 @@ else:
 # DefSmearList = ['8','16','32','64','128','256']
 # DefSmearList = ['32','64','128']
 DefSmearList = ['32','64','128']
+SingSmearList = ['32']
 # DefSmearList = ['32']
 # DefSmearList = ['8','16','32']
 StateSet = map(str,range(1,(PoFShifts+1)*len(DefSmearList)+1))
+PickedState = 1
+PickedStateStr = 'state'+str(PickedState)
 DefInterpList = ['nucleon']
 # DefInterpList = ['nucleon','nucleon2']
 DefSmList = ['sm'+ism for ism in DefSmearList]
 DefInterpSmearList = ElongateName(DefInterpList,DefSmList)
-DefTSinkList = [29]
+CMTSinkList = [29]
 AllTSinkList = [26,29,32,35,38]
 AllTSinkShift = [it-tsource for it in AllTSinkList]
 AllTSinkStrList = ['tsink'+str(its) for its in AllTSinkList]
 
-AllREvecTSinkList = {'12104':[29],'12090':[]}
+AllREvecTSinkList = {'12104':[29],'12090':[26,32]}
 REvecTSinkList = AllREvecTSinkList[str(kappa)]
 REvecTSinkStrList = ['tsink'+str(its) for its in REvecTSinkList]
 DefREvecVarList = [18,2]
-# REvecTvarList = ['to'+str(DefREvecVarList[0])+'dt'+str(DefREvecVarList[1])]
-REvecTvarList = []
+REvecTvarList = ['REvecto'+str(DefREvecVarList[0])+'dt'+str(DefREvecVarList[1])]
+# REvecTvarList = []
 DefPoFVarList = [16,2]
 AllPoFTSinkList = {'12104':[],'12090':[26,27]}
 PoFTSinkList = AllPoFTSinkList[str(kappa)]
 PoFTSinkStrList = ['tsink'+str(its) for its in PoFTSinkList]
 ##DEBUG##
-# PoFTvarList = [VarPref+'Test']
-# PoFReadTvarList = [PoFOrSum+'TestnD'+str(PoFShifts)]
+# PoFTvarList = ['PoF'+PoFShifts+'Test']
+# PoFReadTvarList = ['PoFTestnD'+str(PoFShifts)]
 # ##uncomment below to restore##
-PoFTvarList = [VarPref+'to'+str(DefPoFVarList[0])+'dt'+str(DefPoFVarList[1])]
-PoFReadTvarList = [PoFOrSum+'to'+str(DefPoFVarList[0])+'dt'+str(DefPoFVarList[1])+'nD'+str(PoFShifts)]
+PoFTvarList = ['PoF'+str(PoFShifts)+'to'+str(DefPoFVarList[0])+'dt'+str(DefPoFVarList[1])]
+PoFDirTvarList = ['PoFto'+str(DefPoFVarList[0])+'dt'+str(DefPoFVarList[1])]
+PoFReadTvarList = ['PoFto'+str(DefPoFVarList[0])+'dt'+str(DefPoFVarList[1])+'nD'+str(PoFShifts)]
 
 # REvecPar26 = [[ 0.0004799, -0.0119381, 0.9999286 ],[0,0,0],[0,0,0]]
 # REvecPar32 = [[ 0.0007567612, -0.0182265391, 0.9998335964],[0,0,0],[0,0,0]]
