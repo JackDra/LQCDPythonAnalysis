@@ -66,8 +66,6 @@ with open('./setup.cfg','r') as f:
                     AnaProc = int(thisline)
                 elif 'ListOrSet' in thisread:
                     ListOrSet = thisline
-                elif 'PoFOrSum' in thisread:
-                    PoFOrSum = thisline
                 elif 'PoFShifts' in thisread:
                     PoFShifts = int(thisline)
                 elif 'kappa' in thisread:

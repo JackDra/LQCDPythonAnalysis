@@ -33,15 +33,8 @@ else:
 print ''
 thiskappa = int(raw_input("Kappa Value: (0.XXXXX)\n"))
 
-
 print ''
-thisBoolPoF = raw_input("Do Pencil of Function method (y/n)?\n")
-
-if thisBoolPoF == 'y':
-    print ''
-    thisNShifts = int(raw_input("How Many Shifts?\n"))
-else:
-    thisNShifts = 0
+thisNShifts = int(raw_input("How Many Shifts?\n"))
 
 
 
@@ -56,16 +49,8 @@ f.write('\nListOrSet:\n')
 f.write(thisListOrSet+'\n')
 f.write('\nkappa:\n')
 f.write(str(thiskappa)+'\n')
-if thisBoolPoF == 'y':
-    f.write('\nPoFOrSum:\n')
-    f.write('PoF\n')
-    f.write('\nPoFShifts:\n')
-    f.write(str(thisNShifts)+'\n')
-else:
-    f.write('\nPoFOrSum:\n')
-    f.write('sum\n')
-    f.write('\nPoFShifts:\n')
-    f.write(str(thisNShifts)+'\n')
+f.write('\nPoFShifts:\n')
+f.write(str(thisNShifts)+'\n')
 
 f.close()
 
