@@ -292,7 +292,11 @@ def CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=True):
             CMCfun2pt.append(ProjectCorrPoF2pt(LEvec[ip],Cfuns2pt[:,:,ip],REvec[ip]))
         else:
             CMCfun2pt.append(ProjectCorrPoF2pt(LEvec[ip],Cfuns2pt[:,:,ip],REvec[ip],thisPoFShifts=0))
-    if printout:  print 'CM Creation PoFto'+str(todtvals[0])+'dt'+str(todtvals[1])+ ' took: ' , GetTimeStr(time.time()-start)
+    if printout:
+        if DoPoF:
+            print 'CM PoF Creation shift'+str(PoFShifts)+' to'+str(todtvals[0])+' dt'+str(todtvals[1])+ ' took: ' , GetTimeStr(time.time()-start)
+        else:
+            print 'CM Creation to'+str(todtvals[0])+' dt'+str(todtvals[1])+ ' took: ' , GetTimeStr(time.time()-start)
     return [np.rollaxis(np.array(CMCfun2pt),1),LEvec,REvec,Emass]
 
 
