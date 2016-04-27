@@ -41,6 +41,8 @@ def CreateTwoPt(thisMomList,thisSmearList,DoPoF=True):
 
     start = time.time()
     inputparams = []
+    makeContextFunctions(CreatePoF2ptCfuns)
+    makeContextFunctions(CreateCM2ptCfuns)
     for icount,itodt in enumerate(DeftodtList):
         inputparams.append((data2pt,itodt,thisMomList))
 
@@ -48,22 +50,18 @@ def CreateTwoPt(thisMomList,thisSmearList,DoPoF=True):
     if DoMulticore:
         thisPool = Pool(min(len(inputparams),AnaProc))
         if DoPoF:
-            makeContextFunctions(CreatePoF2ptCfuns)
             output = thisPool.map(CreatePoF2ptCfuns.mapper,inputparams)
             thisPool.close()
             thisPool.join()
         else:
-            makeContextFunctions(CreateCM2ptCfuns)
             output = thisPool.map(CreateCM2ptCfuns.mapper,inputparams)
             thisPool.close()
             thisPool.join()
     else:
         output = []
         if DoPoF:
-            makeContextFunctions(CreatePoF2ptCfuns)
             for iin in inputparams: output.append(CreatePoF2ptCfuns.mapper(iin))
         else:
-            makeContextFunctions(CreateCM2ptCfuns)
             for iin in inputparams: output.append(CreateCM2ptCfuns.mapper(iin))
     
     
