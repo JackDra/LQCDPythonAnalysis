@@ -150,7 +150,6 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
                                     runmomlist.append(iq)
                                 else:
                                     print 'Skipping tsink='+str(itsink)+ ' ' +PiOpp+' '+iq
-                                    runmomlist.append(iq)
                             if ccheck:
                                 if iq in MomDoneCmplx:
                                     print 'Adding   tsink='+str(itsink)+ ' ' +PiOpp+'cmplx '+iq
