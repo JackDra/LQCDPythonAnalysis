@@ -62,7 +62,11 @@ def SetOpps(AllList):
         if 'Run' in contents: iscmplx = 'cmplx'
     return sorted(Extra),sorted(thisOppList),sorted(thisDSList),sorted(thisProjList),'real, '+iscmplx
 
-def Wipe2pt(outputdir,statelist=[],todtlist=[],smlist=[]):
+def Wipe2pt(outputdir,statelist=[],todtlist=[],smlist=[],DoPoF=False):
+    if DoPoF:
+        thistodtlist = ['PoF'+str(PoFShifts)+itodt for itodt in todtlist]
+    else:
+        thistodtlist = ['CM'+itodt for itodt in todtlist]
     for iflag in ['cfuns/twopt','Mass']:
         thisdir = outputdir+iflag+'/'
         for itodt in todtlist:
