@@ -69,7 +69,7 @@ def Wipe2pt(outputdir,statelist=[],todtlist=[],smlist=[],DoPoF=False):
         thistodtlist = ['CM'+itodt for itodt in todtlist]
     for iflag in ['cfuns/twopt','Mass']:
         thisdir = outputdir+iflag+'/'
-        for itodt in todtlist:
+        for itodt in thistodtlist:
             ifile = thisdir+itodt+'LREM.txt'
             if os.path.isfile(ifile): os.remove(ifile)
             for istate in statelist:
