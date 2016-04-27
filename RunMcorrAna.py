@@ -116,6 +116,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
                                                         thisTvarL=thisTvarList,thisTSinkL=[str(itsink)],
                                                         thisREvecTvarL=thisREvecTvarList,thisREvecTSinkL=[str(itsink)],
                                                         thisPoFTvarL=thisPoFTvarList,thisPoFTSinkL=[str(itsink)])
+            print thisSetList
             if 'giDi' == Curr:
                 if WipeThisSet:
                     WipeSet(outputdir,['doubP4giDi','singP4giDi'],thisSetList)
