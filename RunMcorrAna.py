@@ -61,6 +61,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
         thisTvarList = DefTvarList
         thisREvecTvarList = []
         thisPoFTvarList = []
+        thisStateSet = range(1,len(thisSmearList)+1)
     elif 'REvec' in RunType:
         thisTSinkList = RunTSinkList
         thisSmearList = DefSmearList
@@ -69,6 +70,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
         thisTvarList = []
         thisREvecTvarList = REvecTvarList
         thisPoFTvarList = []
+        thisStateSet = [PickedState]
     elif 'PoF' in RunType:
         thisTSinkList = RunTSinkList
         thisSmearList = DefSmearList
@@ -77,6 +79,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
         thisTvarList = []
         thisREvecTvarList = []
         thisPoFTvarList = PoFTvarList
+        thisStateSet = [PickedState]
     elif 'TSink' in RunType:
         thisTSinkList = RunTSinkList
         thisSmearList = ['32']
@@ -88,6 +91,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
         thisTvarList = []
         thisREvecTvarList = []
         thisPoFTvarList = []
+        thisStateSet = [PickedState]
     elif 'TwoPt' in RunType:
         DoTwoPt = True
     else:
@@ -112,7 +116,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
             else:
                 itsinkList,iPrefList = [int(itsink)],[thisPrefList[it]]
             thisSetList,this2ptSetList,dump = CreateSet(thisSmearL=wipeSL,thisCMTSinkL=[str(itsink)]
-                                                        ,thisStateL=StateSet,thisSingSmearL=wipeSL,
+                                                        ,thisStateL=thisStateSet,thisSingSmearL=wipeSL,
                                                         thisTvarL=thisTvarList,thisTSinkL=[str(itsink)],
                                                         thisREvecTvarL=thisREvecTvarList,thisREvecTSinkL=[str(itsink)],
                                                         thisPoFTvarL=thisPoFTvarList,thisPoFTSinkL=[str(itsink)])
