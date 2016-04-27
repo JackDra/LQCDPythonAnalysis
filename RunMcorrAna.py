@@ -58,7 +58,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
         thisSmearList = DefSmearList
         wipeSL = thisSmearList
         thisPrefList = ['cm' for s in thisTSinkList]
-        thisTvarList = DefTvarList
+        thisTvarList = AnaTvarList
         thisREvecTvarList = []
         thisPoFTvarList = []
         thisStateSet = range(1,len(thisSmearList)+1)
