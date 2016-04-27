@@ -204,15 +204,16 @@ def ProjectCorrPoF2pt(LEvec,Cfun,REvec,thisPoFShifts=PoFShifts):
 def ProjectREvecCorrPoF(Cfun,CfunShift,REvec,thisPoFShifts=PoFShifts):
     CMCfun = []
     Cfunjsm = np.array(Cfun)[:,0,:]
-    CfunjsmShift = np.array(CfunShift)[:,0,:]
-    CfunjsmShift = np.roll(CfunjsmShift,-1,axis=1)
     if thisPoFShifts==0:
         CfunExt = Cfunjsm
-    elif thisPoFShifts==1:
-        CfunExt = np.concatenate((Cfunjsm,CfunjsmShift))
-    elif thisPoFShifts==2:
-        CfunjsmShift2 = np.roll(CfunjsmShift,-1,axis=1)
-        CfunExt = np.concatenate((Cfunjsm,CfunjsmShift,CfunjsmShift2))
+    else:
+        CfunjsmShift = np.array(CfunShift)[:,0,:]
+        CfunjsmShift = np.roll(CfunjsmShift,-1,axis=1)
+        if thisPoFShifts==1:
+            CfunExt = np.concatenate((Cfunjsm,CfunjsmShift))
+        elif thisPoFShifts==2:
+            CfunjsmShift2 = np.roll(CfunjsmShift,-1,axis=1)
+            CfunExt = np.concatenate((Cfunjsm,CfunjsmShift,CfunjsmShift2))
     ##DEBUG##
     if DebugCM:
         print 'ThreePoint Run:'
@@ -319,7 +320,7 @@ def CreateREvecCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
     for igamma,gammaCfun in enumerate(np.rollaxis(np.array(Cfuns3pt),2)):
         CMCfun3pt.append([])
         for ip,pCfun in enumerate(np.rollaxis(gammaCfun,2)): 
-            CMCfun3pt[igamma].append(ProjectREvecCorrPoF(pCfun,REvec[ip],thisPoFShifts=0))
+            CMCfun3pt[igamma].append(ProjectREvecCorrPoF(pCfun,None,REvec[ip],thisPoFShifts=0))
     return [np.array(CMCfun2pt),np.rollaxis(np.array(CMCfun3pt),2)]
 
 
