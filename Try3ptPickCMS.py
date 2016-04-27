@@ -70,9 +70,9 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         data2ptset = DiagSmear(data2pt).tolist()
         data3ptset = DiagSmear(data3pt).tolist()
         start = time.time()
-        for icount,(itodt,iTvar) in enumerate(zip(DeftodtList,DefTvarList)):
+        for icount,(itodt,iTvar) in enumerate(zip(AnatodtList,AnaTvarList)):
             thisstart = time.time()
-            timeleft = GetTimeLeft(icount,len(DeftodtList),(time.time()-start))
+            timeleft = GetTimeLeft(icount,len(AnatodtList),(time.time()-start))
             print 'CMTech ' , iTvar , ' Time Left: ' , str(datetime.timedelta(seconds=timeleft)) , ' h:m:s   \r',
             [CMdata2pt,CMdata3pt] = CreateCMCfuns(data3pt,data2pt,itodt,thisMomList)
             data2ptset += CMdata2pt.tolist()
@@ -80,7 +80,7 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
             print 'CMTech ' , iTvar , ' Time Taken: ' , str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s  '
         data3ptset = np.array(data3ptset)
         data2ptset = np.array(data2ptset)
-        SetList = CreateMassSet(thisSmearList,StateSet,DefTvarList,flipord=True)
+        SetList = CreateMassSet(thisSmearList,StateSet,AnaTvarList,flipord=True)
         SetList = ['tsink'+str(thisTSinkList[0])+iS for iS in SetList]
         print 'CMTech Total Time Taken: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
     elif 'REvec' == RunType:

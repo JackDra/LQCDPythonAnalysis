@@ -190,7 +190,8 @@ DefRedGammaList = DefCombGammaList[len(DefGammaList):]
 
 DeftoList = [17,18,19,20,21,22,23]
 DefdtList = [2,3,4]
-DefTvarPicked = 'CMto18dt2'
+DeftodtPicked = (18,2)
+DefTvarPicked = 'CMto'+str(DeftodtPicked[0])+'dt'+str(DeftodtPicked[1])
 
 DeftodtList = []
 DefTvarList = []
@@ -225,8 +226,10 @@ for idt in DefdtList:
     DefTvarto20.append('CMto20dt'+str(idt))
             
 if OnlySelVar:
+    AnatodtList = [DeftodtPicked]
     AnaTvarList = [DefTvarPicked]
 else:
+    AnatodtList = DeftodtList
     AnaTvarList = DefTvarList
     
 # DefSmearList = ['32','64','128']
