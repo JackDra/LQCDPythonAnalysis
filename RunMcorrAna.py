@@ -97,7 +97,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,DoPoF=
     print '----------------------------------------------------------------------------------'
     if RunType == 'TwoPt':
         print 'Two Point Analysis'
-        Wipe2pt(outputdir,statelist=StateSet,todtlist=DefTvarList,smlist=DefSmearList,DoPoF=DoPoF)
+        Wipe2pt(outputdir,statelist=StateSet,todtlist=TwoPtDefTvarList,smlist=DefSmearList,DoPoF=DoPoF)
         thisMomList = Get2ptSetMoms(outputdir,RunMomList,statelist=StateSet,todtlist=DefTvarList,smlist=DefSmearList)
         CreateTwoPt(DragpZ([qstrTOip(iq) for iq in thisMomList]),DefSmearList,DoPoF=DoPoF)
         print 'Two Point Analysis Complete'
