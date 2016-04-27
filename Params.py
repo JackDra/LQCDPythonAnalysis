@@ -190,7 +190,7 @@ DefRedGammaList = DefCombGammaList[len(DefGammaList):]
 
 DeftoList = [17,18,19,20,21,22,23]
 DefdtList = [2,3,4]
-DefTvarPicked = 'to18dt2'    
+DefTvarPicked = 'CMto18dt2'    
 
 DeftodtList = []
 DefTvarList = []
@@ -199,24 +199,24 @@ DefTvarDt2 = []
 DefTvarDt3 = []
 DefTvarDt4 = []
 for ito in DeftoList:
-    DefTvarDt1.append('to'+str(ito)+'dt1')
-    DefTvarDt2.append('to'+str(ito)+'dt2')
-    DefTvarDt3.append('to'+str(ito)+'dt3')
-    DefTvarDt4.append('to'+str(ito)+'dt4')
+    DefTvarDt1.append('CMto'+str(ito)+'dt1')
+    DefTvarDt2.append('CMto'+str(ito)+'dt2')
+    DefTvarDt3.append('CMto'+str(ito)+'dt3')
+    DefTvarDt4.append('CMto'+str(ito)+'dt4')
     for idt in DefdtList:
         DeftodtList.append((ito,idt))
-        DefTvarList.append('to'+str(ito)+'dt'+str(idt))
+        DefTvarList.append('CMto'+str(ito)+'dt'+str(idt))
 DefTvarto16 = []
 DefTvarto17 = []
 DefTvarto18 = []
 DefTvarto19 = []
 DefTvarto20 = []
 for idt in DefdtList:
-    DefTvarto16.append('to16dt'+str(idt))
-    DefTvarto17.append('to17dt'+str(idt))
-    DefTvarto18.append('to18dt'+str(idt))
-    DefTvarto19.append('to19dt'+str(idt))
-    DefTvarto20.append('to20dt'+str(idt))
+    DefTvarto16.append('CMto16dt'+str(idt))
+    DefTvarto17.append('CMto17dt'+str(idt))
+    DefTvarto18.append('CMto18dt'+str(idt))
+    DefTvarto19.append('CMto19dt'+str(idt))
+    DefTvarto20.append('CMto20dt'+str(idt))
             
 if OnlySelVar:
     AnaTvarList = [DefTvarPicked]
