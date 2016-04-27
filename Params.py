@@ -190,10 +190,11 @@ DefRedGammaList = DefCombGammaList[len(DefGammaList):]
 
 DeftoList = [17,18,19,20,21,22,23]
 DefdtList = [2,3,4]
-DefTvarPicked = 'CMto18dt2'    
+DefTvarPicked = 'CMto18dt2'
 
 DeftodtList = []
 DefTvarList = []
+TwoPtDefTvarList = []
 DefTvarDt1 = []
 DefTvarDt2 = []
 DefTvarDt3 = []
@@ -206,6 +207,7 @@ for ito in DeftoList:
     for idt in DefdtList:
         DeftodtList.append((ito,idt))
         DefTvarList.append('CMto'+str(ito)+'dt'+str(idt))
+        TwoPtDefTvarList.append('to'+str(ito)+'dt'+str(idt))
 DefTvarto16 = []
 DefTvarto17 = []
 DefTvarto18 = []

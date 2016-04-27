@@ -66,9 +66,9 @@ def CreateTwoPt(thisMomList,thisSmearList,DoPoF=True):
     
     
     if DoPoF:
-        thisTvarList = ['PoF'+str(PoFShifts)+iTvar for iTvar in DefTvarList]
+        thisTvarList = ['PoF'+str(PoFShifts)+iTvar for iTvar in TwoPtDefTvarList]
     else:
-        thisTvarList = ['CM'+iTvar for iTvar in DefTvarList]
+        thisTvarList = ['CM'+iTvar for iTvar in TwoPtDefTvarList]
     for iout,iTvar in zip(output,thisTvarList):
         [CMdata2pt,LEvec,REvec,Emass] = iout
 ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
