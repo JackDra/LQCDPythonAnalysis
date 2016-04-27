@@ -16,7 +16,7 @@ import time,datetime
 from MultiWrap import *
 from multiprocessing import Pool
 
-def CreateTwoPt(thisMomList,thisSmearList,DoPoF=True):
+def CreateTwoPt(thisMomList,thisSmearList):
     logfile = logdir+'LogTwoPt.log'
     errfile = logdir+'LogTwoPt.log'
     touch(logfile)
@@ -49,26 +49,18 @@ def CreateTwoPt(thisMomList,thisSmearList,DoPoF=True):
 
     if DoMulticore:
         thisPool = Pool(min(len(inputparams),AnaProc))
-        if DoPoF:
-            output = thisPool.map(CreatePoF2ptCfuns.mapper,inputparams)
-            thisPool.close()
-            thisPool.join()
-        else:
-            output = thisPool.map(CreateCM2ptCfuns.mapper,inputparams)
-            thisPool.close()
-            thisPool.join()
+        output = thisPool.map(CreatePoF2ptCfuns.mapper,inputparams)
+        output += thisPool.map(CreateCM2ptCfuns.mapper,inputparams)
+        thisPool.close()
+        thisPool.join()
     else:
         output = []
-        if DoPoF:
-            for iin in inputparams: output.append(CreatePoF2ptCfuns.mapper(iin))
-        else:
-            for iin in inputparams: output.append(CreateCM2ptCfuns.mapper(iin))
+        for iin in inputparams: output.append(CreatePoF2ptCfuns.mapper(iin))
+        for iin in inputparams: output.append(CreateCM2ptCfuns.mapper(iin))
     
     
-    if DoPoF:
-        thisTvarList = ['PoF'+str(PoFShifts)+iTvar for iTvar in TwoPtDefTvarList]
-    else:
-        thisTvarList = ['CM'+iTvar for iTvar in TwoPtDefTvarList]
+    thisTvarList = ['PoF'+str(PoFShifts)+iTvar for iTvar in TwoPtDefTvarList]
+    thisTvarList += ['CM'+iTvar for iTvar in TwoPtDefTvarList]
     for iout,iTvar in zip(output,thisTvarList):
         [CMdata2pt,LEvec,REvec,Emass] = iout
 ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)

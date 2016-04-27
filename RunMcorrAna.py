@@ -47,7 +47,7 @@ def CRFWrap(RunType,itsinkList,thisSmearList,iPrefList,thisMomList,iProj,igamma)
              DragpZ([qstrTOip(iq) for iq in thisMomList]),thisPGList={iProj:[igamma]},DontWriteZero=DRZ)
 
 
-def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,DoPoF=True):
+def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
 
     # print "running " + Curr + ' ' + thisCol + ' tsinks: ' + ' '.join(RunTSinkList)
     sys.stdout = sys.__stdout__
@@ -97,9 +97,9 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,DoPoF=
     print '----------------------------------------------------------------------------------'
     if RunType == 'TwoPt':
         print 'Two Point Analysis'
-        Wipe2pt(outputdir,statelist=StateSet,todtlist=TwoPtDefTvarList,smlist=DefSmearList,DoPoF=DoPoF)
+        Wipe2pt(outputdir,statelist=StateSet,todtlist=TwoPtDefTvarList,smlist=DefSmearList)
         thisMomList = Get2ptSetMoms(outputdir,RunMomList,statelist=StateSet,todtlist=DefTvarList,smlist=DefSmearList)
-        CreateTwoPt(DragpZ([qstrTOip(iq) for iq in thisMomList]),DefSmearList,DoPoF=DoPoF)
+        CreateTwoPt(DragpZ([qstrTOip(iq) for iq in thisMomList]),DefSmearList)
         print 'Two Point Analysis Complete'
     else:
         print 'Three Point Analysis '+Curr + ' ' + RunType + ' tsinks: ' + ' '.join(RunTSinkList)
@@ -180,12 +180,7 @@ CurrIn = sys.argv[1]
 
 thisPool = False
 if CurrIn == 'TwoPt':
-    if len(sys.argv) < 3: raise IOError("input Do Pencil of Function? (T/F) (shifts is in setup file)")
-    if sys.argv[2] == 'T' or 'PoF' in sys.argv[2]:
-        RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe)
-    elif sys.argv[2] == 'F' or 'CM' in sys.argv[2]:
-        RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe,DoPoF=False)
-    else: raise IOError("input Do Pencil of Function? (T/F) (shifts is in setup file)")
+    RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe)
 else:
     if len(sys.argv) < 3: raise IOError("input Collection of Data To compute as second argument (CM,TSink,REvec)")
     thisColIn = sys.argv[2]
