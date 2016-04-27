@@ -123,7 +123,6 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         thisMomList = thisMomList[1:]
         data3ptset = data3ptset[:,:,1:,:]
         RFr = RFr[:,:,1:,:]
-    print SetList
     ## data2ptset [ iset , ip , it ]
     ## data3ptset [ iset , igamma , ip , it ] bs1
     PrintCfunToFile(np.rollaxis(data3ptset,1),SetList,thisMomList,thisGammaList)
