@@ -61,10 +61,10 @@ def CreateTwoPt(thisMomList,thisSmearList,DoPoF=True):
         output = []
         if DoPoF:
             makeContextFunctions(CreatePoF2ptCfuns)
-            for iin in inputparams: output.append(CreatePoF2ptCfuns.mapper(*iin))
+            for iin in inputparams: output.append(CreatePoF2ptCfuns.mapper(iin))
         else:
             makeContextFunctions(CreateCM2ptCfuns)
-            for iin in inputparams: output.append(CreateCM2ptCfuns.mapper(*iin))
+            for iin in inputparams: output.append(CreateCM2ptCfuns.mapper(iin))
     
     
     if DoPoF:
