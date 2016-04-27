@@ -182,7 +182,7 @@ CurrIn = sys.argv[1]
 thisPool = False
 if CurrIn == 'TwoPt':
     if len(sys.argv) < 3: raise IOError("input Do Pencil of Function? (T/F) (shifts is in setup file)")
-    if sys.argv[2] == 'T':
+    if sys.argv[2] == 'T' or 'PoF' in sys.argv[2]:
         RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe)
     elif sys.argv[2] == 'F':
         RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe,DoPoF=False)
