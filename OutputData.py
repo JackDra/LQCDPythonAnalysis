@@ -115,7 +115,7 @@ def PrintLREvecMassToFile(thisLE,thisRE,thisEMass,thisMomList,thisTvar,DoPoF=Tru
                                  ' {0:20.10f}'.format(iEM) + '\n' )
                     f.write('\n')
             else:
-                f.write('         '+''.join([' {0:>20}'.format('sm'+DefSmearList[i]) for i in range(len(pLE[0]))])+' {0:>20}'.format('E-Mass')+'\n')
+                f.write('     '+''.join([' {0:>20}'.format('sm'+DefSmearList[i]) for i in range(len(pLE[0]))])+' {0:>20}'.format('E-Mass')+'\n')
                 for istate,iLE,iRE,iEM in zip(StateSet,pLE,pRE,pEMass):
                     f.write( 'L/R'+istate+' '+''.join(' {0:20.10f}'.format(k.real) for k in iLE.tolist())+' {0:20.10f}'.format(iEM) + '\n' )
 
