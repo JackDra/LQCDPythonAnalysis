@@ -211,7 +211,7 @@ for ito in DeftoList:
         TwoPtDefTvarList.append('to'+str(ito)+'dt'+str(idt))
         TwoTotDefTvarList.append('PoF'+str(PoFShifts)+'to'+str(ito)+'dt'+str(idt))
 
-TwoTotDefTvarList = DefTvarList+TwoTotDefTvarList
+TwoTotDefTvarList += DefTvarList
 DefTvarto16 = []
 DefTvarto17 = []
 DefTvarto18 = []
