@@ -50,9 +50,9 @@ def ReadSet(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList, thisDSL
                     f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
                     thisfilelist.append(directory+'/'+isource+'/@/'+fileprefix)
     f.close()
+    print 'number of configs = ' , len(thisfilelist)
+    print ''
     if ShowConfNum:
-        print 'number of configs = ' , len(thisfilelist)
-        print ''
         for ifile in thisfilelist:
             print ifile
         print ''
