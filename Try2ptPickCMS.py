@@ -65,6 +65,10 @@ def CreateTwoPt(thisMomList,thisSmearList):
         [CMdata2pt,LEvec,REvec,Emass] = iout
 ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
         C2out += CMdata2pt.tolist()
+        if 'PoF' in iTvar:
+            DoPoF = True
+        else:
+            DoPoF = False
         PrintLREvecMassToFile(LEvec,REvec,Emass,thisMomList,iTvar,DoPoF=DoPoF)
     print 'CMTech Total Time Taken: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
     start = time.time()
