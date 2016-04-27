@@ -199,15 +199,15 @@ else:
             # if iCurr != 'Tensor': continue
             if thisColIn == 'All':
                 for iCol in ReadColList:
-                    RunOffCorrs(thisPool,iCurr,iCol[0],iCol[1].split(),WipeThisSet=DefWipe)
+                    RunOffCorrs(thisPool,iCurr,iCol[0],RunTSinkList=iCol[1].split(),WipeThisSet=DefWipe)
             else:
-                RunOffCorrs(thisPool,iCurr,thisColIn,thisTSinkIn,WipeThisSet=DefWipe)
+                RunOffCorrs(thisPool,iCurr,thisColIn,RunTSinkList=thisTSinkIn,WipeThisSet=DefWipe)
     else:
         if thisColIn == 'All':
             for iCol in ReadColList:
-                RunOffCorrs(thisPool,CurrIn,iCol[0],iCol[1].split(),WipeThisSet=DefWipe)
+                RunOffCorrs(thisPool,CurrIn,iCol[0],RunTSinkList=iCol[1].split(),WipeThisSet=DefWipe)
         else:
-            RunOffCorrs(thisPool,CurrIn,thisColIn,thisTSinkIn,WipeThisSet=DefWipe)
+            RunOffCorrs(thisPool,CurrIn,thisColIn,RunTSinkList=thisTSinkIn,WipeThisSet=DefWipe)
         
 if thisPool != False:
     thisPool.close()
