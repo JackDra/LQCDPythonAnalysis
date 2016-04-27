@@ -31,7 +31,7 @@ def SortMySet(SLin,massset=False):
     SLout = []
     TSinkLout = []
     if massset:
-        for ism in DefSmList+TwoTotTvarList:
+        for ism in DefSmList+TwoTotDefTvarList:
             for iSLin in SLin:
                 if ism in iSLin and iSLin not in SLout:
                     SLout.append(iSLin)
@@ -151,7 +151,7 @@ def CreateMassSet(thisSmearL,thisStateList,thisTvarList,flipord=False):
         for istate in thisStateList:
             for itvar in thisTvarList:
                 SetGraph.append('state'+str(istate)+itvar)
-    return SortMySet(SetGraph)[0]
+    return SortMySet(SetGraph,massset=True)[0]
 
 
 ## dataCM [ istate , todt ]
