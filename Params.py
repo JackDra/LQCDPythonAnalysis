@@ -195,6 +195,7 @@ DefTvarPicked = 'CMto18dt2'
 DeftodtList = []
 DefTvarList = []
 TwoPtDefTvarList = []
+TwoTotDefTvarList = []
 DefTvarDt1 = []
 DefTvarDt2 = []
 DefTvarDt3 = []
@@ -208,6 +209,9 @@ for ito in DeftoList:
         DeftodtList.append((ito,idt))
         DefTvarList.append('CMto'+str(ito)+'dt'+str(idt))
         TwoPtDefTvarList.append('to'+str(ito)+'dt'+str(idt))
+        TwoTotDefTvarList.append('PoF'+str(PoFShifts)+'to'+str(ito)+'dt'+str(idt))
+
+TwoToTDefTvarList = DefTvarList+TwoTotDefTvarList
 DefTvarto16 = []
 DefTvarto17 = []
 DefTvarto18 = []

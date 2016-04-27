@@ -31,7 +31,7 @@ def SortMySet(SLin,massset=False):
     SLout = []
     TSinkLout = []
     if massset:
-        for ism in DefSmList+PoFTvarList+REvecTvarList+DefTvarList:
+        for ism in DefSmList+TwoTotTvarList:
             for iSLin in SLin:
                 if ism in iSLin and iSLin not in SLout:
                     SLout.append(iSLin)
