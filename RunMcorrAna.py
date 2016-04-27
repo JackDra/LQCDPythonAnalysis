@@ -110,8 +110,9 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
                 # itsinkList = [30,30]
                 iPrefList = [thisPrefList[it]]*len(itsinkList)
             else:
-                itsinkList,iPrefList = [itsink],[thisPrefList[it]]
-            thisSetList,this2ptSetList,dump = CreateSet(thisSmearL=wipeSL,thisStateL=StateSet,thisSingSmearL=wipeSL,
+                itsinkList,iPrefList = [int(itsink)],[thisPrefList[it]]
+            thisSetList,this2ptSetList,dump = CreateSet(thisSmearL=wipeSL,thisCMTSinkL=[str(itsink)]
+                                                        ,thisStateL=StateSet,thisSingSmearL=wipeSL,
                                                         thisTvarL=thisTvarList,thisTSinkL=[str(itsink)],
                                                         thisREvecTvarL=thisREvecTvarList,thisREvecTSinkL=[str(itsink)],
                                                         thisPoFTvarL=thisPoFTvarList,thisPoFTSinkL=[str(itsink)])
