@@ -44,25 +44,41 @@ def PrintFitToFile(data,dataChi,iset,filename,thisMomList,thisCutList):
     with open(filename+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
 
-    # with open(filename+'.xml','a+') as fb:
-    #     # print thisMomList
-    #     for iq,theq in enumerate(thisMomList):
-    #         fb.write('      '+theq+'\n')
-    #         for icut,fitdata,fitdataChi in zip(thisCutList,data[iq],dataChi[iq]):
-    #             # print ifitmin , ifitmax , fitdata.Avg , fitdata.Std , fitdataChi/float(fitlen)
-    #             fb.write( frmtstr.format(icut,fitdata[iset].Avg,fitdata[iset].Std,fitdataChi[iset])+ '\n' )
-                
-# # data = [ ip , icut , iset ]
-# def PrintFitBootToFile(data,filename,iset,thisMomList,thisCutList):
-#     with open(filename+'.boot.txt','a+') as fb:
-#         fb.write('         nboot '+str(nboot) + '\n')
-#         for iq,theq in enumerate(thisMomList):
-#             fb.write('      '+theq+'\n')
-#             for icut,fitdata in zip(thisCutList,data[iq]):
-#                 fb.write('   cut{0}\n'.format(icut))
-#                 for iboot,bootdata in zip(range(fitdata[iset].nboot),fitdata[iset].values):
-#                     fb.write( '{0} {1:20.10f}'.format(repr(iboot).rjust(4), bootdata)+ '\n' )
 
+def PrintLREvecMassToFile(thisLE,thisRE,thisEMass,thisMomList,thisTvar,DoPoF=True):
+    datadict = {'Eigen_solutions':{'Values':OrderedDict()}}
+    xmlMomList = map(ipTOqcond,thisMomList)
+    mkdir_p(outputdir+'/Mass/')
+    for ip,pLE,pRE,pEMass in zip(xmlMomList,thisLE,thisRE,thisEMass):
+        datadict['Eigen_solutions']['Values'][ip] = OrderedDict()
+        for istate,iLE,iRE,iEM in zip(StateSet,pLE,pRE,pEMass):
+            datadict['Eigen_solutions']['Values'][ip]['State'+str(istate)] = LREVecToFormat(iLE,iRE,iEM,DoPoF)
+    with open(outputdir+'/Mass/'+thisTvar+'LREM.xml','w') as f:
+        f.write( xmltodict.unparse(datadict,pretty=True))
+
+
+    # with open(outputdir+'/Mass/'+thisTvar+'LREM.txt','a+') as f:
+    #     for ip,pLE,pRE,pEMass in zip(thisMomList,thisLE,thisRE,thisEMass):
+    #         f.write(ipTOqstr(ip)+'\n')
+    #         if DoPoF:
+    #             f.write('         '+''.join([' {0:>20}'.format('sm'+DefSmearList[i]) for i in range(len(pLE[0])//(PoFShifts+1))])+' {0:>20}'.format('E-Mass')+'\n')
+    #             for istate,iLE,iRE,iEM in zip(StateSet,pLE,pRE,pEMass):
+    #                 for iPoF in range(PoFShifts+1):
+    #                     thisnsmears = len(iLE)//(PoFShifts+1)
+    #                     f.write( 'L/R'+istate+' PoF'+str(iPoF)+''.join(' {0:20.10f}'.format(k.real) for k in iLE.tolist()[iPoF*thisnsmears:(iPoF+1)*thisnsmears])+
+    #                              ' {0:20.10f}'.format(iEM) + '\n' )
+    #                 f.write('\n')
+    #         else:
+    #             f.write('     '+''.join([' {0:>20}'.format('sm'+DefSmearList[i]) for i in range(len(pLE[0]))])+' {0:>20}'.format('E-Mass')+'\n')
+    #             for istate,iLE,iRE,iEM in zip(StateSet,pLE,pRE,pEMass):
+    #                 f.write( 'L/R'+istate+' '+''.join(' {0:20.10f}'.format(k.real) for k in iLE.tolist())+' {0:20.10f}'.format(iEM) + '\n' )
+
+                # for iPoF in range(PoFShifts+1):
+                #     thisnsmears = len(iRE)//(PoFShifts+1)
+                #     f.write( 'R'+istate + ' PoF'+str(iPoF)+' '+ ''.join(' {0:20.10f}'.format(k.real) for k in iRE.tolist()[iPoF:iPoF+thisnsmears])+
+                #              ' {0:20.10f}'.format(iEM) + '\n' )
+
+        
 # ##data [ ip , icut , itsink ]
 # ##datafit [ ip , icut , ifit , par ] bs1
 # def PrintSumToFile(data,datafit,datafitchi,filename,thisFitList,thisMomList,thisTSinkList,thisCutList,frmtflag='f'):
@@ -108,28 +124,6 @@ def PrintFitToFile(data,dataChi,iset,filename,thisMomList,thisCutList):
 
 
 
-# def PrintLREvecMassToFile(thisLE,thisRE,thisEMass,thisMomList,thisTvar,DoPoF=True):
-#     mkdir_p(outputdir+'/Mass/')
-#     with open(outputdir+'/Mass/'+thisTvar+'LREM.txt','a+') as f:
-#         for ip,pLE,pRE,pEMass in zip(thisMomList,thisLE,thisRE,thisEMass):
-#             f.write(ipTOqstr(ip)+'\n')
-#             if DoPoF:
-#                 f.write('         '+''.join([' {0:>20}'.format('sm'+DefSmearList[i]) for i in range(len(pLE[0])//(PoFShifts+1))])+' {0:>20}'.format('E-Mass')+'\n')
-#                 for istate,iLE,iRE,iEM in zip(StateSet,pLE,pRE,pEMass):
-#                     for iPoF in range(PoFShifts+1):
-#                         thisnsmears = len(iLE)//(PoFShifts+1)
-#                         f.write( 'L/R'+istate+' PoF'+str(iPoF)+''.join(' {0:20.10f}'.format(k.real) for k in iLE.tolist()[iPoF*thisnsmears:(iPoF+1)*thisnsmears])+
-#                                  ' {0:20.10f}'.format(iEM) + '\n' )
-#                     f.write('\n')
-#             else:
-#                 f.write('     '+''.join([' {0:>20}'.format('sm'+DefSmearList[i]) for i in range(len(pLE[0]))])+' {0:>20}'.format('E-Mass')+'\n')
-#                 for istate,iLE,iRE,iEM in zip(StateSet,pLE,pRE,pEMass):
-#                     f.write( 'L/R'+istate+' '+''.join(' {0:20.10f}'.format(k.real) for k in iLE.tolist())+' {0:20.10f}'.format(iEM) + '\n' )
-
-#                 # for iPoF in range(PoFShifts+1):
-#                 #     thisnsmears = len(iRE)//(PoFShifts+1)
-#                 #     f.write( 'R'+istate + ' PoF'+str(iPoF)+' '+ ''.join(' {0:20.10f}'.format(k.real) for k in iRE.tolist()[iPoF:iPoF+thisnsmears])+
-#                 #              ' {0:20.10f}'.format(iEM) + '\n' )
 
 # ##C3set [ igamma , iset , it ] bs1
 

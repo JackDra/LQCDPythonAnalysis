@@ -2,6 +2,7 @@
 
 import xmltodict
 from collections import OrderedDict
+from Params import *
 
 def tstr(it):
     return 't'+str(it)
@@ -49,3 +50,21 @@ def FormatToDictAvgStdChi(String):
     return dict(zip(['Avg','Std','Chi'],FormatToAvgStdChi(String)))
 
 
+def LREVecToFormat(iLE,iRE,iEM,DoPoF):
+    if DoPoF:
+        SmPoFList = []
+        for iPoF in ['PoF0','PoF1']:
+            SmPoFList += [ism+'_'+iPoF for ism in DefSmList]
+    else:
+        SmPoFList = DefSmList
+    dictout = OrderedDict()
+    dictout['Emass'] = '{0:20.10f}'.format(iEMass)
+    dictout['Left_Evec'] = OrderedDict()
+    dictout['Right_Evec'] = OrderedDict()
+    for eLE,thiskey in zip(iLE,SmPoFList):
+        dictout['Left_Evec'][thiskey] = '{0:20.10f}'.format(eLE)
+    for eRE,thiskey in zip(iRE,SmPoFList):
+        dictout['Left_Evec'][thiskey] = '{0:20.10f}'.format(eRE)
+    return dictout
+        
+    
