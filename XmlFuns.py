@@ -22,7 +22,7 @@ def FormatToDictAvgStd(String):
 def RecursiveFTDAS(dictin):
     if isinstance(dictin,dict) or isinstance(dictin,OrderedDict):
         for ikey,idata in dictin.iteritems():
-            dictin[ikey] = BootNdimDict(idata)
+            dictin[ikey] = RecursiveFTDAS(idata)
         return dictin
     else:
         if isinstance(dictin,str):
