@@ -29,9 +29,9 @@ def FormatToDictAvgStd(String):
 def tstr(thist):
     return 't'+str(thist)
 
-def PrintToFile(thisdata,filename,thisTList,thisMomList,frmtflag='f'):
+def PrintToFile(thisdata,filename,thisTList,thisMomList,CalcFlag,frmtflag='f'):
     frmtstr = '{0:20.10'+frmtflag+'} {1:20.10'+frmtflag+'}'
-    datadict = {'Values':OrderedDict(),'Boots':OrderedDict()}
+    datadict = {CalcFlag:{'Values':OrderedDict(),'Boots':OrderedDict()}}
     for ip,pdata in zip(thisMomList,thisdata):
         tkeyList = map(tstr,thisTList)
         datadict['Values'][ipTOqcond(ip)] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,pdata)))
