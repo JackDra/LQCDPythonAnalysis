@@ -21,9 +21,7 @@ def ExpandSetList(thisSL):
         elif 'ALL' in iset:
             SLout += DefSetList
         else:
-            SLout += iset
-    print SLout
-    print SortMySet(SLout)[0]
+            SLout.append(iset)
     return SortMySet(SLout)[0]
 
 
