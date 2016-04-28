@@ -70,7 +70,7 @@ def iqTOip(iq):
 def ipTOqstr(ip):
     return qvecSet[int(ip)]
 
-def ipTOqscond(ip):
+def ipTOqcond(ip):
     return qvecSet[int(ip)].replace('=','').replace(' ','')
 
 def iqTOqstr(iq):
