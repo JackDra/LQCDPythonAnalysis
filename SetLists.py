@@ -126,7 +126,7 @@ def CreateSet(thisSmearL=DefSmearList,thisSingSmearL=SingSmearList,
               thisTSinkL=AllTSinkList,thisCMTSinkL=CMTSinkList,
               thisREvecTvarL=REvecTvarList,thisREvecTSinkL=REvecTSinkList,
               thisPoFTvarL=PoFTvarList,thisPoFTSinkL=PoFTSinkList):
-    SetGraph,SetMassGraph = [],set([])
+    SetGraph,SetMassGraph = [],[]
     SetTsink = []
     SetMassGraph = CreateMassSet(thisSmearL,thisStateL,thisTvarL)
     SetGraph += CreateGenericSet(thisCMTSinkL,thisSmearL,[],[])
@@ -135,7 +135,7 @@ def CreateSet(thisSmearL=DefSmearList,thisSingSmearL=SingSmearList,
     SetGraph += CreateGenericSet(thisREvecTSinkL,[],thisStateL,thisREvecTvarL)        
     SetGraph += CreateGenericSet(thisPoFTSinkL,[],thisStateL,thisPoFTvarL)
     SetGraph,SetTsink = SortMySet(SetGraph,massset=False)
-    return [SetGraph,SortMySet(list(SetMassGraph))[0],SetTsink]
+    return [SetGraph,SortMySet(SetMassGraph,massset=True)[0],SetTsink]
 
 
 
