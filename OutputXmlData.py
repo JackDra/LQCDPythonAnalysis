@@ -17,7 +17,7 @@ def PrintToFile(thisdata,filename,thisTList,thisMomList,frmtflag='f'):
     print ''
     for ip,pdata in zip(thisMomList,thisdata):        
         pdataform = [frmtstr.format(tdata.Avg,tdata.Std) for tdata in pdata]
-        datadict['mom'][ipTOqstr(ip)] = {'t values':OrderedDict(zip(str,thisTList),pdataform)}
+        datadict['mom'][ipTOqstr(ip)] = {'t values':OrderedDict(zip(map(str,thisTList),pdataform))}
     with open(filename+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
 
