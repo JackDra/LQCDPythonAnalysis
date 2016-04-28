@@ -53,7 +53,6 @@ def ReadRFFile(filename,bootfn='',thisMomList=[]):
                 for tdata in momdata.itervalues():
                     dictout[thismom]['Vals'].append(tdata['Avg'])
                     dictout[thismom]['Valserr'].append(tdata['Std'])
-    print dictout
     return dictout
         
                     

@@ -31,7 +31,7 @@ def PrintToFile(thisdata,filename,thisTList,thisMomList,CalcFlag,frmtflag='f'):
 # data = [ ip , icut , iset ]
 def PrintFitToFile(data,dataChi,iset,filename,thisMomList,thisCutList):
     datadict = {'Fits':{'Values':OrderedDict(),'Boots':OrderedDict()}}
-    xmlMomList = map(ipTOqcond,thisMomList)
+    xmlMomList = map(qstrTOqcond,thisMomList)
     xmlCutList = map(xmlcut,thisCutList)
     for ip,pdata,pdataChi in zip(xmlMomList,data,dataChi):        
         datadict['Fits']['Values'][ip] = OrderedDict()
