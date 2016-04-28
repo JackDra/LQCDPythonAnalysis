@@ -20,6 +20,8 @@ def ExpandSetList(thisSL):
             SLout += CreateREvecSet(CMTSinkList,[PickedState],AnaTvarList)[0]
         elif 'ALL' in iset:
             SLout += DefSetList
+        else:
+            SLout += iset
     return SortMySet(SLout)[0]
 
 
