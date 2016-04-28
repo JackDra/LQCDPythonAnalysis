@@ -138,7 +138,7 @@ def PrintCfunToFile(C3set,thisSetList,thisMomList, thisGammaList):
             filename = (gammadir + iset+thegamma)
             PrintToFile(np.array(setdata),filename,range(64),thisMomList,frmtflag='e')
             filename = (bootgammadir + iset+thegamma)
-            PrintBootToFile(np.array(setdata),filename,range(64),thisMomList,frmtflag='e')
+            PrintBootToFile(np.array(setdata),filename,range(64),thisMomList)
 
 ##dataset [ igamma , iset , ip , it ] bs1
 
