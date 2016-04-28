@@ -47,7 +47,6 @@ thisGammaList = CreateGammaList(feedin['gamma'])
 [thisReadSetList,thisReadSet2pt,thisTSinkList] = CreateSet(thisSmearL=ReadSmearList,thisTvarL=[],thisTSinkL=ReadTSinkList)
 
 start = time.time()
-print 'Running multiprocessor fits'
 inputparams = []
 for igamma in thisGammaList:
     if 'doub' not in igamma and 'sing' not in igamma and 'twopt' not in igamma:
@@ -57,10 +56,12 @@ for igamma in thisGammaList:
 makeContextFunctions(FitSumWrap)
 
 if DoMulticore:
+    print 'Running multiprocessor fits'
     thisPool = Pool(processes=min(len(inputparams),AnaProc))
     thisPool.map(FitSumWrap.mapper,inputparams)
     thisPool.close()
     thisPool.join()
 else:
+    print 'Running single processor fits'
     for ipar in inputparams : FitSumWrap(*ipar)
 print 'All Done, time taken:' , GetTimeStr(time.time()-start)
