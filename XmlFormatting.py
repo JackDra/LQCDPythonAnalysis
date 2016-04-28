@@ -83,3 +83,9 @@ def ParamsToFitFlag(theFitList):
         for ifit in cutfitlist:
             listout[icut].append('r'+str(ifit[0])+'-'+str(ifit[1]))
     return listout
+
+
+def FitFlagXmlToOld(param,fitr):
+    oldparam = param.replace('slope','sl').replace('constant','con')
+    oldfitr = fitr[1:].split('-')
+    return 'fit '+oldparam+' '+oldfitr[0]+'-'+oldfitr[1]

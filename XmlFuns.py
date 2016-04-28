@@ -15,7 +15,10 @@ def RecFTDAS(dictin):
             dictout = map(float,dictin)
         except:
             try:
-                dictout = FormatToDictAvgStd(str(dictin))
+                if len(str(dictin).split()) == 3:
+                    dictout = FormatToDictAvgStdChi(str(dictin))
+                elif len(str(dictin).split()) == 2:
+                    dictout = FormatToDictAvgStd(str(dictin))
             except:
                 raise TypeError('final value in dictionary is not string')
         return dictout

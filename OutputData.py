@@ -78,27 +78,27 @@ from OutputXmlData import *
 #                 f.write('\n')
 
 
-def PrintSumBootToFile(data,datafit,filename,thisFitList,thisMomList,thisTSinkList,thisCutList,frmtflag='f'):
-    frmtstr = '{0:3} {1:20.10'+frmtflag+'}'
-    with open(filename+'.boot.txt','a+') as fb:
-        fb.write('         nboot '+str(nboot) + '\n')
-        for theq,qdata,qdatafit,qfitlist in zip(thisMomList,data,datafit,thisFitList):
-            fb.write('      '+theq+'\n')
-            for icut,cutdata,cutdatafit,cutfitlist in zip(thisCutList,qdata,qdatafit,qfitlist):
-                for itsink,tsinkdata in zip(thisTSinkList,cutdata):
-                    fb.write('    cut{0} tsink{1}:'.format(icut,itsink)+ '\n' )
-                    for iboot,bootdata in zip(range(nboot),tsinkdata.values):
-                        fb.write( frmtstr.format(iboot, bootdata)+ '\n' )
-                fb.write('\n')
-                for ifit,fitdata in zip(cutfitlist,cutdatafit):
-                    fb.write('fit cut{0} sl {1:2}{2:2}:'.format(icut,ifit[0],ifit[1])+'\n')
-                    for iboot,bootdata in enumerate(fitdata[0].values):
-                        fb.write(frmtstr.format(iboot,bootdata)+'\n')
-                for ifit,fitdata in zip(cutfitlist,cutdatafit):
-                    fb.write('fit cut{0} con{1:2}{2:2}:'.format(icut,ifit[0],ifit[1])+'\n')
-                    for iboot,bootdata in enumerate(fitdata[1].values):
-                        fb.write(frmtstr.format(iboot,bootdata)+'\n')
-                fb.write('\n')
+# def PrintSumBootToFile(data,datafit,filename,thisFitList,thisMomList,thisTSinkList,thisCutList,frmtflag='f'):
+#     frmtstr = '{0:3} {1:20.10'+frmtflag+'}'
+#     with open(filename+'.boot.txt','a+') as fb:
+#         fb.write('         nboot '+str(nboot) + '\n')
+#         for theq,qdata,qdatafit,qfitlist in zip(thisMomList,data,datafit,thisFitList):
+#             fb.write('      '+theq+'\n')
+#             for icut,cutdata,cutdatafit,cutfitlist in zip(thisCutList,qdata,qdatafit,qfitlist):
+#                 for itsink,tsinkdata in zip(thisTSinkList,cutdata):
+#                     fb.write('    cut{0} tsink{1}:'.format(icut,itsink)+ '\n' )
+#                     for iboot,bootdata in zip(range(nboot),tsinkdata.values):
+#                         fb.write( frmtstr.format(iboot, bootdata)+ '\n' )
+#                 fb.write('\n')
+#                 for ifit,fitdata in zip(cutfitlist,cutdatafit):
+#                     fb.write('fit cut{0} sl {1:2}{2:2}:'.format(icut,ifit[0],ifit[1])+'\n')
+#                     for iboot,bootdata in enumerate(fitdata[0].values):
+#                         fb.write(frmtstr.format(iboot,bootdata)+'\n')
+#                 for ifit,fitdata in zip(cutfitlist,cutdatafit):
+#                     fb.write('fit cut{0} con{1:2}{2:2}:'.format(icut,ifit[0],ifit[1])+'\n')
+#                     for iboot,bootdata in enumerate(fitdata[1].values):
+#                         fb.write(frmtstr.format(iboot,bootdata)+'\n')
+#                 fb.write('\n')
 
 
 
@@ -174,8 +174,8 @@ def PrintSumSetToFile(sumdata,sumfits,sumfitschi,thisFitList,thissm, thisGammaMo
         mkdir_p(bootgammadir)
         filename = gammadir +thissm+thegamma
         PrintSumToFile(gammadata,gammafitdata,gfdchi,filename,gfitlist,thisMomList,thisTSinkList,thisCutList)
-        filename = bootgammadir +thissm+thegamma
-        PrintSumBootToFile(gammadata,gammafitdata,filename,gfitlist,thisMomList,thisTSinkList,thisCutList)
+        # filename = bootgammadir +thissm+thegamma
+        # PrintSumBootToFile(gammadata,gammafitdata,filename,gfitlist,thisMomList,thisTSinkList,thisCutList)
 
 
 
@@ -399,39 +399,39 @@ def PrintOSFToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2ptLis
                                     f.write(frmstr.format(iboot,float(bootdata))+'\n')
     print '                                             '
 
-def PrintFFSet(FFin,Set,Mass,SetMass,theCurr):
-    FFdir = outputdir +'/FormFactors/'+theCurr+'/'
-    FFbootdir = FFdir + 'boots/'
-    mkdir_p(FFbootdir)
-    thisfile = FFdir +theCurr+Set
-    thisfileboot = FFbootdir +theCurr+Set
-    with open(thisfile+'.txt','w') as f:
-        if 'Chi' not in Mass.keys(): Mass['Chi'] = float('NaN')
-        f.write('Mass {0} {1:20.10f} {2:20.10f} {3:20.10f}'
-                .format(SetMass,Mass['Avg'],Mass['Std'],Mass['Chi'])+' \n')
-        f.write('\n')
-        f.write('{0:>6}'.format('q**2'))
-        for iff in range(NoFFPars[theCurr]):
-            f.write('{0:>20}{1:>20}'.format('FF'+str(iff+1),'FF'+str(iff+1)+'Err'))
-        f.write('{0:>20}'.format('Chi**2 PDF\n'))
-        for iqsqrd,qdata in FFin.iteritems():
-            if 'Boot' not in qdata.keys(): continue
-            f.write('{0:>6}'.format(iqsqrd))
-            for iFF in qdata['Boot']:
-                f.write(' {0:20.10f} {1:20.10f}'.format(iFF.Avg,iFF.Std))
-            f.write(' {0:20.10f} \n'.format(qdata['Chi']))
-    with open(thisfileboot+'.boot.txt','w') as f:
-        if 'Chi' not in Mass.keys(): Mass['Chi'] = float('NaN')
-        f.write('nboot = ' + str(nboot)+ '\n')
-        f.write('Mass {0} {1:20.10f} {2:20.10f} {3:20.10f}'
-                .format(SetMass,Mass['Avg'],Mass['Std'],Mass['Chi'])+' \n')
-        for iFF in range(NoFFPars[theCurr]):
-            f.write('{0:>12}'.format('FF'+str(iFF+1))+'\n')
-            for iqsqrd,qdata in FFin.iteritems():
-                if 'Boot' not in qdata.keys(): continue
-                f.write('{0:>6}'.format(iqsqrd)+'\n')
-                for iboot,bootval in enumerate(qdata['Boot'][iFF].values):
-                    f.write('{0:3} {1:20.10f}'.format(iboot,bootval)+'\n')
+# def PrintFFSet(FFin,Set,Mass,SetMass,theCurr):
+#     FFdir = outputdir +'/FormFactors/'+theCurr+'/'
+#     FFbootdir = FFdir + 'boots/'
+#     mkdir_p(FFbootdir)
+#     thisfile = FFdir +theCurr+Set
+#     thisfileboot = FFbootdir +theCurr+Set
+#     with open(thisfile+'.txt','w') as f:
+#         if 'Chi' not in Mass.keys(): Mass['Chi'] = float('NaN')
+#         f.write('Mass {0} {1:20.10f} {2:20.10f} {3:20.10f}'
+#                 .format(SetMass,Mass['Avg'],Mass['Std'],Mass['Chi'])+' \n')
+#         f.write('\n')
+#         f.write('{0:>6}'.format('q**2'))
+#         for iff in range(NoFFPars[theCurr]):
+#             f.write('{0:>20}{1:>20}'.format('FF'+str(iff+1),'FF'+str(iff+1)+'Err'))
+#         f.write('{0:>20}'.format('Chi**2 PDF\n'))
+#         for iqsqrd,qdata in FFin.iteritems():
+#             if 'Boot' not in qdata.keys(): continue
+#             f.write('{0:>6}'.format(iqsqrd))
+#             for iFF in qdata['Boot']:
+#                 f.write(' {0:20.10f} {1:20.10f}'.format(iFF.Avg,iFF.Std))
+#             f.write(' {0:20.10f} \n'.format(qdata['Chi']))
+#     with open(thisfileboot+'.boot.txt','w') as f:
+#         if 'Chi' not in Mass.keys(): Mass['Chi'] = float('NaN')
+#         f.write('nboot = ' + str(nboot)+ '\n')
+#         f.write('Mass {0} {1:20.10f} {2:20.10f} {3:20.10f}'
+#                 .format(SetMass,Mass['Avg'],Mass['Std'],Mass['Chi'])+' \n')
+#         for iFF in range(NoFFPars[theCurr]):
+#             f.write('{0:>12}'.format('FF'+str(iFF+1))+'\n')
+#             for iqsqrd,qdata in FFin.iteritems():
+#                 if 'Boot' not in qdata.keys(): continue
+#                 f.write('{0:>6}'.format(iqsqrd)+'\n')
+#                 for iboot,bootval in enumerate(qdata['Boot'][iFF].values):
+#                     f.write('{0:3} {1:20.10f}'.format(iboot,bootval)+'\n')
 
 
 
