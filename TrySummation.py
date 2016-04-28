@@ -44,11 +44,12 @@ feedin = InputParams(sys.argv[1:])
 
 thisGammaList = CreateGammaList(feedin['gamma'])
 
-thisReadSetList = feedin['set']
-thisTSinkList,thisReadSet2pt = GetTsinkSmLists(feedin['set'])
-thisTSinkList = map(unxmlTSink,thisTSinkList)
+# thisReadSetList = feedin['set']
+# thisTSinkList,thisReadSet2pt = GetTsinkSmLists(feedin['set'])
+# thisTSinkList = map(unxmlTSink,thisTSinkList)
 
-# [thisReadSetList,thisReadSet2pt,thisTSinkList] = CreateSet(thisSmearL=ReadSmearList,thisTvarL=[],thisTSinkL=ReadTSinkList)
+[thisReadSetList,thisReadSet2pt,thisTSinkList] = CreateSet(thisSingSmearL=SingSmearList,thisTSinkL=ReadTSinkList,
+                                                           thisSmearL=[],thisREvecTvarL=[],thisPoFTvarL=[],thisTvarList=[])
 
 ShowSetLists(thisReadSetList)
 
