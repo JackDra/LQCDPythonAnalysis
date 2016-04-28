@@ -12,13 +12,11 @@ import cPickle as pickle
 from collections import OrderedDict
 
 def PrintToFile(thisdata,filename,thisTList,thisMomList,frmtflag='f'):
-    frmtstr = '{0:20.10'+frmtflag+'}'
+    frmtstr = '{0:20.10'+frmtflag+'} {1:20.10'+frmtflag+'}'
     datadict = {'mom':{}}
     for ip,pdata in zip(thisMomList,thisdata):        
-        pdataformAvg = [frmtstr.format(tdata.Avg) for tdata in pdata]
-        pdataformStd = [frmtstr.format(tdata.Std) for tdata in pdata]
-        datadict['mom'][ipTOqstr(ip)] = {'Average':{'t values':OrderedDict(zip(map(str,thisTList),pdataformAvg))}}
-        datadict['mom'][ipTOqstr(ip)] = {'Error':{'t values':OrderedDict(zip(map(str,thisTList),pdataformStd))}}
+        pdataform = [frmtstr.format(tdata.Avg,tdata.Std) for tdata in pdata]
+        datadict['mom'][ipTOqstr(ip)] = {'t values':OrderedDict(zip(map(str,thisTList),pdataform))}
     with open(filename+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
 
