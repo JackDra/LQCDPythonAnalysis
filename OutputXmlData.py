@@ -2,7 +2,6 @@
 
 from Params import *
 from FitParams import *
-import numpy as np
 from BootTest import BootStrap1
 from MiscFuns import *
 from SetLists import GetTsinkSmLists
