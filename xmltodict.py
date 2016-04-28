@@ -343,11 +343,6 @@ def _emit(key, value, content_handler,
         attrs = OrderedDict()
         children = []
         for ik, iv in v.items():
-            print 'DEBUG'
-            print ik
-            print iv
-            print cdata_key
-            print 'DEBUG'
             if ik == cdata_key:
                 cdata = iv
                 continue
