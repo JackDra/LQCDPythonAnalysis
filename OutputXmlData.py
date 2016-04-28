@@ -34,26 +34,15 @@ def PrintToFile(thisdata,filename,thisTList,thisMomList,CalcFlag,frmtflag='f'):
     datadict = {CalcFlag:{'Values':OrderedDict(),'Boots':OrderedDict()}}
     for ip,pdata in zip(thisMomList,thisdata):
         tkeyList = map(tstr,thisTList)
-        datadict['Values'][ipTOqcond(ip)] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,pdata)))
+        datadict[CalcFlag]['Values'][ipTOqcond(ip)] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,pdata)))
     for ip,pdata in zip(thisMomList,thisdata):        
         tkeyList = map(tstr,thisTList)
-        datadict['Boots'][ipTOqcond(ip)] = OrderedDict()
+        datadict[CalcFlag]['Boots'][ipTOqcond(ip)] = OrderedDict()
         for itstr,tdata in zip(map(tstr,thisTList),pdata):
-            datadict['Boots'][ipTOqcond(ip)][itstr] = tdata.values
+            datadict[CalcFlag]['Boots'][ipTOqcond(ip)][itstr] = tdata.values
     with open(filename+'.xml','w') as f:
-        f.write( xmltodict.unparse(datadict,pretty=True))
+        f.write( xmltodict.unparse(datadict[CalcFlag],pretty=True))
 
-# def PrintBootToFile(thisdata,filename,thisTList,thisMomList):
-#     datadict = {'mom':OrderedDict()}
-#     for ip,pdata in zip(thisMomList,thisdata):
-#         datadict['mom'][ipTOqcond(ip)] = {}
-#         for it,tdata in zip(thisTList,pdata):
-#             try:
-#                 datadict['mom'][ipTOqcond(ip)][tstr(it)] = {'Boot':tdata.values}
-#             except:
-#                 datadict['mom'][ipTOqcond(ip)][tstr(it)] = {'Boot':tdata}
-#     with open(filename+'.boot.dat','w') as fb:
-#         pickle.dump(datadict,fb)
 
 
 # # data = [ ip , icut , iset ]
