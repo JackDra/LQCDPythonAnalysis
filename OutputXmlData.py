@@ -15,7 +15,7 @@ from collections import OrderedDict
 def PrintToFile(thisdata,filename,thisTList,thisMomList,frmtflag='f'):
     datadict = {'mom':{}}
     for ip,pdata in zip(thisMomList,thisdata):
-        datadict['mom'][ip] = {'t values':OrderedDict((str(it),'{0:20.10'+frmtflag+'}'.format(idata)) for (it,idata) in zip(thisTList,pdata))}
+        datadict['mom'][ip] = {'t values':OrderedDict((str(it),('{0:20.10'+frmtflag+'}').format(idata)) for (it,idata) in zip(thisTList,pdata))}
     with open(filename+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
 
