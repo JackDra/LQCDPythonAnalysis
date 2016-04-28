@@ -16,8 +16,10 @@ def PrintToFile(thisdata,filename,thisTList,thisMomList,frmtflag='f'):
     datadict = {'mom':{}}
     print ''
     for ip,pdata in zip(thisMomList,thisdata):
+        
         datadict['mom'][ip] = {'t values':OrderedDict((str(it),frmtstr.format(tdata.Avg,tdata.Std)) for (it,tdata) in zip(thisTList,pdata))}
         for it in thisTList:
+            print 'mom',ip,'t values',str(it)
             print datadict['mom'][ip]['t values'][str(it)]
     with open(filename+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
