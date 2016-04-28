@@ -13,7 +13,7 @@ from collections import OrderedDict
 
 def PrintToFile(thisdata,filename,thisTList,thisMomList,frmtflag='f'):
     frmtstr = '{0:20.10'+frmtflag+'} {1:20.10'+frmtflag+'}'
-    datadict = {'mom':{}}
+    datadict = {'mom':OrderedDict()}
     for ip,pdata in zip(thisMomList,thisdata):        
         pdataform = [frmtstr.format(tdata.Avg,tdata.Std) for tdata in pdata]
         datadict['mom'][ipTOqstr(ip)] = {'t values':OrderedDict(zip(map(str,thisTList),pdataform))}
@@ -21,7 +21,7 @@ def PrintToFile(thisdata,filename,thisTList,thisMomList,frmtflag='f'):
         f.write( xmltodict.unparse(datadict,pretty=True))
 
 def PrintBootToFile(thisdata,filename,thisTList,thisMomList):
-    datadict = {'mom':{}}
+    datadict = {'mom':OrderedDict()}
     for ip,pdata in zip(thisMomList,thisdata):
         datadict['mom'][ipTOqstr(ip)] = {'t values':{}}
         for it,tdata in zip(thisTList,pdata):
