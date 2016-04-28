@@ -10,7 +10,7 @@ import re
 try:
     import xmltodict
 except:
-    raise EnvironmentError("please have xmltodict installed (git pull \"https://github.com/martinblech/xmltodict.git\"")
+    raise EnvironmentError("please have xmltodict installed (git clone \"https://github.com/martinblech/xmltodict.git\") and install")
 
 ##CHANGE StringFix.py FUNCTION##
 
