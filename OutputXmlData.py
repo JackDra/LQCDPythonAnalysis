@@ -10,21 +10,7 @@ from FormFactors import NoFFPars
 import xmltodict
 import cPickle as pickle
 from collections import OrderedDict
-
-def AvgStdToFormat(Avg,Std,frmtflag='f'):
-    return ('{0:20.10'+frmtflag+'} {1:20.10'+frmtflag+'}').format(Avg,Std)
-
-def DictAvgStdToFormat(Dict,frmtflag='f'):
-    return AvgStdToFormat(Dict['Avg'],Dict['Std'],frmtflag=frmtflag)
-
-def BootAvgStdToFormat(Dict,frmtflag='f'):
-    return AvgStdToFormat(Dict.Avg,Dict.Std,frmtflag=frmtflag)
-
-def FormatToAvgStd(String):
-    return String.strip().split()
-
-def FormatToDictAvgStd(String):
-    return {zip(['Avg','Std'],FormatToAvgStd(String))}
+from XmlFuns import *
 
 def tstr(thist):
     return 't'+str(thist)
