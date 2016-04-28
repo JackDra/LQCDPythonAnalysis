@@ -9,7 +9,6 @@ from Params import *
 
 
 def ReadXmlDict(filein):
-    if '.txt' in filename: filename = filename.replace('.txt','.xml')
     with open(filein,'r') as f:
         data = RecFTDAS(xmltodict.parse(f.read()))
     return data
@@ -24,6 +23,7 @@ def ReadXmlArrayed(filein):
 ##outputdict = { thismom , [tVals] / [Vals] / [Valserr] / [Boot] bs }
 def ReadRFFile(filename,bootfn='',thisMomList=[]):
     dictout = {}
+    if '.txt' in filename: filename = filename.replace('.txt','.xml')
     if os.path.isfile(filename):
         data = ReadXmlDict(filename)
         data = data[data.keys()[0]]
@@ -53,6 +53,7 @@ def ReadRFFile(filename,bootfn='',thisMomList=[]):
                 for tdata in momdata.itervalues():
                     dictout[thismom]['Vals'].append(tdata['Avg'])
                     dictout[thismom]['Valserr'].append(tdata['Std'])
+    print dictout
     return dictout
         
                     

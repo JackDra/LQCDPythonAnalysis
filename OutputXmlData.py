@@ -33,8 +33,6 @@ def PrintFitToFile(data,dataChi,iset,filename,thisMomList,thisCutList):
     datadict = {'Fits':{'Values':OrderedDict(),'Boots':OrderedDict()}}
     xmlMomList = map(ipTOqcond,thisMomList)
     xmlCutList = map(xmlcut,thisCutList)
-    print ''
-    print len(data),len(dataChi),len(xmlMomList)
     for ip,pdata,pdataChi in zip(xmlMomList,data,dataChi):        
         datadict['Fits']['Values'][ip] = OrderedDict()
         for icutstr,cutdata,cutdataChi in zip(xmlCutList,pdata,pdataChi):
