@@ -64,7 +64,7 @@ def LREVecToFormat(iLE,iRE,iEM,DoPoF):
     for eLE,thiskey in zip(iLE,SmPoFList):
         dictout['Left_Evec'][thiskey] = '{0:20.10f}'.format(eLE)
     for eRE,thiskey in zip(iRE,SmPoFList):
-        dictout['Left_Evec'][thiskey] = '{0:20.10f}'.format(eRE)
+        dictout['Right_Evec'][thiskey] = '{0:20.10f}'.format(eRE)
     return dictout
         
     
