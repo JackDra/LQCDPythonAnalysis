@@ -52,6 +52,8 @@ thisGammaList = CreateGammaList(feedin['gamma'])
                                                            thisSmearL=[],thisREvecTvarL=[],thisPoFTvarL=[],thisTvarL=[])
 
 ShowSetLists(thisReadSetList)
+print thisReadSet2pt
+print thisTSinkList
 
 start = time.time()
 inputparams = []
