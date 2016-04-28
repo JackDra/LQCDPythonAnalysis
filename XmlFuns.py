@@ -10,6 +10,7 @@ def RecFTDAS(dictin):
             dictin[ikey] = RecFTDAS(idata)
         return dictin
     else:
+        print dictout
         try:
             dictout = map(float,dictin)
         except:
