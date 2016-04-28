@@ -9,7 +9,7 @@ from Params import *
 
 
 def ReadXmlDict(filein):
-    print filein
+    if '.txt' in filename: filename = filename.replace('.txt','.xml')
     with open(filein,'r') as f:
         data = RecFTDAS(xmltodict.parse(f.read()))
     return data
