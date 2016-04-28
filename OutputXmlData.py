@@ -67,9 +67,9 @@ def PrintSumToFile(data,datafit,datafitchi,filename,thisFitList,thisMomList,this
     xmlCutList = map(xmlcut,thisCutList)
     xmlTSinkList = map(xmlTSink,thisTSinkList)
     for ip,pdata,pdatafit,pdatafitchi,pfitlist in zip(xmlMomList,data,datafit,datafitchi,thisFitList):
-        thisFitList = ParamsToFitFlag(pfitlist)
+        xmlFitList = ParamsToFitFlag(pfitlist)
         datadict['Sum']['Values'][ip] = OrderedDict()
-        for icut,cutdata,cutdatafit,cutdatafitchi,cutfitlist in zip(xmlCutList,pdata,pdatafit,pdatafitchi,thisFitList):
+        for icut,cutdata,cutdatafit,cutdatafitchi,cutfitlist in zip(xmlCutList,pdata,pdatafit,pdatafitchi,xmlFitList):
             datadict['Sum']['Values'][ip][icut] = OrderedDict()
             datadict['Sum']['Values'][ip][icut]['slope'] = OrderedDict()
             datadict['Sum']['Values'][ip][icut]['constant'] = OrderedDict()
@@ -81,9 +81,9 @@ def PrintSumToFile(data,datafit,datafitchi,filename,thisFitList,thisMomList,this
                 datadict['Sum']['Values'][ip][icut]['constant'][ifit] = BootAvgStdChiToFormat(fitdata[1],fitdatachi)
 
     for ip,pdata,pdatafit,pdatafitchi,pfitlist in zip(xmlMomList,data,datafit,datafitchi,thisFitList):
-        thisFitList = ParamsToFitFlag(pfitlist)
+        xmlFitList = ParamsToFitFlag(pfitlist)
         datadict['Sum']['Boots'][ip] = OrderedDict()
-        for icut,cutdata,cutdatafit,cutdatafitchi,cutfitlist in zip(xmlCutList,pdata,pdatafit,pdatafitchi,thisFitList):
+        for icut,cutdata,cutdatafit,cutdatafitchi,cutfitlist in zip(xmlCutList,pdata,pdatafit,pdatafitchi,xmlFitList):
             datadict['Sum']['Boots'][ip][icut] = OrderedDict()
             datadict['Sum']['Boots'][ip][icut]['slope'] = OrderedDict()
             datadict['Sum']['Boots'][ip][icut]['constant'] = OrderedDict()
