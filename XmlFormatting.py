@@ -81,5 +81,5 @@ def ParamsToFitFlag(theFitList):
     for icut,cutfitlist in enumerate(theFitList):    
         listout.append([])
         for ifit in cutfitlist:
-            listout[icut] = 'r'+str(ifit[0])+'-'+str(ifit[1])
+            listout[icut].append('r'+str(ifit[0])+'-'+str(ifit[1]))
     return listout
