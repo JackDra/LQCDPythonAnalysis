@@ -9,6 +9,7 @@ from Params import *
 
 
 def ReadXmlDict(filein):
+    print filein
     with open(filein,'r') as f:
         data = RecFTDAS(xmltodict.parse(f.read()))
     return data
