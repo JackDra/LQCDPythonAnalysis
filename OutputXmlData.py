@@ -13,9 +13,10 @@ import cPickle as pickle
 from collections import OrderedDict
 
 def PrintToFile(thisdata,filename,thisTList,thisMomList,frmtflag='f'):
+    frmtstr = '{1:20.10'+frmtflag+'} {2:20.10'+frmtflag+'}'
     datadict = {'mom':{}}
     for ip,pdata in zip(thisMomList,thisdata):
-        datadict['mom'][ip] = {'t values':OrderedDict((str(it),('{0:20.10'+frmtflag+'}').format(idata)) for (it,idata) in zip(thisTList,pdata))}
+        datadict['mom'][ip] = {'t values':OrderedDict((str(it),frmstr.format(idata.Avg,idata.Std)) for (it,idata) in zip(thisTList,pdata))}
     with open(filename+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
 
@@ -30,17 +31,6 @@ def PrintBootToFile(thisdata,filename,thisTList,thisMomList):
                 datadict['mom'][ip]['t values'][str(it)] = {'Boot':tdata}
     with open(filename+'.boot.dat','w') as fb:
         pickle.dump(datadict,fb)
-    # frmtstr = '{0} {1:20.10'+frmtflag+'}'
-    # WriteBoot = False
-    # if os.path.isfile(filename+'.boot.txt'): WriteBoot = True
-    # with open(filename+'.boot.txt','a+') as fb:
-    #     if WriteBoot: fb.write('      nboot '+str(nboot) + '\n')
-    #     for ip,pdata in zip(thisMomList,data):
-    #         fb.write('   '+ipTOqstr(ip)+'\n')
-    #         for it,tdata in zip(thisTList,pdata):
-    #             fb.write( 't '+str(it)+'\n')
-    #             for iboot,bootdata in zip(range(nboot),tdata.values):
-    #                 fb.write( frmtstr.format(repr(iboot).rjust(8), bootdata)+ '\n' )
 
 
 # # data = [ ip , icut , iset ]
