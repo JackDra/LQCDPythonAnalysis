@@ -18,7 +18,7 @@ def PrintToFile(thisdata,filename,thisTList,thisMomList,CalcFlag,frmtflag='f'):
     xmlMomList = map(ipTOqcond,thisMomList)
     tkeyList = map(tstr,thisTList)
     for ip,pdata in zip(xmlMomList,thisdata):
-        datadict[CalcFlag]['Values'][ip] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,pdata)))
+        datadict[CalcFlag]['Values'][ip] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,pdata,[frmtflag]*len(pdata))))
     for ip,pdata in zip(xmlMomList,thisdata):
         datadict[CalcFlag]['Boots'][ip] = OrderedDict()
         for itstr,tdata in zip(tkeyList,pdata):
