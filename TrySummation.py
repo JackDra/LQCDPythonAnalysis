@@ -49,7 +49,7 @@ thisGammaList = CreateGammaList(feedin['gamma'])
 # thisTSinkList = map(unxmlTSink,thisTSinkList)
 
 [thisReadSetList,thisReadSet2pt,thisTSinkList] = CreateSet(thisSingSmearL=SingSmearList,thisTSinkL=ReadTSinkList,
-                                                           thisSmearL=[],thisREvecTvarL=[],thisPoFTvarL=[],thisTvarList=[])
+                                                           thisSmearL=[],thisREvecTvarL=[],thisPoFTvarL=[],thisTvarL=[])
 
 ShowSetLists(thisReadSetList)
 
