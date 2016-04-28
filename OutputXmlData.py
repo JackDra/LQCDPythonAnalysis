@@ -11,12 +11,27 @@ import xmltodict
 import cPickle as pickle
 from collections import OrderedDict
 
+def AvgStdToFormat(Avg,Std,frmtflag='f'):
+    return ('{0:20.10'+frmtflag+'} {1:20.10'+frmtflag+'}').format(Avg,Std)
+
+def DictAvgStdToFormat(Dict,frmtflag='f'):
+    return AvgStdToFormat(Dict['Avg'],Dict['Std'],frmtflag=frmtflag)
+
+def BootAvgStdToFormat(Dict,frmtflag='f'):
+    return AvgStdToFormat(Dict.Avg,Dict.Std,frmtflag=frmtflag)
+
+def FormatToAvgStd(String):
+    return String.strip().split()
+
+def FormatToDictAvgStd(String):
+    return {zip(['Avg','Std'],FormatToAvgStd(String))}
+
+
 def PrintToFile(thisdata,filename,thisTList,thisMomList,frmtflag='f'):
     frmtstr = '{0:20.10'+frmtflag+'} {1:20.10'+frmtflag+'}'
     datadict = {'mom':OrderedDict()}
     for ip,pdata in zip(thisMomList,thisdata):        
-        pdataform = [frmtstr.format(tdata.Avg,tdata.Std) for tdata in pdata]
-        datadict['mom'][ipTOqstr(ip)] = {'t values':OrderedDict(zip(map(str,thisTList),pdataform))}
+        datadict['mom'][ipTOqstr(ip)] = {'t values':OrderedDict(zip(map(str,thisTList),map(BootAvgStdToFormat,pdata)))}
     with open(filename+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
 
