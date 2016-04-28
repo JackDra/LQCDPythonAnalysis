@@ -14,7 +14,7 @@ from FFParams import *
 import time,datetime
 import copy
 from InputArgs import *
-
+from XmlFormatting import *
 
 
 
@@ -46,6 +46,7 @@ thisGammaList = CreateGammaList(feedin['gamma'])
 
 thisReadSetList = feedin['set']
 thisTSinkList,thisReadSet2pt = GetTsinkSmLists(feedin['set'])
+thisTSinkList = map(unxmlTSink,thisTSinkList)
 
 # [thisReadSetList,thisReadSet2pt,thisTSinkList] = CreateSet(thisSmearL=ReadSmearList,thisTvarL=[],thisTSinkL=ReadTSinkList)
 
