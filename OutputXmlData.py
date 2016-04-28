@@ -26,40 +26,50 @@ def FormatToAvgStd(String):
 def FormatToDictAvgStd(String):
     return {zip(['Avg','Std'],FormatToAvgStd(String))}
 
+def tstr(thist):
+    return 't'+str(thist)
 
 def PrintToFile(thisdata,filename,thisTList,thisMomList,frmtflag='f'):
     frmtstr = '{0:20.10'+frmtflag+'} {1:20.10'+frmtflag+'}'
     datadict = {'mom':OrderedDict()}
     for ip,pdata in zip(thisMomList,thisdata):        
-        datadict['mom'][ipTOqstr(ip)] = {'t values':OrderedDict(zip(map(str,thisTList),map(BootAvgStdToFormat,pdata)))}
+        datadict['mom'][ipTOqcond(ip)] = OrderedDict(('Values',OrderedDict(zip(map(tstr,thisTList),map(BootAvgStdToFormat,pdata)))))
+        datadict['mom'][ipTOqcond(ip)]['Boots'] = OrderedDict()
+        for itstr,tdata in zip(map(tstr,thisTList),pdata):
+            datadict['mom'][ipTOqcond(ip)]['Boots'][itstr] = tdata.values
     with open(filename+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
 
-def PrintBootToFile(thisdata,filename,thisTList,thisMomList):
-    datadict = {'mom':OrderedDict()}
-    for ip,pdata in zip(thisMomList,thisdata):
-        datadict['mom'][ipTOqstr(ip)] = {'t values':{}}
-        for it,tdata in zip(thisTList,pdata):
-            try:
-                datadict['mom'][ipTOqstr(ip)]['t values'][str(it)] = {'Boot':tdata.values}
-            except:
-                datadict['mom'][ipTOqstr(ip)]['t values'][str(it)] = {'Boot':tdata}
-    with open(filename+'.boot.dat','w') as fb:
-        pickle.dump(datadict,fb)
+# def PrintBootToFile(thisdata,filename,thisTList,thisMomList):
+#     datadict = {'mom':OrderedDict()}
+#     for ip,pdata in zip(thisMomList,thisdata):
+#         datadict['mom'][ipTOqcond(ip)] = {}
+#         for it,tdata in zip(thisTList,pdata):
+#             try:
+#                 datadict['mom'][ipTOqcond(ip)][tstr(it)] = {'Boot':tdata.values}
+#             except:
+#                 datadict['mom'][ipTOqcond(ip)][tstr(it)] = {'Boot':tdata}
+#     with open(filename+'.boot.dat','w') as fb:
+#         pickle.dump(datadict,fb)
 
 
 # # data = [ ip , icut , iset ]
 # def PrintFitToFile(data,dataChi,iset,filename,thisMomList,thisCutList):
-#     with open(filename+'.txt','a+') as fb:
+#     frmtstr = 'cut{0} {1:20.10f} {2:20.10f} {3:20.10f}'
+#     datadict = {'mom':OrderedDict()}
+#     for ip,pdata in zip(thisMomList,thisdata):        
+#         datadict['mom'][ipTOqcond(ip)] = {'t values':OrderedDict(zip(map(str,thisTList),map(BootAvgStdToFormat,pdata)))}
+#     with open(filename+'.xml','w') as f:
+#         f.write( xmltodict.unparse(datadict,pretty=True))
+
+#     with open(filename+'.xml','a+') as fb:
 #         # print thisMomList
 #         for iq,theq in enumerate(thisMomList):
 #             fb.write('      '+theq+'\n')
 #             for icut,fitdata,fitdataChi in zip(thisCutList,data[iq],dataChi[iq]):
 #                 # print ifitmin , ifitmax , fitdata.Avg , fitdata.Std , fitdataChi/float(fitlen)
-#                 fb.write( 'cut{0} {1:20.10f} {2:20.10f} {3:20.10f}'.format(icut,
-#                                                                         fitdata[iset].Avg,fitdata[iset].Std,
-#                                                                         fitdataChi[iset])+ '\n' )
-
+#                 fb.write( frmtstr.format(icut,fitdata[iset].Avg,fitdata[iset].Std,fitdataChi[iset])+ '\n' )
+                
 # # data = [ ip , icut , iset ]
 # def PrintFitBootToFile(data,filename,iset,thisMomList,thisCutList):
 #     with open(filename+'.boot.txt','a+') as fb:

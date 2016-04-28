@@ -137,8 +137,8 @@ def PrintCfunToFile(C3set,thisSetList,thisMomList, thisGammaList):
             print 'Printing : ' , thegamma , iset , '                \r',
             filename = (gammadir + iset+thegamma)
             PrintToFile(np.array(setdata),filename,range(64),thisMomList,frmtflag='e')
-            filename = (bootgammadir + iset+thegamma)
-            PrintBootToFile(np.array(setdata),filename,range(64),thisMomList)
+            # filename = (bootgammadir + iset+thegamma)
+            # PrintBootToFile(np.array(setdata),filename,range(64),thisMomList)
 
 ##dataset [ igamma , iset , ip , it ] bs1
 
@@ -156,8 +156,8 @@ def PrintSetToFile(dataset,thisSetList,thisMomList, thisGammaList,tsink):
                 tlist = range(tsource,int(tsink)+1)
             filename = (gammadir +iset+thegamma)
             PrintToFile(setdata,filename,tlist,thisMomList)
-            filename = (bootgammadir +iset+thegamma)
-            PrintBootToFile(setdata,filename,tlist,thisMomList)
+            # filename = (bootgammadir +iset+thegamma)
+            # PrintBootToFile(setdata,filename,tlist,thisMomList)
 
 
 ##sumdata [ igamma , ip , icut , itsink ] bs1
