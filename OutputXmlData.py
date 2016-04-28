@@ -73,7 +73,6 @@ def PrintSumToFile(data,datafit,datafitchi,filename,thisFitList,thisMomList,this
             datadict['Sum']['Values'][ip][icut] = OrderedDict()
             datadict['Sum']['Values'][ip][icut]['slope'] = OrderedDict()
             datadict['Sum']['Values'][ip][icut]['constant'] = OrderedDict()
-            datadict['Sum']['Values'][ip][icut] = OrderedDict()
             for itsink,tsinkdata in zip(xmlTSinkList,cutdata):
                 datadict['Sum']['Values'][ip][icut][itsink] = BootAvgStdToFormat(tsinkdata)
             for ifit,fitdata,fitdatachi in zip(cutfitlist,cutdatafit,cutdatafitchi):
@@ -87,7 +86,6 @@ def PrintSumToFile(data,datafit,datafitchi,filename,thisFitList,thisMomList,this
             datadict['Sum']['Boots'][ip][icut] = OrderedDict()
             datadict['Sum']['Boots'][ip][icut]['slope'] = OrderedDict()
             datadict['Sum']['Boots'][ip][icut]['constant'] = OrderedDict()
-            datadict['Sum']['Boots'][ip][icut] = OrderedDict()
             for itsink,tsinkdata in zip(xmlTSinkList,cutdata):
                 datadict['Sum']['Boots'][ip][icut][itsink] = tsinkdata.values
             for ifit,fitdata,fitdatachi in zip(cutfitlist,cutdatafit,cutdatafitchi):
