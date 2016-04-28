@@ -33,7 +33,8 @@ def PrintToFile(thisdata,filename,thisTList,thisMomList,frmtflag='f'):
     frmtstr = '{0:20.10'+frmtflag+'} {1:20.10'+frmtflag+'}'
     datadict = {'mom':OrderedDict()}
     for ip,pdata in zip(thisMomList,thisdata):        
-        datadict['mom'][ipTOqcond(ip)] = OrderedDict(('Values',OrderedDict(zip(map(tstr,thisTList),map(BootAvgStdToFormat,pdata)))))
+        tkeyList = map(tstr,thisTList)
+        datadict['mom'][ipTOqcond(ip)] = OrderedDict([('Values',OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,pdata))))])
         datadict['mom'][ipTOqcond(ip)]['Boots'] = OrderedDict()
         for itstr,tdata in zip(map(tstr,thisTList),pdata):
             datadict['mom'][ipTOqcond(ip)]['Boots'][itstr] = tdata.values
