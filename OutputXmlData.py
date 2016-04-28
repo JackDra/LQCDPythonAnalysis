@@ -37,11 +37,11 @@ def PrintFitToFile(data,dataChi,iset,filename,thisMomList,thisCutList):
     for ip,pdata,pdataChi in zip(xmlMomList,data,dataChi):        
         datadict['Fits']['Values'][ip] = OrderedDict()
         for icutstr,cutdata,cutdataChi in zip(xmlCutList,pdata,pdataChi):
-            datadict['Fits']['Values'][ip][icutstr] = OrderedDict(zip(xmlCutList,map(BootAvgStdChiToFormat,cutdata,cutdataChi)))
+            datadict['Fits']['Values'][ip][icutstr] = OrderedDict(zip(xmlCutList,map(BootAvgStdChiToFormat,cutdata[iset],cutdataChi[iset])))
     for ip,pdata in zip(xmlMomList,data):        
         datadict['Fits']['Boots'][ip] = OrderedDict()
         for icutstr,cutdata in zip(xmlCutList,pdata):
-            datadict['Fits']['Boots'][ip][icutstr] = cutdata.values
+            datadict['Fits']['Boots'][ip][icutstr] = cutdata[iset].values
     with open(filename+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
 
