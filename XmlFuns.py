@@ -21,6 +21,7 @@ def FormatToDictAvgStd(String):
 
 def RecursiveFTDAS(dictin):
     if isinstance(dictin,dict) or isinstance(dictin,OrderedDict):
+        print dictin
         if isinstance(dictin,str):
             return FormatToDictAvgStr(dictin)
         else:
