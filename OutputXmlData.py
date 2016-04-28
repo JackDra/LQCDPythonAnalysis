@@ -31,13 +31,15 @@ def tstr(thist):
 
 def PrintToFile(thisdata,filename,thisTList,thisMomList,frmtflag='f'):
     frmtstr = '{0:20.10'+frmtflag+'} {1:20.10'+frmtflag+'}'
-    datadict = {'mom':OrderedDict()}
+    datadict = {'Values':OrderedDict(),'Boots':OrderedDict()}
+    for ip,pdata in zip(thisMomList,thisdata):
+        tkeyList = map(tstr,thisTList)
+        datadict['Values'][ipTOqcond(ip)] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,pdata)))
     for ip,pdata in zip(thisMomList,thisdata):        
         tkeyList = map(tstr,thisTList)
-        datadict['mom'][ipTOqcond(ip)] = OrderedDict([('Values',OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,pdata))))])
-        datadict['mom'][ipTOqcond(ip)]['Boots'] = OrderedDict()
+        datadict['Boots'][ipTOqcond(ip)] = OrderedDict()
         for itstr,tdata in zip(map(tstr,thisTList),pdata):
-            datadict['mom'][ipTOqcond(ip)]['Boots'][itstr] = tdata.values
+            datadict['Boots'][ipTOqcond(ip)][itstr] = tdata.values
     with open(filename+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
 
