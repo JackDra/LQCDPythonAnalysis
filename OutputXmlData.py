@@ -67,6 +67,7 @@ def PrintSumToFile(data,datafit,datafitchi,filename,thisFitList,thisMomList,this
     xmlCutList = map(xmlcut,thisCutList)
     xmlTSinkList = map(xmlTSink,thisTSinkList)
     for ip,pdata,pdatafit,pdatafitchi,pfitlist in zip(xmlMomList,data,datafit,datafitchi,thisFitList):
+        print pfitlist
         xmlFitList = ParamsToFitFlag(pfitlist)
         datadict['Sum']['Values'][ip] = OrderedDict()
         for icut,cutdata,cutdatafit,cutdatafitchi,cutfitlist in zip(xmlCutList,pdata,pdatafit,pdatafitchi,xmlFitList):
@@ -82,6 +83,7 @@ def PrintSumToFile(data,datafit,datafitchi,filename,thisFitList,thisMomList,this
 
     for ip,pdata,pdatafit,pdatafitchi,pfitlist in zip(xmlMomList,data,datafit,datafitchi,thisFitList):
         xmlFitList = ParamsToFitFlag(pfitlist)
+        print pfitlist
         print xmlFitList
         datadict['Sum']['Boots'][ip] = OrderedDict()
         for icut,cutdata,cutdatafit,cutdatafitchi,cutfitlist in zip(xmlCutList,pdata,pdatafit,pdatafitchi,xmlFitList):
