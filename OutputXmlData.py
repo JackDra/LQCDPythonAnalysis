@@ -57,47 +57,63 @@ def PrintLREvecMassToFile(thisLE,thisRE,thisEMass,thisMomList,thisTvar,DoPoF=Tru
         f.write( xmltodict.unparse(datadict,pretty=True))
 
 
-    # with open(outputdir+'/Mass/'+thisTvar+'LREM.txt','a+') as f:
-    #     for ip,pLE,pRE,pEMass in zip(thisMomList,thisLE,thisRE,thisEMass):
-    #         f.write(ipTOqstr(ip)+'\n')
-    #         if DoPoF:
-    #             f.write('         '+''.join([' {0:>20}'.format('sm'+DefSmearList[i]) for i in range(len(pLE[0])//(PoFShifts+1))])+' {0:>20}'.format('E-Mass')+'\n')
-    #             for istate,iLE,iRE,iEM in zip(StateSet,pLE,pRE,pEMass):
-    #                 for iPoF in range(PoFShifts+1):
-    #                     thisnsmears = len(iLE)//(PoFShifts+1)
-    #                     f.write( 'L/R'+istate+' PoF'+str(iPoF)+''.join(' {0:20.10f}'.format(k.real) for k in iLE.tolist()[iPoF*thisnsmears:(iPoF+1)*thisnsmears])+
-    #                              ' {0:20.10f}'.format(iEM) + '\n' )
-    #                 f.write('\n')
-    #         else:
-    #             f.write('     '+''.join([' {0:>20}'.format('sm'+DefSmearList[i]) for i in range(len(pLE[0]))])+' {0:>20}'.format('E-Mass')+'\n')
-    #             for istate,iLE,iRE,iEM in zip(StateSet,pLE,pRE,pEMass):
-    #                 f.write( 'L/R'+istate+' '+''.join(' {0:20.10f}'.format(k.real) for k in iLE.tolist())+' {0:20.10f}'.format(iEM) + '\n' )
-
-                # for iPoF in range(PoFShifts+1):
-                #     thisnsmears = len(iRE)//(PoFShifts+1)
-                #     f.write( 'R'+istate + ' PoF'+str(iPoF)+' '+ ''.join(' {0:20.10f}'.format(k.real) for k in iRE.tolist()[iPoF:iPoF+thisnsmears])+
-                #              ' {0:20.10f}'.format(iEM) + '\n' )
 
         
-# ##data [ ip , icut , itsink ]
-# ##datafit [ ip , icut , ifit , par ] bs1
-# def PrintSumToFile(data,datafit,datafitchi,filename,thisFitList,thisMomList,thisTSinkList,thisCutList,frmtflag='f'):
-#     frmtstr = '    cut{0} tsink{3}: {1:20.10'+frmtflag+'} {2:20.10'+frmtflag+'}'
-#     frmtfitstr = ' {0:20.10'+frmtflag+'} {1:20.10'+frmtflag+'} {2:20.10'+frmtflag+'}'
-#     with open(filename+'.txt','a+') as f:
-#         for theq,qdata,qdatafit,qdatafitchi,qfitlist in zip(thisMomList,data,datafit,datafitchi,thisFitList):
-#             f.write(theq+'\n')
-#             for icut,cutdata,cutdatafit,cutdatafitchi,cutfitlist in zip(thisCutList,qdata,qdatafit,qdatafitchi,qfitlist):
-#                 for itsink,tsinkdata in zip(thisTSinkList,cutdata):
-#                     f.write( frmtstr.format(icut, tsinkdata.Avg, tsinkdata.Std,itsink) + '\n' )
-#                 f.write('\n')
-#                 for ifit,fitdata,fitdatachi in zip(cutfitlist,cutdatafit,cutdatafitchi):
-#                     f.write('fit cut{0} sl {1:2}{2:2}:'.format(icut,ifit[0],ifit[1]) +
-#                             frmtfitstr.format(fitdata[0].Avg,fitdata[0].Std,fitdatachi)+'\n')
-#                 for ifit,fitdata,fitdatachi in zip(cutfitlist,cutdatafit,cutdatafitchi):
-#                     f.write('fit cut{0} con{1:2}{2:2}:'.format(icut,ifit[0],ifit[1]) +
-#                             frmtfitstr.format(fitdata[1].Avg,fitdata[1].Std,fitdatachi)+'\n')
-#                 f.write('\n')
+##data [ ip , icut , itsink ]
+##datafit [ ip , icut , ifit , par ] bs1
+def PrintSumToFile(data,datafit,datafitchi,filename,thisFitList,thisMomList,thisTSinkList,thisCutList,frmtflag='f'):
+    datadict = {'Sum':{'Values':OrderedDict(),'Boots':OrderedDict()}}
+    xmlMomList = map(qstrTOqcond,thisMomList)
+    xmlCutList = map(xmlcut,thisCutList)
+    xmlTSinkList = map(xmlTSink,thisTSinkList)
+    xmlFitList = map(ParamsToFitFlag,thisFitList)
+    for ip,pdata,pdatafit,pdatafitchi,pfitlist in zip(xmlMomList,data,datafit,datafitchi,xmlFitList):
+        datadict['Sum']['Values'][ip] = OrderedDict()
+        for icut,cutdata,cutdatafit,cutdatafitchi,cutfitlist in zip(xmlCutList,pdata,pdatafit,pdatafitchi,pfitlist):
+            datadict['Sum']['Values'][ip][icut] = OrderedDict()
+            datadict['Sum']['Values'][ip][icut]['slope'] = OrderedDict()
+            datadict['Sum']['Values'][ip][icut]['constant'] = OrderedDict()
+            datadict['Sum']['Values'][ip][icut] = OrderedDict()
+            for itsink,tsinkdata in zip(xmlTSinkList,cutdata):
+                datadict['Sum']['Values'][ip][icut][itsink] = BootAvgStdToFormat(tsinkdata)
+            for ifit,fitdata,fitdatachi in zip(cutfitlist,cutdatafit,cutdatafitchi):
+                datadict['Sum']['Values'][ip][icut]['slope'][ifit] = BootAvgStdChiToFormat(fitdata[0],fitdatachi)
+            for ifit,fitdata,fitdatachi in zip(cutfitlist,cutdatafit,cutdatafitchi):
+                datadict['Sum']['Values'][ip][icut]['constant'][ifit] = BootAvgStdChiToFormat(fitdata[1],fitdatachi)
+
+    for ip,pdata,pdatafit,pdatafitchi,pfitlist in zip(xmlMomList,data,datafit,datafitchi,xmlFitList):
+        datadict['Sum']['Boots'][ip] = OrderedDict()
+        for icut,cutdata,cutdatafit,cutdatafitchi,cutfitlist in zip(xmlCutList,pdata,pdatafit,pdatafitchi,pfitlist):
+            datadict['Sum']['Boots'][ip][icut] = OrderedDict()
+            datadict['Sum']['Boots'][ip][icut]['slope'] = OrderedDict()
+            datadict['Sum']['Boots'][ip][icut]['constant'] = OrderedDict()
+            datadict['Sum']['Boots'][ip][icut] = OrderedDict()
+            for itsink,tsinkdata in zip(xmlTSinkList,cutdata):
+                datadict['Sum']['Boots'][ip][icut][itsink] = tsinkdata.values
+            for ifit,fitdata,fitdatachi in zip(cutfitlist,cutdatafit,cutdatafitchi):
+                datadict['Sum']['Boots'][ip][icut]['slope'][ifit] = fitdata[0].values
+            for ifit,fitdata,fitdatachi in zip(cutfitlist,cutdatafit,cutdatafitchi):
+                datadict['Sum']['Boots'][ip][icut]['constant'][ifit] = fitdata[1].values
+
+    with open(filename+'.xml','w') as f:
+        f.write( xmltodict.unparse(datadict,pretty=True))
+
+    # frmtstr = '    cut{0} tsink{3}: {1:20.10'+frmtflag+'} {2:20.10'+frmtflag+'}'
+    # frmtfitstr = ' {0:20.10'+frmtflag+'} {1:20.10'+frmtflag+'} {2:20.10'+frmtflag+'}'
+    # with open(filename+'.txt','a+') as f:
+    #     for theq,qdata,qdatafit,qdatafitchi,qfitlist in zip(thisMomList,data,datafit,datafitchi,thisFitList):
+    #         f.write(theq+'\n')
+    #         for icut,cutdata,cutdatafit,cutdatafitchi,cutfitlist in zip(thisCutList,qdata,qdatafit,qdatafitchi,qfitlist):
+    #             for itsink,tsinkdata in zip(thisTSinkList,cutdata):
+    #                 f.write( frmtstr.format(icut, tsinkdata.Avg, tsinkdata.Std,itsink) + '\n' )
+    #             f.write('\n')
+    #             for ifit,fitdata,fitdatachi in zip(cutfitlist,cutdatafit,cutdatafitchi):
+    #                 f.write('fit cut{0} sl {1:2}{2:2}:'.format(icut,ifit[0],ifit[1]) +
+    #                         frmtfitstr.format(fitdata[0].Avg,fitdata[0].Std,fitdatachi)+'\n')
+    #             for ifit,fitdata,fitdatachi in zip(cutfitlist,cutdatafit,cutdatafitchi):
+    #                 f.write('fit cut{0} con{1:2}{2:2}:'.format(icut,ifit[0],ifit[1]) +
+    #                         frmtfitstr.format(fitdata[1].Avg,fitdata[1].Std,fitdatachi)+'\n')
+    #             f.write('\n')
 
 
 # def PrintSumBootToFile(data,datafit,filename,thisFitList,thisMomList,thisTSinkList,thisCutList,frmtflag='f'):

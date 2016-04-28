@@ -13,7 +13,7 @@ def untstr(it):
 def xmlcut(icut):
     return 'cut'+str(icut)
 
-def unxmlstr(icut):
+def unxmlcut(icut):
     return int(icut.replace('cut',''))
 
 
@@ -50,6 +50,7 @@ def FormatToDictAvgStdChi(String):
     return dict(zip(['Avg','Std','Chi'],FormatToAvgStdChi(String)))
 
 
+
 def LREVecToFormat(iLE,iRE,iEM,DoPoF):
     if DoPoF:
         SmPoFList = []
@@ -68,3 +69,17 @@ def LREVecToFormat(iLE,iRE,iEM,DoPoF):
     return dictout
         
     
+
+def xmlTSink(thestr):
+    return 'tsink'+str(thestr)
+
+def unxmlTSink(thestr):
+    return int(thestr.replace('tsink',''))
+
+def ParamsToFitFlag(theFitList):
+    listout = []
+    for icut,cutfitlist in enumerate(theFitList):    
+        listout.append([])
+        for ifit in cutfitlist:
+            listout[icut] = 'r'+str(ifit[0])+'-'+str(ifit[1])
+    return listout

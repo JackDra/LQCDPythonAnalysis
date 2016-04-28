@@ -59,23 +59,23 @@ from OutputXmlData import *
 
 ##data [ ip , icut , itsink ]
 ##datafit [ ip , icut , ifit , par ] bs1
-def PrintSumToFile(data,datafit,datafitchi,filename,thisFitList,thisMomList,thisTSinkList,thisCutList,frmtflag='f'):
-    frmtstr = '    cut{0} tsink{3}: {1:20.10'+frmtflag+'} {2:20.10'+frmtflag+'}'
-    frmtfitstr = ' {0:20.10'+frmtflag+'} {1:20.10'+frmtflag+'} {2:20.10'+frmtflag+'}'
-    with open(filename+'.txt','a+') as f:
-        for theq,qdata,qdatafit,qdatafitchi,qfitlist in zip(thisMomList,data,datafit,datafitchi,thisFitList):
-            f.write(theq+'\n')
-            for icut,cutdata,cutdatafit,cutdatafitchi,cutfitlist in zip(thisCutList,qdata,qdatafit,qdatafitchi,qfitlist):
-                for itsink,tsinkdata in zip(thisTSinkList,cutdata):
-                    f.write( frmtstr.format(icut, tsinkdata.Avg, tsinkdata.Std,itsink) + '\n' )
-                f.write('\n')
-                for ifit,fitdata,fitdatachi in zip(cutfitlist,cutdatafit,cutdatafitchi):
-                    f.write('fit cut{0} sl {1:2}{2:2}:'.format(icut,ifit[0],ifit[1]) +
-                            frmtfitstr.format(fitdata[0].Avg,fitdata[0].Std,fitdatachi)+'\n')
-                for ifit,fitdata,fitdatachi in zip(cutfitlist,cutdatafit,cutdatafitchi):
-                    f.write('fit cut{0} con{1:2}{2:2}:'.format(icut,ifit[0],ifit[1]) +
-                            frmtfitstr.format(fitdata[1].Avg,fitdata[1].Std,fitdatachi)+'\n')
-                f.write('\n')
+# def PrintSumToFile(data,datafit,datafitchi,filename,thisFitList,thisMomList,thisTSinkList,thisCutList,frmtflag='f'):
+#     frmtstr = '    cut{0} tsink{3}: {1:20.10'+frmtflag+'} {2:20.10'+frmtflag+'}'
+#     frmtfitstr = ' {0:20.10'+frmtflag+'} {1:20.10'+frmtflag+'} {2:20.10'+frmtflag+'}'
+#     with open(filename+'.txt','a+') as f:
+#         for theq,qdata,qdatafit,qdatafitchi,qfitlist in zip(thisMomList,data,datafit,datafitchi,thisFitList):
+#             f.write(theq+'\n')
+#             for icut,cutdata,cutdatafit,cutdatafitchi,cutfitlist in zip(thisCutList,qdata,qdatafit,qdatafitchi,qfitlist):
+#                 for itsink,tsinkdata in zip(thisTSinkList,cutdata):
+#                     f.write( frmtstr.format(icut, tsinkdata.Avg, tsinkdata.Std,itsink) + '\n' )
+#                 f.write('\n')
+#                 for ifit,fitdata,fitdatachi in zip(cutfitlist,cutdatafit,cutdatafitchi):
+#                     f.write('fit cut{0} sl {1:2}{2:2}:'.format(icut,ifit[0],ifit[1]) +
+#                             frmtfitstr.format(fitdata[0].Avg,fitdata[0].Std,fitdatachi)+'\n')
+#                 for ifit,fitdata,fitdatachi in zip(cutfitlist,cutdatafit,cutdatafitchi):
+#                     f.write('fit cut{0} con{1:2}{2:2}:'.format(icut,ifit[0],ifit[1]) +
+#                             frmtfitstr.format(fitdata[1].Avg,fitdata[1].Std,fitdatachi)+'\n')
+#                 f.write('\n')
 
 
 def PrintSumBootToFile(data,datafit,filename,thisFitList,thisMomList,thisTSinkList,thisCutList,frmtflag='f'):
