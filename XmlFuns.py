@@ -25,6 +25,7 @@ def RecursiveFTDAS(dictin):
             dictin[ikey] = RecursiveFTDAS(idata)
         return dictin
     else:
+        print dictin
         if isinstance(dictin,str):
             return FormatToDictAvgStr(dictin)
         else:
