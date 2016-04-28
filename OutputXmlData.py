@@ -16,9 +16,9 @@ def PrintToFile(thisdata,filename,thisTList,thisMomList,frmtflag='f'):
     datadict = {'mom':{}}
     print ''
     for ip,pdata in zip(thisMomList,thisdata):
-        datadict['mom'][ip] = {'t values':OrderedDict(('t='+str(it),frmtstr.format(tdata.Avg,tdata.Std)) for (it,tdata) in zip(thisTList,pdata))}
+        datadict['mom'][ip] = {'t values':OrderedDict((str(it),frmtstr.format(tdata.Avg,tdata.Std)) for (it,tdata) in zip(thisTList,pdata))}
         for it in thisTList:
-            print datadict['mom'][ip]['t values']['t='+str(it)]
+            print datadict['mom'][ip]['t values'][str(it)]
     with open(filename+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
 
@@ -28,9 +28,9 @@ def PrintBootToFile(thisdata,filename,thisTList,thisMomList):
         datadict['mom'][ip] = {'t values':{}}
         for it,tdata in zip(thisTList,pdata):
             try:
-                datadict['mom'][ip]['t values']['t='+str(it)] = {'Boot':tdata.values}
+                datadict['mom'][ip]['t values'][str(it)] = {'Boot':tdata.values}
             except:
-                datadict['mom'][ip]['t values']['t='+str(it)] = {'Boot':tdata}
+                datadict['mom'][ip]['t values'][str(it)] = {'Boot':tdata}
     with open(filename+'.boot.dat','w') as fb:
         pickle.dump(datadict,fb)
 
