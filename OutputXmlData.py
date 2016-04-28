@@ -82,11 +82,13 @@ def PrintSumToFile(data,datafit,datafitchi,filename,thisFitList,thisMomList,this
 
     for ip,pdata,pdatafit,pdatafitchi,pfitlist in zip(xmlMomList,data,datafit,datafitchi,thisFitList):
         xmlFitList = ParamsToFitFlag(pfitlist)
+        print xmlFitList
         datadict['Sum']['Boots'][ip] = OrderedDict()
         for icut,cutdata,cutdatafit,cutdatafitchi,cutfitlist in zip(xmlCutList,pdata,pdatafit,pdatafitchi,xmlFitList):
             datadict['Sum']['Boots'][ip][icut] = OrderedDict()
             datadict['Sum']['Boots'][ip][icut]['slope'] = OrderedDict()
             datadict['Sum']['Boots'][ip][icut]['constant'] = OrderedDict()
+            print cutfitlist
             for itsink,tsinkdata in zip(xmlTSinkList,cutdata):
                 datadict['Sum']['Boots'][ip][icut][itsink] = tsinkdata.values
             for ifit,fitdata,fitdatachi in zip(cutfitlist,cutdatafit,cutdatafitchi):
