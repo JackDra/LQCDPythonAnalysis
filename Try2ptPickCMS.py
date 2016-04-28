@@ -8,7 +8,8 @@ import sys
 from Params import *
 from ReadCMCfuns import ReadSet,ReadList
 from CMSTech import CreateCM2ptCfuns,CreatePoF2ptCfuns,PreptwoptCorr
-from OutputData import PrintSetToFile,PrintLREvecMassToFile,PrintCfunToFile
+from OutputData import PrintSetToFile,PrintCfunToFile
+from OutputXmlData import PrintLREvecMassToFile
 from CreateCombs import CreategiDi
 from SetLists import CreateMassSet
 from MiscFuns import *
