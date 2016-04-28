@@ -41,7 +41,7 @@ def PrintToFile(thisdata,filename,thisTList,thisMomList,CalcFlag,frmtflag='f'):
         for itstr,tdata in zip(map(tstr,thisTList),pdata):
             datadict[CalcFlag]['Boots'][ipTOqcond(ip)][itstr] = tdata.values
     with open(filename+'.xml','w') as f:
-        f.write( xmltodict.unparse(datadict[CalcFlag],pretty=True))
+        f.write( xmltodict.unparse(datadict,pretty=True))
 
 
 
