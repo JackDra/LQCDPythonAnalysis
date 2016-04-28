@@ -191,7 +191,7 @@ def PrintFitSetToFile(dataset,datasetChi,thisGammaMomList,thisSetList,thisCutLis
             filename = gammadir +thisset+thisgamma
             bootfilename = bootgammadir +thisset+thisgamma
             PrintFitToFile(dataset[igamma],datasetChi[igamma],iset,filename,thismomlist,thisCutList)
-            PrintFitBootToFile(dataset[igamma],bootfilename,iset,thismomlist,thisCutList)
+            # PrintFitBootToFile(dataset[igamma],bootfilename,iset,thismomlist,thisCutList)
 
 
 #dataset    = [ cuts , ip , istate ] bs1
