@@ -7,6 +7,10 @@ import operator as op
 import socket
 import os
 import re
+try:
+    import xmltodict
+except:
+    raise EnvironmentError("please have xmltodict installed (git pull \"https://github.com/martinblech/xmltodict.git\"")
 
 ##CHANGE StringFix.py FUNCTION##
 
