@@ -34,28 +34,28 @@ from OutputXmlData import *
 #                     fb.write( frmtstr.format(repr(iboot).rjust(8), bootdata)+ '\n' )
 
 
-# data = [ ip , icut , iset ]
-def PrintFitToFile(data,dataChi,iset,filename,thisMomList,thisCutList):
-    with open(filename+'.txt','a+') as fb:
-        # print thisMomList
-        for iq,theq in enumerate(thisMomList):
-            fb.write('      '+theq+'\n')
-            for icut,fitdata,fitdataChi in zip(thisCutList,data[iq],dataChi[iq]):
-                # print ifitmin , ifitmax , fitdata.Avg , fitdata.Std , fitdataChi/float(fitlen)
-                fb.write( 'cut{0} {1:20.10f} {2:20.10f} {3:20.10f}'.format(icut,
-                                                                        fitdata[iset].Avg,fitdata[iset].Std,
-                                                                        fitdataChi[iset])+ '\n' )
+# # data = [ ip , icut , iset ]
+# def PrintFitToFile(data,dataChi,iset,filename,thisMomList,thisCutList):
+#     with open(filename+'.txt','a+') as fb:
+#         # print thisMomList
+#         for iq,theq in enumerate(thisMomList):
+#             fb.write('      '+theq+'\n')
+#             for icut,fitdata,fitdataChi in zip(thisCutList,data[iq],dataChi[iq]):
+#                 # print ifitmin , ifitmax , fitdata.Avg , fitdata.Std , fitdataChi/float(fitlen)
+#                 fb.write( 'cut{0} {1:20.10f} {2:20.10f} {3:20.10f}'.format(icut,
+#                                                                         fitdata[iset].Avg,fitdata[iset].Std,
+#                                                                         fitdataChi[iset])+ '\n' )
 
-# data = [ ip , icut , iset ]
-def PrintFitBootToFile(data,filename,iset,thisMomList,thisCutList):
-    with open(filename+'.boot.txt','a+') as fb:
-        fb.write('         nboot '+str(nboot) + '\n')
-        for iq,theq in enumerate(thisMomList):
-            fb.write('      '+theq+'\n')
-            for icut,fitdata in zip(thisCutList,data[iq]):
-                fb.write('   cut{0}\n'.format(icut))
-                for iboot,bootdata in zip(range(fitdata[iset].nboot),fitdata[iset].values):
-                    fb.write( '{0} {1:20.10f}'.format(repr(iboot).rjust(4), bootdata)+ '\n' )
+# # data = [ ip , icut , iset ]
+# def PrintFitBootToFile(data,filename,iset,thisMomList,thisCutList):
+#     with open(filename+'.boot.txt','a+') as fb:
+#         fb.write('         nboot '+str(nboot) + '\n')
+#         for iq,theq in enumerate(thisMomList):
+#             fb.write('      '+theq+'\n')
+#             for icut,fitdata in zip(thisCutList,data[iq]):
+#                 fb.write('   cut{0}\n'.format(icut))
+#                 for iboot,bootdata in zip(range(fitdata[iset].nboot),fitdata[iset].values):
+#                     fb.write( '{0} {1:20.10f}'.format(repr(iboot).rjust(4), bootdata)+ '\n' )
 
 ##data [ ip , icut , itsink ]
 ##datafit [ ip , icut , ifit , par ] bs1
