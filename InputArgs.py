@@ -4,6 +4,11 @@ from Params import *
 from SetLists import *
 from FFParams import *
 
+def ShowSetLists(thissetlist):
+    print 
+    print 'Set Lists:'
+    print '\n'.join(thissetlist)
+    print 
 
 def ExpandSetList(thisSL):
     SLout = []

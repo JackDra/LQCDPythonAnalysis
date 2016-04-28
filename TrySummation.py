@@ -44,7 +44,12 @@ feedin = InputParams(sys.argv[1:])
 
 thisGammaList = CreateGammaList(feedin['gamma'])
 
-[thisReadSetList,thisReadSet2pt,thisTSinkList] = CreateSet(thisSmearL=ReadSmearList,thisTvarL=[],thisTSinkL=ReadTSinkList)
+thisReadSetList = feedin['set']
+thisTSinkList,thisReadSet2pt = GetTsinkSmLists(feedin['set'])
+
+# [thisReadSetList,thisReadSet2pt,thisTSinkList] = CreateSet(thisSmearL=ReadSmearList,thisTvarL=[],thisTSinkL=ReadTSinkList)
+
+ShowSetLists(thisReadSetList)
 
 start = time.time()
 inputparams = []

@@ -72,7 +72,7 @@ feedin = InputParams(sys.argv[1:])
 
 thisGammaList = CreateGammaList(feedin['gamma'])
 
-print 'Set List: \n'+ '\n'.join(feedin['set'])
+ShowSetLists(feedin['set'])
 
 totstart = time.time()
 inputparams = []
