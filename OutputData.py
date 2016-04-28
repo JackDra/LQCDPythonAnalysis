@@ -8,29 +8,30 @@ from MiscFuns import *
 from SetLists import GetTsinkSmLists
 from OppFuns import *
 from FormFactors import NoFFPars
+from OutputXmlData import *
 
 
-def PrintToFile(thisdata,filename,thisTList,thisMomList,frmtflag='f'):
-    frmtstr = '{0} {1:20.10'+frmtflag+'} {2:20.10'+frmtflag+'}'
-    with open(filename+'.txt','a+') as f:
-        for ip,pdata in zip(thisMomList,thisdata):
-            f.write(ipTOqstr(ip)+'\n')
-            for it,tdata in zip(thisTList,pdata):
-                f.write( frmtstr.format(repr(it).rjust(3), tdata.Avg, tdata.Std) + '\n' )
+# def PrintToFile(thisdata,filename,thisTList,thisMomList,frmtflag='f'):
+#     frmtstr = '{0} {1:20.10'+frmtflag+'} {2:20.10'+frmtflag+'}'
+#     with open(filename+'.txt','a+') as f:
+#         for ip,pdata in zip(thisMomList,thisdata):
+#             f.write(ipTOqstr(ip)+'\n')
+#             for it,tdata in zip(thisTList,pdata):
+#                 f.write( frmtstr.format(repr(it).rjust(3), tdata.Avg, tdata.Std) + '\n' )
 
 
-def PrintBootToFile(data,filename,thisTList,thisMomList,frmtflag='f'):
-    frmtstr = '{0} {1:20.10'+frmtflag+'}'
-    WriteBoot = False
-    if os.path.isfile(filename+'.boot.txt'): WriteBoot = True
-    with open(filename+'.boot.txt','a+') as fb:
-        if WriteBoot: fb.write('      nboot '+str(nboot) + '\n')
-        for ip,pdata in zip(thisMomList,data):
-            fb.write('   '+ipTOqstr(ip)+'\n')
-            for it,tdata in zip(thisTList,pdata):
-                fb.write( 't '+str(it)+'\n')
-                for iboot,bootdata in zip(range(nboot),tdata.values):
-                    fb.write( frmtstr.format(repr(iboot).rjust(8), bootdata)+ '\n' )
+# def PrintBootToFile(data,filename,thisTList,thisMomList,frmtflag='f'):
+#     frmtstr = '{0} {1:20.10'+frmtflag+'}'
+#     WriteBoot = False
+#     if os.path.isfile(filename+'.boot.txt'): WriteBoot = True
+#     with open(filename+'.boot.txt','a+') as fb:
+#         if WriteBoot: fb.write('      nboot '+str(nboot) + '\n')
+#         for ip,pdata in zip(thisMomList,data):
+#             fb.write('   '+ipTOqstr(ip)+'\n')
+#             for it,tdata in zip(thisTList,pdata):
+#                 fb.write( 't '+str(it)+'\n')
+#                 for iboot,bootdata in zip(range(nboot),tdata.values):
+#                     fb.write( frmtstr.format(repr(iboot).rjust(8), bootdata)+ '\n' )
 
 
 # data = [ ip , icut , iset ]
