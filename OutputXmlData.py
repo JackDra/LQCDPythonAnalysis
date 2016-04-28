@@ -30,17 +30,17 @@ def PrintToFile(thisdata,filename,thisTList,thisMomList,CalcFlag,frmtflag='f'):
 
 # data = [ ip , icut , iset ]
 def PrintFitToFile(data,dataChi,iset,filename,thisMomList,thisCutList):
-    datadict = {CalcFlag:{'Values':OrderedDict(),'Boots':OrderedDict()}}
+    datadict = {'Fits':{'Values':OrderedDict(),'Boots':OrderedDict()}}
     xmlMomList = map(ipTOqcond,thisMomList)
     xmlCutList = map(xmlcut,thisCutList)
     for ip,pdata,pdataChi in zip(xmlMomList,data,dataChi):        
-        datadict[CalcFlag]['Values'][ip] = OrderedDict()
+        datadict['Fits']['Values'][ip] = OrderedDict()
         for icutstr,cutdata,cutdataChi in zip(xmlCutList,pdata,pdataChi):
-            datadict[CalcFlag]['Values'][ip][icutstr] = OrderedDict(zip(xmlCutList,map(BootAvgStdChiToFormat,cutdata,cutdataChi)))
+            datadict['Fits']['Values'][ip][icutstr] = OrderedDict(zip(xmlCutList,map(BootAvgStdChiToFormat,cutdata,cutdataChi)))
     for ip,pdata in zip(xmlMomList,data):        
-        datadict[CalcFlag]['Boots'][ip] = OrderedDict()
+        datadict['Fits']['Boots'][ip] = OrderedDict()
         for icutstr,cutdata in zip(xmlCutList,pdata):
-            datadict[CalcFlag]['Boots'][ip][icutstr] = cutdata.values
+            datadict['Fits']['Boots'][ip][icutstr] = cutdata.values
     with open(filename+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
 
