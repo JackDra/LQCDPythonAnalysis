@@ -58,7 +58,7 @@ def LREVecToFormat(iLE,iRE,iEM,DoPoF):
     else:
         SmPoFList = DefSmList
     dictout = OrderedDict()
-    dictout['Emass'] = '{0:20.10f}'.format(iEMass)
+    dictout['Emass'] = '{0:20.10f}'.format(iEM)
     dictout['Left_Evec'] = OrderedDict()
     dictout['Right_Evec'] = OrderedDict()
     for eLE,thiskey in zip(iLE,SmPoFList):
