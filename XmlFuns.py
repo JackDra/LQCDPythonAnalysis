@@ -3,26 +3,11 @@
 import xmltodict
 from collections import OrderedDict
 
-def AvgStdToFormat(Avg,Std,frmtflag='f'):
-    return ('{0:20.10'+frmtflag+'} {1:20.10'+frmtflag+'}').format(Avg,Std)
 
-def DictAvgStdToFormat(Dict,frmtflag='f'):
-    return AvgStdToFormat(Dict['Avg'],Dict['Std'],frmtflag=frmtflag)
-
-def BootAvgStdToFormat(Dict,frmtflag='f'):
-    return AvgStdToFormat(Dict.Avg,Dict.Std,frmtflag=frmtflag)
-
-def FormatToAvgStd(String):
-    return map(float,String.strip().split())
-
-def FormatToDictAvgStd(String):
-    return dict(zip(['Avg','Std'],FormatToAvgStd(String)))
-
-
-def RecursiveFTDAS(dictin):
+def RecFTDAS(dictin):
     if isinstance(dictin,dict) or isinstance(dictin,OrderedDict):
         for ikey,idata in dictin.iteritems():
-            dictin[ikey] = RecursiveFTDAS(idata)
+            dictin[ikey] = RecFTDAS(idata)
         return dictin
     else:
         try:
@@ -34,3 +19,25 @@ def RecursiveFTDAS(dictin):
                 raise TypeError('final value in dictionary is not string')
         return dictout
 
+
+def RecDictToKeys(dictin):
+    if isinstance(dictin,dict) or isinstance(dictin,OrderedDict):
+        RecKeys = RecDictToKeys(dictin[dictin.keys()[0]])
+        return [dictin.keys()] + RecKeys
+    else:
+        return []
+
+
+def RecDictToNp(dictin):
+    if isinstance(dictin,dict) or isinstance(dictin,OrderedDict):
+        dataout = []
+        for idict in dictin.itervalues():
+            dataout += [RecDictToNp(idict)]
+        return dataout
+    else:
+        return dictin
+
+    ## Keys going down the dictionary chane , total np array with correct dimension
+    ## Caution, no checking to see if dimensions are same size.
+def RecDictToNpWrap(dictin):
+    return RecDictToKeys(dictin),RecDictToNp(dictin)

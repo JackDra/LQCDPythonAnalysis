@@ -73,6 +73,9 @@ def ipTOqstr(ip):
 def ipTOqcond(ip):
     return qvecSet[int(ip)].replace('=','').replace(' ','')
 
+def qcondTOqstr(iq):
+    return ' '.join(iq).replace('q ','q = ')
+
 def iqTOqstr(iq):
     return qvecSet[iqTOip(iq)]
 
@@ -85,6 +88,7 @@ def qvecTOqstr(qvec):
 def qstrTOqvec(qstr):
     sqvec = qstr.split()
     return [int(sqvec[2]),int(sqvec[3]),int(sqvec[4])]
+
 
 def qstrTOip(qstr):
     return qvecTOip(qstrTOqvec(qstr))

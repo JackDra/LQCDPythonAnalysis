@@ -11,42 +11,46 @@ import xmltodict
 import cPickle as pickle
 from collections import OrderedDict
 from XmlFuns import *
-
-def tstr(thist):
-    return 't'+str(thist)
+from XmlFormatting import *
 
 def PrintToFile(thisdata,filename,thisTList,thisMomList,CalcFlag,frmtflag='f'):
-    frmtstr = '{0:20.10'+frmtflag+'} {1:20.10'+frmtflag+'}'
     datadict = {CalcFlag:{'Values':OrderedDict(),'Boots':OrderedDict()}}
-    for ip,pdata in zip(thisMomList,thisdata):
-        tkeyList = map(tstr,thisTList)
-        datadict[CalcFlag]['Values'][ipTOqcond(ip)] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,pdata)))
-    for ip,pdata in zip(thisMomList,thisdata):        
-        tkeyList = map(tstr,thisTList)
-        datadict[CalcFlag]['Boots'][ipTOqcond(ip)] = OrderedDict()
-        for itstr,tdata in zip(map(tstr,thisTList),pdata):
-            datadict[CalcFlag]['Boots'][ipTOqcond(ip)][itstr] = tdata.values
+    xmlMomList = map(ipTOqcond,thisMomList)
+    tkeyList = map(tstr,thisTList)
+    for ip,pdata in zip(xmlMomList,thisdata):
+        datadict[CalcFlag]['Values'][ip] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,pdata)))
+    for ip,pdata in zip(xmlMomList,thisdata):
+        datadict[CalcFlag]['Boots'][ip] = OrderedDict()
+        for itstr,tdata in zip(tkeyList,pdata):
+            datadict[CalcFlag]['Boots'][ip][itstr] = tdata.values
     with open(filename+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
 
 
 
-# # data = [ ip , icut , iset ]
-# def PrintFitToFile(data,dataChi,iset,filename,thisMomList,thisCutList):
-#     frmtstr = 'cut{0} {1:20.10f} {2:20.10f} {3:20.10f}'
-#     datadict = {'mom':OrderedDict()}
-#     for ip,pdata in zip(thisMomList,thisdata):        
-#         datadict['mom'][ipTOqcond(ip)] = {'t values':OrderedDict(zip(map(str,thisTList),map(BootAvgStdToFormat,pdata)))}
-#     with open(filename+'.xml','w') as f:
-#         f.write( xmltodict.unparse(datadict,pretty=True))
+# data = [ ip , icut , iset ]
+def PrintFitToFile(data,dataChi,iset,filename,thisMomList,thisCutList):
+    datadict = {CalcFlag:{'Values':OrderedDict(),'Boots':OrderedDict()}}
+    xmlMomList = map(ipTOqcond,thisMomList)
+    xmlCutList = map(xmlcut,thisCutList)
+    for ip,pdata,pdataChi in zip(xmlMomList,data,dataChi):        
+        datadict[CalcFlag]['Values'][ip] = OrderedDict()
+        for icutstr,cutdata,cutdataChi in zip(xmlCutList,pdata,pdataChi):
+            datadict[CalcFlag]['Values'][ip][icutstr] = OrderedDict(zip(xmlCutList,map(BootAvgStdChiToFormat,cutdata,cutdataChi)))
+    for ip,pdata in zip(xmlMomList,data):        
+        datadict[CalcFlag]['Boots'][ip] = OrderedDict()
+        for icutstr,cutdata in zip(xmlCutList,pdata):
+            datadict[CalcFlag]['Boots'][ip][icutstr] = cutdata.values
+    with open(filename+'.xml','w') as f:
+        f.write( xmltodict.unparse(datadict,pretty=True))
 
-#     with open(filename+'.xml','a+') as fb:
-#         # print thisMomList
-#         for iq,theq in enumerate(thisMomList):
-#             fb.write('      '+theq+'\n')
-#             for icut,fitdata,fitdataChi in zip(thisCutList,data[iq],dataChi[iq]):
-#                 # print ifitmin , ifitmax , fitdata.Avg , fitdata.Std , fitdataChi/float(fitlen)
-#                 fb.write( frmtstr.format(icut,fitdata[iset].Avg,fitdata[iset].Std,fitdataChi[iset])+ '\n' )
+    # with open(filename+'.xml','a+') as fb:
+    #     # print thisMomList
+    #     for iq,theq in enumerate(thisMomList):
+    #         fb.write('      '+theq+'\n')
+    #         for icut,fitdata,fitdataChi in zip(thisCutList,data[iq],dataChi[iq]):
+    #             # print ifitmin , ifitmax , fitdata.Avg , fitdata.Std , fitdataChi/float(fitlen)
+    #             fb.write( frmtstr.format(icut,fitdata[iset].Avg,fitdata[iset].Std,fitdataChi[iset])+ '\n' )
                 
 # # data = [ ip , icut , iset ]
 # def PrintFitBootToFile(data,filename,iset,thisMomList,thisCutList):

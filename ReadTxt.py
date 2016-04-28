@@ -16,6 +16,7 @@ from copy import deepcopy, copy
 import re
 import time
 import datetime
+from ReadXml import *
 
 
 # R/L Evecs [ ip , istate , ival ]
@@ -542,78 +543,79 @@ def MakeMethodsDict(readdir,readfile,thisMethodList,thisSetList,thisMomList=[]):
                 MethDict[imom][iMeth][iSet] = thisDict[iSet][imom]
     return MethDict
 
-##Also works for cfuns##
-##outputdict = { thismom , [tVals] / [Vals] / [Valserr] / [Boot] bs }
-def ReadRFFile(filename,bootfn='',thisMomList=[]):
-    ReadMom = False
-    renorm = GetRenorm(filename)
-    outputdict = OrderedDict()
-    # print filename
-    if os.path.isfile(filename):
-        def thisReadFile(thisoutputdict):
-            with open(filename,'r') as f:
-                for line in f:
-                    rdata = line.strip()
-                    if rdata[0] == 'q':
-                        if len(thisMomList) > 0 and all([imom in thisoutputdict.keys() for imom in thisMomList]): return thisoutputdict
-                        if rdata in thisMomList or len(thisMomList) ==0:
-                            thismom = rdata
-                            ReadMom = True
-                            try:
-                                thisoutputdict[thismom] = OrderedDict()
-                            except:
-                                raise IOError("double momenta in file"+filename)
-                            thisoutputdict[thismom]['tVals'] = []
-                            thisoutputdict[thismom]['Vals'] = []
-                            thisoutputdict[thismom]['Valserr'] = []
-                        else:
-                            ReadMom = False
-                    elif ReadMom:
-                        rdata = rdata.split()
-                        thisoutputdict[thismom]['tVals'].append(int(rdata[0]))
-                        thisoutputdict[thismom]['Vals'].append(float(rdata[1])*renorm)
-                        thisoutputdict[thismom]['Valserr'].append(float(rdata[2])*renorm)
-            return thisoutputdict
-        outputdict = thisReadFile(outputdict)
+## Replaced with ReadXml Version
+# ##Also works for cfuns##
+# ##outputdict = { thismom , [tVals] / [Vals] / [Valserr] / [Boot] bs }
+# def ReadRFFile(filename,bootfn='',thisMomList=[]):
+#     ReadMom = False
+#     renorm = GetRenorm(filename)
+#     outputdict = OrderedDict()
+#     # print filename
+#     if os.path.isfile(filename):
+#         def thisReadFile(thisoutputdict):
+#             with open(filename,'r') as f:
+#                 for line in f:
+#                     rdata = line.strip()
+#                     if rdata[0] == 'q':
+#                         if len(thisMomList) > 0 and all([imom in thisoutputdict.keys() for imom in thisMomList]): return thisoutputdict
+#                         if rdata in thisMomList or len(thisMomList) ==0:
+#                             thismom = rdata
+#                             ReadMom = True
+#                             try:
+#                                 thisoutputdict[thismom] = OrderedDict()
+#                             except:
+#                                 raise IOError("double momenta in file"+filename)
+#                             thisoutputdict[thismom]['tVals'] = []
+#                             thisoutputdict[thismom]['Vals'] = []
+#                             thisoutputdict[thismom]['Valserr'] = []
+#                         else:
+#                             ReadMom = False
+#                     elif ReadMom:
+#                         rdata = rdata.split()
+#                         thisoutputdict[thismom]['tVals'].append(int(rdata[0]))
+#                         thisoutputdict[thismom]['Vals'].append(float(rdata[1])*renorm)
+#                         thisoutputdict[thismom]['Valserr'].append(float(rdata[2])*renorm)
+#             return thisoutputdict
+#         outputdict = thisReadFile(outputdict)
 
-        if os.path.isfile(bootfn):
-            def thisReadBoot(thisoutputdict):
-                currMomList = []
-                ReadMom = False
-                with open(bootfn,'r') as f:
-                    for line in f:
-                        rdata = line.strip()
-                        if rdata[0] == 'q':
-                            if len(thisMomList) > 0 and all([imom in currMomList for imom in thisMomList]): 
-                                BootNdimDict(thisoutputdict)
-                                return thisoutputdict
-                            if rdata in thisMomList or len(thisMomList) ==0:
-                                thismom = rdata
-                                currMomList.append(thismom)
-                                ReadMom = True
-                                if rdata not in thisoutputdict.keys():
-                                    print 'WARNING: '+rdata+' found in:'
-                                    print bootfn + ' but not in:'
-                                    print filename
-                                    thisoutputdict[thismom] = OrderedDict()
-                                thisoutputdict[thismom]['Boot'] = []
-                            else:
-                                ReadMom = False
-                        elif rdata[0] == 't' and ReadMom:
-                            rdata = rdata.split()
-                            if int(rdata[1]) not in thisoutputdict[thismom]['tVals']:
-                                raise IOError("T value in file but not in Boot file")
-                            thisoutputdict[thismom]['Boot'].append(BootStrap1(nboot,0.9))
-                        elif 'nboot' in rdata:
-                            if nboot != int(rdata.split()[1]): raise IOError("nboot missmatch")
-                        elif ReadMom:
-                            rdata = rdata.split()
-                            iboot = int(rdata[0])
-                            thisoutputdict[thismom]['Boot'][-1].values[iboot] = float(rdata[1])*renorm
-                BootNdimDict(thisoutputdict)
-                return thisoutputdict
-            outputdict = thisReadBoot(outputdict)
-    return outputdict
+#         if os.path.isfile(bootfn):
+#             def thisReadBoot(thisoutputdict):
+#                 currMomList = []
+#                 ReadMom = False
+#                 with open(bootfn,'r') as f:
+#                     for line in f:
+#                         rdata = line.strip()
+#                         if rdata[0] == 'q':
+#                             if len(thisMomList) > 0 and all([imom in currMomList for imom in thisMomList]): 
+#                                 BootNdimDict(thisoutputdict)
+#                                 return thisoutputdict
+#                             if rdata in thisMomList or len(thisMomList) ==0:
+#                                 thismom = rdata
+#                                 currMomList.append(thismom)
+#                                 ReadMom = True
+#                                 if rdata not in thisoutputdict.keys():
+#                                     print 'WARNING: '+rdata+' found in:'
+#                                     print bootfn + ' but not in:'
+#                                     print filename
+#                                     thisoutputdict[thismom] = OrderedDict()
+#                                 thisoutputdict[thismom]['Boot'] = []
+#                             else:
+#                                 ReadMom = False
+#                         elif rdata[0] == 't' and ReadMom:
+#                             rdata = rdata.split()
+#                             if int(rdata[1]) not in thisoutputdict[thismom]['tVals']:
+#                                 raise IOError("T value in file but not in Boot file")
+#                             thisoutputdict[thismom]['Boot'].append(BootStrap1(nboot,0.9))
+#                         elif 'nboot' in rdata:
+#                             if nboot != int(rdata.split()[1]): raise IOError("nboot missmatch")
+#                         elif ReadMom:
+#                             rdata = rdata.split()
+#                             iboot = int(rdata[0])
+#                             thisoutputdict[thismom]['Boot'][-1].values[iboot] = float(rdata[1])*renorm
+#                 BootNdimDict(thisoutputdict)
+#                 return thisoutputdict
+#             outputdict = thisReadBoot(outputdict)
+#     return outputdict
 
 def ReadFitFile(filename,bootfn='',thisMomList=[]):
     ReadMom = False
