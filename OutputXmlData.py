@@ -111,15 +111,16 @@ def PrintFFSet(FFin,Set,Mass,SetMass,theCurr):
     datadict['Form_Factors']['Values']['Mass']['Std'] = Mass['Std']
     datadict['Form_Factors']['Values']['Mass']['Chi'] = Mass['Chi']
     for iqsqrd,qdata in FFin.iteritems():
-        datadict['Form_Factors']['Values'][iqsqrd] = OrderedDict()
-        print qdata.keys()
-        datadict['Form_Factors']['Values'][iqsqrd]['Chi'] = qdata['Chi']
-        for ic,iFF in enumerate(qdata['Boot']):
-            datadict['Form_Factors']['Values'][iqsqrd]['FF'+str(ic)] = BootAvgStdToFormat(iFF)
+        if len(qdata.keys()) > 0:
+            datadict['Form_Factors']['Values'][iqsqrd] = OrderedDict()
+            datadict['Form_Factors']['Values'][iqsqrd]['Chi'] = qdata['Chi']
+            for ic,iFF in enumerate(qdata['Boot']):
+                datadict['Form_Factors']['Values'][iqsqrd]['FF'+str(ic)] = BootAvgStdToFormat(iFF)
     for iqsqrd,qdata in FFin.iteritems():
-        datadict['Form_Factors']['Boots'][iqsqrd] = OrderedDict()
-        for ic,iFF in enumerate(qdata['Boot']):
-            datadict['Form_Factors']['Boots'][iqsqrd]['FF'+str(ic)] = iFF.values
+        if len(qdata.keys()) > 0:
+            datadict['Form_Factors']['Boots'][iqsqrd] = OrderedDict()
+            for ic,iFF in enumerate(qdata['Boot']):
+                datadict['Form_Factors']['Boots'][iqsqrd]['FF'+str(ic)] = iFF.values
     with open(filename+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
 
