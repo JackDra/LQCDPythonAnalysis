@@ -169,7 +169,7 @@ def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
                 for icutstr,cutdata,cutdataChi in zip(xml2ptFitList,data2pt,data2ptChi):
                     mcutdata = cutdata[ipc][PickTF(ism,iA,len(thisSmList))]
                     datadict['TSFMass']['Values'][ip][icutstr] = BootAvgStdChiToFormat(mcutdata,cutdataChi[ipc],frmtflag='e')
-            for ipc,ip in zip(xmlMomList):        
+            for ipc,ip in enumerate(xmlMomList):        
                 datadict['TSFMass']['Boots'][ip] = OrderedDict()
                 for icutstr,cutdata in zip(xml2ptFitList,data2pt):
                     mcutdata = cutdata[ipc][PickTF(ism,iA,len(thisSmList))]
