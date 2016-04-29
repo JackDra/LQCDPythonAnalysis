@@ -43,6 +43,11 @@ def CreateDS(datadoub,datasing,thisGammaList):
 def CreategiDi(data3pt,thisGammaList,thisDSList):
     data3ptout = Swap3ptSS(data3pt)
     if len(data3ptout) != 4:
+        ##DEBUG##
+        print 'dimensions of correlator (ism, jsm, igamma)'
+        for ic,idata in enumerate(data3pt):
+            for jc,jdata in enumerate(idata):
+                print i , j , len(jdata)
         raise IOError("Need giDi with i =1,2,3,4 for giDi combination")
     thisGammaListOut = np.array(thisGammaList)
     for iDS in thisDSList:
