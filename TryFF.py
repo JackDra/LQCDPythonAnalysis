@@ -60,7 +60,7 @@ def DoFF(thisMethodList,thisCurr,thisSetList,thisGammaList):
     inputparams = [PickMassSet(MassSet,theset)+(theset,setdict,thisCurr) for theset,setdict in data.iteritems()]
     start = time.time()
     for ipar in inputparams: CreateFFWrap(*ipar)
-    mprint( 'Fit and Print for ' , ' '.join(thisMethodList) , thisCurr , ' '.join(thisSetList) ,' in total took: ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'    
+    mprint( 'Fit and Print for ' , ' '.join(thisMethodList) , thisCurr , ' '.join(thisSetList) ,' in total took: ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s')    
     mprint( '')
 
 
