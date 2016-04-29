@@ -99,6 +99,7 @@ def PrintSumToFile(data,datafit,datafitchi,filename,thisFitList,thisMomList,this
 
 
 def PrintFFSet(FFin,Set,Mass,SetMass,theCurr):
+    print 'Starting Print'
     FFdir = outputdir +'/FormFactors/'+theCurr+'/'
     FFbootdir = FFdir + 'boots/'
     mkdir_p(FFbootdir)
@@ -121,7 +122,6 @@ def PrintFFSet(FFin,Set,Mass,SetMass,theCurr):
             datadict['Form_Factors']['Boots'][iqsqrd] = OrderedDict()
             for ic,iFF in enumerate(qdata['Boot']):
                 datadict['Form_Factors']['Boots'][iqsqrd]['FF'+str(ic)] = iFF.values
-    print datadict['Form_Factors']['Values']['Mass']
     with open(thisfile+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
 
