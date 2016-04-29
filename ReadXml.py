@@ -26,7 +26,6 @@ def ReadRFFile(filename,bootfn='',thisMomList=[]):
     renorm = GetRenorm(filename)
     dictout = {}
     if '.txt' in filename: filename = filename.replace('.txt','.xml')
-    print filename
     if not os.path.isfile(filename):
         mprint(filename + ' not found')
     else:
