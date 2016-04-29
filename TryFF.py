@@ -32,7 +32,7 @@ def PickMassSet(MassSet,theset):
     return theMass,thesetmass
 
 def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr):
-    mprint( 'Set:' + theset + ' MassSetPicked:'+thesetmass)
+    # mprint( 'Set:' + theset + ' MassSetPicked:'+thesetmass)
 ## FF { { momsqrd } { Boot/Avg/Chi } }
     thisstart = time.time()
     FF = CreateFF(setdict,thisMass['Avg'],thisCurr)
