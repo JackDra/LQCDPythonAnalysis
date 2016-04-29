@@ -196,6 +196,7 @@ def PrintTSFToFile(filename,thisMomList,xml2ptFitList,xmlTSFList,data3pt,data3pt
             datadict['TSF']['Boots'][ip][icut2ptstr] = OrderedDict()
             for icutstr,cutdata in zip(xmlTSFList,data3pt[ic2pt][ipc][igamma][ism]):
                 datadict['TSF']['Boots'][ip][icut2ptstr][icutstr] = cutdata[ipar].values
+    print filename+'.xml'
     with open(filename+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
     
