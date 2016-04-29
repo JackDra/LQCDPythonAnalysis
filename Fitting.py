@@ -226,8 +226,8 @@ def OneStateSetFit(C2pt,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2pt
             Chithis2pt.append(thisod2[2])
         return Bootthis2pt,Avgthis2pt,Chithis2pt
 
-    def sm3ptwrap(thisBoot2ptmom,thisBoot2ptZ,C2mom,C3mom,this3ptCutList,thisSetList):
-        def SplitIset(thisiset):
+    def sm3ptwrap(thisBoot2ptmom,thisBoot2ptZ,C2mom,C3mom,this3ptCutList,thisSetList,thisSML):
+        def SplitIset(thisiset,thisSML):
             thisiset = thisiset.replace('REvec','CM')
             sm = re.sub('tsink..','',thisiset)
             itsink = thisiset.replace(sm,'').replace('tsink','')
@@ -238,7 +238,7 @@ def OneStateSetFit(C2pt,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2pt
         # print len(C3mom) , len(thisSetList)
         for iset,thisset in enumerate(thisSetList):
             isC3 = C3mom[iset]
-            thisism,thistsink = SplitIset(thisset)
+            thisism,thistsink = SplitIset(thisset,thisSML)
             isC2 = C2mom[thisism]
             thisod3 = OneStateFit3pt(thisBoot2ptZ[thisism]+thisBoot2ptmom[thisism],
                                      isC2,isC3,this3ptCutList,thistsink)
@@ -275,7 +275,7 @@ def OneStateSetFit(C2pt,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2pt
             imom2pt = thisGammaMomList['twopt'].index(thismom)
             C2mom,C3mom = C2pt[imom2pt],C3pt[thisigamma][imom]
             Boot2ptMom = Boot2pt[imom2pt]
-            inputparams.append((Boot2ptMom,Boot2ptZ,C2mom,C3mom,this3ptCutList,thisSetList))
+            inputparams.append((Boot2ptMom,Boot2ptZ,C2mom,C3mom,this3ptCutList,thisSetList,thisSmList))
     if DoMulticore:
         output3pt = thisPool.map(sm3ptwrap.mapper,inputparams)
     else:
