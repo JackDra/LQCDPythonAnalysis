@@ -16,13 +16,13 @@ FitCutList = range(FitCutMin,FitCutMax+1)
 FitCutArgs = ['cut'+str(ic) for ic in FitCutList]
 ##TryFits.py
 FitCutPicked =  {'tsink26sm32':'cut4',
-                 'tsink26'+PickedStateStr+REvecTvarList[0]:'cut4',
+                 'tsink26'+PickedStateStr+'REvec'+REvecTvarList[0]:'cut4',
                  'tsink29sm32':'cut5',
                  'tsink29sm64':'cut5',
                  'tsink29sm128':'cut5',
-                 'tsink29'+PickedStateStr+DefTvarPicked:'cut5',
+                 'tsink29'+PickedStateStr+'CM'+DefTvarPicked:'cut5',
                  'tsink32sm32':'cut6',
-                 'tsink32'+PickedStateStr+REvecTvarList[0]:'cut6',
+                 'tsink32'+PickedStateStr+'REvec'+REvecTvarList[0]:'cut6',
                  'tsink35sm32':'cut6',
                  'tsink38sm32':'cut6',
                  'tsink26'+PickedStateStr+'PoF'+str(PoFShifts)+PoFTvarList[0]:'cut4',
