@@ -221,7 +221,7 @@ def ReadSFFile(filename,bootfn='',OneOrTwo='Two',thisMomList=[]):
                                 dictout[thismom][ipar][thisfit][icut]['Std'] = dictout[thismom][ipar][thisfit][icut]['Boot'].Std
                                 dictout[thismom][ipar][thisfit][icut]['Chi'] = data['Values'][imom][ifit][icut]['Chi']
 
-                else:
+            else:
                 bootdata = data['Values']
                 for imom,momdata in bootdata.iteritems():
                     thismom = qcondTOqstr(imom)
