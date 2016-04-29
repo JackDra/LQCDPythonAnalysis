@@ -282,7 +282,7 @@ def PrintOSFSetToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2pt
         for igamma,(thisgamma,thismomlist) in enumerate(thisGammaMomList.iteritems()):
             print 'Printing ' , thispar , ' ' , thisgamma , ' to file      \r',
             gammapardir = outputdir+CreateOppDir(thisgamma)+'/OSF'+fileprefix+'/'
-            for ism,thesm in enumerate(thisSmList):
+            for ism,thesm in enumerate(thisSetList):
                 filename = gammapardir+thesm+thisgamma+ thispar
                 PrintOSFToFile(filename,thismomlist,xml2ptFitList,xmlOSFList,data3pt,data3ptChi,ipar,igamma,ism)
 
