@@ -231,7 +231,7 @@ def OneStateSetFit(C2pt,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2pt
             thisiset = thisiset.replace('REvec','CM')
             sm = re.sub('tsink..','',thisiset)
             itsink = thisiset.replace(sm,'').replace('tsink','')
-            ism = thisSmList.index(sm)
+            ism = thisSML.index(sm)
             return ism,int(itsink)
 
         Boot3pt,Avg3pt,Chi3pt = [],[],[]
