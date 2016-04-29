@@ -107,10 +107,15 @@ thisGammaList = []
 for thisCurr in feedin['current']:
     thisGammaList = CurrOpps[thisCurr] + [iC+'cmplx' for iC in CurrOpps[thisCurr]] + ['twopt']
     for imeth in feedin['method']:
-        for iSet in feedin['set']:
-            print 'Adding to queue FF: ' , imeth , thisCurr , iSet
-            inputparams.append(([imeth],thisCurr,[iSet],thisGammaList))
-
+        if 'Fits' in imeth or 'OSF' in imeth:
+            for iSet in feedin['set']:
+                print 'Adding to queue FF: ' , imeth , thisCurr , iSet
+                inputparams.append(([imeth],thisCurr,[iSet],thisGammaList))
+        else:
+            for iSet in RemoveTSink(feedin['set']):
+                print 'Adding to queue FF: ' , imeth , thisCurr , iSet
+                inputparams.append(([imeth],thisCurr,[iSet],thisGammaList))
+            
 tottime = time.time()
 if DoMulticore:
     makeContextFunctions(DoFF)
