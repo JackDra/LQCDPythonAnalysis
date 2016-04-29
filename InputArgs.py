@@ -27,7 +27,6 @@ def ExpandSetList(thisSL):
             SLout += DefSetList
         else:
             SLout.append(iset)
-    print SLout
     return SortMySet(SLout)
 
 
