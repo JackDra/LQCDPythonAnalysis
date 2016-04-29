@@ -148,15 +148,15 @@ def Get2ptSetMoms(outputdir,MomListIn,statelist=[],todtlist=[],smlist=[]):
         thisdir = outputdir+iflag+'/'
         for itodt in todtlist:
             if iflag == 'Mass':
-                ifile = thisdir+itodt+'LREM.txt'
+                ifile = thisdir+itodt+'LREM.xml'
                 if os.path.isfile(ifile):
                     tempmomlist = GetCompletedMom(ifile)
                     momlist = momlist & tempmomlist
                 else:
                     return MomListIn
             for istate in statelist:
-                ifile = thisdir+'state'+istate+itodt+iflag.replace('cfuns/','')+'.txt'
-                # ifb = thisdir+'boots/state'+istate+itodt+iflag.replace('cfuns/','')+'.boot.txt'
+                ifile = thisdir+'state'+istate+itodt+iflag.replace('cfuns/','')+'.xml'
+                # ifb = thisdir+'boots/state'+istate+itodt+iflag.replace('cfuns/','')+'.boot.xml'
                 # if os.path.isfile(ifile) and os.path.isfile(ifb):
                 #     tempmomlist = GetCompletedMom(ifile)
                 if os.path.isfile(ifile):
@@ -165,8 +165,8 @@ def Get2ptSetMoms(outputdir,MomListIn,statelist=[],todtlist=[],smlist=[]):
                 else:
                     return MomListIn
         for ism in smlist:
-            ifile = thisdir+'sm'+ism+iflag.replace('cfuns/','')+'.txt'
-            # ifb = thisdir+'boots/sm'+ism+iflag.replace('cfuns/','')+'.boot.txt'
+            ifile = thisdir+'sm'+ism+iflag.replace('cfuns/','')+'.xml'
+            # ifb = thisdir+'boots/sm'+ism+iflag.replace('cfuns/','')+'.boot.xml'
             # if os.path.isfile(ifile) and os.path.isfile(ifb):
             #     tempmomlist = GetCompletedMom(ifile)
             if os.path.isfile(ifile):
@@ -203,24 +203,22 @@ def Check2pt(outputdir,momstr,statelist=[],todtlist=[],smlist=[]):
         thisdir = outputdir+iflag+'/'
         for itodt in todtlist:
             if iflag == 'Mass':
-                ifile = thisdir+itodt+'LREM.txt'
+                ifile = thisdir+itodt+'LREM.xml'
                 if os.path.isfile(ifile):
                     tempmomlist = GetCompletedMom(ifile)
                     momlist = momlist & tempmomlist
                 else:
                     return []
             for istate in statelist:
-                ifile = thisdir+'state'+istate+itodt+iflag.replace('cfuns/','')+'.txt'
-                ifb = thisdir+'boots/state'+istate+itodt+iflag.replace('cfuns/','')+'.boot.txt'
-                if os.path.isfile(ifile) and os.path.isfile(ifb):
+                ifile = thisdir+'state'+istate+itodt+iflag.replace('cfuns/','')+'.xml'
+                if os.path.isfile(ifile):
                     if momstr not in GetCompletedMom(ifile):
                         DoMom = True
                 else:
                     DoMom = True
         for ism in smlist:
-            ifile = thisdir+'sm'+ism+iflag.replace('cfuns/','')+'.txt'
-            ifb = thisdir+'boots/sm'+ism+iflag.replace('cfuns/','')+'.boot.txt'
-            if os.path.isfile(ifile) and os.path.isfile(ifb):
+            ifile = thisdir+'sm'+ism+iflag.replace('cfuns/','')+'.xml'
+            if os.path.isfile(ifile):
                 if momstr not in GetCompletedMom(ifile):
                     DoMom = True
             else:
@@ -236,36 +234,32 @@ def CheckSet(outputdir,momstr,thisGammaList,tlist=[],statelist=[],todtlist=[],sm
             for it in tlist:
                 for istate in statelist:
                     for itodt in todtlist:
-                        ifile = thisdir+'tsink'+it+'state'+istate+itodt+igamma+'.txt'
+                        ifile = thisdir+'tsink'+it+'state'+istate+itodt+igamma+'.xml'
                         # if PrintRead: print ifile
-                        ifb = thisdir+'boots/tsink'+it+'state'+istate+itodt+igamma+'.boot.txt'
-                        if os.path.isfile(ifile) and os.path.isfile(ifb):
+                        if os.path.isfile(ifile) :
                             if momstr not in GetCompletedMom(ifile): DoMom = True
                         else:
                             DoMom = True
                 for ism in smlist:
-                    ifile = thisdir+'tsink'+it+'sm'+ism+igamma+'.txt'
+                    ifile = thisdir+'tsink'+it+'sm'+ism+igamma+'.xml'
                     # if PrintRead: print ifile
-                    ifb = thisdir+'boots/tsink'+it+'sm'+ism+igamma+'.boot.txt'
-                    if os.path.isfile(ifile) and os.path.isfile(ifb):
+                    if os.path.isfile(ifile) :
                         if momstr not in GetCompletedMom(ifile): DoMom = True
                     else:
                         DoMom = True
         else:
             for istate in statelist:
                 for itodt in todtlist:
-                    ifile = thisdir+'state'+istate+itodt+igamma+'.txt'
+                    ifile = thisdir+'state'+istate+itodt+igamma+'.xml'
                     # if PrintRead: print ifile
-                    ifb = thisdir+'boots/state'+istate+itodt+igamma+'.boot.txt'
-                    if os.path.isfile(ifile) and os.path.isfile(ifb):
+                    if os.path.isfile(ifile) :
                         if momstr not in GetCompletedMom(ifile): DoMom = True
                     else:
                         DoMom = True
             for ism in smlist:
-                ifile = thisdir+'sm'+ism+igamma+'.txt'
+                ifile = thisdir+'sm'+ism+igamma+'.xml'
                 # if PrintRead: print ifile
-                ifb = thisdir+'boots/sm'+ism+igamma+'.boot.txt'
-                if os.path.isfile(ifile) and os.path.isfile(ifb):
+                if os.path.isfile(ifile) :
                     if momstr not in GetCompletedMom(ifile): DoMom = True
                 else:
                     DoMom = True
@@ -361,8 +355,8 @@ def ReadFFDict(thisindir,thisFFDict):
         for iset,thisset in enumerate(FFSetList):
             if PrintRead: print 'Reading ',thisFF,'at : ' ,int((iset*100)/float(len(FFSetList))),'%     \r',
             thisdir = thisindir+'FormFactors/'+thisFF+'/'
-            thisfile = thisdir+thisFF+thisset+'.txt'
-            thisbootfile = thisdir + 'boots/'+thisFF+thisset+'.boot.txt'
+            thisfile = thisdir+thisFF+thisset+'.xml'
+            thisbootfile = thisdir + 'boots/'+thisFF+thisset+'.boot.xml'
             DataDict[thisFF][thisset] = ReadFFFile(thisfile,bootfn=thisbootfile)            
         if PrintRead: print 'Reading ',thisFF,'took : ' , str(datetime.timedelta(seconds=time.time()-startff)) , ' h:m:s                     '
     if PrintRead: print 'Reading all FFs took : ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
@@ -380,11 +374,11 @@ def ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=[
             massMethodList = copy(thisMethodList)
             if 'SumMeth' in massMethodList:massMethodList.remove('SumMeth')
             if 'Fits' in massMethodList: massMethodList.remove('Fits')
-            DataDict[thisgamma] = MakeMethodsDict(gammadirin,'twopt.txt',
+            DataDict[thisgamma] = MakeMethodsDict(gammadirin,'twopt.xml',
                                                   massMethodList,thisSetList,thisMomList=thisMomList)
         else:
             gammadirin = thisindir+CreateOppDir(thisgamma)+'/'
-            DataDict[thisgamma] = MakeMethodsDict(gammadirin,thisgamma+'.txt',
+            DataDict[thisgamma] = MakeMethodsDict(gammadirin,thisgamma+'.xml',
                                                   thisMethodList,thisSetList,thisMomList=thisMomList)
     if PrintRead: print 'Reading took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
     if 'RF' in thisMethodList: DataDict = CombSetBoot(DataDict,'-')
@@ -398,11 +392,11 @@ def ReadCfunsDict(thisindir,thisSetList,thisGammaList,thisMomList=[]):
         if PrintRead: print 'Reading Cfuns at: ' ,int((ig*100)/float(len(thisGammaList))),'%     \r',
         if thisgamma == 'twopt':
             gammadirin = thisindir+'cfuns/twopt/'
-            DataDict[thisgamma] = MakeMethodsDict(gammadirin,'twopt.txt',
+            DataDict[thisgamma] = MakeMethodsDict(gammadirin,'twopt.xml',
                                                         ['RF'],thisSetList,thisMomList=thisMomList)
         else:
             gammadirin = thisindir+'cfuns/'+CreateOppDir(thisgamma)+'/'
-            DataDict[thisgamma] = MakeMethodsDict(gammadirin,thisgamma+'.txt',
+            DataDict[thisgamma] = MakeMethodsDict(gammadirin,thisgamma+'.xml',
                                                         ['RF'],thisSetList,thisMomList=thisMomList)
     if PrintRead: print 'Reading Cfuns took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
     DataDict = CombSetBoot(DataDict,'-')
@@ -515,33 +509,33 @@ def MakeMethodsDict(readdir,readfile,thisMethodList,thisSetList,thisMomList=[]):
             if 'twopt' in readfile: RFSetList = ReduceTsink(thisSetList)
             for iSet in RFSetList:
                 filename = readdir+iSet+readfile
-                bootfn = readdir+'boots/'+iSet+readfile.replace('.txt','.boot.txt')
+                bootfn = readdir+'boots/'+iSet+readfile.replace('.xml','.boot.xml')
                 thisDict[iSet] = ReadRFFile(filename,bootfn=bootfn,thisMomList=thisMomList)
         elif 'SF' in iMeth:
             thisDict=OrderedDict()
             if 'TSF' in iMeth:
                 for iSet in ReduceTsink(thisSetList):
-                    filename = readdir+iMeth+'/'+iSet+readfile.replace('.txt','##.txt')
-                    bootfn = readdir+iMeth+'/boots/'+iSet+readfile.replace('.txt','##.boot.txt')
+                    filename = readdir+iMeth+'/'+iSet+readfile.replace('.xml','##.xml')
+                    bootfn = readdir+iMeth+'/boots/'+iSet+readfile.replace('.xml','##.boot.xml')
                     thisDict[iSet] = ReadTSFFile(filename,bootfn=bootfn,thisMomList=thisMomList)
             elif 'OSF' in iMeth:
                 OSFSetList = thisSetList
                 if 'twopt' in readfile: OSFSetList = ReduceTsink(thisSetList)
                 for iSet in OSFSetList:
-                    filename = readdir+iMeth+'/'+iSet+readfile.replace('.txt','##.txt')
-                    bootfn = readdir+iMeth+'/boots/'+iSet+readfile.replace('.txt','##.boot.txt')
+                    filename = readdir+iMeth+'/'+iSet+readfile.replace('.xml','##.xml')
+                    bootfn = readdir+iMeth+'/boots/'+iSet+readfile.replace('.xml','##.boot.xml')
                     thisDict[iSet] = ReadOSFFile(filename,bootfn=bootfn,thisMomList=thisMomList)
         elif 'SumMeth' in iMeth:
             thisDict=OrderedDict()
             for iSet in ReduceTsink(thisSetList,NoCM=True):
                 filename = readdir+iMeth+'/'+iSet+readfile
-                bootfn = readdir+iMeth+'/boots/'+iSet+readfile.replace('.txt','.boot.txt')
+                bootfn = readdir+iMeth+'/boots/'+iSet+readfile.replace('.xml','.boot.xml')
                 thisDict[iSet] = ReadSumFile(filename,bootfn=bootfn,thisMomList=thisMomList)
         elif 'Fits' in iMeth:
             thisDict = OrderedDict()
             for iSet in thisSetList:
                 filename = readdir+iMeth+'/'+iSet+readfile
-                bootfn = readdir+iMeth+'/boots/'+iSet+readfile.replace('.txt','.boot.txt')
+                bootfn = readdir+iMeth+'/boots/'+iSet+readfile.replace('.xml','.boot.xml')
                 thisDict[iSet] = ReadFitFile(filename,bootfn=bootfn,thisMomList=thisMomList)
         else:
             if PrintRead: print iMeth , ' not a known method'
