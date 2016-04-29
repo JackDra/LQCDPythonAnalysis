@@ -228,7 +228,7 @@ def OneStateSetFit(C2pt,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2pt
 
     def sm3ptwrap(thisBoot2ptmom,thisBoot2ptZ,C2mom,C3mom,this3ptCutList,thisSetList):
         def SplitIset(thisiset):
-            sm = re.sub('tsink..','',thisiset)
+            sm = re.sub('tsink..','',thisiset.replace('REvec','CM'))
             itsink = thisiset.replace(sm,'').replace('tsink','')
             ism = thisSmList.index(sm)
             return ism,int(itsink)
