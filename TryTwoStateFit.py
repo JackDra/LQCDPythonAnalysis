@@ -103,7 +103,6 @@ else:
 
 
 print 'Creating SetList'
-print ExpandSetList(CaptString)
 [ReadSetList,SetTsink] = ExpandSetList(CaptString)
 ReadSet2pt = GetTsinkSmLists(ReadSetList)[1]
 print ''
