@@ -216,13 +216,13 @@ def ReduceTsink(listin,NoCM=False):
     return listout
 
 
-def GetTsinkSmLists(listin):
+def GetTsinkSmLists(listin,nodup=True):
     smlist,tsinklist = [],[]
     for istr in listin:
         tsinkstr,smstr = SplitTSinkString(istr)
-        if tsinkstr not in tsinklist:
+        if tsinkstr not in tsinklist or not nodub:
             tsinklist.append(tsinkstr)
-        if smstr not in smlist:
+        if smstr not in smlist or not nodub:
             smlist.append(smstr)
     return tsinklist,smlist
 
