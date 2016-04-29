@@ -74,8 +74,6 @@ thisFitOSFR = CreateFitList(OSF2ptMinStart,OSF2ptMinEnd,OSF2ptMaxStart,OSF2ptMax
 
 print 'Creating SetList'
 [ReadSetList,SetTsink] = ExpandSetList(CaptString)
-ReadSet2pt = map(RemoveTSink,ReadSetList)
-
 print ''
 print 'nboot = ' + str(nboot)
 
@@ -142,6 +140,7 @@ def DoOSF(thisSetList):
     #OneFit3ptAvg = [ ifit2pt , igamma , ip , iset , ifit3pt , params ]
     #OneFit3ptChi = [ ifit2pt , igamma , ip , iset , ifit3pt ]
 
+    print 'DEBUG',len(OneFit2pt[0][0])
     start = time.time()
     print 'Printing OSF Results to file: \r',
     WipeSFSet(outputdir,thisGammaList+['twopt'],'OSF'+outfile,'One',setlist=thisSetList)

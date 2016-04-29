@@ -104,7 +104,6 @@ else:
 
 print 'Creating SetList'
 [ReadSetList,SetTsink] = ExpandSetList(CaptString)
-ReadSet2pt = GetTsinkSmLists(ReadSetList)[1]
 print ''
 print 'nboot = ' + str(nboot)
 print 'All T Sinks: '+ ', '.join(map(str,ReadTSinkList))
