@@ -805,190 +805,190 @@ def ReadOSFFile(filename,bootfn='',thisMomList=[]):
 
 ##outputdict = { thismom , fitpar , 2corfitr , 3corcutr , Avg / Std / Chi / Boot (bs) }
 ## put ## as parameter
-def ReadSFFile(filename,bootfn='',OneOrTwo='Two',thisMomList=[]):
-    ReadMom = False
-    renorm = 1.
-    outputdict = OrderedDict()
-    if 'twopt' in filename:
-        twoptread = True
-        thisCorr = 'C2'
-    else:
-        twoptread = False
-        thisCorr = 'C3'
-    for ipar in StateParList[OneOrTwo][thisCorr]:
-        if ipar in ['m0','Dm'] and OneOrTwo == 'Two':
-            filename = re.sub('sm.*twopt','twopt',filename)
-            bootfn = re.sub('sm.*twopt','twopt',bootfn)
-            filename = re.sub('state.*twopt','twopt',filename)
-            bootfn = re.sub('state.*twopt','twopt',bootfn)
-        # print filename.replace('##',ipar)
-        if os.path.isfile(filename.replace('##',ipar)):
-            def thisReadFile(thisoutputdict):
-                currMomList = []
-                with open(filename.replace('##',ipar),'r') as f:
-                    for line in f:
-                        rdata = line.strip()
-                        if len(rdata) > 0:
-                            if rdata[0] == 'q':
-                                if len(thisMomList) > 0 and all([imom in currMomList for imom in thisMomList]): return thisoutputdict
-                                if rdata in thisMomList or len(thisMomList) == 0:
-                                    thismom = rdata
-                                    currMomList.append(thismom)
-                                    ReadMom = True
-                                    if thismom not in thisoutputdict.keys():
-                                        thisoutputdict[thismom] = OrderedDict()
-                                    if ipar not in thisoutputdict[thismom].keys():
-                                        thisoutputdict[thismom][ipar] = OrderedDict()
-                                else:
-                                    ReadMom = False
-                            elif ReadMom and twoptread:
-                                rdata = map(str,rdata.split())
-                                dictfitr = rdata[0]+'-'+rdata[1]
-                                if dictfitr not in thisoutputdict[thismom][ipar].keys():
-                                    thisoutputdict[thismom][ipar][dictfitr] = OrderedDict()
-                                try:
-                                    thisoutputdict[thismom][ipar][dictfitr]['Avg'] = float(rdata[2])*renorm
-                                    thisoutputdict[thismom][ipar][dictfitr]['Std'] = float(rdata[3])*renorm
-                                    thisoutputdict[thismom][ipar][dictfitr]['Chi'] = float(rdata[4])
-                                except:
-                                    thisoutputdict[thismom][ipar][dictfitr]['Avg'] = float('NaN')
-                                    thisoutputdict[thismom][ipar][dictfitr]['Std'] = float('NaN')
-                                    thisoutputdict[thismom][ipar][dictfitr]['Chi'] = float('NaN')                                
-                            elif ReadMom:
-                                rdata = map(str,rdata.split())
-                                dictfitr = rdata[0]+'-'+rdata[1]
-                                cutr = 'cut'+rdata[2]
-                                if dictfitr not in thisoutputdict[thismom][ipar].keys():
-                                    thisoutputdict[thismom][ipar][dictfitr] = OrderedDict()
-                                if cutr not in thisoutputdict[thismom][ipar][dictfitr].keys():
-                                    thisoutputdict[thismom][ipar][dictfitr][cutr] = OrderedDict()
-                                try:
-                                    thisoutputdict[thismom][ipar][dictfitr][cutr]['Avg'] = float(rdata[3])*renorm
-                                    thisoutputdict[thismom][ipar][dictfitr][cutr]['Std'] = float(rdata[4])*renorm
-                                    thisoutputdict[thismom][ipar][dictfitr][cutr]['Chi'] = float(rdata[5])
-                                except:
-                                    thisoutputdict[thismom][ipar][dictfitr][cutr]['Avg'] = float('NaN')
-                                    thisoutputdict[thismom][ipar][dictfitr][cutr]['Std'] = float('NaN')
-                                    thisoutputdict[thismom][ipar][dictfitr][cutr]['Chi'] = float('NaN')
-                return thisoutputdict
-            outputdict = thisReadFile(outputdict)
+# def ReadSFFile(filename,bootfn='',OneOrTwo='Two',thisMomList=[]):
+#     ReadMom = False
+#     renorm = 1.
+#     outputdict = OrderedDict()
+#     if 'twopt' in filename:
+#         twoptread = True
+#         thisCorr = 'C2'
+#     else:
+#         twoptread = False
+#         thisCorr = 'C3'
+#     for ipar in StateParList[OneOrTwo][thisCorr]:
+#         if ipar in ['m0','Dm'] and OneOrTwo == 'Two':
+#             filename = re.sub('sm.*twopt','twopt',filename)
+#             bootfn = re.sub('sm.*twopt','twopt',bootfn)
+#             filename = re.sub('state.*twopt','twopt',filename)
+#             bootfn = re.sub('state.*twopt','twopt',bootfn)
+#         # print filename.replace('##',ipar)
+#         if os.path.isfile(filename.replace('##',ipar)):
+#             def thisReadFile(thisoutputdict):
+#                 currMomList = []
+#                 with open(filename.replace('##',ipar),'r') as f:
+#                     for line in f:
+#                         rdata = line.strip()
+#                         if len(rdata) > 0:
+#                             if rdata[0] == 'q':
+#                                 if len(thisMomList) > 0 and all([imom in currMomList for imom in thisMomList]): return thisoutputdict
+#                                 if rdata in thisMomList or len(thisMomList) == 0:
+#                                     thismom = rdata
+#                                     currMomList.append(thismom)
+#                                     ReadMom = True
+#                                     if thismom not in thisoutputdict.keys():
+#                                         thisoutputdict[thismom] = OrderedDict()
+#                                     if ipar not in thisoutputdict[thismom].keys():
+#                                         thisoutputdict[thismom][ipar] = OrderedDict()
+#                                 else:
+#                                     ReadMom = False
+#                             elif ReadMom and twoptread:
+#                                 rdata = map(str,rdata.split())
+#                                 dictfitr = rdata[0]+'-'+rdata[1]
+#                                 if dictfitr not in thisoutputdict[thismom][ipar].keys():
+#                                     thisoutputdict[thismom][ipar][dictfitr] = OrderedDict()
+#                                 try:
+#                                     thisoutputdict[thismom][ipar][dictfitr]['Avg'] = float(rdata[2])*renorm
+#                                     thisoutputdict[thismom][ipar][dictfitr]['Std'] = float(rdata[3])*renorm
+#                                     thisoutputdict[thismom][ipar][dictfitr]['Chi'] = float(rdata[4])
+#                                 except:
+#                                     thisoutputdict[thismom][ipar][dictfitr]['Avg'] = float('NaN')
+#                                     thisoutputdict[thismom][ipar][dictfitr]['Std'] = float('NaN')
+#                                     thisoutputdict[thismom][ipar][dictfitr]['Chi'] = float('NaN')                                
+#                             elif ReadMom:
+#                                 rdata = map(str,rdata.split())
+#                                 dictfitr = rdata[0]+'-'+rdata[1]
+#                                 cutr = 'cut'+rdata[2]
+#                                 if dictfitr not in thisoutputdict[thismom][ipar].keys():
+#                                     thisoutputdict[thismom][ipar][dictfitr] = OrderedDict()
+#                                 if cutr not in thisoutputdict[thismom][ipar][dictfitr].keys():
+#                                     thisoutputdict[thismom][ipar][dictfitr][cutr] = OrderedDict()
+#                                 try:
+#                                     thisoutputdict[thismom][ipar][dictfitr][cutr]['Avg'] = float(rdata[3])*renorm
+#                                     thisoutputdict[thismom][ipar][dictfitr][cutr]['Std'] = float(rdata[4])*renorm
+#                                     thisoutputdict[thismom][ipar][dictfitr][cutr]['Chi'] = float(rdata[5])
+#                                 except:
+#                                     thisoutputdict[thismom][ipar][dictfitr][cutr]['Avg'] = float('NaN')
+#                                     thisoutputdict[thismom][ipar][dictfitr][cutr]['Std'] = float('NaN')
+#                                     thisoutputdict[thismom][ipar][dictfitr][cutr]['Chi'] = float('NaN')
+#                 return thisoutputdict
+#             outputdict = thisReadFile(outputdict)
 
-            thisbootfn = bootfn.replace('##',ipar)
-            # if twoptread: print thisbootfn
-            if os.path.isfile(thisbootfn):
-                def thisReadBoot(thisoutputdict):
-                    currMomList = []
-                    ReadMom = False
-                    with open(thisbootfn,'r') as f:
-                        for line in f:
-                            rdata = line.strip()
-                            if len(rdata) > 0:
-                                if rdata.split()[0] == 'nboot':
-                                    if nboot != int(rdata.split()[1]): raise IOError("nboot missmatch")
-                                elif rdata[0] == 'q':
-                                    if len(thisMomList) > 0 and all([imom in currMomList for imom in thisMomList]): 
-                                        BootNdimDict(thisoutputdict)
-                                        return thisoutputdict
-                                    if rdata in thisMomList or len(thisMomList) == 0:
-                                        thismom = rdata
-                                        currMomList.append(thismom)
-                                        ReadMom = True
-                                        if thismom not in thisoutputdict.keys():
-                                            if ipar not in thisoutputdict[thismom].keys():
-                                                print 'WARNING: '+thismom + ' '+ ipar +' found in:'
-                                                print thisbootfn + ' but not in:'
-                                                print filename
-                                                thisoutputdict[thismom] = OrderedDict()
-                                                thisoutputdict[thismom][ipar] = OrderedDict()
-                                    else:
-                                        ReadMom = False
-                                elif rdata[0] == 'f' and ReadMom and twoptread:
-                                    rdata = map(str,rdata.split())
-                                    dictfitr = rdata[1]+'-'+rdata[2]
-                                    if dictfitr not in thisoutputdict[thismom][ipar].keys():
-                                        thisoutputdict[thismom][ipar][dictfitr] = OrderedDict()
-                                    thisoutputdict[thismom][ipar][dictfitr]['Boot'] = BootStrap1(nboot,0.9)
-                                elif rdata[0] == 'f' and ReadMom:
-                                    rdata = map(str,rdata.split())
-                                    dictfitr = rdata[1]+'-'+rdata[2]
-                                    cutr = 'cut'+rdata[3]
-                                    if dictfitr not in thisoutputdict[thismom][ipar].keys():
-                                        thisoutputdict[thismom][ipar][dictfitr] = OrderedDict()
-                                    if cutr not in thisoutputdict[thismom][ipar][dictfitr].keys():
-                                        thisoutputdict[thismom][ipar][dictfitr][cutr] = OrderedDict()
-                                    thisoutputdict[thismom][ipar][dictfitr][cutr]['Boot'] = BootStrap1(nboot,0.9)
-                                elif ReadMom:
-                                    try:
-                                        if twoptread:
-                                            thisoutputdict[thismom][ipar][dictfitr]['Boot'].values[int(rdata.split()[0])] = float(rdata.split()[1])*renorm
-                                        else:
-                                            thisoutputdict[thismom][ipar][dictfitr][cutr]['Boot'].values[int(rdata.split()[0])] = float(rdata.split()[1])*renorm
-                                    except:
-                                        if twoptread:
-                                            thisoutputdict[thismom][ipar][dictfitr]['Boot'].values[int(rdata[0][:3])] = float('NaN')
-                                        else:
-                                            thisoutputdict[thismom][ipar][dictfitr][cutr]['Boot'].values[int(rdata[0][:3])] = float('NaN')
-                    BootNdimDict(thisoutputdict)
-                    return thisoutputdict
-                outputdict = thisReadBoot(outputdict)
-    return outputdict
+#             thisbootfn = bootfn.replace('##',ipar)
+#             # if twoptread: print thisbootfn
+#             if os.path.isfile(thisbootfn):
+#                 def thisReadBoot(thisoutputdict):
+#                     currMomList = []
+#                     ReadMom = False
+#                     with open(thisbootfn,'r') as f:
+#                         for line in f:
+#                             rdata = line.strip()
+#                             if len(rdata) > 0:
+#                                 if rdata.split()[0] == 'nboot':
+#                                     if nboot != int(rdata.split()[1]): raise IOError("nboot missmatch")
+#                                 elif rdata[0] == 'q':
+#                                     if len(thisMomList) > 0 and all([imom in currMomList for imom in thisMomList]): 
+#                                         BootNdimDict(thisoutputdict)
+#                                         return thisoutputdict
+#                                     if rdata in thisMomList or len(thisMomList) == 0:
+#                                         thismom = rdata
+#                                         currMomList.append(thismom)
+#                                         ReadMom = True
+#                                         if thismom not in thisoutputdict.keys():
+#                                             if ipar not in thisoutputdict[thismom].keys():
+#                                                 print 'WARNING: '+thismom + ' '+ ipar +' found in:'
+#                                                 print thisbootfn + ' but not in:'
+#                                                 print filename
+#                                                 thisoutputdict[thismom] = OrderedDict()
+#                                                 thisoutputdict[thismom][ipar] = OrderedDict()
+#                                     else:
+#                                         ReadMom = False
+#                                 elif rdata[0] == 'f' and ReadMom and twoptread:
+#                                     rdata = map(str,rdata.split())
+#                                     dictfitr = rdata[1]+'-'+rdata[2]
+#                                     if dictfitr not in thisoutputdict[thismom][ipar].keys():
+#                                         thisoutputdict[thismom][ipar][dictfitr] = OrderedDict()
+#                                     thisoutputdict[thismom][ipar][dictfitr]['Boot'] = BootStrap1(nboot,0.9)
+#                                 elif rdata[0] == 'f' and ReadMom:
+#                                     rdata = map(str,rdata.split())
+#                                     dictfitr = rdata[1]+'-'+rdata[2]
+#                                     cutr = 'cut'+rdata[3]
+#                                     if dictfitr not in thisoutputdict[thismom][ipar].keys():
+#                                         thisoutputdict[thismom][ipar][dictfitr] = OrderedDict()
+#                                     if cutr not in thisoutputdict[thismom][ipar][dictfitr].keys():
+#                                         thisoutputdict[thismom][ipar][dictfitr][cutr] = OrderedDict()
+#                                     thisoutputdict[thismom][ipar][dictfitr][cutr]['Boot'] = BootStrap1(nboot,0.9)
+#                                 elif ReadMom:
+#                                     try:
+#                                         if twoptread:
+#                                             thisoutputdict[thismom][ipar][dictfitr]['Boot'].values[int(rdata.split()[0])] = float(rdata.split()[1])*renorm
+#                                         else:
+#                                             thisoutputdict[thismom][ipar][dictfitr][cutr]['Boot'].values[int(rdata.split()[0])] = float(rdata.split()[1])*renorm
+#                                     except:
+#                                         if twoptread:
+#                                             thisoutputdict[thismom][ipar][dictfitr]['Boot'].values[int(rdata[0][:3])] = float('NaN')
+#                                         else:
+#                                             thisoutputdict[thismom][ipar][dictfitr][cutr]['Boot'].values[int(rdata[0][:3])] = float('NaN')
+#                     BootNdimDict(thisoutputdict)
+#                     return thisoutputdict
+#                 outputdict = thisReadBoot(outputdict)
+#     return outputdict
 
 
-## dataout = { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
-def ReadFFFile(filename,bootfn=''):
-    outputdict = OrderedDict()
-    if os.path.isfile(filename):
-        with open(filename,'r') as f:
-            for line in f:
-                rdata = line.strip()
-                if len(rdata) == 0: continue
-                rdata = rdata.split()
-                if 'Mass' in rdata[0]:
-                    outputdict['Mass'] = {'Set':rdata[1],
-                                          'Avg':float(rdata[2]),
-                                          'Std':float(rdata[3]),
-                                          'Chi':float(rdata[4])}
-                elif 'q**2' in rdata[0]:
-                    for idata in rdata:
-                        if 'FF' in idata and 'Err' not in idata :
-                            outputdict[idata] = OrderedDict()
-                        elif 'Chi' in idata:
-                            outputdict['Chi'] = OrderedDict()
-                elif 'qsqrd' in rdata[0]:
-                    thisikey = 0
-                    for ikey,dictkey in enumerate(outputdict.keys()):
-                        if 'Mass' in dictkey: continue
-                        thisikey += 1
-                        if 'FF' in dictkey:
-                            outputdict[dictkey][rdata[0]] = {'Avg':float(rdata[thisikey]),
-                                                             'Std':float(rdata[thisikey+1])}
-                            thisikey +=1
-                        else:
-                            outputdict[dictkey][rdata[0]] = float(rdata[thisikey])                            
-        if os.path.isfile(bootfn):
-            RFF,qsqrdread = None,None
-            with open(bootfn,'r') as f:
-                for line in f:
-                    rdata = line.strip()
-                    if len(rdata) == 0: continue
-                    rdata = rdata.split()
-                    if 'nboot' in rdata[0]:
-                        nboot = int(rdata[2])
-                    elif 'Mass' in rdata[0] and 'Mass' in outputdict.keys():
-                        outputdict['Mass']['Boot'] = BootStrap1(nboot,1)
-                        RFF = 'Mass'
-                    elif 'FF' in rdata[0]:
-                        RFF = rdata[0]
-                    elif 'qsqrd' in rdata[0] and RFF in outputdict.keys():
-                        qsqrdread = rdata[0]
-                        outputdict[RFF][qsqrdread]['Boot'] = BootStrap1(nboot,1)
-                    else:
-                        if 'Mass' in RFF:
-                            outputdict['Mass']['Boot'].values[int(rdata[0])] = float(rdata[1])
-                        else:
-                            outputdict[RFF][qsqrdread]['Boot'].values[int(rdata[0])] = float(rdata[1])
-            BootNdimDict(outputdict)
-    return outputdict
+# ## dataout = { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
+# def ReadFFFile(filename,bootfn=''):
+#     outputdict = OrderedDict()
+#     if os.path.isfile(filename):
+#         with open(filename,'r') as f:
+#             for line in f:
+#                 rdata = line.strip()
+#                 if len(rdata) == 0: continue
+#                 rdata = rdata.split()
+#                 if 'Mass' in rdata[0]:
+#                     outputdict['Mass'] = {'Set':rdata[1],
+#                                           'Avg':float(rdata[2]),
+#                                           'Std':float(rdata[3]),
+#                                           'Chi':float(rdata[4])}
+#                 elif 'q**2' in rdata[0]:
+#                     for idata in rdata:
+#                         if 'FF' in idata and 'Err' not in idata :
+#                             outputdict[idata] = OrderedDict()
+#                         elif 'Chi' in idata:
+#                             outputdict['Chi'] = OrderedDict()
+#                 elif 'qsqrd' in rdata[0]:
+#                     thisikey = 0
+#                     for ikey,dictkey in enumerate(outputdict.keys()):
+#                         if 'Mass' in dictkey: continue
+#                         thisikey += 1
+#                         if 'FF' in dictkey:
+#                             outputdict[dictkey][rdata[0]] = {'Avg':float(rdata[thisikey]),
+#                                                              'Std':float(rdata[thisikey+1])}
+#                             thisikey +=1
+#                         else:
+#                             outputdict[dictkey][rdata[0]] = float(rdata[thisikey])                            
+#         if os.path.isfile(bootfn):
+#             RFF,qsqrdread = None,None
+#             with open(bootfn,'r') as f:
+#                 for line in f:
+#                     rdata = line.strip()
+#                     if len(rdata) == 0: continue
+#                     rdata = rdata.split()
+#                     if 'nboot' in rdata[0]:
+#                         nboot = int(rdata[2])
+#                     elif 'Mass' in rdata[0] and 'Mass' in outputdict.keys():
+#                         outputdict['Mass']['Boot'] = BootStrap1(nboot,1)
+#                         RFF = 'Mass'
+#                     elif 'FF' in rdata[0]:
+#                         RFF = rdata[0]
+#                     elif 'qsqrd' in rdata[0] and RFF in outputdict.keys():
+#                         qsqrdread = rdata[0]
+#                         outputdict[RFF][qsqrdread]['Boot'] = BootStrap1(nboot,1)
+#                     else:
+#                         if 'Mass' in RFF:
+#                             outputdict['Mass']['Boot'].values[int(rdata[0])] = float(rdata[1])
+#                         else:
+#                             outputdict[RFF][qsqrdread]['Boot'].values[int(rdata[0])] = float(rdata[1])
+#             BootNdimDict(outputdict)
+#     return outputdict
     
 
 
