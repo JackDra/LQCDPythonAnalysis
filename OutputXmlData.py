@@ -233,6 +233,7 @@ def PrintOSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
                 datadict['OSFMass']['Values'][ip] = OrderedDict()
                 for icutstr,cutdata,cutdataChi in zip(xml2ptFitList,data2pt,data2ptChi):
                     if im == 1:
+                        print len(cutdata[ipc]), ism
                         mcutdata = cutdata[ipc][ism][im].exp(1)
                         mcutdata.Stats()
                         thisformat = 'f'
