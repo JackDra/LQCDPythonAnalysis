@@ -183,12 +183,16 @@ def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
 
 def PrintTSFToFile(filename,thisMomList,xml2ptFitList,xmlTSFList,data3pt,data3ptChi,ipar,igamma,ism):
     datadict = {'TSF':{'Values':OrderedDict(),'Boots':OrderedDict()}}
-    print thisMomList
     xmlMomList = map(qstrTOqcond,thisMomList)
     for ipc,ip in enumerate(xmlMomList):        
         datadict['TSF']['Values'][ip] = OrderedDict()
         for ic2pt,icut2ptstr in enumerate(xml2ptFitList):
             datadict['TSF']['Values'][ip][icut2ptstr] = OrderedDict()
+            print ''
+            print len(data3pt) , ic2pt
+            print len(data3pt[ic2pt]) , ipc
+            print len(data3pt[ic2pt][ipc]) , igamma
+            print len(data3pt[ic2pt][ipc][igamma]) , ism
             for icutstr,cutdata,cutdataChi in zip(xmlTSFList,data3pt[ic2pt][ipc][igamma][ism],data3ptChi[ic2pt][ipc][igamma][ism]):
                 datadict['TSF']['Values'][ip][icut2ptstr][icutstr] = BootAvgStdChiToFormat(cutdata[ipar],cutdataChi)
     for ipc,ip in enumerate(xmlMomList):        
