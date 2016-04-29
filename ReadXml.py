@@ -88,8 +88,11 @@ def ReadFitFile(filename,bootfn='',thisMomList=[]):
 def ReadSumFile(filename,bootfn='',thisMomList=[]):
     dictout = {}
     if '.txt' in filename: filename = filename.replace('.txt','.xml')
-    if os.path.isfile(filename):
+    if not os.path.isfile(filename):
+        mprint(filename + ' not found')
+    else:
         data = ReadXmlDict(filename)
+        print data
         data = data[data.keys()[0]]
         if 'Boots' in data.keys():
             bootdata = data['Boots']
@@ -131,5 +134,4 @@ def ReadSumFile(filename,bootfn='',thisMomList=[]):
                             for ir,rdata in tdata.iteritems():
                                 thisfitr = FitFlagXmlToOld(it,ir)
                                 dictout[thismom][icut][thisfitr] = rdata
-    print dictout
     return dictout
