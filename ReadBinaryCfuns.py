@@ -9,7 +9,6 @@ SeekIncSize = 8
 class ReadFSDerCfunPick:
     def __init__(self,file,thisMomList,thisDGList):
         self.data = []
-        print file
         f = open(file,'rb')
         for igd,thisgamma in enumerate(thisDGList):
             cmplxflag = False

@@ -64,9 +64,9 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
     if 'CM' == RunType:
 ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 ## CMdata3pt  [ istate , igamma , ip , it] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-        if giDi: data3pt,thisGammaList = CreategiDi(data3pt,thisGammaList,thisDSList)
         data2pt = np.array(PreptwoptCorr(data2pt))
         data3pt = np.array(data3pt)[0,:,:,:,:,:]
+        if giDi: data3pt,thisGammaList = CreategiDi(data3pt,thisGammaList,thisDSList)
         data2ptset = DiagSmear(data2pt).tolist()
         data3ptset = DiagSmear(data3pt).tolist()
         start = time.time()
@@ -86,9 +86,9 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
     elif 'REvec' == RunType:
 ## CMdata2pt [ istate , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 ## CMdata3pt  [ istate , igamma , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-        if giDi: data3pt,thisGammaList = CreategiDi(data3pt,thisGammaList,thisDSList)
         data2pt = np.array(PreptwoptCorr(data2pt))
         data3pt = np.array(data3pt)[0,:,:,:,:,:]
+        if giDi: data3pt,thisGammaList = CreategiDi(data3pt,thisGammaList,thisDSList)
         print 'Creating REvec CM Tech ' , REvecTvarList[0]
         [data2ptset,data3ptset] = CreateREvecCfuns(data3pt,data2pt,DefREvecVarList,thisMomList)
         SetList,dump = CreateREvecSet(thisTSinkList,StateSet,REvecTvarList)
@@ -109,9 +109,9 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         #     print it, data3ptset[0][0][0][it].Avg, data2ptset[0][0][it].Avg
             
     elif 'TSink' == RunType:
-        if giDi: data3pt,thisGammaList = CreategiDi(data3pt,thisGammaList,thisDSList)
         data2pt = np.array(PreptwoptCorr(data2pt))
         data3pt = np.array(data3pt)[0,:,:,:,:,:]
+        if giDi: data3pt,thisGammaList = CreategiDi(data3pt,thisGammaList,thisDSList)
         data2ptset,data3ptset = DiagSmear(data2pt),DiagSmear(data3pt)
         SetList = ['tsink'+str(thisTSinkList[0])+'sm'+ism for ism in thisSmearList]
     print 'Analysis Complete'
