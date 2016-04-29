@@ -43,6 +43,7 @@ thisFitTSFR = CreateFitList(TSF2ptMinStart,TSF2ptMinEnd,TSF2ptMaxStart,TSF2ptMax
 
 if outfile == 'Tsink':
     print 'Tsink run'
+    CaptString = ['TSINKLIST']
     ReadSmearList = ['32']
     ReadTSinkList = AllTSinkList
     ReadStateList = []
@@ -53,6 +54,7 @@ elif outfile == 'test32':
     print 'test32 run'
     ReadSmearList = ['32']
     ReadTSinkList = [32,35,38]
+    CaptString = ['tsink'+str(its)+'sm32' for its in ReadTSinkList]
     ReadStateList = []
     ReadTvarList = []
     ReadREvecTSinkList = []
@@ -61,6 +63,7 @@ elif outfile == 'Small':
     print 'Small run'
     ReadSmearList = ['32']
     ReadTSinkList = [26,29,32]
+    CaptString = ['tsink'+str(its)+'sm32' for its in ReadTSinkList]
     ReadStateList = []
     ReadTvarList = []
     ReadREvecTSinkList = []
@@ -69,17 +72,28 @@ elif outfile == 'CM':
     print 'CM run'
     ReadSmearList = DefSmearList
     ReadTSinkList = [29]
+    CaptString = ['SMSET','CMSET']
     ReadStateList = []
     ReadTvarList = []
     ReadREvecTSinkList = []
     ReadREvecTvarList = []
 elif outfile == 'REvec':
     print 'REvec run'
+    CaptString = ['REvecSET']
     ReadSmearList = []
     ReadTSinkList = []
     ReadTvarList = []
     ReadREvecTSinkList = REvecTSinkList
     ReadREvecTvarList = REvecTvarList
+elif outfile == 'PoF'+str(PoFShifts):
+    thisPoF = 'PoF'+str(PoFShifts)
+    print thisPoF+' run'
+    CaptString = ['PoFSET']
+    ReadSmearList = []
+    ReadTSinkList = []
+    ReadTvarList = []
+    ReadREvecTSinkList = PoFTSinkList
+    ReadREvecTvarList = PoFTvarList
 elif outfile == 'All':
     for iCol in TSFColList:
         os.system(scriptdir+"TryTwoStateFit.py " + iCol+' ' +' '.join(sys.argv[2:]))
@@ -89,14 +103,12 @@ else:
 
 
 print 'Creating SetList'
-[ReadSetList,ReadSet2pt,SetTsink] = CreateSet(thisSmearL=ReadSmearList,thisTvarL=ReadTvarList,thisTSinkL=ReadTSinkList,
-                                              thisREvecTvarL=ReadREvecTvarList,thisREvecTSinkL=ReadREvecTSinkList)
-
+[ReadSetList,ReadSet2pt,SetTsink] = ExpandSetList(CaptString)
 print ''
 print 'nboot = ' + str(nboot)
 print 'All T Sinks: '+ ', '.join(map(str,ReadTSinkList))
 # print 'All Operators: \n'+'\n'.join(thisGammaList)+'\n'
-print 'All Sets:\n' + '\n'.join(ReadSetList)+'\n'
+ShowSetLists(ReadSetList)
 # print 'All 2pt Sets:\n' + '\n'.join(map(str,ReadSet2pt))
 # print 'All Fit Ranges:\n' + '\n'.join(map(str,thisFitTSFR))+'\n'
 

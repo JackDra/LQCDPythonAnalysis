@@ -9,7 +9,7 @@ def ShowSetLists(thissetlist):
     print 'Set Lists:'
     print '\n'.join(thissetlist)
     print 
-
+    
 def ExpandSetList(thisSL):
     SLout = []
     for iset in thisSL:
@@ -27,7 +27,7 @@ def ExpandSetList(thisSL):
             SLout += DefSetList
         else:
             SLout.append(iset)
-    return SortMySet(SLout)[0]
+    return SortMySet(SLout)
 
 
 def InputParams(inputparams):
@@ -55,7 +55,7 @@ def InputParams(inputparams):
         elif '-g' in isys:
             feedout['gamma'] = isys.replace('-g=','').split(',')
         elif '-s' in isys:
-            feedout['set'] = ExpandSetList(isys.replace('-s=','').split(','))
+            feedout['set'] = ExpandSetList(isys.replace('-s=','').split(','))[0]
             for isl in feedout['set']:
                 if isl not in DefSetList:
                     print 'Warning, ' + isl + ' not found in set list, skipping.'
