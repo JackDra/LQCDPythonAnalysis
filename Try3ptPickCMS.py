@@ -38,8 +38,8 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
     sys.stdout = open(logfilemid,'a',0)
     sys.stderr = open(errfile,'a',0)
 
-    print thisPGList
-    print thisPDList
+    # print thisPGList
+    # print thisPDList
     # print thisDSList
     # print thisSmearList
     # print thisPrefList

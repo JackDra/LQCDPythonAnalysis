@@ -42,6 +42,8 @@ def CreateDS(datadoub,datasing,thisGammaList):
 
 def CreategiDi(data3pt,thisGammaList,thisDSList):
     data3ptout = Swap3ptSS(data3pt)
+    if len(data3ptout) != 4:
+        raise IOError("Need giDi with i =1,2,3,4 for giDi combination")
     thisGammaListOut = np.array(thisGammaList)
     for iDS in thisDSList:
         g4D4i = thisGammaListOut.tolist().index(iDS+'P4g4D4')
