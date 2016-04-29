@@ -247,7 +247,7 @@ def OneStateSetFit(C2pt,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2pt
         return Boot3pt,Avg3pt,Chi3pt
 
     this2ptFitR,perdone = this2ptFitRvec
-    thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
+    thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList,rmdup=False)
     print thisTSinkList
     print thisSmList
     Boot2pt,Avg2pt,Chi2pt = [],[],[]
