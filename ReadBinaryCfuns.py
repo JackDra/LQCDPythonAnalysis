@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 from array import array
 import numpy as np
-import BootTest as bt
 from Params import *
 
 SeekIncSize = 8
@@ -10,6 +9,7 @@ SeekIncSize = 8
 class ReadFSDerCfunPick:
     def __init__(self,file,thisMomList,thisDGList):
         self.data = []
+        print file
         f = open(file,'rb')
         for igd,thisgamma in enumerate(thisDGList):
             cmplxflag = False
