@@ -112,6 +112,7 @@ def PrintFFSet(FFin,Set,Mass,SetMass,theCurr):
     datadict['Form_Factors']['Values']['Mass']['Chi'] = Mass['Chi']
     for iqsqrd,qdata in FFin.iteritems():
         datadict['Form_Factors']['Values'][iqsqrd] = OrderedDict()
+        print qdata.keys()
         datadict['Form_Factors']['Values'][iqsqrd]['Chi'] = qdata['Chi']
         for ic,iFF in enumerate(qdata['Boot']):
             datadict['Form_Factors']['Values'][iqsqrd]['FF'+str(ic)] = BootAvgStdToFormat(iFF)
