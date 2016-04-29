@@ -94,3 +94,7 @@ def FitFlagXmlToOld(param,fitr):
     oldparam = param.replace('slope','sl').replace('constant','con')
     oldfitr = unxmlfitr(fitr)
     return 'fit '+oldparam+' '+oldfitr[0]+'-'+oldfitr[1]
+
+def FitFlagXmlToOldSF(fitr):
+    oldfitr = unxmlfitr(fitr)
+    return oldfitr[0]+'-'+oldfitr[1]
