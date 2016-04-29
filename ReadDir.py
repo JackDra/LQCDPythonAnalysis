@@ -4,11 +4,10 @@ from SetLists import *
 import glob,os
 
 def ReadSetDir(thisdir,thisgamma=''):
-    thisSetList = glob.glob(thisdir+'/*.txt')
+    thisSetList = glob.glob(thisdir+'/*.xml')
     thisSetList = [(iS.replace(thisdir,'')
                     .replace(thisgamma,'')
-                    .replace('.txt','')
-                    .replace('.boot','')) for iS in thisSetList]
+                    .replace('.xml','')) for iS in thisSetList]
     if OnlySelVar:
         SetOut = []
         for iSet in thisSetList:
@@ -20,29 +19,29 @@ def ReadSetDir(thisdir,thisgamma=''):
     return SetOut
 
 
-def ReadSetBootDir(thisdir,thisgamma='',ReadBoot=True):
-    tSL = ReadSetDir(thisdir,thisgamma=thisgamma)
-    if ReadBoot: 
-        tSLBoot = ReadSetDir(thisdir+'boots/',thisgamma=thisgamma)
-        return list(set(tSL) & set(tSLBoot))
-    else:
-        return tSL
+# def ReadSetBootDir(thisdir,thisgamma='',ReadBoot=True):
+#     tSL = ReadSetDir(thisdir,thisgamma=thisgamma)
+#     if ReadBoot: 
+#         tSLBoot = ReadSetDir(thisdir+'boots/',thisgamma=thisgamma)
+#         return list(set(tSL) & set(tSLBoot))
+#     else:
+#         return tSL
 
-def ReadAllDir(thisdir,thisgamma='',ReadBoot=True):
+def ReadAllDir(thisdir,thisgamma=''):
     thisSetList = []
     for (dirname,dirs,files) in os.walk(thisdir):
         if 'boots' in dirname: continue
-        thisSetList += [dirname.replace(thisdir,'').replace('/','')+iset for iset in ReadSetBootDir(dirname,thisgamma=thisgamma,ReadBoot=ReadBoot)]
+        thisSetList += [dirname.replace(thisdir,'').replace('/','')+iset for iset in ReadSetDir(dirname,thisgamma=thisgamma)]
     return thisSetList
 
 
 ## thisCurrDict = [ iCurr : iSets ]
-def GetCurrDict(thisCurrTypes,ReadBoot=False):
+def GetCurrDict(thisCurrTypes):
     thisCurrDict = {}
     thisSetList = None
     for iCurr in thisCurrTypes:
         print 'Reading ' , iCurr , ' Form Factors '
-        thisCurrDict[iCurr] = ReadAllDir(outputdir+'FormFactors/'+iCurr+'/',thisgamma=iCurr,ReadBoot=ReadBoot)
+        thisCurrDict[iCurr] = ReadAllDir(outputdir+'FormFactors/'+iCurr+'/',thisgamma=iCurr)
         if thisSetList == None: 
             thisSetList = set(thisCurrDict[iCurr])
         else:
