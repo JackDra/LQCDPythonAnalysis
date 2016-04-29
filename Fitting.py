@@ -235,7 +235,7 @@ def OneStateSetFit(C2pt,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2pt
             return ism,int(itsink)
 
         Boot3pt,Avg3pt,Chi3pt = [],[],[]
-        print len(C3mom) , len(thisSetList)
+        # print len(C3mom) , thisSetList
         for iset,thisset in enumerate(thisSetList):
             isC3 = C3mom[iset]
             thisism,thistsink = SplitIset(thisset,thisSML)
