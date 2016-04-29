@@ -37,12 +37,14 @@ OSFColList = ['Tsink','CM']
 if outfile == 'Tsink':
     ReadSmearList = ['32']
     ReadTSinkList = AllTSinkList
+    CaptString = ['TSINKSET']
     ReadTvarList = []
     ReadREvecTSinkList = []
     ReadREvecTvarList = []
 elif outfile == 'CM':
     ReadSmearList = DefSmearList
     ReadTSinkList = [29]
+    CaptString = ['SMSET','CMSET']
     ReadTvarList = AnaTvarList
     ReadREvecTSinkList = []
     ReadREvecTvarList = []
@@ -51,12 +53,14 @@ elif outfile == 'JustPoF':
     ReadSmearList = []
     ReadTSinkList = [29]
     ReadTvarList = AnaTvarList
+    CaptString = ['PoFSET']
     ReadREvecTSinkList = []
     ReadREvecTvarList = []
 elif outfile == 'REvec':
     ReadSmearList = []
     ReadTSinkList = []
     ReadTvarList = []
+    CaptString = ['REvecSET']
     ReadREvecTSinkList = REvecTSinkList
     ReadREvecTvarList = REvecTvarList
 elif outfile == 'All':
@@ -72,8 +76,9 @@ else:
 thisFitOSFR = CreateFitList(OSF2ptMinStart,OSF2ptMinEnd,OSF2ptMaxStart,OSF2ptMaxEnd,OSF3ptCutMin,OSF3ptCutMax)
 
 print 'Creating SetList'
-[ReadSetList,ReadSet2pt,SetTsink] = CreateSet(thisSmearL=ReadSmearList,thisTvarL=ReadTvarList,thisTSinkL=ReadTSinkList,
-                                              thisREvecTvarL=ReadREvecTvarList,thisREvecTSinkL=ReadREvecTSinkList)
+[ReadSetList,SetTsink] = ExpandSetList(CaptString)
+ReadSet2pt = GetTsinkSmLists(ReadSetList)[1]
+
 print ''
 print 'nboot = ' + str(nboot)
 
