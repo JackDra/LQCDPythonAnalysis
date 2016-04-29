@@ -121,7 +121,7 @@ def PrintFFSet(FFin,Set,Mass,SetMass,theCurr):
             datadict['Form_Factors']['Boots'][iqsqrd] = OrderedDict()
             for ic,iFF in enumerate(qdata['Boot']):
                 datadict['Form_Factors']['Boots'][iqsqrd]['FF'+str(ic)] = iFF.values
-    with open(filename+'.xml','w') as f:
+    with open(thisfile+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
 
 
