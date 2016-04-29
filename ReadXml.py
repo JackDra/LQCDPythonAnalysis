@@ -138,3 +138,58 @@ def ReadSumFile(filename,bootfn='',thisMomList=[]):
                                 thisfitr = FitFlagXmlToOld(it,ir)
                                 dictout[thismom][icut][thisfitr] = rdata
     return dictout
+## dataout = { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
+def ReadFFFile(filename,bootfn=''):
+    outputdict = OrderedDict()
+    if os.path.isfile(filename):
+        with open(filename,'r') as f:
+            for line in f:
+                rdata = line.strip()
+                if len(rdata) == 0: continue
+                rdata = rdata.split()
+                if 'Mass' in rdata[0]:
+                    outputdict['Mass'] = {'Set':rdata[1],
+                                          'Avg':float(rdata[2]),
+                                          'Std':float(rdata[3]),
+                                          'Chi':float(rdata[4])}
+                elif 'q**2' in rdata[0]:
+                    for idata in rdata:
+                        if 'FF' in idata and 'Err' not in idata :
+                            outputdict[idata] = OrderedDict()
+                        elif 'Chi' in idata:
+                            outputdict['Chi'] = OrderedDict()
+                elif 'qsqrd' in rdata[0]:
+                    thisikey = 0
+                    for ikey,dictkey in enumerate(outputdict.keys()):
+                        if 'Mass' in dictkey: continue
+                        thisikey += 1
+                        if 'FF' in dictkey:
+                            outputdict[dictkey][rdata[0]] = {'Avg':float(rdata[thisikey]),
+                                                             'Std':float(rdata[thisikey+1])}
+                            thisikey +=1
+                        else:
+                            outputdict[dictkey][rdata[0]] = float(rdata[thisikey])                            
+        if os.path.isfile(bootfn):
+            RFF,qsqrdread = None,None
+            with open(bootfn,'r') as f:
+                for line in f:
+                    rdata = line.strip()
+                    if len(rdata) == 0: continue
+                    rdata = rdata.split()
+                    if 'nboot' in rdata[0]:
+                        nboot = int(rdata[2])
+                    elif 'Mass' in rdata[0] and 'Mass' in outputdict.keys():
+                        outputdict['Mass']['Boot'] = BootStrap1(nboot,1)
+                        RFF = 'Mass'
+                    elif 'FF' in rdata[0]:
+                        RFF = rdata[0]
+                    elif 'qsqrd' in rdata[0] and RFF in outputdict.keys():
+                        qsqrdread = rdata[0]
+                        outputdict[RFF][qsqrdread]['Boot'] = BootStrap1(nboot,1)
+                    else:
+                        if 'Mass' in RFF:
+                            outputdict['Mass']['Boot'].values[int(rdata[0])] = float(rdata[1])
+                        else:
+                            outputdict[RFF][qsqrdread]['Boot'].values[int(rdata[0])] = float(rdata[1])
+            BootNdimDict(outputdict)
+    return outputdict

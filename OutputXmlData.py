@@ -110,6 +110,7 @@ def PrintFFSet(FFin,Set,Mass,SetMass,theCurr):
     datadict['Form_Factors']['Values']['Mass']['Avg'] = Mass['Avg']
     datadict['Form_Factors']['Values']['Mass']['Std'] = Mass['Std']
     datadict['Form_Factors']['Values']['Mass']['Chi'] = Mass['Chi']
+    datadict['Form_Factors']['Boots']['Mass'] = Mass['Boot']
     for iqsqrd,qdata in FFin.iteritems():
         if len(qdata.keys()) > 0:
             datadict['Form_Factors']['Values'][iqsqrd] = OrderedDict()
