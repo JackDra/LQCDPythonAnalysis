@@ -186,7 +186,7 @@ def Get3SM(outputdir,thisGammaList,MomListIn,setlist):
         thisdir = outputdir+CreateOppDir(igamma)
         for iset in setlist:
             ifile = thisdir+iset+igamma+'.xml'
-            if PrintRead: print ifile
+            # if PrintRead: print ifile
             if os.path.isfile(ifile):
                 tempmomlist = GetCompletedMom(ifile)
                 momlist = momlist & tempmomlist
