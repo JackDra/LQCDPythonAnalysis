@@ -233,21 +233,21 @@ def PrintOSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
                 datadict['OSFMass']['Values'][ip] = OrderedDict()
                 for icutstr,cutdata,cutdataChi in zip(xml2ptFitList,data2pt,data2ptChi):
                     if im == 1:
-                        mcutdata = cutdata[ipc][im].exp(1)
+                        mcutdata = cutdata[ipc][ism][im].exp(1)
                         mcutdata.Stats()
                         thisformat = 'f'
                     else:
-                        mcutdata = cutdata[ipc][im]
+                        mcutdata = cutdata[ipc][ism][im]
                         thisformat = 'e'
-                    datadict['OSFMass']['Values'][ip][icutstr] = BootAvgStdChiToFormat(mcutdata,cutdataChi[ipc],frmtflag=thisformat)
+                    datadict['OSFMass']['Values'][ip][icutstr] = BootAvgStdChiToFormat(mcutdata,cutdataChi[ipc][ism],frmtflag=thisformat)
             for ipc,ip in enumerate(xmlMomList):        
                 datadict['OSFMass']['Boots'][ip] = OrderedDict()
                 for icutstr,cutdata in zip(xml2ptFitList,data2pt):
                     if im == 1:
-                        mcutdata = cutdata[ipc][im].exp(1)
+                        mcutdata = cutdata[ipc][ism][im].exp(1)
                         mcutdata.Stats()
                     else:
-                        mcutdata = cutdata[ipc][im]
+                        mcutdata = cutdata[ipc][ism][im]
                     datadict['OSFMass']['Boots'][ip][icutstr] = mcutdata.values
             with open(filename+'.xml','w') as f:
                 f.write( xmltodict.unparse(datadict,pretty=True))
