@@ -99,7 +99,6 @@ def PrintSumToFile(data,datafit,datafitchi,filename,thisFitList,thisMomList,this
 
 
 def PrintFFSet(FFin,Set,Mass,SetMass,theCurr):
-    print 'Starting Print'
     FFdir = outputdir +'/FormFactors/'+theCurr+'/'
     FFbootdir = FFdir + 'boots/'
     mkdir_p(FFbootdir)

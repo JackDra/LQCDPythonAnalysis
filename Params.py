@@ -302,3 +302,9 @@ def GetRenorm(thisstring):
         return ScalarNorm
     else:
         return 1.0
+
+
+def mprint(string):
+    if not DoMulticore: print string
+
+    

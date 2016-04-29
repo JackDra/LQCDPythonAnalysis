@@ -32,68 +32,38 @@ def PickMassSet(MassSet,theset):
     return theMass,thesetmass
 
 def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr):
-    # print 'Set:' + theset + ' MassSetPicked:'+thesetmass
+    mprint( 'Set:' + theset + ' MassSetPicked:'+thesetmass)
 ## FF { { momsqrd } { Boot/Avg/Chi } }
     thisstart = time.time()
     FF = CreateFF(setdict,thisMass['Avg'],thisCurr)
     PrintFFSet(FF,theset,thisMass,thesetmass,thisCurr)
-    # print 'Fit and Print for ' , theset , ' took: ',str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s'    
+    mprint( 'Fit and Print for ' , theset , ' took: ',str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s'    )
 
 
 #FitMasses later
 def DoFF(thisMethodList,thisCurr,thisSetList,thisGammaList):
-    # print 'Running : ' , thisCurr , ' ' , thisMethodList[0]
-    # print 'SetList:\n' + '\n'.join(thisSetList)
-    # print ''
-    # PrintOpps(thisGammaList)
-    # print 'Reading Methods:\n' + '\n'.join(thisMethodList)
 
     data,MassSet = ExtractValues(outputdir,thisGammaList,thisSetList,thisMethodList)
     if len(data.keys()) == 0:
-        # print 'No Sets Found, returning'
+        mprint( 'No Sets Found, returning')
         return
 
-    # print 'All data Collected:'
-    # for iCol in data.keys():
-    #     print iCol
-    # print ''
-    # try:
-    #     # print 'Mass data Collected:'
-    #     for iCol in MassSet.keys():
-    #         print iCol
-    # except:
-    #     print 'No Masses Found, using default'
+    mprint( 'All data Collected:')
+    for iCol in data.keys():
+        mprint( iCol)
+    mprint( '')
     # data { { StateList } { gamma } { mom } { Fit(Boot/Avg/Std/Chi) } }
-    # print ''
-    # print 'Default Mass Set To: ' , DefMassVal[DefMassVal.keys()[0]]
-    # print ''
-    # print 'Creating Form Factors:' 
+    mprint( '')
+    mprint( 'Default Mass Set To: ' , DefMassVal[DefMassVal.keys()[0]])
+    mprint( '')
+    mprint( 'Creating Form Factors:' )
     inputparams = [PickMassSet(MassSet,theset)+(theset,setdict,thisCurr) for theset,setdict in data.iteritems()]
     start = time.time()
     for ipar in inputparams: CreateFFWrap(*ipar)
-    print 'Fit and Print for ' , ' '.join(thisMethodList) , thisCurr , ' '.join(thisSetList) ,' in total took: ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'    
-    # print ''
+    mprint( 'Fit and Print for ' , ' '.join(thisMethodList) , thisCurr , ' '.join(thisSetList) ,' in total took: ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'    
+    mprint( '')
 
 
-# if kappa == 12090:
-#     thisSmearList = DefSmearList
-#     if OnlySelVar:
-#         thisTvarList = [DefTvarPicked]
-#     else:
-#         thisTvarList = DefTvarList
-#     thisTSinkList = AllTSinkList
-#     thisStateList = ['1']
-# elif kappa == 12104:
-#     thisSmearList = []
-#     if OnlySelVar:
-#         thisTvarList = [DefTvarPicked]
-#     else:
-#         thisTvarList = DefTvarList
-#     thisTSinkList = REvecTSinkList
-#     thisStateList = ['1']
-
-# if len(sys.argv) == 1:
-#     raise IOError('please select valid current type :\n' + '\n'.join(CurrTypes)+'\n or MethodType:\n'+'\n'.join(MethodList))
 
 feedin = InputParams(sys.argv[1:])
 
