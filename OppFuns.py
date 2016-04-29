@@ -68,28 +68,22 @@ def Wipe2pt(outputdir,statelist=[],todtlist=[],smlist=[]):
     for iflag in ['cfuns/twopt','Mass']:
         thisdir = outputdir+iflag+'/'
         for itodt in thistodtlist:
-            ifile = thisdir+itodt+'LREM.txt'
+            ifile = thisdir+itodt+'LREM.xml'
             if os.path.isfile(ifile): os.remove(ifile)
             for istate in statelist:
-                ifile = thisdir+'state'+istate+itodt+iflag.replace('cfuns/','')+'.txt'
-                ifb = thisdir+'boots/state'+istate+itodt+iflag.replace('cfuns/','')+'.boot.txt'
+                ifile = thisdir+'state'+istate+itodt+iflag.replace('cfuns/','')+'.xml'
                 if os.path.isfile(ifile): os.remove(ifile)
-                if os.path.isfile(ifb): os.remove(ifb)
         for ism in smlist:
-            ifile = thisdir+'sm'+ism+iflag.replace('cfuns/','')+'.txt'
-            ifb = thisdir+'boots/sm'+ism+iflag.replace('cfuns/','')+'.boot.txt'
+            ifile = thisdir+'sm'+ism+iflag.replace('cfuns/','')+'.xml'
             if os.path.isfile(ifile): os.remove(ifile)
-            if os.path.isfile(ifb): os.remove(ifb)
     
 
 def WipeSet(outputdir,thisGammaList,setlist,filepref=''):
     for igamma in thisGammaList:
         thisdir = outputdir+CreateOppDir(igamma) + filepref        
         for iset in setlist:
-            ifile = thisdir+iset+igamma+'.txt'
-            ifb = thisdir+'boots/'+iset+igamma+'.boot.txt'
+            ifile = thisdir+iset+igamma+'.xml'
             if os.path.isfile(ifile): os.remove(ifile)
-            if os.path.isfile(ifb): os.remove(ifb)
 
             
 # def WipeSet(outputdir,thisGammaList,tlist=[],treveclist=[],statelist=[],revectodtlist=[],todtlist=[],smlist=[],filepref=''):

@@ -17,6 +17,7 @@ import re
 import time
 import datetime
 from ReadXml import *
+import xml.etree.ElementTree as ET
 
 
 # R/L Evecs [ ip , istate , ival ]
@@ -115,21 +116,31 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
     if PrintRead: print 'Extracting data took: ', str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                  '
     return datadictout,datamassout
 
+
+
 def GetCompletedMom(thisfile):
     thisqlist = set([])
-    with open(thisfile,'r') as f:
-        for line in f:
-            if len(line.strip()) > 0:
-                if line.strip()[0] == 'q':
-                    thisqlist = thisqlist | set([line.strip()])
-    return thisqlist
+    thisqlistboot = set([])
+    tree = ET.parse(thisfile)
+    root = tree.getroot()
+    rootlist = [it.tag for it in root.findall('./')]
 
-def GetTxtAndBootComp(thisfile,thisbootfile):
-    txtqlist = GetCompletedMom(thisfile)
-    bootqlist = GetCompletedMom(thisbootfile)
-    if len(txtqlist ^ bootqlist) != 0:
-            raise IOError('momenta missmatch '+thisbootfile+' '+thisfile)
-    return txtqlist & bootqlist
+    if 'Values' in rootlist:
+        for ival in root.findall('./Values/'):
+            if ival.tag[0] == 'q':
+                thisqlist = thisqlist | set([qcondTOqstr(ival.tag)])
+    if 'Boots' in rootlist:
+        for ival in root.findall('./Boots/'):
+            if ival.tag[0] == 'q':
+                thisqlistboot = thisqlistboot | set([qcondTOqstr(ival.tag)])
+    return thisqlist & bootqlist
+
+# def GetTxtAndBootComp(thisfile,thisbootfile):
+#     txtqlist = GetCompletedMom(thisfile)
+#     bootqlist = GetCompletedMom(thisbootfile)
+#     if len(txtqlist ^ bootqlist) != 0:
+#             raise IOError('momenta missmatch '+thisbootfile+' '+thisfile)
+#     return txtqlist & bootqlist
 
 def Get2ptSetMoms(outputdir,MomListIn,statelist=[],todtlist=[],smlist=[]):
     momlist = set(MomListIn)
@@ -147,7 +158,7 @@ def Get2ptSetMoms(outputdir,MomListIn,statelist=[],todtlist=[],smlist=[]):
                 ifile = thisdir+'state'+istate+itodt+iflag.replace('cfuns/','')+'.txt'
                 # ifb = thisdir+'boots/state'+istate+itodt+iflag.replace('cfuns/','')+'.boot.txt'
                 # if os.path.isfile(ifile) and os.path.isfile(ifb):
-                #     tempmomlist = GetTxtAndBootComp(ifile,ifb)
+                #     tempmomlist = GetCompletedMom(ifile)
                 if os.path.isfile(ifile):
                     tempmomlist = GetCompletedMom(ifile)
                     momlist = momlist & tempmomlist
@@ -157,7 +168,7 @@ def Get2ptSetMoms(outputdir,MomListIn,statelist=[],todtlist=[],smlist=[]):
             ifile = thisdir+'sm'+ism+iflag.replace('cfuns/','')+'.txt'
             # ifb = thisdir+'boots/sm'+ism+iflag.replace('cfuns/','')+'.boot.txt'
             # if os.path.isfile(ifile) and os.path.isfile(ifb):
-            #     tempmomlist = GetTxtAndBootComp(ifile,ifb)
+            #     tempmomlist = GetCompletedMom(ifile)
             if os.path.isfile(ifile):
                 tempmomlist = GetCompletedMom(ifile)
                 momlist = momlist & tempmomlist
@@ -171,7 +182,7 @@ def Get3SM(outputdir,thisGammaList,MomListIn,setlist):
     for igamma in thisGammaList:
         thisdir = outputdir+CreateOppDir(igamma)
         for iset in setlist:
-            ifile = thisdir+iset+igamma+'.txt'
+            ifile = thisdir+iset+igamma+'.mom'
             if PrintRead: print ifile
             if os.path.isfile(ifile):
                 tempmomlist = GetCompletedMom(ifile)
@@ -194,7 +205,7 @@ def Check2pt(outputdir,momstr,statelist=[],todtlist=[],smlist=[]):
             if iflag == 'Mass':
                 ifile = thisdir+itodt+'LREM.txt'
                 if os.path.isfile(ifile):
-                    tempmomlist = GetTxtAndBootComp(ifile,ifb)
+                    tempmomlist = GetCompletedMom(ifile)
                     momlist = momlist & tempmomlist
                 else:
                     return []
@@ -202,7 +213,7 @@ def Check2pt(outputdir,momstr,statelist=[],todtlist=[],smlist=[]):
                 ifile = thisdir+'state'+istate+itodt+iflag.replace('cfuns/','')+'.txt'
                 ifb = thisdir+'boots/state'+istate+itodt+iflag.replace('cfuns/','')+'.boot.txt'
                 if os.path.isfile(ifile) and os.path.isfile(ifb):
-                    if momstr not in GetTxtAndBootComp(ifile,ifb):
+                    if momstr not in GetCompletedMom(ifile):
                         DoMom = True
                 else:
                     DoMom = True
@@ -210,7 +221,7 @@ def Check2pt(outputdir,momstr,statelist=[],todtlist=[],smlist=[]):
             ifile = thisdir+'sm'+ism+iflag.replace('cfuns/','')+'.txt'
             ifb = thisdir+'boots/sm'+ism+iflag.replace('cfuns/','')+'.boot.txt'
             if os.path.isfile(ifile) and os.path.isfile(ifb):
-                if momstr not in GetTxtAndBootComp(ifile,ifb):
+                if momstr not in GetCompletedMom(ifile):
                     DoMom = True
             else:
                 DoMom = True
@@ -229,7 +240,7 @@ def CheckSet(outputdir,momstr,thisGammaList,tlist=[],statelist=[],todtlist=[],sm
                         # if PrintRead: print ifile
                         ifb = thisdir+'boots/tsink'+it+'state'+istate+itodt+igamma+'.boot.txt'
                         if os.path.isfile(ifile) and os.path.isfile(ifb):
-                            if momstr not in GetTxtAndBootComp(ifile,ifb): DoMom = True
+                            if momstr not in GetCompletedMom(ifile): DoMom = True
                         else:
                             DoMom = True
                 for ism in smlist:
@@ -237,7 +248,7 @@ def CheckSet(outputdir,momstr,thisGammaList,tlist=[],statelist=[],todtlist=[],sm
                     # if PrintRead: print ifile
                     ifb = thisdir+'boots/tsink'+it+'sm'+ism+igamma+'.boot.txt'
                     if os.path.isfile(ifile) and os.path.isfile(ifb):
-                        if momstr not in GetTxtAndBootComp(ifile,ifb): DoMom = True
+                        if momstr not in GetCompletedMom(ifile): DoMom = True
                     else:
                         DoMom = True
         else:
@@ -247,7 +258,7 @@ def CheckSet(outputdir,momstr,thisGammaList,tlist=[],statelist=[],todtlist=[],sm
                     # if PrintRead: print ifile
                     ifb = thisdir+'boots/state'+istate+itodt+igamma+'.boot.txt'
                     if os.path.isfile(ifile) and os.path.isfile(ifb):
-                        if momstr not in GetTxtAndBootComp(ifile,ifb): DoMom = True
+                        if momstr not in GetCompletedMom(ifile): DoMom = True
                     else:
                         DoMom = True
             for ism in smlist:
@@ -255,7 +266,7 @@ def CheckSet(outputdir,momstr,thisGammaList,tlist=[],statelist=[],todtlist=[],sm
                 # if PrintRead: print ifile
                 ifb = thisdir+'boots/sm'+ism+igamma+'.boot.txt'
                 if os.path.isfile(ifile) and os.path.isfile(ifb):
-                    if momstr not in GetTxtAndBootComp(ifile,ifb): DoMom = True
+                    if momstr not in GetCompletedMom(ifile): DoMom = True
                 else:
                     DoMom = True
     return DoMom
