@@ -133,7 +133,7 @@ def GetCompletedMom(thisfile):
         for ival in root.findall('./Boots/'):
             if ival.tag[0] == 'q':
                 thisqlistboot = thisqlistboot | set([qcondTOqstr(ival.tag)])
-    return thisqlist & bootqlist
+    return thisqlist & thisbootqlist
 
 # def GetTxtAndBootComp(thisfile,thisbootfile):
 #     txtqlist = GetCompletedMom(thisfile)
