@@ -34,14 +34,14 @@ def FormatToDictAvgStd(String):
 
 
 
-def AvgStdChiToFormat(Avg,Std,Chi):
-    return ('{0:20.10f} {1:20.10f} {2:20.10f}').format(Avg,Std,Chi)
+def AvgStdChiToFormat(Avg,Std,Chi,frmtflag='f'):
+    return ('{0:20.10'+frmtflag+'} {1:20.10'+frmtflag+'} {2:20.10f}').format(Avg,Std,Chi)
 
-def DictAvgStdChiToFormat(Dict,Chi):
-    return AvgStdChiToFormat(Dict['Avg'],Dict['Std'],Chi)
+def DictAvgStdChiToFormat(Dict,Chi,frmtflag='f'):
+    return AvgStdChiToFormat(Dict['Avg'],Dict['Std'],Chi,frmtflag=frmtflag)
 
-def BootAvgStdChiToFormat(Dict,Chi):
-    return AvgStdChiToFormat(Dict.Avg,Dict.Std,Chi)
+def BootAvgStdChiToFormat(Dict,Chi,frmtflag='f'):
+    return AvgStdChiToFormat(Dict.Avg,Dict.Std,Chi,frmtflag=frmtflag)
 
 def FormatToAvgStdChi(String):
     return map(float,String.strip().split())
@@ -69,7 +69,12 @@ def LREVecToFormat(iLE,iRE,iEM,DoPoF):
     return dictout
         
     
+def xmlfitr(thefitr):
+    return 'r'+'-'.join(map(str,thefitr))
 
+def unxmlfitr(thefitr):
+    return thefitr.replace('r','').split('-')
+    
 def xmlTSink(thestr):
     return 'tsink'+str(thestr)
 
@@ -81,11 +86,11 @@ def ParamsToFitFlag(theFitList):
     for icut,cutfitlist in enumerate(theFitList):    
         listout.append([])
         for ifit in cutfitlist:
-            listout[icut].append('r'+str(ifit[0])+'-'+str(ifit[1]))
+            listout[icut].append(xmlfitr(ifit))
     return listout
 
 
 def FitFlagXmlToOld(param,fitr):
     oldparam = param.replace('slope','sl').replace('constant','con')
-    oldfitr = fitr[1:].split('-')
+    oldfitr = unxmlfitr(fitr)
     return 'fit '+oldparam+' '+oldfitr[0]+'-'+oldfitr[1]

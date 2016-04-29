@@ -6,7 +6,7 @@ from FitParams import *
 from Fitting import MomTSSetFit
 from ReadTxt import ReadCfunsnp
 from SetLists import *
-from OutputData import PrintTSFMassToFile,PrintTSFToFile
+from OutputData import PrintTSFMassToFile,PrintTSFSetToFile
 from CreateCombs import MakeUmD
 from OppFuns import CreateGammaList,PrintOpps,WipeSF
 from FFParams import *
@@ -170,7 +170,7 @@ start = time.time()
 print 'Printing TSF Results to file: '
 WipeSF(outputdir,thisGammaList+['twopt'],'TSF'+outfile,'Two',statelist=ReadStateList,todtlist=ReadTvarList,smlist=ReadSmearList)
 PrintTSFMassToFile(TwoFit2pt,TwoFit2ptChi,ReadSetList,thisFitTSFR,outfile,thisGammaMomList['twopt'])
-PrintTSFToFile(TwoFit3pt,TwoFit3ptChi,thisGammaMomList,ReadSetList,thisFitTSFR,outfile)
+PrintTSFSetToFile(TwoFit3pt,TwoFit3ptChi,thisGammaMomList,ReadSetList,thisFitTSFR,outfile)
 
 for icf,ifit2pt in enumerate(thisFitTSFR):
     thispicklefile = pickledir+'tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+'.p'

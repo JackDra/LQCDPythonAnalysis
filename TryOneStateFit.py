@@ -6,7 +6,7 @@ from FitParams import *
 from Fitting import OneStateSetFit
 from ReadTxt import ReadCfunsnp
 from SetLists import *
-from OutputData import PrintOSFMassToFile,PrintOSFToFile
+from OutputData import PrintOSFMassToFile,PrintOSFSetToFile
 from CreateCombs import MakeUmD
 from OppFuns import CreateGammaList,PrintOpps,WipeSFSet
 from FFParams import *
@@ -144,7 +144,7 @@ def DoOSF(thisSetList):
     print 'Printing OSF Results to file: \r',
     WipeSFSet(outputdir,thisGammaList+['twopt'],'OSF'+outfile,'One',setlist=thisSetList)
     PrintOSFMassToFile(OneFit2pt,OneFit2ptChi,thisSetList,thisFitOSFR,outfile,thisGammaMomList['twopt'])
-    PrintOSFToFile(OneFit3pt,OneFit3ptChi,thisGammaMomList,thisSetList,thisFitOSFR,outfile)
+    PrintOSFSetToFile(OneFit3pt,OneFit3ptChi,thisGammaMomList,thisSetList,thisFitOSFR,outfile)
 
     for icf,ifit2pt in enumerate(thisFitOSFR):
         thispicklefile = pickledir+'tempOSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+'.p'

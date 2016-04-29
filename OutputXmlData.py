@@ -110,7 +110,6 @@ def PrintFFSet(FFin,Set,Mass,SetMass,theCurr):
     datadict['Form_Factors']['Values']['Mass']['Avg'] = Mass['Avg']
     datadict['Form_Factors']['Values']['Mass']['Std'] = Mass['Std']
     datadict['Form_Factors']['Values']['Mass']['Chi'] = Mass['Chi']
-    datadict['Form_Factors']['Boots']['Mass'] = Mass['Boot']
     for iqsqrd,qdata in FFin.iteritems():
         if len(qdata.keys()) > 0:
             datadict['Form_Factors']['Values'][iqsqrd] = OrderedDict()
@@ -129,191 +128,163 @@ def PrintFFSet(FFin,Set,Mass,SetMass,theCurr):
 
 
 
-# def PickTF(iset,iA,setsize):
-#     return setsize*iA + iset
+def PickTF(iset,iA,setsize):
+    return setsize*iA + iset
 
 
 # #data2pt       = [ ifit2pt , ip , params ]
 # #data2ptChi    = [ ifit2pt , ip ]
 
-# def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,thisMomList):
-#     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
-#     masspardir = outputdir + 'cfuns/twopt/TSF'+fileprefix+'/'
-#     bootdir = masspardir + 'boots/'
-#     mkdir_p(bootdir)
-#     for im in [-2,-1]: #TwoStateParList m0 and dm
-#         filename = masspardir+'twopt'+TwoStateParList['C2'][im]
-#         with open(filename+'.txt','a+') as f:
-#             for imom,thismom in enumerate(thisMomList):
-#                 f.write(thismom+'\n')
-#                 for icfit2pt,ifit2pt in enumerate(thisFit2ptList):
-#                     TSF2pt = data2pt[icfit2pt][imom][im]
-#                     TSF2ptChi = data2ptChi[icfit2pt][imom]
-#                     TSF2ptout = TSF2pt.exp(1)
-#                     TSF2ptout.Stats()
-#                     frmstr = '{3:3}{4:3} {0:20.10f} {1:20.10f} {2:20.10f}'
-#                     f.write(frmstr.format(float(TSF2ptout.Avg),float(TSF2ptout.Std),float(TSF2ptChi),ifit2pt[0],ifit2pt[1])+'\n')
-#         bootfn = bootdir+'twopt'+TwoStateParList['C2'][im]
-#         with open(bootfn+'.boot.txt','a+') as f:
-#             f.write(' nboot ' + str(nboot)+'\n')
-#             for imom,thismom in enumerate(thisMomList):
-#                 f.write(thismom+'\n')
-#                 for icfit2pt,ifit2pt in enumerate(thisFit2ptList):
-#                     f.write(' fitr {0:3}{1:3}'.format(ifit2pt[0],ifit2pt[1])+'\n')
-#                     TSF2pt = data2pt[icfit2pt][imom][im]
-#                     for iboot,bootdata in enumerate(TSF2pt.values):
-#                         frmstr = '{0:3}{1:20.10f}'
-#                         f.write(frmstr.format(iboot,float(np.exp(bootdata)))+'\n')
-#     for iA,theA in enumerate(TwoStateParList['C2'][:-2]):
-#         for ism,thesm in enumerate(thisSmList):
-#             filename = masspardir +thesm+'twopt'+ theA
-#             with open(filename+'.txt','a+') as f:
-#                 for imom,thismom in enumerate(thisMomList):
-#                     f.write(thismom+'\n')
-#                     for icfit2pt,ifit2pt in enumerate(thisFit2ptList):
-#                         TSF2pt = data2pt[icfit2pt][imom][PickTF(ism,iA,len(thisSmList))]
-#                         TSF2ptChi = data2ptChi[icfit2pt][imom]
-#                         frmstr = '{3:3}{4:3} {0:20.10e} {1:20.10e} {2:20.10e}'
-#                         f.write(frmstr.format(float(TSF2pt.Avg),float(TSF2pt.Std),float(TSF2ptChi),ifit2pt[0],ifit2pt[1] )+'\n')
-#             bootfn = bootdir+thesm+'twopt'+theA
-#             with open(bootfn+'.boot.txt','a+') as f:
-#                 f.write(' nboot ' + str(nboot)+'\n')
-#                 for imom,thismom in enumerate(thisMomList):
-#                     f.write(thismom+'\n')
-#                     for icfit2pt,ifit2pt in enumerate(thisFit2ptList):
-#                         f.write(' fitr {0:3}{1:3}'.format(ifit2pt[0],ifit2pt[1])+'\n')
-#                         TSF2pt = data2pt[icfit2pt][imom][PickTF(ism,iA,len(thisSmList))]                        
-#                         for iboot,bootdata in enumerate(TSF2pt.values):
-#                             frmstr = '{0:3} {1:20.10e}'
-#                             f.write(frmstr.format(iboot,float(bootdata))+'\n')
+def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,thisMomList):
+    thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
+    masspardir = outputdir + 'cfuns/twopt/TSF'+fileprefix+'/'
+    for im in [-2,-1]: #TwoStateParList m0 and dm
+        filename = masspardir+'twopt'+TwoStateParList['C2'][im]
+        datadict = {'TSFMass':{'Values':OrderedDict(),'Boots':OrderedDict()}}
+        xmlMomList = map(qstrTOqcond,thisMomList)
+        xml2ptFitList = map(xmlfitr,thisFit2ptList)
+        for ipc,ip in enumerate(xmlMomList):        
+            datadict['TSFMass']['Values'][ip] = OrderedDict()
+            for icutstr,cutdata,cutdataChi in zip(xml2ptFitList,pdata,pdataChi):
+                mcutdata = cutdata[ipc][im].exp(1)
+                mcutdata.Stats()
+                datadict['TSFMass']['Values'][ip][icutstr] = BootAvgStdChiToFormat(mcutdata,cutdataChi[icp])
+        for icp,ip in enumerate(xmlMomList):        
+            datadict['TSFMass']['Boots'][ip] = OrderedDict()
+            for icutstr,cutdata in zip(xml2ptFitList,pdata):
+                mcutdata = cutdata[icp][im].exp(1)
+                mcutdata.Stats()
+                datadict['TSFMass']['Boots'][ip][icutstr] = mcutdata.values
+        with open(filename+'.xml','w') as f:
+            f.write( xmltodict.unparse(datadict,pretty=True))
 
-# #data3pt       = [ ifit2pt , ip , igamma , istate , ifit3pt , params ] bs1
-# #data3ptChi    = [ ifit2pt , ip , igamma , istate , ifit3pt ]
-# def PrintTSFToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2ptList,fileprefix):
-#     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
-#     del thisGammaMomList['twopt']
-#     for ipar,thispar in enumerate(TwoStateParList['C3']):
-#         for igamma,(thisgamma,thismomlist) in enumerate(thisGammaMomList.iteritems()):
-#             print 'Printing ' , thispar , ' ' , thisgamma , ' to file      \r',
-#             gammapardir = outputdir+CreateOppDir(thisgamma)+'/TSF'+fileprefix+'/'
-#             bootdir = gammapardir+'boots/'
-#             mkdir_p(bootdir)
-#             for ism,thesm in enumerate(thisSmList):
-#                 filename = gammapardir+thesm+thisgamma+ thispar
-#                 with open(filename+'.txt','a+') as f:
-#                     for imom,thismom in enumerate(thismomlist):
-#                         f.write(thismom+'\n')
-#                         for icfit2pt,ifit2pt in enumerate(thisFit2ptList):
-#                             f.write('\n')
-#                             for icfit3pt,ifit3pt in enumerate(TSF3ptCutList):
-#                                 fit3TF = data3pt[icfit2pt][igamma][imom][ism][icfit3pt][ipar]
-#                                 fit3TFChi = data3ptChi[icfit2pt][igamma][imom][ism][icfit3pt]
-#                                 f.write('{3:3}{4:3}{5:4} {0:20.10f} {1:20.10f} {2:20.10f}'
-#                                         .format(fit3TF.Avg,fit3TF.Std,fit3TFChi,ifit2pt[0],ifit2pt[1],ifit3pt)+'\n')
-#                 bootfn = bootdir+thesm+thisgamma+ thispar
-#                 with open(bootfn+'.boot.txt','a+') as f:
-#                     f.write(' nboot ' + str(nboot)+'\n')
-#                     for imom,thismom in enumerate(thismomlist):
-#                         f.write(thismom+'\n')
-#                         for icfit2pt,ifit2pt in enumerate(thisFit2ptList):
-#                             f.write('\n')
-#                             for icfit3pt,ifit3pt in enumerate(TSF3ptCutList):
-#                                 f.write('fitr {0:3}{1:3}{2:4}'.format(ifit2pt[0],ifit2pt[1],ifit3pt)+'\n')
-#                                 fit3TF = data3pt[icfit2pt][igamma][imom][ism][icfit3pt][ipar]
-#                                 for iboot,bootdata in enumerate(fit3TF.values):
-#                                     frmstr = '{0:3} {1:20.10f}'
-#                                     f.write(frmstr.format(iboot,float(bootdata))+'\n')
-#     print '                                     '
-
-# #OneFit2pt    = [ ifit2pt , ip , ism  , params ] bs1
-# #OneFit2ptChi    = [ ifit2pt , ip , ism ]
-# def PrintOSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,thisMomList):
-#     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
-#     masspardir = outputdir + 'cfuns/twopt/OSF'+fileprefix+'/'
-#     bootdir = masspardir + 'boots/'
-#     mkdir_p(bootdir)    
-#     for im in [1,0]:
-#         for ism,thesm in enumerate(thisSmList):
-#             filename = masspardir+thesm+'twopt'+OneStateParList['C2'][im]
-#             frmstr = '{3:3}{4:3} {0:20.10f} {1:20.10f} {2:20.10f}'
-#             if im == 0: frmstr = '{3:3}{4:3} {0:20.10e} {1:20.10e} {2:20.10f}'
-#             with open(filename+'.txt','a+') as f:
-#                 for imom,thismom in enumerate(thisMomList):
-#                     f.write(thismom+'\n')
-#                     for icfit2pt,ifit2pt in enumerate(thisFit2ptList):
-#                         OSF2pt = data2pt[icfit2pt][imom][ism][im]
-#                         OSF2ptChi = data2ptChi[icfit2pt][imom][ism]
-#                         if im == 1: OSF2pt = OSF2pt.exp(1)
-#                         OSF2pt.Stats()
-#                         f.write(frmstr.format(float(OSF2pt.Avg),float(OSF2pt.Std),float(OSF2ptChi),ifit2pt[0],ifit2pt[1])+'\n')
-#             bootfn = bootdir+thesm+'twopt'+OneStateParList['C2'][im]
-#             frmstr = '{0:3} {1:20.10f}'
-#             if im == 0: frmstr = '{0:3} {1:20.10e}'
-#             with open(bootfn+'.boot.txt','a+') as f:
-#                 f.write(' nboot ' + str(nboot)+'\n')
-#                 for imom,thismom in enumerate(thisMomList):
-#                     f.write(thismom+'\n')
-#                     for icfit2pt,ifit2pt in enumerate(thisFit2ptList):
-#                         f.write(' fitr {0:3}{1:3}'.format(ifit2pt[0],ifit2pt[1])+'\n')
-#                         OSF2pt = data2pt[icfit2pt][imom][ism][im]                    
-#                         for iboot,bootdata in enumerate(OSF2pt.values):
-#                             if im == 1: bootdata = np.exp(bootdata)
-#                             f.write(frmstr.format(iboot,float(bootdata))+'\n')
-
-#     # for theset,setTF,setTFChi in zip(thisSetList,OneFit2pt[iA],OneFit2ptChi):
-#     #     filename = masspardir+theset+'twopt'+OneStateParList['C2'][iA]
-#     #     with open(filename+'.txt','a+') as f:
-#     #         for momTF,momTFChi,imom in zip(setTF,setTFChi,thisMomList):
-#     #             f.write(imom+'\n')
-#     #             for ifit2pt,OSF2pt,OSF2ptChi in zip(thisFit2ptList,momTF,momTFChi):
-#     #                 f.write(frmstr.format(float(OSF2pt.Avg),float(OSF2pt.Std),float(OSF2ptChi),ifit2pt[0],ifit2pt[1])+'\n')
-#     #     bootfn = bootdir+theset+'twopt'+OneStateParList['C2'][iA]
-#     #     with open(bootfn+'.boot.txt','a+') as f:
-#     #         f.write(' nboot ' + str(nboot)+'\n')
-#     #         for momTF,imom in zip(setTF,thisMomList):
-#     #             f.write(imom+'\n')
-#     #             for ifit2pt,OSF2pt in zip(thisFit2ptList,momTF):
-#     #                 f.write(' fitr {0:3}{1:3}'.format(ifit2pt[0],ifit2pt[1])+'\n')
-#     #                 for iboot,bootdata in enumerate(OSF2pt.values):
-#     #                     frmstr = '{0:3}{1:20.10e}'
-#     #                     f.write(frmstr.format(iboot,float(bootdata))+'\n')
+    for iA,theA in enumerate(TwoStateParList['C2'][:-2]):
+        for ism,thesm in enumerate(thisSmList):
+            filename = masspardir +thesm+'twopt'+ theA
+            datadict = {'TSFMass':{'Values':OrderedDict(),'Boots':OrderedDict()}}
+            xmlMomList = map(qstrTOqcond,thisMomList)
+            xml2ptFitList = map(xmlfitr,thisFit2ptList)
+            for icp,ip in enumerate(xmlMomList):        
+                datadict['TSFMass']['Values'][ip] = OrderedDict()
+                for icutstr,cutdata,cutdataChi in zip(xml2ptFitList,pdata,pdataChi):
+                    mcutdata = cutdata[icp][PickTF(ism,iA,len(thisSmList))]
+                    datadict['TSFMass']['Values'][ip][icutstr] = BootAvgStdChiToFormat(mcutdata,cutdataChi[icp],frmtflag='e')
+            for icp,ip in zip(xmlMomList):        
+                datadict['TSFMass']['Boots'][ip] = OrderedDict()
+                for icutstr,cutdata in zip(xml2ptFitList,pdata):
+                    mcutdata = cutdata[icp][PickTF(ism,iA,len(thisSmList))]
+                    datadict['TSFMass']['Boots'][ip][icutstr] = mcutdata.values
+            with open(filename+'.xml','w') as f:
+                f.write( xmltodict.unparse(datadict,pretty=True))
 
 
-# #OneFit3pt    = [ ifit2pt , igamma , ip , iset , ifit3pt , params ] bs1
-# def PrintOSFToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2ptList,fileprefix):
-#     del thisGammaMomList['twopt']
-#     for ipar,thispar in enumerate(OneStateParList['C3']):
-#         for igamma,(thisgamma,thismomlist) in enumerate(thisGammaMomList.iteritems()):
-#             print 'Printing ' , thispar , ' ' , thisgamma , ' to file      \r',
-#             gammapardir = outputdir+CreateOppDir(thisgamma)+'/OSF'+fileprefix+'/'
-#             bootdir = gammapardir+'boots/'
-#             mkdir_p(bootdir)
-#             for iset,theset in enumerate(thisSetList):
-#                 filename = gammapardir +theset+thisgamma+thispar
-#                 with open(filename+'.txt','a+') as f:
-#                     for imom,thismom in enumerate(thismomlist):
-#                         f.write(thismom+'\n')
-#                         for icfit2pt,ifit2pt in enumerate(thisFit2ptList):
-#                             f.write('\n')
-#                             for icfit3pt,ifit3pt in enumerate(OSF3ptCutList):
-#                                 fit3TF = data3pt[icfit2pt][igamma][imom][iset][icfit3pt][ipar]
-#                                 fit3TFChi = data3ptChi[icfit2pt][igamma][imom][iset][icfit3pt]
-#                                 f.write('{3:3}{4:3}{5:4} {0:20.10f} {1:20.10f} {2:20.10f}'
-#                                         .format(fit3TF.Avg,fit3TF.Std,fit3TFChi,ifit2pt[0],ifit2pt[1],ifit3pt)+'\n')
-#                 bootfn = bootdir+theset+thisgamma+ thispar
-#                 with open(bootfn+'.boot.txt','a+') as f:
-#                     f.write(' nboot ' + str(nboot)+'\n')
-#                     for imom,thismom in enumerate(thismomlist):
-#                         f.write(thismom+'\n')
-#                         for icfit2pt,ifit2pt in enumerate(thisFit2ptList):
-#                             f.write('\n')
-#                             for icfit3pt,ifit3pt in enumerate(OSF3ptCutList):
-#                                 f.write('fitr {0:3}{1:3}{2:4}'.format(ifit2pt[0],ifit2pt[1],ifit3pt)+'\n')
-#                                 fit3TF = data3pt[icfit2pt][igamma][imom][iset][icfit3pt][ipar]
-#                                 for iboot,bootdata in enumerate(fit3TF.values):
-#                                     frmstr = '{0:3} {1:20.10f}'
-#                                     f.write(frmstr.format(iboot,float(bootdata))+'\n')
-#     print '                                             '
+#data3pt       = [ ifit2pt , ip , igamma , istate , ifit3pt , params ] bs1
+#data3ptChi    = [ ifit2pt , ip , igamma , istate , ifit3pt ]
+
+def PrintTSFToFile(filename,thisMomList,xml2ptFitList,xmlTSFList,TSF3ptCutList,data3pt,data3ptChi,ipar,igamma,ism):
+    datadict = {'TSF':{'Values':OrderedDict(),'Boots':OrderedDict()}}
+    xmlMomList = map(qstrTOqcond,thisMomList)
+    for ipc,ip in enumerate(xmlMomList):        
+        datadict['TSF']['Values'][ip] = OrderedDict()
+        for ic2pt,icut2ptstr in enumerate(xml2ptFitList):
+            datadict['TSF']['Values'][ip][icut2ptstr] = OrderedDict()
+            for icutstr,cutdata,cutdataChi in zip(xmlTSFList,data3pt[ic2pt][ipc][igamma][ism],data3ptChi[ic2pt][ipc][igamma][ism]):
+                datadict['TSF']['Values'][ip][icut2ptstr][icutstr] = BootAvgStdChiToFormat(cutdata[ipar],cutdataChi)
+    for icp,ip in enumerate(xmlMomList):        
+        datadict['TSF']['Boots'][ip] = OrderedDict()
+        for ic2pt,icut2ptstr in enumerate(xml2ptFitList):
+            datadict['TSF']['Boots'][ip][icut2ptstr] = OrderedDict()
+            for icutstr,cutdata in zip(xmlTSFList,data3pt[ic2pt][ipc][igamma][ism]):
+                datadict['TSF']['Boots'][ip][icut2ptstr][icutstr] = cutdata[ipar].values
+    with open(filename+'.xml','w') as f:
+        f.write( xmltodict.unparse(datadict,pretty=True))
+    
+                
+                
+#data3pt       = [ ifit2pt , ip , igamma , istate , ifit3pt , params ] bs1
+#data3ptChi    = [ ifit2pt , ip , igamma , istate , ifit3pt ]
+def PrintTSFSetToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2ptList,fileprefix):
+    thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
+    xml2ptFitList = map(xmlfitr,thisFit2ptList)
+    xmlTSFList = map(xmlcut,TSF3ptCutList)
+    del thisGammaMomList['twopt']
+    for ipar,thispar in enumerate(TwoStateParList['C3']):
+        for igamma,(thisgamma,thismomlist) in enumerate(thisGammaMomList.iteritems()):
+            print 'Printing ' , thispar , ' ' , thisgamma , ' to file      \r',
+            gammapardir = outputdir+CreateOppDir(thisgamma)+'/TSF'+fileprefix+'/'
+            for ism,thesm in enumerate(thisSmList):
+                filename = gammapardir+thesm+thisgamma+ thispar
+                PrintTSFToFile(filename,thismomlist,xml2ptFitList,xmlTSFList,data3pt,data3ptChi,ipar,igamma,ism)
+
+
+                
+#OneFit2pt    = [ ifit2pt , ip , ism  , params ] bs1
+#OneFit2ptChi    = [ ifit2pt , ip , ism ]
+def PrintOSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,thisMomList):
+    thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
+    masspardir = outputdir + 'cfuns/twopt/OSF'+fileprefix+'/'
+    for im in [1,0]:
+        for ism,thesm in enumerate(thisSmList):
+            filename = masspardir+thesm+'twopt'+OneStateParList['C2'][im]
+            datadict = {'OSFMass':{'Values':OrderedDict(),'Boots':OrderedDict()}}
+            xmlMomList = map(qstrTOqcond,thisMomList)
+            xml2ptFitList = map(xmlfitr,thisFit2ptList)
+            for ipc,ip in enumerate(xmlMomList):        
+                datadict['OSFMass']['Values'][ip] = OrderedDict()
+                for icutstr,cutdata,cutdataChi in zip(xml2ptFitList,pdata,pdataChi):
+                    if im == 1:
+                        mcutdata = cutdata[ipc][im].exp(1)
+                        mcutdata.Stats()
+                        thisformat = 'f'
+                    else:
+                        mcutdata = cutdata[ipc][im]
+                        thisformat = 'e'
+                    datadict['OSFMass']['Values'][ip][icutstr] = BootAvgStdChiToFormat(mcutdata,cutdataChi[icp],frmtflag=thisformat)
+            for icp,ip in enumerate(xmlMomList):        
+                datadict['OSFMass']['Boots'][ip] = OrderedDict()
+                for icutstr,cutdata in zip(xml2ptFitList,pdata):
+                    if im == 1:
+                        mcutdata = cutdata[icp][im].exp(1)
+                        mcutdata.Stats()
+                    else:
+                        mcutdata = cutdata[icp][im]
+                    datadict['OSFMass']['Boots'][ip][icutstr] = mcutdata.values
+            with open(filename+'.xml','w') as f:
+                f.write( xmltodict.unparse(datadict,pretty=True))
+
+
+#OneFit3pt    = [ ifit2pt , igamma , ip , iset , ifit3pt , params ] bs1
+
+def PrintOSFToFile(filename,thisMomList,xml2ptFitList,xmlOSFList,OSF3ptCutList,data3pt,data3ptChi,ipar,igamma,ism):
+    datadict = {'OSF':{'Values':OrderedDict(),'Boots':OrderedDict()}}
+    xmlMomList = map(qstrTOqcond,thisMomList)
+    for ipc,ip in enumerate(xmlMomList):        
+        datadict['OSF']['Values'][ip] = OrderedDict()
+        for ic2pt,icut2ptstr in enumerate(xml2ptFitList):
+            datadict['OSF']['Values'][ip][icut2ptstr] = OrderedDict()
+            for icutstr,cutdata,cutdataChi in zip(xmlOSFList,data3pt[ic2pt][igamma][ipc][ism],data3ptChi[ic2pt][igamma][ipc][ism]):
+                datadict['OSF']['Values'][ip][icut2ptstr][icutstr] = BootAvgStdChiToFormat(cutdata[ipar],cutdataChi)
+    for icp,ip in enumerate(xmlMomList):        
+        datadict['OSF']['Boots'][ip] = OrderedDict()
+        for ic2pt,icut2ptstr in enumerate(xml2ptFitList):
+            datadict['OSF']['Boots'][ip][icut2ptstr] = OrderedDict()
+            for icutstr,cutdata in zip(xmlOSFList,data3pt[ic2pt][igamma][ipc][ism]):
+                datadict['OSF']['Boots'][ip][icut2ptstr][icutstr] = cutdata[ipar].values
+    with open(filename+'.xml','w') as f:
+        f.write( xmltodict.unparse(datadict,pretty=True))
+        
+
+def PrintOSFSetToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2ptList,fileprefix):
+    xml2ptFitList = map(xmlfitr,thisFit2ptList)
+    xmlOSFList = map(xmlcut,OSF3ptCutList)
+    del thisGammaMomList['twopt']
+    for ipar,thispar in enumerate(OneStateParList['C3']):
+        for igamma,(thisgamma,thismomlist) in enumerate(thisGammaMomList.iteritems()):
+            print 'Printing ' , thispar , ' ' , thisgamma , ' to file      \r',
+            gammapardir = outputdir+CreateOppDir(thisgamma)+'/OSF'+fileprefix+'/'
+            for ism,thesm in enumerate(thisSmList):
+                filename = gammapardir+thesm+thisgamma+ thispar
+                PrintOSFToFile(filename,thismomlist,xml2ptFitList,xmlOSFList,data3pt,data3ptChi,ipar,igamma,ism)
 
 
 
