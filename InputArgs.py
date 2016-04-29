@@ -71,7 +71,7 @@ def InputParams(inputparams):
                 if 'zmom' in imom:
                     feedout['mom'] += ['q = 0 0 0']
                 else:
-                    feedout['mom'] += [' '.join(imom.replace('q','q=').replace('- ','-')]
+                    feedout['mom'] += [' '.join(imom.replace('q','q=')).replace('- ','-')]
             for ipl in feedout['mom']:            
                 if ipl not in qvecSet:                        
                     feedout['mom'].remove(ipl)
