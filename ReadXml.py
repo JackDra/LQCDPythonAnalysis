@@ -6,6 +6,7 @@ from XmlFormatting import *
 import os
 from BootTest import BootStrap1
 from Params import *
+from FitParams import *
 
 
 def ReadXmlDict(filein):
