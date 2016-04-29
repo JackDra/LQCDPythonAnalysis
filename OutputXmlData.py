@@ -188,11 +188,6 @@ def PrintTSFToFile(filename,thisMomList,xml2ptFitList,xmlTSFList,data3pt,data3pt
         datadict['TSF']['Values'][ip] = OrderedDict()
         for ic2pt,icut2ptstr in enumerate(xml2ptFitList):
             datadict['TSF']['Values'][ip][icut2ptstr] = OrderedDict()
-            print ''
-            print len(data3pt) , ic2pt
-            print len(data3pt[ic2pt]) , ipc
-            print len(data3pt[ic2pt][ipc]) , igamma
-            print len(data3pt[ic2pt][igamma][ipc]) , ism
             for icutstr,cutdata,cutdataChi in zip(xmlTSFList,data3pt[ic2pt][igamma][ipc][ism],data3ptChi[ic2pt][igamma][ipc][ism]):
                 datadict['TSF']['Values'][ip][icut2ptstr][icutstr] = BootAvgStdChiToFormat(cutdata[ipar],cutdataChi)
     for ipc,ip in enumerate(xmlMomList):        
