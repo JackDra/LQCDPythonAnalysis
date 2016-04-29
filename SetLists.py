@@ -204,7 +204,7 @@ def PickSmSet(SetList,Sm):
             ListOut.append(Sm)
     return ListOut
 
-def ReduceTsink(listin,NoCM=False):
+def ReduceTsink(listin,NoCM=False,NoREvec=True):
     listout = []
     for ilist in listin:
         tsinkstr,smstr = SplitTSinkString(ilist)
@@ -213,6 +213,9 @@ def ReduceTsink(listin,NoCM=False):
     if NoCM:
         for i,ilo in enumerate(listout):
             if 'state' in ilo:del listout[i]
+    if NoREvec:
+        for i,ilo in enumerate(listout):
+            if 'REvec' in ilo:del listout[i]
     return listout
 
 
@@ -235,6 +238,12 @@ def GetintTSink(string):
 def RemoveSet(string):
     return SplitTSinkString(string)[0]
 
+def ReduceTooMassSet(thisSetList):
+    notsinkList = ReduceTsink(thisSetList)
+    for ic,ism in enumerate(notsinkList):
+        if 'REvec' in ism: del notsinkList[ic]
+    return notsinkList
+    
 if kappa == 12090:
     DefSetCol = CreateSet()
 elif kappa == 12104:

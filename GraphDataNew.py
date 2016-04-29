@@ -253,7 +253,7 @@ def PlotRFSet(data,thisSetList,legrem=[''],MassDt = False):
     if MassDt == False:
         iterSetList = SortMySet(thisSetList)[0]
     else:
-        iterSetList = SortMySet(ReduceTsink(thisSetList))[0]
+        iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
     for iset in iterSetList:
         if not CheckDict(data,'RF',iset): continue
         redset = iset
@@ -273,7 +273,7 @@ def PlotRFSet(data,thisSetList,legrem=[''],MassDt = False):
 
 def PlotLogSet(data,thisSetList,legrem=''):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
-    iterSetList = SortMySet(ReduceTsink(thisSetList))[0]
+    iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
     for iset in iterSetList:
         if not CheckDict(data,'RF',iset): continue
         dataplot = deepcopy(data['RF'][iset])
@@ -284,7 +284,7 @@ def PlotLogSet(data,thisSetList,legrem=''):
 
 def PlotLogSetOSF(data,thisSetList,thisSF,legrem=''):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
-    iterSetList = SortMySet(ReduceTsink(thisSetList))[0]
+    iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
     for iset in iterSetList:
         if not CheckDict(data,'RF',iset): continue
         thiscol = thiscolcyc.next()
@@ -303,7 +303,7 @@ def PlotLogSetOSF(data,thisSetList,thisSF,legrem=''):
 
 def PlotLogSetTSF(data,thisSetList,thisSF,legrem=''):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
-    iterSetList = SortMySet(ReduceTsink(thisSetList))[0]
+    iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
     for iset in iterSetList:
         if not CheckDict(data,'RF',iset): continue
         thiscol = thiscolcyc.next()

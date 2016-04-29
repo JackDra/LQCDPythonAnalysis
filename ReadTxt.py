@@ -509,7 +509,7 @@ def MakeMethodsDict(readdir,readfile,thisMethodList,thisSetList,thisMomList=[]):
         if iMeth == 'RF':
             thisDict = OrderedDict()
             RFSetList = thisSetList
-            if 'twopt' in readfile: RFSetList = ReduceTsink(thisSetList)
+            if 'twopt' in readfile: RFSetList = ReduceTooMassSet(thisSetList)
             for iSet in RFSetList:
                 filename = readdir+iSet+readfile
                 bootfn = readdir+'boots/'+iSet+readfile.replace('.xml','.boot.xml')
@@ -523,7 +523,7 @@ def MakeMethodsDict(readdir,readfile,thisMethodList,thisSetList,thisMomList=[]):
                     thisDict[iSet] = ReadTSFFile(filename,bootfn=bootfn,thisMomList=thisMomList)
             elif 'OSF' in iMeth:
                 OSFSetList = thisSetList
-                if 'twopt' in readfile: OSFSetList = ReduceTsink(thisSetList)
+                if 'twopt' in readfile: OSFSetList = ReduceTooMassSet(thisSetList)
                 for iSet in OSFSetList:
                     filename = readdir+iMeth+'/'+iSet+readfile.replace('.xml','##.xml')
                     bootfn = readdir+iMeth+'/boots/'+iSet+readfile.replace('.xml','##.boot.xml')
