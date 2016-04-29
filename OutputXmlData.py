@@ -169,7 +169,7 @@ def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
                 for icutstr,cutdata,cutdataChi in zip(xml2ptFitList,data2pt,data2ptChi):
                     mcutdata = cutdata[ipc][PickTF(ism,iA,len(thisSmList))]
                     datadict['TSFMass']['Values'][ip][icutstr] = BootAvgStdChiToFormat(mcutdata,cutdataChi[ipc],frmtflag='e')
-            for ipc,ip in enumerate(xmlMomList):        
+            for ipc,ip in enum(xmlMomList):        
                 datadict['TSFMass']['Boots'][ip] = OrderedDict()
                 for icutstr,cutdata in zip(xml2ptFitList,data2pt):
                     mcutdata = cutdata[ipc][PickTF(ism,iA,len(thisSmList))]
@@ -181,7 +181,7 @@ def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
 #data3pt       = [ ifit2pt , ip , igamma , istate , ifit3pt , params ] bs1
 #data3ptChi    = [ ifit2pt , ip , igamma , istate , ifit3pt ]
 
-def PrintTSFToFile(filename,thisMomList,xml2ptFitList,xmlTSFList,TSF3ptCutList,data3pt,data3ptChi,ipar,igamma,ism):
+def PrintTSFToFile(filename,thisMomList,xml2ptFitList,xmlTSFList,data3pt,data3ptChi,ipar,igamma,ism):
     datadict = {'TSF':{'Values':OrderedDict(),'Boots':OrderedDict()}}
     xmlMomList = map(qstrTOqcond,thisMomList)
     for ipc,ip in enumerate(xmlMomList):        
@@ -255,7 +255,7 @@ def PrintOSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
 
 #OneFit3pt    = [ ifit2pt , igamma , ip , iset , ifit3pt , params ] bs1
 
-def PrintOSFToFile(filename,thisMomList,xml2ptFitList,xmlOSFList,OSF3ptCutList,data3pt,data3ptChi,ipar,igamma,ism):
+def PrintOSFToFile(filename,thisMomList,xml2ptFitList,xmlOSFList,data3pt,data3ptChi,ipar,igamma,ism):
     datadict = {'OSF':{'Values':OrderedDict(),'Boots':OrderedDict()}}
     xmlMomList = map(qstrTOqcond,thisMomList)
     for ipc,ip in enumerate(xmlMomList):        
