@@ -47,7 +47,7 @@ def CreategiDi(data3pt,thisGammaList,thisDSList):
         print 'dimensions of correlator (ism, jsm, igamma)'
         for ic,idata in enumerate(data3pt):
             for jc,jdata in enumerate(idata):
-                print i , j , len(jdata)
+                print ic , jc , len(jdata)
         raise IOError("Need giDi with i =1,2,3,4 for giDi combination")
     thisGammaListOut = np.array(thisGammaList)
     for iDS in thisDSList:
