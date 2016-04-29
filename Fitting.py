@@ -218,7 +218,6 @@ def TwoStateFitMom3pt(fitBoot2pt,C2pt,C3pt,this3ptCutList,thisTSinkList):
 def OneStateSetFit(C2pt,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2ptFitRvec):
     def sm2ptwrap(C2ptmom,thisSmList,this2ptFitR):
         Bootthis2pt,Avgthis2pt,Chithis2pt = [],[],[]
-        print len(C2ptmom) , thisSmList
         for ism,thissm in enumerate(thisSmList):
             isC2 = C2ptmom[ism]
             thisod2 = OneStateFit2pt(isC2,this2ptFitR)
@@ -249,6 +248,9 @@ def OneStateSetFit(C2pt,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2pt
 
     this2ptFitR,perdone = this2ptFitRvec
     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
+    for ic,ism in enumerate(thisSmList):
+        if 'REvec' in ism:
+            del thisSmList[ic]
     Boot2pt,Avg2pt,Chi2pt = [],[],[]
     Boot3pt,Avg3pt,Chi3pt = [],[],[]
     start = time.time()
