@@ -118,6 +118,7 @@ print 'Reading Data'
 [data3pt,data2pt,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,ReadSetList,thisMomList=feedin['mom'])
 thisGammaList = thisGammaMomList.keys()
 PrintOpps(thisGammaList)
+print thisGammaMomList.values()[0]
 print 'Data Read is: ' + BorA
 
 ## data2pt = [ ip , iset2pt , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
