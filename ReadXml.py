@@ -179,6 +179,12 @@ def ReadFFFile(filename,bootfn=''):
 def ReadSFFile(filename,bootfn='',OneOrTwo='Two',thisMomList=[]):
     dictout = {}
     if '.txt' in filename: filename = filename.replace('.txt','.xml')
+    if 'twopt' in filename:
+        twoptread = True
+        thisCorr = 'C2'
+    else:
+        twoptread = False
+        thisCorr = 'C3'
     for ipar in StateParList[OneOrTwo][thisCorr]:
         if ipar in ['m0','Dm'] and OneOrTwo == 'Two':
             filename = re.sub('sm.*twopt','twopt',filename)
@@ -186,12 +192,6 @@ def ReadSFFile(filename,bootfn='',OneOrTwo='Two',thisMomList=[]):
             filename = re.sub('state.*twopt','twopt',filename)
             bootfn = re.sub('state.*twopt','twopt',bootfn)
         filename = filename.replace('##',ipar)
-        if 'twopt' in filename:
-            twoptread = True
-            thisCorr = 'C2'
-        else:
-            twoptread = False
-            thisCorr = 'C3'
         if not os.path.isfile(filename):
             mprint(filename + ' not found')
         else:
