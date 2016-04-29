@@ -68,7 +68,6 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
             dictin[thiscol][thisgamma] = {}
         return dictin
     readdata = ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
-    print readdata
     start = time.time()
     datadictout,datamassout = OrderedDict(),OrderedDict()
     for ig,igamma in enumerate(thisGammaList):

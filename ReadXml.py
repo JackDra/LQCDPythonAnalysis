@@ -131,4 +131,5 @@ def ReadSumFile(filename,bootfn='',thisMomList=[]):
                             for ir,rdata in tdata.iteritems():
                                 thisfitr = FitFlagXmlToOld(it,ir)
                                 dictout[thismom][icut][thisfitr] = rdata
+    print dictout
     return dictout
