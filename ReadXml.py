@@ -25,7 +25,9 @@ def ReadRFFile(filename,bootfn='',thisMomList=[]):
     renorm = GetRenorm(filename)
     dictout = {}
     if '.txt' in filename: filename = filename.replace('.txt','.xml')
-    if os.path.isfile(filename):
+    if not os.path.isfile(filename):
+        mprint(filename + ' not found')
+    else:
         data = ReadXmlDict(filename)
         data = data[data.keys()[0]]
         if 'Boots' in data.keys():
@@ -61,7 +63,9 @@ def ReadRFFile(filename,bootfn='',thisMomList=[]):
 def ReadFitFile(filename,bootfn='',thisMomList=[]):
     dictout = {}
     if '.txt' in filename: filename = filename.replace('.txt','.xml')
-    if os.path.isfile(filename):
+    if not os.path.isfile(filename):
+        mprint(filename + ' not found')
+    else:
         data = ReadXmlDict(filename)
         data = data[data.keys()[0]]
         if 'Boots' in data.keys():
@@ -92,7 +96,6 @@ def ReadSumFile(filename,bootfn='',thisMomList=[]):
         mprint(filename + ' not found')
     else:
         data = ReadXmlDict(filename)
-        print data
         data = data[data.keys()[0]]
         if 'Boots' in data.keys():
             bootdata = data['Boots']
