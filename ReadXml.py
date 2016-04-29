@@ -214,7 +214,7 @@ def ReadSFFile(filename,bootfn='',OneOrTwo='Two',thisMomList=[]):
                             dictout[thismom][ipar][thisfit]['Std'] = dictout[thismom][ipar][thisfit]['Boot'].Std
                             dictout[thismom][ipar][thisfit]['Chi'] = data['Values'][imom][ifit]['Chi']
                         else:
-                            for icut,cutdata in momdata.iteritems():
+                            for icut,cutdata in fitrdata.iteritems():
                                 dictout[thismom][ipar][thisfit][icut]['Boot'] = BootStrap1(nboot,0)
                                 dictout[thismom][ipar][thisfit][icut]['Boot'].values = cutdata
                                 dictout[thismom][ipar][thisfit][icut]['Boot'].Stats()
