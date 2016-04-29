@@ -43,7 +43,7 @@ thisFitTSFR = CreateFitList(TSF2ptMinStart,TSF2ptMinEnd,TSF2ptMaxStart,TSF2ptMax
 
 if outfile == 'Tsink':
     print 'Tsink run'
-    CaptString = ['TSINKLIST']
+    CaptString = ['TSINKSET']
     ReadSmearList = ['32']
     ReadTSinkList = AllTSinkList
     ReadStateList = []
@@ -103,8 +103,9 @@ else:
 
 
 print 'Creating SetList'
-ShowSetLists(ExpandSetList(CaptString))
-[ReadSetList,ReadSet2pt,SetTsink] = ExpandSetList(CaptString)
+print ExpandSetList(CaptString)
+[ReadSetList,SetTsink] = ExpandSetList(CaptString)
+ReadSet2pt = GetTsinkSmLists(ReadSetList)[1]
 print ''
 print 'nboot = ' + str(nboot)
 print 'All T Sinks: '+ ', '.join(map(str,ReadTSinkList))
