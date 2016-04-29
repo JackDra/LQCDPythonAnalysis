@@ -269,9 +269,11 @@ PoFTSinkStrList = ['tsink'+str(its) for its in PoFTSinkList]
 # PoFTvarList = ['PoF'+PoFShifts+'Test']
 # PoFReadTvarList = ['PoFTestnD'+str(PoFShifts)]
 # ##uncomment below to restore##
+## warning, below has been hard coded to fix the to16 is to17 problem i had
 PoFTvarList = ['PoF'+str(PoFShifts)+'to'+str(DefPoFVarList[0])+'dt'+str(DefPoFVarList[1])]
-PoFDirTvarList = ['PoFto'+str(DefPoFVarList[0])+'dt'+str(DefPoFVarList[1])]
-PoFReadTvarList = ['PoFto'+str(DefPoFVarList[0])+'dt'+str(DefPoFVarList[1])+'nD'+str(PoFShifts)]
+PoFTvarListCfun = ['PoF'+str(PoFShifts)+'to'+str(DefPoFVarList[0]-1)+'dt'+str(DefPoFVarList[1])]
+PoFDirTvarList = ['PoFto'+str(DefPoFVarList[0]-1)+'dt'+str(DefPoFVarList[1])]
+PoFReadTvarList = ['PoFto'+str(DefPoFVarList[0]-1)+'dt'+str(DefPoFVarList[1])+'nD'+str(PoFShifts)]
 
 # REvecPar26 = [[ 0.0004799, -0.0119381, 0.9999286 ],[0,0,0],[0,0,0]]
 # REvecPar32 = [[ 0.0007567612, -0.0182265391, 0.9998335964],[0,0,0],[0,0,0]]
