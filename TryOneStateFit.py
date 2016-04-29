@@ -74,7 +74,7 @@ thisFitOSFR = CreateFitList(OSF2ptMinStart,OSF2ptMinEnd,OSF2ptMaxStart,OSF2ptMax
 
 print 'Creating SetList'
 [ReadSetList,SetTsink] = ExpandSetList(CaptString)
-ReadSet2pt = RemoveTSink(ReadSetList)[1]
+ReadSet2pt = map(RemoveTSink,ReadSetList)
 
 print ''
 print 'nboot = ' + str(nboot)
