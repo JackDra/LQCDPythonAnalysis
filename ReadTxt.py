@@ -617,75 +617,75 @@ def MakeMethodsDict(readdir,readfile,thisMethodList,thisSetList,thisMomList=[]):
 #             outputdict = thisReadBoot(outputdict)
 #     return outputdict
 
-def ReadFitFile(filename,bootfn='',thisMomList=[]):
-    ReadMom = False
-    renorm = 1.
-    outputdict = OrderedDict()
-    # print filename
-    if os.path.isfile(filename):
-        def thisReadFile(thisoutputdict):
-            with open(filename,'r') as f:
-                for line in f:
-                    rdata = line.strip()
-                    if len(rdata) > 0:
-                        if rdata[0] == 'q':
-                            if len(thisMomList) > 0 and all([imom in thisoutputdict.keys() for imom in thisMomList]): return thisoutputdict
-                            if rdata in thisMomList or len(thisMomList) == 0:
-                                thismom = rdata
-                                ReadMom = True
-                                thisoutputdict[thismom] = OrderedDict()
-                            else:
-                                ReadMom = False
-                        elif ReadMom:
-                            rdata = rdata.split()
-                            if rdata[0] not in thisoutputdict[thismom].keys():
-                                thisoutputdict[thismom][rdata[0]] = OrderedDict()
-                            thisoutputdict[thismom][rdata[0]]['Avg'] = float(rdata[1])*renorm
-                            thisoutputdict[thismom][rdata[0]]['Std'] = float(rdata[2])*renorm
-                            thisoutputdict[thismom][rdata[0]]['Chi'] = float(rdata[3])
-            return thisoutputdict
-        outputdict = thisReadFile(outputdict)
+# def ReadFitFile(filename,bootfn='',thisMomList=[]):
+#     ReadMom = False
+#     renorm = 1.
+#     outputdict = OrderedDict()
+#     # print filename
+#     if os.path.isfile(filename):
+#         def thisReadFile(thisoutputdict):
+#             with open(filename,'r') as f:
+#                 for line in f:
+#                     rdata = line.strip()
+#                     if len(rdata) > 0:
+#                         if rdata[0] == 'q':
+#                             if len(thisMomList) > 0 and all([imom in thisoutputdict.keys() for imom in thisMomList]): return thisoutputdict
+#                             if rdata in thisMomList or len(thisMomList) == 0:
+#                                 thismom = rdata
+#                                 ReadMom = True
+#                                 thisoutputdict[thismom] = OrderedDict()
+#                             else:
+#                                 ReadMom = False
+#                         elif ReadMom:
+#                             rdata = rdata.split()
+#                             if rdata[0] not in thisoutputdict[thismom].keys():
+#                                 thisoutputdict[thismom][rdata[0]] = OrderedDict()
+#                             thisoutputdict[thismom][rdata[0]]['Avg'] = float(rdata[1])*renorm
+#                             thisoutputdict[thismom][rdata[0]]['Std'] = float(rdata[2])*renorm
+#                             thisoutputdict[thismom][rdata[0]]['Chi'] = float(rdata[3])
+#             return thisoutputdict
+#         outputdict = thisReadFile(outputdict)
 
-        if os.path.isfile(bootfn):
-            def thisReadBoot(thisoutputdict):
-                ReadMom = False
-                currMomList = []
-                with open(bootfn,'r') as f:
-                    for line in f:
-                        rdata = line.strip()
-                        if len(rdata) > 0:
-                            if rdata.split()[0] == 'nboot':
-                                if nboot != int(rdata.split()[1]): raise IOError("nboot missmatch")
-                            elif rdata[0] == 'q':
-                                if len(thisMomList) > 0 and all([imom in currMomList for imom in thisMomList]): 
-                                    BootNdimDict(thisoutputdict)
-                                    return thisoutputdict
-                                if rdata in thisMomList or len(thisMomList) == 0:
-                                    thismom = rdata
-                                    currMomList.append(thismom)
-                                    ReadMom = True
-                                    if rdata not in thisoutputdict.keys():
-                                        print 'WARNING: '+rdata+' found in:'
-                                        print bootfn + ' but not in:'
-                                        print filename
-                                        thisoutputdict[thismom] = OrderedDict()
-                                else:
-                                    ReadMom = False
-                            elif rdata[0] == 'c' and ReadMom:
-                                rdata = rdata.split()
-                                cutpar = rdata[0]
-                                if cutpar not in thisoutputdict[thismom].keys():
-                                    thisoutputdict[thismom][cutpar] = OrderedDict()
-                                thisoutputdict[thismom][cutpar]['Boot'] = BootStrap1(nboot,0.9)
-                            elif ReadMom:
-                                try:
-                                    thisoutputdict[thismom][cutpar]['Boot'].values[int(rdata.split()[0])] = float(rdata.split()[1])
-                                except:
-                                    thisoutputdict[thismom][cutpar]['Boot'].values[int(rdata[0][:3])] = float('NaN')
-                BootNdimDict(thisoutputdict)
-                return thisoutputdict
-            outputdict = thisReadBoot(outputdict)
-    return outputdict
+#         if os.path.isfile(bootfn):
+#             def thisReadBoot(thisoutputdict):
+#                 ReadMom = False
+#                 currMomList = []
+#                 with open(bootfn,'r') as f:
+#                     for line in f:
+#                         rdata = line.strip()
+#                         if len(rdata) > 0:
+#                             if rdata.split()[0] == 'nboot':
+#                                 if nboot != int(rdata.split()[1]): raise IOError("nboot missmatch")
+#                             elif rdata[0] == 'q':
+#                                 if len(thisMomList) > 0 and all([imom in currMomList for imom in thisMomList]): 
+#                                     BootNdimDict(thisoutputdict)
+#                                     return thisoutputdict
+#                                 if rdata in thisMomList or len(thisMomList) == 0:
+#                                     thismom = rdata
+#                                     currMomList.append(thismom)
+#                                     ReadMom = True
+#                                     if rdata not in thisoutputdict.keys():
+#                                         print 'WARNING: '+rdata+' found in:'
+#                                         print bootfn + ' but not in:'
+#                                         print filename
+#                                         thisoutputdict[thismom] = OrderedDict()
+#                                 else:
+#                                     ReadMom = False
+#                             elif rdata[0] == 'c' and ReadMom:
+#                                 rdata = rdata.split()
+#                                 cutpar = rdata[0]
+#                                 if cutpar not in thisoutputdict[thismom].keys():
+#                                     thisoutputdict[thismom][cutpar] = OrderedDict()
+#                                 thisoutputdict[thismom][cutpar]['Boot'] = BootStrap1(nboot,0.9)
+#                             elif ReadMom:
+#                                 try:
+#                                     thisoutputdict[thismom][cutpar]['Boot'].values[int(rdata.split()[0])] = float(rdata.split()[1])
+#                                 except:
+#                                     thisoutputdict[thismom][cutpar]['Boot'].values[int(rdata[0][:3])] = float('NaN')
+#                 BootNdimDict(thisoutputdict)
+#                 return thisoutputdict
+#             outputdict = thisReadBoot(outputdict)
+#     return outputdict
     
 
 ##outputdict = { thismom , cutpar , tsinkrpar/tsinkval , Avg / Std / Chi / Boot (bs) }
