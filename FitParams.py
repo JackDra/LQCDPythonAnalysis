@@ -25,8 +25,8 @@ FitCutPicked =  {'tsink26sm32':'cut4',
                  'tsink32'+PickedStateStr+'REvec':'cut6',
                  'tsink35sm32':'cut6',
                  'tsink38sm32':'cut6',
-                 'tsink26'+PickedStateStr+'PoF'+str(PoFShifts):'cut4',
-                 'tsink27'+PickedStateStr+'PoF'+str(PoFShifts):'cut4'}
+                 'tsink26'+PickedStateStr+'PoF':'cut4',
+                 'tsink27'+PickedStateStr+'PoF':'cut4'}
 ##
 
 
