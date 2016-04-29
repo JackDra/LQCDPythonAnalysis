@@ -183,6 +183,7 @@ def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
 
 def PrintTSFToFile(filename,thisMomList,xml2ptFitList,xmlTSFList,data3pt,data3ptChi,ipar,igamma,ism):
     datadict = {'TSF':{'Values':OrderedDict(),'Boots':OrderedDict()}}
+    print thisMomList
     xmlMomList = map(qstrTOqcond,thisMomList)
     for ipc,ip in enumerate(xmlMomList):        
         datadict['TSF']['Values'][ip] = OrderedDict()
@@ -196,7 +197,6 @@ def PrintTSFToFile(filename,thisMomList,xml2ptFitList,xmlTSFList,data3pt,data3pt
             datadict['TSF']['Boots'][ip][icut2ptstr] = OrderedDict()
             for icutstr,cutdata in zip(xmlTSFList,data3pt[ic2pt][ipc][igamma][ism]):
                 datadict['TSF']['Boots'][ip][icut2ptstr][icutstr] = cutdata[ipar].values
-    print filename+'.xml'
     with open(filename+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
     
