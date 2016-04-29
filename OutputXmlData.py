@@ -145,13 +145,13 @@ def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
         xml2ptFitList = map(xmlfitr,thisFit2ptList)
         for ipc,ip in enumerate(xmlMomList):        
             datadict['TSFMass']['Values'][ip] = OrderedDict()
-            for icutstr,cutdata,cutdataChi in zip(xml2ptFitList,pdata,pdataChi):
+            for icutstr,cutdata,cutdataChi in zip(xml2ptFitList,data2pt,data2ptChi):
                 mcutdata = cutdata[ipc][im].exp(1)
                 mcutdata.Stats()
                 datadict['TSFMass']['Values'][ip][icutstr] = BootAvgStdChiToFormat(mcutdata,cutdataChi[icp])
         for icp,ip in enumerate(xmlMomList):        
             datadict['TSFMass']['Boots'][ip] = OrderedDict()
-            for icutstr,cutdata in zip(xml2ptFitList,pdata):
+            for icutstr,cutdata in zip(xml2ptFitList,data2pt):
                 mcutdata = cutdata[icp][im].exp(1)
                 mcutdata.Stats()
                 datadict['TSFMass']['Boots'][ip][icutstr] = mcutdata.values
@@ -166,12 +166,12 @@ def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
             xml2ptFitList = map(xmlfitr,thisFit2ptList)
             for icp,ip in enumerate(xmlMomList):        
                 datadict['TSFMass']['Values'][ip] = OrderedDict()
-                for icutstr,cutdata,cutdataChi in zip(xml2ptFitList,pdata,pdataChi):
+                for icutstr,cutdata,cutdataChi in zip(xml2ptFitList,data2pt,data2ptChi):
                     mcutdata = cutdata[icp][PickTF(ism,iA,len(thisSmList))]
                     datadict['TSFMass']['Values'][ip][icutstr] = BootAvgStdChiToFormat(mcutdata,cutdataChi[icp],frmtflag='e')
             for icp,ip in zip(xmlMomList):        
                 datadict['TSFMass']['Boots'][ip] = OrderedDict()
-                for icutstr,cutdata in zip(xml2ptFitList,pdata):
+                for icutstr,cutdata in zip(xml2ptFitList,data2pt):
                     mcutdata = cutdata[icp][PickTF(ism,iA,len(thisSmList))]
                     datadict['TSFMass']['Boots'][ip][icutstr] = mcutdata.values
             with open(filename+'.xml','w') as f:
@@ -231,7 +231,7 @@ def PrintOSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
             xml2ptFitList = map(xmlfitr,thisFit2ptList)
             for ipc,ip in enumerate(xmlMomList):        
                 datadict['OSFMass']['Values'][ip] = OrderedDict()
-                for icutstr,cutdata,cutdataChi in zip(xml2ptFitList,pdata,pdataChi):
+                for icutstr,cutdata,cutdataChi in zip(xml2ptFitList,data2pt,data2ptChi):
                     if im == 1:
                         mcutdata = cutdata[ipc][im].exp(1)
                         mcutdata.Stats()
@@ -242,7 +242,7 @@ def PrintOSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
                     datadict['OSFMass']['Values'][ip][icutstr] = BootAvgStdChiToFormat(mcutdata,cutdataChi[icp],frmtflag=thisformat)
             for icp,ip in enumerate(xmlMomList):        
                 datadict['OSFMass']['Boots'][ip] = OrderedDict()
-                for icutstr,cutdata in zip(xml2ptFitList,pdata):
+                for icutstr,cutdata in zip(xml2ptFitList,data2pt):
                     if im == 1:
                         mcutdata = cutdata[icp][im].exp(1)
                         mcutdata.Stats()
