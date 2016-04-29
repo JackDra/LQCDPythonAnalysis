@@ -192,14 +192,14 @@ def PrintTSFToFile(filename,thisMomList,xml2ptFitList,xmlTSFList,data3pt,data3pt
             print len(data3pt) , ic2pt
             print len(data3pt[ic2pt]) , ipc
             print len(data3pt[ic2pt][ipc]) , igamma
-            print len(data3pt[ic2pt][ipc][igamma]) , ism
-            for icutstr,cutdata,cutdataChi in zip(xmlTSFList,data3pt[ic2pt][ipc][igamma][ism],data3ptChi[ic2pt][ipc][igamma][ism]):
+            print len(data3pt[ic2pt][igamma][ipc]) , ism
+            for icutstr,cutdata,cutdataChi in zip(xmlTSFList,data3pt[ic2pt][igamma][ipc][ism],data3ptChi[ic2pt][igamma][ipc][ism]):
                 datadict['TSF']['Values'][ip][icut2ptstr][icutstr] = BootAvgStdChiToFormat(cutdata[ipar],cutdataChi)
     for ipc,ip in enumerate(xmlMomList):        
         datadict['TSF']['Boots'][ip] = OrderedDict()
         for ic2pt,icut2ptstr in enumerate(xml2ptFitList):
             datadict['TSF']['Boots'][ip][icut2ptstr] = OrderedDict()
-            for icutstr,cutdata in zip(xmlTSFList,data3pt[ic2pt][ipc][igamma][ism]):
+            for icutstr,cutdata in zip(xmlTSFList,data3pt[ic2pt][igamma][ipc][ism]):
                 datadict['TSF']['Boots'][ip][icut2ptstr][icutstr] = cutdata[ipar].values
     with open(filename+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
