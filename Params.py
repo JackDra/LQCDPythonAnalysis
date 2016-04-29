@@ -93,7 +93,7 @@ DoNorm = False # normalises the 2 point function (see CMSTech.py)
 ##DEBUG toggles (True/False):
 ScaleByP4g4 = False ## scales out all operators by P4g4 instead of 2 point correlator at tsink for Ratio value (RF)
 DebugCM = False # for debugging Correlation Matrix stuff
-ShowConfNum = False # debugging, show number of configs during read
+ShowConfNum = True # debugging, show number of configs during read
 PrintRead = False # Screws up output if on and doing mulitcore reading
 DoCmplx = True # reads complex opperator values as well as real values, should be on
 DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
