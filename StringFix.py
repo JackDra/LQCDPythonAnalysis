@@ -62,7 +62,9 @@ def SplitToDt(tvar):
 
 def ProperCM(thestring):
     thestring = thestring.replace('state1','')
-    thestring = thestring.replace(VarPref,'')
+    thestring = thestring.replace('CM','')
+    thestring = thestring.replace('REvec','REvecSPACE')
+    thestring = thestring.replace('PoF','PoFSPACE')
     toval = re.search('to.*dt',thestring)
     try:
         toval = toval.group().replace('to','').replace('dt','')
@@ -70,7 +72,6 @@ def ProperCM(thestring):
         return thestring
     if toval+'to'+toval in thestring:
         itosh = str(int(toval)-tsource)
-        thestring = thestring.replace(toval+'to'+toval+'dt','to'+itosh+'dt')
         thestring = thestring.replace('to'+toval+'dt','to'+itosh+'dt')
     thestring = thestring.replace('dt',r'\Delta t')        
     thestring = thestring.replace('to','SPACEt_{0}')    
