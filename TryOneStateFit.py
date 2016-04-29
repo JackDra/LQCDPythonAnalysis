@@ -65,7 +65,7 @@ elif outfile == 'REvec':
     ReadREvecTvarList = REvecTvarList
 elif outfile == 'All':
     for iCol in OSFColList:
-        os.system(scriptdir+"TryOneStateFit.py " + iCol+' '.join(sys.argv[2:]) )
+        os.system(scriptdir+"TryOneStateFit.py " + iCol+' '+' '.join(sys.argv[2:]) )
     exit()
 else:
     raise SyntaxError('Input CM or Tsink')
