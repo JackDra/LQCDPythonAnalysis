@@ -219,13 +219,14 @@ def ReduceTsink(listin,NoCM=False,NoREvec=True):
     return listout
 
 
-def GetTsinkSmLists(listin,nodup=True):
+def GetTsinkSmLists(listin,NoREvec=False):
     smlist,tsinklist = [],[]
     for istr in listin:
         tsinkstr,smstr = SplitTSinkString(istr)
-        if tsinkstr not in tsinklist or not nodup:
+        if 'REvec' in smstr and NoREvec: continue
+        if tsinkstr not in tsinklist:
             tsinklist.append(tsinkstr)
-        if smstr not in smlist or not nodup:
+        if smstr not in smlist:
             smlist.append(smstr)
     return tsinklist,smlist
 

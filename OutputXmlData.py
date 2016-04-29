@@ -222,8 +222,7 @@ def PrintTSFSetToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2pt
 #OneFit2pt    = [ ifit2pt , ip , ism  , params ] bs1
 #OneFit2ptChi    = [ ifit2pt , ip , ism ]
 def PrintOSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,thisMomList):
-    thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
-    thisSmList = [ism.replace('REvec','CM') for ism in thisSmList]
+    thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList,NoREvec=True)
     masspardir = outputdir + 'cfuns/twopt/OSF'+fileprefix+'/'
     for im in [1,0]:
         for ism,thesm in enumerate(thisSmList):
