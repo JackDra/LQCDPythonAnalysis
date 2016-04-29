@@ -183,6 +183,8 @@ if len(sys.argv) < 2: raise IOError("input current type as first argument")
 print sys.argv[1]
 CurrIn = sys.argv[1]
 
+os.remove( logdir+'LogAll.log.start')
+os.remove( logdir+'LogAll.log.end')
 thisPool = False
 if CurrIn == 'TwoPt':
     RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe)
