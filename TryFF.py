@@ -54,7 +54,7 @@ def DoFF(thisMethodList,thisCurr,thisSetList,thisGammaList):
     mprint( '')
     # data { { StateList } { gamma } { mom } { Fit(Boot/Avg/Std/Chi) } }
     mprint( '')
-    mprint( 'Default Mass Set To: ' , DefMassVal[DefMassVal.keys()[0]])
+    mprint( 'Default Mass Set To: ' , DefMassVal[DefMassVal.keys()[0]]['Set'])
     mprint( '')
     mprint( 'Creating Form Factors:' )
     inputparams = [PickMassSet(MassSet,theset)+(theset,setdict,thisCurr) for theset,setdict in data.iteritems()]
