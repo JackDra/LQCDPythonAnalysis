@@ -55,7 +55,6 @@ def DoFF(thisMethodList,thisCurr,thisSetList,thisGammaList):
     # data { { StateList } { gamma } { mom } { Fit(Boot/Avg/Std/Chi) } }
     mprint( '')
     mprint( 'Creating Form Factors:' )
-    print data
     inputparams = [PickMassSet(MassSet,theset)+(theset,setdict,thisCurr) for theset,setdict in data.iteritems()]
     start = time.time()
     for ipar in inputparams: CreateFFWrap(*ipar)
