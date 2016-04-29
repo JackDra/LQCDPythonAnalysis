@@ -75,7 +75,7 @@ def PickFFAllSets(currdata,thiscurr,thisSetList):
 def PickFFFewSets(currdata,thiscurr,thisSetList):
     PickedSetList = []
     # for Fitkey,FitCutVal in FitCutPicked.iteritems():
-    PickedSetList += FlagList(thisSetList,'Fit','tsink29'+PickedStateStr+'sum',FitCutPicked['tsink29'+PickedStateStr+'sum'])
+    PickedSetList += FlagList(thisSetList,'Fit','tsink29CM'+PickedStateStr,FitCutPicked['tsink29'+PickedStateStr+'sum'])
     PickedSetList += FlagList(thisSetList,'Fit','tsink35sm32',FitCutPicked['tsink35sm32'])
     PickedSetList += FlagList(thisSetList,'SumMeth',SumFitRPicked,SumCutPar)
     # PickedSetList += FlagList(thisSetList,'OSF',OSFCutPicked)
