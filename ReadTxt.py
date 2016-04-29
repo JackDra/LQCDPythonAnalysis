@@ -121,6 +121,7 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
 def GetCompletedMom(thisfile):
     thisqlist = set([])
     thisqlistboot = set([])
+    print thisfile
     tree = ET.parse(thisfile)
     root = tree.getroot()
     rootlist = [it.tag for it in root.findall('./')]
