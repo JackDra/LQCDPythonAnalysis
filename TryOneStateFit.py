@@ -32,7 +32,7 @@ feedin = InputParams(sys.argv[2:])
 print 'Gamma Input (For re-running): -g=' , feedin['gamma']
 ReadGammaList = CreateGammaList(feedin['gamma'],twopt=True)
 
-OSFColList = ['Tsink','CM']
+OSFColList = ['Tsink','CM','JustPoF','REvec']
 
 if outfile == 'Tsink':
     ReadSmearList = ['32']
@@ -65,10 +65,7 @@ elif outfile == 'REvec':
     ReadREvecTvarList = REvecTvarList
 elif outfile == 'All':
     for iCol in OSFColList:
-        if ReadGammaList == DefGammaList:
-            os.system(scriptdir+"TryOneStateFit.py " + iCol)
-        else:
-            os.system(scriptdir+"TryOneStateFit.py " + iCol+' ' +' '.join(ReadGammaList))
+        os.system(scriptdir+"TryOneStateFit.py " + iCol+' '.join(sys.argv[2:]) )
     exit()
 else:
     raise SyntaxError('Input CM or Tsink')
