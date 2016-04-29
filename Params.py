@@ -305,6 +305,7 @@ def GetRenorm(thisstring):
 
 
 def mprint(*string):
+    if isinstance(string,str): string = [string]
     if not DoMulticore: print ' '.join(string)
 
     
