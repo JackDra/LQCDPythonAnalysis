@@ -220,9 +220,9 @@ def GetTsinkSmLists(listin,nodup=True):
     smlist,tsinklist = [],[]
     for istr in listin:
         tsinkstr,smstr = SplitTSinkString(istr)
-        if tsinkstr not in tsinklist or not nodub:
+        if tsinkstr not in tsinklist or not nodup:
             tsinklist.append(tsinkstr)
-        if smstr not in smlist or not nodub:
+        if smstr not in smlist or not nodup:
             smlist.append(smstr)
     return tsinklist,smlist
 
