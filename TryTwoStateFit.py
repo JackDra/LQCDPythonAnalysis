@@ -103,6 +103,7 @@ else:
 
 
 print 'Creating SetList'
+ShowSetLists(ExpandSetList(CaptString))
 [ReadSetList,ReadSet2pt,SetTsink] = ExpandSetList(CaptString)
 print ''
 print 'nboot = ' + str(nboot)
