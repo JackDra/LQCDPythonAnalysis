@@ -25,8 +25,8 @@ FitCutPicked =  {'tsink26sm32':'cut4',
                  'tsink32'+PickedStateStr+'REvec':'cut6',
                  'tsink35sm32':'cut6',
                  'tsink38sm32':'cut6',
-                 'tsink26'+PickedStateStr+'PoF':'cut4',
-                 'tsink27'+PickedStateStr+'PoF':'cut4'}
+                 'tsink26'+PickedStateStr+'PoF'+str(PoFShifts):'cut4',
+                 'tsink27'+PickedStateStr+'PoF'+str(PoFShifts):'cut4'}
 ##
 
 
@@ -62,7 +62,7 @@ OSFfitr = {'sm32':str(OSFfitvals['sm32'][0])+'-'+str(OSFfitvals['sm32'][1]),
            'sm64':str(OSFfitvals['sm64'][0])+'-'+str(OSFfitvals['sm64'][1]),
            'sm128':str(OSFfitvals['sm128'][0])+'-'+str(OSFfitvals['sm128'][1]),
            PickedStateStr+'REvec':str(OSFfitvals[PickedStateStr+REvecTvarList[0]][0])+'-'+str(OSFfitvals[PickedStateStr+REvecTvarList[0]][1]),
-           PickedStateStr+'PoF':str(OSFfitvals[PickedStateStr+PoFTvarList[0]][0])+'-'+str(OSFfitvals[PickedStateStr+PoFTvarList[0]][1]),
+           PickedStateStr+'PoF'+str(PoFShifts):str(OSFfitvals[PickedStateStr+PoFTvarList[0]][0])+'-'+str(OSFfitvals[PickedStateStr+PoFTvarList[0]][1]),
            PickedStateStr+'CM':str(OSFfitvals[PickedStateStr+DefTvarPicked][0])+'-'+str(OSFfitvals[PickedStateStr+DefTvarPicked][1])}
 
 
