@@ -93,7 +93,7 @@ def SplitSet(data,SetList,TsinkList):
 
 def RemoveToDt(thisstring):
     for ivar in TwoPtDefTvarList:
-        thissting = thissting.replace(ivar,'')
+        thisstring = thisstring.replace(ivar,'')
     return thisstring
 
 
