@@ -83,8 +83,8 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                         if CheckDict(thismassdict,'m0',TSFfitr):
                             datamassout[ism+iMeth] = thismassdict['m0'][TSFfitr]
                     elif 'OSF' in iMeth:
-                        if CheckDict(thismassdict,'m0',OSFfitr[ism]):
-                            datamassout[ism+iMeth] = thismassdict['m0'][OSFfitr[ism]]
+                        if CheckDict(thismassdict,'m0',OSFfitr[RemoveToDt(ism)]):
+                            datamassout[ism+iMeth] = thismassdict['m0'][OSFfitr[RemoveToDt(ism)]]
         else:
             for imom,momdata in readdata[igamma].iteritems():
                 for iMeth,Methdata in momdata.iteritems():
@@ -99,9 +99,9 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                                     datadictout[iSet+iMeth+icut][igamma][imom] = thisdict['B00'][TSFfitr][icut]
                         elif 'OSF' in iMeth:
                             for icut in OSFCutList:
-                                if CheckDict(thisdict,'B00',OSFfitr[ism],icut):
+                                if CheckDict(thisdict,'B00',OSFfitr[fitsm],icut):
                                     datadictout = SetupDict(datadictout,igamma,iSet+iMeth+icut)
-                                    datadictout[iSet+iMeth+icut][igamma][imom] = thisdict['B00'][OSFfitr[ism]][icut]
+                                    datadictout[iSet+iMeth+icut][igamma][imom] = thisdict['B00'][OSFfitr[fitsm]][icut]
                         elif 'SumMeth' in iMeth:
                             for ifit in SumFitRList:
                                 for icut in SumCutList:
@@ -328,7 +328,7 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
                             for ipar in StateParList['One']['C2']:
                                 fitrkey = RemoveTSink(iset)
                                 if DefTvarPicked in fitrkey: fitrkey = PickedStateStr+DefTvarPicked
-                                pars2pt.append(datadict['twopt'][zmomstr][iSF][RemoveTSink(iset)][ipar][OSFfitr[fitrkey]]['Boot'])
+                                pars2pt.append(datadict['twopt'][zmomstr][iSF][RemoveTSink(iset)][ipar][OSFfitr[RemoveToDt(fitrkey)]]['Boot'])
                             data2ptZ =  pars2pt[0]*(pars2pt[1]*(-GetintTSink(iset)+tsource)).exp(1)
                         elif 'TSF' in iSF:
                             if not all([iState in datadict['twopt'][zmomstr][iSF][RemoveTSink(iset)].keys() for iState in StateParList['Two']['C2']]): continue

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+!/usr/bin/env python
 
 import matplotlib
 matplotlib.use('Agg') # Must be before importing matplotlib.pyplot or pylab!
@@ -485,10 +485,11 @@ def PlotTSFLine(data,data2pt,thistsink,col,thisshift,TSFcut,smear):
 def PlotOSFValue(data,col,thisshift,OSFcut,smear,thistsink):
     LRM = max((int(thistsink)-tsource)/2.-int(OSFcut.replace('cut','')),0)
     tvals = np.array([-LRM+thisshift,LRM+thisshift])
-    if not CheckDict(data,'B00',OSFfitr[smear],OSFcut,'Avg'): return
-    if not CheckDict(data,'B00',OSFfitr[smear],OSFcut,'Std'): return
-    dataval = abs(data['B00'][OSFfitr[smear]][OSFcut]['Avg'])
-    dataerr = data['B00'][OSFfitr[smear]][OSFcut]['Std']
+    osfsmear = RemoveToDt(smear)
+    if not CheckDict(data,'B00',OSFfitr[osfsmear],OSFcut,'Avg'): return
+    if not CheckDict(data,'B00',OSFfitr[osfsmear],OSFcut,'Std'): return
+    dataval = abs(data['B00'][OSFfitr[osfsmear]][OSFcut]['Avg'])
+    dataerr = data['B00'][OSFfitr[osfsmear]][OSFcut]['Std']
     dataup,datadown = dataval+dataerr,dataval-dataerr
     pl.fill_between(tvals,[datadown,datadown],[dataup,dataup],facecolor=col,edgecolor='none',alpha=thisalpha)
     pl.plot(tvals,[dataval,dataval],color = col)
@@ -517,7 +518,7 @@ def PlotTSFMassLine(data2pt,col,smear,thisdt):
 
 
 def PlotOSFMassValue(data,col,smear,thisdt):
-    smearindex,deltashift = smear,0
+    smearindex,deltashift = RemoveToDt(smear),0
     if 'sm' not in smear:
         if 'PoF' in smear:
             deltashift = PoFShifts*2
@@ -549,7 +550,7 @@ def PlotTSFMassValue(data,thisdt):
 
 
 def PlotOSFLog(data,col,smear,norm):
-    smearindex = smear
+    smearindex = RemoveToDt(smear)
     if 'sum' in smear: smearindex = PickedStateStr+'sum'    
     if not CheckDict(data,'m0',OSFfitr[smearindex],'Boot'): return
     if not CheckDict(data,'Am',OSFfitr[smearindex],'Boot'): return
