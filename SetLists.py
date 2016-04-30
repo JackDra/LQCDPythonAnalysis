@@ -91,6 +91,12 @@ def SplitSet(data,SetList,TsinkList):
     return dataout
 
 
+def RemoveToDt(thisstring):
+    for ivar in TwoPtDefTvarList:
+        thissting = thissting.replace(ivar,'')
+    return thisstring
+
+
 def CreateStateSet(smL,stateL,tvarL):
     Lout = ['sm'+str(ism) for ism in smL]
     for istate in stateL:

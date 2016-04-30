@@ -90,6 +90,7 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                 for iMeth,Methdata in momdata.iteritems():
                     for iSet,thisdict in Methdata.iteritems():
                         itsink,ism = SplitTSinkString(iSet)
+                        fitsm = RemoveToDt(ism)
                         if DefTvarPicked in ism: ism = PickedStateStr+DefTvarPicked
                         if 'TSF' in iMeth:
                             for icut in TSFCutList:
