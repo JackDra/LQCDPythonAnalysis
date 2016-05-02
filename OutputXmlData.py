@@ -14,6 +14,14 @@ from XmlFuns import *
 from XmlFormatting import *
 import os
 
+def MergeXmlOuput(thisfile,outputdict):
+    if os.path.isfile(filename+'.xml'):
+        with open(filename+'.xml','r') as filein:
+            outputdict = merge_dicts(xmltodict.parse(filein.read()),outputdict)
+    with open(filename+'.xml','w') as f:
+        f.write( xmltodict.unparse(outputdict,pretty=True))
+    
+
 def PrintToFile(thisdata,filename,thisTList,thisMomList,CalcFlag,frmtflag='f'):
     datadict = {CalcFlag:{'Values':OrderedDict(),'Boots':OrderedDict()}}
     xmlMomList = map(ipTOqcond,thisMomList)
@@ -24,13 +32,7 @@ def PrintToFile(thisdata,filename,thisTList,thisMomList,CalcFlag,frmtflag='f'):
         datadict[CalcFlag]['Boots'][ip] = OrderedDict()
         for itstr,tdata in zip(tkeyList,pdata):
             datadict[CalcFlag]['Boots'][ip][itstr] = tdata.values
-    if os.path.isfile(filename+'.xml'):
-        with open(filename+'.xml','r') as filein:
-            dictorig = xmltodict.parse(filein.read())
-            datadict = merge_dicts(dictorig,datadict)
-    with open(filename+'.xml','w') as f:
-        f.write( xmltodict.unparse(datadict,pretty=True))
-
+    MergeXmlOutput(filename,datadict)
 
 
 # data = [ ip , icut , iset ]
@@ -46,8 +48,7 @@ def PrintFitToFile(data,dataChi,iset,filename,thisMomList,thisCutList):
         datadict['Fits']['Boots'][ip] = OrderedDict()
         for icutstr,cutdata in zip(xmlCutList,pdata):
             datadict['Fits']['Boots'][ip][icutstr] = cutdata[iset].values
-    with open(filename+'.xml','w') as f:
-        f.write( xmltodict.unparse(datadict,pretty=True))
+    MergeXmlOutput(filename,datadict)
 
 
 def PrintLREvecMassToFile(thisLE,thisRE,thisEMass,thisMomList,thisTvar,DoPoF=True):
@@ -58,8 +59,7 @@ def PrintLREvecMassToFile(thisLE,thisRE,thisEMass,thisMomList,thisTvar,DoPoF=Tru
         datadict['Eigen_solutions']['Values'][ip] = OrderedDict()
         for istate,iLE,iRE,iEM in zip(StateSet,pLE,pRE,pEMass):
             datadict['Eigen_solutions']['Values'][ip]['State'+str(istate)] = LREVecToFormat(iLE,iRE,iEM,DoPoF)
-    with open(outputdir+'/Mass/'+thisTvar+'LREM.xml','w') as f:
-        f.write( xmltodict.unparse(datadict,pretty=True))
+    MergeXmlOutput(outputdir+'/Mass/'+thisTvar+'LREM',datadict)
 
 
 
@@ -98,9 +98,7 @@ def PrintSumToFile(data,datafit,datafitchi,filename,thisFitList,thisMomList,this
                 datadict['Sum']['Boots'][ip][icut]['slope'][ifit] = fitdata[0].values
             for ifit,fitdata,fitdatachi in zip(cutfitlist,cutdatafit,cutdatafitchi):
                 datadict['Sum']['Boots'][ip][icut]['constant'][ifit] = fitdata[1].values
-
-    with open(filename+'.xml','w') as f:
-        f.write( xmltodict.unparse(datadict,pretty=True))
+    MergeXmlOutput(filename,datadict)
 
 
 def PrintFFSet(FFin,Set,Mass,SetMass,theCurr):
@@ -126,8 +124,7 @@ def PrintFFSet(FFin,Set,Mass,SetMass,theCurr):
             datadict['Form_Factors']['Boots'][iqsqrd] = OrderedDict()
             for ic,iFF in enumerate(qdata['Boot']):
                 datadict['Form_Factors']['Boots'][iqsqrd]['FF'+str(ic)] = iFF.values
-    with open(thisfile+'.xml','w') as f:
-        f.write( xmltodict.unparse(datadict,pretty=True))
+    MergeXmlOutput(thisfile,datadict)
 
 
 
@@ -160,8 +157,7 @@ def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
                 mcutdata = cutdata[ipc][im].exp(1)
                 mcutdata.Stats()
                 datadict['TSFMass']['Boots'][ip][icutstr] = mcutdata.values
-        with open(filename+'.xml','w') as f:
-            f.write( xmltodict.unparse(datadict,pretty=True))
+        MergeXmlOutput(filename,datadict)
 
     for iA,theA in enumerate(TwoStateParList['C2'][:-2]):
         for ism,thesm in enumerate(thisSmList):
@@ -179,8 +175,7 @@ def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
                 for icutstr,cutdata in zip(xml2ptFitList,data2pt):
                     mcutdata = cutdata[ipc][PickTF(ism,iA,len(thisSmList))]
                     datadict['TSFMass']['Boots'][ip][icutstr] = mcutdata.values
-            with open(filename+'.xml','w') as f:
-                f.write( xmltodict.unparse(datadict,pretty=True))
+            MergeXmlOutput(filename,datadict)
 
 
 #data3pt       = [ ifit2pt , ip , igamma , istate , ifit3pt , params ] bs1
@@ -201,8 +196,7 @@ def PrintTSFToFile(filename,thisMomList,xml2ptFitList,xmlTSFList,data3pt,data3pt
             datadict['TSF']['Boots'][ip][icut2ptstr] = OrderedDict()
             for icutstr,cutdata in zip(xmlTSFList,data3pt[ic2pt][igamma][ipc][ism]):
                 datadict['TSF']['Boots'][ip][icut2ptstr][icutstr] = cutdata[ipar].values
-    with open(filename+'.xml','w') as f:
-        f.write( xmltodict.unparse(datadict,pretty=True))
+    MergeXmlOutput(filename,datadict)
     
                 
                 
@@ -255,8 +249,7 @@ def PrintOSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
                     else:
                         mcutdata = cutdata[ipc][ism][im]
                     datadict['OSFMass']['Boots'][ip][icutstr] = mcutdata.values
-            with open(filename+'.xml','w') as f:
-                f.write( xmltodict.unparse(datadict,pretty=True))
+            MergeXmlOutput(filename,datadict)
 
 
 #OneFit3pt    = [ ifit2pt , igamma , ip , iset , ifit3pt , params ] bs1
@@ -276,8 +269,7 @@ def PrintOSFToFile(filename,thisMomList,xml2ptFitList,xmlOSFList,data3pt,data3pt
             datadict['OSF']['Boots'][ip][icut2ptstr] = OrderedDict()
             for icutstr,cutdata in zip(xmlOSFList,data3pt[ic2pt][igamma][ipc][ism]):
                 datadict['OSF']['Boots'][ip][icut2ptstr][icutstr] = cutdata[ipar].values
-    with open(filename+'.xml','w') as f:
-        f.write( xmltodict.unparse(datadict,pretty=True))
+    MergeXmlOutput(filename,datadict)
         
 
 def PrintOSFSetToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2ptList,fileprefix):
