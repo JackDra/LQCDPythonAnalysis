@@ -14,7 +14,7 @@ from XmlFuns import *
 from XmlFormatting import *
 import os
 
-def MergeXmlOuput(thisfile,outputdict):
+def MergeXmlOutput(thisfile,outputdict):
     if os.path.isfile(filename+'.xml'):
         with open(filename+'.xml','r') as filein:
             outputdict = merge_dicts(xmltodict.parse(filein.read()),outputdict)
