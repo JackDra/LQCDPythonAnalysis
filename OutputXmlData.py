@@ -15,10 +15,10 @@ from XmlFormatting import *
 import os
 
 def MergeXmlOutput(thisfile,outputdict):
-    if os.path.isfile(filename+'.xml'):
-        with open(filename+'.xml','r') as filein:
+    if os.path.isfile(thisfile+'.xml'):
+        with open(thisfile+'.xml','r') as filein:
             outputdict = merge_dicts(xmltodict.parse(filein.read()),outputdict)
-    with open(filename+'.xml','w') as f:
+    with open(thisfile+'.xml','w') as f:
         f.write( xmltodict.unparse(outputdict,pretty=True))
     
 
