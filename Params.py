@@ -107,9 +107,9 @@ outputdir = datadir+'results/'+ListOrSet+'k'+str(kappa)+'/'
 logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 pickledir = datadir+"pickledir/"
 REvecDir = scriptdir+'REvecSave/k'+str(kappa)+'/'
-# RunMomList = qvecSet 
+RunMomList = qvecSet 
 # For Debuggin, only use zero momenta
-RunMomList = [qvecSet[iqTOip(0)],qvecSet[qvecTOip([0,0,1])]]
+# RunMomList = [qvecSet[iqTOip(0)],qvecSet[qvecTOip([0,0,1])]]
 # RunMomList = [qvecSet[iqTOip(0)]]
 mkdir_p(outputdir)
 mkdir_p(pickledir)
