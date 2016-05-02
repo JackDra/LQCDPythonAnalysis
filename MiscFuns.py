@@ -12,7 +12,7 @@ import pylab as pl
 import time,datetime
 from copy import deepcopy
 
-def merge(a, b, path=None):
+def merge_dicts(a, b, path=None):
    "merges b into a"
    if path is None: path = []
    for key in b:
