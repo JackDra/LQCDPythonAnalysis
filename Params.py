@@ -86,7 +86,7 @@ VectorNorm = 0.8574 # normalisation for Vector Current
 PsVectorNorm = 0.8728 # normalisation for Pseudo Vector current
 TensorNorm = 0.9945 # normalisation for Tensor Current
 MultiCoreFitting = False # Multicore for Boot Fitting, not needed in current build
-DoMulticore = False # Runs multicore wherever implemented
+DoMulticore = True # Runs multicore wherever implemented
 OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
 DoNorm = False # normalises the 2 point function (see CMSTech.py)
 
@@ -107,9 +107,10 @@ outputdir = datadir+'results/'+ListOrSet+'k'+str(kappa)+'/'
 logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 pickledir = datadir+"pickledir/"
 REvecDir = scriptdir+'REvecSave/k'+str(kappa)+'/'
-# RunMomList = qvecSet 
+RunMomList = qvecSet 
 # For Debuggin, only use zero momenta
-RunMomList = [qvecSet[iqTOip(0)],qvecSet[qvecTOip([0,0,1])]]
+# RunMomList = [qvecSet[iqTOip(0)],qvecSet[qvecTOip([0,0,1])]]
+# RunMomList = [qvecSet[iqTOip(0)]]
 mkdir_p(outputdir)
 mkdir_p(pickledir)
 mkdir_p(logdir)
