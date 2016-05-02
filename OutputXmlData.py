@@ -12,6 +12,7 @@ import cPickle as pickle
 from collections import OrderedDict
 from XmlFuns import *
 from XmlFormatting import *
+import os
 
 def PrintToFile(thisdata,filename,thisTList,thisMomList,CalcFlag,frmtflag='f'):
     datadict = {CalcFlag:{'Values':OrderedDict(),'Boots':OrderedDict()}}
@@ -23,6 +24,9 @@ def PrintToFile(thisdata,filename,thisTList,thisMomList,CalcFlag,frmtflag='f'):
         datadict[CalcFlag]['Boots'][ip] = OrderedDict()
         for itstr,tdata in zip(tkeyList,pdata):
             datadict[CalcFlag]['Boots'][ip][itstr] = tdata.values
+    if os.path.isfile(filename_'.xml'):
+        with open(filename+'.xml','r') as filein:
+            datadict = merge_dicts(datadict,xmltodict.parse(filein.read()))
     with open(filename+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
 
