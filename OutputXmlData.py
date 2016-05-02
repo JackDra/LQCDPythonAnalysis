@@ -30,7 +30,6 @@ def PrintToFile(thisdata,filename,thisTList,thisMomList,CalcFlag,frmtflag='f'):
     if os.path.isfile(filename+'.xml'):
         with open(filename+'.xml','r') as filein:
             dictorig = xmltodict.parse(filein.read())
-            print dictorig.keys()
             print dictorig[CalcFlag].keys()
             print dictorig[CalcFlag]['Values'].keys()
             print dictorig[CalcFlag]['Boots'].keys()
