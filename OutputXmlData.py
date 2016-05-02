@@ -24,9 +24,15 @@ def PrintToFile(thisdata,filename,thisTList,thisMomList,CalcFlag,frmtflag='f'):
         datadict[CalcFlag]['Boots'][ip] = OrderedDict()
         for itstr,tdata in zip(tkeyList,pdata):
             datadict[CalcFlag]['Boots'][ip][itstr] = tdata.values
+    print datadict[CalcFlag].keys()
+    print datadict[CalcFlag]['Values'].keys()
+    print datadict[CalcFlag]['Boots'].keys()
     if os.path.isfile(filename+'.xml'):
         with open(filename+'.xml','r') as filein:
             datadict = merge_dicts(xmltodict.parse(filein.read()),datadict)
+    print datadict[CalcFlag].keys()
+    print datadict[CalcFlag]['Values'].keys()
+    print datadict[CalcFlag]['Boots'].keys()
     with open(filename+'.xml','w') as f:
         f.write( xmltodict.unparse(datadict,pretty=True))
 
