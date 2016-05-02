@@ -29,7 +29,12 @@ def PrintToFile(thisdata,filename,thisTList,thisMomList,CalcFlag,frmtflag='f'):
     print datadict[CalcFlag]['Boots'].keys()
     if os.path.isfile(filename+'.xml'):
         with open(filename+'.xml','r') as filein:
-            datadict = merge_dicts(xmltodict.parse(filein.read()),datadict)
+            dictorig = xmltodict.parse(filein.read())
+            print dictorig.keys()
+            print dictorig[CalcFlag].keys()
+            print dictorig[CalcFlag]['Values'].keys()
+            print dictorig[CalcFlag]['Boots'].keys()
+            datadict = merge_dicts(dictorig,datadict)
     print datadict[CalcFlag].keys()
     print datadict[CalcFlag]['Values'].keys()
     print datadict[CalcFlag]['Boots'].keys()
