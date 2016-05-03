@@ -119,9 +119,8 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
 
 
 
-def GetCompletedMom(thisfile):
-    thisqlist = []
-    # thisqlistboot = set([])
+def GetCompletedMom(thisfile,thismomin=qvecSet):
+    thismomlist = []
     try:
         tree = ET.parse(thisfile)
         root = tree.getroot()
@@ -131,16 +130,18 @@ def GetCompletedMom(thisfile):
         return set([])
     if 'Values' in rootlist:
         for ival in root.findall('./Values/'):
-            print ival.tag
-            if ival.tag[0] == 'q':
-                thisqlist.append(qcondTOqstr(ival.tag))
-                # thisqlist = thisqlist | set([qcondTOqstr(ival.tag)])
+            if qcondTOqstr(ival.tag) in thismomin:
+                thismomlist.append(qcondTOqstr(ival.tag))
+    else:
+        os.remove(thisfile)
+        return set([])
+    # thisqlist = thisqlist | set([qcondTOqstr(ival.tag)])
     # if 'Boots' in rootlist:
     #     for ival in root.findall('./Boots/'):
     #         if ival.tag[0] == 'q':
     #             thisqlistboot = thisqlistboot | set([qcondTOqstr(ival.tag)])
     # return thisqlist & thisqlistboot
-    return set(thisqlist)
+    return set(thismomlist)
 
 # def GetTxtAndBootComp(thisfile,thisbootfile):
 #     txtqlist = GetCompletedMom(thisfile)
@@ -167,7 +168,7 @@ def Get2ptSetMoms(outputdir,MomListIn,statelist=[],todtlist=[],smlist=[]):
                 # if os.path.isfile(ifile) and os.path.isfile(ifb):
                 #     tempmomlist = GetCompletedMom(ifile)
                 if os.path.isfile(ifile):
-                    tempmomlist = GetCompletedMom(ifile)
+                    tempmomlist = GetCompletedMom(ifile,momlistin=MomListIn)
                     momlist = momlist & tempmomlist
                 else:
                     return MomListIn
@@ -177,7 +178,7 @@ def Get2ptSetMoms(outputdir,MomListIn,statelist=[],todtlist=[],smlist=[]):
             # if os.path.isfile(ifile) and os.path.isfile(ifb):
             #     tempmomlist = GetCompletedMom(ifile)
             if os.path.isfile(ifile):
-                tempmomlist = GetCompletedMom(ifile)
+                tempmomlist = GetCompletedMom(ifile,momlistin=MomListIn)
                 momlist = momlist & tempmomlist
             else:
                 return MomListIn
@@ -192,11 +193,10 @@ def Get3SM(outputdir,thisGammaList,MomListIn,setlist):
             ifile = thisdir+iset+igamma+'.xml'
             # if PrintRead: print ifile
             if os.path.isfile(ifile):
-                tempmomlist = GetCompletedMom(ifile)
-                momlist = momlist & tempmomlist
+                momlist = momlist & GetCompletedMom(ifile,momlistin=MomListIn)
             else:
                 return MomListIn
-    return OrderMomList(set(MomListIn) - momlist)
+    return momlist
             
 
 def Get3ptSetMoms(outputdir,thisGammaList,MomListIn,setlist):
