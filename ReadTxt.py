@@ -120,8 +120,8 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
 
 
 def GetCompletedMom(thisfile):
-    thisqlist = set([])
-    thisqlistboot = set([])
+    thisqlist = []
+    # thisqlistboot = set([])
     try:
         tree = ET.parse(thisfile)
         root = tree.getroot()
@@ -131,14 +131,16 @@ def GetCompletedMom(thisfile):
         return set([])
     if 'Values' in rootlist:
         for ival in root.findall('./Values/'):
+            print ival.tag[0]
             if ival.tag[0] == 'q':
-                thisqlist = thisqlist | set([qcondTOqstr(ival.tag)])
+                thisqlist.append(qcondTOqstr(ival.tag))
+                # thisqlist = thisqlist | set([qcondTOqstr(ival.tag)])
     # if 'Boots' in rootlist:
     #     for ival in root.findall('./Boots/'):
     #         if ival.tag[0] == 'q':
     #             thisqlistboot = thisqlistboot | set([qcondTOqstr(ival.tag)])
     # return thisqlist & thisqlistboot
-    return thisqlist
+    return set(thisqlist)
 
 # def GetTxtAndBootComp(thisfile,thisbootfile):
 #     txtqlist = GetCompletedMom(thisfile)
