@@ -131,7 +131,7 @@ def GetCompletedMom(thisfile):
         return set([])
     if 'Values' in rootlist:
         for ival in root.findall('./Values/'):
-            print ival.tag[0]
+            print ival.tag
             if ival.tag[0] == 'q':
                 thisqlist.append(qcondTOqstr(ival.tag))
                 # thisqlist = thisqlist | set([qcondTOqstr(ival.tag)])
