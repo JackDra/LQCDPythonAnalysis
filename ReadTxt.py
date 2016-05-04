@@ -124,8 +124,8 @@ def GetCompletedMom(thisfile,momin=qvecSet):
     def GCMWrap(thisfile,momin):
         thismomlist = []
         readsec = False
-        with open(thisfile,'r') as thisfile:
-            for line in thisfile:
+        with open(thisfile,'r') as f:
+            for line in f:
                 linepar = line.strip()
                 if '<Values>' in linepar:
                     readsec = True
