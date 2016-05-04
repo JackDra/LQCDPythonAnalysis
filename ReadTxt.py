@@ -122,6 +122,7 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
 
 def GetCompletedMom(thisfile,momin=qvecSet):
     def GCMWrap(thisfile,momin):
+        print momin
         thismomlist = []
         readsec = False
         with open(thisfile,'r') as thisfile:
@@ -137,16 +138,13 @@ def GetCompletedMom(thisfile,momin=qvecSet):
                         print linepar , thismom
                         if thismom in momin:
                             thismomlist.append(thismom)
-        raise IOError('</Values> not found')
-    try:
-        print 'DEBUG: reading file'
-        print thisfile
-        thismomlist = GCMWrap(thisfile,momin)
-        print 'DEBUG: read complete'
-        print ''
-    except:
         os.remove(thisfile)
-        return set([])
+        return []
+    print 'DEBUG: reading file'
+    print thisfile
+    thismomlist = GCMWrap(thisfile,momin)
+    print 'DEBUG: read complete'
+    print ''
     return set(thismomlist)
 
 # def GetTxtAndBootComp(thisfile,thisbootfile):
