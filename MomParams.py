@@ -72,7 +72,7 @@ def ipTOqstr(ip):
 
 
 def qcondTOqstr(iq):
-    return ' '.join(iq).replace('q ','q = ')
+    return ' '.join(iq).replace('q ','q = ').replace('- ','-')
 
 def qstrTOqcond(iq):
     return ' '.join(iq).replace('=','').replace(' ','')
