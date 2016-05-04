@@ -122,7 +122,9 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
 def GetCompletedMom(thisfile,momin=qvecSet):
     thismomlist = []
     try:
+        print 'DEBUG: parsing file'
         tree = ET.parse(thisfile)
+        print 'DEBUG: getting root'
         root = tree.getroot()
         rootlist = [it.tag for it in root.findall('./')]
     except:
