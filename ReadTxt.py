@@ -134,6 +134,7 @@ def GetCompletedMom(thisfile,momin=qvecSet):
                 elif readsec:
                     if '<q' in linepar:
                         thismom = qcondTOqstr(linepar[1:-1])
+                        print linepar , thismom
                         if thismom in momin:
                             thismomlist.append(thismom)
         raise IOError('</Values> not found')
