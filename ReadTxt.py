@@ -119,7 +119,7 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
 
 
 
-def GetCompletedMom(thisfile,thismomin=qvecSet):
+def GetCompletedMom(thisfile,momin=qvecSet):
     thismomlist = []
     try:
         tree = ET.parse(thisfile)
@@ -130,7 +130,7 @@ def GetCompletedMom(thisfile,thismomin=qvecSet):
         return set([])
     if 'Values' in rootlist:
         for ival in root.findall('./Values/'):
-            if qcondTOqstr(ival.tag) in thismomin:
+            if qcondTOqstr(ival.tag) in momin:
                 thismomlist.append(qcondTOqstr(ival.tag))
     else:
         os.remove(thisfile)
@@ -178,7 +178,7 @@ def Get2ptSetMoms(outputdir,MomListIn,statelist=[],todtlist=[],smlist=[]):
             # if os.path.isfile(ifile) and os.path.isfile(ifb):
             #     tempmomlist = GetCompletedMom(ifile)
             if os.path.isfile(ifile):
-                tempmomlist = GetCompletedMom(ifile,momlistin=MomListIn)
+                tempmomlist = GetCompletedMom(ifile,momin=MomListIn)
                 momlist = momlist & tempmomlist
             else:
                 return MomListIn
@@ -193,7 +193,7 @@ def Get3SM(outputdir,thisGammaList,MomListIn,setlist):
             ifile = thisdir+iset+igamma+'.xml'
             # if PrintRead: print ifile
             if os.path.isfile(ifile):
-                momlist = momlist & GetCompletedMom(ifile,momlistin=MomListIn)
+                momlist = momlist & GetCompletedMom(ifile,momin=MomListIn)
             else:
                 return MomListIn
     return momlist
