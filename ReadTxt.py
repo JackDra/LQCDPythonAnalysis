@@ -122,7 +122,6 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
 
 def GetCompletedMom(thisfile,momin=qvecSet):
     def GCMWrap(thisfile,momin):
-        print momin
         thismomlist = []
         readsec = False
         with open(thisfile,'r') as thisfile:
@@ -131,11 +130,11 @@ def GetCompletedMom(thisfile,momin=qvecSet):
                 if '<Values>' in linepar:
                     readsec = True
                 elif '</Values>' in linepar:
+                    print thismomlist
                     return thismomlist
                 elif readsec:
                     if '<q' in linepar:
                         thismom = qcondTOqstr(linepar[1:-1])
-                        print linepar , thismom
                         if thismom in momin:
                             thismomlist.append(thismom)
         os.remove(thisfile)
