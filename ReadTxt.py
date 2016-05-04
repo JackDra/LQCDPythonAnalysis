@@ -119,36 +119,34 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
 
 
 
+
 def GetCompletedMom(thisfile,momin=qvecSet):
-    thismomlist = []
+    def GCMWrap(thisfile,momin):
+        thismomlist = []
+        readsec = False
+        with open(thisfile,'r') as thisfile:
+            for line in thisfile:
+                linepar = line.strip()
+                if '<Values>' in linepar:
+                    readsec = True
+                elif '</Values>' in linepar:
+                    return thismomlist
+                elif readsec:
+                    if '<q' in linepar:
+                        thismom = qcondTOqstr(linepar[1:-1])
+                        if thismom in momin:
+                            thismomlist.append(thismom)
+        raise IOError('</Values> not found')
     try:
-        print 'DEBUG: parsing file'
-        tree = ET.parse(thisfile)
-        print 'DEBUG: getting root'
-        root = tree.getroot()
-        rootlist = [it.tag for it in root.findall('./')]
+        print 'DEBUG: reading file'
+        print thisfile
+        thismomlist = GCMWrap(thisfile,momin)
+        print 'DEBUG: read complete'
+        print ''
     except:
         os.remove(thisfile)
         return set([])
-    if 'Values' in rootlist:
-        print 'DEBUG: starting mom check'
-        print thisfile
-        thismomlist = [qcondTOqstr(ival.tag) for ival in root.findall('./Values/')]
-        print 'DEBUG: Finished Mom Check'
-        print ''
-        # for ival in root.findall('./Values/'):
-        #     if qcondTOqstr(ival.tag) in momin:
-        #         thismomlist.append(qcondTOqstr(ival.tag))
-    else:
-        os.remove(thisfile)
-        return set([])
-    # thisqlist = thisqlist | set([qcondTOqstr(ival.tag)])
-    # if 'Boots' in rootlist:
-    #     for ival in root.findall('./Boots/'):
-    #         if ival.tag[0] == 'q':
-    #             thisqlistboot = thisqlistboot | set([qcondTOqstr(ival.tag)])
-    # return thisqlist & thisqlistboot
-    return set(momin) & set(thismomlist)
+    return set(thismomlist)
 
 # def GetTxtAndBootComp(thisfile,thisbootfile):
 #     txtqlist = GetCompletedMom(thisfile)
