@@ -130,7 +130,6 @@ def GetCompletedMom(thisfile,momin=qvecSet):
                 if '<Values>' in linepar:
                     readsec = True
                 elif '</Values>' in linepar:
-                    print thismomlist
                     return thismomlist
                 elif readsec:
                     if '<q' in linepar:
@@ -139,11 +138,8 @@ def GetCompletedMom(thisfile,momin=qvecSet):
                             thismomlist.append(thismom)
         os.remove(thisfile)
         return []
-    print 'DEBUG: reading file'
-    print thisfile
     thismomlist = GCMWrap(thisfile,momin)
-    print 'DEBUG: read complete'
-    print ''
+    print set(thismomlist)
     return set(thismomlist)
 
 # def GetTxtAndBootComp(thisfile,thisbootfile):
