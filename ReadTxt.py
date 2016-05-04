@@ -139,7 +139,6 @@ def GetCompletedMom(thisfile,momin=qvecSet):
         os.remove(thisfile)
         return []
     thismomlist = GCMWrap(thisfile,momin)
-    print set(thismomlist)
     return set(thismomlist)
 
 # def GetTxtAndBootComp(thisfile,thisbootfile):
@@ -195,7 +194,7 @@ def Get3SM(outputdir,thisGammaList,MomListIn,setlist):
                 momlist = momlist & GetCompletedMom(ifile,momin=MomListIn)
             else:
                 return MomListIn
-    return momlist
+    return OrderMomList(set(MomListIn) - momlist)
             
 
 def Get3ptSetMoms(outputdir,thisGammaList,MomListIn,setlist):
