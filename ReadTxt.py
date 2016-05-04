@@ -121,6 +121,7 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
 
 def GetCompletedMom(thisfile,momin=qvecSet):
     print 'DEBUG: starting mom check'
+    print thisfile
     thismomlist = []
     try:
         tree = ET.parse(thisfile)
@@ -143,6 +144,7 @@ def GetCompletedMom(thisfile,momin=qvecSet):
     #             thisqlistboot = thisqlistboot | set([qcondTOqstr(ival.tag)])
     # return thisqlist & thisqlistboot
     print 'DEBUG: Finished Mom Check'
+    print ''
     return set(thismomlist)
 
 # def GetTxtAndBootComp(thisfile,thisbootfile):
