@@ -10,13 +10,13 @@ from FitParams import *
 
 
 def ReadXmlDict(filein):
-    with open(filein,'r') as f:
-        data = RecFTDAS(xmltodict.parse(f.read()))
+    try:
+        with open(filein,'r') as f:
+            data = RecFTDAS(xmltodict.parse(f.read()))
+    except:
+        raise IOError('Reading xml file fail: ' + filein)
     return data
 
-
-def ReadXmlArrayed(filein):
-    data = ReadXmlDict(filein)
     
 
 ##Also works for cfuns##
