@@ -33,8 +33,9 @@ def PrintToFile(thisdata,filedir,filename,thisTList,thisMomList,frmtflag='f'):
     for ip,pdata in zip(xmlMomList,thisdata):
         datadict = {ip:{'Values':OrderedDict(),'Boots':OrderedDict()}}
         iqsqrd = qsqrdstr(qcondTOqstr(ip))
-        outputfile = filedir+'qsqrd'+str(iqsqrd)+'/'+filename+ip
-        mkdir_p(outputfilelist[-1])
+        outputfile = filedir+'qsqrd'+str(iqsqrd)+'/'+ip+'/'
+        mkdir_p(outputfile)
+        outputfile = outputfile+filename+ip
         datadict[ip]['Values'] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,pdata,[frmtflag]*len(pdata))))
         datadict[ip]['Boots'] = OrderedDict()
         for itstr,tdata in zip(tkeyList,pdata):
