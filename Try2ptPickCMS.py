@@ -60,8 +60,8 @@ def CreateTwoPt(thisMomList,thisSmearList):
         for iin in inputparams: output.append(CreateCM2ptCfuns.mapper(iin))
     
     
-    thisTvarList = ['PoF'+str(PoFShifts)+iTvar for iTvar in TwoPtDefTvarList]
-    thisTvarList += ['CM'+iTvar for iTvar in TwoPtDefTvarList]
+    thisPoFTvarList = ['PoF'+str(PoFShifts)+iTvar for iTvar in TwoPtDefTvarList]
+    thisCMTvarList += ['CM'+iTvar for iTvar in TwoPtDefTvarList]
     for iout,iTvar in zip(output,thisTvarList):
         [CMdata2pt,LEvec,REvec,Emass] = iout
 ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
@@ -74,7 +74,9 @@ def CreateTwoPt(thisMomList,thisSmearList):
     print 'CMTech Total Time Taken: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
     start = time.time()
     print 'Printing to file \r',
-    SetList = CreateMassSet(thisSmearList,StateSet,thisTvarList,flipord=True)
+    SetList = CreateMassSet(thisSmearList,StateSet,thisPoFTvarList,flipord=True)
+    SetList += CreateMassSet([],StateSet[:len(StateSet)/PoFShifts],thisCMTvarList,flipord=True)
+    print SetList
     PrintCfunToFile([C2out],SetList,thisMomList,['twopt'])
     PrintSetToFile([C2out],SetList,thisMomList,['Mass'],0)
     print 'Printing took ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
