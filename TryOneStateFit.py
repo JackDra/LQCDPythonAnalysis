@@ -3,7 +3,7 @@ import numpy as np
 import sys
 from Params import *
 from FitParams import *
-from Fitting import OneStateSetFit
+from Fitting import OneStateSetFit,OneStateSettwopt
 from ReadTxt import ReadCfunsnp
 from SetLists import *
 from OutputData import PrintOSFMassToFile,PrintOSFSetToFile
