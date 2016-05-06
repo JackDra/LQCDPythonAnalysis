@@ -204,10 +204,10 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
             if RemoveTSink(iset) not in datadict['twopt'][zmomstr]['RF'].keys(): continue
                 # if thisPrintRead: print RemoveTSink(iset)+' not in two point set list, not constructing RF'
             data3pt = data3ptdict[igamma][zmomstr]['RF'][iset]['Boot']
-            print datadict['twopt'][zmomstr].keys()
-            print ['OSF'+iOSF for iOSF in OSFFileFlags]+['TSF'+iTSF for iTSF in TSFFileFlags]
             for iSF in ['OSF'+iOSF for iOSF in OSFFileFlags]+['TSF'+iTSF for iTSF in TSFFileFlags]:
                 if iSF in datadict['twopt'][zmomstr].keys():
+                    print datadict['twopt'][zmomstr][iSF].keys()
+                    print RemoveTSink(iset)
                     if RemoveTSink(iset) in datadict['twopt'][zmomstr][iSF].keys():
                         pars2pt = []
                         if 'OSF' in iSF:
