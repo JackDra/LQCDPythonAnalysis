@@ -17,7 +17,6 @@ def ReadXmlDict(filein):
         print 'Reading xml file fail: ' + filein
         xmldata = {'Null':{'Values':{},'Boots':{}}}
 
-    print xmldata
     firstkey = xmldata.keys()[0]
     if firstkey != 'Null':
         try:
@@ -44,7 +43,6 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
             if 'Boots' in data.keys():
                 bootdata = data['Boots']
                 dictout[thismom] = {}
-                print bootdata
                 dictout[thismom]['tVals'] = map(untstr,bootdata.keys())
                 dictout[thismom]['Boot'] = []
                 dictout[thismom]['Vals'] = []
