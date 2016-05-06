@@ -25,8 +25,8 @@ def WriteXmlOutput(thisfile,outputdict):
     Vals = {firstkey:{'Values':outputdict[firstkey]['Values']}}
     # Boots = {firstkey:{'Boots':outputdict[firstkey]['Boots']}}
     outdirlist = thisfile.split('/')
-    bootdir = '/',join(outdirlist[:-1]+['boots'])
-    bootout = '/',join(outdirlist[:-1]+['boots']+[outdirlist[-1]])
+    bootdir = '/'.join(outdirlist[:-1]+['boots'])
+    bootout = '/'.join(outdirlist[:-1]+['boots']+[outdirlist[-1]])
     mkdir_p(bootdir)
     Vals[firstkey]['Boots'] = bootout.replace('.xml','.boot.p')
     with open(thisfile+'.xml','w') as f:
