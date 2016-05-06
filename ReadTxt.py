@@ -245,8 +245,7 @@ def ReadFFDict(thisindir,thisFFDict,thisPrintRead=PrintRead):
             if thisPrintRead: print 'Reading ',thisFF,'at : ' ,int((iset*100)/float(len(FFSetList))),'%     \r',
             thisdir = thisindir+'FormFactors/'+thisFF+'/'
             thisfile = thisdir+thisFF+thisset+'.xml'
-            thisbootfile = thisdir + 'boots/'+thisFF+thisset+'.boot.xml'
-            DataDict[thisFF][thisset] = ReadFFFile(thisfile,bootfn=thisbootfile)            
+            DataDict[thisFF][thisset] = ReadFFFile(thisfile)            
         if thisPrintRead: print 'Reading ',thisFF,'took : ' , str(datetime.timedelta(seconds=time.time()-startff)) , ' h:m:s                     '
     if thisPrintRead: print 'Reading all FFs took : ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
     return DataDict
