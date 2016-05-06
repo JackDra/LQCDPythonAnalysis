@@ -206,11 +206,11 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
             data3pt = data3ptdict[igamma][zmomstr]['RF'][iset]['Boot']
             for iSF in ['OSF'+iOSF for iOSF in OSFFileFlags]+['TSF'+iTSF for iTSF in TSFFileFlags]:
                 if iSF in datadict['twopt'][zmomstr].keys():
-                    print datadict['twopt'][zmomstr][iSF].keys()
-                    print RemoveTSink(iset)
                     if RemoveTSink(iset) in datadict['twopt'][zmomstr][iSF].keys():
                         pars2pt = []
                         if 'OSF' in iSF:
+                            print StateParList['One']['C2']
+                            print datadict['twopt'][zmomstr][iSF][RemoveTSink(iset)].keys()
                             if not all([iState in datadict['twopt'][zmomstr][iSF][RemoveTSink(iset)].keys() for iState in StateParList['One']['C2']]): continue
                             for ipar in StateParList['One']['C2']:
                                 fitrkey = RemoveTSink(iset)
