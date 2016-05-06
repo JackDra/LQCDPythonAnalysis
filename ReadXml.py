@@ -30,7 +30,10 @@ def ReadRFFile(filename,bootfn='',thisMomList=[]):
     if not os.path.isfile(filename):
         mprint(filename + ' not found')
     else:
+        print ''
+        print 'DEBUG: reading file' + filename
         data = ReadXmlDict(filename)
+        print 'DEBUG: read complete, creating dictionary'
         data = data[data.keys()[0]]
         if 'Boots' in data.keys():
             bootdata = data['Boots']
@@ -58,6 +61,8 @@ def ReadRFFile(filename,bootfn='',thisMomList=[]):
                 for tdata in momdata.itervalues():
                     dictout[thismom]['Vals'].append(tdata['Avg']*renorm)
                     dictout[thismom]['Valserr'].append(tdata['Std'])
+        print 'DEBUG: complete'
+        print ''
     return dictout
         
                     
