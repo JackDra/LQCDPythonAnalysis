@@ -269,6 +269,7 @@ def OneStateSetFit(OSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,
             Chi3pt.append(thisod3[2])
         return Boot3pt,Avg3pt,Chi3pt
 
+    start = time.time()
     this2ptFitR,perdone = this2ptFitRvec
     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList,NoREvec=True)
     Boot2pt,Avg2pt,Chi2pt = OSF2ptarray
