@@ -209,8 +209,6 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
                     if RemoveTSink(iset) in datadict['twopt'][zmomstr][iSF].keys():
                         pars2pt = []
                         if 'OSF' in iSF:
-                            print StateParList['One']['C2']
-                            print datadict['twopt'][zmomstr][iSF][RemoveTSink(iset)].keys()
                             if not all([iState in datadict['twopt'][zmomstr][iSF][RemoveTSink(iset)].keys() for iState in StateParList['One']['C2']]): continue
                             for ipar in StateParList['One']['C2']:
                                 fitrkey = RemoveTSink(iset)
