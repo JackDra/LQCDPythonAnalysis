@@ -197,6 +197,7 @@ def PlotColSum(data,thisSetList,thissm,thisGamma,thisMom,TitlePref,thisTsinkR='f
     outTR = thisTsinkR.replace('-','_')
     pl.savefig(CreateFile(thissm,thisGamma,thisMom,TitlePref+outTR)+'.pdf')
     pl.clf()
+    print data.keys()
     PlotSummedRF(data['SumMeth'][thissm],thisTsinkR)
     pl.savefig(CreateFile(thissm,thisGamma,thisMom,TitlePref+outTR)+'Sfun'+'.pdf')
     pl.clf()
