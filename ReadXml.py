@@ -30,8 +30,8 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
         print filename
-        if os.path.isfile(filename):
-            data = ReadXmlDict(filename)
+        if os.path.isfile(readfile):
+            data = ReadXmlDict(readfile)
             data = data[data.keys()[0]]
             if 'Boots' in data.keys():
                 bootdata = data['Boots']
