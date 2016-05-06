@@ -75,7 +75,7 @@ def CreateTwoPt(thisMomList,thisSmearList):
     start = time.time()
     print 'Printing to file \r',
     SetList = CreateMassSet(thisSmearList,StateSet,thisPoFTvarList,flipord=True)
-    SetList += CreateMassSet([],StateSet[:len(StateSet)/PoFShifts],thisCMTvarList,flipord=True)
+    SetList += CreateMassSet([],StateSet[:len(StateSet)/(PoFShifts+1)],thisCMTvarList,flipord=True)
     print SetList
     PrintCfunToFile([C2out],SetList,thisMomList,['twopt'])
     PrintSetToFile([C2out],SetList,thisMomList,['Mass'],0)
