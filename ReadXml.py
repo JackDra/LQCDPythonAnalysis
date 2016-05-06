@@ -14,7 +14,8 @@ def ReadXmlDict(filein):
         with open(filein,'r') as f:
             data = RecFTDAS(xmltodict.parse(f.read()))
     except:
-        raise IOError('Reading xml file fail: ' + filein)
+        print 'Reading xml file fail: ' + filein
+        data = {'Null':{'Values':{},'Boots':{}}}
     return data
 
     
