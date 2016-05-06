@@ -62,7 +62,7 @@ def CreateTwoPt(thisMomList,thisSmearList):
     
     thisPoFTvarList = ['PoF'+str(PoFShifts)+iTvar for iTvar in TwoPtDefTvarList]
     thisCMTvarList = ['CM'+iTvar for iTvar in TwoPtDefTvarList]
-    for iout,iTvar in zip(output,thisTvarList):
+    for iout,iTvar in zip(output,thisPoFTvarList+thisCMTvarList):
         [CMdata2pt,LEvec,REvec,Emass] = iout
 ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
         C2out += CMdata2pt.tolist()
