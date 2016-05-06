@@ -26,10 +26,10 @@ def ReadXmlDict(filein):
 def ReadRFFile(filedir,filename,thisMomList=RunMomList):
     renorm = GetRenorm(filename)
     dictout = {}
-    if '.txt' in filename: filename = filename.replace('.txt','.xml')
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
+        print filename
         if os.path.isfile(filename):
             data = ReadXmlDict(filename)
             data = data[data.keys()[0]]
