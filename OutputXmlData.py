@@ -20,6 +20,7 @@ def WriteXmlOutput(thisfile,outputdict):
         f.write( xmltodict.unparse(outputdict,pretty=True))
 
 def MergeXmlOutput(thisfile,outputdict):
+    print outputdict.keys()
     if os.path.isfile(thisfile+'.xml'):
         with open(thisfile+'.xml','r') as filein:
             outputdict = merge_dicts(xmltodict.parse(filein.read()),outputdict)
