@@ -23,6 +23,8 @@ def MergeXmlOutput(thisfile,outputdict):
     if os.path.isfile(thisfile+'.xml'):
         with open(thisfile+'.xml','r') as filein:
             outputdict = merge_dicts(xmltodict.parse(filein.read()),outputdict)
+    if len(outputdict.keys() > 1):
+        raise IOError('Xml main key not single:' + ','.join(outputdict.keys()))
     WriteXmlOutput(thisfile,outputdict)
 
 def SetUpPDict(ip,filedir,filename):
@@ -45,7 +47,20 @@ def PrintToFile(thisdata,filedir,filename,thisTList,thisMomList,frmtflag='f'):
             datadict[ip]['Boots'][itstr] = tdata.values
         WriteXmlOutput(outputfile,datadict)
 
-
+# data = [ ip , icut ]
+def PrintFitMassToFile(data,dataChi,iset,filedir,filename,thisMomList,FitRanges):
+    xmlMomList = map(qstrTOqcond,thisMomList)
+    xmlCutList = map(xmlcut,thisCutList)
+    xmlFitRanges = map(xmlfitr,FitRanges)
+    for ip,pdata,pdataChi in zip(xmlMomList,data,dataChi):        
+        datadict,outputfile = SetUpPDict(ip,filedir,filename)
+        datadict[ip]['Values'] = OrderedDict()
+        datadict[ip]['Boots'] = OrderedDict()
+        for ifit,fitdata,fitdataChi in zip(xmlFitRanges,qdata,qdataChi):
+            datadict[ip]['Values'][icutstr] = BootAvgStdChiToFormat(fitdata[iset],fitdataChi[iset])
+            datadict[ip]['Boots'][icutstr] = cutdata[iset].values
+        MergeXmlOutput(outputfile,datadict)
+        
 # data = [ ip , icut , iset ]
 def PrintFitToFile(data,dataChi,iset,filedir,filename,thisMomList,thisCutList):
     xmlMomList = map(qstrTOqcond,thisMomList)
@@ -269,26 +284,5 @@ def PrintOSFSetToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2pt
 
 
 
-# # # data = [ ip , icut ]
-# # def PrintFitMassToFile(data,dataChi,filename,thisMomList,FitRanges):
-# #     with open(filename+'.fit.txt','a+') as fb:
-# #         for theq,qdata,qdataChi in zip(thisMomList,data,dataChi):
-# #             fb.write('      '+theq+'\n')
-# #             for ifit,fitdata,fitdataChi in zip(FitRanges,qdata,qdataChi):
-# #                 # print ifitmin , ifitmax , fitdata.Avg , fitdata.Std , fitdataChi/float(fitlen)
-# #                 fb.write( 'cut{0:4}{1:4}{2:20.10f}{3:20.10f}{4:20.10f}'.format(ifit[0],ifit[1],
-# #                                                                         fitdata.Avg,fitdata.Std,
-# #                                                                         fitdataChi)+ '\n' )
-
-# # # data = [ ip , icut ]
-# # def PrintFitMassBootToFile(data,filename,thisMomList,FitRanges):
-# #     with open(filename+'.fit.boot.txt','a+') as fb:
-# #         fb.write('         nboot '+str(nboot) + '\n')
-# #         for theq,qdata in zip(thisMomList,data):
-# #             fb.write('      '+theq+'\n')
-# #             for ifit,fitdata in zip(FitRanges,qdata):
-# #                 fb.write('   cut{0:4} {1:4}\n'.format(ifit[0],ifit[1]))
-# #                 for iboot,bootdata in zip(range(fitdata.nboot),fitdata.values):
-# #                     fb.write( '{0}{1:20.10f}'.format(repr(iboot).rjust(4), bootdata)+ '\n' )
 
 # #  LocalWords:  thisSetList
