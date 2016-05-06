@@ -182,15 +182,13 @@ def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
         thisCorr = 'C3'
     for ipar in StateParList[OneOrTwo][thisCorr]:
         if ipar in ['m0','Dm'] and OneOrTwo == 'Two':
-            filename = re.sub('sm.*twopt','twopt',filename)
-            bootfn = re.sub('sm.*twopt','twopt',bootfn)
-            filename = re.sub('state.*twopt','twopt',filename)
-            bootfn = re.sub('state.*twopt','twopt',bootfn)
-        thisfilename = filename.replace('##',ipar)
+            thisfilename = re.sub('sm.*twopt','twopt',filename)
+            thisfilename = re.sub('state.*twopt','twopt',thisfilename).replace('##',ipar)
+        else:
+            thisfilename = filename.replace('##',ipar)
         for thismom in thisMomList:
             ip = qstrTOqcond(thismom)
             readfile = filedir+MakeMomDir(ip)+thisfilename.replace('.xml',ip+'.xml')
-            print readfile
             if os.path.isfile(readfile):
                 data = ReadXmlDict(readfile)
                 data = data[data.keys()[0]]
@@ -225,6 +223,6 @@ def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
                     for ifit,fitrdata in bootdata.iteritems():
                         thisfit = FitFlagXmlToOldSF(ifit)
                         dictout[thismom][ipar][thisfit] = dictout[thismom][ifit]
-        return dictout
+    return dictout
             
             
