@@ -61,18 +61,18 @@ def ReadLREM(todtval,thisMomList,filepref):
 ## readdata { gamma } { mom } { method } { set }
 ## datadictout { collection } { gamma } { mom }
 ## datamassout { collection }
-def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList=qvecSet):
+def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList=qvecSet,thisPrintRead=PrintRead):
     def SetupDict(dictin,thisgamma,thiscol):
         if thiscol not in dictin.keys():
             dictin[thiscol] = {}
         if thisgamma not in dictin[thiscol].keys():
             dictin[thiscol][thisgamma] = {}
         return dictin
-    readdata = ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
+    readdata = ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList,thisPrintRead=thisPrintRead)
     start = time.time()
     datadictout,datamassout = OrderedDict(),OrderedDict()
     for ig,igamma in enumerate(thisGammaList):
-        if PrintRead: print ' Extracting data from read: ' , int((ig*100)/float(len(thisGammaList))) ,'%  \r',
+        if thisPrintRead: print ' Extracting data from read: ' , int((ig*100)/float(len(thisGammaList))) ,'%  \r',
         if igamma == 'twopt' or igamma == 'Mass':
             zmom = 'q = 0 0 0' 
             if not CheckDict(readdata,igamma,zmom): continue
@@ -114,7 +114,7 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                                 if icut in thisdict.keys():
                                     datadictout = SetupDict(datadictout,igamma,iSet+iMeth+icut)
                                     datadictout[iSet+iMeth+icut][igamma][imom] = thisdict[icut]
-    if PrintRead: print 'Extracting data took: ', str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                  '
+    if thisPrintRead: print 'Extracting data took: ', str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                  '
     return datadictout,datamassout
 
 
@@ -274,16 +274,16 @@ def CheckSet(outputdir,momstr,thisGammaList,tlist=[],statelist=[],todtlist=[],sm
 
 #data2pt = [ mom , set , it ] bs
 #data3pt = [ gamma , mom , set , it ] bs
-def ReadCfunsnp(thisGammaList,thisSetList,thisMomList=[]):
+def ReadCfunsnp(thisGammaList,thisSetList,thisMomList=[],thisPrintRead=PrintRead):
     datadict = ReadCfunsDict(outputdir,thisSetList,thisGammaList,thisMomList=thisMomList)
-    return SetRFDictToList(datadict)
+    return SetRFDictToList(datadict,thisPrintRead=thisPrintRead)
 
-def ReadRFnp(thisGammaList,thisSetList,thisMomList=[]):
-    datadict = ReadSetDict(outputdir,thisSetList,thisGammaList,['RF'],thisMomList=thisMomList)
-    return SetRFDictToList(datadict)
+def ReadRFnp(thisGammaList,thisSetList,thisMomList=[],thisPrintRead=PrintRead):
+    datadict = ReadSetDict(outputdir,thisSetList,thisGammaList,['RF'],thisMomList=thisMomList,thisPrintRead=thisPrintRead)
+    return SetRFDictToList(datadict,thisPrintRead=thisPrintRead)
 
-def ReadSetAndCfunsDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=[]):
-    datadict = ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
+def ReadSetAndCfunsDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=[],thisPrintRead=PrintRead):
+    datadict = ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList,thisPrintRead=thisPrintRead)
     data3ptdict = ReadCfunsDict(thisindir,thisSetList,thisGammaList,thisMomList=thisMomList)
     for igamma in datadict.keys():
         for imom in datadict[igamma].keys():
@@ -304,21 +304,21 @@ def RewriteRF(RFdict,threeptdict,thisopp,thismom):
                         RFdict[igamma][thismom]['RF'][iset]['Valserr'][it] = RFdict[igamma][thismom]['RF'][iset]['Boot'][it].Std
     return RFdict
                 
-def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=[]):
+def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=[],thisPrintRead=PrintRead):
     if 'twopt' not in thisGammaList: raise IOError('twopt needed in set list')
     data3ptdict = ReadCfunsDict(thisindir,thisSetList,thisGammaList,thisMomList=thisMomList)
-    datadict = ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
+    datadict = ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList,thisPrintRead=thisPrintRead)
     zmomstr = 'q = 0 0 0'
     start = time.time()
     if ScaleByP4g4: datadict = RewriteRF(datadict,data3ptdict,'P4g4',zmomstr)
     for igamma in datadict.keys():
         if igamma == 'twopt': continue
-        if PrintRead: print 'Constructing Fitted RF Values: ' , igamma , '     \r',
+        if thisPrintRead: print 'Constructing Fitted RF Values: ' , igamma , '     \r',
         if zmomstr not in datadict[igamma].keys(): continue
         for iset in datadict[igamma][zmomstr]['RF'].keys():
             if 'RF' not in datadict['twopt'][zmomstr].keys(): continue
             if RemoveTSink(iset) not in datadict['twopt'][zmomstr]['RF'].keys(): continue
-                # if PrintRead: print RemoveTSink(iset)+' not in two point set list, not constructing RF'
+                # if thisPrintRead: print RemoveTSink(iset)+' not in two point set list, not constructing RF'
             data3pt = data3ptdict[igamma][zmomstr]['RF'][iset]['Boot']
             for iSF in ['OSF'+iOSF for iOSF in OSFFileFlags]+['TSF'+iTSF for iTSF in TSFFileFlags]:
                 if iSF in datadict['twopt'][zmomstr].keys():
@@ -343,76 +343,82 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
                         GetBootStats(datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'])
                         datadict[igamma][zmomstr]['RF'+iSF][iset]['Vals'] = Pullflag(datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'],'Avg')
                         datadict[igamma][zmomstr]['RF'+iSF][iset]['Valserr'] = Pullflag(datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'],'Std')
-    if PrintRead: print 'Constructing Fitted RF Values took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s '
+    if thisPrintRead: print 'Constructing Fitted RF Values took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s '
     return datadict
 
 ## DataDict { FormFactor } { Set } { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
 ## N.B. Set under Mass is different to Set, it is the set sellected for the mass extraction.
 ## thisFFDict = { keys=(scalar,vector etc):values=(setlist for current) / Mass:Set/Avg/Std/Chi/Boot / FF#:qsqrd:Avg/Std/Boot / Chi:qsqrd}
 
-def ReadFFDict(thisindir,thisFFDict):
+def ReadFFDict(thisindir,thisFFDict,thisPrintRead=PrintRead):
     DataDict = OrderedDict()
-    if PrintRead: print ''
+    if thisPrintRead: print ''
     start = time.time()
     for iFF,(thisFF,FFSetList) in enumerate(thisFFDict.iteritems()):
         startff = time.time()
         DataDict[thisFF] = OrderedDict()
         for iset,thisset in enumerate(FFSetList):
-            if PrintRead: print 'Reading ',thisFF,'at : ' ,int((iset*100)/float(len(FFSetList))),'%     \r',
+            if thisPrintRead: print 'Reading ',thisFF,'at : ' ,int((iset*100)/float(len(FFSetList))),'%     \r',
             thisdir = thisindir+'FormFactors/'+thisFF+'/'
             thisfile = thisdir+thisFF+thisset+'.xml'
             thisbootfile = thisdir + 'boots/'+thisFF+thisset+'.boot.xml'
             DataDict[thisFF][thisset] = ReadFFFile(thisfile,bootfn=thisbootfile)            
-        if PrintRead: print 'Reading ',thisFF,'took : ' , str(datetime.timedelta(seconds=time.time()-startff)) , ' h:m:s                     '
-    if PrintRead: print 'Reading all FFs took : ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
+        if thisPrintRead: print 'Reading ',thisFF,'took : ' , str(datetime.timedelta(seconds=time.time()-startff)) , ' h:m:s                     '
+    if thisPrintRead: print 'Reading all FFs took : ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
     return DataDict
 
 ## DataDict { gamma } { mom } { method } { set }
-def ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=[]):
+def ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=[],thisPrintRead=PrintRead):
     DataDict = OrderedDict()
-    if PrintRead: print ''
+    if thisPrintRead: print ''
     start = time.time()
     for ig,thisgamma in enumerate(thisGammaList):
-        if PrintRead: print 'Reading at: ' ,int((ig*100)/float(len(thisGammaList))),'%     \r',
+        if thisPrintRead: print 'Reading at: ' ,int((ig*100)/float(len(thisGammaList))),'%     \r',
         if thisgamma == 'twopt':
             gammadirin = thisindir+'cfuns/twopt/'
             massMethodList = copy(thisMethodList)
             if 'SumMeth' in massMethodList:massMethodList.remove('SumMeth')
             if 'Fits' in massMethodList: massMethodList.remove('Fits')
             DataDict[thisgamma] = MakeMethodsDict(gammadirin,'twopt.xml',
-                                                  massMethodList,thisSetList,thisMomList=thisMomList)
+                                                  massMethodList,thisSetList,thisMomList=thisMomList,
+                                                  thisPrintRead=thisPrintRead)
         else:
             gammadirin = thisindir+CreateOppDir(thisgamma)+'/'
             DataDict[thisgamma] = MakeMethodsDict(gammadirin,thisgamma+'.xml',
-                                                  thisMethodList,thisSetList,thisMomList=thisMomList)
-    if PrintRead: print 'Reading took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
-    if 'RF' in thisMethodList: DataDict = CombSetBoot(DataDict,'-')
+                                                  thisMethodList,thisSetList,thisMomList=thisMomList,
+                                                  thisPrintRead=thisPrintRead)
+    if thisPrintRead: print 'Reading took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
+    if 'RF' in thisMethodList: DataDict = CombSetBoot(DataDict,'-',thisPrintRead=thisPrintRead)
     return DataDict
 
-def ReadCfunsDict(thisindir,thisSetList,thisGammaList,thisMomList=[]):
+def ReadCfunsDict(thisindir,thisSetList,thisGammaList,thisMomList=[],thisPrintRead=PrintRead):
     DataDict = OrderedDict()
-    if PrintRead: print ''
+    if thisPrintRead: print ''
     start = time.time()
     for ig,thisgamma in enumerate(thisGammaList):
-        if PrintRead: print 'Reading Cfuns at: ' ,int((ig*100)/float(len(thisGammaList))),'%     \r',
+        if thisPrintRead: print 'Reading Cfuns at: ' ,int((ig*100)/float(len(thisGammaList))),'%     \r',
         if thisgamma == 'twopt':
             gammadirin = thisindir+'cfuns/twopt/'
             DataDict[thisgamma] = MakeMethodsDict(gammadirin,'twopt.xml',
-                                                        ['RF'],thisSetList,thisMomList=thisMomList)
+                                                        ['RF'],thisSetList,thisMomList=thisMomList,
+                                                  thisPrintRead=thisPrintRead)
         else:
             gammadirin = thisindir+'cfuns/'+CreateOppDir(thisgamma)+'/'
             DataDict[thisgamma] = MakeMethodsDict(gammadirin,thisgamma+'.xml',
-                                                        ['RF'],thisSetList,thisMomList=thisMomList)
-    if PrintRead: print 'Reading Cfuns took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
-    DataDict = CombSetBoot(DataDict,'-')
+                                                  ['RF'],thisSetList,thisMomList=thisMomList,
+                                                  thisPrintRead=thisPrintRead)
+    if thisPrintRead: print 'Reading Cfuns took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
+    DataDict = CombSetBoot(DataDict,'-',thisPrintRead=thisPrintRead)
     return DataDict
 
 
-def SetRFDictToList(DictData):
+def SetRFDictToList(DictData,thisPrintRead=PrintRead):
     dataoutRF,dataout2pt = [],[]
     gammalistout = OrderedDict()
     BorA = ''
+    start = time.time()
     for igamma,(thisgamma,gammadata) in enumerate(DictData.iteritems()):
+        if thisPrintRead: print 'Converting DictToList ' + igamma '          \r',
         gammalistout[thisgamma] = []
         if thisgamma == 'twopt':
             for imom,(thismom,momdata) in enumerate(gammadata.iteritems()):
@@ -445,6 +451,7 @@ def SetRFDictToList(DictData):
         if 'q = 0 0 0' in gammalistout['twopt']:
             dataout2pt.insert(0, dataout2pt.pop(gammalistout['twopt'].index('q = 0 0 0')))
             gammalistout['twopt'].insert(0, gammalistout['twopt'].pop(gammalistout['twopt'].index('q = 0 0 0')))
+    if thisPrintRead: print 'Converting DictToList took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
     return dataoutRF,dataout2pt,gammalistout,BorA
 ##datadict.keys() is gammalist
 
@@ -481,7 +488,7 @@ def CombMethBoot(udata,ddata,opp,imom,igamma):
     return dataout
 
 
-def CombSetBoot(data,opp):
+def CombSetBoot(data,opp,thisPrintRead=PrintRead):
     dataout = deepcopy(data)
     start = time.time()
     for dgamma,dgammadata in data.iteritems():
@@ -489,7 +496,7 @@ def CombSetBoot(data,opp):
             combgamma = dgamma.replace('doub','')
             for sgamma,sgammadata in data.iteritems():
                 if 'sing'+combgamma == sgamma:
-                    if PrintRead: print 'Combining ' , dgamma , ' ' , sgamma ,'             \r',
+                    if thisPrintRead: print 'Combining ' , dgamma , ' ' , sgamma ,'             \r',
                     if combgamma not in dataout.keys():
                         dataout[combgamma] = OrderedDict()
                     for imom in dgammadata.iterkeys():
@@ -501,11 +508,11 @@ def CombSetBoot(data,opp):
                         else:
                             print ''
                             print 'Warning: ', imom , ' in ' , dgamma , ' but not in ' , sgamma 
-    if PrintRead: print 'Combining took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
+    if thisPrintRead: print 'Combining took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
     return dataout
 
 
-def MakeMethodsDict(readdir,readfile,thisMethodList,thisSetList,thisMomList=[]):
+def MakeMethodsDict(readdir,readfile,thisMethodList,thisSetList,thisMomList=[],thisPrintRead=PrintRead):
     MethDict = OrderedDict()
     for iMeth in thisMethodList:
         if iMeth == 'RF':
@@ -543,7 +550,7 @@ def MakeMethodsDict(readdir,readfile,thisMethodList,thisSetList,thisMomList=[]):
                 bootfn = readdir+iMeth+'/boots/'+iSet+readfile.replace('.xml','.boot.xml')
                 thisDict[iSet] = ReadFitFile(filename,bootfn=bootfn,thisMomList=thisMomList)
         else:
-            if PrintRead: print iMeth , ' not a known method'
+            if thisPrintRead: print iMeth , ' not a known method'
         for iSet in thisDict.keys():
             for imom in thisDict[iSet].keys():
                 if imom not in MethDict.keys():
