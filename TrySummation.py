@@ -43,15 +43,16 @@ feedin = InputParams(sys.argv[1:])
 
 thisGammaList = CreateGammaList(feedin['gamma'])
 
+ParsTSinkList = []
 for ict,its in enumerate(ReadTSinkList):
-    if all(['tsink'+str(its) not in rts for rts in feedin['set']]):
-        del ReadTSinkList[its]
+    if any(['tsink'+str(its) in rts for rts in feedin['set']]):
+        ParsTSinkList.append(its)
 
 # thisReadSetList = feedin['set']
 # thisTSinkList,thisReadSet2pt = GetTsinkSmLists(feedin['set'])
 # thisTSinkList = map(unxmlTSink,thisTSinkList)
 
-[thisReadSetList,thisReadSet2pt,thisTSinkList] = CreateSet(thisSingSmearL=SingSmearList,thisTSinkL=ReadTSinkList,
+[thisReadSetList,thisReadSet2pt,thisTSinkList] = CreateSet(thisSingSmearL=SingSmearList,thisTSinkL=ParsTSinkList,
                                                            thisSmearL=[],thisREvecTvarL=[],thisPoFTvarL=[],thisTvarL=[])
 
 ShowSetLists(thisReadSetList)
