@@ -14,25 +14,32 @@ from XmlFuns import *
 from XmlFormatting import *
 import os
 
+
+def WriteXmlOutput(thisfile,outputdict):
+    with open(thisfile+'.xml','w') as f:
+        f.write( xmltodict.unparse(outputdict,pretty=True))
+
 def MergeXmlOutput(thisfile,outputdict):
     if os.path.isfile(thisfile+'.xml'):
         with open(thisfile+'.xml','r') as filein:
             outputdict = merge_dicts(xmltodict.parse(filein.read()),outputdict)
-    with open(thisfile+'.xml','w') as f:
-        f.write( xmltodict.unparse(outputdict,pretty=True))
-    
+    WriteXmlOutput(thisfile,outputdict)
+        
 
-def PrintToFile(thisdata,filename,thisTList,thisMomList,CalcFlag,frmtflag='f'):
-    datadict = {CalcFlag:{'Values':OrderedDict(),'Boots':OrderedDict()}}
+def PrintToFile(thisdata,filedir,filename,thisTList,thisMomList,frmtflag='f'):
     xmlMomList = map(ipTOqcond,thisMomList)
     tkeyList = map(tstr,thisTList)
+    outputfilelist = []
     for ip,pdata in zip(xmlMomList,thisdata):
-        datadict[CalcFlag]['Values'][ip] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,pdata,[frmtflag]*len(pdata))))
-    for ip,pdata in zip(xmlMomList,thisdata):
-        datadict[CalcFlag]['Boots'][ip] = OrderedDict()
+        datadict = {ip:{'Values':OrderedDict(),'Boots':OrderedDict()}}
+        iqsqrd = qsqrdstr(qcondTOqstr(ip))
+        outputfile = filedir+'qsqrd'+str(iqsqrd)+'/'+filename+ip
+        mkdir_p(outputfilelist[-1])
+        datadict[ip]['Values'] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,pdata,[frmtflag]*len(pdata))))
+        datadict[ip]['Boots'] = OrderedDict()
         for itstr,tdata in zip(tkeyList,pdata):
-            datadict[CalcFlag]['Boots'][ip][itstr] = tdata.values
-    MergeXmlOutput(filename,datadict)
+            datadict[ip]['Boots'][itstr] = tdata.values
+        WriteXmlOutput(outputfile,datadict)
 
 
 # data = [ ip , icut , iset ]
