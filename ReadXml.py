@@ -18,7 +18,7 @@ def ReadXmlDict(filein):
         xmldata = {'Null':{'Values':{},'Boots':{}}}
 
     firstkey = xmldata.keys()[0]
-    if firstkey = 'Null':
+    if firstkey == 'Null':
         data = xmldata
     else:
         try:
