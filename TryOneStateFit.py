@@ -24,7 +24,7 @@ from InputArgs import *
 
 print '----------------------------------------------------------------------------------'
 
-if len(sys.argv) < 2: raise IOError('Input CM, Tsink or Sm as first arg')
+if len(sys.argv) < 2: raise IOError('Input CM, Tsink, JustPoF or REvec as first arg')
 outfile = sys.argv[1]
 
 feedin = InputParams(sys.argv[2:])
@@ -78,10 +78,10 @@ print ''
 print 'nboot = ' + str(nboot)
 
 
-def DoOSF(thisSetList):
+def DoOSF(thisSetList,thisGammaList,data2pt):
     print 'All Sets:\n' + '\n'.join(thisSetList)+'\n'
     print 'Reading Data'
-    [data3pt,data2pt,thisGammaMomList,BorA] = ReadCfunsnp(ReadGammaList,thisSetList,thisMomList=feedin['mom'])
+    [data3pt,dump,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=feedin['mom'])
     thisGammaList = thisGammaMomList.keys()
     PrintOpps(thisGammaList)
     print 'Data Read is: ' + BorA
@@ -153,4 +153,10 @@ def DoOSF(thisSetList):
 
     print 'Printting OSF Results to file  took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
 
-DoOSF(ReadSetList)
+print 'reading 2 point correlator data'
+[dump,data2pt,dump2,dump3] = ReadCfunsnp(['twopt'],thisSetList,thisMomList=feedin['mom'])
+for igamma in ReadGammaList:
+    if 'doub' not in igamma or 'sing' not in igamma:
+        DoOSF(ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],data2pt)
+    elif igamma.replace('doub','').replace('sing','') not in ReadGammaList:
+        DoOSF(ReadSetList,[igamma],data2pt)
