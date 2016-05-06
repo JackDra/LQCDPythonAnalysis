@@ -121,7 +121,7 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList):
     OneFit3ptAvg = []
     OneFit3ptChi = []
     for icf,ifit2pt in enumerate(thisFitOSFR):
-        thispicklefile = pickledir+'tempOSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0]'.p'
+        thispicklefile = pickledir+'tempOSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0]+'.p'
         print 'Reading Picked file: ' , thispicklefile , '                                \r',
         if os.path.isfile(thispicklefile):
             pfile = open( thispicklefile, "rb" )
