@@ -166,7 +166,6 @@ def ReadFFFile(filename):
                     if iff not in dataout.keys():
                         dataout[iff] = OrderedDict()
                     dataout[iff][iq] = ffdata
-    print dataout
     return dataout
 
 
