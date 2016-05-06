@@ -155,7 +155,7 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList):
 print 'Reading and fitting 2 point correlator data'
 [dump,data2pt,twoptGammaMomList,dump3] = ReadCfunsnp(['twopt'],ReadSetList,thisMomList=feedin['mom'])
 for icf,ifit2pt in enumerate(thisFitOSFR):
-    OSF2ptarray = OneStateSet2pt(data2pt,thisSetList,twoptGammaMomList,ifit2pt)
+    OSF2ptarray = OneStateSet2pt(data2pt,ReadSetList,twoptGammaMomList,ifit2pt)
 print 'Reading and fitting 2 point correlators finished'
 print ''
 
