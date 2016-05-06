@@ -17,6 +17,7 @@ def ReadXmlDict(filein):
         print 'Reading xml file fail: ' + filein
         xmldata = {'Null':{'Values':{},'Boots':{}}}
 
+    print xmldata
     firstkey = xmldata.keys()[0]
     if firstkey != 'Null':
         try:
