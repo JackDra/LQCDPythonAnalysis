@@ -27,6 +27,7 @@ def WriteXmlOutput(thisfile,outputdict):
     outdirlist = thisfile.split('/')
     bootdir = '/'.join(outdirlist[:-1]+['boots'])
     bootout = '/'.join(outdirlist[:-1]+['boots']+[outdirlist[-1]])
+    print bootout
     mkdir_p(bootdir)
     Vals[firstkey]['Boots'] = bootout.replace('.xml','.boot.p')
     with open(thisfile+'.xml','w') as f:
