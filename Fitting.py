@@ -333,6 +333,7 @@ def OneStateFit3pt(fitBoot2pt,C3pt,this3ptCutList,thistsink):
     fitAvg3pt = []
     fitAvg3ptChi = []
     AvgPars  = Pullflag(fitBoot2pt,'Avg') 
+    print fitBoot2pt
     BootPars = np.rollaxis(Pullflag(fitBoot2pt,'values'),1)
     for icut,cutval in enumerate(this3ptCutList):
         tdata3pt = []
