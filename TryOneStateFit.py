@@ -80,7 +80,7 @@ print 'nboot = ' + str(nboot)
 print 'All Sets:\n' + '\n'.join(ReadSetList)+'\n'
 
 
-def DoOSF(thisSetList,thisGammaList,data2pt,twoptGammaMomList):
+def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList):
     print 'Reading Data'
     [data3pt,dump,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=feedin['mom'])
     thisGammaMomList['twopt'] = twoptGammaMomList['twopt']
@@ -89,6 +89,10 @@ def DoOSF(thisSetList,thisGammaList,data2pt,twoptGammaMomList):
     print 'Data Read is: ' + BorA
     thisGammaList.remove('twopt')
     ## data2pt = [ ip , iset2pt , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+    ## OSF2ptarray = [ OneFit2pt,OneFit2ptAvg,OneFitChi ]
+    #OneFit2pt    = [ ifit2pt , ip , ism  , params ] bs1
+    #OneFit2ptAvg = [ ifit2pt , ip , ism  , params ]
+    #OneFit2ptChi = [ ifit2pt , ip , ism  ]
     ## data3pt = [ igamma , ip , iset , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 
 
@@ -98,7 +102,8 @@ def DoOSF(thisSetList,thisGammaList,data2pt,twoptGammaMomList):
         thispicklefile = pickledir+'tempOSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+'.p'
         if not os.path.isfile(thispicklefile):
             perdone = (icf+1)/float(len(thisFitOSFR))
-            tempout = OneStateSetFit(data2pt,data3pt,OSF3ptCutList,thisSetList,thisGammaMomList,[ifit2pt,int(perdone*100)])
+            thisOSF2ptarray = [OSF2ptarray[0][ifir2pt],OSF2ptarray[1][ifir2pt],OSF2ptarray[2][ifir2pt]]
+            tempout = OneStateSetFit(thisOSF2ptarray,,data3pt,OSF3ptCutList,thisSetList,thisGammaMomList,[ifit2pt,int(perdone*100)])
             pfile = open( thispicklefile, "wb" )
             pickle.dump( tempout, pfile )
             pfile.close()
@@ -111,11 +116,9 @@ def DoOSF(thisSetList,thisGammaList,data2pt,twoptGammaMomList):
     del data2pt
 
     start = time.time()
-    OneFit2pt = []
+    OneFit2pt,OneFit2ptAvg,OneFit2ptChi = OSF2ptarray
     OneFit3pt = []
-    OneFit2ptAvg = []
     OneFit3ptAvg = []
-    OneFit2ptChi = []
     OneFit3ptChi = []
     for icf,ifit2pt in enumerate(thisFitOSFR):
         thispicklefile = pickledir+'tempOSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+'.p'
@@ -124,20 +127,14 @@ def DoOSF(thisSetList,thisGammaList,data2pt,twoptGammaMomList):
             pfile = open( thispicklefile, "rb" )
             [OSF2pt,OSF3pt,OSF2ptAvg,OSF3ptAvg,OSF2ptChi,OSF3ptChi] = pickle.load( pfile )
             pfile.close()
-            OneFit2pt.append(OSF2pt)
             OneFit3pt.append(OSF3pt)
-            OneFit2ptAvg.append(OSF2ptAvg)
             OneFit3ptAvg.append(OSF3ptAvg)
-            OneFit2ptChi.append(OSF2ptChi)
             OneFit3ptChi.append(OSF3ptChi)
         else:
             raise IOError('Pickled file not found: ' + thispicklefile)
 
     print 'Reading Pickled files took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
 
-    #OneFit2pt    = [ ifit2pt , ip , ism  , params ] bs1
-    #OneFit2ptAvg = [ ifit2pt , ip , ism  , params ]
-    #OneFit2ptChi = [ ifit2pt , ip , ism  ]
     #OneFit3pt    = [ ifit2pt , igamma , ip , iset , ifit3pt , params ] bs1
     #OneFit3ptAvg = [ ifit2pt , igamma , ip , iset , ifit3pt , params ]
     #OneFit3ptChi = [ ifit2pt , igamma , ip , iset , ifit3pt ]
@@ -155,15 +152,17 @@ def DoOSF(thisSetList,thisGammaList,data2pt,twoptGammaMomList):
 
     print 'Printting OSF Results to file  took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
 
-print 'reading 2 point correlator data'
+print 'Reading and fitting 2 point correlator data'
 [dump,data2pt,twoptGammaMomList,dump3] = ReadCfunsnp(['twopt'],ReadSetList,thisMomList=feedin['mom'])
-print 'reading 2 point correlators finished'
+for icf,ifit2pt in enumerate(thisFitOSFR):
+    OSF2ptarray = OneStateSet2pt(data2pt,thisSetList,twoptGammaMomList,ifit2pt)
+print 'Reading and fitting 2 point correlators finished'
 print ''
 
 for igamma in ReadGammaList:
     if 'doub' not in igamma and 'sing' not in igamma:
         print 'Running ' + igamma
-        DoOSF(ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],data2pt,twoptGammaMomList)
+        DoOSF(ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],OSF2ptarray,twoptGammaMomList)
     elif igamma.replace('doub','').replace('sing','') not in ReadGammaList:
         print 'Running ' + igamma
-        DoOSF(ReadSetList,[igamma],data2pt,twoptGammaMomList)
+        DoOSF(ReadSetList,[igamma],OSF2ptarray,twoptGammaMomList)

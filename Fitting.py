@@ -215,7 +215,7 @@ def TwoStateFitMom3pt(fitBoot2pt,C2pt,C3pt,this3ptCutList,thisTSinkList):
 #___2pt = [ ip , istate/ism  , params ]
 #___3pt = [ igamma , ip , iset , i3cut , params ]
 
-def OneStateSetFit(C2pt,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2ptFitRvec):
+def OneStateSet2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitR):
     def sm2ptwrap(C2ptmom,thisSmList,this2ptFitR):
         Bootthis2pt,Avgthis2pt,Chithis2pt = [],[],[]
         for ism,thissm in enumerate(thisSmList):
@@ -225,6 +225,27 @@ def OneStateSetFit(C2pt,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2pt
             Avgthis2pt.append(thisod2[1])
             Chithis2pt.append(thisod2[2])
         return Bootthis2pt,Avgthis2pt,Chithis2pt
+
+    thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList,NoREvec=True)
+    Boot2pt,Avg2pt,Chi2pt = [],[],[]
+    start = time.time()
+    inputparams = [(C2pt[imom],thisSmList,this2ptFitR) for imom in range(len(thisGammaMomList['twopt']))]
+    if DoMulticore:
+        makeContextFunctions(sm2ptwrap)
+        thisPool = Pool(min(len(thisGammaMomList['twopt']),AnaProc))
+        output = thisPool.map(sm2ptwrap.mapper,inputparams)
+    else:
+        output = []
+        for iin in inputparams: output.append(sm2ptwrap(*iin))
+    for imom,thismom in enumerate(thisGammaMomList['twopt']):
+        Boot2pt.append(output[imom][0])
+        Avg2pt.append(output[imom][1])
+        Chi2pt.append(output[imom][2])
+    print 'fit range ' , this2ptFitR , ' twopt ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                    '
+    return [Boot2pt,Avg2pt,Chi2pt]
+
+
+def OneStateSetFit(OSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2ptFitRvec):
 
     def sm3ptwrap(thisBoot2ptmom,thisBoot2ptZ,C2mom,C3mom,this3ptCutList,thisSetList,thisSML):
         def SplitIset(thisiset,thisSML):
@@ -249,22 +270,8 @@ def OneStateSetFit(C2pt,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2pt
 
     this2ptFitR,perdone = this2ptFitRvec
     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList,NoREvec=True)
-    Boot2pt,Avg2pt,Chi2pt = [],[],[]
+    Boot2pt,Avg2pt,Chi2pt = OSF2ptarray
     Boot3pt,Avg3pt,Chi3pt = [],[],[]
-    start = time.time()
-    inputparams = [(C2pt[imom],thisSmList,this2ptFitR) for imom in range(len(thisGammaMomList['twopt']))]
-    if DoMulticore:
-        makeContextFunctions(sm2ptwrap)
-        makeContextFunctions(sm3ptwrap)
-        thisPool = Pool(min(len(thisGammaMomList['twopt']),AnaProc))
-        output = thisPool.map(sm2ptwrap.mapper,inputparams)
-    else:
-        output = []
-        for iin in inputparams: output.append(sm2ptwrap(*iin))
-    for imom,thismom in enumerate(thisGammaMomList['twopt']):
-        Boot2pt.append(output[imom][0])
-        Avg2pt.append(output[imom][1])
-        Chi2pt.append(output[imom][2])
     Boot2ptZ = Boot2pt[0]
     inputparams = []
     thisigamma = -1
@@ -299,7 +306,7 @@ def OneStateSetFit(C2pt,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2pt
         thisPool.close()
         thisPool.join()
     print 'fit range ' , this2ptFitR , ' ' , perdone, '% took:  ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                    '
-    return [Boot2pt,Boot3pt,Avg2pt,Avg3pt,Chi2pt,Chi3pt]
+    return [Boot3pt,Avg3pt,Chi3pt]
 
 
 # C2pt = [ it ] bs1
