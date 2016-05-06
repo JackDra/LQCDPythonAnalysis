@@ -17,7 +17,6 @@ import re
 import time
 import datetime
 from ReadXml import *
-import xml.etree.ElementTree as ET
 
 
 # R/L Evecs [ ip , istate , ival ]

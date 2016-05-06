@@ -186,11 +186,10 @@ def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
             bootfn = re.sub('sm.*twopt','twopt',bootfn)
             filename = re.sub('state.*twopt','twopt',filename)
             bootfn = re.sub('state.*twopt','twopt',bootfn)
-        filename = filename.replace('##',ipar)
+        thisfilename = filename.replace('##',ipar)
         for thismom in thisMomList:
             ip = qstrTOqcond(thismom)
-            readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
-            print readfile
+            readfile = filedir+MakeMomDir(ip)+thisfilename.replace('.xml',ip+'.xml')
             if os.path.isfile(readfile):
                 data = ReadXmlDict(readfile)
                 data = data[data.keys()[0]]
