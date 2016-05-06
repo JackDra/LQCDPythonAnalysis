@@ -7,15 +7,26 @@ import os
 from BootTest import BootStrap1
 from Params import *
 from FitParams import *
-
+import cPickle as pickle
 
 def ReadXmlDict(filein):
     try:
         with open(filein,'r') as f:
-            data = RecFTDAS(xmltodict.parse(f.read()))
+            xmldata = RecFTDAS(xmltodict.parse(f.read()))
     except:
         print 'Reading xml file fail: ' + filein
-        data = {'Null':{'Values':{},'Boots':{}}}
+        xmldata = {'Null':{'Values':{},'Boots':{}}}
+
+    firstkey = xmldata.keys()[0]
+    if firstkey = 'Null':
+        data = xmldata
+    else:
+        try:
+            with open(xmldata[firstkey]['Boots'] ,"wb") as pfile:
+                data = pickle.load( pfile )
+        except:
+            print 'Reading pickle file fail: ' + xmldata[firstkey]['Boots']
+            data = {'Null':{'Values':{},'Boots':{}}}
     return data
 
     

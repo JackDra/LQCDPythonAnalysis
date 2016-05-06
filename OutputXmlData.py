@@ -12,13 +12,29 @@ import cPickle as pickle
 from collections import OrderedDict
 from XmlFuns import *
 from XmlFormatting import *
+import cPickle as pickle
 import os
 
 
-def WriteXmlOutput(thisfile,outputdict):
-    with open(thisfile+'.xml','w') as f:
-        f.write( xmltodict.unparse(outputdict,pretty=True))
+# def WriteXmlOutput(thisfile,outputdict):
+#     with open(thisfile+'.xml','w') as f:
+#         f.write( xmltodict.unparse(outputdict,pretty=True))
 
+def WriteXmlOutput(thisfile,outputdict):
+    firstkey = outputdict.keys()[0]
+    Vals = {firstkey:{'Values':outputdict[firstkey]['Values']}}
+    # Boots = {firstkey:{'Boots':outputdict[firstkey]['Boots']}}
+    outdirlist = thisfile.split('/')
+    bootdir = '/',join(outdirlist[:-1]+['boots'])
+    bootout = '/',join(outdirlist[:-1]+['boots']+[outdirlist[-1]])
+    mkdir_p(bootdir)
+    Vals[firstkey]['Boots'] = bootout.replace('.xml','.boot.p')
+    with open(thisfile+'.xml','w') as f:
+        f.write( xmltodict.unparse(Vals,pretty=True))
+    with open( bootout, "wb" ) as pfile:
+        pickle.dump( outputdict, pfile )
+    
+        
 def MergeXmlOutput(thisfile,outputdict):
     if CheckMomFile(thisfile+'.xml'):
         with open(thisfile+'.xml','r') as filein:
