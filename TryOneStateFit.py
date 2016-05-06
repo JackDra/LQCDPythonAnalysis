@@ -113,7 +113,6 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList):
     print 'Fitting took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
 
     del data3pt
-    del data2pt
 
     start = time.time()
     OneFit2pt,OneFit2ptAvg,OneFit2ptChi = OSF2ptarray
