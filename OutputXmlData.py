@@ -178,6 +178,7 @@ def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
     for im in [-2,-1]: #TwoStateParList m0 and dm
         filename = 'twopt'+TwoStateParList['C2'][im]
         for ipc,ip in enumerate(xmlMomList):        
+            datadict,outputfile = SetUpPDict(ip,masspardir,filename)
             datadict[ip]['Values'] = OrderedDict()
             datadict[ip]['Boots'] = OrderedDict()
             for icutstr,cutdata,cutdataChi in zip(xml2ptFitList,data2pt,data2ptChi):
