@@ -159,15 +159,6 @@ del data2pt
 print 'Reading and fitting 2 point correlators finished'
 print ''
 
-inputparams = [FitSMList(C2pt[imom],this2ptFitR,thisnsm) + (thisnsm,) for imom in range(len(thisGammaMomList['twopt']))]
-if DoMulticore:
-    makeContextFunctions(TwoStateFit2pt)
-    makeContextFunctions(smfitwrap)
-    thisPool = Pool(min(len(thisGammaMomList['twopt']),AnaProc))
-    output = thisPool.map(TwoStateFit2pt.mapper,inputparams)
-else:
-    output = []
-    for iin in inputparams: output.append(TwoStateFit2pt(*iin))
 
 
 inputparams = []
@@ -181,6 +172,7 @@ for igamma in ReadGammaList:
 
 if DoMulticore:
     makeContextFunctions(DoOSF)
+    thisPool = Pool(min(len(inputparams),AnaProc))
     thisPool.map(DoOSF.mapper,inputparams)
     thisPool.close()
     thisPool.join()
