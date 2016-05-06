@@ -43,6 +43,10 @@ feedin = InputParams(sys.argv[1:])
 
 thisGammaList = CreateGammaList(feedin['gamma'])
 
+for ict,its in enumerate(feedin['set']):
+    if all(['tsink'+str(rts) not in its for rts in ReadTSinkList]):
+        del feedin['set'][ict]
+
 # thisReadSetList = feedin['set']
 # thisTSinkList,thisReadSet2pt = GetTsinkSmLists(feedin['set'])
 # thisTSinkList = map(unxmlTSink,thisTSinkList)
