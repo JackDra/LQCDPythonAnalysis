@@ -163,7 +163,6 @@ print ''
 
 inputparams = []
 for igamma in ReadGammaList:
-    print igamma
     if 'twopt' in igamma: continue
     if 'doub' not in igamma and 'sing' not in igamma:
         print 'Running ' + igamma
