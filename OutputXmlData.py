@@ -23,7 +23,7 @@ import os
 def WriteXmlOutput(thisfile,outputdict):
     firstkey = outputdict.keys()[0]
     Vals = {firstkey:{'Values':outputdict[firstkey]['Values']}}
-    # Boots = {firstkey:{'Boots':outputdict[firstkey]['Boots']}}
+    Boots = outputdict[firstkey]['Boots']
     outdirlist = thisfile.split('/')
     bootdir = '/'.join(outdirlist[:-1]+['boots'])
     bootout = '/'.join(outdirlist[:-1]+['boots']+[outdirlist[-1]])
@@ -32,7 +32,7 @@ def WriteXmlOutput(thisfile,outputdict):
     with open(thisfile+'.xml','w') as f:
         f.write( xmltodict.unparse(Vals,pretty=True))
     with open( bootout+'.boot.p', "wb" ) as pfile:
-        pickle.dump( outputdict, pfile )
+        pickle.dump( Boots, pfile )
     
         
 def MergeXmlOutput(thisfile,outputdict):

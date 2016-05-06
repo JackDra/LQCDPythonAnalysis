@@ -23,10 +23,9 @@ def ReadXmlDict(filein):
     else:
         try:
             with open(xmldata[firstkey]['Boots'] ,"wb") as pfile:
-                data = pickle.load( pfile )
+                xmldata[firstkey]['Boots'] = pickle.load( pfile )
         except:
             print 'Reading pickle file fail: ' + xmldata[firstkey]['Boots']
-            data = {'Null':{'Values':{},'Boots':{}}}
     return data
 
     
