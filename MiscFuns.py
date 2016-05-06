@@ -12,6 +12,12 @@ import pylab as pl
 import time,datetime
 from copy import deepcopy
 
+def CheckZip(*data):
+   for itd,idata in enumerate(data[1:]):
+      if len(idata) != len(data[0]):
+         raise IOError(str(itd) +' input is not same length as 0')
+      
+      
 def merge_dicts(a, b, path=None):
    "merges b into a"
    if path is None: path = []
@@ -36,7 +42,7 @@ def DelDubs(listin):
       if il not in listout:
          listout.append(il)
    return listout
-
+1
 def chunks(l, n):
    n = max(1, n)
    return [l[i:i + n] for i in range(0, len(l), n)]
