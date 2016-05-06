@@ -122,20 +122,18 @@ def Get2ptSetMoms(outputdir,MomListIn,statelist=[],todtlist=[],smlist=[]):
     momlist = set([])
     xmlMomList = map(qstrTOqcond,MomListIn)
     for iflag in ['cfuns/twopt','Mass']:
-        thisdir = outputdir+iflag+'/'
-        for itodt in todtlist:
-            if iflag == 'Mass':
-                for ip in xmlMomList:
-                    ifile = thisdir+MakeMomDir(ip)+itodt+'LREM'+ip+'.xml'
-                    if not CheckMomFile(ifile): momlist.add(ip)
-            for istate in statelist:
-                for ip in xmlMomList:
+        for ip in xmlMomList:
+            thisdir = outputdir+iflag+MakeMomDir(ip)
+            for itodt in todtlist:
+                if iflag == 'Mass':
+                    ifile = thisdir+itodt+'LREM'+ip+'.xml'
+                    if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
+                for istate in statelist:
                     ifile = thisdir+MakeMomDir(ip)+'state'+istate+itodt+iflag.replace('cfuns/','')+ip+'.xml'
-                    if not CheckMomFile(ifile): momlist.add(ip)
-        for ism in smlist:
-            for ip in xmlMomList:
+                    if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
+            for ism in smlist:
                 ifile = thisdir+MakeMomDir(ip)+ism+iflag.replace('cfuns/','')+ip+'.xml'
-                if not CheckMomFile(ifile): momlist.add(ip)
+                if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
     return OrderMomList(momlist)
 
 
@@ -147,7 +145,7 @@ def Get3SM(outputdir,thisGammaList,MomListIn,setlist):
         for iset in setlist:
             for ip in xmlMomList:
                 ifile = thisdir+MakeMomDir(ip)+iset+igamma+ip+'.xml'
-                if not CheckMomFile(ifile): momlist.add(ip)
+                if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
     return OrderMomList(momlist)
             
 

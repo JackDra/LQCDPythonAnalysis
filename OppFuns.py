@@ -62,28 +62,32 @@ def SetOpps(AllList):
         if 'Run' in contents: iscmplx = 'cmplx'
     return sorted(Extra),sorted(thisOppList),sorted(thisDSList),sorted(thisProjList),'real, '+iscmplx
 
-def Wipe2pt(outputdir,statelist=[],todtlist=[],smlist=[]):
+def Wipe2pt(outputdir,statelist=[],todtlist=[],smlist=[],thisMomList=RunMomList):
     thistodtlist = ['PoF'+str(PoFShifts)+itodt for itodt in todtlist]
     thistodtlist += ['CM'+itodt for itodt in todtlist]
+    xmlMomList = map(qstrTOqcond,thisMomList)
     for iflag in ['cfuns/twopt','Mass']:
-        thisdir = outputdir+iflag+'/'
-        for itodt in thistodtlist:
-            ifile = thisdir+itodt+'LREM.xml'
-            if os.path.isfile(ifile): os.remove(ifile)
-            for istate in statelist:
-                ifile = thisdir+'state'+istate+itodt+iflag.replace('cfuns/','')+'.xml'
+        for ip in xmlMomList:
+            thisdir = outputdir+iflag+MakeMomDir(ip)
+            for itodt in thistodtlist:
+                ifile = thisdir+itodt+'LREM.xml'
                 if os.path.isfile(ifile): os.remove(ifile)
-        for ism in smlist:
-            ifile = thisdir+'sm'+ism+iflag.replace('cfuns/','')+'.xml'
-            if os.path.isfile(ifile): os.remove(ifile)
+                for istate in statelist:
+                    ifile = thisdir+'state'+istate+itodt+iflag.replace('cfuns/','')+ip+'.xml'
+                    if os.path.isfile(ifile): os.remove(ifile)
+            for ism in smlist:
+                ifile = thisdir+'sm'+ism+iflag.replace('cfuns/','')+ip+'.xml'
+                if os.path.isfile(ifile): os.remove(ifile)
     
 
-def WipeSet(outputdir,thisGammaList,setlist,filepref=''):
+def WipeSet(outputdir,thisGammaList,setlist,thisMomList=RunMomList,filepref=''):
+    xmlMomList = map(qstrTOqcond,thisMomList)
     for igamma in thisGammaList:
-        thisdir = outputdir+CreateOppDir(igamma) + filepref        
+        thisdir = outputdir+CreateOppDir(igamma)
         for iset in setlist:
-            ifile = thisdir+iset+igamma+'.xml'
-            if os.path.isfile(ifile): os.remove(ifile)
+            for ip in xmlMomList:
+                ifile = thisdir+MakeMomDir(ip)+filepref+iset+igamma+ip+'.xml'
+                if os.path.isfile(ifile): os.remove(ifile)
 
             
 # def WipeSet(outputdir,thisGammaList,tlist=[],treveclist=[],statelist=[],revectodtlist=[],todtlist=[],smlist=[],filepref=''):
