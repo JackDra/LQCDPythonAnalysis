@@ -118,7 +118,7 @@ def PrintSumToFile(data,datafit,datafitchi,filedir,filename,thisFitList,thisMomL
             for ifit,fitdata,fitdatachi in zip(cutfitlist,cutdatafit,cutdatafitchi):
                 datadict[ip]['Values'][icut]['constant'][ifit] = BootAvgStdChiToFormat(fitdata[1],fitdatachi)
                 datadict[ip]['Boots'][icut]['constant'][ifit] = fitdata[1].values
-        MergeXmlOutput(outputfile,outputfile)
+        MergeXmlOutput(outputfile,datadict)
 
 
 def PrintFFSet(FFin,Set,Mass,SetMass,theCurr):
