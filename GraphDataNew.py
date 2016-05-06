@@ -218,8 +218,10 @@ def PlotRFSetTSF(data,data2pt,thisSetList,TSFcut,thisTSF,legrem=''):
 
 def PlotRFSetOSF(data,data2pt,thisSetList,OSFcut,thisOSF,legrem=''):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
+    print data.keys()
+    print 'RF'+thisOSF
     for iset in SortMySet(thisSetList)[0]:
-        print 'RF'+thisOSF , iset
+        print iset
         thistsink,thissm = SplitTSinkString(iset)
         thiscol = thiscolcyc.next()
         thissym = thissymcyc.next()
