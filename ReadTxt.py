@@ -392,7 +392,7 @@ def MakeMethodsDict(readdir,readfile,thisMethodList,thisSetList,thisMomList=RunM
             if 'twopt' in readfile: RFSetList = ReduceTooMassSet(thisSetList)
             for iSet in RFSetList:
                 filename = readdir+iSet+readfile
-                thisDict[iSet] = ReadRFFile(filedir,iSet+readfile,thisMomList=thisMomList)
+                thisDict[iSet] = ReadRFFile(readdir,iSet+readfile,thisMomList=thisMomList)
         elif 'SF' in iMeth:
             thisDict=OrderedDict()
             if 'TSF' in iMeth:
