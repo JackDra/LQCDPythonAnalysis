@@ -135,7 +135,7 @@ def PrintCfunToFile(C3set,thisSetList,thisMomList, thisGammaList):
         mkdir_p(bootgammadir)
         for iset,setdata in zip(thisSetList,gammadata):
             print 'Printing : ' , thegamma , iset , '                \r',
-            PrintToFile(np.array(setdata),gammadir,iset+thegamma,range(64),thisMomList,'Cfuns',frmtflag='e')
+            PrintToFile(np.array(setdata),gammadir,iset+thegamma,range(64),thisMomList,frmtflag='e')
             # filename = (bootgammadir + iset+thegamma)
             # PrintBootToFile(np.array(setdata),filename,range(64),thisMomList)
 
@@ -155,7 +155,7 @@ def PrintSetToFile(dataset,thisSetList,thisMomList, thisGammaList,tsink):
             else:
                 calcflag = 'Ratio_Factor'
                 tlist = range(tsource,int(tsink)+1)
-            PrintToFile(setdata,gammadir,iset+thegamma,tlist,thisMomList,calcflag)
+            PrintToFile(setdata,gammadir,iset+thegamma,tlist,thisMomList)
             # filename = (bootgammadir +iset+thegamma)
             # PrintBootToFile(setdata,filename,tlist,thisMomList)
 
