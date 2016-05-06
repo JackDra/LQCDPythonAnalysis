@@ -247,6 +247,7 @@ def OneStateSet2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitR):
 
 def OneStateSetFit(OSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2ptFitRvec):
 
+    thisDoMulticore = False
     def sm3ptwrap(thisBoot2ptmom,thisBoot2ptZ,C2mom,C3mom,this3ptCutList,thisSetList,thisSML):
         def SplitIset(thisiset,thisSML):
             thisiset = thisiset.replace('REvec','CM')
@@ -283,7 +284,7 @@ def OneStateSetFit(OSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,
             C2mom,C3mom = C2pt[imom2pt],C3pt[thisigamma][imom]
             Boot2ptMom = Boot2pt[imom2pt]
             inputparams.append((Boot2ptMom,Boot2ptZ,C2mom,C3mom,this3ptCutList,thisSetList,thisSmList))
-    if DoMulticore:
+    if thisDoMulticore:
         output3pt = thisPool.map(sm3ptwrap.mapper,inputparams)
     else:
         output3pt = []
@@ -302,7 +303,7 @@ def OneStateSetFit(OSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,
             Chi3pt[thisigamma].append(output3pt[totcount][2])
             totcount += 1
         # print 'fit range ' , this2ptFitR , ' ThreePt Fit At: ' ,int((igamma*100) / float(len(thisGammaMomList.keys()))), '%                             \r',
-    if DoMulticore:
+    if thisDoMulticore:
         thisPool.close()
         thisPool.join()
     print 'fit range ' , this2ptFitR , ' ' , perdone, '% took:  ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                    '
