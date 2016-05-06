@@ -72,6 +72,7 @@ print ''
 
 inputparams = []
 thisGammaList = []
+if 'RF' in feedin['set']: del feedin['set']['RF']
 for thisCurr in feedin['current']:
     thisGammaList = CurrOpps[thisCurr] + [iC+'cmplx' for iC in CurrOpps[thisCurr]] + ['twopt']
     for imeth in feedin['method']:
