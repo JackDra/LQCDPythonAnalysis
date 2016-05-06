@@ -190,6 +190,7 @@ def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
         for thismom in thisMomList:
             ip = qstrTOqcond(thismom)
             readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
+            print readfile
             if os.path.isfile(readfile):
                 data = ReadXmlDict(readfile)
                 data = data[data.keys()[0]]
