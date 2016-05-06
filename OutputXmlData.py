@@ -80,9 +80,9 @@ def PrintLREvecMassToFile(thisLE,thisRE,thisEMass,thisMomList,thisTvar,DoPoF=Tru
     for ip,pLE,pRE,pEMass in zip(xmlMomList,thisLE,thisRE,thisEMass):
         mkdir_p(outputdir+'/Mass/')
         datadict,outputfile = SetUpPDict(ip,outputdir+'/Mass/',thisTvar+'LREM'+ip)
-        datadict['Eigen_solutions'+ip]['Values'] = OrderedDict()
+        datadict[ip]['Values'] = OrderedDict()
         for istate,iLE,iRE,iEM in zip(StateSet,pLE,pRE,pEMass):
-            datadict['Eigen_solutions'+ip]['Values']['State'+str(istate)] = LREVecToFormat(iLE,iRE,iEM,DoPoF)
+            datadict[ip]['Values']['State'+str(istate)] = LREVecToFormat(iLE,iRE,iEM,DoPoF)
         MergeXmlOutput(outputfile,datadict)
 
 
