@@ -23,7 +23,7 @@ def ReadXmlDict(filein):
 ##Also works for cfuns##
 ##xmlinput = { Ratio_Factor , Boots/Values , thismomlist , tlist } 
 ##outputdict = { thismom , [tVals] / [Vals] / [Valserr] / [Boot] bs }
-def ReadRFFile(filedir,filename,bootfn='',thisMomList=[]):
+def ReadRFFile(filedir,filename,thisMomList=RunMomList):
     renorm = GetRenorm(filename)
     dictout = {}
     if '.txt' in filename: filename = filename.replace('.txt','.xml')
@@ -31,12 +31,7 @@ def ReadRFFile(filedir,filename,bootfn='',thisMomList=[]):
         thismom = qcondTOqstr(ip)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
         if os.path.isfile(filename):
-            # mprint(filename + ' not found')
-        # else:
-            # print ''
-            # print 'DEBUG: reading file' + filename
             data = ReadXmlDict(filename)
-            # print 'DEBUG: read complete, creating dictionary'
             data = data[data.keys()[0]]
             if 'Boots' in data.keys():
                 bootdata = data['Boots']
@@ -60,13 +55,11 @@ def ReadRFFile(filedir,filename,bootfn='',thisMomList=[]):
                 for tdata in bootdata.itervalues():
                     dictout[thismom]['Vals'].append(tdata['Avg']*renorm)
                     dictout[thismom]['Valserr'].append(tdata['Std'])
-            # print 'DEBUG: complete'
-            # print ''
         return dictout
         
                     
 
-def ReadFitFile(filename,bootfn='',thisMomList=[]):
+def ReadFitFile(filename,thisMomList=RunMomList):
     dictout = {}
     if '.txt' in filename: filename = filename.replace('.txt','.xml')
     if not os.path.isfile(filename):
@@ -95,7 +88,7 @@ def ReadFitFile(filename,bootfn='',thisMomList=[]):
     return dictout
 
 ##outputdict = { thismom , cutpar , tsinkrpar/tsinkval , Avg / Std / Chi / Boot (bs) }
-def ReadSumFile(filename,bootfn='',thisMomList=[]):
+def ReadSumFile(filename,thisMomList=RunMomList):
     dictout = {}
     if '.txt' in filename: filename = filename.replace('.txt','.xml')
     if not os.path.isfile(filename):
@@ -146,7 +139,7 @@ def ReadSumFile(filename,bootfn='',thisMomList=[]):
     return dictout
 
 ## dataout = { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
-def ReadFFFile(filename,bootfn=''):
+def ReadFFFile(filename):
     dataout = {}
     if '.txt' in filename: filename = filename.replace('.txt','.xml')
     if not os.path.isfile(filename):
@@ -181,7 +174,7 @@ def ReadFFFile(filename,bootfn=''):
 
 ##outputdict = { thismom , fitpar , 2corfitr , 3corcutr , Avg / Std / Chi / Boot (bs) }
 ## put ## as parameter
-def ReadSFFile(filename,bootfn='',OneOrTwo='Two',thisMomList=[]):
+def ReadSFFile(filename,OneOrTwo='Two',thisMomList=RunMomList):
     dictout = {}
     if '.txt' in filename: filename = filename.replace('.txt','.xml')
     if 'twopt' in filename:
