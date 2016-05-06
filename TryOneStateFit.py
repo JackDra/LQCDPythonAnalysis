@@ -76,10 +76,10 @@ print 'Creating SetList'
 [ReadSetList,SetTsink] = ExpandSetList(CaptString)
 print ''
 print 'nboot = ' + str(nboot)
+print 'All Sets:\n' + '\n'.join(ReadSetList)+'\n'
 
 
 def DoOSF(thisSetList,thisGammaList,data2pt,twoptGammaMomList):
-    print 'All Sets:\n' + '\n'.join(thisSetList)+'\n'
     print 'Reading Data'
     [data3pt,dump,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=feedin['mom'])
     thisGammaMomList['twopt'] = twoptGammaMomList['twopt']
