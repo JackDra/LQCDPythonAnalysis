@@ -78,10 +78,11 @@ print ''
 print 'nboot = ' + str(nboot)
 
 
-def DoOSF(thisSetList,thisGammaList,data2pt):
+def DoOSF(thisSetList,thisGammaList,data2pt,twoptGammaMomList):
     print 'All Sets:\n' + '\n'.join(thisSetList)+'\n'
     print 'Reading Data'
     [data3pt,dump,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=feedin['mom'])
+    thisGammaMomList['twopt'] = twoptGammaMomList['twopt']
     thisGammaList = thisGammaMomList.keys()
     PrintOpps(thisGammaList)
     print 'Data Read is: ' + BorA
@@ -154,9 +155,9 @@ def DoOSF(thisSetList,thisGammaList,data2pt):
     print 'Printting OSF Results to file  took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
 
 print 'reading 2 point correlator data'
-[dump,data2pt,dump2,dump3] = ReadCfunsnp(['twopt'],thisSetList,thisMomList=feedin['mom'])
+[dump,data2pt,twoptGammaMomList,dump3] = ReadCfunsnp(['twopt'],ReadSetList,thisMomList=feedin['mom'])
 for igamma in ReadGammaList:
     if 'doub' not in igamma or 'sing' not in igamma:
-        DoOSF(ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],data2pt)
+        DoOSF(ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],data2pt,twoptGammaMomList)
     elif igamma.replace('doub','').replace('sing','') not in ReadGammaList:
-        DoOSF(ReadSetList,[igamma],data2pt)
+        DoOSF(ReadSetList,[igamma],data2pt,twoptGammaMomList)
