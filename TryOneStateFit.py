@@ -163,6 +163,7 @@ print ''
 
 inputparams = []
 for igamma in ReadGammaList:
+    if 'twopt' in igamma: continue
     if 'doub' not in igamma and 'sing' not in igamma:
         print 'Running ' + igamma
         inputparams.append((ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],OSF2ptarray,twoptGammaMomList))
