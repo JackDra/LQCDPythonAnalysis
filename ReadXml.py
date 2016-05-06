@@ -59,7 +59,7 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
         
                     
 
-def ReadFitFile(filename,thisMomList=RunMomList):
+def ReadFitFile(filedir,filename,thisMomList=RunMomList):
     dictout = {}
     if '.txt' in filename: filename = filename.replace('.txt','.xml')
     if not os.path.isfile(filename):
@@ -88,7 +88,7 @@ def ReadFitFile(filename,thisMomList=RunMomList):
     return dictout
 
 ##outputdict = { thismom , cutpar , tsinkrpar/tsinkval , Avg / Std / Chi / Boot (bs) }
-def ReadSumFile(filename,thisMomList=RunMomList):
+def ReadSumFile(filedir,filename,thisMomList=RunMomList):
     dictout = {}
     if '.txt' in filename: filename = filename.replace('.txt','.xml')
     if not os.path.isfile(filename):
@@ -174,7 +174,7 @@ def ReadFFFile(filename):
 
 ##outputdict = { thismom , fitpar , 2corfitr , 3corcutr , Avg / Std / Chi / Boot (bs) }
 ## put ## as parameter
-def ReadSFFile(filename,OneOrTwo='Two',thisMomList=RunMomList):
+def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
     dictout = {}
     if '.txt' in filename: filename = filename.replace('.txt','.xml')
     if 'twopt' in filename:
