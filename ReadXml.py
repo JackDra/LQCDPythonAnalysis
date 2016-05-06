@@ -44,6 +44,7 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
             if 'Boots' in data.keys():
                 bootdata = data['Boots']
                 dictout[thismom] = {}
+                print bootdata
                 dictout[thismom]['tVals'] = map(untstr,bootdata.keys())
                 dictout[thismom]['Boot'] = []
                 dictout[thismom]['Vals'] = []
