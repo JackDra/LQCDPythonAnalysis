@@ -21,7 +21,7 @@ def ReadXmlDict(filein):
     firstkey = xmldata.keys()[0]
     if firstkey != 'Null':
         # try:
-        with open(xmldata[firstkey]['Boots'] ,"wb") as pfile:
+        with open(xmldata[firstkey]['Boots'] ,"rb") as pfile:
             xmldata[firstkey]['Boots'] = pickle.load( pfile )
         # except:
         #     print 'Reading pickle file fail: ' + xmldata[firstkey]['Boots']
