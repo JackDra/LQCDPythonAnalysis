@@ -27,12 +27,11 @@ def WriteXmlOutput(thisfile,outputdict):
     outdirlist = thisfile.split('/')
     bootdir = '/'.join(outdirlist[:-1]+['boots'])
     bootout = '/'.join(outdirlist[:-1]+['boots']+[outdirlist[-1]])
-    print bootout
     mkdir_p(bootdir)
-    Vals[firstkey]['Boots'] = bootout.replace('.xml','.boot.p')
+    Vals[firstkey]['Boots'] = bootout+'.boot.p'
     with open(thisfile+'.xml','w') as f:
         f.write( xmltodict.unparse(Vals,pretty=True))
-    with open( bootout, "wb" ) as pfile:
+    with open( bootout+'.boot.p', "wb" ) as pfile:
         pickle.dump( outputdict, pfile )
     
         
