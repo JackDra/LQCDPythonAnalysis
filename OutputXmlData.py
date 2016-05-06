@@ -20,11 +20,9 @@ def WriteXmlOutput(thisfile,outputdict):
         f.write( xmltodict.unparse(outputdict,pretty=True))
 
 def MergeXmlOutput(thisfile,outputdict):
-    print outputdict.keys()
-    if os.path.isfile(thisfile+'.xml'):
+    if CheckMomFile(thisfile+'.xml'):
         with open(thisfile+'.xml','r') as filein:
             outputdict = merge_dicts(xmltodict.parse(filein.read()),outputdict)
-
     if len(outputdict.keys() > 1):
         raise IOError('Xml main key not single:' + ','.join(outputdict.keys()))
     WriteXmlOutput(thisfile,outputdict)
