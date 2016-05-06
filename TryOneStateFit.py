@@ -44,7 +44,8 @@ if outfile == 'Tsink':
 elif outfile == 'CM':
     ReadSmearList = DefSmearList
     ReadTSinkList = [29]
-    CaptString = ['SMSET','CMSET','PoFSET','REvecSET']
+    # CaptString = ['SMSET','CMSET','PoFSET','REvecSET']
+    CaptString = ['SMSET','CMSET','PoFSET']
     ReadTvarList = AnaTvarList
     ReadREvecTSinkList = []
     ReadREvecTvarList = []
