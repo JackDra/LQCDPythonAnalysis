@@ -204,6 +204,8 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
             if RemoveTSink(iset) not in datadict['twopt'][zmomstr]['RF'].keys(): continue
                 # if thisPrintRead: print RemoveTSink(iset)+' not in two point set list, not constructing RF'
             data3pt = data3ptdict[igamma][zmomstr]['RF'][iset]['Boot']
+            print datadict['twopt'][zmomstr].keys()
+            print ['OSF'+iOSF for iOSF in OSFFileFlags]+['TSF'+iTSF for iTSF in TSFFileFlags]
             for iSF in ['OSF'+iOSF for iOSF in OSFFileFlags]+['TSF'+iTSF for iTSF in TSFFileFlags]:
                 if iSF in datadict['twopt'][zmomstr].keys():
                     if RemoveTSink(iset) in datadict['twopt'][zmomstr][iSF].keys():
@@ -227,7 +229,6 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
                         GetBootStats(datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'])
                         datadict[igamma][zmomstr]['RF'+iSF][iset]['Vals'] = Pullflag(datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'],'Avg')
                         datadict[igamma][zmomstr]['RF'+iSF][iset]['Valserr'] = Pullflag(datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'],'Std')
-                        print datadict[igamma][zmomstr].keys() , zmomstr
     if thisPrintRead: print 'Constructing Fitted RF Values took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s '
     return datadict
 
