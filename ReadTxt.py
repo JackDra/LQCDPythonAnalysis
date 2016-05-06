@@ -275,7 +275,7 @@ def CheckSet(outputdir,momstr,thisGammaList,tlist=[],statelist=[],todtlist=[],sm
 #data2pt = [ mom , set , it ] bs
 #data3pt = [ gamma , mom , set , it ] bs
 def ReadCfunsnp(thisGammaList,thisSetList,thisMomList=[],thisPrintRead=PrintRead):
-    datadict = ReadCfunsDict(outputdir,thisSetList,thisGammaList,thisMomList=thisMomList)
+    datadict = ReadCfunsDict(outputdir,thisSetList,thisGammaList,thisMomList=thisMomList,thisPrintRead=thisPrintRead)
     return SetRFDictToList(datadict,thisPrintRead=thisPrintRead)
 
 def ReadRFnp(thisGammaList,thisSetList,thisMomList=[],thisPrintRead=PrintRead):
