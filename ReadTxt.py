@@ -520,6 +520,7 @@ def MakeMethodsDict(readdir,readfile,thisMethodList,thisSetList,thisMomList=[],t
             RFSetList = thisSetList
             if 'twopt' in readfile: RFSetList = ReduceTooMassSet(thisSetList)
             for iSet in RFSetList:
+                print iSet
                 filename = readdir+iSet+readfile
                 bootfn = readdir+'boots/'+iSet+readfile.replace('.xml','.boot.xml')
                 thisDict[iSet] = ReadRFFile(filename,bootfn=bootfn,thisMomList=thisMomList)
