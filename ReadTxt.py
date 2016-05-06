@@ -118,157 +118,43 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
     return datadictout,datamassout
 
 
-
-
-def GetCompletedMom(thisfile,momin=qvecSet):
-    def GCMWrap(thisfile,momin):
-        thismomlist = []
-        readsec = False
-        with open(thisfile,'r') as f:
-            for line in f:
-                linepar = line.strip()
-                if '<Values>' in linepar:
-                    readsec = True
-                elif '</Values>' in linepar:
-                    return thismomlist
-                elif readsec:
-                    if '<q' in linepar:
-                        thismom = qcondTOqstr(linepar[1:-1])
-                        if thismom in momin:
-                            thismomlist.append(thismom)
-        os.remove(thisfile)
-        return []
-    thismomlist = GCMWrap(thisfile,momin)
-    return set(thismomlist)
-
-# def GetTxtAndBootComp(thisfile,thisbootfile):
-#     txtqlist = GetCompletedMom(thisfile)
-#     bootqlist = GetCompletedMom(thisbootfile)
-#     if len(txtqlist ^ bootqlist) != 0:
-#             raise IOError('momenta missmatch '+thisbootfile+' '+thisfile)
-#     return txtqlist & bootqlist
-
 def Get2ptSetMoms(outputdir,MomListIn,statelist=[],todtlist=[],smlist=[]):
-    momlist = set(MomListIn)
+    momlist = set([])
+    xmlMomList = map(qstrTOqcond,MomListIn)
     for iflag in ['cfuns/twopt','Mass']:
         thisdir = outputdir+iflag+'/'
         for itodt in todtlist:
             if iflag == 'Mass':
-                ifile = thisdir+itodt+'LREM.xml'
-                if os.path.isfile(ifile):
-                    tempmomlist = GetCompletedMom(ifile)
-                    momlist = momlist & tempmomlist
-                else:
-                    return MomListIn
+                for ip in xmlMomList:
+                    ifile = thisdir+MakeMomDir(ip)+itodt+'LREM'+ip+'.xml'
+                    if not CheckMomFile(ifile): momlist.add(ip)
             for istate in statelist:
-                ifile = thisdir+'state'+istate+itodt+iflag.replace('cfuns/','')+'.xml'
-                # ifb = thisdir+'boots/state'+istate+itodt+iflag.replace('cfuns/','')+'.boot.xml'
-                # if os.path.isfile(ifile) and os.path.isfile(ifb):
-                #     tempmomlist = GetCompletedMom(ifile)
-                if os.path.isfile(ifile):
-                    tempmomlist = GetCompletedMom(ifile,momlistin=MomListIn)
-                    momlist = momlist & tempmomlist
-                else:
-                    return MomListIn
+                for ip in xmlMomList:
+                    ifile = thisdir+MakeMomDir(ip)+'state'+istate+itodt+iflag.replace('cfuns/','')+ip+'.xml'
+                    if not CheckMomFile(ifile): momlist.add(ip)
         for ism in smlist:
-            ifile = thisdir+'sm'+ism+iflag.replace('cfuns/','')+'.xml'
-            # ifb = thisdir+'boots/sm'+ism+iflag.replace('cfuns/','')+'.boot.xml'
-            # if os.path.isfile(ifile) and os.path.isfile(ifb):
-            #     tempmomlist = GetCompletedMom(ifile)
-            if os.path.isfile(ifile):
-                tempmomlist = GetCompletedMom(ifile,momin=MomListIn)
-                momlist = momlist & tempmomlist
-            else:
-                return MomListIn
-    return OrderMomList(set(MomListIn) - momlist)
+            for ip in xmlMomList:
+                ifile = thisdir+MakeMomDir(ip)+ism+iflag.replace('cfuns/','')+ip+'.xml'
+                if not CheckMomFile(ifile): momlist.add(ip)
+    return OrderMomList(momlist)
 
 
 def Get3SM(outputdir,thisGammaList,MomListIn,setlist):
     momlist = set(MomListIn)
+    xmlMomList = map(qstrTOqcond,MomListIn)
     for igamma in thisGammaList:
         thisdir = outputdir+CreateOppDir(igamma)
         for iset in setlist:
-            ifile = thisdir+iset+igamma+'.xml'
-            # if PrintRead: print ifile
-            if os.path.isfile(ifile):
-                momlist = momlist & GetCompletedMom(ifile,momin=MomListIn)
-            else:
-                return MomListIn
-    return OrderMomList(set(MomListIn) - momlist)
+            for ip in xmlMomList:
+                ifile = thisdir+MakeMomDir(ip)+iset+igamma+ip+'.xml'
+                if not CheckMomFile(ifile): momlist.add(ip)
+    return OrderMomList(momlist)
             
 
 def Get3ptSetMoms(outputdir,thisGammaList,MomListIn,setlist):
     return OrderMomList(set(Get3SM(outputdir,thisGammaList,MomListIn,setlist)) |
                         set(Get3SM(outputdir+'cfuns/',thisGammaList,MomListIn,setlist)))
 
-
-def Check2pt(outputdir,momstr,statelist=[],todtlist=[],smlist=[]):
-    DoMom = False
-    for iflag in ['cfuns/twopt','Mass']:
-        thisdir = outputdir+iflag+'/'
-        for itodt in todtlist:
-            if iflag == 'Mass':
-                ifile = thisdir+itodt+'LREM.xml'
-                if os.path.isfile(ifile):
-                    tempmomlist = GetCompletedMom(ifile)
-                    momlist = momlist & tempmomlist
-                else:
-                    return []
-            for istate in statelist:
-                ifile = thisdir+'state'+istate+itodt+iflag.replace('cfuns/','')+'.xml'
-                if os.path.isfile(ifile):
-                    if momstr not in GetCompletedMom(ifile):
-                        DoMom = True
-                else:
-                    DoMom = True
-        for ism in smlist:
-            ifile = thisdir+'sm'+ism+iflag.replace('cfuns/','')+'.xml'
-            if os.path.isfile(ifile):
-                if momstr not in GetCompletedMom(ifile):
-                    DoMom = True
-            else:
-                DoMom = True
-    return DoMom
-
-
-def CheckSet(outputdir,momstr,thisGammaList,tlist=[],statelist=[],todtlist=[],smlist=[]):
-    DoMom = False
-    for igamma in thisGammaList:
-        thisdir = outputdir+CreateOppDir(igamma)
-        if len(tlist) > 0:
-            for it in tlist:
-                for istate in statelist:
-                    for itodt in todtlist:
-                        ifile = thisdir+'tsink'+it+'state'+istate+itodt+igamma+'.xml'
-                        # if PrintRead: print ifile
-                        if os.path.isfile(ifile) :
-                            if momstr not in GetCompletedMom(ifile): DoMom = True
-                        else:
-                            DoMom = True
-                for ism in smlist:
-                    ifile = thisdir+'tsink'+it+'sm'+ism+igamma+'.xml'
-                    # if PrintRead: print ifile
-                    if os.path.isfile(ifile) :
-                        if momstr not in GetCompletedMom(ifile): DoMom = True
-                    else:
-                        DoMom = True
-        else:
-            for istate in statelist:
-                for itodt in todtlist:
-                    ifile = thisdir+'state'+istate+itodt+igamma+'.xml'
-                    # if PrintRead: print ifile
-                    if os.path.isfile(ifile) :
-                        if momstr not in GetCompletedMom(ifile): DoMom = True
-                    else:
-                        DoMom = True
-            for ism in smlist:
-                ifile = thisdir+'sm'+ism+igamma+'.xml'
-                # if PrintRead: print ifile
-                if os.path.isfile(ifile) :
-                    if momstr not in GetCompletedMom(ifile): DoMom = True
-                else:
-                    DoMom = True
-    return DoMom
 
 ##NEW FUNCTIONS##
 

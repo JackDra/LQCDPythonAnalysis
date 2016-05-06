@@ -27,8 +27,7 @@ def MergeXmlOutput(thisfile,outputdict):
 
 def SetUpPDict(ip,filedir,filename):
     datadict = {ip:{'Values':OrderedDict(),'Boots':OrderedDict()}}
-    iqsqrd = qsqrdstr(qcondTOqstr(ip))
-    outputfile = filedir+'qsqrd'+str(iqsqrd)+'/'+ip+'/'
+    outputfile = filedir+MakeMomDir(ip)
     mkdir_p(outputfile)
     outputfile = outputfile+filename+ip
     return datadict,outputfile
@@ -62,14 +61,14 @@ def PrintFitToFile(data,dataChi,iset,filedir,filename,thisMomList,thisCutList):
 
 
 def PrintLREvecMassToFile(thisLE,thisRE,thisEMass,thisMomList,thisTvar,DoPoF=True):
-    datadict = {'Eigen_solutions':{'Values':OrderedDict()}}
     xmlMomList = map(ipTOqcond,thisMomList)
-    mkdir_p(outputdir+'/Mass/')
     for ip,pLE,pRE,pEMass in zip(xmlMomList,thisLE,thisRE,thisEMass):
-        datadict['Eigen_solutions']['Values'][ip] = OrderedDict()
+        mkdir_p(outputdir+'/Mass/')
+        datadict,outputfile = SetUpPDict(ip,outputdir+'/Mass/',+thisTvar+'LREM'+ip)
+        datadict['Eigen_solutions'+ip]['Values'] = OrderedDict()
         for istate,iLE,iRE,iEM in zip(StateSet,pLE,pRE,pEMass):
-            datadict['Eigen_solutions']['Values'][ip]['State'+str(istate)] = LREVecToFormat(iLE,iRE,iEM,DoPoF)
-    MergeXmlOutput(outputdir+'/Mass/'+thisTvar+'LREM',datadict)
+            datadict['Eigen_solutions'+ip]['Values']['State'+str(istate)] = LREVecToFormat(iLE,iRE,iEM,DoPoF)
+        MergeXmlOutput(outputfile,datadict)
 
 
 
