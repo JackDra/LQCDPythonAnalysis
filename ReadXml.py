@@ -23,47 +23,46 @@ def ReadXmlDict(filein):
 ##Also works for cfuns##
 ##xmlinput = { Ratio_Factor , Boots/Values , thismomlist , tlist } 
 ##outputdict = { thismom , [tVals] / [Vals] / [Valserr] / [Boot] bs }
-def ReadRFFile(filename,bootfn='',thisMomList=[]):
+def ReadRFFile(filedir,filename,bootfn='',thisMomList=[]):
     renorm = GetRenorm(filename)
     dictout = {}
     if '.txt' in filename: filename = filename.replace('.txt','.xml')
-    if os.path.isfile(filename):
-        # mprint(filename + ' not found')
-    # else:
-        # print ''
-        # print 'DEBUG: reading file' + filename
-        data = ReadXmlDict(filename)
-        # print 'DEBUG: read complete, creating dictionary'
-        data = data[data.keys()[0]]
-        if 'Boots' in data.keys():
-            bootdata = data['Boots']
-            for imom,momdata in bootdata.iteritems():
-                thismom = qcondTOqstr(imom)
+    for ip in thisMomList:
+        thismom = qcondTOqstr(ip)
+        readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
+        if os.path.isfile(filename):
+            # mprint(filename + ' not found')
+        # else:
+            # print ''
+            # print 'DEBUG: reading file' + filename
+            data = ReadXmlDict(filename)
+            # print 'DEBUG: read complete, creating dictionary'
+            data = data[data.keys()[0]]
+            if 'Boots' in data.keys():
+                bootdata = data['Boots']
                 dictout[thismom] = {}
-                dictout[thismom]['tVals'] = map(untstr,momdata.keys())
+                dictout[thismom]['tVals'] = map(untstr,bootdata.keys())
                 dictout[thismom]['Boot'] = []
                 dictout[thismom]['Vals'] = []
                 dictout[thismom]['Valserr'] = []
-                for bootlist in momdata.itervalues():
+                for bootlist in bootdata.itervalues():
                     dictout[thismom]['Boot'].append(BootStrap1(nboot,0))
                     dictout[thismom]['Boot'][-1].values = [iboot*renorm for iboot in bootlist]
                     dictout[thismom]['Boot'][-1].Stats()
                     dictout[thismom]['Vals'].append(dictout[thismom]['Boot'][-1].Avg)
                     dictout[thismom]['Valserr'].append(dictout[thismom]['Boot'][-1].Std)
-        else:
-            bootdata = data['Values']
-            for imom,momdata in bootdata.iteritems():
-                thismom = qcondTOqstr(imom)
+            else:
+                bootdata = data['Values']
                 dictout[thismom] = {}
-                dictout[thismom]['tVals'] = map(untstr,momdata.keys())
+                dictout[thismom]['tVals'] = map(untstr,bootdata.keys())
                 dictout[thismom]['Vals'] = []
                 dictout[thismom]['Valserr'] = []
-                for tdata in momdata.itervalues():
+                for tdata in bootdata.itervalues():
                     dictout[thismom]['Vals'].append(tdata['Avg']*renorm)
                     dictout[thismom]['Valserr'].append(tdata['Std'])
-        # print 'DEBUG: complete'
-        # print ''
-    return dictout
+            # print 'DEBUG: complete'
+            # print ''
+        return dictout
         
                     
 
