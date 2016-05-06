@@ -68,47 +68,39 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
 
 def ReadFitFile(filedir,filename,thisMomList=RunMomList):
     dictout = {}
-    if '.txt' in filename: filename = filename.replace('.txt','.xml')
-    if not os.path.isfile(filename):
-        mprint(filename + ' not found')
-    else:
-        data = ReadXmlDict(filename)
-        data = data[data.keys()[0]]
-        if 'Boots' in data.keys():
-            bootdata = data['Boots']
-            for imom,momdata in bootdata.iteritems():
-                thismom = qcondTOqstr(imom)
-                dictout[thismom] = {}
-                for icut,cutdata in momdata.iteritems():
+    for thismom in thisMomList:
+        ip = qstrTOqcond(thismom)
+        readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
+        if os.path.isfile(readfile):
+            data = ReadXmlDict(filename)
+            data = data[data.keys()[0]]
+            if 'Boots' in data.keys():
+                bootdata = data['Boots']
+                for icut,cutdata in bootdata.iteritems():
                     dictout[thismom][icut] = {}
                     dictout[thismom][icut]['Boot'] = BootStrap1(nboot,0)
                     dictout[thismom][icut]['Boot'].values = cutdata
                     dictout[thismom][icut]['Boot'].Stats()
                     dictout[thismom][icut]['Avg'] = dictout[thismom][icut]['Boot'].Avg
                     dictout[thismom][icut]['Std'] = dictout[thismom][icut]['Boot'].Std
-                    dictout[thismom][icut]['Chi'] = data['Values'][imom][icut]['Chi']
-        else:
-            bootdata = data['Values']
-            for imom,momdata in bootdata.iteritems():
-                thismom = qcondTOqstr(imom)
-                dictout[thismom] = momdata
+                    dictout[thismom][icut]['Chi'] = data['Values'][icut]['Chi']
+            else:
+                dictout[thismom] = data
     return dictout
 
 ##outputdict = { thismom , cutpar , tsinkrpar/tsinkval , Avg / Std / Chi / Boot (bs) }
 def ReadSumFile(filedir,filename,thisMomList=RunMomList):
     dictout = {}
-    if '.txt' in filename: filename = filename.replace('.txt','.xml')
-    if not os.path.isfile(filename):
-        mprint(filename + ' not found')
-    else:
-        data = ReadXmlDict(filename)
-        data = data[data.keys()[0]]
-        if 'Boots' in data.keys():
-            bootdata = data['Boots']
-            for imom,momdata in bootdata.iteritems():
-                thismom = qcondTOqstr(imom)
+    for thismom in thisMomList:
+        ip = qstrTOqcond(thismom)
+        readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
+        if os.path.isfile(readfile):
+            data = ReadXmlDict(filename)
+            data = data[data.keys()[0]]
+            if 'Boots' in data.keys():
+                bootdata = data['Boots']
                 dictout[thismom] = {}
-                for icut,cutdata in momdata.iteritems():
+                for icut,cutdata in bootdata.iteritems():
                     dictout[thismom][icut] = {}
                     for it,tdata in cutdata.iteritems():
                         if 'tsink' in it:
@@ -127,14 +119,12 @@ def ReadSumFile(filedir,filename,thisMomList=RunMomList):
                                 dictout[thismom][icut][thisfitr]['Boot'].Stats()
                                 dictout[thismom][icut][thisfitr]['Avg'] = dictout[thismom][icut][thisfitr]['Boot'].Avg
                                 dictout[thismom][icut][thisfitr]['Std'] = dictout[thismom][icut][thisfitr]['Boot'].Std
-                                dictout[thismom][icut][thisfitr]['Chi'] = data['Values'][imom][icut][it][ir]['Chi']
+                                dictout[thismom][icut][thisfitr]['Chi'] = data['Values'][icut][it][ir]['Chi']
 
-        else:
-            valdata = data['Values']
-            for imom,momdata in valdatadata.iteritems():
-                thismom = qcondTOqstr(imom)
+            else:
+                valdata = data['Values']
                 dictout[thismom] = {}
-                for icut,cutdata in momdata.iteritems():
+                for icut,cutdata in bootdata.iteritems():
                     dictout[thismom][icut] = {}
                     for it,tdata in cutdata.iteritems():
                         if 'tsink' in it:
@@ -197,18 +187,17 @@ def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
             filename = re.sub('state.*twopt','twopt',filename)
             bootfn = re.sub('state.*twopt','twopt',bootfn)
         filename = filename.replace('##',ipar)
-        if not os.path.isfile(filename):
-            mprint(filename + ' not found')
-        else:
-            data = ReadXmlDict(filename)
-            data = data[data.keys()[0]]
-            if 'Boots' in data.keys():
-                bootdata = data['Boots']
-                for imom,momdata in bootdata.iteritems():
-                    thismom = qcondTOqstr(imom)
+        for thismom in thisMomList:
+            ip = qstrTOqcond(thismom)
+            readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
+            if os.path.isfile(readfile):
+                data = ReadXmlDict(filename)
+                data = data[data.keys()[0]]
+                if 'Boots' in data.keys():
+                    bootdata = data['Boots']
                     if thismom not in dictout.keys():dictout[thismom] = {}
                     dictout[thismom][ipar] = {}
-                    for ifit,fitrdata in momdata.iteritems():
+                    for ifit,fitrdata in bootdata.iteritems():
                         thisfit = FitFlagXmlToOldSF(ifit)
                         dictout[thismom][ipar][thisfit] = {}
                         if twoptread:
@@ -217,7 +206,7 @@ def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
                             dictout[thismom][ipar][thisfit]['Boot'].Stats()
                             dictout[thismom][ipar][thisfit]['Avg'] = dictout[thismom][ipar][thisfit]['Boot'].Avg
                             dictout[thismom][ipar][thisfit]['Std'] = dictout[thismom][ipar][thisfit]['Boot'].Std
-                            dictout[thismom][ipar][thisfit]['Chi'] = data['Values'][imom][ifit]['Chi']
+                            dictout[thismom][ipar][thisfit]['Chi'] = data['Values'][ifit]['Chi']
                         else:
                             for icut,cutdata in fitrdata.iteritems():
                                 dictout[thismom][ipar][thisfit][icut] = {}
@@ -226,15 +215,13 @@ def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
                                 dictout[thismom][ipar][thisfit][icut]['Boot'].Stats()
                                 dictout[thismom][ipar][thisfit][icut]['Avg'] = dictout[thismom][ipar][thisfit][icut]['Boot'].Avg
                                 dictout[thismom][ipar][thisfit][icut]['Std'] = dictout[thismom][ipar][thisfit][icut]['Boot'].Std
-                                dictout[thismom][ipar][thisfit][icut]['Chi'] = data['Values'][imom][ifit][icut]['Chi']
+                                dictout[thismom][ipar][thisfit][icut]['Chi'] = data['Values'][ifit][icut]['Chi']
 
-            else:
-                bootdata = data['Values']
-                for imom,momdata in bootdata.iteritems():
-                    thismom = qcondTOqstr(imom)
+                else:
+                    bootdata = data['Values']
                     if thismom not in dictout.keys():dictout[thismom] = {}
                     dictout[thismom][ipar] = {}
-                    for ifit,fitrdata in momdata.iteritems():
+                    for ifit,fitrdata in bootdata.iteritems():
                         thisfit = FitFlagXmlToOldSF(ifit)
                         dictout[thismom][ipar][thisfit] = dictout[thismom][ifit]
         return dictout
