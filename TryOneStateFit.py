@@ -156,8 +156,13 @@ def DoOSF(thisSetList,thisGammaList,data2pt,twoptGammaMomList):
 
 print 'reading 2 point correlator data'
 [dump,data2pt,twoptGammaMomList,dump3] = ReadCfunsnp(['twopt'],ReadSetList,thisMomList=feedin['mom'])
+print 'reading 2 point correlators finished'
+print ''
+
 for igamma in ReadGammaList:
     if 'doub' not in igamma or 'sing' not in igamma:
+        print 'Running ' + igamma
         DoOSF(ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],data2pt,twoptGammaMomList)
     elif igamma.replace('doub','').replace('sing','') not in ReadGammaList:
+        print 'Running ' + igamma
         DoOSF(ReadSetList,[igamma],data2pt,twoptGammaMomList)
