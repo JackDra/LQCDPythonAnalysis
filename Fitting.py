@@ -249,7 +249,7 @@ def OneStateSet2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitR):
 def OneStateSetFit(OSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2ptFitRvec):
 
     thisDoMulticore = False
-    def sm3ptwrap(thisBoot2ptmom,thisBoot2ptZ,C2mom,C3mom,this3ptCutList,thisSetList,thisSML):
+    def sm3ptwrap(thisBoot2ptmom,thisBoot2ptZ,C3mom,this3ptCutList,thisSetList,thisSML):
         def SplitIset(thisiset,thisSML):
             thisiset = thisiset.replace('REvec','CM')
             sm = re.sub('tsink..','',thisiset)
@@ -262,9 +262,8 @@ def OneStateSetFit(OSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,
         for iset,thisset in enumerate(thisSetList):
             isC3 = C3mom[iset]
             thisism,thistsink = SplitIset(thisset,thisSML)
-            isC2 = C2mom[thisism]
             thisod3 = OneStateFit3pt(thisBoot2ptZ[thisism]+thisBoot2ptmom[thisism],
-                                     isC2,isC3,this3ptCutList,thistsink)
+                                     isC3,this3ptCutList,thistsink)
             Boot3pt.append(thisod3[0])
             Avg3pt.append(thisod3[1])
             Chi3pt.append(thisod3[2])
@@ -282,9 +281,9 @@ def OneStateSetFit(OSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,
         thisigamma += 1
         for imom,thismom in enumerate(thismomlist):
             imom2pt = thisGammaMomList['twopt'].index(thismom)
-            C2mom,C3mom = C2pt[imom2pt],C3pt[thisigamma][imom]
+            C3mom =C3pt[thisigamma][imom]
             Boot2ptMom = Boot2pt[imom2pt]
-            inputparams.append((Boot2ptMom,Boot2ptZ,C2mom,C3mom,this3ptCutList,thisSetList,thisSmList))
+            inputparams.append((Boot2ptMom,Boot2ptZ,C3mom,this3ptCutList,thisSetList,thisSmList))
     if thisDoMulticore:
         output3pt = thisPool.map(sm3ptwrap.mapper,inputparams)
     else:
@@ -329,7 +328,7 @@ def OneStateFit2pt(data2pt,fitr):
     return [fitBoot2pt,fitAvg2pt,fitAvg2ptChi[0]]
 
 
-def OneStateFit3pt(fitBoot2pt,C2pt,C3pt,this3ptCutList,thistsink):
+def OneStateFit3pt(fitBoot2pt,C3pt,this3ptCutList,thistsink):
     fitBoot3pt = []
     fitAvg3pt = []
     fitAvg3ptChi = []
