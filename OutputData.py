@@ -18,21 +18,15 @@ def PrintCfunToFile(C3set,thisSetList,thisMomList, thisGammaList):
     cfundir = outputdir + 'cfuns/'
     for thegamma,gammadata in zip(thisGammaList,C3set):
         gammadir = cfundir+CreateOppDir(thegamma)+'/'
-        bootgammadir = gammadir + 'boots/'
-        mkdir_p(bootgammadir)
         for iset,setdata in zip(thisSetList,gammadata):
             print 'Printing : ' , thegamma , iset , '                \r',
             PrintToFile(np.array(setdata),gammadir,iset+thegamma,range(64),thisMomList,frmtflag='e')
-            # filename = (bootgammadir + iset+thegamma)
-            # PrintBootToFile(np.array(setdata),filename,range(64),thisMomList)
 
 ##dataset [ igamma , iset , ip , it ] bs1
 
 def PrintSetToFile(dataset,thisSetList,thisMomList, thisGammaList,tsink):
     for thegamma,gammadata in zip(thisGammaList,dataset):
         gammadir = outputdir+CreateOppDir(thegamma)+'/'
-        bootgammadir = gammadir + 'boots/'
-        mkdir_p(bootgammadir)
         for iset,setdata in zip(thisSetList,gammadata):
             print 'Printing : ' , thegamma , iset , '                \r',
             if thegamma == 'Mass':
@@ -43,8 +37,6 @@ def PrintSetToFile(dataset,thisSetList,thisMomList, thisGammaList,tsink):
                 calcflag = 'Ratio_Factor'
                 tlist = range(tsource,int(tsink)+1)
             PrintToFile(setdata,gammadir,iset+thegamma,tlist,thisMomList)
-            # filename = (bootgammadir +iset+thegamma)
-            # PrintBootToFile(setdata,filename,tlist,thisMomList)
 
 
 ##sumdata [ igamma , ip , icut , itsink ] bs1
@@ -55,7 +47,6 @@ def PrintSumSetToFile(sumdata,sumfits,sumfitschi,thisFitList,thissm, thisGammaMo
     for (thegamma,thisMomList),gammadata,gammafitdata,gfdchi,gfitlist in zip(thisGammaMomList.iteritems(),sumdata,sumfits,sumfitschi,thisFitList):
         print 'Printing : ' , thegamma , '                \r',
         gammadir = outputdir+CreateOppDir(thegamma)+'/SumMeth/'
-        mkdir_p(bootgammadir)
         filename = thissm+thegamma
         PrintSumToFile(gammadata,gammafitdata,gfdchi,gammadir,filename,gfitlist,thisMomList,thisTSinkList,thisCutList)
 
@@ -70,7 +61,6 @@ def PrintFitSetToFile(dataset,datasetChi,thisGammaMomList,thisSetList,thisCutLis
             print 'Printing : ' , thisgamma , thisset , '                \r',
             filename = thisset+thisgamma
             PrintFitToFile(dataset[igamma],datasetChi[igamma],iset,gammadir,filename,thismomlist,thisCutList)
-            # PrintFitBootToFile(dataset[igamma],bootfilename,iset,thismomlist,thisCutList)
 
 
 #dataset    = [ cuts , ip , istate ] bs1
