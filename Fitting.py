@@ -216,7 +216,6 @@ def TwoStateFitMom3pt(fitBoot2pt,C2pt,C3pt,this3ptCutList,thisTSinkList):
 #___3pt = [ igamma , ip , iset , i3cut , params ]
 
 def OneStateSet2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitR):
-    thisDoMulticore = False
     def sm2ptwrap(C2ptmom,thisSmList,this2ptFitR):
         Bootthis2pt,Avgthis2pt,Chithis2pt = [],[],[]
         for ism,thissm in enumerate(thisSmList):
@@ -231,8 +230,8 @@ def OneStateSet2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitR):
     Boot2pt,Avg2pt,Chi2pt = [],[],[]
     start = time.time()
     inputparams = [(C2pt[imom],thisSmList,this2ptFitR) for imom in range(len(thisGammaMomList['twopt']))]
-    if thisDoMulticore:
-        makeContextFunctions(sm2ptwrap)
+    makeContextFunctions(sm2ptwrap)
+    if DoMulticore:
         thisPool = Pool(min(len(thisGammaMomList['twopt']),AnaProc))
         output = thisPool.map(sm2ptwrap.mapper,inputparams)
     else:
@@ -242,6 +241,9 @@ def OneStateSet2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitR):
         Boot2pt.append(output[imom][0])
         Avg2pt.append(output[imom][1])
         Chi2pt.append(output[imom][2])
+    if DoMulticore:
+        thisPool.close()
+        thisPool.join()
     print 'fit range ' , this2ptFitR , ' twopt ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                    '
     return [Boot2pt,Avg2pt,Chi2pt]
 
