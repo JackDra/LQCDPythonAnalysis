@@ -57,7 +57,7 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
-        print readfile
+        mprint(readfile)
         if os.path.isfile(readfile):
             data = ReadXmlAndPickle(readfile)[0]
             data = data[data.keys()[0]]
