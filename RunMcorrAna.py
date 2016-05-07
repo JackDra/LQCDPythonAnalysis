@@ -141,8 +141,6 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
                             WipeSet(outputdir+'cfuns/',wipegammalist,thisSetList)
                         MomDone = Get3ptSetMoms(outputdir,gammalist,RunMomList,thisSetList) 
                         MomDoneCmplx = Get3ptSetMoms(outputdir,gammalistcmplx,RunMomList,thisSetList) 
-                        print MomDone
-                        print MomDoneCmplx
                         runmomlist,runmomlistcmplx = [],[]
                         for iq in RunMomList:
                             iqvec = np.array(qstrTOqvec(iq))*qunit
