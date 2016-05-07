@@ -27,7 +27,8 @@ def CreateSubOppList(igamma):
     return GammaList
 
 if kappa == 12090:
-    ReadColList = [['TSink',"26 32 35 38"],['CM',"29"],['REvec',"26 32"],['PoF',"26 27"]]
+    # ReadColList = [['TSink',"26 32 35 38"],['CM',"29"],['REvec',"26 32"],['PoF',"26 27"]]
+    ReadColList = [['TSink',"26 32 35 38"],['CM',"29"],['PoF',"26 27"]]
     # ReadColList = [['CM',"29"],['REvec',"'26 32'"]]
 else:
     ReadColList = [['REvec',"29"]]
