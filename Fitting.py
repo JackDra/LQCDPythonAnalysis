@@ -308,7 +308,7 @@ def OneStateSetFit(OSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,
     if thisDoMulticore:
         thisPool.close()
         thisPool.join()
-    print 'fit range ' , this2ptFitR , ' ' , perdone, '% took:  ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                    '
+    mprint( 'fit range ' , this2ptFitR , ' ' , perdone, '% took:  ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                    ')
     return [Boot3pt,Avg3pt,Chi3pt]
 
 
