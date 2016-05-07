@@ -87,7 +87,6 @@ def WipeSet(outputdir,thisGammaList,setlist,thisMomList=RunMomList,filepref=''):
         for iset in setlist:
             for ip in xmlMomList:
                 ifile = thisdir+MakeMomDir(ip)+filepref+iset+igamma+ip+'.xml'
-                print ifile
                 if os.path.isfile(ifile): os.remove(ifile)
 
             
