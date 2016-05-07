@@ -42,7 +42,7 @@ def ReadXmlAndPickle(filein):
 def CheckMomFile(filein):
     print filein
     ip = GetqcondFromFilename(filein)
-    xmldict,bootfile = ReadXmlDict(filein)
+    xmldata,bootfile = ReadXmlDict(filein)
     firstkey = xmldata.keys()[0]
     if os.path.isfile(bootfile) and ip in firstkey:
         return True
