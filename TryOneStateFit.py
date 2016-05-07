@@ -141,7 +141,7 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList):
         mprint( 'Removing Picked file: ' , thispicklefile , '                                \r',)
         os.remove(thispicklefile)
 
-    mprint( 'Printting OSF Results to file  took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s')
+    print 'Printting OSF Results to file  took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
 
 
 
@@ -150,7 +150,7 @@ picklefile2pt = pickledir+'tempOSF'+outfile+'fittwopt.p'
 if os.path.isfile(picklefile2pt):
     print '2 point picked file found, reading in'
     with open( picklefile2pt, "rb" ) as pfile:
-        OSF2ptarray = pickle.load( pfile )
+        OSF2ptarray,twoptGammaMomList = pickle.load( pfile )
     print '2 point picked file read in'        
 else:
     print 'Reading and fitting 2 point correlator data'
@@ -170,7 +170,7 @@ else:
     del data2pt
     print 'Pickling 2 point correlators'
     with open( picklefile2pt, "wb" ) as pfile:
-        pickle.dump( OSF2ptarray, pfile )
+        pickle.dump( [OSF2ptarray,twoptGammaMomList], pfile )
     print 'Printing 2 point correlators to file'
     PrintOSFMassToFile(OneFit2pt,OneFit2ptChi,ReadSetList,thisFitOSFR,outfile,twoptGammaMomList['twopt'])
 
