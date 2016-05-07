@@ -26,7 +26,7 @@ def ReadXmlDict(filein):
             xmldata = RecFTDAS(xmltodict.parse(f.read()))
         bootfile = xmldata[xmldata.keys()[0]]['Boots']
     except:
-        print 'Reading xml file fail: ' + filein
+        # print 'Reading xml file fail: ' + filein
         xmldata = {'Null':{'Values':{},'Boots':{}}}
         bootfile = 'NoBootDir'
     return xmldata,bootfile
@@ -40,7 +40,6 @@ def ReadXmlAndPickle(filein):
 
     
 def CheckMomFile(filein):
-    print filein
     ip = GetqcondFromFilename(filein)
     xmldata,bootfile = ReadXmlDict(filein)
     firstkey = xmldata.keys()[0]
