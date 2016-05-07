@@ -151,7 +151,7 @@ if os.path.isfile(picklefile2pt):
     print '2 point picked file found, reading in'
     with open( picklefile2pt, "rb" ) as pfile:
         temp = pickle.load( pfile )
-        print temp
+        print len(temp)
         OSF2ptarray,twoptGammaMomList = temp 
     print '2 point picked file read in'        
 else:
