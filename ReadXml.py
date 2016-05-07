@@ -43,8 +43,11 @@ def CheckMomFile(filein):
     ip = GetqcondFromFilename(filein)
     xmldata,bootfile = ReadXmlDict(filein)
     firstkey = xmldata.keys()[0]
+    print filein
     if os.path.isfile(bootfile) and ip in firstkey:
+        print 'True'
         return True
+    print 'False'
     return False
 
 
