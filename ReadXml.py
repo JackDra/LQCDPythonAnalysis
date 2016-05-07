@@ -32,6 +32,7 @@ def ReadXmlDict(filein):
     return xmldata,bootfile
 
 def ReadXmlAndPickle(filein):
+    mprint('reading: ' + filein)
     xmldata,bootfile = ReadXmlDict(filein)
     firstkey = xmldata.keys()[0]
     if firstkey != 'Null':
@@ -58,7 +59,6 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
-        mprint(readfile)
         if os.path.isfile(readfile):
             data = ReadXmlAndPickle(readfile)[0]
             data = data[data.keys()[0]]
