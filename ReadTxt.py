@@ -137,7 +137,7 @@ def Get2ptSetMoms(outputdir,MomListIn,statelist=[],todtlist=[],smlist=[]):
 
 
 def Get3SM(outputdir,thisGammaList,MomListIn,setlist):
-    momlist = set(MomListIn)
+    momlist = set([])
     xmlMomList = map(qstrTOqcond,MomListIn)
     for igamma in thisGammaList:
         thisdir = outputdir+CreateOppDir(igamma)
