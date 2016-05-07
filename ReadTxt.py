@@ -300,7 +300,7 @@ def SetRFDictToList(DictData,thisPrintRead=PrintRead):
     BorA = ''
     start = time.time()
     for igamma,(thisgamma,gammadata) in enumerate(DictData.iteritems()):
-        if thisPrintRead: print 'Converting DictToList ' + igamma+ '          \r',
+        if thisPrintRead: print 'Converting DictToList ' + thisgamma+ '          \r',
         gammalistout[thisgamma] = []
         if thisgamma == 'twopt':
             for imom,(thismom,momdata) in enumerate(gammadata.iteritems()):
