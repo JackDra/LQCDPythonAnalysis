@@ -169,11 +169,11 @@ else:
         #OneFit2ptAvg = [ ifit2pt , ip , ism  , params ]
         #OneFit2ptChi = [ ifit2pt , ip , ism  ]
     del data2pt
-    print 'Printing 2 point correlators to file'
-    PrintOSFMassToFile(OneFit2pt,OneFit2ptChi,thisSetList,thisFitOSFR,outfile,thisGammaMomList['twopt'])
-    print 'Printing 2 point correlators to file complete'
+    print 'Pickling 2 point correlators'
     with open( picklefile2pt, "wb" ) as pfile:
         pickle.dump( OSF2ptarray, pfile )
+    print 'Printing 2 point correlators to file'
+    PrintOSFMassToFile(OneFit2pt,OneFit2ptChi,thisSetList,thisFitOSFR,outfile,thisGammaMomList['twopt'])
 
 
 inputparams = []
