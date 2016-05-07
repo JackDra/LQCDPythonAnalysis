@@ -9,24 +9,44 @@ from Params import *
 from FitParams import *
 import cPickle as pickle
 
+
+def ReadPickleBoot(filein):
+    try:
+        with open(filein , "rb") as pfile:
+            dataout = pickle.load( pfile )
+    except:
+        print 'Reading pickle file fail: ' + filein
+        dataout = {}
+    return dataout
+
+
 def ReadXmlDict(filein):
     try:
         with open(filein,'r') as f:
             xmldata = RecFTDAS(xmltodict.parse(f.read()))
+        bootfile = xmldata[xmldata.keys()[0]]['Boots']
     except:
         print 'Reading xml file fail: ' + filein
         xmldata = {'Null':{'Values':{},'Boots':{}}}
+        bootfile = 'NoBootDir'
+    return xmldata,bootfile
 
-    firstkey = xmldata.keys()[0]
+def ReadXmlAndPickle(filein):
+    xmldata = ReadXmlDict(filein)
+    firstkey,bootfile = xmldata.keys()[0]
     if firstkey != 'Null':
-        try:
-            with open(xmldata[firstkey]['Boots'] , "rb") as pfile:
-                xmldata[firstkey]['Boots'] = pickle.load( pfile )
-        except:
-            print 'Reading pickle file fail: ' + xmldata[firstkey]['Boots']
-    return xmldata
+        xmldata[firstkey]['Boots'] = ReadPickleBoot(bootfile)
+    return xmldata,bootfile
 
     
+def CheckMomFile(filein):
+    ip = GetqcondFromFilename(filein)
+    xmldict,bootfile = ReadXmlDict(filein)
+    firstkey = xmldata.keys()[0]
+    if os.path.isfile(bootfile) and ip in firstkey:
+        return True
+    return False
+
 
 ##Also works for cfuns##
 ##xmlinput = { Ratio_Factor , Boots/Values , thismomlist , tlist } 
@@ -38,7 +58,7 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
         if os.path.isfile(readfile):
-            data = ReadXmlDict(readfile)
+            data = ReadXmlAndPickle(readfile)[0]
             data = data[data.keys()[0]]
             if 'Boots' in data.keys():
                 bootdata = data['Boots']
@@ -72,7 +92,7 @@ def ReadFitFile(filedir,filename,thisMomList=RunMomList):
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
         if os.path.isfile(readfile):
-            data = ReadXmlDict(readfile)
+            data = ReadXmlAndPickle(readfile)[0]
             data = data[data.keys()[0]]
             if 'Boots' in data.keys():
                 bootdata = data['Boots']
@@ -95,7 +115,7 @@ def ReadSumFile(filedir,filename,thisMomList=RunMomList):
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
         if os.path.isfile(readfile):
-            data = ReadXmlDict(readfile)
+            data = ReadXmlAndPickle(readfile)[0]
             data = data[data.keys()[0]]
             if 'Boots' in data.keys():
                 bootdata = data['Boots']
@@ -142,7 +162,7 @@ def ReadFFFile(filename):
     if not os.path.isfile(filename):
         mprint(filename + ' not found')
     else:
-        data = ReadXmlDict(filename)
+        data = ReadXmlAndPickle(filename)[0]
         data = data[data.keys()[0]]
         dataout = OrderedDict()
         dataout['Mass'] = data['Values']['Mass']
@@ -190,7 +210,7 @@ def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
             ip = qstrTOqcond(thismom)
             readfile = filedir+MakeMomDir(ip)+thisfilename.replace('.xml',ip+'.xml')
             if os.path.isfile(readfile):
-                data = ReadXmlDict(readfile)
+                data = ReadXmlAndPickle(readfile)[0]
                 data = data[data.keys()[0]]
                 if 'Boots' in data.keys():
                     bootdata = data['Boots']

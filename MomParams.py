@@ -154,16 +154,13 @@ def iqTOE(ip,mass):
 
 def qvecTOE(ip,mass):
     return np.sqrt((qsqrdstr(qvecTOqstr(ip))*qunit)**2 + mass**2)
-
-def CheckMomFile(filein):
-    outbool = False
-    if os.path.isfile(filein):
-        with open(filein,'r') as f:
-            if '<q' in f.readline().strip():
-                if '<Values>' in f.readline().strip():
-                    outbool = True
-    return outbool
                 
 def MakeMomDir(ip):
     iqsqrd = qsqrdstr(qcondTOqstr(ip))
     return '/qsqrd'+str(iqsqrd)+'/'+ip+'/'
+
+def GetqcondFromFilename(filename):
+    for ip in qvecSet:
+        if qstrTOqcond(ip) in filename:
+            return qstrTOqcond(ip)
+    raise IOError('No Momenta in filename :' + filename)
