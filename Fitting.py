@@ -230,6 +230,7 @@ def OneStateSet2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitR):
     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList,NoREvec=True)
     Boot2pt,Avg2pt,Chi2pt = [],[],[]
     start = time.time()
+    print thisGammaMomList['twopt']
     inputparams = [(C2pt[imom],thisSmList,this2ptFitR) for imom in range(len(thisGammaMomList['twopt']))]
     if thisDoMulticore:
         makeContextFunctions(sm2ptwrap)
