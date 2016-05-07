@@ -273,7 +273,6 @@ def OneStateSetFit(OSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,
     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList,NoREvec=True)
     Boot2pt,Avg2pt,Chi2pt = OSF2ptarray
     Boot3pt,Avg3pt,Chi3pt = [],[],[]
-    print Boot2pt
     Boot2ptZ = Boot2pt[0]
     inputparams = []
     thisigamma = -1

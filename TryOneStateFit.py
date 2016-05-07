@@ -155,6 +155,7 @@ print 'Reading and fitting 2 point correlator data'
 OSF2ptarray = []
 for icf,ifit2pt in enumerate(thisFitOSFR):
     OSF2ptarray.append(OneStateSet2pt(data2pt,ReadSetList,twoptGammaMomList,ifit2pt))
+    print OSF2ptarray[-1][0]
 del data2pt
 print 'Reading and fitting 2 point correlators finished'
 print ''
