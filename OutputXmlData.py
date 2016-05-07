@@ -12,6 +12,7 @@ import cPickle as pickle
 from collections import OrderedDict
 from XmlFuns import *
 from XmlFormatting import *
+from ReadXml import *
 import cPickle as pickle
 import os
 
