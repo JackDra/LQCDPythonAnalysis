@@ -102,8 +102,7 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList):
         thispicklefile = pickledir+'tempOSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0]+'.p'
         if not os.path.isfile(thispicklefile):
             perdone = (icf+1)/float(len(thisFitOSFR))
-            thisOSF2ptarray = [OSF2ptarray[0][icf],OSF2ptarray[1][icf],OSF2ptarray[2][icf]]
-            tempout = OneStateSetFit(thisOSF2ptarray,data3pt,OSF3ptCutList,thisSetList,thisGammaMomList,[ifit2pt,int(perdone*100)])
+            tempout = OneStateSetFit(OSF2ptarray[icf],data3pt,OSF3ptCutList,thisSetList,thisGammaMomList,[ifit2pt,int(perdone*100)])
             pfile = open( thispicklefile, "wb" )
             pickle.dump( tempout, pfile )
             pfile.close()
@@ -153,13 +152,9 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList):
 
 print 'Reading and fitting 2 point correlator data'
 [dump,data2pt,twoptGammaMomList,dump3] = ReadCfunsnp(['twopt'],ReadSetList,thisMomList=feedin['mom'])
-OSF2pt,OSF2ptAvg,OSF2ptChi = [],[],[]
+OSF2ptarray = []
 for icf,ifit2pt in enumerate(thisFitOSFR):
-    temp = OneStateSet2pt(data2pt,ReadSetList,twoptGammaMomList,ifit2pt)
-    OSF2pt.append(temp[0])
-    OSF2ptAvg.append(temp[1])
-    OSF2ptChi.append(temp[2])
-OSF2ptarray = [OSF2pt,OSF2ptAvg,OSF2ptChi]
+    OSF2ptarray.append(OneStateSet2pt(data2pt,ReadSetList,twoptGammaMomList,ifit2pt))
 del data2pt
 print 'Reading and fitting 2 point correlators finished'
 print ''
