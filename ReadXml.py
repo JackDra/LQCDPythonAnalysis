@@ -32,8 +32,8 @@ def ReadXmlDict(filein):
     return xmldata,bootfile
 
 def ReadXmlAndPickle(filein):
-    xmldata = ReadXmlDict(filein)
-    firstkey,bootfile = xmldata.keys()[0]
+    xmldata,bootfile = ReadXmlDict(filein)
+    firstkey = xmldata.keys()[0]
     if firstkey != 'Null':
         xmldata[firstkey]['Boots'] = ReadPickleBoot(bootfile)
     return xmldata,bootfile
