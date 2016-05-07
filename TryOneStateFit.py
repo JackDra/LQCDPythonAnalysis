@@ -150,9 +150,7 @@ picklefile2pt = pickledir+'tempOSF'+outfile+'fittwopt.p'
 if os.path.isfile(picklefile2pt):
     print '2 point picked file found, reading in'
     with open( picklefile2pt, "rb" ) as pfile:
-        temp = pickle.load( pfile )
-        print len(temp)
-        OSF2ptarray,twoptGammaMomList = temp 
+        OSF2ptarray,twoptGammaMomList = pickle.load( pfile )
     print '2 point picked file read in'        
 else:
     print 'Reading and fitting 2 point correlator data'
