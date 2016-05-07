@@ -85,7 +85,7 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList):
     [data3pt,dump,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=feedin['mom'])
     thisGammaMomList['twopt'] = twoptGammaMomList['twopt']
     thisGammaList = thisGammaMomList.keys()
-    PrintOpps(thisGammaList)
+    # PrintOpps(thisGammaList)
     mprint( 'Data Read is: ' + BorA)
     thisGammaList.remove('twopt')
     ## data3pt = [ igamma , ip , iset , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
@@ -151,8 +151,7 @@ if os.path.isfile(picklefile2pt):
     print '2 point picked file found, reading in'
     with open( picklefile2pt, "rb" ) as pfile:
         OSF2ptarray = pickle.load( pfile )
-    print '2 point picked file read in'
-        
+    print '2 point picked file read in'        
 else:
     print 'Reading and fitting 2 point correlator data'
     [dump,data2pt,twoptGammaMomList,dump3] = ReadCfunsnp(['twopt'],ReadSetList,thisMomList=feedin['mom'])
