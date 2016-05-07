@@ -149,15 +149,14 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList):
 picklefile2pt = pickledir+'tempOSF'+outfile+'fittwopt.p'
 if os.path.isfile(picklefile2pt):
     print '2 point picked file found, reading in'
-    pfile = open( picklefile2pt, "rb" )
-    OSF2ptarray = pickle.load( pfile )
-    pfile.close()
+    with open( picklefile2pt, "rb" ) as pfile:
+        OSF2ptarray = pickle.load( pfile )
     print '2 point picked file read in'
         
 else:
     print 'Reading and fitting 2 point correlator data'
     [dump,data2pt,twoptGammaMomList,dump3] = ReadCfunsnp(['twopt'],ReadSetList,thisMomList=feedin['mom'])
-        ## data2pt = [ ip , iset2pt , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+    ## data2pt = [ ip , iset2pt , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     OSF2ptarray = []
     OneFit2pt = []
     OneFit2ptChi = []
@@ -173,10 +172,8 @@ else:
     print 'Printing 2 point correlators to file'
     PrintOSFMassToFile(OneFit2pt,OneFit2ptChi,thisSetList,thisFitOSFR,outfile,thisGammaMomList['twopt'])
     print 'Printing 2 point correlators to file complete'
-
-    pfile = open( picklefile2pt, "wb" )
-    pickle.dump( OSF2ptarray, pfile )
-    pfile.close()
+    with open( picklefile2pt, "wb" ) as pfile:
+        pickle.dump( OSF2ptarray, pfile )
 
 
 inputparams = []
@@ -199,5 +196,5 @@ else:
     for iin in inputparams: DoOSF(*iin)
 
 print 'removing pickled 2pt file'
-os.remove(picklefile2pt)
+if os.path.isfile(picklefile2pt): os.remove(picklefile2pt)
 print 'all finished'
