@@ -58,6 +58,7 @@ for ict,its in enumerate(ReadTSinkList):
 ShowSetLists(thisReadSetList)
 
 start = time.time()
+print feedin['mom']
 inputparams = []
 for igamma in thisGammaList:
     if 'doub' not in igamma and 'sing' not in igamma and 'twopt' not in igamma:
