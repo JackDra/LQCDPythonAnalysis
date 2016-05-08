@@ -95,6 +95,7 @@ def MomTSSetFit(TSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,thi
         return Boot3pt,Avg3pt,Chi3pt
 
     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
+    thisTSinkList = [int(its.replace('tsink','')) for its in thisTSinkList]
     thisnsm = len(thisSmList)
     this2ptFitR,perdone = this2ptFitRvec
     Boot3pt,Avg3pt,Chi3pt = [],[],[]
