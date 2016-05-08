@@ -75,6 +75,7 @@ def FitMassSet(Massin,tmin,tmax):
 
 
 def MomTSSetFit(TSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2ptFitRvec):
+    thisDoMulticore = False
     def smfitwrap(thisBoot2ptmom,thisBoot2ptZ,C2mom,C3mom,this3ptCutList,thisTSinkList,thisSmList):
         def GetTsinkInSm(C3,funsm,funSetList):
             C3out = []
@@ -109,7 +110,7 @@ def MomTSSetFit(TSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,thi
             C2mom,C3mom = C2pt[imom2pt],C3pt[thisigamma][imom]
             Boot2ptMom = Boot2pt[imom2pt]
             inputparams.append((Boot2ptMom,Boot2ptZ,C2mom,C3mom,this3ptCutList,thisTSinkList,thisSmList))
-    if DoMulticore:
+    if thisDoMulticore:
         output3pt = thisPool.map(smfitwrap.mapper,inputparams)
     else:
         output3pt = []
@@ -129,7 +130,7 @@ def MomTSSetFit(TSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,thi
             Chi3pt[thisigamma].append(output3pt[totcount][2])
             totcount += 1
         # print 'fit range ' , this2ptFitR , ' ThreePt Fit At: ' ,int((igamma*100) / float(len(thisGammaMomList.keys()))), '%                             \r',
-    if DoMulticore:
+    if thisDoMulticore:
         thisPool.close()
         thisPool.join()
     mprint( 'fit range ' , this2ptFitR , ' ' , perdone, '% took:  ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                    ')
@@ -137,7 +138,6 @@ def MomTSSetFit(TSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,thi
 
 
 def MomTSSetFit2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec):
-
     this2ptFitR,perdone = this2ptFitRvec
     Boot2pt,Avg2pt,Chi2pt = [],[],[]
     start = time.time()
@@ -157,7 +157,7 @@ def MomTSSetFit2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec):
         Avg2pt.append(output[imom][1])
         Chi2pt.append(output[imom][2])
     print 'fit range ' , this2ptFitR , ' twopt ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                    '
-    return [Boot3pt,Avg3pt,Chi2pt]
+    return [Boot2pt,Avg2pt,Chi2pt]
 
 
 # C2pt = [ it ] bs1
