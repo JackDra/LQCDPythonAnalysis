@@ -94,7 +94,7 @@ def MomTSSetFit(TSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,thi
             Chi3pt.append(thisod[2])
         return Boot3pt,Avg3pt,Chi3pt
 
-    start = time.time
+    start = time.time()
     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
     thisTSinkList = [int(its.replace('tsink','')) for its in thisTSinkList]
     thisnsm = len(thisSmList)
