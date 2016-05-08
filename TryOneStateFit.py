@@ -81,6 +81,7 @@ print 'All Sets:\n' + '\n'.join(ReadSetList)+'\n'
 
 
 def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList):
+    totstart = time.time()
     mprint( 'Reading Data')
     [data3pt,dump,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=feedin['mom'])
     thisGammaMomList['twopt'] = twoptGammaMomList['twopt']
@@ -141,7 +142,7 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList):
         mprint( 'Removing Picked file: ' , thispicklefile , '                                \r',)
         os.remove(thispicklefile)
 
-    print 'Printting OSF Results to file  took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
+    print 'OSF ' + thisGammaList[0]+' took ' , str(datetime.timedelta(seconds=time.time()-totstart)) , ' h:m:s'
 
 
 
