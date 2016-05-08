@@ -188,6 +188,7 @@ print 'All Sets:\n' + '\n'.join(ReadSetList)+'\n'
 
     
 picklefile2pt = pickledir+'tempTSF'+outfile+'fittwopt.p'
+print picklefile2pt
 if os.path.isfile(picklefile2pt):
     print '2 point picked file found, reading in'
     with open( picklefile2pt, "rb" ) as pfile:
