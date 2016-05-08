@@ -94,6 +94,7 @@ def MomTSSetFit(TSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,thi
             Chi3pt.append(thisod[2])
         return Boot3pt,Avg3pt,Chi3pt
 
+    thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
     this2ptFitR,perdone = this2ptFitRvec
     Boot3pt,Avg3pt,Chi3pt = [],[],[]
     Boot2pt,Avg2pt,Chi2pt = TSF2ptarray
