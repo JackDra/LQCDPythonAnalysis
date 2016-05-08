@@ -76,7 +76,7 @@ def FitMassSet(Massin,tmin,tmax):
 
 def MomTSSetFit(TSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2ptFitRvec):
     thisDoMulticore = False
-    def smfitwrap(thisBoot2ptmom,thisBoot2ptZ,C2mom,C3mom,this3ptCutList,thisTSinkList,thisSmList):
+    def smfitwrap(thisBoot2ptmom,thisBoot2ptZ,C3mom,this3ptCutList,thisTSinkList,thisSmList):
         def GetTsinkInSm(C3,funsm,funSetList):
             C3out = []
             for iS,iSet in enumerate(funSetList):
@@ -86,8 +86,8 @@ def MomTSSetFit(TSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,thi
         Boot3pt,Avg3pt,Chi3pt = [],[],[]
         for ism,thissm in enumerate(thisSmList):
             Params2pt,Params2ptZero = PickBoot2pt(thisBoot2ptmom,thisnsm,ism),PickBoot2pt(thisBoot2ptZ,thisnsm,ism)
-            isC2,isC3 = C2mom[ism],GetTsinkInSm(C3mom,thissm,thisSetList)
-            thisod = TwoStateFitMom3pt(Params2ptZero+Params2pt,isC2,isC3,
+            isC3 = GetTsinkInSm(C3mom,thissm,thisSetList)
+            thisod = TwoStateFitMom3pt(Params2ptZero+Params2pt,isC3,
                                        this3ptCutList,thisTSinkList)
             Boot3pt.append(thisod[0])
             Avg3pt.append(thisod[1])
@@ -107,9 +107,9 @@ def MomTSSetFit(TSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,thi
         # print thisgamma , ' thismomlistlen=',len(thismomlist) , ' C3momlen=' , len(C3pt[thisigamma])
         for imom,thismom in enumerate(thismomlist):
             imom2pt = thisGammaMomList['twopt'].index(thismom)
-            C2mom,C3mom = C2pt[imom2pt],C3pt[thisigamma][imom]
+            C3mom = C3pt[thisigamma][imom]
             Boot2ptMom = Boot2pt[imom2pt]
-            inputparams.append((Boot2ptMom,Boot2ptZ,C2mom,C3mom,this3ptCutList,thisTSinkList,thisSmList))
+            inputparams.append((Boot2ptMom,Boot2ptZ,C3mom,this3ptCutList,thisTSinkList,thisSmList))
     if thisDoMulticore:
         output3pt = thisPool.map(smfitwrap.mapper,inputparams)
     else:
@@ -173,7 +173,7 @@ def TwoStateFit2pt(fitdata2pt,tdata2pt,parl):
     fitBoot2pt,fitAvg2pt,fitAvg2ptChi = FitBoots(fitdata2pt,tdata2pt,C2TwoStateFitFunCM,parlen=parl)
     return [fitBoot2pt,fitAvg2pt,fitAvg2ptChi[0]]
 
-def TwoStateFitMom3pt(fitBoot2pt,C2pt,C3pt,this3ptCutList,thisTSinkList):
+def TwoStateFitMom3pt(fitBoot2pt,C3pt,this3ptCutList,thisTSinkList):
     tsvar = True
     fitBoot3pt = []
     fitAvg3pt = []
