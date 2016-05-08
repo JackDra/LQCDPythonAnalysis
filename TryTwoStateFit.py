@@ -11,8 +11,8 @@ from CreateCombs import MakeUmD
 from OppFuns import CreateGammaList,PrintOpps,WipeSF
 from FFParams import *
 # from multiprocessing.pool import ThreadPool
-# from multiprocessing import Pool
-# from MultiWrap import *
+from multiprocessing import Pool
+from MultiWrap import *
 import time
 import datetime
 import os
