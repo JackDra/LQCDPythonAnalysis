@@ -309,8 +309,7 @@ def mprint(*string):
     if isinstance(string,str):
         if not DoMulticore: print string
     else:
-        print ' '.join(map(str,list(string)))
-        if not DoMulticore: print ' '.join(string)
+        if not DoMulticore: print ' '.join(map(str,list(string)))
         
 
     
