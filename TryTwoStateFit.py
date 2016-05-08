@@ -201,7 +201,8 @@ else:
     TwoFit2pt = []
     TwoFit2ptChi = []
     for icf,ifit2pt in enumerate(thisFitTSFR):
-        TSF2ptarray.append(MomTSSetFit2pt(data2pt,ReadSetList,twoptGammaMomList,ifit2pt))
+        perdone = (icf+1)/float(len(thisFitTSFR))
+        TSF2ptarray.append(MomTSSetFit2pt(data2pt,ReadSetList,twoptGammaMomList,[ifit2pt,perdone]))
         TwoFit2pt.append(TSF2ptarray[-1][0])
         TwoFit2ptChi.append(TSF2ptarray[-1][2])
         ## TSF2ptarray = [ ifit2pt , TwoFit2pt/TwoFit2ptAvg/TwoFitChi ]
