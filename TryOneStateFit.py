@@ -186,12 +186,14 @@ for igamma in ReadGammaList:
         inputparams.append((ReadSetList,[igamma],OSF2ptarray,twoptGammaMomList))
 
 if DoMulticore:
+    print 'Running Multicore'
     makeContextFunctions(DoOSF)
     thisPool = Pool(min(len(inputparams),AnaProc))
     thisPool.map(DoOSF.mapper,inputparams)
     thisPool.close()
     thisPool.join()
 else:
+    print 'Running Single Core'
     for iin in inputparams: DoOSF(*iin)
 
 print 'removing pickled 2pt file'
