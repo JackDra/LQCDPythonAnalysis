@@ -138,7 +138,7 @@ def MomTSSetFit(TSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,thi
 
 
 def MomTSSetFit2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec):
-    this2ptFitR,perdone = this2ptFitRvec
+    this2ptFitR = this2ptFitRvec
     Boot2pt,Avg2pt,Chi2pt = [],[],[]
     start = time.time()
     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
