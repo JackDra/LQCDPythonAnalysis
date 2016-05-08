@@ -3,7 +3,7 @@ import numpy as np
 import sys
 from Params import *
 from FitParams import *
-from Fitting import MomTSSetFit
+from Fitting import MomTSSetFit,MomTSSetFit2pt
 from ReadTxt import ReadCfunsnp
 from SetLists import *
 from OutputData import PrintTSFMassToFile,PrintTSFSetToFile
@@ -201,7 +201,7 @@ else:
     TwoFit2pt = []
     TwoFit2ptChi = []
     for icf,ifit2pt in enumerate(thisFitTSFR):
-        TSF2ptarray.append(TwoStateSet2pt(data2pt,ReadSetList,twoptGammaMomList,ifit2pt))
+        TSF2ptarray.append(MomTSSetFit2pt(data2pt,ReadSetList,twoptGammaMomList,ifit2pt))
         TwoFit2pt.append(TSF2ptarray[-1][0])
         TwoFit2ptChi.append(TSF2ptarray[-1][2])
         ## TSF2ptarray = [ ifit2pt , TwoFit2pt/TwoFit2ptAvg/TwoFitChi ]
