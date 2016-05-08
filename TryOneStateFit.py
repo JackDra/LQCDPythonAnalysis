@@ -81,6 +81,7 @@ print 'All Sets:\n' + '\n'.join(ReadSetList)+'\n'
 
 
 def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList):
+    print 'Running ' + thisGammaList[0]
     totstart = time.time()
     mprint( 'Reading Data')
     [data3pt,dump,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=feedin['mom'])
@@ -180,10 +181,8 @@ inputparams = []
 for igamma in ReadGammaList:
     if 'twopt' in igamma: continue
     if 'doub' not in igamma and 'sing' not in igamma:
-        print 'Running ' + igamma
         inputparams.append((ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],OSF2ptarray,twoptGammaMomList))
     elif igamma.replace('doub','').replace('sing','') not in ReadGammaList:
-        print 'Running ' + igamma
         inputparams.append((ReadSetList,[igamma],OSF2ptarray,twoptGammaMomList))
 
 if DoMulticore:
