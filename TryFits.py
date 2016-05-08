@@ -84,7 +84,7 @@ for igamma in thisGammaList:
 
 if DoMulticore:
     makeContextFunctions(TryFitsFun)
-    thisPool = Pool(min(len(inputparams),AnaProc))
+    thisPool = Pool(min(len(inputparams),feedin['anaproc']))
     output = thisPool.map(TryFitsFun.mapper,inputparams)
     thisPool.close()
     thisPool.join()

@@ -29,7 +29,7 @@ if DoMulticore:
     for igamma in thisGammaList:
         inputparams.append((feedin['method'],[igamma,'twopt'],feedin['set'],feedin['mom']))
     makeContextFunctions(ReadAndPlotSummary)
-    thisPool = Pool(min(len(inputparams),AnaProc))
+    thisPool = Pool(min(len(inputparams),feedin['anaproc']))
     thisPool.map(ReadAndPlotSummary.mapper,inputparams)
     thisPool.close()
     thisPool.join()

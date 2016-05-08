@@ -88,7 +88,7 @@ for thisCurr in feedin['current']:
 tottime = time.time()
 if DoMulticore:
     makeContextFunctions(DoFF)
-    thisPool = Pool(min(AnaProc,len(inputparams)))
+    thisPool = Pool(min(feedin['anaproc'],len(inputparams)))
     thisPool.map(DoFF.mapper,inputparams)
     thisPool.close()
     thisPool.join()

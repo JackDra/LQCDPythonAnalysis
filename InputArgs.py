@@ -32,6 +32,7 @@ def ExpandSetList(thisSL):
 
 def InputParams(inputparams):
     feedout = {}
+    feedout['anaproc'] = AnaProc
     feedout['gamma'] = ''
     feedout['set'] = DefSetList
     feedout['method'] = MethodList
@@ -50,6 +51,7 @@ def InputParams(inputparams):
             print '-m= specifies Method used, choose from:\n' + '\n'.join(MethodList)+'\n'
             print '-c= specifies Current to look at, choose from:\n' + '\n'.join(CurrOpps.keys())+'\n'
             print "-p= specifies the momentium list to use, form is 'q = X Y Z', X,Y,Z = -3,-2,-1,0,1,2,3"
+            print "-np= specifies the maximum number of processors used for this job"
             print 
             exit()
         elif '-g' in isys:
@@ -96,5 +98,11 @@ def InputParams(inputparams):
             if len(feedout['current']) == 0:
                 print 'Nothing found for current list, using default list'
                 feedout['current'] = CurrOpps.keys()
+        elif '-np' in isys:
+            thisAnaProc = int(isys.replace('-np=',''))
+            if AnaProc < thisAnaProc:
+                print 'number of processors is larger than specified default in setup.cfg, using default'
+            else:
+                feedout['anaproc'] = thisAnaProc
     return feedout
 

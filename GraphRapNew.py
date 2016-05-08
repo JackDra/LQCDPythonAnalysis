@@ -124,7 +124,7 @@ if thisGammaList == ['twopt']:
             else:
                 inputparams.append((['q = 0 0 0',imom],thisSmList,TvarPicked,TvarLists,feedin['method']))                
         makeContextFunctions(ReadAndPlotMass)
-        thisPool = Pool(min(len(inputparams),AnaProc))
+        thisPool = Pool(min(len(inputparams),feedin['anaproc']))
         output = thisPool.map(ReadAndPlotMass.mapper,inputparams)
         thisPool.close()
         thisPool.join()
@@ -141,7 +141,7 @@ else:
             if any([idst in igamma for idst in ['doub','sing','twopt']]): continue
             inputparams.append((['doub'+igamma,'sing'+igamma,igamma,'twopt'],feedin['mom'],feedin['set'],feedin['method']))
         makeContextFunctions(ReadAndPlotDict)
-        thisPool = Pool(min(len(inputparams),AnaProc))
+        thisPool = Pool(min(len(inputparams),feedin['anaproc']))
         output = thisPool.map(ReadAndPlotDict.mapper,inputparams)
         thisPool.close()
         thisPool.join()

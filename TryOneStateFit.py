@@ -188,7 +188,7 @@ for igamma in ReadGammaList:
 if DoMulticore:
     print 'Running Multicore'
     makeContextFunctions(DoOSF)
-    thisPool = Pool(min(len(inputparams),AnaProc))
+    thisPool = Pool(min(len(inputparams),feedin['anaproc']))
     thisPool.map(DoOSF.mapper,inputparams)
     thisPool.close()
     thisPool.join()

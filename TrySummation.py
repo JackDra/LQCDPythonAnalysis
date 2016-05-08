@@ -68,7 +68,7 @@ makeContextFunctions(FitSumWrap)
 
 if DoMulticore:
     print 'Running multiprocessor fits'
-    thisPool = Pool(processes=min(len(inputparams),AnaProc))
+    thisPool = Pool(processes=min(len(inputparams),feedin['anaproc']))
     thisPool.map(FitSumWrap.mapper,inputparams)
     thisPool.close()
     thisPool.join()
