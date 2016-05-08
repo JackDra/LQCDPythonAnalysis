@@ -76,7 +76,6 @@ def FitMassSet(Massin,tmin,tmax):
 
 def MomTSSetFit(TSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2ptFitRvec):
     thisDoMulticore = False
-    thisnsm = len(thisSmList)
     def smfitwrap(thisBoot2ptmom,thisBoot2ptZ,C3mom,this3ptCutList,thisTSinkList,thisSmList):
         def GetTsinkInSm(C3,funsm,funSetList):
             C3out = []
@@ -96,6 +95,7 @@ def MomTSSetFit(TSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,thi
         return Boot3pt,Avg3pt,Chi3pt
 
     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
+    thisnsm = len(thisSmList)
     this2ptFitR,perdone = this2ptFitRvec
     Boot3pt,Avg3pt,Chi3pt = [],[],[]
     Boot2pt,Avg2pt,Chi2pt = TSF2ptarray
