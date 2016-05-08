@@ -160,6 +160,9 @@ def MomTSSetFit2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec):
         Boot2pt.append(output[imom][0])
         Avg2pt.append(output[imom][1])
         Chi2pt.append(output[imom][2])
+    if DoMulticore:
+        thisPool.close()
+        thisPool.join()
     print 'fit range ' , this2ptFitR , ' twopt ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                    '
     return [Boot2pt,Avg2pt,Chi2pt]
 
