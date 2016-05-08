@@ -103,6 +103,7 @@ def InputParams(inputparams):
             if AnaProc < thisAnaProc:
                 print 'number of processors is larger than specified default in setup.cfg, using default'
             else:
+                print 'number of processors = ',thisAnaProc
                 feedout['anaproc'] = thisAnaProc
     return feedout
 
