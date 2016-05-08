@@ -74,14 +74,14 @@ def FitMassSet(Massin,tmin,tmax):
 #___3pt = [ igamma , ip , icut , params ]
 
 
-def MomTSSetFit(C2pt,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2ptFitRvec):
-    def GetTsinkInSm(C3,funsm,funSetList):
-        C3out = []
-        for iS,iSet in enumerate(funSetList):
-            if funsm in iSet:
-                C3out.append(C3[iS])
-        return C3out
+def MomTSSetFit(TSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2ptFitRvec):
     def smfitwrap(thisBoot2ptmom,thisBoot2ptZ,C2mom,C3mom,this3ptCutList,thisTSinkList,thisSmList):
+        def GetTsinkInSm(C3,funsm,funSetList):
+            C3out = []
+            for iS,iSet in enumerate(funSetList):
+                if funsm in iSet:
+                    C3out.append(C3[iS])
+            return C3out
         Boot3pt,Avg3pt,Chi3pt = [],[],[]
         for ism,thissm in enumerate(thisSmList):
             Params2pt,Params2ptZero = PickBoot2pt(thisBoot2ptmom,thisnsm,ism),PickBoot2pt(thisBoot2ptZ,thisnsm,ism)
@@ -95,24 +95,7 @@ def MomTSSetFit(C2pt,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2ptFit
 
     this2ptFitR,perdone = this2ptFitRvec
     Boot3pt,Avg3pt,Chi3pt = [],[],[]
-    Boot2pt,Avg2pt,Chi2pt = [],[],[]
-    start = time.time()
-    thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
-    thisnsm = len(thisSmList)
-    thisTSinkList = [int(its.replace('tsink','')) for its in thisTSinkList]
-    inputparams = [FitSMList(C2pt[imom],this2ptFitR,thisnsm) + (thisnsm,) for imom in range(len(thisGammaMomList['twopt']))]
-    if DoMulticore:
-        makeContextFunctions(TwoStateFit2pt)
-        makeContextFunctions(smfitwrap)
-        thisPool = Pool(min(len(thisGammaMomList['twopt']),AnaProc))
-        output = thisPool.map(TwoStateFit2pt.mapper,inputparams)
-    else:
-        output = []
-        for iin in inputparams: output.append(TwoStateFit2pt(*iin))
-    for imom,thismom in enumerate(thisGammaMomList['twopt']):
-        Boot2pt.append(output[imom][0])
-        Avg2pt.append(output[imom][1])
-        Chi2pt.append(output[imom][2])
+    Boot2pt,Avg2pt,Chi2pt = OSF2ptarray
     
     inputparams = []
     Boot2ptZ = Boot2pt[0]
@@ -149,8 +132,32 @@ def MomTSSetFit(C2pt,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2ptFit
     if DoMulticore:
         thisPool.close()
         thisPool.join()
-    print 'fit range ' , this2ptFitR , ' ' , perdone ,'% took:  ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                    '
-    return [Boot2pt,Boot3pt,Avg2pt,Avg3pt,Chi2pt,Chi3pt]
+    mprint( 'fit range ' , this2ptFitR , ' ' , perdone, '% took:  ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                    ')
+    return [Boot3pt,Avg3pt,Chi3pt]
+
+
+def MomTSSetFit2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec):
+
+    this2ptFitR,perdone = this2ptFitRvec
+    Boot2pt,Avg2pt,Chi2pt = [],[],[]
+    start = time.time()
+    thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
+    thisnsm = len(thisSmList)
+    thisTSinkList = [int(its.replace('tsink','')) for its in thisTSinkList]
+    inputparams = [FitSMList(C2pt[imom],this2ptFitR,thisnsm) + (thisnsm,) for imom in range(len(thisGammaMomList['twopt']))]
+    if DoMulticore:
+        makeContextFunctions(TwoStateFit2pt)
+        thisPool = Pool(min(len(thisGammaMomList['twopt']),AnaProc))
+        output = thisPool.map(TwoStateFit2pt.mapper,inputparams)
+    else:
+        output = []
+        for iin in inputparams: output.append(TwoStateFit2pt(*iin))
+    for imom,thismom in enumerate(thisGammaMomList['twopt']):
+        Boot2pt.append(output[imom][0])
+        Avg2pt.append(output[imom][1])
+        Chi2pt.append(output[imom][2])
+    print 'fit range ' , this2ptFitR , ' twopt ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                    '
+    return [Boot3pt,Avg3pt,Chi2pt]
 
 
 # C2pt = [ it ] bs1

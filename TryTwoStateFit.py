@@ -23,12 +23,12 @@ from InputArgs import *
 
 print '----------------------------------------------------------------------------------'
 
-def fxn():
-    warnings.warn("", RuntimeWarning)
+# def fxn():
+#     warnings.warn("", RuntimeWarning)
     
-with warnings.catch_warnings():
-    warnings.simplefilter("ignore")
-    fxn()
+# with warnings.catch_warnings():
+#     warnings.simplefilter("ignore")
+#     fxn()
 
 
 if len(sys.argv) < 2: raise IOError('Input CM, Tsink or Sm as first arg')
@@ -36,10 +36,9 @@ outfile = sys.argv[1]
 feedin = InputParams(sys.argv[2:])
 
 print 'Gamma Input (For re-running): -g=' , feedin['gamma']
-thisGammaList = CreateGammaList(feedin['gamma'],twopt=True)
+ReadGammaList = CreateGammaList(feedin['gamma'],twopt=True)
 
 TSFColList = ['Tsink','test32','Small','CM']
-thisFitTSFR = CreateFitList(TSF2ptMinStart,TSF2ptMinEnd,TSF2ptMaxStart,TSF2ptMaxEnd,TSF3ptCutMin,TSF3ptCutMax)
 
 if outfile == 'Tsink':
     print 'Tsink run'
@@ -102,96 +101,140 @@ else:
     raise SyntaxError('Input CM, Tsink or Sm for first arg')
 
 
+
+def DoTSF(thisSetList,thisGammaList,TSF2ptarray,twoptGammaMomList):
+    print 'Running ' + thisGammaList[0]
+    totstart = time.time()
+    mprint( 'Reading Data')
+
+    [data3pt,dump,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=feedin['mom'])
+    thisGammaMomList['twopt'] = twoptGammaMomList['twopt']
+    thisGammaList = thisGammaMomList.keys()
+    mprint( 'Data Read is: ' + BorA)
+
+    ## data2pt = [ ip , iset2pt , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+    ## data3pt = [ igamma , ip , iset , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+
+    # data3pt,thisGammaList = MakeUmD(data3pt,thisGammaList)
+    thisGammaList.remove('twopt')
+
+    # thisFitTSFR = [thisFitTSFR[0]]
+    start = time.time()
+    for icf,ifit2pt in enumerate(thisFitTSFR):
+        thispicklefile = pickledir+'tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+'.p'
+        if not os.path.isfile(thispicklefile):
+            perdone = (icf+1)/float(len(thisFitTSFR))
+            tempout = MomTSSetFit(TSF2ptarray[icf],data3pt,TSF3ptCutList,thisSetList,thisGammaMomList,[ifit2pt,int(perdone*100)])
+            pfile = open( thispicklefile, "wb" )
+            pickle.dump( tempout, pfile )
+            pfile.close()
+            timeleft = (time.time()-start)*((1-perdone)/perdone)
+            mprint( 'Current Fit Time: ' , str(datetime.timedelta(seconds=(time.time()-start))) ,' h:m:s  Time Remaining: ' , str(datetime.timedelta(seconds=timeleft)) , ' h:m:s')
+            mprint( '')
+    # mprint( 'Fitting took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
+
+    del data3pt
+
+    start = time.time()
+    TwoFit3pt = []
+    TwoFit3ptAvg = []
+    TwoFit3ptChi = []
+    for icf,ifit2pt in enumerate(thisFitTSFR):
+        thispicklefile = pickledir+'tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+'.p'
+        mprint( 'Reading Picked File: ' , thispicklefile , '                         \r',)
+        if os.path.isfile(thispicklefile):
+            pfile = open( thispicklefile, "rb" )
+            [TSF3pt,TSF3ptAvg,TSF3ptChi] = pickle.load( pfile )
+            pfile.close()
+            # [TSF2pt,TSF3pt,TSF2ptAvg,TSF3ptAvg,TSF2ptChi,TSF3ptChi] = TwoStateSetFit(np.rollaxis(np.array(data2pt),1),data3pt,ifit2pt,TSF3ptCutList,ReadTSinkList)
+            TwoFit3pt.append(TSF3pt)
+            TwoFit3ptAvg.append(TSF3ptAvg)
+            TwoFit3ptChi.append(TSF3ptChi)
+        else:
+            raise IOError('Pickled file not found: ' + thispicklefile)
+
+    mprint( 'Reading Pickled files took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s          ')
+
+
+
+    #TwoFit2pt    = [ ifit2pt , ip , params ] bs1
+    #TwoFit2ptAvg = [ ifit2pt , ip , params ]
+    #TwoFit2ptChi = [ ifit2pt , ip ]
+    #TwoFit3pt    = [ ifit2pt , ip , igamma , istate , ifit3pt , params ] bs1
+    #TwoFit3ptAvg = [ ifit2pt , ip , igamma , istate , ifit3pt , params ]
+    #TwoFit3ptChi = [ ifit2pt , ip , igamma , istate , ifit3pt ]
+
+    start = time.time()
+    mprint( 'Printing TSF Results to file: ')
+    WipeSF(outputdir,thisGammaList+['twopt'],'TSF'+outfile,'Two',statelist=ReadStateList,todtlist=ReadTvarList,smlist=ReadSmearList)
+    PrintTSFSetToFile(TwoFit3pt,TwoFit3ptChi,thisGammaMomList,thisSetList,thisFitTSFR,outfile)
+
+    for icf,ifit2pt in enumerate(thisFitTSFR):
+        thispicklefile = pickledir+'tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+'.p'
+        mprint( 'Removing Picked File: ' , thispicklefile , '                         \r',)
+        os.remove(thispicklefile)
+
+    print 'TSF ' + thisGammaList[0]+' took ' , str(datetime.timedelta(seconds=time.time()-totstart)) , ' h:m:s'
+    
+
+
+thisFitTSFR = CreateFitList(TSF2ptMinStart,TSF2ptMinEnd,TSF2ptMaxStart,TSF2ptMaxEnd,TSF3ptCutMin,TSF3ptCutMax)
+
 print 'Creating SetList'
 [ReadSetList,SetTsink] = ExpandSetList(CaptString)
 print ''
 print 'nboot = ' + str(nboot)
-print 'All T Sinks: '+ ', '.join(map(str,ReadTSinkList))
-# print 'All Operators: \n'+'\n'.join(thisGammaList)+'\n'
-ShowSetLists(ReadSetList)
-# print 'All 2pt Sets:\n' + '\n'.join(map(str,ReadSet2pt))
-# print 'All Fit Ranges:\n' + '\n'.join(map(str,thisFitTSFR))+'\n'
+print 'All Sets:\n' + '\n'.join(ReadSetList)+'\n'
 
-print 'Reading Data'
-
-[data3pt,data2pt,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,ReadSetList,thisMomList=feedin['mom'])
-thisGammaList = thisGammaMomList.keys()
-PrintOpps(thisGammaList)
-print 'Data Read is: ' + BorA
-
-## data2pt = [ ip , iset2pt , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-## data3pt = [ igamma , ip , iset , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-
-# data3pt,thisGammaList = MakeUmD(data3pt,thisGammaList)
-thisGammaList.remove('twopt')
- 
-# thisFitTSFR = [thisFitTSFR[0]]
-start = time.time()
-for icf,ifit2pt in enumerate(thisFitTSFR):
-    thispicklefile = pickledir+'tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+'.p'
-    if not os.path.isfile(thispicklefile):
-        perdone = (icf+1)/float(len(thisFitTSFR))
-        tempout = MomTSSetFit(data2pt,data3pt,TSF3ptCutList,ReadSetList,thisGammaMomList,[ifit2pt,int(perdone*100)])
-        pfile = open( thispicklefile, "wb" )
-        pickle.dump( tempout, pfile )
-        pfile.close()
-        timeleft = (time.time()-start)*((1-perdone)/perdone)
-        print 'Current Fit Time: ' , str(datetime.timedelta(seconds=(time.time()-start))) ,' h:m:s  Time Remaining: ' , str(datetime.timedelta(seconds=timeleft)) , ' h:m:s'
-        print ''
-# print 'Fitting took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
-
-del data3pt
-del data2pt
-
-start = time.time()
-TwoFit2pt = []
-TwoFit3pt = []
-TwoFit2ptAvg = []
-TwoFit3ptAvg = []
-TwoFit2ptChi = []
-TwoFit3ptChi = []
-for icf,ifit2pt in enumerate(thisFitTSFR):
-    thispicklefile = pickledir+'tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+'.p'
-    print 'Reading Picked File: ' , thispicklefile , '                         \r',
-    if os.path.isfile(thispicklefile):
-        pfile = open( thispicklefile, "rb" )
-        [TSF2pt,TSF3pt,TSF2ptAvg,TSF3ptAvg,TSF2ptChi,TSF3ptChi] = pickle.load( pfile )
-        pfile.close()
-        # [TSF2pt,TSF3pt,TSF2ptAvg,TSF3ptAvg,TSF2ptChi,TSF3ptChi] = TwoStateSetFit(np.rollaxis(np.array(data2pt),1),data3pt,ifit2pt,TSF3ptCutList,ReadTSinkList)
-        TwoFit2pt.append(TSF2pt)
-        TwoFit3pt.append(TSF3pt)
-        TwoFit2ptAvg.append(TSF2ptAvg)
-        TwoFit3ptAvg.append(TSF3ptAvg)
-        TwoFit2ptChi.append(TSF2ptChi)
-        TwoFit3ptChi.append(TSF3ptChi)
-    else:
-        raise IOError('Pickled file not found: ' + thispicklefile)
-
-print 'Reading Pickled files took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s          '
- 
-
- 
-#TwoFit2pt    = [ ifit2pt , ip , params ] bs1
-#TwoFit2ptAvg = [ ifit2pt , ip , params ]
-#TwoFit2ptChi = [ ifit2pt , ip ]
-#TwoFit3pt    = [ ifit2pt , ip , igamma , istate , ifit3pt , params ] bs1
-#TwoFit3ptAvg = [ ifit2pt , ip , igamma , istate , ifit3pt , params ]
-#TwoFit3ptChi = [ ifit2pt , ip , igamma , istate , ifit3pt ]
-
-start = time.time()
-print 'Printing TSF Results to file: '
-WipeSF(outputdir,thisGammaList+['twopt'],'TSF'+outfile,'Two',statelist=ReadStateList,todtlist=ReadTvarList,smlist=ReadSmearList)
-PrintTSFMassToFile(TwoFit2pt,TwoFit2ptChi,ReadSetList,thisFitTSFR,outfile,thisGammaMomList['twopt'])
-PrintTSFSetToFile(TwoFit3pt,TwoFit3ptChi,thisGammaMomList,ReadSetList,thisFitTSFR,outfile)
-
-for icf,ifit2pt in enumerate(thisFitTSFR):
-    thispicklefile = pickledir+'tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+'.p'
-    print 'Removing Picked File: ' , thispicklefile , '                         \r',
-    os.remove(thispicklefile)
-
-print 'Printting TSF Results to file took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                  '
+    
+picklefile2pt = pickledir+'tempTSF'+outfile+'fittwopt.p'
+if os.path.isfile(picklefile2pt):
+    print '2 point picked file found, reading in'
+    with open( picklefile2pt, "rb" ) as pfile:
+        TSF2ptarray,twoptGammaMomList = pickle.load( pfile )
+    print '2 point picked file read in'        
+else:
+    print 'Reading and fitting 2 point correlator data'
+    [dump,data2pt,twoptGammaMomList,dump3] = ReadCfunsnp(['twopt'],ReadSetList,thisMomList=feedin['mom'])
+    ## data2pt = [ ip , iset2pt , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+    TSF2ptarray = []
+    TwoFit2pt = []
+    TwoFit2ptChi = []
+    for icf,ifit2pt in enumerate(thisFitTSFR):
+        TSF2ptarray.append(TwoStateSet2pt(data2pt,ReadSetList,twoptGammaMomList,ifit2pt))
+        TwoFit2pt.append(TSF2ptarray[-1][0])
+        TwoFit2ptChi.append(TSF2ptarray[-1][2])
+        ## TSF2ptarray = [ ifit2pt , TwoFit2pt/TwoFit2ptAvg/TwoFitChi ]
+        #TwoFit2pt    = [ ifit2pt , ip , ism  , params ] bs1
+        #TwoFit2ptAvg = [ ifit2pt , ip , ism  , params ]
+        #TwoFit2ptChi = [ ifit2pt , ip , ism  ]
+    del data2pt
+    print 'Pickling 2 point correlators'
+    with open( picklefile2pt, "wb" ) as pfile:
+        pickle.dump( [TSF2ptarray,twoptGammaMomList], pfile )
+    print 'Printing 2 point correlators to file'
+    PrintTSFMassToFile(TwoFit2pt,TwoFit2ptChi,ReadSetList,thisFitTSFR,outfile,twoptGammaMomList['twopt'])
 
 
+inputparams = []
+for igamma in ReadGammaList:
+    if 'twopt' in igamma: continue
+    if 'doub' not in igamma and 'sing' not in igamma:
+        inputparams.append((ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],TSF2ptarray,twoptGammaMomList))
+    elif igamma.replace('doub','').replace('sing','') not in ReadGammaList:
+        inputparams.append((ReadSetList,[igamma],TSF2ptarray,twoptGammaMomList))
 
+if DoMulticore:
+    print 'Running Multicore'
+    makeContextFunctions(DoTSF)
+    thisPool = Pool(min(len(inputparams),AnaProc))
+    thisPool.map(DoTSF.mapper,inputparams)
+    thisPool.close()
+    thisPool.join()
+else:
+    print 'Running Single Core'
+    for iin in inputparams: DoTSF(*iin)
 
-
+print 'removing pickled 2pt file'
+if os.path.isfile(picklefile2pt): os.remove(picklefile2pt)
+print 'all finished'

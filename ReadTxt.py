@@ -254,13 +254,13 @@ def ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=R
     DataDict = OrderedDict()
     if thisPrintRead: print ''
     start = time.time()
+    massMethodList = copy(thisMethodList)
+    if 'SumMeth' in massMethodList:massMethodList.remove('SumMeth')
+    if 'Fits' in massMethodList: massMethodList.remove('Fits')
     for ig,thisgamma in enumerate(thisGammaList):
         if thisPrintRead: print 'Reading at: ' ,int((ig*100)/float(len(thisGammaList))),'%     \r',
         if thisgamma == 'twopt':
             gammadirin = thisindir+'cfuns/twopt/'
-            massMethodList = copy(thisMethodList)
-            if 'SumMeth' in massMethodList:massMethodList.remove('SumMeth')
-            if 'Fits' in massMethodList: massMethodList.remove('Fits')
             DataDict[thisgamma] = MakeMethodsDict(gammadirin,'twopt.xml',
                                                   massMethodList,thisSetList,thisMomList=thisMomList,
                                                   thisPrintRead=thisPrintRead)
@@ -269,8 +269,8 @@ def ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=R
             DataDict[thisgamma] = MakeMethodsDict(gammadirin,thisgamma+'.xml',
                                                   thisMethodList,thisSetList,thisMomList=thisMomList,
                                                   thisPrintRead=thisPrintRead)
-    if thisPrintRead: print 'Reading took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
     if 'RF' in thisMethodList: DataDict = CombSetBoot(DataDict,'-',thisPrintRead=thisPrintRead)
+    if thisPrintRead: print 'Reading took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
     return DataDict
 
 def ReadCfunsDict(thisindir,thisSetList,thisGammaList,thisMomList=RunMomList,thisPrintRead=PrintRead):
@@ -383,43 +383,35 @@ def CombSetBoot(data,opp,thisPrintRead=PrintRead):
 
 def MakeMethodsDict(readdir,readfile,thisMethodList,thisSetList,thisMomList=RunMomList,thisPrintRead=PrintRead):
     MethDict = OrderedDict()
+    loopSetList = thisSetList
+    if 'twopt' in readdir: loopSetList = ReduceTooMassSet(thisSetList)
     for iMeth in thisMethodList:
+        thisDict = OrderedDict()
         if iMeth == 'RF':
-            thisDict = OrderedDict()
-            RFSetList = thisSetList
-            if 'twopt' in readfile: RFSetList = ReduceTooMassSet(thisSetList)
-            for iSet in RFSetList:
+            for iSet in loopSetList:
                 filename = readdir+iSet+readfile
                 thisDict[iSet] = ReadRFFile(readdir,iSet+readfile,thisMomList=thisMomList)
-        elif 'SF' in iMeth:
-            thisDict=OrderedDict()
-            if 'TSF' in iMeth:
-                for iSet in ReduceTooMassSet(thisSetList):
-                    thisDict[iSet] = ReadTSFFile(readdir+iMeth+'/',iSet+readfile.replace('.xml','##.xml'),thisMomList=thisMomList)
-            elif 'OSF' in iMeth:
-                OSFSetList = thisSetList
-                if 'twopt' in readfile: OSFSetList = ReduceTooMassSet(thisSetList)
-                for iSet in OSFSetList:
-                    filename = iSet+readfile.replace('.xml','##.xml')
-                    thisDict[iSet] = ReadOSFFile(readdir+iMeth+'/',filename,thisMomList=thisMomList)
+        elif 'TSF' in iMeth:
+            for iSet in ReduceTooMassSet(loopSetList):
+                thisDict[iSet] = ReadTSFFile(readdir+iMeth+'/',iSet+readfile.replace('.xml','##.xml'),thisMomList=thisMomList)
+        elif 'OSF' in iMeth:
+            for iSet in loopSetList:
+                filename = iSet+readfile.replace('.xml','##.xml')
+                thisDict[iSet] = ReadOSFFile(readdir+iMeth+'/',filename,thisMomList=thisMomList)
         elif 'SumMeth' in iMeth:
-            thisDict=OrderedDict()
-            for iSet in ReduceTsink(thisSetList,NoCM=True):
+            for iSet in ReduceTsink(loopSetList,NoCM=True):
                 filename = iSet+readfile
                 thisDict[iSet] = ReadSumFile(readdir+iMeth+'/',filename,thisMomList=thisMomList)
         elif 'Fits' in iMeth:
-            thisDict = OrderedDict()
-            for iSet in thisSetList:
+            for iSet in loopSetList:
                 filename = iSet+readfile
                 thisDict[iSet] = ReadFitFile(readdir+iMeth+'/',filename,thisMomList=thisMomList)
         else:
             if thisPrintRead: print iMeth , ' not a known method'
         for iSet in thisDict.keys():
             for imom in thisDict[iSet].keys():
-                if imom not in MethDict.keys():
-                    MethDict[imom] = OrderedDict()
-                if iMeth not in MethDict[imom].keys():
-                    MethDict[imom][iMeth] = OrderedDict()
+                if imom not in MethDict.keys(): MethDict[imom] = OrderedDict()
+                if iMeth not in MethDict[imom].keys(): MethDict[imom][iMeth] = OrderedDict()
                 MethDict[imom][iMeth][iSet] = thisDict[iSet][imom]
     return MethDict
 
