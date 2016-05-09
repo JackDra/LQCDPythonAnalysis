@@ -257,7 +257,7 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
     for iset in iterSetList:
         if not CheckDict(data,'RF',iset): continue
         if MassDt == False:
-            PlotRF(data['RF'][iset],thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset.replace(legrem,0)))
+            PlotRF(data['RF'][iset],thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset.replace(legrem,'')))
         else:
             dataplot = deepcopy(data['RF'][iset])
             dataplot['Boot'] = MassFun(dataplot['Boot'],MassDt)
