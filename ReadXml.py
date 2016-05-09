@@ -180,6 +180,7 @@ def ReadFFFile(filename):
             for iq,qdata in data['Boots'].iteritems():
                 dataout['Chi'][iq] = data['Values'][iq]['Chi']
                 for iff,ffdata in qdata.iteritems():
+                    if 'Chi' in iff: continue
                     if iff not in dataout.keys():
                         dataout[iff] = OrderedDict()
                     dataout[iff][iq] = OrderedDict()
