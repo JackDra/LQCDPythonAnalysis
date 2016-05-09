@@ -161,11 +161,14 @@ else:
     OSF2ptarray = []
     OneFit2pt = []
     OneFit2ptChi = []
+    start = time.time()
     for icf,ifit2pt in enumerate(thisFitOSFR):
         perdone = (icf+1)/float(len(thisFitOSFR))
-        OSF2ptarray.append(OneStateSet2pt(data2pt,ReadSetList,twoptGammaMomList,[ifit2pt,perdone]))
+        OSF2ptarray.append(OneStateSet2pt(data2pt,ReadSetList,twoptGammaMomList,[ifit2pt,int(perdone*100)]))
         OneFit2pt.append(OSF2ptarray[-1][0])
         OneFit2ptChi.append(OSF2ptarray[-1][2])
+        timeleft = (time.time()-start)*((1-perdone)/perdone)
+        print 'Current Fit Time: ' , str(datetime.timedelta(seconds=(time.time()-start))) ,' h:m:s  Time Remaining: ' , str(datetime.timedelta(seconds=timeleft)) , ' h:m:s'
         ## OSF2ptarray = [ ifit2pt , OneFit2pt/OneFit2ptAvg/OneFitChi ]
         #OneFit2pt    = [ ifit2pt , ip , ism  , params ] bs1
         #OneFit2ptAvg = [ ifit2pt , ip , ism  , params ]
