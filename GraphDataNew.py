@@ -435,9 +435,11 @@ def PlotSummedRF(data,thisfitr):
         GetBootStats(fitbootdata),GetBootStats(fitbootdashed)
         plotup = Pullflag(fitbootdata,'Avg')+Pullflag(fitbootdata,'Std')
         plotdown = Pullflag(fitbootdata,'Avg')-Pullflag(fitbootdata,'Std')
-        print fitbootdashed[5]
-        plotdashedup = Pullflag(fitbootdashed,'Avg')+Pullflag(fitbootdashed,'Std')
-        plotdasheddown = Pullflag(fitbootdashed,'Avg')-Pullflag(fitbootdashed,'Std')
+        if len(fitbootdashed) == 0:
+            plotdashedup,plotdasheddown = [],[]
+        else:
+            plotdashedup = Pullflag(fitbootdashed,'Avg')+Pullflag(fitbootdashed,'Std')
+            plotdasheddown = Pullflag(fitbootdashed,'Avg')-Pullflag(fitbootdashed,'Std')
         pl.plot(fittdata,map(abs,Pullflag(fitbootdata,'Avg')),
                 label='slope='+MakeValAndErr(abs(parsl.Avg),parsl.Std),color=thiscol)
         pl.fill_between(fittdata,plotup,plotdown,color=thiscol,alpha=thisalpha,edgecolor='none')
