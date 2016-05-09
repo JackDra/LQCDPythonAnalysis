@@ -85,6 +85,7 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList,thisMomList):
     totstart = time.time()
     mprint( 'Reading Data')
     [data3pt,dump,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=thisMomList)
+    print len(data3pt[0])
     thisGammaMomList['twopt'] = twoptGammaMomList['twopt']
     thisGammaList = thisGammaMomList.keys()
     # PrintOpps(thisGammaList)
