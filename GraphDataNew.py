@@ -183,12 +183,12 @@ def PlotCol(data,thisSetList,thisflag,thisGamma,thisMom,TitlePref):
 
 def PlotColTSF(data,data2pt,thisSetList,thisflag,thisGamma,thisMom,TitlePref,TSFcut,thisTSF):
     PlotRFSetTSF(data,data2pt,SiftAndSort(thisSetList,thisflag),TSFcut,thisTSF,legrem=thisflag[0])
-    pl.savefig(CreateFile(thisflag,thisGamma,thisMom,TitlePref)+str(TSFcut)+'.pdf')
+    pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+str(TSFcut)+'.pdf')
     pl.clf()
 
 def PlotColOSF(data,data2pt,thisSetList,thisflag,thisGamma,thisMom,TitlePref,OSFcut,thisOSF):
     PlotRFSetOSF(data,data2pt,SiftAndSort(thisSetList,thisflag,nocm=False),OSFcut,thisOSF,legrem=thisflag[0])
-    pl.savefig(CreateFile(thisflag,thisGamma,thisMom,TitlePref)+str(OSFcut)+'.pdf')
+    pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+str(OSFcut)+'.pdf')
     pl.clf()
 
 def PlotColSum(data,thisSetList,thissm,thisGamma,thisMom,TitlePref,thisTsinkR='fit sl 0-4'):
