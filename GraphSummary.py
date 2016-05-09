@@ -115,7 +115,7 @@ def PlotXlabs(method,thissetlist,xminmax):
         if 'CM' in method:
             line2 = tsinklist[0]
             line3 = map(ReducedVar,smlist)
-            if 'PoF' in line3:
+            if any(['PoF' in il for il in line3]):
                 line3 = ['PoF']*(len(PoFTSinkList)-1) + line3
         elif 'Tsink' in method:
             line2 = 'All ' + smlist[0]
