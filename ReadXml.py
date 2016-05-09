@@ -59,7 +59,9 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
-        if os.path.isfile(readfile):
+        if not os.path.isfile(readfile):
+            mprint(readfile + ' not found')
+        else:
             data = ReadXmlAndPickle(readfile)[0]
             data = data[data.keys()[0]]
             if 'Boots' in data.keys():
@@ -93,7 +95,9 @@ def ReadFitFile(filedir,filename,thisMomList=RunMomList):
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
-        if os.path.isfile(readfile):
+        if not os.path.isfile(readfile):
+            mprint(readfile + ' not found')
+        else:
             data = ReadXmlAndPickle(readfile)[0]
             data = data[data.keys()[0]]
             if 'Boots' in data.keys():
@@ -116,7 +120,9 @@ def ReadSumFile(filedir,filename,thisMomList=RunMomList):
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
-        if os.path.isfile(readfile):
+        if not os.path.isfile(readfile):
+            mprint(readfile + ' not found')
+        else:
             data = ReadXmlAndPickle(readfile)[0]
             data = data[data.keys()[0]]
             if 'Boots' in data.keys():
@@ -211,7 +217,9 @@ def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
         for thismom in thisMomList:
             ip = qstrTOqcond(thismom)
             readfile = filedir+MakeMomDir(ip)+thisfilename.replace('.xml',ip+'.xml')
-            if os.path.isfile(readfile):
+            if not os.path.isfile(readfile):
+                mprint(readfile + ' not found')
+            else:
                 data = ReadXmlAndPickle(readfile)[0]
                 data = data[data.keys()[0]]
                 if 'Boots' in data.keys():
