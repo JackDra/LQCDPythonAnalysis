@@ -131,7 +131,7 @@ if thisGammaList == ['twopt']:
     else:
         ReadAndPlotMass(thisGammaList,feedin['mom'],feedin['set'],feedin['method'])
 else:
-    if feedin['mom'] != ['q = 0 0 0']:
+    if any([imom != 'q = 0 0 0' for imom in feedin['mom']]):
         feedin['method'] = ['RF']
     print 'MethodList:\n' + '\n'.join(feedin['method'])
     print 'thisSetList:\n' + '\n'.join(feedin['set'])
