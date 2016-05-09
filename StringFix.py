@@ -32,14 +32,16 @@ def NoTSink(thestring):
     return thestring
 
 def NoCM(thestring):
-    for itvar in DefTvarList:
+    for itvar in PoFTvarList:
+        thestring = thestring.replace(itvar,'')
+    for itvar in REvecTvarList:
         thestring = thestring.replace(itvar,'')
     for itvar in DefTvarList:
         thestring = thestring.replace(itvar,'')
     return thestring
         
 def ProperTsink(thestring):
-    for tsinkstr,itsink in zip(AllTSinkStrList,AllTSinkList):
+    for tsinkstr,itsink in zip(AllTSinkStrListVar,AllTSinkListVar):
         thestring = thestring.replace(tsinkstr,'SPACEt='+str(itsink-tsource))
     return thestring
 
@@ -53,12 +55,12 @@ def SplitToDt(tvar):
         toval = re.search('to.*dt',tvar)
         toval = toval.group().replace('dt','')
     except:
-        return None
+        return None,None
     try:
         dtval = re.search('dt.*',tvar).group()
     except:
-        return None
-    return toval,dtval
+        return None,None
+    return str(int(toval)-tsource),dtval
 
 def ProperCM(thestring):
     thestring = thestring.replace('state1','')

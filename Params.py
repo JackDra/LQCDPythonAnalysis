@@ -252,8 +252,10 @@ DefSmList = ['sm'+ism for ism in DefSmearList]
 DefInterpSmearList = ElongateName(DefInterpList,DefSmList)
 CMTSinkList = [29]
 AllTSinkList = [26,29,32,35,38]
+AllTSinkListVar = [26,27,29,32,35,38]
 AllTSinkShift = [it-tsource for it in AllTSinkList]
 AllTSinkStrList = ['tsink'+str(its) for its in AllTSinkList]
+AllTSinkStrListVar = ['tsink'+str(its) for its in AllTSinkListVar]
 
 AllREvecTSinkList = {'12104':[29],'12090':[26,32]}
 REvecTSinkList = AllREvecTSinkList[str(kappa)]
