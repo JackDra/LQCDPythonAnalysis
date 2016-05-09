@@ -360,7 +360,6 @@ def CombMethBoot(udata,ddata,opp,imom,igamma):
 def CombSetBoot(data,opp,thisPrintRead=PrintRead):
     dataout = deepcopy(data)
     start = time.time()
-    print data.keys()
     for dgamma,dgammadata in data.iteritems():
         if 'doub' in dgamma:
             combgamma = dgamma.replace('doub','')
@@ -415,6 +414,7 @@ def MakeMethodsDict(readdir,readfile,thisMethodList,thisSetList,thisMomList=RunM
             if thisPrintRead: print iMeth , ' not a known method'
         for iSet in thisDict.keys():
             for imom in thisDict[iSet].keys():
+                if bool(thisDict[iSet][imom]): continue
                 if imom not in MethDict.keys(): MethDict[imom] = OrderedDict()
                 if iMeth not in MethDict[imom].keys(): MethDict[imom][iMeth] = OrderedDict()
                 MethDict[imom][iMeth][iSet] = thisDict[iSet][imom]
