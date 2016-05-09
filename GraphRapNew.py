@@ -22,7 +22,7 @@ from InputArgs import *
 ##thisMomList in qstr format (e.g. 'q = 0 0 0')
 ##NB q = 0 0 0 MUST BE INCLUDED FOR TSF ETC
 def progprint(numb,starttime,igamma):
-    print 'Graphing Operator: ' + igamma , int(numb*100/float(9)) , '% time taken:' , str(datetime.timedelta(seconds=time.time()-starttime)) ,' h:m:s          \r',
+    mprint( 'Graphing Operator: ' + igamma , int(numb*100/float(9)) , '% time taken:' , str(datetime.timedelta(seconds=time.time()-starttime)) ,' h:m:s          \r',)
 
 
 def ReadAndPlotMass(thisMomList,thisSmearList,thisSetList,thisSetPoFLists,thisMethodList):

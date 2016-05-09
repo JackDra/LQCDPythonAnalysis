@@ -72,9 +72,8 @@ def PullThisDicts(datadict,igamma,imom):
 def SiftAndSort(thisSetList,comp,nocm=True):
     SetListOut = []
     for iset in thisSetList:
-        if any([icomp in iset for icomp in comp]): 
-            if 'state' not in iset or not nocm:
-                SetListOut.append(iset)
+        if (comp in iset) and ('state' not in iset or not nocm): 
+            SetListOut.append(iset)
     # SetListOut.sort()
     return SetListOut
 
