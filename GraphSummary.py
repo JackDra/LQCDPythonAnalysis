@@ -113,7 +113,7 @@ def PlotXlabs(method,thissetlist,xminmax):
         line1 = '1SF'
         if 'CM' in method:
             line2 = tsinklist[0]
-            line3 = smlist
+            line3 = map(ReducedVar,smlist)
         elif 'Tsink' in method:
             line2 = 'All ' + smlist[0]
             line3 = tsinklist

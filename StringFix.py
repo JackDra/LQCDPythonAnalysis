@@ -41,7 +41,17 @@ def NoCM(thestring):
     for itvar in DefTvarList:
         thestring = thestring.replace(itvar,'')
     return thestring
-        
+
+def ReducedVar(thestring):
+    for itvar in PoFTvarList:
+        thestring = thestring.replace(itvar,'PoF')
+    for itvar in REvecTvarList:
+        thestring = thestring.replace(itvar,'REvec')
+    for itvar in DefTvarList:
+        thestring = thestring.replace(itvar,'CM')
+    return thestring
+
+
 def ProperTsink(thestring):
     for tsinkstr,itsink in zip(AllTSinkStrListVar,AllTSinkListVar):
         thestring = thestring.replace(tsinkstr,'SPACEt'+str(itsink-tsource))
@@ -123,7 +133,7 @@ def LabToXaxis(thestring,col):
         stringout = stringout.replace('fitr1-4','')
         stringout = stringout.replace('fitr2-4','')
     elif col in 'OSFCM':
-        stringout = NoTSink(NoCM(NoSm(stringout)))
+        stringout = NoCM(NoSm(stringout))
     elif col in 'OSFTsink':
         stringout = NoTSink(NoCM(NoSm(stringout)))
     elif col in 'TSFCM':
