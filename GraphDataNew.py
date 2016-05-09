@@ -72,7 +72,7 @@ def PullThisDicts(datadict,igamma,imom):
 def SiftAndSort(thisSetList,comp,nocm=True):
     SetListOut = []
     for iset in thisSetList:
-        if (comp in iset) and ('state' not in iset or not nocm): 
+        if any([icomp in iset for icomp in comp]) and ('state' not in iset or not nocm): 
             SetListOut.append(iset)
     # SetListOut.sort()
     return SetListOut
@@ -131,15 +131,15 @@ def PlotTSinkData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
 
 def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
     for ifitr in SumFitRList:
-        PlotColSum(data,thisSetList,thissm,thisGamma,thisMom,'Sum TSink Comparison ',thisTsinkR=ifitr)
+        PlotColSum(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisTsinkR=ifitr)
         
 def PlotTSinkSFData(data,data2pt,thisSetList,thisGamma,thisMom,thisSF='TSFTsink',thissm='sm32'):
     if 'TSF' in thisSF:
         for icut in TSFCutList:
-            PlotColTSF(data,data2pt,thisSetList,thissm,thisGamma,thisMom,thisSF+' Comparison ',icut,thisSF)
+            PlotColTSF(data,data2pt,thisSetList,[thissm],thisGamma,thisMom,thisSF+' Comparison ',icut,thisSF)
     if 'OSF' in thisSF:
         for icut in OSFCutList:
-            PlotColOSF(data,data2pt,thisSetList,thissm,thisGamma,thisMom,thisSF+' Comparison ',icut,thisSF)
+            PlotColOSF(data,data2pt,thisSetList,[thissm],thisGamma,thisMom,thisSF+' Comparison ',icut,thisSF)
         
 def PlotCMData(data,thisSetList,thisGamma,thisMom,thistsink='tsink29'):
     PlotCol(data,thisSetList,[thistsink,'PoF'],thisGamma,thisMom,'Variational Comparison ')
@@ -171,34 +171,34 @@ def PlotMassSFData(data,thisSetList,thisMom,thisSF='SFCM'):
 
 def PlotCMSFData(data,data2pt,thisSetList,thisGamma,thisMom,thistsink='tsink29',thisSF='SFCM'):
     for icut in TSFCutList:
-        PlotColTSF(data,data2pt,thisSetList,thistsink,thisGamma,thisMom,'T'+thisSF+' Comparison ',icut,'T'+thisSF)
+        PlotColTSF(data,data2pt,thisSetList,[thistsink],thisGamma,thisMom,'T'+thisSF+' Comparison ',icut,'T'+thisSF)
     for icut in OSFCutList:
-        PlotColOSF(data,data2pt,thisSetList,thistsink,thisGamma,thisMom,'O'+thisSF+' Comparison ',icut,'O'+thisSF)
+        PlotColOSF(data,data2pt,thisSetList,[thistsink],thisGamma,thisMom,'O'+thisSF+' Comparison ',icut,'O'+thisSF)
 
 
 def PlotCol(data,thisSetList,thisflag,thisGamma,thisMom,TitlePref):
-    PlotRFSet(data,SiftAndSort(thisSetList,thisflag,nocm=False),legrem=thisflag)
+    PlotRFSet(data,SiftAndSort(thisSetList,thisflag,nocm=False),legrem=thisflag[0])
     pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+'.pdf')
     pl.clf()
 
 def PlotColTSF(data,data2pt,thisSetList,thisflag,thisGamma,thisMom,TitlePref,TSFcut,thisTSF):
-    PlotRFSetTSF(data,data2pt,SiftAndSort(thisSetList,thisflag),TSFcut,thisTSF,legrem=thisflag)
+    PlotRFSetTSF(data,data2pt,SiftAndSort(thisSetList,thisflag),TSFcut,thisTSF,legrem=thisflag[0])
     pl.savefig(CreateFile(thisflag,thisGamma,thisMom,TitlePref)+str(TSFcut)+'.pdf')
     pl.clf()
 
 def PlotColOSF(data,data2pt,thisSetList,thisflag,thisGamma,thisMom,TitlePref,OSFcut,thisOSF):
-    PlotRFSetOSF(data,data2pt,SiftAndSort(thisSetList,thisflag,nocm=False),OSFcut,thisOSF,legrem=thisflag)
+    PlotRFSetOSF(data,data2pt,SiftAndSort(thisSetList,thisflag,nocm=False),OSFcut,thisOSF,legrem=thisflag[0])
     pl.savefig(CreateFile(thisflag,thisGamma,thisMom,TitlePref)+str(OSFcut)+'.pdf')
     pl.clf()
 
 def PlotColSum(data,thisSetList,thissm,thisGamma,thisMom,TitlePref,thisTsinkR='fit sl 0-4'):
-    PlotRFSetSum(data,SiftAndSort(thisSetList,thissm),thisTsinkR,legrem=thissm)
+    PlotRFSetSum(data,SiftAndSort(thisSetList,thissm),thisTsinkR,legrem=thissm[0])
     outTR = thisTsinkR.replace('-','_')
-    pl.savefig(CreateFile(thissm,thisGamma,thisMom,TitlePref+outTR)+'.pdf')
+    pl.savefig(CreateFile(thissm[0],thisGamma,thisMom,TitlePref+outTR)+'.pdf')
     pl.clf()
-    if CheckDict(data,'SumMeth',thissm):
-        PlotSummedRF(data['SumMeth'][thissm],thisTsinkR)
-        pl.savefig(CreateFile(thissm,thisGamma,thisMom,TitlePref+outTR)+'Sfun'+'.pdf')
+    if CheckDict(data,'SumMeth',thissm[0]):
+        PlotSummedRF(data['SumMeth'][thissm[0]],thisTsinkR)
+        pl.savefig(CreateFile(thissm[0],thisGamma,thisMom,TitlePref+outTR)+'Sfun'+'.pdf')
         pl.clf()
 
 def PlotRFSetTSF(data,data2pt,thisSetList,TSFcut,thisTSF,legrem=''):
