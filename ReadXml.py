@@ -95,6 +95,7 @@ def ReadFitFile(filedir,filename,thisMomList=RunMomList):
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
+        dictout[thismom] = {}
         if not os.path.isfile(readfile):
             mprint(readfile + ' not found')
         else:
