@@ -185,8 +185,9 @@ def PlotSummaryMethods(data,thisMethodSetList,igamma,iq,outputdir,dirpref=''):
     ylow,yhigh = pl.ylim()
     ysize = yhigh-ylow
     pl.ylim(ylow-(3*ysize*xlabshift),yhigh)
-    # ylow,yhigh = pl.ylim()
-    # ysize = yhigh-ylow
+    pl.ylim(max(lowlim,pl.ylim()[0]),min(highlim,pl.ylim()[1]))
+    ylow,yhigh = pl.ylim()
+    ysize = yhigh-ylow
     for xmid,line1 in Xbox1:
         pl.text(xmid,ylow+(3*ysize*xlabshift),line1,horizontalalignment='center')
     for xmid,line2 in Xbox2:
@@ -197,7 +198,6 @@ def PlotSummaryMethods(data,thisMethodSetList,igamma,iq,outputdir,dirpref=''):
     pl.ylabel('Value')
     pl.title(TitleFix('SummaryPlot ' + igamma + ' ' + iq))
     pl.xlim(-1,xvalues-1)
-    pl.ylim(max(lowlim,pl.ylim()[0]),min(highlim,pl.ylim()[1]))
     pl.grid(False,axis='x')
     if 'FF' in igamma: thisgammadir = dirpref + '/'
     else: thisgammadir = CreateOppDir(igamma)
