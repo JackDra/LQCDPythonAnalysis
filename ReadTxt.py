@@ -412,7 +412,6 @@ def MakeMethodsDict(readdir,readfile,thisMethodList,thisSetList,thisMomList=RunM
             for imom in thisDict[iSet].keys():
                 if imom not in MethDict.keys(): MethDict[imom] = OrderedDict()
                 if iMeth not in MethDict[imom].keys(): MethDict[imom][iMeth] = OrderedDict()
-                print imom,iMeth,iSet
                 MethDict[imom][iMeth][iSet] = thisDict[iSet][imom]
     return MethDict
 
