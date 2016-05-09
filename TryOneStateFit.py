@@ -80,11 +80,11 @@ print 'nboot = ' + str(nboot)
 print 'All Sets:\n' + '\n'.join(ReadSetList)+'\n'
 
 
-def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList):
+def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList,thisMomList):
     print 'Running ' + thisGammaList[0]
     totstart = time.time()
     mprint( 'Reading Data')
-    [data3pt,dump,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=feedin['mom'])
+    [data3pt,dump,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=thisMomList)
     thisGammaMomList['twopt'] = twoptGammaMomList['twopt']
     thisGammaList = thisGammaMomList.keys()
     # PrintOpps(thisGammaList)
@@ -143,7 +143,7 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList):
         mprint( 'Removing Picked file: ' , thispicklefile , '                                \r',)
         os.remove(thispicklefile)
 
-    print 'OSF ' + thisGammaList[0]+' took ' , str(datetime.timedelta(seconds=time.time()-totstart)) , ' h:m:s'
+    print 'OSF ' + thisGammaList[0]+' ' + thisMomList[0] + ' took ' , str(datetime.timedelta(seconds=time.time()-totstart)) , ' h:m:s'
 
 
 
@@ -182,12 +182,13 @@ else:
 
 
 inputparams = []
-for igamma in ReadGammaList:
-    if 'twopt' in igamma: continue
-    if 'doub' not in igamma and 'sing' not in igamma:
-        inputparams.append((ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],OSF2ptarray,twoptGammaMomList))
-    elif igamma.replace('doub','').replace('sing','') not in ReadGammaList:
-        inputparams.append((ReadSetList,[igamma],OSF2ptarray,twoptGammaMomList))
+for imom in feedin['mom']:
+    for igamma in ReadGammaList:
+        if 'twopt' in igamma: continue
+        if 'doub' not in igamma and 'sing' not in igamma:
+            inputparams.append((ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],OSF2ptarray,twoptGammaMomList,[imom]))
+        elif igamma.replace('doub','').replace('sing','') not in ReadGammaList:
+            inputparams.append((ReadSetList,[igamma],OSF2ptarray,twoptGammaMomList,[imom]))
 
 if DoMulticore:
     print 'Running Multicore'
