@@ -37,7 +37,11 @@ def WriteXmlOutput(thisfile,outputdict):
     
         
 def MergeXmlOutput(thisfile,outputdict,CheckMom=True):
-    if CheckMomFile(thisfile+'.xml') and CheckMom:
+    if CheckMom:
+        if CheckMomFile(thisfile+'.xml'):
+            thisdict = ReadXmlAndPickle(thisfile+'.xml')[0]
+            outputdict = merge_dicts(outputdict,thisdict)
+    else:
         thisdict = ReadXmlAndPickle(thisfile+'.xml')[0]
         outputdict = merge_dicts(outputdict,thisdict)
     if len(outputdict.keys()) > 1:
