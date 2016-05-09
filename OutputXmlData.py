@@ -45,7 +45,7 @@ def MergeXmlOutput(thisfile,outputdict,CheckMom=True):
         thisdict = ReadXmlAndPickle(thisfile+'.xml')[0]
         outputdict = merge_dicts(outputdict,thisdict)
     if len(outputdict.keys()) > 1:
-        raise IOError('Xml main key not single:' + ','.join(outputdict.keys()))
+        raise IOError('Xml main key not single: ' + ', '.join(outputdict.keys()))
     WriteXmlOutput(thisfile,outputdict)
 
 def SetUpPDict(ip,filedir,filename):

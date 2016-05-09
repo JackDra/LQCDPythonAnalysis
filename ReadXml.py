@@ -27,16 +27,16 @@ def ReadXmlDict(filein):
         bootfile = xmldata[xmldata.keys()[0]]['Boots']
     except:
         # print 'Reading xml file fail: ' + filein
-        xmldata = {'Null':{'Values':{},'Boots':{}}}
+        xmldata = {}
         bootfile = 'NoBootDir'
     return xmldata,bootfile
 
 def ReadXmlAndPickle(filein):
     mprint('reading: ' + filein)
     xmldata,bootfile = ReadXmlDict(filein)
-    firstkey = xmldata.keys()[0]
-    if firstkey != 'Null':
-        xmldata[firstkey]['Boots'] = ReadPickleBoot(bootfile)
+    firstkey = xmldata.keys()
+    if len(firstkey) > 0:
+        xmldata[firstkey[0]]['Boots'] = ReadPickleBoot(bootfile)
     return xmldata,bootfile
 
     
