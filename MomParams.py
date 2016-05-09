@@ -160,9 +160,7 @@ def MakeMomDir(ip):
     return '/qsqrd'+str(iqsqrd)+'/'+ip+'/'
 
 def GetqcondFromFilename(filename):
-    print filename
     for ip in qvecSet:
-        print ip, qstrTOqcond(ip)
         if qstrTOqcond(ip) in filename:
             return qstrTOqcond(ip)
     raise IOError('No Momenta in filename :' + filename)
