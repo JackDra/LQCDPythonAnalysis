@@ -37,9 +37,10 @@ def WriteXmlOutput(thisfile,outputdict):
     
         
 def MergeXmlOutput(thisfile,outputdict):
-    if CheckMomFile(thisfile+'.xml'):
-        thisdict = ReadXmlAndPickle(thisfile+'.xml')[0]
-        outputdict = merge_dicts(outputdict,thisdict)
+    if os.path.isfile(thisfile+'.xml'):
+        if CheckMomFile(thisfile+'.xml'):
+            thisdict = ReadXmlAndPickle(thisfile+'.xml')[0]
+            outputdict = merge_dicts(outputdict,thisdict)
     if len(outputdict.keys()) > 1:
         raise IOError('Xml main key not single:' + ','.join(outputdict.keys()))
     WriteXmlOutput(thisfile,outputdict)
