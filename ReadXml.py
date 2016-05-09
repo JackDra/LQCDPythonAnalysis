@@ -93,8 +93,8 @@ def ReadFitFile(filedir,filename,thisMomList=RunMomList):
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
-        dictout[thismom] = {}
         if os.path.isfile(readfile):
+            dictout[thismom] = {}
             data = ReadXmlAndPickle(readfile)[0]
             data = data[data.keys()[0]]
             if 'Boots' in data.keys():
