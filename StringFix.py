@@ -29,6 +29,8 @@ def NoSm(thestring):
 def NoTSink(thestring):
     for i in AllTSinkStrList:
         thestring = thestring.replace(i,'')
+    for i in AllTSinkStrListVar:
+        thestring = thestring.replace(i,'')
     return thestring
 
 def NoCM(thestring):
