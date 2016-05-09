@@ -43,13 +43,12 @@ def NoCM(thestring):
     return thestring
 
 def ReducedVar(thestring):
-    thestring.replace('state1','')
     for itvar in PoFTvarList:
         thestring = thestring.replace(itvar,'PoF')
     for itvar in REvecTvarList:
         thestring = thestring.replace(itvar,'REvec')
     for itvar in DefTvarList:
-        thestring = thestring.replace(itvar,'CM')
+        thestring = thestring.replace(itvar,'CMCM')
     return thestring
 
 
