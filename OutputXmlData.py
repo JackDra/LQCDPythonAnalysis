@@ -36,11 +36,10 @@ def WriteXmlOutput(thisfile,outputdict):
         pickle.dump( Boots, pfile )
     
         
-def MergeXmlOutput(thisfile,outputdict):
-    if os.path.isfile(thisfile+'.xml'):
-        if CheckMomFile(thisfile+'.xml'):
-            thisdict = ReadXmlAndPickle(thisfile+'.xml')[0]
-            outputdict = merge_dicts(outputdict,thisdict)
+def MergeXmlOutput(thisfile,outputdict,CheckMom=True):
+    if CheckMomFile(thisfile+'.xml') and CheckMom:
+        thisdict = ReadXmlAndPickle(thisfile+'.xml')[0]
+        outputdict = merge_dicts(outputdict,thisdict)
     if len(outputdict.keys()) > 1:
         raise IOError('Xml main key not single:' + ','.join(outputdict.keys()))
     WriteXmlOutput(thisfile,outputdict)
@@ -159,7 +158,7 @@ def PrintFFSet(FFin,Set,Mass,SetMass,theCurr):
             datadict['Form_Factors']['Boots'][iqsqrd] = OrderedDict()
             for ic,iFF in enumerate(qdata['Boot']):
                 datadict['Form_Factors']['Boots'][iqsqrd]['FF'+str(ic)] = iFF.values
-    MergeXmlOutput(thisfile,datadict)
+    MergeXmlOutput(thisfile,datadict,CheckMom=False)
 
 
 
