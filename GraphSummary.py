@@ -51,10 +51,11 @@ pl.rcParams.update(params)
 def GetPlotIters():
     return itertools.cycle(markerset),itertools.cycle(colourset8),itertools.cycle(shiftset)
 
+
 ## Add special exclusions here: ##
 def GraphCondit(igamma,iq,thisMeth,iSet):
     graphthis = True
-    if 'OSF' in thisMeth and 'tsink26sm32' in iSet and 'cut3' in iSet: graphthis = False
+    # if 'OSF' in thisMeth and 'tsink26sm32' in iSet and 'cut3' in iSet: graphthis = False
     if 'Fits' in thisMeth and 'tsink32' in iSet and 'to18dt2' in iSet: graphthis = False
     if 'Fits' in thisMeth and 'tsink26' in iSet and 'to18dt2' in iSet: graphthis = False
     if 'SumMeth' in thisMeth and 'fitr2-4' in iSet: graphthis = False
@@ -74,8 +75,8 @@ def PlotXlabs(method,thissetlist,xminmax):
                 line3.append('All')
             elif '1-4' in isub and 'fr1' not in line3:
                 line3.append('fr1')
-            elif '2-4' in isub and 'fr2' not in line3:
-                line3.append('fr2')
+            # elif '2-4' in isub and 'fr2' not in line3:
+            #     line3.append('fr2')
     elif 'FitsTsink' in method:
         line1 = 'Fits'
         line2  = smlist[0]
