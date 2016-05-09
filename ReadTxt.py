@@ -360,6 +360,7 @@ def CombMethBoot(udata,ddata,opp,imom,igamma):
 def CombSetBoot(data,opp,thisPrintRead=PrintRead):
     dataout = deepcopy(data)
     start = time.time()
+    print data.keys()
     for dgamma,dgammadata in data.iteritems():
         if 'doub' in dgamma:
             combgamma = dgamma.replace('doub','')
