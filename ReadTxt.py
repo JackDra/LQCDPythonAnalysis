@@ -370,7 +370,6 @@ def CombSetBoot(data,opp,thisPrintRead=PrintRead):
                         dataout[combgamma] = OrderedDict()
                     for imom in dgammadata.iterkeys():
                         if imom in sgammadata.keys():
-                            print sgamma, dgamma, sgammadata[imom].keys(),dgammadata[imom].keys()
                             if 'RF' in sgammadata[imom].keys():
                                 if imom not in dataout[combgamma].keys():
                                     dataout[combgamma][imom] = OrderedDict()
