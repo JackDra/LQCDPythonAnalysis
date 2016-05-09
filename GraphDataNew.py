@@ -248,7 +248,7 @@ def PlotRFSetSum(data,thisSetList,thisTsinkR,legrem=''):
 
 
 
-def PlotRFSet(data,thisSetList,legrem=[''],MassDt = False):
+def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     if MassDt == False:
         iterSetList = SortMySet(thisSetList)[0]
@@ -256,11 +256,8 @@ def PlotRFSet(data,thisSetList,legrem=[''],MassDt = False):
         iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
     for iset in iterSetList:
         if not CheckDict(data,'RF',iset): continue
-        redset = iset
-        for ilegrem in legrem:
-            redset = redset.replace(ilegrem,'')
         if MassDt == False:
-            PlotRF(data['RF'][iset],thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(redset))
+            PlotRF(data['RF'][iset],thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset.replace(legrem,0)))
         else:
             dataplot = deepcopy(data['RF'][iset])
             dataplot['Boot'] = MassFun(dataplot['Boot'],MassDt)
