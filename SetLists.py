@@ -225,14 +225,14 @@ def ReduceTsink(listin,NoCM=False,NoREvec=True):
     return listout
 
 
-def GetTsinkSmLists(listin,NoREvec=False):
+def GetTsinkSmLists(listin,NoREvec=False,Reduced=True):
     smlist,tsinklist = [],[]
     for istr in listin:
         tsinkstr,smstr = SplitTSinkString(istr)
         if 'REvec' in smstr and NoREvec: continue
-        if tsinkstr not in tsinklist:
+        if tsinkstr not in tsinklist or not Reduced:
             tsinklist.append(tsinkstr)
-        if smstr not in smlist:
+        if smstr not in smlist or not Reduced:
             smlist.append(smstr)
     return tsinklist,smlist
 
