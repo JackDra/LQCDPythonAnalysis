@@ -60,7 +60,7 @@ def SplitToDt(tvar):
         dtval = re.search('dt.*',tvar).group()
     except:
         return None,None
-    return str(int(toval)-tsource),dtval
+    return toval,dtval
 
 def ProperCM(thestring):
     thestring = thestring.replace('state1','')
