@@ -416,9 +416,6 @@ def PlotSummedRF(data,thisfitr):
     thisfitr = thisfitr.split()[-1]
     thisfitmin,thisfitmax = thisfitr.split('-')
     for icut,cutdata in data.iteritems():
-        print cutdata.keys()
-        print cutdata['fit con '+thisfitr].keys()
-        print cutdata['fit con '+thisfitr]['Boot']
         tdata,dataplot,dataploterr = [],[],[]
         thiscol,thissym = thiscolcyc.next(),thissymcyc.next()
         
@@ -438,6 +435,7 @@ def PlotSummedRF(data,thisfitr):
         GetBootStats(fitbootdata),GetBootStats(fitbootdashed)
         plotup = Pullflag(fitbootdata,'Avg')+Pullflag(fitbootdata,'Std')
         plotdown = Pullflag(fitbootdata,'Avg')-Pullflag(fitbootdata,'Std')
+        print fitbootdashed[5]
         plotdashedup = Pullflag(fitbootdashed,'Avg')+Pullflag(fitbootdashed,'Std')
         plotdasheddown = Pullflag(fitbootdashed,'Avg')-Pullflag(fitbootdashed,'Std')
         pl.plot(fittdata,map(abs,Pullflag(fitbootdata,'Avg')),
