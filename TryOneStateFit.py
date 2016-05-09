@@ -81,7 +81,7 @@ print 'All Sets:\n' + '\n'.join(ReadSetList)+'\n'
 
 
 def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList,thisMomList):
-    print 'Running ' + thisGammaList[0]
+    print 'Running ' + thisGammaList[0] + ' ' + thisMomList[0]
     totstart = time.time()
     mprint( 'Reading Data')
     [data3pt,dump,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=thisMomList)
