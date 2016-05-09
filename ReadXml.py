@@ -59,9 +59,7 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
-        if not os.path.isfile(readfile):
-            # mprint(readfile + ' not found')
-        else:
+        if os.path.isfile(readfile):
             data = ReadXmlAndPickle(readfile)[0]
             data = data[data.keys()[0]]
             if 'Boots' in data.keys():
@@ -96,9 +94,7 @@ def ReadFitFile(filedir,filename,thisMomList=RunMomList):
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
         dictout[thismom] = {}
-        if not os.path.isfile(readfile):
-            # mprint(readfile + ' not found')
-        else:
+        if os.path.isfile(readfile):
             data = ReadXmlAndPickle(readfile)[0]
             data = data[data.keys()[0]]
             if 'Boots' in data.keys():
@@ -121,9 +117,7 @@ def ReadSumFile(filedir,filename,thisMomList=RunMomList):
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
-        if not os.path.isfile(readfile):
-            # mprint(readfile + ' not found')
-        else:
+        if os.path.isfile(readfile):
             data = ReadXmlAndPickle(readfile)[0]
             data = data[data.keys()[0]]
             if 'Boots' in data.keys():
@@ -168,9 +162,7 @@ def ReadSumFile(filedir,filename,thisMomList=RunMomList):
 def ReadFFFile(filename):
     dataout = {}
     if '.txt' in filename: filename = filename.replace('.txt','.xml')
-    if not os.path.isfile(filename):
-        # mprint(filename + ' not found')
-    else:
+    if os.path.isfile(filename):
         data = ReadXmlAndPickle(filename)[0]
         data = data[data.keys()[0]]
         dataout = OrderedDict()
@@ -219,9 +211,7 @@ def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
         for thismom in thisMomList:
             ip = qstrTOqcond(thismom)
             readfile = filedir+MakeMomDir(ip)+thisfilename.replace('.xml',ip+'.xml')
-            if not os.path.isfile(readfile):
-                # mprint(readfile + ' not found')
-            else:
+            if os.path.isfile(readfile):
                 data = ReadXmlAndPickle(readfile)[0]
                 data = data[data.keys()[0]]
                 if 'Boots' in data.keys():
