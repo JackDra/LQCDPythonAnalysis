@@ -229,7 +229,7 @@ def TwoStateFitMom3pt(fitBoot2pt,C3pt,this3ptCutList,thisTSinkList):
 #___2pt = [ ip , istate/ism  , params ]
 #___3pt = [ igamma , ip , iset , i3cut , params ]
 
-def OneStateSet2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitR):
+def OneStateSet2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec):
     def sm2ptwrap(C2ptmom,thisSmList,this2ptFitR):
         Bootthis2pt,Avgthis2pt,Chithis2pt = [],[],[]
         for ism,thissm in enumerate(thisSmList):
