@@ -21,7 +21,7 @@ thisGammaList = CreateGammaList(feedin['gamma'],twopt=False)
 # MethodList.remove('OSFTsink')
 
 print 'SetLists:\n','\n'.join(feedin['set']) + '\n'
-print 'MomList:\n','\n'.join(feedin['mom']) + '\n'
+# print 'MomList:\n','\n'.join(feedin['mom']) + '\n'
 if 'RF' in feedin['method']: feedin['method'].remove('RF')
 
 if DoMulticore:
