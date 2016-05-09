@@ -60,7 +60,7 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
         if not os.path.isfile(readfile):
-            mprint(readfile + ' not found')
+            # mprint(readfile + ' not found')
         else:
             data = ReadXmlAndPickle(readfile)[0]
             data = data[data.keys()[0]]
@@ -97,7 +97,7 @@ def ReadFitFile(filedir,filename,thisMomList=RunMomList):
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
         dictout[thismom] = {}
         if not os.path.isfile(readfile):
-            mprint(readfile + ' not found')
+            # mprint(readfile + ' not found')
         else:
             data = ReadXmlAndPickle(readfile)[0]
             data = data[data.keys()[0]]
@@ -122,7 +122,7 @@ def ReadSumFile(filedir,filename,thisMomList=RunMomList):
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
         if not os.path.isfile(readfile):
-            mprint(readfile + ' not found')
+            # mprint(readfile + ' not found')
         else:
             data = ReadXmlAndPickle(readfile)[0]
             data = data[data.keys()[0]]
@@ -169,7 +169,7 @@ def ReadFFFile(filename):
     dataout = {}
     if '.txt' in filename: filename = filename.replace('.txt','.xml')
     if not os.path.isfile(filename):
-        mprint(filename + ' not found')
+        # mprint(filename + ' not found')
     else:
         data = ReadXmlAndPickle(filename)[0]
         data = data[data.keys()[0]]
@@ -220,7 +220,7 @@ def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
             ip = qstrTOqcond(thismom)
             readfile = filedir+MakeMomDir(ip)+thisfilename.replace('.xml',ip+'.xml')
             if not os.path.isfile(readfile):
-                mprint(readfile + ' not found')
+                # mprint(readfile + ' not found')
             else:
                 data = ReadXmlAndPickle(readfile)[0]
                 data = data[data.keys()[0]]
