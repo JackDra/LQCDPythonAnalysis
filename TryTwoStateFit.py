@@ -102,14 +102,15 @@ else:
 
 
 
-def DoTSF(thisSetList,thisGammaList,TSF2ptarray,twoptGammaMomList):
-    print 'Running ' + thisGammaList[0]
+def DoTSF(thisSetList,thisGammaList,TSF2ptarray,twoptGammaMomList,thisMomList):
+    print 'Running ' + thisGammaList[0] + ' ' + thisMomList[0]
     totstart = time.time()
     mprint( 'Reading Data')
 
-    [data3pt,dump,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=feedin['mom'])
+    [data3pt,dump,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=thisMomList)
     thisGammaMomList['twopt'] = twoptGammaMomList['twopt']
     thisGammaList = thisGammaMomList.keys()
+    thisMom = qstrTOqcond(thisMomList[0])
     mprint( 'Data Read is: ' + BorA)
 
     ## data2pt = [ ip , iset2pt , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
@@ -121,7 +122,7 @@ def DoTSF(thisSetList,thisGammaList,TSF2ptarray,twoptGammaMomList):
     # thisFitTSFR = [thisFitTSFR[0]]
     start = time.time()
     for icf,ifit2pt in enumerate(thisFitTSFR):
-        thispicklefile = pickledir+'tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+'.p'
+        thispicklefile = pickledir+'tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0] + thisMom+thisGammaList[0]+thisMom+'.p'
         if not os.path.isfile(thispicklefile):
             perdone = (icf+1)/float(len(thisFitTSFR))
             tempout = MomTSSetFit(TSF2ptarray[icf],data3pt,TSF3ptCutList,thisSetList,thisGammaMomList,[ifit2pt,int(perdone*100)])
@@ -140,7 +141,7 @@ def DoTSF(thisSetList,thisGammaList,TSF2ptarray,twoptGammaMomList):
     TwoFit3ptAvg = []
     TwoFit3ptChi = []
     for icf,ifit2pt in enumerate(thisFitTSFR):
-        thispicklefile = pickledir+'tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+'.p'
+        thispicklefile = pickledir+'tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0]+thisMom+'.p'
         mprint( 'Reading Picked File: ' , thispicklefile , '                         \r',)
         if os.path.isfile(thispicklefile):
             pfile = open( thispicklefile, "rb" )
@@ -170,7 +171,7 @@ def DoTSF(thisSetList,thisGammaList,TSF2ptarray,twoptGammaMomList):
     PrintTSFSetToFile(TwoFit3pt,TwoFit3ptChi,thisGammaMomList,thisSetList,thisFitTSFR,outfile)
 
     for icf,ifit2pt in enumerate(thisFitTSFR):
-        thispicklefile = pickledir+'tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+'.p'
+        thispicklefile = pickledir+'tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0]+thisMom+'.p'
         mprint( 'Removing Picked File: ' , thispicklefile , '                         \r',)
         os.remove(thispicklefile)
 
@@ -218,12 +219,13 @@ else:
 
 
 inputparams = []
-for igamma in ReadGammaList:
-    if 'twopt' in igamma: continue
-    if 'doub' not in igamma and 'sing' not in igamma:
-        inputparams.append((ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],TSF2ptarray,twoptGammaMomList))
-    elif igamma.replace('doub','').replace('sing','') not in ReadGammaList:
-        inputparams.append((ReadSetList,[igamma],TSF2ptarray,twoptGammaMomList))
+for imom in feedin['mom']:
+    for igamma in ReadGammaList:
+        if 'twopt' in igamma: continue
+        if 'doub' not in igamma and 'sing' not in igamma:
+            inputparams.append((ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],TSF2ptarray,twoptGammaMomList,[imom]))
+        elif igamma.replace('doub','').replace('sing','') not in ReadGammaList:
+            inputparams.append((ReadSetList,[igamma],TSF2ptarray,twoptGammaMomList,[imom]))
 
 if DoMulticore:
     print 'Running Multicore'
