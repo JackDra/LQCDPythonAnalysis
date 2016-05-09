@@ -185,8 +185,8 @@ def PlotSummaryMethods(data,thisMethodSetList,igamma,iq,outputdir,dirpref=''):
     ylow,yhigh = pl.ylim()
     ysize = yhigh-ylow
     pl.ylim(ylow-(3*ysize*xlabshift),yhigh)
-    ylow,yhigh = pl.ylim()
-    ysize = yhigh-ylow
+    # ylow,yhigh = pl.ylim()
+    # ysize = yhigh-ylow
     for xmid,line1 in Xbox1:
         pl.text(xmid,ylow+(3*ysize*xlabshift),line1,horizontalalignment='center')
     for xmid,line2 in Xbox2:
