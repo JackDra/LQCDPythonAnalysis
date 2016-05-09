@@ -156,12 +156,12 @@ def PrintFFSet(FFin,Set,Mass,SetMass,theCurr):
             datadict['Form_Factors']['Values'][iqsqrd] = OrderedDict()
             datadict['Form_Factors']['Values'][iqsqrd]['Chi'] = qdata['Chi']
             for ic,iFF in enumerate(qdata['Boot']):
-                datadict['Form_Factors']['Values'][iqsqrd]['FF'+str(ic)] = BootAvgStdToFormat(iFF)
+                datadict['Form_Factors']['Values'][iqsqrd]['FF'+str(ic+1)] = BootAvgStdToFormat(iFF)
     for iqsqrd,qdata in FFin.iteritems():
         if len(qdata.keys()) > 0:
             datadict['Form_Factors']['Boots'][iqsqrd] = OrderedDict()
             for ic,iFF in enumerate(qdata['Boot']):
-                datadict['Form_Factors']['Boots'][iqsqrd]['FF'+str(ic)] = iFF.values
+                datadict['Form_Factors']['Boots'][iqsqrd]['FF'+str(ic+1)] = iFF.values
     MergeXmlOutput(thisfile,datadict,CheckMom=False)
 
 
