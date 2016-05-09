@@ -44,7 +44,7 @@ def NoCM(thestring):
         
 def ProperTsink(thestring):
     for tsinkstr,itsink in zip(AllTSinkStrListVar,AllTSinkListVar):
-        thestring = thestring.replace(tsinkstr,'SPACEt='+str(itsink-tsource))
+        thestring = thestring.replace(tsinkstr,'SPACEt'+str(itsink-tsource))
     return thestring
 
 def ProperSmear(thestring):
