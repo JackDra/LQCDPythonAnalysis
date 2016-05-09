@@ -97,7 +97,7 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList,thisMomList):
     start = time.time()
     # thisFitOSFR = [thisFitOSFR[0]]
     for icf,ifit2pt in enumerate(thisFitOSFR):
-        thispicklefile = pickledir+'tempOSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0]+'.p'
+        thispicklefile = pickledir+'tempOSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0]+thisMomList[0]+'.p'
         if not os.path.isfile(thispicklefile):
             perdone = (icf+1)/float(len(thisFitOSFR))
             tempout = OneStateSetFit(OSF2ptarray[icf],data3pt,OSF3ptCutList,thisSetList,thisGammaMomList,[ifit2pt,int(perdone*100)])
@@ -116,7 +116,7 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList,thisMomList):
     OneFit3ptAvg = []
     OneFit3ptChi = []
     for icf,ifit2pt in enumerate(thisFitOSFR):
-        thispicklefile = pickledir+'tempOSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0]+'.p'
+        thispicklefile = pickledir+'tempOSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0]+thisMomList[0]+'.p'
         mprint( 'Reading Picked file: ' , thispicklefile , '                                \r',)
         if os.path.isfile(thispicklefile):
             pfile = open( thispicklefile, "rb" )
@@ -140,7 +140,7 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList,thisMomList):
     PrintOSFSetToFile(OneFit3pt,OneFit3ptChi,thisGammaMomList,thisSetList,thisFitOSFR,outfile)
 
     for icf,ifit2pt in enumerate(thisFitOSFR):
-        thispicklefile = pickledir+'tempOSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0]+'.p'
+        thispicklefile = pickledir+'tempOSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0]+thisMomList[0]+'.p'
         mprint( 'Removing Picked file: ' , thispicklefile , '                                \r',)
         os.remove(thispicklefile)
 
