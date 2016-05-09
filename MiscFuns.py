@@ -265,6 +265,7 @@ def NDimOpp3(data,data2,data3,dimleft,funin,*funvars):
 def Pullflag(data,atribute):
     npdata = np.array(data)
     dataout = np.array([])
+    if len(npdata.flatten()) == 0: return getattr(data,atribute)
     for idata in npdata.flatten():
         flagdim = np.array(getattr(idata,atribute)).shape
         dataout = np.append(dataout,getattr(idata,atribute))
