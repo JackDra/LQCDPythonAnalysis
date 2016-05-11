@@ -19,7 +19,7 @@ from SetLists import *
 ##outputdict = { thismom , [tVals] / [Vals] / [Valserr] / [Boot] bs }
 def Check3ptFiles(thisGammaList,thisSetList,thisMomList,CheckType='',cfuns=False):
     CheckSetList,thisdir = thisSetList,outputdir
-    outputbool = False
+    outputbool = True
     if len(CheckType) > 0:
         CheckType += '/'
         if any([itype in CheckType for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(thisSetList)
@@ -34,10 +34,10 @@ def Check3ptFiles(thisGammaList,thisSetList,thisMomList,CheckType='',cfuns=False
         for iSF in SFList:
             for igamma in thisGammaList:
                 gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
-                for pstr in GetMomFromGamma(igamma):
+                for pstr in GetMomFromGamma(igamma,thisMomList=thisMomList):
                     ip = qstrTOqcond(pstr)
                     filename = iset+igamma+ iSF
                     dump,checkfile = SetUpPDict(ip,gammadir,filename)
-                    outputbool = outputbool or not CheckMomFile(checkfile+'.xml')
+                    outputbool = outputbool and CheckMomFile(checkfile+'.xml')
     return outputbool
                 

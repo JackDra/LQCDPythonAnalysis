@@ -97,7 +97,12 @@ def DumpAllMomLists():
         outfile = momlistdir + igamma + '.p'
         with open(outfile,'wb') as f:
             pickle.dump(FindMomFromGamma(igamma),f)
-
+    print ' Dumping MomList: P4giDi '
+    outfile = momlistdir + 'P4giDi.p'
+    with open(outfile,'wb') as f:
+        pickle.dump(['q = 0 0 0'],f)
+    
+            
 def GetMomFromGamma(igamma,thisMomList=qvecSet):
     infile = momlistdir + igamma.replace('doub','').replace('sing','') + '.p'
     with open(infile,'rb') as f:
