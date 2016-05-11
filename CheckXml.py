@@ -16,16 +16,24 @@ from OutputXmlData import *
 ##Also works for cfuns##
 ##xmlinput = { Ratio_Factor , Boots/Values , thismomlist , tlist } 
 ##outputdict = { thismom , [tVals] / [Vals] / [Valserr] / [Boot] bs }
-def CheckFitFiles(thisGammaList,thisSetList,thisMomList):
+def Check3ptFiles(thisGammaList,thisSetList,thisMomList,CheckType='',cfuns=False):
     outputbool = False
     xmlMomList = map(qstrTOqcond,thisMomList)
     for igamma in thisGammaList:
-        gammadir = outputdir+CreateOppDir(igamma)+'/Fits/'
+        if len(CheckType) > 0: CheckType += '/'
+        if cfuns: CheckType += 'cfuns/'
+        gammadir = outputdir+CreateOppDir(igamma)+'/' + CheckType
         for ip in xmlMomList:
             for iset in thisSetList:
-                filename = iset+igamma
-                dump,checkfile = SetUpPDict(ip,gammadir,filename)
-                print checkfile+'.xml'
-                outputbool = outputbool or not CheckMomFile(checkfile+'.xml')
+                SFList = ['']
+                if 'OSF' in CheckType:
+                    SFflag = OneStateParList['C3']
+                if 'TSF' in CheckType:
+                    SFflag = TwoStateParList['C3']
+                for iSF in SFList:
+                    filename = iset+igamma
+                    dump,checkfile = SetUpPDict(ip,gammadir,filename)
+                    print checkfile+'.xml'
+                    outputbool = outputbool or not CheckMomFile(checkfile+'.xml')
     return outputbool
                 
