@@ -20,14 +20,14 @@ from SetLists import *
 def Check3ptFiles(thisGammaList,thisSetList,thisMomList,CheckType='',cfuns=False):
     CheckSetList,thisdir = thisSetList,outputdir
     outputbool = False
-    xmlMomList = map(qstrTOqcond,thisMomList)
     if len(CheckType) > 0:
         CheckType += '/'
         if any([itype in CheckType for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(thisSetList)
         if cfuns: thisdir = outputdir + 'cfuns/'
     for igamma in thisGammaList:
         gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
-        for ip in xmlMomList:
+        for pstr in GetMomFromGamma(igamma):
+            ip = qstrTOqcond(pstr)
             for iset in CheckSetList:
                 SFList = ['']
                 if 'OSF' in CheckType:
