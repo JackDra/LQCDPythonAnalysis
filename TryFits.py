@@ -78,13 +78,14 @@ ShowSetLists(feedin['set'])
 totstart = time.time()
 inputparams = []
 nchunk = 1
+RunGammaList = []
 for igamma in thisGammaList:
     if 'doub' not in igamma and 'sing' not in igamma:
         for iChunk,(iSetChunk,iTSChunks) in enumerate(zip(chunks(feedin['set'],nchunk),chunks(DefTSinkSetList,nchunk))):
             if Check3ptFiles(['doub'+igamma,'sing'+igamma,igamma],iSetChunk,feedin['mom'],CheckType='Fits'):
                 print igamma , ' present for ' ,  ','.join(iSetChunk) 
-                del thisGammaList[thisGammaList.index(igamma)]
             else:
+                RunGammaList.append(igamma)
                 inputparams.append((['doub'+igamma,'sing'+igamma,igamma],iSetChunk,feedin['mom'],iTSChunks,(iChunk*100)/float(len(chunks(feedin['set'],nchunk)))))
 
 if DoMulticore:
@@ -100,7 +101,7 @@ else:
         print int((icount*100)/float(len(inputparams))) , '% done'
 
 
-WipeSet(outputdir,thisGammaList,feedin['set'],filepref='Fits/')
+WipeSet(outputdir,RunGammaList,feedin['set'],filepref='Fits/')
 for iout in output:
     FitDataBoot,FitDataChi,thisGammaMomList,feedin['set'],FitCutList = iout
     PrintFitSetToFile(*iout)

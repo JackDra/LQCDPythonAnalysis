@@ -104,6 +104,7 @@ VarMassCutoff = 0.4 # used in correlation matrix for cutting artifacts out of ei
 dirread = datadir+'/cfuns/k'+str(kappa)
 outputdir = datadir+'results/'+ListOrSet+'k'+str(kappa)+'/'
 logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
+momlistdir = datadir+'momdir/'
 pickledir = datadir+"pickledir/"
 REvecDir = scriptdir+'REvecSave/k'+str(kappa)+'/'
 RunMomList = qvecSet 
@@ -114,6 +115,7 @@ mkdir_p(outputdir)
 mkdir_p(pickledir)
 mkdir_p(logdir)
 mkdir_p(REvecDir)
+mkdir_p(momlistdir)
 nt = 64
 ns = 4
 

@@ -3,6 +3,7 @@ from MiscFuns import *
 from FFFuns import *
 from FitFunctions import *
 from Params import DefProjDerList
+import cPickle as pickle
 
 gi = ['g'+str(i) for i in [1,2,3,4]]
 gig5 = ['g'+str(i)+'g5' for i in [1,2,3,4]]
@@ -71,3 +72,34 @@ NoFFList = {'Scalar'   : ['FF1'],
             'PsVector' : ['FF1','FF2'],
             'Tensor'   : ['FF1','FF2','FF3']}
 
+
+
+def FindMomFromGamma(igamma,thisMomList=qvecSet):
+    momout = []
+    testgamma = igamma.replace('cmplx','').replace('doub','').replace('sing','')
+    for thisFF,iCurrOpps in CurrOpps.iteritems():
+        if testgamma in iCurrOpps:
+            thisFFtype = thisFF
+    for iq in thisMomList:
+        iqvec = np.array(qstrTOqvec(iq))*qunit
+        dump,rcheck,ccheck =  CurrFFs[thisFFtype](testgamma,iqvec.tolist(),[0,0,0],1.0)
+        if rcheck and 'cmplx' not in igamma:
+            momout.append(iq)
+        elif ccheck and 'cmplx' in igamma:
+            momout.append(iq)
+    return momout
+                                    
+            
+def DumpAllMomLists():
+    mygammalist = ['P4'+igamma for igamma in AllGammaSet] +['P3'+igamma for igamma in AllGammaSet] 
+    for igamma in mygammalist:
+        print ' Dumping MomList: ' + igamma
+        outfile = momlistdir + igamma + '.p'
+        with open(outfile,'wb') as f:
+            pickle.dump(FindMomFromGamma(igamma),f)
+
+def GetMomFromGamma(igamma,thisMomList=qvecSet):
+    infile = momlistdir + igamma + '.p'
+    with open(infile,'rb') as f:
+        momlistout = pickle.load(f)
+    return momlistout

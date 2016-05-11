@@ -11,7 +11,6 @@ nxyz = 32
 qunit = (2.0*np.pi)/float(nxyz)
 
 
-
 def makeqlist():
     qlist = np.array([])
     for iq1 in range(-Maxqsqrd,Maxqsqrd+1):

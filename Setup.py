@@ -55,3 +55,5 @@ f.write(str(thisNShifts)+'\n')
 f.close()
 
 
+from FFParams import DumpAllMomLists
+DumpAllMomLists()
