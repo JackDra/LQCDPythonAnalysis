@@ -21,7 +21,7 @@ def Check3ptFiles(thisGammaList,thisSetList,thisMomList,CheckType='',cfuns=False
     outputbool = False
     xmlMomList = map(qstrTOqcond,thisMomList)
     for igamma in thisGammaList:
-        if cfuns: thisdir = outputdir += 'cfuns/'
+        if cfuns: thisdir = outputdir + 'cfuns/'
         if len(CheckType) > 0: CheckType += '/'
         if any([CheckType in itype for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(thisSetList)
         gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
