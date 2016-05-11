@@ -24,17 +24,18 @@ def Check3ptFiles(thisGammaList,thisSetList,thisMomList,CheckType='',cfuns=False
         CheckType += '/'
         if any([itype in CheckType for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(thisSetList)
         if cfuns: thisdir = outputdir + 'cfuns/'
-    for igamma in thisGammaList:
-        gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
-        for pstr in GetMomFromGamma(igamma):
-            ip = qstrTOqcond(pstr)
-            for iset in CheckSetList:
-                SFList = ['']
-                if 'OSF' in CheckType:
-                    SFList = OneStateParList['C3']
-                if 'TSF' in CheckType:
-                    SFList = TwoStateParList['C3']
-                for iSF in SFList:
+    SFList = ['']
+    if 'OSF' in CheckType:
+        SFList = OneStateParList['C3']
+    if 'TSF' in CheckType:
+        SFList = TwoStateParList['C3']
+
+    for iset in CheckSetList:
+        for iSF in SFList:
+            for igamma in thisGammaList:
+                gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
+                for pstr in GetMomFromGamma(igamma):
+                    ip = qstrTOqcond(pstr)
                     filename = iset+igamma+ iSF
                     dump,checkfile = SetUpPDict(ip,gammadir,filename)
                     outputbool = outputbool or not CheckMomFile(checkfile+'.xml')
