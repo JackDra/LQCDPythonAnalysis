@@ -17,14 +17,14 @@ from OutputXmlData import *
 ##xmlinput = { Ratio_Factor , Boots/Values , thismomlist , tlist } 
 ##outputdict = { thismom , [tVals] / [Vals] / [Valserr] / [Boot] bs }
 def Check3ptFiles(thisGammaList,thisSetList,thisMomList,CheckType='',cfuns=False):
-    CheckSetList = thisSetList
+    CheckSetList,thisdir = thisSetList,outputdir
     outputbool = False
     xmlMomList = map(qstrTOqcond,thisMomList)
     for igamma in thisGammaList:
-        if cfuns: CheckType += 'cfuns/'
+        if cfuns: thisdir = outputdir += 'cfuns/'
         if len(CheckType) > 0: CheckType += '/'
         if any([CheckType in itype for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(thisSetList)
-        gammadir = outputdir+CreateOppDir(igamma)+'/' + CheckType
+        gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
         for ip in xmlMomList:
             for iset in CheckSetList:
                 SFList = ['']
