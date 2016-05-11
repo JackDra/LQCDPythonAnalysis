@@ -80,6 +80,7 @@ nchunk = 1
 for igamma in thisGammaList:
     if 'doub' not in igamma and 'sing' not in igamma:
         for iChunk,(iSetChunk,iTSChunks) in enumerate(zip(chunks(feedin['set'],nchunk),chunks(DefTSinkSetList,nchunk))):
+            if CheckFitDone(['doub'+igamma,'sing'+igamma,igamma],iSetChunk,feedin['mom']): continue
             inputparams.append((['doub'+igamma,'sing'+igamma,igamma],iSetChunk,feedin['mom'],iTSChunks,(iChunk*100)/float(len(chunks(feedin['set'],nchunk)))))
 
 if DoMulticore:
