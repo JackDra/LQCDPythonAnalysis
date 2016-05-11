@@ -31,9 +31,9 @@ def Check3ptFiles(thisGammaList,thisSetList,thisMomList,CheckType='',cfuns=False
             for iset in CheckSetList:
                 SFList = ['']
                 if 'OSF' in CheckType:
-                    SFflag = OneStateParList['C3']
+                    SFList = OneStateParList['C3']
                 if 'TSF' in CheckType:
-                    SFflag = TwoStateParList['C3']
+                    SFList = TwoStateParList['C3']
                 for iSF in SFList:
                     filename = iset+igamma+ iSF
                     dump,checkfile = SetUpPDict(ip,gammadir,filename)
