@@ -35,7 +35,7 @@ def Check3ptFiles(thisGammaList,thisSetList,thisMomList,CheckType='',cfuns=False
                 if 'TSF' in CheckType:
                     SFflag = TwoStateParList['C3']
                 for iSF in SFList:
-                    filename = iset+igamma+ SFflag
+                    filename = iset+igamma+ iSF
                     dump,checkfile = SetUpPDict(ip,gammadir,filename)
                     print checkfile+'.xml'
                     outputbool = outputbool or not CheckMomFile(checkfile+'.xml')
