@@ -37,7 +37,6 @@ def Check3ptFiles(thisGammaList,thisSetList,thisMomList,CheckType='',cfuns=False
                 for iSF in SFList:
                     filename = iset+igamma+ iSF
                     dump,checkfile = SetUpPDict(ip,gammadir,filename)
-                    print checkfile+'.xml'
                     outputbool = outputbool or not CheckMomFile(checkfile+'.xml')
     return outputbool
                 
