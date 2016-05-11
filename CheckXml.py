@@ -11,6 +11,7 @@ from FitParams import *
 import cPickle as pickle
 from OppFuns import *
 from OutputXmlData import *
+from SetLists import *
 
 
 ##Also works for cfuns##
