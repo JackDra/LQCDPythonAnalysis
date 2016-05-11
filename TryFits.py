@@ -83,8 +83,8 @@ for igamma in thisGammaList:
         for iChunk,(iSetChunk,iTSChunks) in enumerate(zip(chunks(feedin['set'],nchunk),chunks(DefTSinkSetList,nchunk))):
             if Check3ptFiles(['doub'+igamma,'sing'+igamma,igamma],iSetChunk,feedin['mom'],CheckType='Fits'):
                 print igamma , ' present for ' ,  ','.join(iSetChunk) 
-                continue
-            inputparams.append((['doub'+igamma,'sing'+igamma,igamma],iSetChunk,feedin['mom'],iTSChunks,(iChunk*100)/float(len(chunks(feedin['set'],nchunk)))))
+            else:
+                inputparams.append((['doub'+igamma,'sing'+igamma,igamma],iSetChunk,feedin['mom'],iTSChunks,(iChunk*100)/float(len(chunks(feedin['set'],nchunk)))))
 
 if DoMulticore:
     makeContextFunctions(TryFitsFun)

@@ -61,9 +61,17 @@ start = time.time()
 inputparams = []
 for igamma in thisGammaList:
     if 'doub' not in igamma and 'sing' not in igamma and 'twopt' not in igamma:
-        inputparams.append((['doub'+igamma,'sing'+igamma,igamma],thisReadSetList,thisTSinkList,thisReadSet2pt,feedin['mom']))
+        parsegammalist = ['doub'+igamma,'sing'+igamma,igamma]
+        if Check3ptFiles(parsegammalist,thisReadSetList,feedin['mom'],CheckType='SumMeth'):
+            print igamma , ' present for ' ,  ','.join(iSetChunk)
+        else:
+            inputparams.append((parsegammalist,thisReadSetList,thisTSinkList,thisReadSet2pt,feedin['mom']))
     elif igamma.replace('sing','').replace('doub','') not in thisGammaList and 'twopt' not in igamma:
-        inputparams.append(([igamma],thisReadSetList,thisTSinkList,thisReadSet2pt,feedin['mom']))        
+        parsegammalist = [igamma]
+        if Check3ptFiles(parsegammalist,thisReadSetList,feedin['mom'],CheckType='SumMeth'):
+            print igamma , ' present for ' ,  ','.join(iSetChunk)
+        else:
+            inputparams.append((parsegammalist,thisReadSetList,thisTSinkList,thisReadSet2pt,feedin['mom']))        
 makeContextFunctions(FitSumWrap)
 
 if DoMulticore:
