@@ -63,13 +63,13 @@ for igamma in thisGammaList:
     if 'doub' not in igamma and 'sing' not in igamma and 'twopt' not in igamma:
         parsegammalist = ['doub'+igamma,'sing'+igamma,igamma]
         for imom in Check3ptAllSets(parsegammalist,thisReadSetList,thisMomList=feedin['mom'],CheckType='SumMeth'):
-            print 'adding to que: ' , igamma , ip 
-            inputparams.append((parsegammalist,thisReadSetList,thisTSinkList,thisReadSet2pt,feedin['mom']))
+            print 'adding to que: ' , igamma , imom 
+            inputparams.append((parsegammalist,thisReadSetList,thisTSinkList,thisReadSet2pt,[imom]))
     elif igamma.replace('sing','').replace('doub','') not in thisGammaList and 'twopt' not in igamma:
         parsegammalist = [igamma]
         for imom in Check3ptAllSets(parsegammalist,thisReadSetList,thisMomList=feedin['mom'],CheckType='SumMeth'):
-            print 'adding to que: ' , igamma , ip 
-            inputparams.append((parsegammalist,thisReadSetList,thisTSinkList,thisReadSet2pt,feedin['mom']))
+            print 'adding to que: ' , igamma , imom
+            inputparams.append((parsegammalist,thisReadSetList,thisTSinkList,thisReadSet2pt,[imom]))
 makeContextFunctions(FitSumWrap)
 
 if DoMulticore:
