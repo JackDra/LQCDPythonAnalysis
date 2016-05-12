@@ -174,13 +174,14 @@ def CreateSMOMPairs(plist):
         pc = [ip[0],-ip[1],-ip[2],ip[3]]
         plistout.append([[pa,pb],[pa,pc],[pb,pc]])
     return plistout
-        
+
+
+
 def OutputSMOMPairs(filename):
     def strneg(intin):
-        if intin < 0:
-                  return str(init)
-        else:
-                  return ' '+str(init)
+        nspace = abs(intin)/10
+        if intin < 0: nspace += 1
+        return ' '*(2-nspace)+str(intin)
     thisplist = [[1, 1, 1, 2], [2, 2, 2, 4], [3, 3, 3, 6], [4, 4, 4, 8], [5, 5, 5, 10], [6, 6, 6, 12], [7, 7, 7, 14], [8, 8, 8, 16]]
     plistout = CreateSMOMPairs(thisplist)
     plistout = np.rollaxis(np.rollaxis(np.array(plistout),3),3)
