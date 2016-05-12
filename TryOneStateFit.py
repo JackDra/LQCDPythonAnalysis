@@ -18,6 +18,7 @@ import datetime
 import cPickle as pickle
 # import pickle
 from InputArgs import *
+from CheckXml import Check3ptFiles
 
 # sys.stdout = open(logfile,'a',0)
 # sys.stderr = sys.stdout
@@ -187,9 +188,11 @@ for imom in feedin['mom']:
     for igamma in ReadGammaList:
         if 'twopt' in igamma: continue
         if 'doub' not in igamma and 'sing' not in igamma:
-            inputparams.append((ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],OSF2ptarray,twoptGammaMomList,[imom]))
+            if not Check3ptFiles([igamma,'doub'+igamma,'sing'+igamma],ReadSetList,[imom],CheckType='OSF'+outfile):
+                inputparams.append((ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],OSF2ptarray,twoptGammaMomList,[imom]))
         elif igamma.replace('doub','').replace('sing','') not in ReadGammaList:
-            inputparams.append((ReadSetList,[igamma],OSF2ptarray,twoptGammaMomList,[imom]))
+            if not Check3ptFiles([igamma],ReadSetList,[imom],CheckType='OSF'+outfile):
+                inputparams.append((ReadSetList,[igamma],OSF2ptarray,twoptGammaMomList,[imom]))
 
 if DoMulticore:
     print 'Running Multicore'

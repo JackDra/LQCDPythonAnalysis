@@ -20,6 +20,7 @@ import cPickle as pickle
 # import pickle
 import warnings
 from InputArgs import *
+from CheckXml import Check3ptFiles
 
 print '----------------------------------------------------------------------------------'
 
@@ -223,9 +224,11 @@ for imom in feedin['mom']:
     for igamma in ReadGammaList:
         if 'twopt' in igamma: continue
         if 'doub' not in igamma and 'sing' not in igamma:
-            inputparams.append((ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],TSF2ptarray,twoptGammaMomList,[imom]))
+            if not Check3ptFiles([igamma,'doub'+igamma,'sing'+igamma],ReadSetList,[imom],CheckType='TSF'+outfile):
+                inputparams.append((ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],TSF2ptarray,twoptGammaMomList,[imom]))
         elif igamma.replace('doub','').replace('sing','') not in ReadGammaList:
-            inputparams.append((ReadSetList,[igamma],TSF2ptarray,twoptGammaMomList,[imom]))
+            if not Check3ptFiles([igamma],ReadSetList,[imom],CheckType='TSF'+outfile):
+                inputparams.append((ReadSetList,[igamma],TSF2ptarray,twoptGammaMomList,[imom]))
 
 if DoMulticore:
     print 'Running Multicore'
