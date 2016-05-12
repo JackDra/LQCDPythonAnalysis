@@ -86,13 +86,16 @@ for igamma in thisGammaList:
                 # RunGammaList.append(igamma)
                 inputparams.append((['doub'+igamma,'sing'+igamma,igamma],[iSet],[imom],[iTS],(iChunk*100)/float(len(feedin['set']))))
 
+
 if DoMulticore:
+    print 'Running Multicore'
     makeContextFunctions(TryFitsFun)
     thisPool = Pool(min(len(inputparams),feedin['anaproc']))
     output = thisPool.map(TryFitsFun.mapper,inputparams)
     thisPool.close()
     thisPool.join()
 else:
+    print 'Running Single core'
     output = []
     for icount,iin in enumerate(inputparams):
         output.append(TryFitsFun(*iin))
