@@ -163,3 +163,30 @@ def GetqcondFromFilename(filename):
         if qstrTOqcond(ip) in filename:
             return qstrTOqcond(ip)
     raise IOError('No Momenta in filename :' + filename)
+
+## plistout = [ plistindex , pabc combinations , backward/forward , pxyzt]
+def CreateSMOMPairs(plist):
+    plistout = []
+    for ip in plist:
+        if len(ip) != 4: raise IOError('plist must contain 4vectors: ' + ' '.join(map(str,ip)))
+        pa = ip
+        pb = [-ip[0]] + ip[1:]
+        pc = [ip[0],-ip[1],-ip[2],ip[3]]
+        plistout.append([[pa,pb],[pa,pc],[pb,pc]])
+    return plistout
+        
+def OutputSMOMPairs(filename):
+    def strneg(intin):
+        if intin < 0:
+                  return str(init)
+        else:
+                  return ' '+str(init)
+    thisplist = [[1, 1, 1, 2], [2, 2, 2, 4], [3, 3, 3, 6], [4, 4, 4, 8], [5, 5, 5, 10], [6, 6, 6, 12], [7, 7, 7, 14], [8, 8, 8, 16]]
+    plistout = CreateSMOMPairs(thisplist)
+    plistout = np.rollaxis(np.rollaxis(np.array(plistout),3),3)
+    plistout = [[iip.flatten() for iip in ip] for ip in plistout]
+    with open(filename,'w') as f:
+        for pbf in plistout:
+            f.write('\n')
+            for pxyzt in pbf:
+                f.write('( '+' '.join(map(strneg,pxyzt)) + ' ) \n')
