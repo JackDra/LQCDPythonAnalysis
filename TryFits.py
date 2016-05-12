@@ -77,17 +77,14 @@ ShowSetLists(feedin['set'])
 
 totstart = time.time()
 inputparams = []
-nchunk = 1
-RunGammaList = []
-for imom in feedin['mom']:
-    for igamma in thisGammaList:
-        if 'doub' not in igamma and 'sing' not in igamma:
-            for iChunk,(iSetChunk,iTSChunks) in enumerate(zip(chunks(feedin['set'],nchunk),chunks(DefTSinkSetList,nchunk))):
-                if Check3ptFiles(['doub'+igamma,'sing'+igamma,igamma],iSetChunk,[imom],CheckType='Fits'):
-                    print igamma , ' present for ' ,  ','.join(iSetChunk) , imom
-                else:
-                    RunGammaList.append(igamma)
-                    inputparams.append((['doub'+igamma,'sing'+igamma,igamma],iSetChunk,[imom],iTSChunks,(iChunk*100)/float(len(chunks(feedin['set'],nchunk)))))
+# RunGammaList = []
+for igamma in thisGammaList:
+    if 'doub' not in igamma and 'sing' not in igamma:
+        for iChunk,(iSet,iTS) in enumerate(zip(feedin['set'],DefTSinkSetList)):
+            thisMomList = Check3ptArray(['doub'+igamma,'sing'+igamma,igamma],[iSet],thisMomList=feedin['mom'],CheckType='Fits')
+            for imom in thisMomList[igamma][iSet]:
+                # RunGammaList.append(igamma)
+                inputparams.append((['doub'+igamma,'sing'+igamma,igamma],[iSet],[imom],[iTS],(iChunk*100)/float(len(feedin['set']))))
 
 if DoMulticore:
     makeContextFunctions(TryFitsFun)
@@ -102,7 +99,7 @@ else:
         print int((icount*100)/float(len(inputparams))) , '% done'
 
 
-WipeSet(outputdir,RunGammaList,feedin['set'],filepref='Fits/')
+# WipeSet(outputdir,RunGammaList,feedin['set'],filepref='Fits/')
 for iout in output:
     FitDataBoot,FitDataChi,thisGammaMomList,feedin['set'],FitCutList = iout
     PrintFitSetToFile(*iout)

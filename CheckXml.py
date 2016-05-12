@@ -41,3 +41,31 @@ def Check3ptFiles(thisGammaList,thisSetList,thisMomList,CheckType='',cfuns=False
                     outputbool = outputbool and CheckMomFile(checkfile+'.xml')
     return outputbool
                 
+
+## list of booleans corresponding to what needs to be done relative to list thisMomList
+def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',cfuns=False):
+    CheckSetList,thisdir = thisSetList,outputdir
+    if len(CheckType) > 0:
+        CheckType += '/'
+        if any([itype in CheckType for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(thisSetList)
+        if cfuns: thisdir = outputdir + 'cfuns/'
+    SFList = ['']
+    if 'OSF' in CheckType:
+        SFList = OneStateParList['C3']
+    if 'TSF' in CheckType:
+        SFList = TwoStateParList['C3']
+    for iset in CheckSetList:
+        outlist[iset] = {}
+        for igamma in thisGammaList:
+            gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
+            outlist[iset][igamma] = []
+            for pstr in GetMomFromGamma(igamma,thisMomList=thisMomList):
+                ip = qstrTOqcond(pstr)
+                filename = iset+igamma
+                dump,checkfile = SetUpPDict(ip,gammadir,filename)
+                if all([CheckMomFile(checkfile+iSF+'.xml') for iSF in SFList]):
+                    outlist[iset][igamma].append(ip)
+                else:
+                    outlist[iset][igamma].append(ip)
+    return outlist
+                
