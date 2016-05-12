@@ -65,7 +65,7 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
                 filename = iset+igamma
                 dump,checkfile = SetUpPDict(ip,gammadir,filename)
                 print checkfile
-                if not all([CheckMomFile(checkfile+iSF+'.xml') for iSF in SFList]):
+                if not all([CheckMomFile(checkfile.replace(ip,iSF+ip)+'.xml') for iSF in SFList]):
                     outlist[igamma][iset].append(pstr)
     return outlist
                 
