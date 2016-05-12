@@ -72,7 +72,7 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
 ## list of booleans corresponding to what needs to be done relative to list thisMomList
 def Check3ptAllSets(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',cfuns=False):
     outlist = Check3ptArray(thisGammaList,thisSetList,thisMomList=thisMomList,CheckType=CheckType,cfuns=cfuns)
-    CheckSetList = thiSetList
+    CheckSetList = thisSetList
     if any([itype in CheckType for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(thisSetList)
     outnoset = {}
     for igamma in thisGammaList:
