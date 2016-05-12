@@ -62,12 +62,14 @@ inputparams = []
 for igamma in thisGammaList:
     if 'doub' not in igamma and 'sing' not in igamma and 'twopt' not in igamma:
         parsegammalist = ['doub'+igamma,'sing'+igamma,igamma]
-        for imom in Check3ptAllSets(parsegammalist,thisReadSetList,thisMomList=feedin['mom'],CheckType='SumMeth'):
+        QueMomList = Check3ptAllSets(parsegammalist,thisReadSetList,thisMomList=feedin['mom'],CheckType='SumMeth')
+        for imom in QueMomList[igamma]:
             print 'adding to que: ' , igamma , imom 
             inputparams.append((parsegammalist,thisReadSetList,thisTSinkList,thisReadSet2pt,[imom]))
     elif igamma.replace('sing','').replace('doub','') not in thisGammaList and 'twopt' not in igamma:
         parsegammalist = [igamma]
-        for imom in Check3ptAllSets(parsegammalist,thisReadSetList,thisMomList=feedin['mom'],CheckType='SumMeth'):
+        QueMomList = Check3ptAllSets(parsegammalist,thisReadSetList,thisMomList=feedin['mom'],CheckType='SumMeth')
+        for imom in QueMomList[igamma]:
             print 'adding to que: ' , igamma , imom
             inputparams.append((parsegammalist,thisReadSetList,thisTSinkList,thisReadSet2pt,[imom]))
 makeContextFunctions(FitSumWrap)
