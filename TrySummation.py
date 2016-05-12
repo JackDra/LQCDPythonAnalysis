@@ -14,7 +14,7 @@ import time,datetime
 import copy
 from InputArgs import *
 from XmlFormatting import *
-
+from CheckXml import Check3ptFiles
 
 
 def FitSumWrap(thisGammaList,thisReadSetList,thisTSinkList,this2ptSetList,thisReadMomList):
