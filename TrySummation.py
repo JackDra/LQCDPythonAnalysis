@@ -14,7 +14,7 @@ import time,datetime
 import copy
 from InputArgs import *
 from XmlFormatting import *
-from CheckXml import Check3ptFiles
+from CheckXml import *
 
 
 def FitSumWrap(thisGammaList,thisReadSetList,thisTSinkList,this2ptSetList,thisReadMomList):
@@ -62,16 +62,14 @@ inputparams = []
 for igamma in thisGammaList:
     if 'doub' not in igamma and 'sing' not in igamma and 'twopt' not in igamma:
         parsegammalist = ['doub'+igamma,'sing'+igamma,igamma]
-        if Check3ptFiles(parsegammalist,thisReadSetList,feedin['mom'],CheckType='SumMeth'):
-            print igamma , ' present '
-        else:
+        for imom in Check3ptAllSets(parsegammalist,thisReadSetList,thisMomList=feedin['mom'],CheckType='SumMeth'):
+            print 'adding to que: ' , igamma , ip 
             inputparams.append((parsegammalist,thisReadSetList,thisTSinkList,thisReadSet2pt,feedin['mom']))
     elif igamma.replace('sing','').replace('doub','') not in thisGammaList and 'twopt' not in igamma:
         parsegammalist = [igamma]
-        if Check3ptFiles(parsegammalist,thisReadSetList,feedin['mom'],CheckType='SumMeth'):
-            print igamma , ' present '
-        else:
-            inputparams.append((parsegammalist,thisReadSetList,thisTSinkList,thisReadSet2pt,feedin['mom']))        
+        for imom in Check3ptAllSets(parsegammalist,thisReadSetList,thisMomList=feedin['mom'],CheckType='SumMeth'):
+            print 'adding to que: ' , igamma , ip 
+            inputparams.append((parsegammalist,thisReadSetList,thisTSinkList,thisReadSet2pt,feedin['mom']))
 makeContextFunctions(FitSumWrap)
 
 if DoMulticore:

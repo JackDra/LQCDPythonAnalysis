@@ -55,17 +55,29 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
         SFList = OneStateParList['C3']
     if 'TSF' in CheckType:
         SFList = TwoStateParList['C3']
-    for iset in CheckSetList:
-        outlist[iset] = {}
-        for igamma in thisGammaList:
-            gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
-            outlist[iset][igamma] = []
+    for igamma in thisGammaList:
+        outlist[igamma] = {}
+        gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
+        for iset in CheckSetList:
+            outlist[igamma][iset] = []
             for pstr in GetMomFromGamma(igamma,thisMomList=thisMomList):
                 ip = qstrTOqcond(pstr)
                 filename = iset+igamma
                 dump,checkfile = SetUpPDict(ip,gammadir,filename)
                 if not all([CheckMomFile(checkfile+iSF+'.xml') for iSF in SFList]):
-                    outlist[iset][igamma].append(pstr)
+                    outlist[igamma][iset].append(pstr)
     return outlist
                 
 
+## list of booleans corresponding to what needs to be done relative to list thisMomList
+def Check3ptAllSets(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',cfuns=False):
+    outlist = Check3ptArray(thisGammaList,thisSetList,thisMomList=thisMomList,CheckType=CheckType,cfuns=cfuns)
+    outnoset = {}
+    for igamma in thisGammaList:
+        outnoset[igamma] = []
+        for ip in outlist[igamma][thisSetList[0]]:
+            if all([ip in outlist[igamma][iset] for iset in outlist[igamma].keys()]):
+                outnoset[igamma].append(ip)
+    return outnoset
+            
+        
