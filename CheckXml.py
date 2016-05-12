@@ -73,8 +73,10 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
 def Check3ptAllSets(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',cfuns=False):
     outlist = Check3ptArray(thisGammaList,thisSetList,thisMomList=thisMomList,CheckType=CheckType,cfuns=cfuns)
     outnoset = {}
+    print outlist.keys()
     for igamma in thisGammaList:
         outnoset[igamma] = []
+        print outlist[igamma].keys(), thisSetList[0]
         for ip in outlist[igamma][thisSetList[0]]:
             if all([ip in outlist[igamma][iset] for iset in outlist[igamma].keys()]):
                 outnoset[igamma].append(ip)
