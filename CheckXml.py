@@ -45,6 +45,7 @@ def Check3ptFiles(thisGammaList,thisSetList,thisMomList,CheckType='',cfuns=False
 ## list of booleans corresponding to what needs to be done relative to list thisMomList
 def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',cfuns=False):
     CheckSetList,thisdir = thisSetList,outputdir
+    outlist = {}
     if len(CheckType) > 0:
         CheckType += '/'
         if any([itype in CheckType for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(thisSetList)
