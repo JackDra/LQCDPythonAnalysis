@@ -73,11 +73,11 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
 def Check3ptAllSets(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',cfuns=False):
     outlist = Check3ptArray(thisGammaList,thisSetList,thisMomList=thisMomList,CheckType=CheckType,cfuns=cfuns)
     CheckSetList = thisSetList
-    if any([itype in CheckType for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(thisSetList)
     outnoset = {}
     for igamma in thisGammaList:
         outnoset[igamma] = []
-        for ip in outlist[igamma][thisSetList[0]]:
+        checkSet = outlist[igamma].keys()[0]
+        for ip in outlist[igamma][checkSet]:
             if all([ip in outlist[igamma][iset] for iset in outlist[igamma].keys()]):
                 outnoset[igamma].append(ip)
     return outnoset
