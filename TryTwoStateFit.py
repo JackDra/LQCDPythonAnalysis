@@ -232,17 +232,19 @@ for igamma in ReadGammaList:
             print 'adding to que: ' , igamma , imom
             inputparams.append((ReadSetList,[igamma],TSF2ptarray,twoptGammaMomList,[imom]))
 
-if DoMulticore:
-    print 'Running Multicore'
-    makeContextFunctions(DoTSF)
-    thisPool = Pool(min(len(inputparams),feedin['anaproc']))
-    thisPool.map(DoTSF.mapper,inputparams)
-    thisPool.close()
-    thisPool.join()
+if len(inputparams) > 0:
+    if DoMulticore:
+        print 'Running Multicore'
+        makeContextFunctions(DoTSF)
+        thisPool = Pool(min(len(inputparams),feedin['anaproc']))
+        thisPool.map(DoTSF.mapper,inputparams)
+        thisPool.close()
+        thisPool.join()
+    else:
+        print 'Running Single Core'
+        for iin in inputparams: DoTSF(*iin)
 else:
-    print 'Running Single Core'
-    for iin in inputparams: DoTSF(*iin)
-
+    print 'nothing to do'        
 # print 'removing pickled 2pt file'
 # if os.path.isfile(picklefile2pt): os.remove(picklefile2pt)
 print 'all finished'

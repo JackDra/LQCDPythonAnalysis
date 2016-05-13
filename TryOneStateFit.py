@@ -196,17 +196,19 @@ for igamma in ReadGammaList:
             print 'adding to que: ' , igamma , imom
             inputparams.append((ReadSetList,[igamma],OSF2ptarray,twoptGammaMomList,[imom]))
 
-if DoMulticore:
-    print 'Running Multicore'
-    makeContextFunctions(DoOSF)
-    thisPool = Pool(min(len(inputparams),feedin['anaproc']))
-    thisPool.map(DoOSF.mapper,inputparams)
-    thisPool.close()
-    thisPool.join()
+if len(inputparams) > 0:
+    if DoMulticore:
+        print 'Running Multicore'
+        makeContextFunctions(DoOSF)
+        thisPool = Pool(min(len(inputparams),feedin['anaproc']))
+        thisPool.map(DoOSF.mapper,inputparams)
+        thisPool.close()
+        thisPool.join()
+    else:
+        print 'Running Single Core'
+        for iin in inputparams: DoOSF(*iin)
 else:
-    print 'Running Single Core'
-    for iin in inputparams: DoOSF(*iin)
-
+    print 'nothing to calculate'
 # print 'removing pickled 2pt file'
 # if os.path.isfile(picklefile2pt): os.remove(picklefile2pt)
 print 'all finished'
