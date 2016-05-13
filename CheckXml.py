@@ -68,7 +68,7 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
                 filename = iset+igamma
                 if not all([CheckMomFile(SetUpPDict(ip,gammadir,filename+iSF)[1]+'.xml') for iSF in SFList]):
                     outlist[igamma][iset].append(pstr)
-    print 'Checking complete, Total Time: ' , GetTimeStr(time.time()-totstart)
+    print 'Checking complete, Total Time: ' , GetTimeStr(time.time()-totstart) + '                                  '
     return outlist
                 
 
