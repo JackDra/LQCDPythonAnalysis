@@ -107,4 +107,8 @@ def GetMomFromGamma(igamma,thisMomList=qvecSet):
     infile = momlistdir + igamma.replace('doub','').replace('sing','') + '.p'
     with open(infile,'rb') as f:
         momlistout = pickle.load(f)
-    return momlistout
+    combmomlist = []
+    for imom in thisMomList:
+        if imom in momlistout:
+            combmomlist.append(imom)
+    return combmomlist
