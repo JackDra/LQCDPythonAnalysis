@@ -140,7 +140,7 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList,thisMomList):
     WipeSFSet(outputdir,thisGammaList+['twopt'],'OSF'+outfile,'One',setlist=thisSetList)
     PrintOSFSetToFile(OneFit3pt,OneFit3ptChi,thisGammaMomList,thisSetList,thisFitOSFR,outfile)
 
-    for icf,(ifit2pt,thispicklefile) in enumerate(zip(thisFitOSFR,thispicklefile)):
+    for icf,(ifit2pt,thispicklefile) in enumerate(zip(thisFitOSFR,thispicklelist)):
         mprint( 'Removing Picked file: ' , thispicklefile , '                                \r',)
         os.remove(thispicklefile)
 
