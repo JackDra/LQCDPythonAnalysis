@@ -12,7 +12,8 @@ import cPickle as pickle
 from OppFuns import *
 from OutputXmlData import *
 from SetLists import *
-import time,datetime
+from MiscFuns import *
+import time
 
 ##Also works for cfuns##
 ##xmlinput = { Ratio_Factor , Boots/Values , thismomlist , tlist } 
@@ -57,7 +58,7 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
     if 'TSF' in CheckType:
         SFList = TwoStateParList['C3']
     for icg,igamma in enumerate(thisGammaList):
-        print 'Checking: ' , igamma , GetTimeFormatted(icg,len(thisGammaList),time.time()-totstart) + '          \r',
+        print 'Checking: ' , igamma , GetTimeForm(icg,len(thisGammaList),time.time()-totstart) + '          \r',
         outlist[igamma] = {}
         gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
         for iset in CheckSetList:

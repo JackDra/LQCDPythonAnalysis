@@ -84,7 +84,7 @@ def GetTimeLeft(counter,totlen,timedone):
 def GetTimeLeftStr(counter,totlen,timedone):
    return GetTimeStr(GetTimeLeft(counter,totlen,timedone))
 
-def GetTimeFormmated(counter,totlen,timedone):
+def GetTimeForm(counter,totlen,timedone):
    return 'Current Time: ' + GetTimeStr(thistime) + 'at ' + GetPercent(counter,totlen,timedone) + 'Time Left: ' + GetTimeLeftStr(counter,totlen,timedone)
    
 class Unbuffered(object):
