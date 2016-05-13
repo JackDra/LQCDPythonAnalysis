@@ -12,7 +12,7 @@ import cPickle as pickle
 from OppFuns import *
 from OutputXmlData import *
 from SetLists import *
-
+import time,datetime
 
 ##Also works for cfuns##
 ##xmlinput = { Ratio_Factor , Boots/Values , thismomlist , tlist } 
@@ -45,6 +45,7 @@ def Check3ptFiles(thisGammaList,thisSetList,thisMomList,CheckType='',cfuns=False
 ## list of booleans corresponding to what needs to be done relative to list thisMomList
 def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',cfuns=False):
     CheckSetList,thisdir = thisSetList,outputdir
+    totstart = time.time()
     outlist = {}
     if len(CheckType) > 0:
         CheckType += '/'
@@ -55,7 +56,8 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
         SFList = OneStateParList['C3']
     if 'TSF' in CheckType:
         SFList = TwoStateParList['C3']
-    for igamma in thisGammaList:
+    for icg,igamma in enumerate(thisGammaList):
+        print 'Checking: ' , igamma , GetTimeFormatted(icg,len(thisGammaList),time.time()-totstart) + '          \r',
         outlist[igamma] = {}
         gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
         for iset in CheckSetList:
@@ -65,6 +67,7 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
                 filename = iset+igamma
                 if not all([CheckMomFile(SetUpPDict(ip,gammadir,filename+iSF)[1]+'.xml') for iSF in SFList]):
                     outlist[igamma][iset].append(pstr)
+    print 'Checking complete, Total Time: ' , GetTimeStr(time.time()-totstart)
     return outlist
                 
 
