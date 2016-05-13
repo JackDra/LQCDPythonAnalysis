@@ -58,7 +58,7 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
     if 'TSF' in CheckType:
         SFList = TwoStateParList['C3']
     for icg,igamma in enumerate(thisGammaList):
-        print 'Checking: ' , igamma , GetTimeForm(icg,len(thisGammaList),time.time()-totstart) + '          \r',
+        print 'Checking: ' , GetTimeForm(icg,len(thisGammaList),time.time()-totstart) , igamma ,  '          \r',
         outlist[igamma] = {}
         gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
         for iset in CheckSetList:
@@ -69,7 +69,7 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
                 if not all([CheckMomFile(SetUpPDict(ip,gammadir,filename+iSF)[1]+'.xml') for iSF in SFList]):
                     outlist[igamma][iset].append(pstr)
     if len(thisGammaList) < 5:
-        print 'Checking complete, ' + thisGammaList[0].replace('doub','').replace('sing','') + '  Total Time: ' , GetTimeStr(time.time()-totstart) + ' '*40
+        print 'Checking complete, Total Time: ' , GetTimeStr(time.time()-totstart) +thisGammaList[0].replace('doub','').replace('sing','')+ ' '*40
     else:
         print 'Checking complete, Total Time: ' , GetTimeStr(time.time()-totstart) + ' '*40
     return outlist
