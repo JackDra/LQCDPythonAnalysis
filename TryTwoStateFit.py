@@ -224,12 +224,12 @@ for igamma in ReadGammaList:
     if 'doub' not in igamma and 'sing' not in igamma:
         QueMomList = Check3ptAllSets([igamma,'doub'+igamma,'sing'+igamma],ReadSetList,thisMomList=feedin['mom'],CheckType='TSF'+outfile)
         for imom in QueMomList[igamma]:
-            print 'adding to que: ' , igamma , imom
+            # print 'adding to que: ' , igamma , imom
             inputparams.append((ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],TSF2ptarray,twoptGammaMomList,[imom]))
     elif igamma.replace('doub','').replace('sing','') not in ReadGammaList:
         QueMomList = Check3ptAllSets([igamma],ReadSetList,thisMomList=feedin['mom'],CheckType='TSF'+outfile)
         for imom in QueMomList[igamma]:
-            print 'adding to que: ' , igamma , imom
+            # print 'adding to que: ' , igamma , imom
             inputparams.append((ReadSetList,[igamma],TSF2ptarray,twoptGammaMomList,[imom]))
 
 if len(inputparams) > 0:
