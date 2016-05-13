@@ -208,6 +208,6 @@ else:
     print 'Running Single Core'
     for iin in inputparams: DoOSF(*iin)
 
-print 'removing pickled 2pt file'
-if os.path.isfile(picklefile2pt): os.remove(picklefile2pt)
+# print 'removing pickled 2pt file'
+# if os.path.isfile(picklefile2pt): os.remove(picklefile2pt)
 print 'all finished'
