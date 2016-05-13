@@ -69,9 +69,9 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
                 if not all([CheckMomFile(SetUpPDict(ip,gammadir,filename+iSF)[1]+'.xml') for iSF in SFList]):
                     outlist[igamma][iset].append(pstr)
     if len(thisGammaList) < 5:
-        print 'Checking complete, ' + thisGammaList[0].replace('doub','').replace('sing','') + '  Total Time: ' , GetTimeStr(time.time()-totstart) + ' '*20
+        print 'Checking complete, ' + thisGammaList[0].replace('doub','').replace('sing','') + '  Total Time: ' , GetTimeStr(time.time()-totstart) + ' '*40
     else:
-        print 'Checking complete, Total Time: ' , GetTimeStr(time.time()-totstart) + ' '*20
+        print 'Checking complete, Total Time: ' , GetTimeStr(time.time()-totstart) + ' '*40
     return outlist
                 
 
