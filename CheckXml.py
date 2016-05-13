@@ -70,6 +70,8 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
                     outlist[igamma][iset].append(pstr)
     if len(thisGammaList) < 5:
         print 'Checking complete, ' + thisGammaList[0].replace('doub','').replace('sing','') + '  Total Time: ' , GetTimeStr(time.time()-totstart) + ' '*20
+    else:
+        print 'Checking complete, Total Time: ' , GetTimeStr(time.time()-totstart) + ' '*20
     return outlist
                 
 
