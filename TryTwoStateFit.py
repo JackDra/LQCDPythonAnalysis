@@ -122,9 +122,10 @@ def DoTSF(thisSetList,thisGammaList,TSF2ptarray,twoptGammaMomList,thisMomList):
 
     # thisFitTSFR = [thisFitTSFR[0]]
     start = time.time()
+    thispicklelist = []
     for icf,ifit2pt in enumerate(thisFitTSFR):
-        thispicklefile = pickledir+'tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0] + thisMom+thisGammaList[0]+thisMom+'.p'
-        if not os.path.isfile(thispicklefile):
+        thispicklelist.append(pickledir+'tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0] + thisMom+'.p')
+        if not os.path.isfile(thispicklefile[-1]):
             perdone = (icf+1)/float(len(thisFitTSFR))
             tempout = MomTSSetFit(TSF2ptarray[icf],data3pt,TSF3ptCutList,thisSetList,thisGammaMomList,[ifit2pt,int(perdone*100)])
             pfile = open( thispicklefile, "wb" )
@@ -141,8 +142,7 @@ def DoTSF(thisSetList,thisGammaList,TSF2ptarray,twoptGammaMomList,thisMomList):
     TwoFit3pt = []
     TwoFit3ptAvg = []
     TwoFit3ptChi = []
-    for icf,ifit2pt in enumerate(thisFitTSFR):
-        thispicklefile = pickledir+'tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0]+thisMom+'.p'
+    for icf,(ifit2pt,thispicklefile) in enumerate(zip(thisFitTSFR,thispicklelist)):
         mprint( 'Reading Picked File: ' , thispicklefile , '                         \r',)
         if os.path.isfile(thispicklefile):
             pfile = open( thispicklefile, "rb" )
@@ -171,8 +171,7 @@ def DoTSF(thisSetList,thisGammaList,TSF2ptarray,twoptGammaMomList,thisMomList):
     WipeSF(outputdir,thisGammaList+['twopt'],'TSF'+outfile,'Two',statelist=ReadStateList,todtlist=ReadTvarList,smlist=ReadSmearList)
     PrintTSFSetToFile(TwoFit3pt,TwoFit3ptChi,thisGammaMomList,thisSetList,thisFitTSFR,outfile)
 
-    for icf,ifit2pt in enumerate(thisFitTSFR):
-        thispicklefile = pickledir+'tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0]+thisMom+'.p'
+    for icf,(ifit2pt,thispicklefile) in enumerate(zip(thisFitTSFR,thispicklelist)):
         mprint( 'Removing Picked File: ' , thispicklefile , '                         \r',)
         os.remove(thispicklefile)
 
