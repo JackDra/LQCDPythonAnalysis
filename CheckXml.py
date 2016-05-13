@@ -10,6 +10,7 @@ from FitParams import *
 import cPickle as pickle
 from OppFuns import *
 from ReadXml import CheckMomFile
+from OutputXmlFile import SetUpPDict
 from SetLists import *
 from MiscFuns import *
 import time
