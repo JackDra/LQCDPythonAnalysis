@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import ReadXml
 import xmltodict
 from XmlFuns import *
 from XmlFormatting import *
@@ -10,7 +9,7 @@ from Params import *
 from FitParams import *
 import cPickle as pickle
 from OppFuns import *
-from OutputXmlData import *
+from ReadXml import CheckMomFile
 from SetLists import *
 from MiscFuns import *
 import time

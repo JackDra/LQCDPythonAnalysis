@@ -39,15 +39,13 @@ def ReadXmlAndPickle(filein):
         xmldata[firstkey[0]]['Boots'] = ReadPickleBoot(bootfile)
     return xmldata,bootfile
 
-    
 def CheckMomFile(filein):
     if not os.path.isfile(filein): return False
-    ip = GetqcondFromFilename(filein)
+    if not DoContentsCheck: return True
     xmldata,bootfile = ReadXmlDict(filein)
-    firstkey = xmldata.keys()[0]
-    if os.path.isfile(bootfile) and ip in firstkey:
-        return True
+    if GetqcondFromFilename(filein) in xmldata.keys()[0]: return True
     return False
+
 
 
 ##Also works for cfuns##
