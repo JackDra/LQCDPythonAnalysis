@@ -125,10 +125,10 @@ def DoTSF(thisSetList,thisGammaList,TSF2ptarray,twoptGammaMomList,thisMomList):
     thispicklelist = []
     for icf,ifit2pt in enumerate(thisFitTSFR):
         thispicklelist.append(pickledir+'tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0] + thisMom+'.p')
-        if not os.path.isfile(thispicklefile[-1]):
+        if not os.path.isfile(thispicklelist[icf]):
             perdone = (icf+1)/float(len(thisFitTSFR))
             tempout = MomTSSetFit(TSF2ptarray[icf],data3pt,TSF3ptCutList,thisSetList,thisGammaMomList,[ifit2pt,int(perdone*100)])
-            pfile = open( thispicklefile[-1], "wb" )
+            pfile = open( thispicklelist[icf], "wb" )
             pickle.dump( tempout, pfile )
             pfile.close()
             timeleft = (time.time()-start)*((1-perdone)/perdone)

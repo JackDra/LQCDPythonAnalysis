@@ -100,10 +100,10 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList,thisMomList):
     thispicklelist = []
     for icf,ifit2pt in enumerate(thisFitOSFR):
         thispicklelist.append(pickledir+'tempOSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0]+thisMom+'.p')
-        if not os.path.isfile(thispicklefile[-1]):
+        if not os.path.isfile(thispicklelist[icf]):
             perdone = (icf+1)/float(len(thisFitOSFR))
             tempout = OneStateSetFit(OSF2ptarray[icf],data3pt,OSF3ptCutList,thisSetList,thisGammaMomList,[ifit2pt,int(perdone*100)])
-            pfile = open( thispicklefile[-1], "wb" )
+            pfile = open( thispicklelist[icf], "wb" )
             pickle.dump( tempout, pfile )
             pfile.close()
             timeleft = (time.time()-start)*((1-perdone)/perdone)
