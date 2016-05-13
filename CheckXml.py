@@ -85,6 +85,7 @@ def Check3ptAllSets(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='
         for setlist in outlist[igamma].itervalues():
             for ip in setlist:
                 outnoset[igamma].append(ip)
-    return OrderMomList(outnoset)
+        outnoset[igamma] = OrderMomList(outnoset[igamma])
+    return outnoset
             
         
