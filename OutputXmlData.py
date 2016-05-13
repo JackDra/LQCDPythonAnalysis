@@ -281,7 +281,6 @@ def PrintOSFToFile(filedir,filename,thisMomList,xml2ptFitList,xmlOSFList,data3pt
         for ic2pt,icut2ptstr in enumerate(xml2ptFitList):
             datadict[ip]['Values'][icut2ptstr] = OrderedDict()
             datadict[ip]['Boots'][icut2ptstr] = OrderedDict()
-            print ip, ic2pt, igamma, ism
             for icutstr,cutdata,cutdataChi in zip(xmlOSFList,data3pt[ic2pt][igamma][ipc][ism],data3ptChi[ic2pt][igamma][ipc][ism]):
                 datadict[ip]['Values'][icut2ptstr][icutstr] = BootAvgStdChiToFormat(cutdata[ipar],cutdataChi)
                 datadict[ip]['Boots'][icut2ptstr][icutstr] = cutdata[ipar].values
