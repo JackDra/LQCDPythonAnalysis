@@ -118,7 +118,11 @@ mkdir_p(logdir)
 mkdir_p(REvecDir)
 mkdir_p(momlistdir)
 nt = 64
+nx = 32
+ndim = [nx,nx,nx,nt]
+latspace = 0.074 ## in fm
 ns = 4
+
 
 if ListOrSet == 'ReadList':
     nboot = 2

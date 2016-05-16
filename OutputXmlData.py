@@ -235,7 +235,7 @@ def PrintTSFSetToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2pt
     del thisGammaMomList['twopt']
     for ipar,thispar in enumerate(TwoStateParList['C3']):
         for igamma,(thisgamma,thismomlist) in enumerate(thisGammaMomList.iteritems()):
-            print 'Printing ' , thispar , ' ' , thisgamma , ' to file      \r',
+            mprint('Printing ' , thispar , ' ' , thisgamma , ' to file      \r',)
             gammapardir = outputdir+CreateOppDir(thisgamma)+'/TSF'+fileprefix+'/'
             mkdir_p(gammapardir)
             for ism,thesm in enumerate(thisSmList):                

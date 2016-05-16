@@ -8,7 +8,7 @@ import os, errno
 import sys
 from copy import deepcopy
 from collections import OrderedDict
-import pylab as pl
+# import pylab as pl
 import time,datetime
 from copy import deepcopy
 
@@ -160,14 +160,14 @@ def DelConf(data,iconf):
             del data[delism][deljsm][iconf]
     return data
 
-def get_delcmap(thiscmap,points,delcol):
-    colorrange = pl.linspace(0,1,points)
-    midcr = (delcol[0]+delcol[1])/2.0
-    widcr = (delcol[1]-delcol[0])/2.0
-    for i,icr in enumerate(colorrange):
-        if icr < midcr: colorrange[i] = icr - (icr*widcr)/midcr
-        elif icr > midcr: colorrange[i] = (1-(widcr/(1-midcr)))*(icr-midcr) + midcr + widcr
-    return pl.get_cmap(thiscmap)(colorrange)
+# def get_delcmap(thiscmap,points,delcol):
+#     colorrange = pl.linspace(0,1,points)
+#     midcr = (delcol[0]+delcol[1])/2.0
+#     widcr = (delcol[1]-delcol[0])/2.0
+#     for i,icr in enumerate(colorrange):
+#         if icr < midcr: colorrange[i] = icr - (icr*widcr)/midcr
+#         elif icr > midcr: colorrange[i] = (1-(widcr/(1-midcr)))*(icr-midcr) + midcr + widcr
+#     return pl.get_cmap(thiscmap)(colorrange)
 
 
 def DiagSmear(data2pt):
