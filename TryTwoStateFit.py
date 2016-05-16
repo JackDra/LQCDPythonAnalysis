@@ -21,6 +21,7 @@ import cPickle as pickle
 import warnings
 from InputArgs import *
 from CheckXml import *
+from MiscFuns import GetTimeStr
 
 print '----------------------------------------------------------------------------------'
 
@@ -232,6 +233,7 @@ for igamma in ReadGammaList:
             # print 'adding to que: ' , igamma , imom
             inputparams.append((ReadSetList,[igamma],TSF2ptarray,twoptGammaMomList,[imom]))
 
+RunStart = time.time()
 if len(inputparams) > 0:
     if DoMulticore:
         print 'Running Multicore'
@@ -248,3 +250,4 @@ else:
 # print 'removing pickled 2pt file'
 # if os.path.isfile(picklefile2pt): os.remove(picklefile2pt)
 print 'all finished'
+print 'total time: ' : GetTimeStr(RunStart - time.time())
