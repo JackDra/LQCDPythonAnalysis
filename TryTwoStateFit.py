@@ -176,7 +176,7 @@ def DoTSF(thisSetList,thisGammaList,TSF2ptarray,twoptGammaMomList,thisMomList):
         mprint( 'Removing Picked File: ' , thispicklefile , '                         \r',)
         os.remove(thispicklefile)
 
-    print 'TSF ' + thisGammaList[0]+' took ' , str(datetime.timedelta(seconds=time.time()-totstart)) , ' h:m:s'
+    print 'TSF ' + thisGammaList[0]+' ' + thisMom +' took ' , str(datetime.timedelta(seconds=time.time()-totstart)) , ' h:m:s'
     
 
 
