@@ -34,7 +34,8 @@ feedin = InputParams(sys.argv[2:])
 print 'Gamma Input (For re-running): -g=' , feedin['gamma']
 ReadGammaList = CreateGammaList(feedin['gamma'],twopt=True)
 
-OSFColList = ['Tsink','CM','JustPoF','REvec']
+# OSFColList = ['Tsink','CM','JustPoF','REvec']
+OSFColList = ['Tsink','CM','JustPoF']
 
 if outfile == 'Tsink':
     ReadSmearList = ['32']
