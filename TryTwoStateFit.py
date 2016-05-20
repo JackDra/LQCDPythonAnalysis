@@ -250,4 +250,4 @@ else:
 # print 'removing pickled 2pt file'
 # if os.path.isfile(picklefile2pt): os.remove(picklefile2pt)
 print 'all finished'
-print 'total time: ' : GetTimeStr(RunStart - time.time())
+print 'total time: ', GetTimeStr(RunStart - time.time())
