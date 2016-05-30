@@ -104,7 +104,8 @@ if len(inputparams) > 0:
             print int((icount*100)/float(len(inputparams))) , '% done'
 else:
     print 'nothing to calculate'        
-
+    output = []
+    
 # WipeSet(outputdir,RunGammaList,feedin['set'],filepref='Fits/')
 for iout in output:
     FitDataBoot,FitDataChi,thisGammaMomList,feedin['set'],FitCutList = iout
