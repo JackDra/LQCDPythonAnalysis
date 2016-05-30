@@ -63,7 +63,7 @@ def TryFitsFun(thisGammaList,thisSetList,thisReadMomList,thisTSinkList,thischunk
                 FitDataAvg[igamma][imom].append(dataoutAvg)
                 FitDataChi[igamma][imom].append(dataoutChi)
     #FitData = [ igamma , ip , icut , iset ]
-    print ' '.join(thisGammaMomList.keys()) , ' at ' , thischunk,'% took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s '
+    # print ' '.join(thisGammaMomList.keys()) , ' at ' , thischunk,'% took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s '
     return FitDataBoot,FitDataChi,thisGammaMomList,thisSetList,FitCutList
 
 
