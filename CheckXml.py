@@ -44,7 +44,7 @@ def Check3ptFiles(thisGammaList,thisSetList,thisMomList,CheckType='',cfuns=False
                 
 
 ## list of booleans corresponding to what needs to be done relative to list thisMomList
-def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',cfuns=False):
+def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',cfuns=False,printout=True):
     CheckSetList,thisdir = thisSetList,outputdir
     totstart = time.time()
     outlist = {}
@@ -58,7 +58,7 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
     if 'TSF' in CheckType:
         SFList = TwoStateParList['C3']
     for icg,igamma in enumerate(thisGammaList):
-        print 'Checking: ' , GetTimeForm(icg,len(thisGammaList),time.time()-totstart) , igamma ,  '          \r',
+        if printout: print 'Checking: ' , GetTimeForm(icg,len(thisGammaList),time.time()-totstart) , igamma ,  '          \r',
         outlist[igamma] = {}
         gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
         for iset in CheckSetList:
@@ -69,15 +69,15 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
                 if not all([CheckMomFile(SetUpPDict(ip,gammadir,filename+iSF)[1]+'.xml') for iSF in SFList]):
                     outlist[igamma][iset].append(pstr)
     if len(thisGammaList) < 5:
-        print 'Checking complete, Total Time: ' , GetTimeStr(time.time()-totstart) +thisGammaList[0].replace('doub','').replace('sing','')+ ' '*40
+        if printout: print 'Checking complete, Total Time: ' , GetTimeStr(time.time()-totstart) +thisGammaList[0].replace('doub','').replace('sing','')+ ' '*40
     else:
-        print 'Checking complete, Total Time: ' , GetTimeStr(time.time()-totstart) + ' '*40
+        if printout: print 'Checking complete, Total Time: ' , GetTimeStr(time.time()-totstart) + ' '*40
     return outlist
                 
 
 ## list of booleans corresponding to what needs to be done relative to list thisMomList
-def Check3ptAllSets(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',cfuns=False):
-    outlist = Check3ptArray(thisGammaList,thisSetList,thisMomList=thisMomList,CheckType=CheckType,cfuns=cfuns)
+def Check3ptAllSets(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',cfuns=False,printout=printout):
+    outlist = Check3ptArray(thisGammaList,thisSetList,thisMomList=thisMomList,CheckType=CheckType,cfuns=cfuns,printout = printout)
     CheckSetList = thisSetList
     outnoset = {}
     for igamma in thisGammaList:
