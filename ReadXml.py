@@ -40,6 +40,7 @@ def ReadXmlAndPickle(filein):
     return xmldata,bootfile
 
 def CheckMomFile(filein):
+    print filein
     if not os.path.isfile(filein): return False
     if not DoContentsCheck: return True
     xmldata,bootfile = ReadXmlDict(filein)
