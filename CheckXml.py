@@ -76,7 +76,7 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
                 
 
 ## list of booleans corresponding to what needs to be done relative to list thisMomList
-def Check3ptAllSets(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',cfuns=False,printout=printout):
+def Check3ptAllSets(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',cfuns=False,printout=True):
     outlist = Check3ptArray(thisGammaList,thisSetList,thisMomList=thisMomList,CheckType=CheckType,cfuns=cfuns,printout = printout)
     CheckSetList = thisSetList
     outnoset = {}
