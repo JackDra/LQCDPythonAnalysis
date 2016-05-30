@@ -74,13 +74,16 @@ for igamma in thisGammaList:
             inputparams.append((parsegammalist,thisReadSetList,thisTSinkList,thisReadSet2pt,[imom]))
 makeContextFunctions(FitSumWrap)
 
-if DoMulticore:
-    print 'Running multiprocessor fits'
-    thisPool = Pool(processes=min(len(inputparams),feedin['anaproc']))
-    thisPool.map(FitSumWrap.mapper,inputparams)
-    thisPool.close()
-    thisPool.join()
+if len(inputparams) > 0:
+    if DoMulticore:
+        print 'Running multiprocessor fits'
+        thisPool = Pool(processes=min(len(inputparams),feedin['anaproc']))
+        thisPool.map(FitSumWrap.mapper,inputparams)
+        thisPool.close()
+        thisPool.join()
+    else:
+        print 'Running single processor fits'
+        for ipar in inputparams : FitSumWrap(*ipar)
 else:
-    print 'Running single processor fits'
-    for ipar in inputparams : FitSumWrap(*ipar)
+    print 'nothing to calculate'
 print 'All Done, time taken:' , GetTimeStr(time.time()-start)
