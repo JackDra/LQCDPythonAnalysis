@@ -37,11 +37,11 @@ def ReadXmlAndPickle(filein):
     firstkey = xmldata.keys()
     if len(firstkey) > 0:
         xmldata[firstkey[0]]['Boots'] = ReadPickleBoot(bootfile)
-    if 'Info' not in xmldata[firstkey[0]].keys():
-        xmldata[firstkey[0]]['Info'] = {'nconfig':-1}
-    else:
-        if 'nconfig' not in xmldata[firstkey[0]]['Info'].keys():
+        if 'Info' not in xmldata[firstkey[0]].keys():
             xmldata[firstkey[0]]['Info'] = {'nconfig':-1}
+        else:
+            if 'nconfig' not in xmldata[firstkey[0]]['Info'].keys():
+                xmldata[firstkey[0]]['Info'] = {'nconfig':-1}
     return xmldata,bootfile
 
 def CheckMomFile(filein):
