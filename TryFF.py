@@ -35,8 +35,8 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr):
     # mprint( 'Set:' + theset + ' MassSetPicked:'+thesetmass)
 ## FF { { momsqrd } { Boot/Avg/Chi } }
     thisstart = time.time()
-    FF = CreateFF(setdict,thisMass['Avg'],thisCurr)
-    PrintFFSet(FF,theset,thisMass,thesetmass,thisCurr)
+    FF,infodict = CreateFF(setdict,thisMass['Avg'],thisCurr)
+    PrintFFSet(FF,theset,thisMass,thesetmass,thisCurr,infodict)
     mprint( 'Fit and Print for ' , theset , ' took: ',str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s'    )
 
 

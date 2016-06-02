@@ -10,6 +10,7 @@ from collections import OrderedDict
 from BootTest import BootStrap1
 from FFParams import *
 from LLSBoot import *
+from OutputXmlData import CombineSetInfo
 
 ## data { { gamma } { mom } { Fit(Boot/Avg/Std/Chi) } }
 ## dataout { { momsqrd } { Boot/Avg/Chi }
@@ -18,7 +19,8 @@ def CreateFF(data,mass,iCurr):
     thisdataout = {}
     Opps = CurrOpps[iCurr]
     thisdataout = OrderedDict()
-    for iqsqrd in MomSqrdSet:
+    infodict = {}
+    for iqsqrd in MomSqrdSet:        
         iqs = 'qsqrd'+str(iqsqrd)
         thisdataout['qsqrd'+str(iqsqrd)] = {}
         datavals,FFcoeff = [],[]
@@ -39,11 +41,12 @@ def CreateFF(data,mass,iCurr):
                     for iFF,iFFcof in enumerate(FFcoeffhold):
                         FFcoeff[iFF].append(iFFcof.imag)
                     datavals.append(data[iopp+'cmplx'][iq]['Boot'])
+                    infodict[iqs] = data[iopp+'cmplx'][iq]['Info']
                 if RealVal and rcheck:
                     for iFF,iFFcof in enumerate(FFcoeffhold):
                         FFcoeff[iFF].append(iFFcof.real)
                     datavals.append(data[iopp][iq]['Boot'])
-
+                    infodict[iqs] = data[iopp][iq]['Info']
         if len(datavals) == 0: continue
         zboot,zvec = [BootStrap1(nboot,0)],[0.0]
         if 'Scalar' in iCurr :
@@ -103,7 +106,7 @@ def CreateFF(data,mass,iCurr):
                 thisdataout[iqs]['Boot'] = FFBoothold
                 thisdataout[iqs]['Avg'] = FFAvghold
         thisdataout[iqs]['Chi'] = FFChihold[0]
-    return thisdataout
+    return thisdataout,infodict
 
 
     
