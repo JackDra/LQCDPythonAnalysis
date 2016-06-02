@@ -93,9 +93,9 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList):
                 prevtime = time.time()
                 PlotCMData(thisdatadict,thisSetList,igamma,imom)
                 progprint(8,prevtime,igamma)
-                if 'OSFTsink' in thisMethodList:
+                if 'OSFCM' in thisMethodList:
                     PlotCMOSFData(thisdatadict,thisMassdict,thisSetList,igamma,imom)
-                if 'TSFTsink' in thisMethodList:
+                if 'TSFCM' in thisMethodList:
                     PlotCMTSFData(thisdatadict,thisMassdict,thisSetList,igamma,imom)
             elif kappa == 12104:
                 PlotCMData(thisdatadict,thisSetList,igamma,imom)
