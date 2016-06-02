@@ -162,7 +162,7 @@ def PrintFFSet(FFin,Set,Mass,SetMass,theCurr,infoFF):
     datadict = {'Form_Factors':{'Values':OrderedDict(),'Boots':OrderedDict()}}
     if 'Chi' not in Mass.keys(): Mass['Chi'] = float('NaN')
     datadict['Form_Factors']['Values']['Mass'] = OrderedDict()
-    datadict['Form_Factors']['Values']['Info'] = OrderedDict()
+    datadict['Form_Factors']['Info'] = OrderedDict()
     datadict['Form_Factors']['Values']['Mass']['Set'] = SetMass
     datadict['Form_Factors']['Values']['Mass']['Avg'] = Mass['Avg']
     datadict['Form_Factors']['Values']['Mass']['Std'] = Mass['Std']
