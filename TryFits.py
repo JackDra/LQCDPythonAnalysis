@@ -67,7 +67,10 @@ inputparams = []
 for igamma in thisGammaList:
     if 'doub' not in igamma and 'sing' not in igamma:
         for iChunk,(iSet,iTS) in enumerate(zip(feedin['set'],DefTSinkSetList)):
-            thisMomList = Check3ptArray(['doub'+igamma,'sing'+igamma,igamma],[iSet],thisMomList=feedin['mom'],CheckType='Fits',printout=False)
+            if DefWipe:
+                thisMomList = feedin['mom']
+            else:
+                thisMomList = Check3ptArray(['doub'+igamma,'sing'+igamma,igamma],[iSet],thisMomList=feedin['mom'],CheckType='Fits',printout=False)
             for imom in thisMomList[igamma][iSet]:
                 # print 'adding to que: ' , igamma , iSet , imom
                 # RunGammaList.append(igamma)
