@@ -69,25 +69,34 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList):
                 prevtime = time.time()
                 PlotTSinkData(thisdatadict,thisSetList,igamma,imom,thissm='state1'+PoFTvarList[0])
                 progprint(2,prevtime,igamma)
-                prevtime = time.time()
-                PlotTSinkSumData(thisdatadict,thisSetList,igamma,imom)
-                progprint(3,prevtime,igamma)
-                prevtime = time.time()
-                PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,igamma,imom,thisSF='TSFTsink')
-                progprint(4,prevtime,igamma)
-                prevtime = time.time()
-                PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,igamma,imom,thisSF='TSFtest32')
-                progprint(5,prevtime,igamma)
-                prevtime = time.time()
-                PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,igamma,imom,thisSF='TSFSmall')
-                progprint(6,prevtime,igamma)
-                prevtime = time.time()
-                PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,igamma,imom,thisSF='OSFTsink')
-                progprint(7,prevtime,igamma)
+                if 'SumMeth' in thisMethodList:
+                    prevtime = time.time()
+                    PlotTSinkSumData(thisdatadict,thisSetList,igamma,imom)
+                    progprint(3,prevtime,igamma)
+                if 'TSFTsink' in thisMethodList:
+                    prevtime = time.time()
+                    PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,igamma,imom,thisSF='TSFTsink')
+                    progprint(4,prevtime,igamma)
+                if 'TSFtest32' in thisMethodList:
+                    prevtime = time.time()
+                    PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,igamma,imom,thisSF='TSFtest32')
+                    progprint(5,prevtime,igamma)
+                if 'TSFSmall' in thisMethodList:
+                    prevtime = time.time()
+                    PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,igamma,imom,thisSF='TSFSmall')
+                    progprint(6,prevtime,igamma)
+                if 'OSFTsink' in thisMethodList:
+                    prevtime = time.time()
+                    PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,igamma,imom,thisSF='OSFTsink')
+                    progprint(7,prevtime,igamma)
+                
                 prevtime = time.time()
                 PlotCMData(thisdatadict,thisSetList,igamma,imom)
                 progprint(8,prevtime,igamma)
-                PlotCMSFData(thisdatadict,thisMassdict,thisSetList,igamma,imom)
+                if 'OSFTsink' in thisMethodList:
+                    PlotCMOSFData(thisdatadict,thisMassdict,thisSetList,igamma,imom)
+                if 'TSFTsink' in thisMethodList:
+                    PlotCMTSFData(thisdatadict,thisMassdict,thisSetList,igamma,imom)
             elif kappa == 12104:
                 PlotCMData(thisdatadict,thisSetList,igamma,imom)
                 # PlotCMSFData(thisdatadict,thisMassdict,['tsink29state1to18dt2'],igamma,imom,thisSF='SFREvec')
