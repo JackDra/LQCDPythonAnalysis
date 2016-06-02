@@ -54,7 +54,7 @@ OSF2ptMinStart,OSF2ptMinEnd,OSF2ptMaxStart,OSF2ptMaxEnd = 17,27,21,33
 OSF3ptCutList = range(OSF3ptCutMin,OSF3ptCutMax+1)
 OneStateParList = {'C2':['Am','m0'] , 'C3':['B00']}
 #picked for plotting
-OSFCutList = ['cut4','cut5','cut6']
+OSFCutList = ['cut4','cut5']
 OSFCutPicked = 'cut5'
 OSFfitvals = {'sm32': [26,31], 'sm64': [25,31] , 'sm128':[23,31], PickedStateStr+DefTvarPicked:[20,25],
               PickedStateStr+REvecTvarList[0]:[23,31],PickedStateStr+PoFTvarList[0]:[23,31]}
