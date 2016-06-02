@@ -21,6 +21,16 @@ import os
 #     with open(thisfile+'.xml','w') as f:
 #         f.write( xmltodict.unparse(outputdict,pretty=True))
 
+## listin = [ism] {'Info': {'nconfig':###}}
+## dictout = {'Info': {'nconfig':###}}
+def CombineSetInfo(listin):
+    dictout = {'Info':{}}
+    nconf = listin[0]['Info']['nconfig']
+    for ismlist in listin[1:]:
+        nconf = min(ismlist['Info']['nconfig'],nconf)
+    dictout['Info']['nconfg'] = nconf
+    return dictout
+
 def WriteXmlOutput(thisfile,outputdict):
     firstkey = outputdict.keys()[0]
     Vals = {firstkey:{'Values':outputdict[firstkey]['Values']}}
@@ -56,12 +66,13 @@ def SetUpPDict(ip,filedir,filename):
     return datadict,outputfile
     
 
-def PrintToFile(thisdata,filedir,filename,thisTList,thisMomList,frmtflag='f'):
+def PrintToFile(thisdata,filedir,filename,thisTList,thisMomList,AddDict={},frmtflag='f'):
     xmlMomList = map(ipTOqcond,thisMomList)
     tkeyList = map(tstr,thisTList)
     outputfilelist = []
     for ip,pdata in zip(xmlMomList,thisdata):
         datadict,outputfile = SetUpPDict(ip,filedir,filename)
+        datadict[ip]['Info'] = AddDict
         datadict[ip]['Values'] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,pdata,[frmtflag]*len(pdata))))
         datadict[ip]['Boots'] = OrderedDict()
         for itstr,tdata in zip(tkeyList,pdata):
@@ -69,12 +80,13 @@ def PrintToFile(thisdata,filedir,filename,thisTList,thisMomList,frmtflag='f'):
         WriteXmlOutput(outputfile,datadict)
 
 # data = [ ip , icut ]
-def PrintFitMassToFile(data,dataChi,iset,filedir,filename,thisMomList,FitRanges):
+def PrintFitMassToFile(data,dataChi,iset,filedir,filename,thisMomList,FitRanges,mominfo2pt):
     xmlMomList = map(qstrTOqcond,thisMomList)
     xmlCutList = map(xmlcut,thisCutList)
     xmlFitRanges = map(xmlfitr,FitRanges)
-    for ip,pdata,pdataChi in zip(xmlMomList,data,dataChi):        
+    for ipc,(ip,pdata,pdataChi) in enumerate(zip(xmlMomList,data,dataChi)):        
         datadict,outputfile = SetUpPDict(ip,filedir,filename)
+        datadict[ip]['Info'] = mominfo2pt[ipc]
         datadict[ip]['Values'] = OrderedDict()
         datadict[ip]['Boots'] = OrderedDict()
         for ifit,fitdata,fitdataChi in zip(xmlFitRanges,qdata,qdataChi):
@@ -83,11 +95,12 @@ def PrintFitMassToFile(data,dataChi,iset,filedir,filename,thisMomList,FitRanges)
         MergeXmlOutput(outputfile,datadict)
         
 # data = [ ip , icut , iset ]
-def PrintFitToFile(data,dataChi,iset,filedir,filename,thisMomList,thisCutList):
+def PrintFitToFile(data,dataChi,iset,filedir,filename,thisMomList,thisCutList,mominfoRF):
     xmlMomList = map(qstrTOqcond,thisMomList)
     xmlCutList = map(xmlcut,thisCutList)
-    for ip,pdata,pdataChi in zip(xmlMomList,data,dataChi):        
+    for ipc,(ip,pdata,pdataChi) in enumerate(zip(xmlMomList,data,dataChi)):        
         datadict,outputfile = SetUpPDict(ip,filedir,filename)
+        datadict[ip]['Info'] = mominfoRF[ipc]
         datadict[ip]['Values'] = OrderedDict()
         datadict[ip]['Boots'] = OrderedDict()
         for icutstr,cutdata,cutdataChi in zip(xmlCutList,pdata,pdataChi):
@@ -96,11 +109,12 @@ def PrintFitToFile(data,dataChi,iset,filedir,filename,thisMomList,thisCutList):
         MergeXmlOutput(outputfile,datadict)
 
 
-def PrintLREvecMassToFile(thisLE,thisRE,thisEMass,thisMomList,thisTvar,DoPoF=True):
+def PrintLREvecMassToFile(thisLE,thisRE,thisEMass,thisMomList,thisTvar,AddDict={},DoPoF=True):
     xmlMomList = map(ipTOqcond,thisMomList)
     for ip,pLE,pRE,pEMass in zip(xmlMomList,thisLE,thisRE,thisEMass):
         mkdir_p(outputdir+'/Mass/')
         datadict,outputfile = SetUpPDict(ip,outputdir+'/Mass/',thisTvar+'LREM')
+        datadict[ip]['Info'] = AddDict
         datadict[ip]['Values'] = OrderedDict()
         for istate,iLE,iRE,iEM in zip(StateSet,pLE,pRE,pEMass):
             datadict[ip]['Values']['State'+str(istate)] = LREVecToFormat(iLE,iRE,iEM,DoPoF)
@@ -111,13 +125,14 @@ def PrintLREvecMassToFile(thisLE,thisRE,thisEMass,thisMomList,thisTvar,DoPoF=Tru
         
 ##data [ ip , icut , itsink ]
 ##datafit [ ip , icut , ifit , par ] bs1
-def PrintSumToFile(data,datafit,datafitchi,filedir,filename,thisFitList,thisMomList,thisTSinkList,thisCutList,frmtflag='f'):
+def PrintSumToFile(data,datafit,datafitchi,filedir,filename,thisFitList,thisMomList,thisTSinkList,thisCutList,mominfoRF,frmtflag='f'):
     xmlMomList = map(qstrTOqcond,thisMomList)
     xmlCutList = map(xmlcut,thisCutList)
     xmlTSinkList = map(xmlTSink,thisTSinkList)
-    for ip,pdata,pdatafit,pdatafitchi,pfitlist in zip(xmlMomList,data,datafit,datafitchi,thisFitList):
+    for ipc,(ip,pdata,pdatafit,pdatafitchi,pfitlist) in enumerate(zip(xmlMomList,data,datafit,datafitchi,thisFitList)):
         xmlFitList = ParamsToFitFlag(pfitlist)
         datadict,outputfile = SetUpPDict(ip,filedir,filename)
+        datadict[ip]['Info'] = CombineSetInfo(mominfoRF[ip])
         datadict[ip]['Values'] = OrderedDict()
         datadict[ip]['Boots'] = OrderedDict()
         for icut,cutdata,cutdatafit,cutdatafitchi,cutfitlist in zip(xmlCutList,pdata,pdatafit,pdatafitchi,xmlFitList):
@@ -139,12 +154,12 @@ def PrintSumToFile(data,datafit,datafitchi,filedir,filename,thisFitList,thisMomL
         MergeXmlOutput(outputfile,datadict)
 
 
-def PrintFFSet(FFin,Set,Mass,SetMass,theCurr):
+def PrintFFSet(FFin,Set,Mass,SetMass,theCurr,infoFF):
     FFdir = outputdir +'/FormFactors/'+theCurr+'/'
     FFbootdir = FFdir + 'boots/'
     mkdir_p(FFbootdir)
     thisfile = FFdir +theCurr+Set
-    datadict = {'Form_Factors':{'Values':OrderedDict(),'Boots':OrderedDict()}}
+    datadict = {'Form_Factors':{'Info':infoFF,'Values':OrderedDict(),'Boots':OrderedDict()}}
     if 'Chi' not in Mass.keys(): Mass['Chi'] = float('NaN')
     datadict['Form_Factors']['Values']['Mass'] = OrderedDict()
     datadict['Form_Factors']['Values']['Mass']['Set'] = SetMass
@@ -175,7 +190,7 @@ def PickTF(iset,iA,setsize):
 # #data2pt       = [ ifit2pt , ip , params ]
 # #data2ptChi    = [ ifit2pt , ip ]
 
-def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,thisMomList):
+def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,thisMomList,info2pt):
     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
     masspardir = outputdir + 'cfuns/twopt/TSF'+fileprefix+'/'
     xmlMomList = map(qstrTOqcond,thisMomList)
@@ -184,6 +199,7 @@ def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
         filename = 'twopt'+TwoStateParList['C2'][im]
         for ipc,ip in enumerate(xmlMomList):        
             datadict,outputfile = SetUpPDict(ip,masspardir,filename)
+            datadict[ip]['Info'] = CombineSetInfo(info2pt[ipc])
             datadict[ip]['Values'] = OrderedDict()
             datadict[ip]['Boots'] = OrderedDict()
             for icutstr,cutdata,cutdataChi in zip(xml2ptFitList,data2pt,data2ptChi):
@@ -198,6 +214,7 @@ def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
             filename = thesm+'twopt'+ theA
             for ipc,ip in enumerate(xmlMomList):        
                 datadict,outputfile = SetUpPDict(ip,masspardir,filename)
+                datadict[ip]['Info'] = info2pt[ipc][ism]
                 datadict[ip]['Values'] = OrderedDict()
                 datadict[ip]['Boots'] = OrderedDict()
                 for icutstr,cutdata,cutdataChi in zip(xml2ptFitList,data2pt,data2ptChi):
@@ -210,10 +227,11 @@ def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
 #data3pt       = [ ifit2pt , ip , igamma , istate , ifit3pt , params ] bs1
 #data3ptChi    = [ ifit2pt , ip , igamma , istate , ifit3pt ]
 
-def PrintTSFToFile(filedir,filename,thisMomList,xml2ptFitList,xmlTSFList,data3pt,data3ptChi,ipar,igamma,ism):
+def PrintTSFToFile(filedir,filename,thisMomList,xml2ptFitList,xmlTSFList,data3pt,data3ptChi,ipar,igamma,ism,mominfoRF):
     xmlMomList = map(qstrTOqcond,thisMomList)
     for ipc,ip in enumerate(xmlMomList):        
         datadict,outputfile = SetUpPDict(ip,filedir,filename)
+        datadict[ip]['Info'] = CombineSetInfo(mominfoRF[ipc][igamma])
         datadict[ip]['Values'] = OrderedDict()
         datadict[ip]['Boots'] = OrderedDict()
         for ic2pt,icut2ptstr in enumerate(xml2ptFitList):
@@ -228,7 +246,7 @@ def PrintTSFToFile(filedir,filename,thisMomList,xml2ptFitList,xmlTSFList,data3pt
                 
 #data3pt       = [ ifit2pt , ip , igamma , istate , ifit3pt , params ] bs1
 #data3ptChi    = [ ifit2pt , ip , igamma , istate , ifit3pt ]
-def PrintTSFSetToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2ptList,fileprefix):
+def PrintTSFSetToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2ptList,fileprefix,infoRF):
     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
     xml2ptFitList = map(xmlfitr,thisFit2ptList)
     xmlTSFList = map(xmlcut,TSF3ptCutList)
@@ -239,13 +257,13 @@ def PrintTSFSetToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2pt
             gammapardir = outputdir+CreateOppDir(thisgamma)+'/TSF'+fileprefix+'/'
             mkdir_p(gammapardir)
             for ism,thesm in enumerate(thisSmList):                
-                PrintTSFToFile(gammapardir,thesm+thisgamma+thispar,thismomlist,xml2ptFitList,xmlTSFList,data3pt,data3ptChi,ipar,igamma,ism)
+                PrintTSFToFile(gammapardir,thesm+thisgamma+thispar,thismomlist,xml2ptFitList,xmlTSFList,data3pt,data3ptChi,ipar,igamma,ism,infoRF)
 
 
                 
 #OneFit2pt    = [ ifit2pt , ip , ism  , params ] bs1
 #OneFit2ptChi    = [ ifit2pt , ip , ism ]
-def PrintOSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,thisMomList):
+def PrintOSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,thisMomList,info2pt):
     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList,NoREvec=True)
     masspardir = outputdir + 'cfuns/twopt/OSF'+fileprefix+'/'
     for im in [1,0]:
@@ -255,6 +273,7 @@ def PrintOSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
             xml2ptFitList = map(xmlfitr,thisFit2ptList)
             for ipc,ip in enumerate(xmlMomList):        
                 datadict,outputfile = SetUpPDict(ip,masspardir,filename)
+                datadict[ip]['Info'] = info2pt[ipc][ism]
                 datadict[ip]['Values'] = OrderedDict()
                 datadict[ip]['Boots'] = OrderedDict()
                 for icutstr,cutdata,cutdataChi in zip(xml2ptFitList,data2pt,data2ptChi):
@@ -272,10 +291,11 @@ def PrintOSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
 
 #OneFit3pt    = [ ifit2pt , igamma , ip , iset , ifit3pt , params ] bs1
 
-def PrintOSFToFile(filedir,filename,thisMomList,xml2ptFitList,xmlOSFList,data3pt,data3ptChi,ipar,igamma,ism):
+def PrintOSFToFile(filedir,filename,thisMomList,xml2ptFitList,xmlOSFList,data3pt,data3ptChi,ipar,igamma,ism,infoRF):
     xmlMomList = map(qstrTOqcond,thisMomList)
     for ipc,ip in enumerate(xmlMomList):        
         datadict,outputfile = SetUpPDict(ip,filedir,filename)
+        datadict[ip]['Info'] = infoRF[ipc][igamma][ism]
         datadict[ip]['Values'] = OrderedDict()
         datadict[ip]['Boots'] = OrderedDict()
         for ic2pt,icut2ptstr in enumerate(xml2ptFitList):
@@ -287,7 +307,7 @@ def PrintOSFToFile(filedir,filename,thisMomList,xml2ptFitList,xmlOSFList,data3pt
         MergeXmlOutput(outputfile,datadict)
         
 
-def PrintOSFSetToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2ptList,fileprefix):
+def PrintOSFSetToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2ptList,fileprefix,infoRF):
     xml2ptFitList = map(xmlfitr,thisFit2ptList)
     xmlOSFList = map(xmlcut,OSF3ptCutList)
     del thisGammaMomList['twopt']
@@ -297,7 +317,7 @@ def PrintOSFSetToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2pt
             gammapardir = outputdir+CreateOppDir(thisgamma)+'/OSF'+fileprefix+'/'
             mkdir_p(gammapardir)
             for ism,thesm in enumerate(thisSetList):
-                PrintOSFToFile(gammapardir,thesm+thisgamma+thispar,thismomlist,xml2ptFitList,xmlOSFList,data3pt,data3ptChi,ipar,igamma,ism)
+                PrintOSFToFile(gammapardir,thesm+thisgamma+thispar,thismomlist,xml2ptFitList,xmlOSFList,data3pt,data3ptChi,ipar,igamma,ism,infoRF)
 
 
 

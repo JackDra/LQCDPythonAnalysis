@@ -57,6 +57,7 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
                                              thisDSList,thisTSinkList,dirread,thisPrefList)
     print 'Read Complete'
     print 'ncon=',len(filelist)
+    InfoDict = {'nconfig':len(filelist)}
     ## data2pt = [ ism , jsm , ip ,  it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     ##data3pt = [ ism , jsm , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 
@@ -125,10 +126,10 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         RFr = RFr[:,:,1:,:]
     ## data2ptset [ iset , ip , it ]
     ## data3ptset [ iset , igamma , ip , it ] bs1
-    PrintCfunToFile(np.rollaxis(data3ptset,1),SetList,thisMomList,thisGammaList)
+    PrintCfunToFile(np.rollaxis(data3ptset,1),SetList,thisMomList,thisGammaList,AddDict=InfoDict)
 
     ## RFr = [  iset , igamma , ip , it ] bs1
-    PrintSetToFile(np.rollaxis(RFr,1),SetList,thisMomList,thisGammaList,thisTSinkList[0])
+    PrintSetToFile(np.rollaxis(RFr,1),SetList,thisMomList,thisGammaList,thisTSinkList[0],AddDict=InfoDict)
 
     print 'Finished '+ RunType + ' tsink='+str(thisTSinkList[0]) + ' '+iglog + '                       '
     sys.stdout = open(logfileend,'a',0)

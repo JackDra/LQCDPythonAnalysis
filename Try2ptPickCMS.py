@@ -35,6 +35,7 @@ def CreateTwoPt(thisMomList,thisSmearList):
 
     data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
     ncon = np.size(filelist)
+    InfoDict = {'nconfig':ncon}
     print 'ncon = ' + str(ncon)
     # print 'nboot = ' + str(nboot)
 ## data2pt = [ ism , jsm , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
@@ -66,20 +67,20 @@ def CreateTwoPt(thisMomList,thisSmearList):
         [CMdata2pt,LEvec,REvec,Emass] = iout
 ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
         C2out += CMdata2pt.tolist()
-        PrintLREvecMassToFile(LEvec,REvec,Emass,thisMomList,iTvar,DoPoF=True)
+        PrintLREvecMassToFile(LEvec,REvec,Emass,thisMomList,iTvar,AddDict=InfoDict,DoPoF=True)
 
     for iout,iTvar in zip(outputCM,thisCMTvarList):
         [CMdata2pt,LEvec,REvec,Emass] = iout
 ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
         C2out += CMdata2pt.tolist()
-        PrintLREvecMassToFile(LEvec,REvec,Emass,thisMomList,iTvar,DoPoF=False)
+        PrintLREvecMassToFile(LEvec,REvec,Emass,thisMomList,iTvar,AddDict=InfoDict,DoPoF=False)
 
     print 'CMTech Total Time Taken: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
     start = time.time()
     print 'Printing to file \r',
     SetList = CreateMassSet(thisSmearList,StateSet,thisPoFTvarList,flipord=True)
     SetList += CreateMassSet([],StateSet[:len(StateSet)/(PoFShifts+1)],thisCMTvarList,flipord=True)
-    PrintCfunToFile([C2out],SetList,thisMomList,['twopt'])
-    PrintSetToFile([C2out],SetList,thisMomList,['Mass'],0)
+    PrintCfunToFile([C2out],SetList,thisMomList,['twopt'],AddDict=InfoDict)
+    PrintSetToFile([C2out],SetList,thisMomList,['Mass'],0,AddDict=InfoDict)
     print 'Printing took ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
     # print 'Completed ' + ipTOqstr(thisMomList[0])

@@ -296,6 +296,7 @@ def ReadCfunsDict(thisindir,thisSetList,thisGammaList,thisMomList=RunMomList,thi
 
 def SetRFDictToList(DictData,thisPrintRead=PrintRead):
     dataoutRF,dataout2pt = [],[]
+    infolistRF,infolist2pt = [],[]
     gammalistout = OrderedDict()
     BorA = ''
     start = time.time()
@@ -306,7 +307,9 @@ def SetRFDictToList(DictData,thisPrintRead=PrintRead):
             for imom,(thismom,momdata) in enumerate(gammadata.iteritems()):
                 gammalistout[thisgamma].append(thismom)
                 dataout2pt.append([])
+                infolist2pt.append([])
                 for iset,setdata in enumerate(momdata['RF'].itervalues()):
+                    if 'Info' in setdata.keys(): infolist2pt[imom].append(setdata['Info'])
                     if 'Boot' in setdata.keys():
                         dataout2pt[imom].append(setdata['Boot'])
                         if BorA == 'Avg': BorA = 'Mixed'
@@ -317,10 +320,13 @@ def SetRFDictToList(DictData,thisPrintRead=PrintRead):
                         else:BorA = 'Avg'
         else:
             dataoutRF.append([])
+            infolistRF.append([])
             for imom,(thismom,momdata) in enumerate(gammadata.iteritems()):
                 gammalistout[thisgamma].append(thismom)
                 dataoutRF[-1].append([])
+                infolistRF[-1].append([])
                 for iset,(thisset,setdata) in enumerate(momdata['RF'].iteritems()):
+                    if 'Info' in setdata.keys(): infolistRF[-1].append(setdata['Info'])
                     if 'Boot' in setdata.keys():
                         dataoutRF[-1][imom].append(setdata['Boot'])
                         if BorA == 'Avg': BorA = 'Mixed'
@@ -332,9 +338,10 @@ def SetRFDictToList(DictData,thisPrintRead=PrintRead):
     if 'twopt' in gammalistout.keys():
         if 'q = 0 0 0' in gammalistout['twopt']:
             dataout2pt.insert(0, dataout2pt.pop(gammalistout['twopt'].index('q = 0 0 0')))
+            infolist2pt.insert(0, infolist2pt.pop(gammalistout['twopt'].index('q = 0 0 0')))
             gammalistout['twopt'].insert(0, gammalistout['twopt'].pop(gammalistout['twopt'].index('q = 0 0 0')))
     if thisPrintRead: print 'Converting DictToList took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
-    return dataoutRF,dataout2pt,gammalistout,BorA
+    return dataoutRF,dataout2pt,gammalistout,BorA,infolistRF,infolist2pt
 ##datadict.keys() is gammalist
 
 

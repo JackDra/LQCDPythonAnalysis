@@ -109,7 +109,7 @@ def DoTSF(thisSetList,thisGammaList,TSF2ptarray,twoptGammaMomList,thisMomList):
     totstart = time.time()
     mprint( 'Reading Data')
 
-    [data3pt,dump,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=thisMomList)
+    [data3pt,dump,thisGammaMomList,BorA,infoRF,info2pt] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=thisMomList)
     thisGammaMomList['twopt'] = twoptGammaMomList['twopt']
     thisGammaList = thisGammaMomList.keys()
     thisMom = qstrTOqcond(thisMomList[0])
@@ -170,7 +170,7 @@ def DoTSF(thisSetList,thisGammaList,TSF2ptarray,twoptGammaMomList,thisMomList):
     start = time.time()
     mprint( 'Printing TSF Results to file: ')
     # WipeSF(outputdir,thisGammaList+['twopt'],'TSF'+outfile,'Two',statelist=ReadStateList,todtlist=ReadTvarList,smlist=ReadSmearList)
-    PrintTSFSetToFile(TwoFit3pt,TwoFit3ptChi,thisGammaMomList,thisSetList,thisFitTSFR,outfile)
+    PrintTSFSetToFile(TwoFit3pt,TwoFit3ptChi,thisGammaMomList,thisSetList,thisFitTSFR,outfile,infoRF)
 
     for icf,(ifit2pt,thispicklefile) in enumerate(zip(thisFitTSFR,thispicklelist)):
         mprint( 'Removing Picked File: ' , thispicklefile , '                         \r',)
@@ -197,7 +197,7 @@ if os.path.isfile(picklefile2pt):
     print '2 point picked file read in'        
 else:
     print 'Reading and fitting 2 point correlator data'
-    [dump,data2pt,twoptGammaMomList,dump3] = ReadCfunsnp(['twopt'],ReadSetList,thisMomList=feedin['mom'])
+    [dump,data2pt,twoptGammaMomList,dump3,infoRF,info2pt] = ReadCfunsnp(['twopt'],ReadSetList,thisMomList=feedin['mom'])
     ## data2pt = [ ip , iset2pt , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     TSF2ptarray = []
     TwoFit2pt = []
@@ -216,7 +216,7 @@ else:
     with open( picklefile2pt, "wb" ) as pfile:
         pickle.dump( [TSF2ptarray,twoptGammaMomList], pfile )
     print 'Printing 2 point correlators to file'
-    PrintTSFMassToFile(TwoFit2pt,TwoFit2ptChi,ReadSetList,thisFitTSFR,outfile,twoptGammaMomList['twopt'])
+    PrintTSFMassToFile(TwoFit2pt,TwoFit2ptChi,ReadSetList,thisFitTSFR,outfile,twoptGammaMomList['twopt'],info2pt)
 
 
 inputparams = []

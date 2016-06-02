@@ -19,7 +19,7 @@ from CheckXml import *
 
 def FitSumWrap(thisGammaList,thisReadSetList,thisTSinkList,this2ptSetList,thisReadMomList):
     thisstart = time.time()
-    [dataRF,data2pt,thisGammaMomList,BorA] = ReadRFnp(thisGammaList,thisReadSetList,thisMomList=thisReadMomList)
+    [dataRF,data2pt,thisGammaMomList,BorA,infoRF,info2pt] = ReadRFnp(thisGammaList,thisReadSetList,thisMomList=thisReadMomList)
     # dataRF = [ gamma , mom , set , it ] bs
     if 'twopt' in thisGammaMomList.keys(): del thisGammaMomList['twopt']    
     SummedRF,SumFitBoot,SumFitAvg,SumFitChi,SumFitList = [],[],[],[],[]
@@ -31,7 +31,7 @@ def FitSumWrap(thisGammaList,thisReadSetList,thisTSinkList,this2ptSetList,thisRe
         SumFitChi.append(thisout[3])
         SumFitList.append(thisout[4])
     WipeSet(outputdir,thisGammaMomList.keys(),this2ptSetList,filepref='SumMeth/')
-    PrintSumSetToFile(SummedRF,SumFitBoot,SumFitChi,SumFitList,str(this2ptSetList[0]),thisGammaMomList,thisTSinkList,SumMeth3ptCuts)
+    PrintSumSetToFile(SummedRF,SumFitBoot,SumFitChi,SumFitList,str(this2ptSetList[0]),thisGammaMomList,thisTSinkList,SumMeth3ptCuts,infoRF)
     print 'Fitting ' , ' '.join(thisGammaList) , 'complete, took: ' + GetTimeStr(time.time()-thisstart)
 
 
