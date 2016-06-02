@@ -189,26 +189,26 @@ def PlotCMTSFData(data,data2pt,thisSetList,thisGamma,thisMom,thistsink='tsink29'
 
 def PlotCol(data,thisSetList,thisflag,thisGamma,thisMom,TitlePref):
     PlotRFSet(data,SiftAndSort(thisSetList,thisflag,nocm=False),legrem=thisflag[0])
-    SetRFAxies(giDi='giDi' in thisGamma)
+    SetRFAxies(thisGamma)
     pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+'.pdf')
     pl.clf()
 
 def PlotColTSF(data,data2pt,thisSetList,thisflag,thisGamma,thisMom,TitlePref,TSFcut,thisTSF):
     PlotRFSetTSF(data,data2pt,SiftAndSort(thisSetList,thisflag),TSFcut,thisTSF,legrem=thisflag[0])
-    SetRFAxies(giDi='giDi' in thisGamma)
+    SetRFAxies(thisGamma)
     pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+str(TSFcut)+'.pdf')
     pl.clf()
 
 def PlotColOSF(data,data2pt,thisSetList,thisflag,thisGamma,thisMom,TitlePref,OSFcut,thisOSF):
     PlotRFSetOSF(data,data2pt,SiftAndSort(thisSetList,thisflag,nocm=False),OSFcut,thisOSF,legrem=thisflag[0])
-    SetRFAxies(giDi='giDi' in thisGamma)
+    SetRFAxies(thisGamma)
     pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+str(OSFcut)+'.pdf')
     pl.clf()
 
 def PlotColSum(data,thisSetList,thissm,thisGamma,thisMom,TitlePref,thisTsinkR='fit sl 0-4'):
     PlotRFSetSum(data,SiftAndSort(thisSetList,thissm),thisTsinkR,legrem=thissm[0])
     outTR = thisTsinkR.replace('-','_')
-    SetRFAxies(giDi='giDi' in thisGamma)
+    SetRFAxies(thisGamma)
     pl.savefig(CreateFile(thissm[0],thisGamma,thisMom,TitlePref+outTR)+'.pdf')
     pl.clf()
     if CheckDict(data,'SumMeth',thissm[0]):
