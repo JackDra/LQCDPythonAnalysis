@@ -59,8 +59,6 @@ def PrintFitSetToFile(dataset,datasetChi,thisGammaMomList,thisSetList,thisCutLis
     for igamma,(thisgamma,thismomlist) in enumerate(thisGammaMomList.iteritems()):
         gammadir = outputdir+CreateOppDir(thisgamma)+'/Fits/'
         for iset,thisset in enumerate(thisSetList):
-            print np.array(infosetRF).shape
-            print thisgamma, thisset
             infosetRF = [ip[igamma][iset] for ip in infosetRF]
             print 'Printing : ' , thisgamma , thisset , '                \r',
             filename = thisset+thisgamma
