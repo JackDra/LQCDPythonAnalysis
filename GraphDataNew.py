@@ -30,6 +30,8 @@ thisalpha = 0.3
 MassTVals = 16,34
 Massyrange = 0.35,1.0
 
+giDiyrange = 0.05,0.15
+
 params = {'legend.fontsize': 10,
           'legend.numpoints': 1,
           'axes.labelsize' : 20,
@@ -96,10 +98,13 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref,subdir=''):
     mkdir_p(thisdir)
     return thisdir+thisfile
 
-def SetRFAxies():
+def SetRFAxies(giDi=False):
     pl.xlabel(RFxlab)
     pl.ylabel(RFylab)
-    pl.ylim(max(pl.ylim()[0],0),min(pl.ylim()[1],2))
+    if giDi:
+        pl.ylim(giDiyrange)
+    else:
+        pl.ylim(max(pl.ylim()[0],0),min(pl.ylim()[1],2))
     SetxTicks()
     pl.legend()
 
@@ -151,6 +156,7 @@ def PlotMassData(data,thisSetList,thisMom,TitleFlag=''):
         pl.savefig(CreateFile('Dt'+str(thisDt),'twopt',thisMom,TitleFlag+' Mass Comparison')+'.pdf')
         pl.clf()
     PlotLogSet(data,thisSetList)
+    SetMassAxies()
     pl.savefig(CreateFile('','twopt',thisMom,TitleFlag+' Log Comparison')+'.pdf')
     pl.clf()
 
@@ -163,9 +169,11 @@ def PlotMassSFData(data,thisSetList,thisMom,thisSF='SFCM'):
         pl.savefig(CreateFile('Dt'+str(thisDt),'twopt',thisMom,'T'+thisSF+' Mass Comparison')+'.pdf')
         pl.clf()
     PlotLogSetOSF(data,thisSetList,thisSF)
+    SetLogAxies()
     pl.savefig(CreateFile('','twopt',thisMom,'O'+thisSF+' Log Comparison')+'.pdf')
     pl.clf()
     PlotLogSetTSF(data,thisSetList,thisSF)
+    SetLogAxies()
     pl.savefig(CreateFile('','twopt',thisMom,'T'+thisSF+' Log Comparison')+'.pdf')
     pl.clf()
 
@@ -181,22 +189,26 @@ def PlotCMTSFData(data,data2pt,thisSetList,thisGamma,thisMom,thistsink='tsink29'
 
 def PlotCol(data,thisSetList,thisflag,thisGamma,thisMom,TitlePref):
     PlotRFSet(data,SiftAndSort(thisSetList,thisflag,nocm=False),legrem=thisflag[0])
+    SetRFAxies(giDi='giDi' in thisGamma)
     pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+'.pdf')
     pl.clf()
 
 def PlotColTSF(data,data2pt,thisSetList,thisflag,thisGamma,thisMom,TitlePref,TSFcut,thisTSF):
     PlotRFSetTSF(data,data2pt,SiftAndSort(thisSetList,thisflag),TSFcut,thisTSF,legrem=thisflag[0])
+    SetRFAxies(giDi='giDi' in thisGamma)
     pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+str(TSFcut)+'.pdf')
     pl.clf()
 
 def PlotColOSF(data,data2pt,thisSetList,thisflag,thisGamma,thisMom,TitlePref,OSFcut,thisOSF):
     PlotRFSetOSF(data,data2pt,SiftAndSort(thisSetList,thisflag,nocm=False),OSFcut,thisOSF,legrem=thisflag[0])
+    SetRFAxies(giDi='giDi' in thisGamma)
     pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+str(OSFcut)+'.pdf')
     pl.clf()
 
 def PlotColSum(data,thisSetList,thissm,thisGamma,thisMom,TitlePref,thisTsinkR='fit sl 0-4'):
     PlotRFSetSum(data,SiftAndSort(thisSetList,thissm),thisTsinkR,legrem=thissm[0])
     outTR = thisTsinkR.replace('-','_')
+    SetRFAxies(giDi='giDi' in thisGamma)
     pl.savefig(CreateFile(thissm[0],thisGamma,thisMom,TitlePref+outTR)+'.pdf')
     pl.clf()
     if CheckDict(data,'SumMeth',thissm[0]):
@@ -216,7 +228,6 @@ def PlotRFSetTSF(data,data2pt,thisSetList,TSFcut,thisTSF,legrem=''):
         if not CheckDict(data,thisTSF,thissm) or not CheckDict(data2pt,thisTSF,thissm): continue
         PlotTSFLine(data[thisTSF][thissm],data2pt[thisTSF][thissm],thistsink.replace('tsink',''),thiscol,thisshift,TSFcut,thissm)
         PlotTSFValue(data[thisTSF][thissm],thiscol,thisshift,TSFcut,thissm,thistsink.replace('tsink','') )
-    SetRFAxies()
 
 def PlotRFSetOSF(data,data2pt,thisSetList,OSFcut,thisOSF,legrem=''):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
@@ -235,7 +246,6 @@ def PlotRFSetOSF(data,data2pt,thisSetList,OSFcut,thisOSF,legrem=''):
             else:
                 OSFset = thissm
         PlotOSFValue(data[thisOSF][OSFset],thiscol,thisshift,OSFcut,thissm,thistsink.replace('tsink',''))
-    SetRFAxies()
 
 
 
@@ -247,7 +257,6 @@ def PlotRFSetSum(data,thisSetList,thisTsinkR,legrem=''):
         PlotRF(data['RF'][iset],thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset.replace(legrem,'')))
     if CheckDict(data,'SumMeth',thissm):
         PlotSumMeth(data['SumMeth'][thissm],thiscolcyc.next(),'Sum '+SumCutPar,thisTsinkR)
-    SetRFAxies()
 
 
 
@@ -266,10 +275,6 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
             dataplot['Boot'] = MassFun(dataplot['Boot'],MassDt)
             dataplot['tVals'] = dataplot['tVals'][:-MassDt]
             PlotRF(dataplot,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(redset),MP=True)
-    if not MassDt:
-        SetRFAxies()
-    else:
-        SetMassAxies()
 
 def PlotLogSet(data,thisSetList,legrem=''):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
@@ -280,7 +285,6 @@ def PlotLogSet(data,thisSetList,legrem=''):
         dataplot['Boot'] = np.log([tboot/dataplot['Boot'][tsource-1] for tboot in dataplot['Boot']])
         dataplot['Boot'] = GetBootStats(dataplot['Boot'])
         PlotRF(dataplot,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset.replace(legrem,'')),MP=True,Log=True)
-    SetLogAxies()
 
 def PlotLogSetOSF(data,thisSetList,thisSF,legrem=''):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
@@ -297,7 +301,6 @@ def PlotLogSetOSF(data,thisSetList,thisSF,legrem=''):
         PlotRF(dataplot,thiscol,thissym,thisshift,LegLab(iset.replace(legrem,'')),MP=True,Log=True)
         if not CheckDict(data,'O'+thisSF,iset): continue
         PlotOSFLog(data['O'+thisSF][iset],thiscol,iset,norm)
-    SetLogAxies()
 
 
 
@@ -316,7 +319,6 @@ def PlotLogSetTSF(data,thisSetList,thisSF,legrem=''):
         PlotRF(dataplot,thiscol,thissym,thisshift,LegLab(iset.replace(legrem,'')),MP=True,Log=True)
         if not CheckDict(data,'T'+thisSF,iset): continue
         PlotTSFLog(data['T'+thisSF][iset],thiscol,iset,norm)
-    SetLogAxies()
 
 def PlotMassSetOSF(data2pt,thisSetList,MassDt,thisSF):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
@@ -332,7 +334,6 @@ def PlotMassSetOSF(data2pt,thisSetList,MassDt,thisSF):
         PlotRF(dataplot,thiscol,thissym,thisshift,LegLab(iset),MP=True,)
         if not CheckDict(data2pt,'O'+thisSF,iset): continue
         PlotOSFMassValue(data2pt['O'+thisSF][iset],thiscol,iset,MassDt)
-    SetMassAxies()
 
 
 def PlotMassSetTSF(data2pt,thisSetList,MassDt,thisSF):
@@ -351,13 +352,13 @@ def PlotMassSetTSF(data2pt,thisSetList,MassDt,thisSF):
             PlotTSFMassLine(data2pt['T'+thisSF][iset],thiscol,iset,MassDt)
     if CheckDict(data2pt,'T'+thisSF,iterSetList[0]):
         PlotTSFMassValue(data2pt['T'+thisSF][iterSetList[0]],MassDt)
-    SetMassAxies()
 
 def PlotFFs(data,thisCurr,thisSetList,CollName):
     if len(thisSetList) == 0: return
     for iFF in range(1,NoFFPars[thisCurr]+1):
         thisFF = 'FF'+str(iFF)
         PlotFFSet(data,thisFF,thisSetList)
+        SetFFAxies()
         pl.savefig(CreateFFFile(CollName,thisCurr,thisFF)+'.pdf')
         pl.clf()
         
@@ -371,7 +372,6 @@ def PlotFFSet(dataset,thisFF,thisSetFlag):
         thiscol = thiscolcyc.next()
         collist.append(thiscol)
         PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshiftcyc.next(),LegLab(thisset))
-    SetFFAxies()
     return collist
 
 def PlotFF(data,col,sym,shift,lab):
