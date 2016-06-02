@@ -111,9 +111,9 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                         elif 'Fits' in iMeth:
                             for icut in FitCutArgs:
                                 if icut in thisdict.keys():
+                                    print thisdict[icut]
                                     datadictout = SetupDict(datadictout,igamma,iSet+iMeth+icut)
                                     datadictout[iSet+iMeth+icut][igamma][imom] = thisdict[icut]
-                                    
     if thisPrintRead: print 'Extracting data took: ', str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                  '
     return datadictout,datamassout
 
