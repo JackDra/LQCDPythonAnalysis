@@ -113,6 +113,7 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                                 if icut in thisdict.keys():
                                     datadictout = SetupDict(datadictout,igamma,iSet+iMeth+icut)
                                     datadictout[iSet+iMeth+icut][igamma][imom] = thisdict[icut]
+                                    
     if thisPrintRead: print 'Extracting data took: ', str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                  '
     return datadictout,datamassout
 

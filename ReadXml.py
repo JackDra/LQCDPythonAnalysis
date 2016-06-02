@@ -68,7 +68,7 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
             if 'Boots' in data.keys():
                 bootdata = data['Boots']
                 dictout[thismom] = {}
-                if 'Info' in data.keys(): dictout[thismom]['Info'] = data['Info']
+                dictout[thismom]['Info'] = data['Info']
                 dictout[thismom]['tVals'] = map(untstr,bootdata.keys())
                 dictout[thismom]['Boot'] = []
                 dictout[thismom]['Vals'] = []
@@ -81,7 +81,7 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
                     dictout[thismom]['Valserr'].append(dictout[thismom]['Boot'][-1].Std)
             else:
                 bootdata = data['Values']
-                if 'Info' in data.keys(): dictout[thismom]['Info'] = data['Info']
+                dictout[thismom]['Info'] = data['Info']
                 dictout[thismom] = {}
                 dictout[thismom]['tVals'] = map(untstr,bootdata.keys())
                 dictout[thismom]['Vals'] = []
@@ -102,7 +102,7 @@ def ReadFitFile(filedir,filename,thisMomList=RunMomList):
             dictout[thismom] = {}
             data = ReadXmlAndPickle(readfile)[0]
             data = data[data.keys()[0]]
-            if 'Info' in data.keys(): dictout[thismom]['Info'] = data['Info']
+            dictout[thismom]['Info'] = data['Info']
             if 'Boots' in data.keys():
                 bootdata = data['Boots']
                 for icut,cutdata in bootdata.iteritems():
@@ -129,7 +129,7 @@ def ReadSumFile(filedir,filename,thisMomList=RunMomList):
             if 'Boots' in data.keys():
                 bootdata = data['Boots']
                 dictout[thismom] = {}
-                if 'Info' in data.keys(): dictout[thismom]['Info'] = data['Info']
+                dictout[thismom]['Info'] = data['Info']
                 for icut,cutdata in bootdata.iteritems():
                     dictout[thismom][icut] = {}
                     for it,tdata in cutdata.iteritems():
@@ -154,7 +154,7 @@ def ReadSumFile(filedir,filename,thisMomList=RunMomList):
             else:
                 valdata = data['Values']
                 dictout[thismom] = {}
-                if 'Info' in data.keys(): dictout[thismom]['Info'] = data['Info']
+                dictout[thismom]['Info'] = data['Info']
                 for icut,cutdata in bootdata.iteritems():
                     dictout[thismom][icut] = {}
                     for it,tdata in cutdata.iteritems():
@@ -227,7 +227,7 @@ def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
                     bootdata = data['Boots']
                     if thismom not in dictout.keys():dictout[thismom] = {}
                     dictout[thismom][ipar] = {}
-                    if 'Info' in data.keys(): dictout[thismom]['Info'] = data['Info']
+                    dictout[thismom]['Info'] = data['Info']
                     for ifit,fitrdata in bootdata.iteritems():
                         thisfit = FitFlagXmlToOldSF(ifit)
                         dictout[thismom][ipar][thisfit] = {}
@@ -252,7 +252,7 @@ def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
                     bootdata = data['Values']
                     if thismom not in dictout.keys():dictout[thismom] = {}
                     dictout[thismom][ipar] = {}
-                    if 'Info' in data.keys(): dictout[thismom]['Info'] = data['Info']
+                    dictout[thismom]['Info'] = data['Info']
                     for ifit,fitrdata in bootdata.iteritems():
                         thisfit = FitFlagXmlToOldSF(ifit)
                         dictout[thismom][ipar][thisfit] = dictout[thismom][ifit]
