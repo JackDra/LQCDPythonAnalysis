@@ -14,10 +14,10 @@ def RecFTDAS(dictin):
         try:
             dictout = map(float,dictin)
         except:
-            try:
-                if len(str(dictin).split()) == 3:
+            try:                
+                if len(str(dictin).split(' ')) == 3:
                     dictout = FormatToDictAvgStdChi(str(dictin))
-                elif len(str(dictin).split()) == 2:
+                elif len(str(dictin).split(' ')) == 2:
                     dictout = FormatToDictAvgStd(str(dictin))
                 else:
                     dictout = str(dictin)
