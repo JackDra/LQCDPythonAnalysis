@@ -87,7 +87,7 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList,thisMomList):
     print 'Running ' + thisGammaList[0] + ' ' + thisMomList[0]
     totstart = time.time()
     mprint( 'Reading Data')
-    [data3pt,dump,thisGammaMomList,BorA] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=thisMomList)
+    [data3pt,dump,thisGammaMomList,BorA,infolistRF,infolist2pt] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=thisMomList)
     thisMom = qstrTOqcond(thisMomList[0])
     thisGammaMomList['twopt'] = twoptGammaMomList['twopt']
     thisGammaList = thisGammaMomList.keys()
@@ -140,7 +140,7 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList,thisMomList):
     start = time.time()
     mprint( 'Printing OSF Results to file: \r',)
     # WipeSFSet(outputdir,thisGammaList+['twopt'],'OSF'+outfile,'One',setlist=thisSetList)
-    PrintOSFSetToFile(OneFit3pt,OneFit3ptChi,thisGammaMomList,thisSetList,thisFitOSFR,outfile)
+    PrintOSFSetToFile(OneFit3pt,OneFit3ptChi,thisGammaMomList,thisSetList,thisFitOSFR,outfile,infolistRF)
 
     for icf,(ifit2pt,thispicklefile) in enumerate(zip(thisFitOSFR,thispicklelist)):
         mprint( 'Removing Picked file: ' , thispicklefile , '                                \r',)
