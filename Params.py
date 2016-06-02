@@ -86,7 +86,7 @@ VectorNorm = 0.8574 # normalisation for Vector Current
 PsVectorNorm = 0.8728 # normalisation for Pseudo Vector current
 TensorNorm = 0.9945 # normalisation for Tensor Current
 MultiCoreFitting = False # Multicore for Boot Fitting, not needed in current build
-DoMulticore = False # Runs multicore wherever implemented
+DoMulticore = True # Runs multicore wherever implemented
 DoContentsCheck = False # True makes sure the xml file has the correct momenta first field, turn off for more performance
 OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
 DoNorm = False # normalises the 2 point function (see CMSTech.py)
@@ -97,7 +97,7 @@ DebugCM = False # for debugging Correlation Matrix stuff
 ShowConfNum = False # debugging, show number of configs during read
 PrintRead = not DoMulticore # Screws up output if on and doing mulitcore reading
 DoCmplx = True # reads complex opperator values as well as real values, should be on
-DefWipe = True # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
+DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
     
 
 VarMassCutoff = 0.4 # used in correlation matrix for cutting artifacts out of eigenmass sorting.

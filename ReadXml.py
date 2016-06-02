@@ -41,8 +41,6 @@ def ReadXmlAndPickle(filein):
             xmldata[firstkey[0]]['Info'] = {'nconfig':-1}
         else:
             if not ('nconfig' in xmldata[firstkey[0]]['Info'].keys() or any(['qsqrd' in ixm for ixm in xmldata[firstkey[0]]['Info'].keys()])):
-                print 'doing thingy'
-                print xmldata[firstkey[0]]['Info'].keys()
                 xmldata[firstkey[0]]['Info'] = {'nconfig':-1}
     return xmldata,bootfile
 
