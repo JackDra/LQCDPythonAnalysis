@@ -115,7 +115,7 @@ def ReadFitFile(filedir,filename,thisMomList=RunMomList):
                     dictout[thismom][icut]['Chi'] = data['Values'][icut]['Chi']
             else:
                 dictout[thismom] = data
-        print thismom, data.keys()
+            print thismom, data.keys()
     return dictout
 
 ##outputdict = { thismom , cutpar , tsinkrpar/tsinkval , Avg / Std / Chi / Boot (bs) }
