@@ -68,7 +68,7 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
             dictin[thiscol][thisgamma] = {}
         return dictin
     readdata = ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList,thisPrintRead=thisPrintRead)
-   start = time.time()
+    start = time.time()
     datadictout,datamassout = OrderedDict(),OrderedDict()
     for ig,igamma in enumerate(thisGammaList):
         if thisPrintRead: print ' Extracting data from read: ' , int((ig*100)/float(len(thisGammaList))) ,'%  \r',
