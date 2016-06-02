@@ -264,7 +264,8 @@ AllTSinkShift = [it-tsource for it in AllTSinkList]
 AllTSinkStrList = ['tsink'+str(its) for its in AllTSinkList]
 AllTSinkStrListVar = ['tsink'+str(its) for its in AllTSinkListVar]
 
-AllREvecTSinkList = {'12104':[29],'12090':[26,32]}
+# AllREvecTSinkList = {'12104':[29],'12090':[26,32]}
+AllREvecTSinkList = {'12104':[29],'12090':[]}
 REvecTSinkList = AllREvecTSinkList[str(kappa)]
 REvecTSinkStrList = ['tsink'+str(its) for its in REvecTSinkList]
 DefREvecVarList = [18,2]
