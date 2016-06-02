@@ -15,6 +15,7 @@ def RecFTDAS(dictin):
             dictout = map(float,dictin)
         except:
             try:                
+                print dictin
                 if len(str(dictin).split(' ')) == 3:
                     dictout = FormatToDictAvgStdChi(str(dictin))
                 elif len(str(dictin).split(' ')) == 2:
