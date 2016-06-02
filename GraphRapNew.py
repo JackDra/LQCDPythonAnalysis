@@ -87,7 +87,7 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList):
                 prevtime = time.time()
                 PlotCMData(thisdatadict,thisSetList,igamma,imom)
                 progprint(8,prevtime,igamma)
-                # PlotCMSFData(thisdatadict,thisMassdict,thisSetList,igamma,imom)
+                PlotCMSFData(thisdatadict,thisMassdict,thisSetList,igamma,imom)
             elif kappa == 12104:
                 PlotCMData(thisdatadict,thisSetList,igamma,imom)
                 # PlotCMSFData(thisdatadict,thisMassdict,['tsink29state1to18dt2'],igamma,imom,thisSF='SFREvec')
