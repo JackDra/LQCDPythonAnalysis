@@ -350,6 +350,7 @@ def CombBoot(udata,ddata,opp):
     dataout = {'Boot':ops[opp](np.array(udata['Boot']),np.array(ddata['Boot']))}
     GetBootStats(dataout['Boot'])
     dataout['tVals'] = udata['tVals']
+    dataout['Info'] = min(udata['Info'],ddata['Info'])
     dataout['Vals'] = Pullflag(dataout['Boot'],'Avg')
     dataout['Valserr'] = Pullflag(dataout['Boot'],'Std')
     return dataout

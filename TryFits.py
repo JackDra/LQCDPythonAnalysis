@@ -31,7 +31,6 @@ def TryFitsFun(thisGammaList,thisSetList,thisReadMomList,thisTSinkList,thischunk
     #             print Pullflag(setdata,'Avg')
     #             print ''
     [dataRF,data2pt,thisGammaMomList,BorA,infolistRF,infolist2pt] = ReadRFnp(thisGammaList,thisSetList,thisMomList=thisReadMomList)
-    print infolistRF
     start = time.time()
     FitDataBoot,FitDataAvg,FitDataChi = [],[],[]
     for igamma,(thisgamma,thismomlist) in enumerate(thisGammaMomList.iteritems()):
