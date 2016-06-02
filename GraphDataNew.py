@@ -169,11 +169,14 @@ def PlotMassSFData(data,thisSetList,thisMom,thisSF='SFCM'):
     pl.savefig(CreateFile('','twopt',thisMom,'T'+thisSF+' Log Comparison')+'.pdf')
     pl.clf()
 
-def PlotCMSFData(data,data2pt,thisSetList,thisGamma,thisMom,thistsink='tsink29',thisSF='SFCM'):
-    for icut in TSFCutList:
-        PlotColTSF(data,data2pt,thisSetList,[thistsink],thisGamma,thisMom,'T'+thisSF+' Comparison ',icut,'T'+thisSF)
+def PlotOCMSFData(data,data2pt,thisSetList,thisGamma,thisMom,thistsink='tsink29',thisSF='OSFCM'):
     for icut in OSFCutList:
-        PlotColOSF(data,data2pt,thisSetList,[thistsink],thisGamma,thisMom,'O'+thisSF+' Comparison ',icut,'O'+thisSF)
+        PlotColOSF(data,data2pt,thisSetList,[thistsink],thisGamma,thisMom,thisSF+' Comparison ',icut,thisSF)
+        
+def PlotTCMSFData(data,data2pt,thisSetList,thisGamma,thisMom,thistsink='tsink29',thisSF='TSFCM'):
+    for icut in TSFCutList:
+        PlotColTSF(data,data2pt,thisSetList,[thistsink],thisGamma,thisMom,thisSF+' Comparison ',icut,thisSF)
+
 
 
 def PlotCol(data,thisSetList,thisflag,thisGamma,thisMom,TitlePref):
