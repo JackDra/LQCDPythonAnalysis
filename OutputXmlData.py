@@ -25,6 +25,7 @@ import os
 ## dictout = {'Info': {'nconfig':###}}
 def CombineSetInfo(listin):
     dictout = {'Info':{}}
+    print listin[0].keys()
     nconf = listin[0]['Info']['nconfig']
     if len(listin) > 1:
         for ismlist in listin[1:]:
