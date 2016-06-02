@@ -171,7 +171,7 @@ def PlotMassSFData(data,thisSetList,thisMom,thisSF='SFCM'):
 
 def PlotCMOSFData(data,data2pt,thisSetList,thisGamma,thisMom,thistsink='',thisSF='OSFCM'):
     for icut in OSFCutList:
-        PlotColOSF(data,data2pt,thisSetList,[thistsink],thisGamma,thisMom,thisSF+' Comparison ',icut,thisSF)
+        PlotColOSF(data,data2pt,thisSetList,[thistsink,'PoF'],thisGamma,thisMom,thisSF+' Comparison ',icut,thisSF)
         
 def PlotCMTSFData(data,data2pt,thisSetList,thisGamma,thisMom,thistsink='tsink29',thisSF='TSFCM'):
     for icut in TSFCutList:
