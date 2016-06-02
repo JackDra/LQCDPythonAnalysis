@@ -71,7 +71,8 @@ for igamma in thisGammaList:
                 thisMomList = feedin['mom']
             else:
                 thisMomList = Check3ptArray(['doub'+igamma,'sing'+igamma,igamma],[iSet],thisMomList=feedin['mom'],CheckType='Fits',printout=False)
-            for imom in thisMomList[igamma][iSet]:
+                thisMomList = thisMomList[igamma][iSet]
+            for imom in thisMomList:
                 # print 'adding to que: ' , igamma , iSet , imom
                 # RunGammaList.append(igamma)
                 inputparams.append((['doub'+igamma,'sing'+igamma,igamma],[iSet],[imom],[iTS],(iChunk*100)/float(len(feedin['set']))))
