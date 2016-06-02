@@ -41,6 +41,7 @@ def CreateFF(data,mass,iCurr):
                     for iFF,iFFcof in enumerate(FFcoeffhold):
                         FFcoeff[iFF].append(iFFcof.imag)
                     datavals.append(data[iopp+'cmplx'][iq]['Boot'])
+                    print data[iopp+'cmplx'][iq]
                     infodict[iqs] = data[iopp+'cmplx'][iq]['Info']
                 if RealVal and rcheck:
                     for iFF,iFFcof in enumerate(FFcoeffhold):
