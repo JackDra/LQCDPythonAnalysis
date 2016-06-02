@@ -13,6 +13,8 @@ def RecFTDAS(dictin):
     else:
         try:
             dictout = float(dictin)
+            if int(dictout) == dictout:
+                dictout = int(dictout)
         except:
             try:
                 if len(str(dictin).split()) == 3:
