@@ -233,7 +233,7 @@ def PrintTSFToFile(filedir,filename,thisMomList,xml2ptFitList,xmlTSFList,data3pt
     xmlMomList = map(qstrTOqcond,thisMomList)
     for ipc,ip in enumerate(xmlMomList):        
         datadict,outputfile = SetUpPDict(ip,filedir,filename)
-        datadict[ip]['Info'] = CombineSetInfo(mominfoRF[ipc][igamma])
+        datadict[ip]['Info'] = CombineSetInfo(mominfoRF[igamma][ipc])
         datadict[ip]['Values'] = OrderedDict()
         datadict[ip]['Boots'] = OrderedDict()
         for ic2pt,icut2ptstr in enumerate(xml2ptFitList):
@@ -297,7 +297,7 @@ def PrintOSFToFile(filedir,filename,thisMomList,xml2ptFitList,xmlOSFList,data3pt
     xmlMomList = map(qstrTOqcond,thisMomList)
     for ipc,ip in enumerate(xmlMomList):        
         datadict,outputfile = SetUpPDict(ip,filedir,filename)
-        datadict[ip]['Info'] = infoRF[ipc][igamma][ism]
+        datadict[ip]['Info'] = infoRF[igamma][ipc][ism]
         datadict[ip]['Values'] = OrderedDict()
         datadict[ip]['Boots'] = OrderedDict()
         for ic2pt,icut2ptstr in enumerate(xml2ptFitList):

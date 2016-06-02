@@ -48,7 +48,7 @@ def PrintSumSetToFile(sumdata,sumfits,sumfitschi,thisFitList,thissm, thisGammaMo
         print 'Printing : ' , thegamma , '                \r',
         gammadir = outputdir+CreateOppDir(thegamma)+'/SumMeth/'
         filename = thissm+thegamma
-        infosetRF = [ip[igamma] for ip in infosetRF]
+        infosetRF = [ip for ip in infosetRF[igamma]]
         PrintSumToFile(gammadata,gammafitdata,gfdchi,gammadir,filename,gfitlist,thisMomList,thisTSinkList,thisCutList,infosetRF)
 
 
@@ -59,9 +59,7 @@ def PrintFitSetToFile(dataset,datasetChi,thisGammaMomList,thisSetList,thisCutLis
     for igamma,(thisgamma,thismomlist) in enumerate(thisGammaMomList.iteritems()):
         gammadir = outputdir+CreateOppDir(thisgamma)+'/Fits/'
         for iset,thisset in enumerate(thisSetList):
-            # print infosetRF
-            print infosetRF
-            mominfoRF = [ip[igamma][iset] for ip in infosetRF]
+            mominfoRF = [ip[iset] for ip in infosetRF[igamma]]
             print 'Printing : ' , thisgamma , thisset , '                \r',
             filename = thisset+thisgamma
             PrintFitToFile(dataset[igamma],datasetChi[igamma],iset,gammadir,filename,thismomlist,thisCutList,mominfoRF)
