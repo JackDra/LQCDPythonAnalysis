@@ -68,7 +68,7 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
             dictin[thiscol][thisgamma] = {}
         return dictin
     readdata = ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList,thisPrintRead=thisPrintRead)
-    start = time.time()
+   start = time.time()
     datadictout,datamassout = OrderedDict(),OrderedDict()
     for ig,igamma in enumerate(thisGammaList):
         if thisPrintRead: print ' Extracting data from read: ' , int((ig*100)/float(len(thisGammaList))) ,'%  \r',
@@ -326,7 +326,7 @@ def SetRFDictToList(DictData,thisPrintRead=PrintRead):
                 dataoutRF[-1].append([])
                 infolistRF[-1].append([])
                 for iset,(thisset,setdata) in enumerate(momdata['RF'].iteritems()):
-                    if 'Info' in setdata.keys(): infolistRF[-1].append(setdata['Info'])
+                    if 'Info' in setdata.keys(): infolistRF[-1][iset].append(setdata['Info'])
                     if 'Boot' in setdata.keys():
                         dataoutRF[-1][imom].append(setdata['Boot'])
                         if BorA == 'Avg': BorA = 'Mixed'
