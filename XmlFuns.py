@@ -20,7 +20,7 @@ def RecFTDAS(dictin):
                 elif len(str(dictin).split()) == 2:
                     dictout = FormatToDictAvgStd(str(dictin))
                 else:
-                dictout = str(dictin)
+                    dictout = str(dictin)
             except:
                 raise TypeError('final value in dictionary is not string')
         return dictout
