@@ -81,9 +81,11 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                     if 'TSF' in iMeth:
                         if CheckDict(thismassdict,'m0',TSFfitr):
                             datamassout[ism+iMeth] = thismassdict['m0'][TSFfitr]
+                            datamassout[ism+iMeth]['Info'] = thismassdict['Info']
                     elif 'OSF' in iMeth:
                         if CheckDict(thismassdict,'m0',OSFfitr[RemoveToDt(ism)]):
                             datamassout[ism+iMeth] = thismassdict['m0'][OSFfitr[RemoveToDt(ism)]]
+                            datamassout[ism+iMeth]['Info'] = thismassdict['Info']
         else:
             for imom,momdata in readdata[igamma].iteritems():
                 for iMeth,Methdata in momdata.iteritems():
@@ -96,11 +98,13 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                                 if CheckDict(thisdict,'B00',TSFfitr,icut):
                                     datadictout = SetupDict(datadictout,igamma,iSet+iMeth+icut)
                                     datadictout[iSet+iMeth+icut][igamma][imom] = thisdict['B00'][TSFfitr][icut]
+                                    datadictout[iSet+iMeth+icut][igamma][imom]['Info'] = thisdict['B00']['Info']
                         elif 'OSF' in iMeth:
                             for icut in OSFCutList:
                                 if CheckDict(thisdict,'B00',OSFfitr[fitsm],icut):
                                     datadictout = SetupDict(datadictout,igamma,iSet+iMeth+icut)
                                     datadictout[iSet+iMeth+icut][igamma][imom] = thisdict['B00'][OSFfitr[fitsm]][icut]
+                                    datadictout[iSet+iMeth+icut][igamma][imom]['Info'] = thisdict['B00']['Info']
                         elif 'SumMeth' in iMeth:
                             for ifit in SumFitRList:
                                 for icut in SumCutList:
@@ -108,12 +112,13 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                                         fitdict = ifit.replace('fit sl ','fitr')
                                         datadictout = SetupDict(datadictout,igamma,iSet+iMeth+icut+fitdict)
                                         datadictout[iSet+iMeth+icut+fitdict][igamma][imom] = thisdict[icut][ifit]
+                                        datadictout[iSet+iMeth+icut+fitdict][igamma][imom]['Info'] = thisdict['Info']
                         elif 'Fits' in iMeth:
                             for icut in FitCutArgs:
                                 if icut in thisdict.keys():
-                                    print thisdict[icut]
                                     datadictout = SetupDict(datadictout,igamma,iSet+iMeth+icut)
                                     datadictout[iSet+iMeth+icut][igamma][imom] = thisdict[icut]
+                                    datadictout[iSet+iMeth+icut][igamma][imom]['Info'] = thisdict['Info']
     if thisPrintRead: print 'Extracting data took: ', str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                  '
     return datadictout,datamassout
 
@@ -426,7 +431,6 @@ def MakeMethodsDict(readdir,readfile,thisMethodList,thisSetList,thisMomList=RunM
                 if imom not in MethDict.keys(): MethDict[imom] = OrderedDict()
                 if iMeth not in MethDict[imom].keys(): MethDict[imom][iMeth] = OrderedDict()
                 MethDict[imom][iMeth][iSet] = thisDict[iSet][imom]
-    print MethDict
     return MethDict
 
 

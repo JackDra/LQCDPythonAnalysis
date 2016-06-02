@@ -41,13 +41,11 @@ def CreateFF(data,mass,iCurr):
                     for iFF,iFFcof in enumerate(FFcoeffhold):
                         FFcoeff[iFF].append(iFFcof.imag)
                     datavals.append(data[iopp+'cmplx'][iq]['Boot'])
-                    print data[iopp+'cmplx'][iq]
                     infodict[iqs] = data[iopp+'cmplx'][iq]['Info']
                 if RealVal and rcheck:
                     for iFF,iFFcof in enumerate(FFcoeffhold):
                         FFcoeff[iFF].append(iFFcof.real)
                     datavals.append(data[iopp][iq]['Boot'])
-                    print data[iopp][iq]
                     infodict[iqs] = data[iopp][iq]['Info']
         if len(datavals) == 0: continue
         zboot,zvec = [BootStrap1(nboot,0)],[0.0]
