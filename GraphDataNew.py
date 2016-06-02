@@ -420,18 +420,16 @@ def PlotSummedRF(data,thisfitr):
         
         for itsink,tsinkdata in cutdata.iteritems():
             if 'fit' not in itsink:
-                print tdata
                 tdata.append(int(itsink.replace('tsink',''))-tsource)
                 dataplot.append(abs(tsinkdata['Avg']))
                 dataploterr.append(tsinkdata['Std'])
+        tdata,dataplot,dataploterr = zip(*sorted(zip(tdata,dataplot,dataploterr)))
         pl.errorbar(tdata,dataplot,dataploterr,color=thiscol,fmt=thissym,label=icut)
         if not CheckDict(cutdata,'fit con '+thisfitr,'Boot'): continue
         if not CheckDict(cutdata,'fit sl '+thisfitr,'Boot'): continue        
         parcon,parsl = cutdata['fit con '+thisfitr]['Boot'],cutdata['fit sl '+thisfitr]['Boot']
         fittdata = np.arange(tdata[int(thisfitmin)],tdata[int(thisfitmax)]+incr,incr)
         fittdashed = np.arange(tdata[0],tdata[int(thisfitmin)]+incr,incr)
-        print fittdata
-        print fittdashed
         fitbootdata = [abs((parsl* (it+tsource)) + parcon) for it in fittdata]
         fitbootdashed = [abs((parsl* (it+tsource)) + parcon) for it in fittdashed]
         GetBootStats(fitbootdata),GetBootStats(fitbootdashed)
