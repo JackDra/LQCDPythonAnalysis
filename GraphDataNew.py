@@ -221,7 +221,6 @@ def PlotRFSetTSF(data,data2pt,thisSetList,TSFcut,thisTSF,legrem=''):
 def PlotRFSetOSF(data,data2pt,thisSetList,OSFcut,thisOSF,legrem=''):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     for iset in SortMySet(thisSetList)[0]:
-        print 'checking ', iset
         thistsink,thissm = SplitTSinkString(iset)
         thiscol = thiscolcyc.next()
         thissym = thissymcyc.next()
@@ -235,7 +234,6 @@ def PlotRFSetOSF(data,data2pt,thisSetList,OSFcut,thisOSF,legrem=''):
                 continue
             else:
                 OSFset = thissm
-        print 'plotting ',iset
         PlotOSFValue(data[thisOSF][OSFset],thiscol,thisshift,OSFcut,thissm,thistsink.replace('tsink',''))
     SetRFAxies()
 
