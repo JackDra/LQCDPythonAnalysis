@@ -28,8 +28,7 @@ def CombineSetInfo(listin):
     if len(listin) > 1:
         for ismlist in listin[1:]:
             nconf = min(ismlist['nconfig'],nconf)
-    dictout['nconfig'] = nconf
-    return dictout
+    return {'nconfig':nconf}
 
 def WriteXmlOutput(thisfile,outputdict):
     firstkey = outputdict.keys()[0]
