@@ -116,7 +116,7 @@ if thisGammaList == ['twopt']:
     thisAllSetList = thisSmList+TvarPicked
     print 'AllSetList:\n' + '\n'.join(thisAllSetList)
     print 'MethodList:\n' + '\n'.join(feedin['method'])
-    if DoMulticore:
+    if DoMulticore and len(feedin['mom']) > 1:
         inputparams = []
         for imom in feedin['mom']:
             if imom == 'q = 0 0 0':
@@ -135,7 +135,7 @@ else:
         feedin['method'] = ['RF']
     print 'MethodList:\n' + '\n'.join(feedin['method'])
     print 'thisSetList:\n' + '\n'.join(feedin['set'])
-    if DoMulticore:
+    if DoMulticore and len(thisGammaList) > 1:
         inputparams = []
         for igamma in thisGammaList:
             if any([idst in igamma for idst in ['doub','sing','twopt']]): continue
