@@ -134,7 +134,7 @@ def PrintSumToFile(data,datafit,datafitchi,filedir,filename,thisFitList,thisMomL
     for ipc,(ip,pdata,pdatafit,pdatafitchi,pfitlist) in enumerate(zip(xmlMomList,data,datafit,datafitchi,thisFitList)):
         xmlFitList = ParamsToFitFlag(pfitlist)
         datadict,outputfile = SetUpPDict(ip,filedir,filename)
-        datadict[ip]['Info'] = CombineSetInfo(mominfoRF[ip])
+        datadict[ip]['Info'] = CombineSetInfo(mominfoRF[ipc])
         datadict[ip]['Values'] = OrderedDict()
         datadict[ip]['Boots'] = OrderedDict()
         for icut,cutdata,cutdatafit,cutdatafitchi,cutfitlist in zip(xmlCutList,pdata,pdatafit,pdatafitchi,xmlFitList):
