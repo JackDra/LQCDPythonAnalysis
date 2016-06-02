@@ -309,7 +309,7 @@ def SetRFDictToList(DictData,thisPrintRead=PrintRead):
                 dataout2pt.append([])
                 infolist2pt.append([])
                 for iset,setdata in enumerate(momdata['RF'].itervalues()):
-                    if 'Info' in setdata.keys(): infolist2pt[imom].append(setdata['Info'])
+                    infolist2pt[imom].append(setdata['Info'])
                     if 'Boot' in setdata.keys():
                         dataout2pt[imom].append(setdata['Boot'])
                         if BorA == 'Avg': BorA = 'Mixed'
@@ -326,7 +326,7 @@ def SetRFDictToList(DictData,thisPrintRead=PrintRead):
                 dataoutRF[-1].append([])
                 infolistRF[-1].append([])
                 for iset,(thisset,setdata) in enumerate(momdata['RF'].iteritems()):
-                    if 'Info' in setdata.keys(): infolistRF[-1][iset].append(setdata['Info'])
+                    infolistRF[-1][iset].append(setdata['Info'])
                     if 'Boot' in setdata.keys():
                         dataoutRF[-1][imom].append(setdata['Boot'])
                         if BorA == 'Avg': BorA = 'Mixed'
