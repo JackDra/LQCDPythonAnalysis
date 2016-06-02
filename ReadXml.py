@@ -63,7 +63,7 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
             if 'Boots' in data.keys():
                 bootdata = data['Boots']
                 dictout[thismom] = {}
-                dictout[thismom]['Info'] = data['Info']
+                if 'Info' in dictout[thismom].keys(): dictout[thismom]['Info'] = data['Info']
                 dictout[thismom]['tVals'] = map(untstr,bootdata.keys())
                 dictout[thismom]['Boot'] = []
                 dictout[thismom]['Vals'] = []
@@ -76,7 +76,7 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
                     dictout[thismom]['Valserr'].append(dictout[thismom]['Boot'][-1].Std)
             else:
                 bootdata = data['Values']
-                dictout[thismom]['Info'] = data['Info']
+                if 'Info' in dictout[thismom].keys(): dictout[thismom]['Info'] = data['Info']
                 dictout[thismom] = {}
                 dictout[thismom]['tVals'] = map(untstr,bootdata.keys())
                 dictout[thismom]['Vals'] = []
@@ -97,7 +97,7 @@ def ReadFitFile(filedir,filename,thisMomList=RunMomList):
             dictout[thismom] = {}
             data = ReadXmlAndPickle(readfile)[0]
             data = data[data.keys()[0]]
-            dictout[thismom]['Info'] = data['Info']
+            if 'Info' in dictout[thismom].keys(): dictout[thismom]['Info'] = data['Info']
             if 'Boots' in data.keys():
                 bootdata = data['Boots']
                 for icut,cutdata in bootdata.iteritems():
@@ -124,7 +124,7 @@ def ReadSumFile(filedir,filename,thisMomList=RunMomList):
             if 'Boots' in data.keys():
                 bootdata = data['Boots']
                 dictout[thismom] = {}
-                dictout[thismom]['Info'] = data['Info']
+                if 'Info' in dictout[thismom].keys(): dictout[thismom]['Info'] = data['Info']
                 for icut,cutdata in bootdata.iteritems():
                     dictout[thismom][icut] = {}
                     for it,tdata in cutdata.iteritems():
@@ -149,7 +149,7 @@ def ReadSumFile(filedir,filename,thisMomList=RunMomList):
             else:
                 valdata = data['Values']
                 dictout[thismom] = {}
-                dictout[thismom]['Info'] = data['Info']
+                if 'Info' in dictout[thismom].keys(): dictout[thismom]['Info'] = data['Info']
                 for icut,cutdata in bootdata.iteritems():
                     dictout[thismom][icut] = {}
                     for it,tdata in cutdata.iteritems():
@@ -169,7 +169,7 @@ def ReadFFFile(filename):
         data = ReadXmlAndPickle(filename)[0]
         data = data[data.keys()[0]]
         dataout = OrderedDict()
-        dataout[thismom]['Info'] = data['Info']
+        if 'Info' in dataout[thismom].keys(): dataout[thismom]['Info'] = data['Info']
         dataout['Mass'] = data['Values']['Mass']
         dataout['Chi'] = OrderedDict()
         if 'Boots' in data.keys():
@@ -222,7 +222,7 @@ def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
                     bootdata = data['Boots']
                     if thismom not in dictout.keys():dictout[thismom] = {}
                     dictout[thismom][ipar] = {}
-                    dictout[thismom]['Info'] = data['Info']
+                    if 'Info' in dictout[thismom].keys(): dictout[thismom]['Info'] = data['Info']
                     for ifit,fitrdata in bootdata.iteritems():
                         thisfit = FitFlagXmlToOldSF(ifit)
                         dictout[thismom][ipar][thisfit] = {}
@@ -247,7 +247,7 @@ def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
                     bootdata = data['Values']
                     if thismom not in dictout.keys():dictout[thismom] = {}
                     dictout[thismom][ipar] = {}
-                    dictout[thismom]['Info'] = data['Info']
+                    if 'Info' in dictout[thismom].keys(): dictout[thismom]['Info'] = data['Info']
                     for ifit,fitrdata in bootdata.iteritems():
                         thisfit = FitFlagXmlToOldSF(ifit)
                         dictout[thismom][ipar][thisfit] = dictout[thismom][ifit]
