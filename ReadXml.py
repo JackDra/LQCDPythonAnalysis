@@ -89,7 +89,6 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
                 for tdata in bootdata.itervalues():
                     dictout[thismom]['Vals'].append(tdata['Avg']*renorm)
                     dictout[thismom]['Valserr'].append(tdata['Std'])
-        print dictout[thismom]['Info']
     return dictout
         
                     
