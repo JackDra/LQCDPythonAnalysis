@@ -60,6 +60,7 @@ def PrintFitSetToFile(dataset,datasetChi,thisGammaMomList,thisSetList,thisCutLis
         gammadir = outputdir+CreateOppDir(thisgamma)+'/Fits/'
         for iset,thisset in enumerate(thisSetList):
             # print infosetRF
+            print infosetRF
             mominfoRF = [ip[igamma][iset] for ip in infosetRF]
             print 'Printing : ' , thisgamma , thisset , '                \r',
             filename = thisset+thisgamma
