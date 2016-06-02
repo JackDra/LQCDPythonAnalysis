@@ -44,7 +44,7 @@ def PrintSetToFile(dataset,thisSetList,thisMomList, thisGammaList,tsink,AddDict=
 ##sumfitsChi [ igamma , ip , icut , fitvals ]
 
 def PrintSumSetToFile(sumdata,sumfits,sumfitschi,thisFitList,thissm, thisGammaMomList,thisTSinkList,thisCutList,infoRF):
-    for igamma,(thegamma,thisMomList),gammadata,gammafitdata,gfdchi,gfitlist in enumerate(zip(thisGammaMomList.iteritems(),sumdata,sumfits,sumfitschi,thisFitList)):
+    for igamma,((thegamma,thisMomList),gammadata,gammafitdata,gfdchi,gfitlist) in enumerate(zip(thisGammaMomList.iteritems(),sumdata,sumfits,sumfitschi,thisFitList)):
         print 'Printing : ' , thegamma , '                \r',
         gammadir = outputdir+CreateOppDir(thegamma)+'/SumMeth/'
         filename = thissm+thegamma
