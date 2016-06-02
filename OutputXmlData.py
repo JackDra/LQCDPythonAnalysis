@@ -34,6 +34,7 @@ def CombineSetInfo(listin):
 def WriteXmlOutput(thisfile,outputdict):
     firstkey = outputdict.keys()[0]
     Vals = {firstkey:{'Values':outputdict[firstkey]['Values']}}
+    if 'Info' in output[firstkey].keys():Vals[firstkey]['Info'] = outputdict[firstkey]['Info']
     Boots = outputdict[firstkey]['Boots']
     outdirlist = thisfile.split('/')
     bootdir = '/'.join(outdirlist[:-1]+['boots'])
