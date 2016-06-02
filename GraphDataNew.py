@@ -30,7 +30,7 @@ thisalpha = 0.3
 MassTVals = 16,34
 Massyrange = 0.35,1.0
 
-giDiyrange = 0.05,0.15
+ylimDict = {'P4giDi':[0.05,0.15]}
 
 params = {'legend.fontsize': 10,
           'legend.numpoints': 1,
@@ -98,13 +98,13 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref,subdir=''):
     mkdir_p(thisdir)
     return thisdir+thisfile
 
-def SetRFAxies(giDi=False):
+def SetRFAxies(thisGamma):
     pl.xlabel(RFxlab)
     pl.ylabel(RFylab)
-    if giDi:
-        pl.ylim(giDiyrange)
-    else:
+    if thisGamma not in ylimDict.keys():
         pl.ylim(max(pl.ylim()[0],0),min(pl.ylim()[1],2))
+    else:
+        pl.ylim(ylimDict[thisGamma])
     SetxTicks()
     pl.legend()
 
