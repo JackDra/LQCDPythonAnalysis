@@ -24,13 +24,11 @@ import os
 ## listin = [ism] {'Info': {'nconfig':###}}
 ## dictout = {'Info': {'nconfig':###}}
 def CombineSetInfo(listin):
-    dictout = {'Info':{}}
-    print listin[0].keys()
-    nconf = listin[0]['Info']['nconfig']
+    nconf = listin[0]['nconfig']
     if len(listin) > 1:
         for ismlist in listin[1:]:
-            nconf = min(ismlist['Info']['nconfig'],nconf)
-    dictout['Info']['nconfig'] = nconf
+            nconf = min(ismlist['nconfig'],nconf)
+    dictout['nconfig'] = nconf
     return dictout
 
 def WriteXmlOutput(thisfile,outputdict):
