@@ -174,7 +174,7 @@ def ReadFFFile(filename):
         data = ReadXmlAndPickle(filename)[0]
         data = data[data.keys()[0]]
         dataout = OrderedDict()
-        if 'Info' in dataout[thismom].keys(): dataout[thismom]['Info'] = data['Info']
+        dataout['Info'] = data['Info']
         dataout['Mass'] = data['Values']['Mass']
         dataout['Chi'] = OrderedDict()
         if 'Boots' in data.keys():
