@@ -42,6 +42,7 @@ def ReadXmlAndPickle(filein):
         else:
             if not ('nconfig' in xmldata[firstkey[0]]['Info'].keys() or any(['qsqrd' in ixm for ixm in xmldata[firstkey[0]]['Info'].keys()])):
                 xmldata[firstkey[0]]['Info'] = {'nconfig':-1}
+        print xmldata[firstkey[0]].keys()
     return xmldata,bootfile
 
 def CheckMomFile(filein):
