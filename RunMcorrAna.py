@@ -178,7 +178,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
     sys.stderr = sys.__stderr__
     if 'TwoPt' not in RunType: print 'Three Point Analysis '+Curr + ' ' + RunType + ' tsinks: ' + ' '.join(RunTSinkList) + ' Added to jobs'
 
-if DefWipe: DefWipeWarning()
+DefWipeWarning()
 if len(sys.argv) < 2: raise IOError("input current type as first argument")
 print sys.argv[1]
 CurrIn = sys.argv[1]

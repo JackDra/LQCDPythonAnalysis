@@ -40,6 +40,7 @@ def FitSumWrap(thisGammaList,thisReadSetList,thisTSinkList,this2ptSetList,thisRe
 ReadSmearList = ['32']
 ReadTSinkList = [26,29,32,35,38]
 feedin = InputParams(sys.argv[1:])
+DefWipeWarning()
 
 thisGammaList = CreateGammaList(feedin['gamma'])
 
@@ -63,7 +64,6 @@ for igamma in thisGammaList:
     if 'doub' not in igamma and 'sing' not in igamma and 'twopt' not in igamma:
         parsegammalist = ['doub'+igamma,'sing'+igamma,igamma]
         if DefWipe:
-            DefWipeWarning()
             QueMomList = feedin['mom']
         else:
             QueMomList = Check3ptAllSets(parsegammalist,thisReadSetList,thisMomList=feedin['mom'],CheckType='SumMeth')
@@ -75,7 +75,6 @@ for igamma in thisGammaList:
         parsegammalist = [igamma]
         
         if DefWipe:
-            DefWipeWarning()
             QueMomList = feedin['mom']
         else:
             QueMomList = Check3ptAllSets(parsegammalist,thisReadSetList,thisMomList=feedin['mom'],CheckType='SumMeth')
