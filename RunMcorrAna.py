@@ -9,7 +9,7 @@ from Params import *
 from SetLists import *
 from Try2ptPickCMS import CreateTwoPt
 from Try3ptPickCMS import CreateRF
-from MiscFuns import touch,DefWipeWarning
+from MiscFuns import touch
 from OppFuns import Wipe2pt,WipeSet
 from MiscFuns import *
 from MomParams import *
