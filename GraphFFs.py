@@ -66,8 +66,8 @@ def PickFFAllSets(currdata,thiscurr,thisSetList):
     for ifitr in SumFitRListFlags:
         for icut in SumCutList:
             PickedSetList += FlagList(thisSetList,'SumMeth',ifitr,icut)
-    # for icut in OSFCutList:
-    #     PickedSetList += FlagList(thisSetList,'OSF',icut)
+    for icut in OSFCutList:
+        PickedSetList += FlagList(thisSetList,'OSF',icut)
     for icut in TSFCutList:
         PickedSetList += FlagList(thisSetList,'TSF',icut)
     return PickedSetList
@@ -118,7 +118,7 @@ feedin = InputParams(sys.argv[1:])
 
 thisCurrDict = GetCurrDict(feedin['current'])
 
-datadict,currPSL = ReadAndPlotFF(thisCurrDict,['Fits','Sum'])
+datadict,currPSL = ReadAndPlotFF(thisCurrDict)
 # datadict,currPSL = ReadAndPlotFF(thisCurrDict)
 if kappa == 12090: PlotFFqPick(datadict,currPSL)
 
