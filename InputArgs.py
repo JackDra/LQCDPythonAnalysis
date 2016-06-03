@@ -3,6 +3,11 @@
 from Params import *
 from SetLists import *
 from FFParams import *
+import sys
+
+def DefWipeWarning():
+    thisinput = raw_input("Warning: DefWipe is true, Do you want to wipe existing data? (y/n)")
+    if thisinput != 'y': sys.exit()
 
 def ShowSetLists(thissetlist):
     print 

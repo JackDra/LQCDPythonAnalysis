@@ -9,12 +9,13 @@ from Params import *
 from SetLists import *
 from Try2ptPickCMS import CreateTwoPt
 from Try3ptPickCMS import CreateRF
-from MiscFuns import touch
+from MiscFuns import touch,DefWipeWarning
 from OppFuns import Wipe2pt,WipeSet
 from MiscFuns import *
 from MomParams import *
 from FFParams import *
 from ReadTxt import Get3ptSetMoms,Get2ptSetMoms
+from InputArgs import DefWipeWarning
 import copy
 from multiprocessing import Pool
 
@@ -177,9 +178,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
     sys.stderr = sys.__stderr__
     if 'TwoPt' not in RunType: print 'Three Point Analysis '+Curr + ' ' + RunType + ' tsinks: ' + ' '.join(RunTSinkList) + ' Added to jobs'
 
-if DefWipe:
-    thisinput = raw_input("Warning: DefWipe is true, Do you want to wipe existing data? (y/n)")
-    if thisinput != 'y': sys.exit() 
+if DefWipe: DefWipeWarning()
 if len(sys.argv) < 2: raise IOError("input current type as first argument")
 print sys.argv[1]
 CurrIn = sys.argv[1]

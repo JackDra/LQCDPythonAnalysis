@@ -68,6 +68,7 @@ for igamma in thisGammaList:
     if 'doub' not in igamma and 'sing' not in igamma:
         for iChunk,(iSet,iTS) in enumerate(zip(feedin['set'],DefTSinkSetList)):
             if DefWipe:
+                DefWipeWarning()
                 thisMomList = feedin['mom']
             else:
                 thisMomList = Check3ptArray(['doub'+igamma,'sing'+igamma,igamma],[iSet],thisMomList=feedin['mom'],CheckType='Fits',printout=False)

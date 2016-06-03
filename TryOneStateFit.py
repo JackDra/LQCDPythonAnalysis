@@ -189,6 +189,7 @@ for igamma in ReadGammaList:
     if 'twopt' in igamma: continue
     if 'doub' not in igamma and 'sing' not in igamma:
         if DefWipe:
+            DefWipeWarning()
             QueMomList = feedin['mom']
         else:
             QueMomList = Check3ptAllSets([igamma,'doub'+igamma,'sing'+igamma],ReadSetList,thisMomList=feedin['mom'],CheckType='OSF'+outfile)
@@ -198,6 +199,7 @@ for igamma in ReadGammaList:
             inputparams.append((ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],OSF2ptarray,twoptGammaMomList,[imom]))
     elif igamma.replace('doub','').replace('sing','') not in ReadGammaList:
         if DefWipe:
+            DefWipeWarning()
             QueMomList = feedin['mom']
         else:
             QueMomList = Check3ptAllSets([igamma],ReadSetList,thisMomList=feedin['mom'],CheckType='OSF'+outfile)
