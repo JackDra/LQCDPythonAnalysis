@@ -104,9 +104,6 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                                 if CheckDict(thisdict,'B00',OSFfitr[fitsm],icut):
                                     datadictout = SetupDict(datadictout,igamma,iSet+iMeth+icut)
                                     datadictout[iSet+iMeth+icut][igamma][imom] = thisdict['B00'][OSFfitr[fitsm]][icut]
-                                    print thisdict['B00'].keys()
-                                    print thisdict['B00'][OSFfitr[fitsm]].keys()
-                                    print thisdict['B00'][OSFfitr[fitsm]][icut].keys()
                                     datadictout[iSet+iMeth+icut][igamma][imom]['Info'] = thisdict['B00']['Info']
                         elif 'SumMeth' in iMeth:
                             for ifit in SumFitRList:

@@ -228,7 +228,7 @@ def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
                     bootdata = data['Boots']
                     if thismom not in dictout.keys():dictout[thismom] = {}
                     dictout[thismom][ipar] = {}
-                    dictout[thismom]['Info'] = data['Info']
+                    dictout[thismom][ipar]['Info'] = data['Info']
                     for ifit,fitrdata in bootdata.iteritems():
                         thisfit = FitFlagXmlToOldSF(ifit)
                         dictout[thismom][ipar][thisfit] = {}
