@@ -81,11 +81,11 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                     if 'TSF' in iMeth:
                         if CheckDict(thismassdict,'m0',TSFfitr):
                             datamassout[ism+iMeth] = thismassdict['m0'][TSFfitr]
-                            datamassout[ism+iMeth]['Info'] = thismassdict['Info']
+                            datamassout[ism+iMeth]['Info'] = thismassdict['m0']['Info']
                     elif 'OSF' in iMeth:
                         if CheckDict(thismassdict,'m0',OSFfitr[RemoveToDt(ism)]):
                             datamassout[ism+iMeth] = thismassdict['m0'][OSFfitr[RemoveToDt(ism)]]
-                            datamassout[ism+iMeth]['Info'] = thismassdict['Info']
+                            datamassout[ism+iMeth]['Info'] = thismassdict['m0']['Info']
         else:
             for imom,momdata in readdata[igamma].iteritems():
                 for iMeth,Methdata in momdata.iteritems():
