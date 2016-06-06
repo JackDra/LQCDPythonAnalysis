@@ -419,7 +419,7 @@ def PlotSummedRF(data,thisfitr):
         thiscol,thissym = thiscolcyc.next(),thissymcyc.next()
         
         for itsink,tsinkdata in cutdata.iteritems():
-            if 'fit' not in itsink:
+            if 'fit' not in itsink and 'nconf' not in itsink:
                 tdata.append(int(itsink.replace('tsink',''))-tsource)
                 dataplot.append(abs(tsinkdata['Avg']))
                 dataploterr.append(tsinkdata['Std'])
