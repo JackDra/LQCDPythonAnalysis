@@ -415,7 +415,7 @@ def PlotSummedRF(data,thisfitr):
     thisfitr = thisfitr.split()[-1]
     thisfitmin,thisfitmax = thisfitr.split('-')
     for icut,cutdata in data.iteritems():
-        if cutdata.keys()[0] == 'nconf': continue
+        if 'nconf' in cutdata.keys()[0]: continue
         tdata,dataplot,dataploterr = [],[],[]
         thiscol,thissym = thiscolcyc.next(),thissymcyc.next()
         
