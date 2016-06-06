@@ -140,8 +140,8 @@ if thisGammaList == ['twopt']:
     else:
         ReadAndPlotMass(thisGammaList,feedin['mom'],feedin['set'],feedin['method'])
 else:
-    if any([imom != 'q = 0 0 0' for imom in feedin['mom']]):
-        feedin['method'] = ['RF']
+    # if any([imom != 'q = 0 0 0' for imom in feedin['mom']]):
+    #     feedin['method'] = ['RF']
     print 'MethodList:\n' + '\n'.join(feedin['method'])
     print 'thisSetList:\n' + '\n'.join(feedin['set'])
     if DoMulticore and len(thisGammaList) > 1:
