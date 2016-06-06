@@ -415,10 +415,10 @@ def PlotSummedRF(data,thisfitr):
     thisfitr = thisfitr.split()[-1]
     thisfitmin,thisfitmax = thisfitr.split('-')
     for icut,cutdata in data.iteritems():
+        if cutdata.keys()[0] == 'nconf': continue
         tdata,dataplot,dataploterr = [],[],[]
         thiscol,thissym = thiscolcyc.next(),thissymcyc.next()
         
-        print cutdata.keys()
         for itsink,tsinkdata in cutdata.iteritems():
             if 'fit' not in itsink and 'nconf' not in itsink:
                 tdata.append(int(itsink.replace('tsink',''))-tsource)
