@@ -161,7 +161,7 @@ if os.path.isfile(picklefile2pt):
     print '2 point picked file read in'        
 else:
     print 'Reading and fitting 2 point correlator data'
-    [dump,data2pt,twoptGammaMomList,dump3,dump4,infolist2pt] = ReadCfunsnp(['twopt'],ReadSetList)
+    [dump,data2pt,twoptGammaMomList,dump3,dump4,infolist2pt] = ReadCfunsnp(['twopt'],ReadSetList,thisMomList=feedin['mom'])
     ## data2pt = [ ip , iset2pt , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     OSF2ptarray = []
     OneFit2pt = []

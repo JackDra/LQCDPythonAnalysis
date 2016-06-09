@@ -220,7 +220,6 @@ else:
     PrintTSFMassToFile(TwoFit2pt,TwoFit2ptChi,ReadSetList,thisFitTSFR,outfile,twoptGammaMomList['twopt'],info2pt)
 
 
-print twoptGammaMomList
 inputparams = []
 for igamma in ReadGammaList:
     if 'twopt' in igamma: continue
