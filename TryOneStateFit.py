@@ -112,7 +112,8 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList,thisMomList):
     # thisFitOSFR = [thisFitOSFR[0]]
     thispicklelist = []
     for icf,ifit2pt in enumerate(thisFitOSFR):
-        thispicklelist.append(pickledir+'tempOSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0]+thisMom+'.p')
+        mkdir_p(pickledir+thisGammaList[0]+thisMom)
+        thispicklelist.append(pickledir+thisGammaList[0]+thisMom+'/tempOSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0]+thisMom+'.p')
         if not os.path.isfile(thispicklelist[icf]):
             perdone = (icf+1)/float(len(thisFitOSFR))
             tempout = OneStateSetFit(OSF2ptarray[icf],data3pt,OSF3ptCutList,thisSetList,thisGammaMomList,[ifit2pt,int(perdone*100)])
