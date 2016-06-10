@@ -126,8 +126,9 @@ def DoTSF(thisSetList,thisGammaList,TSF2ptarray,twoptGammaMomList,thisMomList):
     start = time.time()
     thispicklelist = []
     for icf,ifit2pt in enumerate(thisFitTSFR):
-        pickledir+thisGammaList[0] + thisMom
-        thispicklelist.append(pickledir+thisGammaList[0] + thisMom+'/tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0] + thisMom+'.p')
+        thispickledir = pickledir+thisGammaList[0] +'/'+ thisMom
+        mkdir_p(thispickledir)
+        thispicklelist.append(thispickledir+'/tempTSF'+outfile+'fit'+'to'.join(map(str,ifit2pt))+thisGammaList[0] + thisMom+'.p')
         if not os.path.isfile(thispicklelist[icf]):
             perdone = (icf+1)/float(len(thisFitTSFR))
             tempout = MomTSSetFit(TSF2ptarray[icf],data3pt,TSF3ptCutList,thisSetList,thisGammaMomList,[ifit2pt,int(perdone*100)])
