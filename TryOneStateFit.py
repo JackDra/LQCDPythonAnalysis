@@ -38,6 +38,7 @@ ReadGammaList = CreateGammaList(feedin['gamma'],twopt=True)
 # OSFColList = ['Tsink','CM','JustPoF','REvec']
 OSFColList = ['Tsink','CM','JustPoF']
 
+twoptoutfile = outfile
 if outfile == 'Tsink':
     ReadSmearList = ['32']
     ReadTSinkList = AllTSinkList
@@ -162,7 +163,7 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList,thisMomList):
 
 
 
-picklefile2pt = pickledir+'tempOSF'+outfile+'fittwopt.p'
+picklefile2pt = pickledir+'tempOSF'+twoptoutfile+'fittwopt.p'
 if os.path.isfile(picklefile2pt):
     print '2 point picked file found, reading in'
     with open( picklefile2pt, "rb" ) as pfile:
@@ -192,7 +193,7 @@ else:
     with open( picklefile2pt, "wb" ) as pfile:
         pickle.dump( [OSF2ptarray,twoptGammaMomList], pfile )
     print 'Printing 2 point correlators to file'
-    PrintOSFMassToFile(OneFit2pt,OneFit2ptChi,ReadSetList,thisFitOSFR,outfile,twoptGammaMomList['twopt'],infolist2pt)
+    PrintOSFMassToFile(OneFit2pt,OneFit2ptChi,ReadSetList,thisFitOSFR,twoptoutfile,twoptGammaMomList['twopt'],infolist2pt)
 
 
 inputparams = []
