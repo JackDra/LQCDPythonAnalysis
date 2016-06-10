@@ -53,6 +53,14 @@ elif outfile == 'CM':
     ReadTvarList = AnaTvarList
     ReadREvecTSinkList = []
     ReadREvecTvarList = []
+elif outfile == 'JustCM':
+    ReadSmearList = DefSmearList
+    ReadTSinkList = [29]
+    # CaptString = ['SMSET','CMSET','PoFSET','REvecSET']
+    CaptString = ['CMSET']
+    ReadTvarList = AnaTvarList
+    ReadREvecTSinkList = []
+    ReadREvecTvarList = []
 elif outfile == 'JustPoF':
     outfile = 'CM'
     ReadSmearList = []
