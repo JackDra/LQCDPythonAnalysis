@@ -22,14 +22,13 @@ from CheckXml import *
 
 
 
-print outputdir
-
 feedin = InputParams(sys.argv[1:])
 DefWipeWarning()
 thisGammaList = CreateGammaList(feedin['gamma'])
 
 ShowSetLists(feedin['set'])
 
+ShowMethodList(feedin['method'])
 
 nconf = CheckNconf(thisGammaList,feedin['set'],thisMomList=feedin['mom'],CheckList=feedin['method'])
 

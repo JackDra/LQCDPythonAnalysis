@@ -16,7 +16,13 @@ def ShowSetLists(thissetlist):
     print 'Set Lists:'
     print '\n'.join(thissetlist)
     print 
-    
+
+def ShowMethodList(thismethodlist):
+    print 
+    print 'Method Lists:'
+    print '\n'.join(thismethodlist)
+    print 
+
 def ExpandSetList(thisSL):
     SLout = []
     for iset in thisSL:
