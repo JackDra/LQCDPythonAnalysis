@@ -29,7 +29,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
             SFList = TwoStateParList['C3']
 
         for iset in CheckSetList:
-            print '    Checking', iset
+            # print '    Checking', iset
             for iSF in SFList:
                 if len(iSF) > 0: print '       Checking', iSF , ' '*50
                 for igamma in thisGammaList:
