@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from Params import *
+from Params import outputdir
 from XmlFuns import *
 from XmlFormatting import *
 from FitParams import *
