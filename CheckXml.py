@@ -42,7 +42,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                         dump,checkfile = SetUpPDict(ip,gammadir,filename)
                         thisnconf = CheckNconfFile(checkfile+'.xml')
                         if 'File Missing' == thisnconf:
-                            return 'File Missing' + checkfile+'.xml'
+                            return 'File Missing: ' + checkfile+'.xml'
                         else:
                             nconf = min(nconf, CheckNconfFile(checkfile+'.xml'))
     print ' '*50
