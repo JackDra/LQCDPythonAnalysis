@@ -53,7 +53,6 @@ def TryFitsFun(thisGammaList,thisSetList,thisReadMomList,thisTSinkList,thischunk
     return FitDataBoot,FitDataChi,thisGammaMomList,thisSetList,FitCutList,infolistRF
 
 
-thisTSinkStrList = map(str,DefTSinkSetList)
 
 feedin = InputParams(sys.argv[1:])
 DefWipeWarning()

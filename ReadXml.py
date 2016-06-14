@@ -52,6 +52,18 @@ def CheckMomFile(filein):
     return False
 
 
+def CheckNconfFile(filein):
+    if not os.path.isfile(filein): return -2
+    Nconf = -2
+    with open(filein,'r') as thisfile:
+        for line in thisfile:
+            strpline = line.strip()
+            if '</Info>' in strpline:
+                return Nconf
+            elif if '<nconfig>' in strpline and '</nconfig>' in strpline:
+                Nconf = min(Nconf,int(strpline.replace('<nconfig>','').replace('</nconfig>','')))
+    return Nconf
+                    
 
 ##Also works for cfuns##
 ##xmlinput = { Ratio_Factor , Boots/Values , thismomlist , tlist } 
