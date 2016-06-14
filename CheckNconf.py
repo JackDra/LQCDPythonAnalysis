@@ -2,7 +2,7 @@
 
 
 from InputArgs import *
-from ReadXml import CheckNconfFile
+from CheckXml import CheckNconf
 from OppFuns import CreateGammaList
 
 
@@ -12,6 +12,6 @@ thisGammaList = CreateGammaList(feedin['gamma'])
 
 ShowSetLists(feedin['set'])
 
-Nconf = CheckNconfFile(thisGammaList,feedin['set'],thisMomList=feedin['mom'],CheckList=feedin['method'],cfuns=False)
+Nconf = CheckNconf(thisGammaList,feedin['set'],thisMomList=feedin['mom'],CheckList=feedin['method'],cfuns=False)
 
 print Nconf
