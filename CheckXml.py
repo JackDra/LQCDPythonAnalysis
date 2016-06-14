@@ -16,7 +16,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
     nconf = 10e16
     thisdir = outputdir
     for CheckType in CheckList:
-        print 'Checking' , CheckType
+        # print 'Checking' , CheckType
         if 'RF' == CheckType: CheckType = ''
         if len(CheckType) > 0:
             CheckType += '/'
