@@ -13,7 +13,7 @@ from MiscFuns import *
 import time
 
 def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=False):
-    nconf = -2
+    nconf = 10e16
     thisdir = outputdir
     for CheckType in CheckList:
         if 'RF' == CheckType: CheckType = ''
