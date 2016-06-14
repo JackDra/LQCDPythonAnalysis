@@ -1,13 +1,9 @@
 #!/usr/bin/env python
 
-import xmltodict
+from Params import *
 from XmlFuns import *
 from XmlFormatting import *
-import os
-from BootTest import BootStrap1
-from Params import *
 from FitParams import *
-import cPickle as pickle
 from OppFuns import *
 from ReadXml import CheckMomFile,CheckNconfFile
 from OutputXmlData import SetUpPDict
@@ -16,7 +12,6 @@ from MiscFuns import *
 import time
 
 def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=False):
-    print outputdir
     nconf = -2
     for CheckType in CheckList:
         if len(CheckType) > 0:
