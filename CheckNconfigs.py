@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 
+from Params import *
 from InputArgs import *
 from CheckXml import CheckNconf
 from OppFuns import CreateGammaList
