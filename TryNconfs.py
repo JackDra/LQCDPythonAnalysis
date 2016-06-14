@@ -32,7 +32,7 @@ ShowMethodList(feedin['method'])
 
 nconf = CheckNconf(thisGammaList,feedin['set'],thisMomList=feedin['mom'],CheckList=feedin['method'])
 
-if 'File Missing' in nconf:
-    print nconf
-else:
+if isinstance(nconf, int):
     print 'Smallest number of configurations used is', nconf
+else:
+    print nconf
