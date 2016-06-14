@@ -3,8 +3,8 @@
 
 from Params import *
 from InputArgs import *
-from CheckXml import CheckNconf
-from OppFuns import CreateGammaList
+from CheckXml import *
+from OppFuns import *
 
 
 feedin = InputParams(sys.argv[1:])
