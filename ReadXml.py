@@ -60,7 +60,7 @@ def CheckNconfFile(filein):
             strpline = line.strip()
             if '</Info>' in strpline:
                 return Nconf
-            elif if '<nconfig>' in strpline and '</nconfig>' in strpline:
+            elif '<nconfig>' in strpline and '</nconfig>' in strpline:
                 Nconf = min(Nconf,int(strpline.replace('<nconfig>','').replace('</nconfig>','')))
     return Nconf
                     
