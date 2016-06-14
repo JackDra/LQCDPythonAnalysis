@@ -12,6 +12,6 @@ thisGammaList = CreateGammaList(feedin['gamma'])
 
 ShowSetLists(feedin['set'])
 
-Nconf = CheckNconf(thisGammaList,feedin['set'],thisMomList=feedin['mom'],CheckList=feedin['method'],cfuns=False)
+Nconf = CheckNconfFile(thisGammaList,feedin['set'],thisMomList=feedin['mom'],CheckList=feedin['method'],cfuns=False)
 
 print Nconf
