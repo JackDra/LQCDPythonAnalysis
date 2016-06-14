@@ -29,9 +29,9 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
             SFList = TwoStateParList['C3']
 
         for iset in CheckSetList:
-            print '    Checking', iset
+            # print '    Checking', iset
             for iSF in SFList:
-                if len(iSF) > 0: print '       Checking', iSF , ' '*50
+                # if len(iSF) > 0: print '       Checking', iSF , ' '*50
                 for igamma in thisGammaList:
                     if 'doub' not in igamma and 'sing' not in igamma and CheckType == '': continue
                     print '          Checking', igamma, ' '*50 ,' \r',
