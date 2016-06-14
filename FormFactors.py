@@ -10,7 +10,6 @@ from collections import OrderedDict
 from BootTest import BootStrap1
 from FFParams import *
 from LLSBoot import *
-from OutputXmlData import CombineSetInfo
 
 ## data { { gamma } { mom } { Fit(Boot/Avg/Std/Chi) } }
 ## dataout { { momsqrd } { Boot/Avg/Chi }
