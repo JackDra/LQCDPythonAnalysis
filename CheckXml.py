@@ -16,6 +16,7 @@ from MiscFuns import *
 import time
 
 def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=False):
+    print outputdir
     nconf = -2
     for CheckType in CheckList:
         if len(CheckType) > 0:
