@@ -53,8 +53,8 @@ def CheckMomFile(filein):
 
 
 def CheckNconfFile(filein):
-    if not os.path.isfile(filein): return -2
-    Nconf = -2
+    if not os.path.isfile(filein): return 'File Missing'
+    Nconf = 10e16
     with open(filein,'r') as thisfile:
         for line in thisfile:
             strpline = line.strip()

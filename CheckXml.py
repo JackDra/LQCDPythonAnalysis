@@ -35,9 +35,11 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                         ip = qstrTOqcond(pstr)
                         filename = iset+igamma+ iSF
                         dump,checkfile = SetUpPDict(ip,gammadir,filename)
-                        print checkfile+'.xml'
-                        nconf = min(nconf, CheckNconfFile(checkfile+'.xml'))
-                        print nconf
+                        thisnconf = CheckNconfFile(checkfile+'.xml')
+                        if 'File Missing' in thisnconf:
+                            return 'File Missing' + checkfile+'.xml'
+                        else:
+                            nconf = min(nconf, CheckNconfFile(checkfile+'.xml'))
     return nconf
     
 
