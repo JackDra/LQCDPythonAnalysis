@@ -45,6 +45,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                             return 'File Missing' + checkfile+'.xml'
                         else:
                             nconf = min(nconf, CheckNconfFile(checkfile+'.xml'))
+    print ' '*20
     return nconf
     
 
