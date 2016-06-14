@@ -37,6 +37,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                         dump,checkfile = SetUpPDict(ip,gammadir,filename)
                         print checkfile+'.xml'
                         nconf = min(nconf, CheckNconfFile(checkfile+'.xml'))
+                        print nconf
     return nconf
     
 
