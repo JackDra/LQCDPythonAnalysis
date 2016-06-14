@@ -35,8 +35,8 @@ for imethod in feedin['method']:
         nconf = CheckNconf(thisGammaList,[iset],thisMomList=feedin['mom'],CheckList=[imethod])
         if not isinstance(nconf, str):
             if nconf > 10e9:
-                print 'No nconfs in file (depreceated code)'
+                print imethod, iset ,'No nconfs in file (depreceated code)'
             else:
-                print imethod, iset , 'Smallest number of configurations used is', nconf
+                print imethod, iset , 'Nconfs=', nconf
         else:
             print nconf
