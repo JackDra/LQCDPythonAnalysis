@@ -46,7 +46,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                         else:
                             if thisnconf < nconf:
                                 print ''
-                                print 'Dropped nconfigs from ',nconf,' to ',thisconf , ' in file:'
+                                print 'Dropped nconfigs from ',nconf,' to ',thisnconf , ' in file:'
                                 print checkfile+'.xml'
                                 print ''
                             nconf = min(nconf, thisnconf)
