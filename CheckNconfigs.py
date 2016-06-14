@@ -2,9 +2,9 @@
 
 
 from Params import *
+from OppFuns import *
 from InputArgs import *
 from CheckXml import *
-from OppFuns import *
 
 
 feedin = InputParams(sys.argv[1:])
