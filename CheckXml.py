@@ -20,7 +20,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
         if 'RF' == CheckType: CheckType = ''
         if len(CheckType) > 0:
             CheckType += '/'
-            if any([itype in CheckType for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(thisSetList)
+            if any([itype in CheckType for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(CheckSetList)
             if cfuns: thisdir = outputdir + 'cfuns/'
         SFList = ['']
         if 'OSF' in CheckType:
