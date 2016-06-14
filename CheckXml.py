@@ -16,6 +16,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
     nconf = 10e16
     thisdir = outputdir
     for CheckType in CheckList:
+        print 'Checking' , CheckType
         if 'RF' == CheckType: CheckType = ''
         if len(CheckType) > 0:
             CheckType += '/'
@@ -28,8 +29,11 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
             SFList = TwoStateParList['C3']
 
         for iset in CheckSetList:
+            print '    Checking', iset
             for iSF in SFList:
+                print '       Checking', iSF
                 for igamma in thisGammaList:
+                    print '          Checking', igamma
                     gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
                     for pstr in GetMomFromGamma(igamma,thisMomList=thisMomList):
                         ip = qstrTOqcond(pstr)
