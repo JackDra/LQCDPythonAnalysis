@@ -14,11 +14,12 @@ import time
 
 def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=False):
     nconf = -2
+    thisdir = outputdir
     for CheckType in CheckList:
         if len(CheckType) > 0:
             CheckType += '/'
             if any([itype in CheckType for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(thisSetList)
-            if cfuns: outputdir = outputdir + 'cfuns/'
+            if cfuns: thisdir = outputdir + 'cfuns/'
         SFList = ['']
         if 'OSF' in CheckType:
             SFList = OneStateParList['C3']
@@ -28,7 +29,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
         for iset in CheckSetList:
             for iSF in SFList:
                 for igamma in thisGammaList:
-                    gammadir = outputdir+CreateOppDir(igamma)+'/' + CheckType
+                    gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
                     for pstr in GetMomFromGamma(igamma,thisMomList=thisMomList):
                         ip = qstrTOqcond(pstr)
                         filename = iset+igamma+ iSF
