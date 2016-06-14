@@ -22,7 +22,7 @@ from CheckXml import *
 
 
 
-
+print outputdir
 
 feedin = InputParams(sys.argv[1:])
 DefWipeWarning()
