@@ -34,7 +34,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                 print '       Checking', iSF , '                        '
                 for igamma in thisGammaList:
                     if 'doub' not in igamma and 'sing' not in igamma and CheckType == '': continue
-                    print '          Checking', igamma '             \r',
+                    print '          Checking', igamma, '             \r',
                     gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
                     for pstr in GetMomFromGamma(igamma,thisMomList=thisMomList):
                         ip = qstrTOqcond(pstr)
