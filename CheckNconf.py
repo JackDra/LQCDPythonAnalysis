@@ -3,7 +3,7 @@
 
 from InputArgs import *
 from ReadXml import CheckNconfFile
-
+from OppFuns import CreateGammaList
 
 
 feedin = InputParams(sys.argv[1:])
