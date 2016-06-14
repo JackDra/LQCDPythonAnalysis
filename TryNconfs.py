@@ -35,5 +35,7 @@ for iset in feedin['set']:
 
     if isinstance(nconf, int):
         print iset , 'Smallest number of configurations used is', nconf
+        print 
     else:
         print nconf
+        print 
