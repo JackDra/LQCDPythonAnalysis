@@ -34,6 +34,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                         ip = qstrTOqcond(pstr)
                         filename = iset+igamma+ iSF
                         dump,checkfile = SetUpPDict(ip,gammadir,filename)
+                        mprint(checkfile+'.xml')
                         nconf = min(nconf, CheckNconfFile(checkfile+'.xml'))
     return nconf
     
