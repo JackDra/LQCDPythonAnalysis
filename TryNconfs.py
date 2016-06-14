@@ -33,7 +33,7 @@ ShowMethodList(feedin['method'])
 for imethod in feedin['method']:
     for iset in feedin['set']:
         nconf = CheckNconf(thisGammaList,[iset],thisMomList=feedin['mom'],CheckList=[imethod])
-        if isinstance(nconf, int):
+        if not isinstance(nconf, str):
             print imethod, iset , 'Smallest number of configurations used is', nconf
         else:
             print nconf
