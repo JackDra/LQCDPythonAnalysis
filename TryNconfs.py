@@ -32,4 +32,4 @@ ShowMethodList(feedin['method'])
 
 nconf = CheckNconf(thisGammaList,feedin['set'],thisMomList=feedin['mom'],CheckList=feedin['method'])
 
-print nconf
+print 'Smallest number of configurations used is', nconf
