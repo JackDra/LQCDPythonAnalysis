@@ -14,7 +14,8 @@ from MultiWrap import *
 from multiprocessing import Pool
 from InputArgs import *
 
-DoDS = True
+# DoDS = True
+DoDS = False
 
 
 ##datadict = { gamma } { mom } { method } { set }
