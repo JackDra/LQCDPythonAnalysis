@@ -14,6 +14,7 @@ from MultiWrap import *
 from multiprocessing import Pool
 from InputArgs import *
 
+DoDS = True
 
 
 ##datadict = { gamma } { mom } { method } { set }
@@ -53,7 +54,8 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList):
     start = time.time()
     for imom in thisMomList:
         for icg,igamma in enumerate(thisGammaList):
-            if any([idst in igamma for idst in ['doub','sing','twopt']]): continue
+            if any([idst in igamma for idst in ['twopt']]): continue
+            if any([idst in igamma for idst in ['doub','sing']]) and DoDS==False: continue
             gammastart = time.time()
             timeleft = GetTimeLeft(icg,len(thisGammaList),time.time()-start)
             if not CheckDict(datadict,igamma,imom): continue
