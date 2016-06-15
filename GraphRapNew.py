@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from Params import *
 import numpy as np
 from ReadTxt import *
 from MiscFuns import *
@@ -12,7 +13,6 @@ import time,datetime
 from MultiWrap import *
 from multiprocessing import Pool
 from InputArgs import *
-from ParamsDEBUGGING import *
 
 # DoDS = True
 DoDS = False
