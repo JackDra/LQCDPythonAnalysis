@@ -263,6 +263,9 @@ class BootStrap1:
         except:
             try:
                 print fac
+                print fac.Avg
+                print fac.values
+                print fac.nboot
                 tnboot=fac.nboot
                 result.Avg=self.Avg/fac.Avg
                 result.values=self.values/fac.values
