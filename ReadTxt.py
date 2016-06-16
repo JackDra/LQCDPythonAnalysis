@@ -203,35 +203,36 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
     for igamma in datadict.keys():
         if igamma == 'twopt': continue
         if thisPrintRead: print 'Constructing Fitted RF Values: ' , igamma , '     \r',
-        if zmomstr not in datadict[igamma].keys(): continue
-        for iset in datadict[igamma][zmomstr]['RF'].keys():
-            if 'RF' not in datadict['twopt'][zmomstr].keys(): continue
-            if RemoveTSink(iset) not in datadict['twopt'][zmomstr]['RF'].keys(): continue
-                # if thisPrintRead: print RemoveTSink(iset)+' not in two point set list, not constructing RF'
-            data3pt = data3ptdict[igamma][zmomstr]['RF'][iset]['Boot']
-            for iSF in ['OSF'+iOSF for iOSF in OSFFileFlags]+['TSF'+iTSF for iTSF in TSFFileFlags]:
-                if iSF in datadict['twopt'][zmomstr].keys():
-                    if RemoveTSink(iset) in datadict['twopt'][zmomstr][iSF].keys():
-                        pars2pt = []
-                        if 'OSF' in iSF:
-                            if not all([iState in datadict['twopt'][zmomstr][iSF][RemoveTSink(iset)].keys() for iState in StateParList['One']['C2']]): continue
-                            for ipar in StateParList['One']['C2']:
-                                fitrkey = RemoveTSink(iset)
-                                if DefTvarPicked in fitrkey: fitrkey = PickedStateStr+DefTvarPicked
-                                pars2pt.append(datadict['twopt'][zmomstr][iSF][RemoveTSink(iset)][ipar][OSFfitr[RemoveToDt(fitrkey)]]['Boot'])
-                            data2ptZ =  pars2pt[0]*(pars2pt[1]*(-GetintTSink(iset)+tsource)).exp(1)
-                        elif 'TSF' in iSF:
-                            if not all([iState in datadict['twopt'][zmomstr][iSF][RemoveTSink(iset)].keys() for iState in StateParList['Two']['C2']]): continue
-                            for ipar in StateParList['Two']['C2']:
-                                pars2pt.append(datadict['twopt'][zmomstr][iSF][RemoveTSink(iset)][ipar][TSFfitr]['Boot'])
-                            data2ptZ =  ff.C2TSFLineFun(GetintTSink(iset)-tsource,pars2pt)
-                        if 'RF'+iSF not in datadict[igamma][zmomstr].keys(): datadict[igamma][zmomstr]['RF'+iSF] = OrderedDict()
-                        if iset not in datadict[igamma][zmomstr]['RF'+iSF].keys(): datadict[igamma][zmomstr]['RF'+iSF][iset] = OrderedDict()
-                        datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'] = [idata3pt/data2ptZ for idata3pt in data3pt[tsource-1:GetintTSink(iset)]]
-                        datadict[igamma][zmomstr]['RF'+iSF][iset]['tVals'] = datadict[igamma][zmomstr]['RF'][iset]['tVals']
-                        GetBootStats(datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'])
-                        datadict[igamma][zmomstr]['RF'+iSF][iset]['Vals'] = Pullflag(datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'],'Avg')
-                        datadict[igamma][zmomstr]['RF'+iSF][iset]['Valserr'] = Pullflag(datadict[igamma][zmomstr]['RF'+iSF][iset]['Boot'],'Std')
+        for imom in datadict[igamma].iterkeys():
+        # if zmomstr not in datadict[igamma].keys(): continue
+            for iset in datadict[igamma][imom]['RF'].keys():
+                if 'RF' not in datadict['twopt'][imom].keys(): continue
+                if RemoveTSink(iset) not in datadict['twopt'][imom]['RF'].keys(): continue
+                    # if thisPrintRead: print RemoveTSink(iset)+' not in two point set list, not constructing RF'
+                data3pt = data3ptdict[igamma][imom]['RF'][iset]['Boot']
+                for iSF in ['OSF'+iOSF for iOSF in OSFFileFlags]+['TSF'+iTSF for iTSF in TSFFileFlags]:
+                    if iSF in datadict['twopt'][imom].keys():
+                        if RemoveTSink(iset) in datadict['twopt'][imom][iSF].keys():
+                            pars2pt = []
+                            if 'OSF' in iSF:
+                                if not all([iState in datadict['twopt'][imom][iSF][RemoveTSink(iset)].keys() for iState in StateParList['One']['C2']]): continue
+                                for ipar in StateParList['One']['C2']:
+                                    fitrkey = RemoveTSink(iset)
+                                    if DefTvarPicked in fitrkey: fitrkey = PickedStateStr+DefTvarPicked
+                                    pars2pt.append(datadict['twopt'][imom][iSF][RemoveTSink(iset)][ipar][OSFfitr[RemoveToDt(fitrkey)]]['Boot'])
+                                data2ptZ =  ff.C2OneStateFitFunNoExp(GetintTSink(iset)-tsource,pars2pt)
+                            elif 'TSF' in iSF:
+                                if not all([iState in datadict['twopt'][imom][iSF][RemoveTSink(iset)].keys() for iState in StateParList['Two']['C2']]): continue
+                                for ipar in StateParList['Two']['C2']:
+                                    pars2pt.append(datadict['twopt'][imom][iSF][RemoveTSink(iset)][ipar][TSFfitr]['Boot'])
+                                data2ptZ =  ff.C2TSFLineFun(GetintTSink(iset)-tsource,pars2pt)
+                            if 'RF'+iSF not in datadict[igamma][imom].keys(): datadict[igamma][imom]['RF'+iSF] = OrderedDict()
+                            if iset not in datadict[igamma][imom]['RF'+iSF].keys(): datadict[igamma][imom]['RF'+iSF][iset] = OrderedDict()
+                            datadict[igamma][imom]['RF'+iSF][iset]['Boot'] = [idata3pt/data2ptZ for idata3pt in data3pt[tsource-1:GetintTSink(iset)]]
+                            datadict[igamma][imom]['RF'+iSF][iset]['tVals'] = datadict[igamma][imom]['RF'][iset]['tVals']
+                            GetBootStats(datadict[igamma][imom]['RF'+iSF][iset]['Boot'])
+                            datadict[igamma][imom]['RF'+iSF][iset]['Vals'] = Pullflag(datadict[igamma][imom]['RF'+iSF][iset]['Boot'],'Avg')
+                            datadict[igamma][imom]['RF'+iSF][iset]['Valserr'] = Pullflag(datadict[igamma][imom]['RF'+iSF][iset]['Boot'],'Std')
     if thisPrintRead: print 'Constructing Fitted RF Values took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s '
     return datadict
 
