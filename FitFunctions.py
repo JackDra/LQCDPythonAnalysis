@@ -54,8 +54,10 @@ def C2OneStateFitFun(t,p):
 
 def C2OneStateFitFunNoExp(t,p):    
     A0,Ep = p[0],p[1]
-    return A0*np.exp(Ep*(-t) )
-
+    try:
+        return A0*np.exp(Ep*(-t) )
+    except:
+        return A0*(Ep*(-t)).exp(1)
 
 
 def C2OSFFDer(t,p):
@@ -97,7 +99,7 @@ def C2TwoStateFitFunCMNoExp(t,p):
     Am,Amp,m,dm = np.array(p[:Alen]),np.array(p[Alen:-2]),p[-2],p[-1]
     smpick = map(int,t[1])
     return Am[smpick]*(np.exp(-m*t[0]) + Amp[smpick]*np.exp(-(m+dm)*t[0]))
-
+        
 
 def C2TSFLineFun(t,p):
     Am,Amp,m,dm = p[0],p[1],p[2],p[3] 
