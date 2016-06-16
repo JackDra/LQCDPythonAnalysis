@@ -269,6 +269,7 @@ class BootStrap1:
                 tnboot=fac.nboot
                 result.Avg=self.Avg/fac.Avg
                 result.values=self.values/fac.values
+                print 'BootDivide Finished DEBUG'
             except:
                 print "ERROR: UNknown boot divide"
                 print tnboot,fac.nboot
