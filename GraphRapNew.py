@@ -52,7 +52,7 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList):
     thisMassdict = datadict['twopt']['q = 0 0 0']
     start = time.time()
     for imom in thisMomList:
-        # if imom == 'q = 0 0 0' and len(thisMomList) > 1: continue
+        if imom == 'q = 0 0 0' and len(thisMomList) > 1 and DoMulticore: continue
         for icg,igamma in enumerate(thisGammaList):
             if any([idst in igamma for idst in ['twopt']]): continue
             if any([idst in igamma for idst in ['doub','sing']]) and DoDS==False: continue
