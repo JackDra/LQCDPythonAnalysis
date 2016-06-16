@@ -261,7 +261,7 @@ class BootStrap1:
             result.Avg=self.Avg/real
             result.values=self.values/real            
         except:
-            for index in enumerate(self.values):
+            for index,value in enumerate(self.values):
                 print self.values[index] , fac.values[index]
             try:
                 tnboot=fac.nboot
