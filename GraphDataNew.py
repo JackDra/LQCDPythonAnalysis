@@ -524,6 +524,7 @@ def PlotTSFMassLine(data2pt,col,smear,thisdt):
 
 def PlotOSFMassValue(data,col,smear,thisdt):
     smearindex,deltashift = RemoveToDt(smear),0
+    print smear, smearindex
     if 'sm' not in smear:
         if 'PoF' in smear:
             deltashift = PoFShifts*2
