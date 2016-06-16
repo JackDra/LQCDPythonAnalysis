@@ -542,7 +542,6 @@ def PlotOSFMassValue(data,col,smear,thisdt):
         dataup,datadown = dataval+data['m0'][OSFfitr[smearindex]]['Std'],dataval-data['m0'][OSFfitr[smearindex]]['Std']
     else:
         return
-    print smear, smearindex
     pl.fill_between([OSFfitvals[smearindex][0]+deltashift,OSFfitvals[smearindex][1]+deltashift-thisdt],
                     [datadown,datadown],[dataup,dataup],facecolor=col,edgecolor='none',alpha=thisalpha)
     pl.plot([OSFfitvals[smearindex][0]+deltashift,OSFfitvals[smearindex][1]+deltashift-thisdt],[dataval,dataval],color=col)
