@@ -9,6 +9,7 @@ from numpy import zeros, size, sort, exp,average,split,random,append,multiply,su
 #from scipy import exp
 from numpy import array as narray
 from array import array
+import numpy as np
 
 startseed=1234
 
