@@ -263,11 +263,11 @@ class BootStrap1:
         except:
             for index,value in enumerate(self.values):
                 print self.values[index] , fac.values[index]
+            result.values=self.values/fac.values
             try:
                 tnboot=fac.nboot
                 result.Avg=self.Avg/fac.Avg
                 print 'Avg=',result.Avg
-                result.values=self.values/fac.values
                 print 'BootDivide Finished DEBUG'
             except:
                 print "ERROR: UNknown boot divide"
