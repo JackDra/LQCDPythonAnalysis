@@ -524,16 +524,15 @@ def PlotTSFMassLine(data2pt,col,smear,thisdt):
 
 def PlotOSFMassValue(data,col,smear,thisdt):
     smearindex,deltashift = RemoveToDt(smear),0
-    if 'sm' not in smear:
-        if 'PoF' in smear:
-            deltashift = PoFShifts*2
-            smearindex = PickedStateStr+'PoF'+str(PoFShifts)
-        elif 'REvec' in smear:
-            deltashift = 0
-            smearindex = PickedStateStr+'REvec'
-        else:
-            deltashift = 0
-            smearindex = PickedStateStr+'CM'
+    if 'PoF' in smear:
+        deltashift = PoFShifts*2
+        smearindex = PickedStateStr+'PoF'+str(PoFShifts)
+    elif 'REvec' in smear:
+        deltashift = 0
+        smearindex = PickedStateStr+'REvec'
+    elif 'CM' in smear:
+        deltashift = 0
+        smearindex = PickedStateStr+'CM'
     if CheckDict(data,'m0',OSFfitr[smearindex],'Boot'): 
         databoot = data['m0'][OSFfitr[smearindex]]['Boot']
         dataval = abs(databoot.Avg)
