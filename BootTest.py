@@ -263,7 +263,7 @@ class BootStrap1:
         except:
             for index,value in enumerate(self.values):
                 print self.values[index] , fac.values[index]
-            result.values=self.values/fac.values
+            result.values=np.array(self.values)/np.array(fac.values)
             try:
                 tnboot=fac.nboot
                 result.Avg=self.Avg/fac.Avg
