@@ -9,7 +9,6 @@ from numpy import zeros, size, sort, exp,average,split,random,append,multiply,su
 #from scipy import exp
 from numpy import array as narray
 from array import array
-import numpy as np
 
 startseed=1234
 
@@ -265,7 +264,7 @@ class BootStrap1:
             try:
                 tnboot=fac.nboot
                 result.Avg=self.Avg/fac.Avg
-                result.values=np.array(self.values)/np.array(fac.values)
+                result.values=self.values/fac.values
             except:
                 print "ERROR: UNknown boot divide"
                 print tnboot,fac.nboot
