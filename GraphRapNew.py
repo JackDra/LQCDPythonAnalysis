@@ -53,6 +53,7 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList):
     thisMassdict = datadict['twopt']['q = 0 0 0']
     start = time.time()
     for imom in thisMomList:
+        if imom == 'q = 0 0 0' and len(thisMomList) > 1: continue
         for icg,igamma in enumerate(thisGammaList):
             if any([idst in igamma for idst in ['twopt']]): continue
             if any([idst in igamma for idst in ['doub','sing']]) and DoDS==False: continue
@@ -153,7 +154,7 @@ else:
             if any([idst in igamma for idst in ['doub','sing','twopt']]): continue
             for imom in feedin['mom']:
                 if imom == 'q = 0 0 0' :
-                    inputparams.append((['doub'+igamma,'sing'+igamma,igamma,'twopt'],[imom],feedin['set'],feedin['method']))                
+                    inputparams.append((['doub'+igamma,'sing'+igamma,igamma,'twopt'],[imom],feedin['set'],feedin['method'])) 
                 else:
                     inputparams.append((['doub'+igamma,'sing'+igamma,igamma,'twopt'],['q = 0 0 0',imom],feedin['set'],feedin['method']))
         makeContextFunctions(ReadAndPlotDict)
