@@ -54,7 +54,9 @@ def C2OneStateFitFun(t,p):
 
 def C2OneStateFitFunNoExp(t,p):    
     A0,Ep = p[0],p[1]
-    return A0*np.exp(-Ep*t )
+    return A0*np.exp(Ep*(-t) )
+
+
 
 def C2OSFFDer(t,p):
     A0,Ep = p[0],np.exp(p[1])
