@@ -36,14 +36,13 @@ def ReadAndPlotMass(thisMomList,thisSmearList,thisSetList,thisSetPoFLists,thisMe
     start = time.time()
     for imom in thisMomList[-1:]:
         momstart = time.time()
-        # print 'Plotting ' , imom , 'Mass            \r',
+        mprint( 'Plotting ' , imom , 'Mass            \r',)
         thistwoptdict = datadict['twopt'][imom]
         PlotMassData(thistwoptdict,thisSmearList+thisSetList,imom)
-        # print 'Plotting ' , imom , 'State Fits      \r',
+        mprint( 'Plotting ' , imom , 'State Fits      \r',)
         PlotMassSFData(thistwoptdict,thisSmearList+thisSetList,imom)
         for ipof,(itpl,thistf) in enumerate(thisSetPoFLists):
-            # print 'Plotting ' , imom , 'PoFSets ', str(int((ipof*100)/len(thisSetPoFLists))),'%        \r',
-
+            mprint( 'Plotting ' , imom , 'PoFSets ', str(int((ipof*100)/len(thisSetPoFLists))),'%        \r',)
             PlotMassData(thistwoptdict,thisSmearList+itpl,imom,TitleFlag=thistf)
         print 'Plotting ' , imom, 'Took: ' , str(datetime.timedelta(seconds=(time.time()-momstart))) ,' h:m:s                      '
     
