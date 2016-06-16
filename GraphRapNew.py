@@ -142,7 +142,7 @@ if thisGammaList == ['twopt']:
         thisPool.close()
         thisPool.join()
     else:
-        ReadAndPlotMass(feedin['mom'],thisSmList,TvarPicked,TvarList,feedin['method'])
+        ReadAndPlotMass(feedin['mom'],thisSmList,TvarPicked,TvarLists,feedin['method'])
 else:
     # if any([imom != 'q = 0 0 0' for imom in feedin['mom']]):
     #     feedin['method'] = ['RF']
