@@ -193,10 +193,6 @@ def MassFun(cfun,Dt=1):
     mass = []
     for it,tcfun in enumerate(cfun):
        if it+Dt < len(cfun):
-          print cfun[it+Dt].values
-          print 
-          print tcfun.values
-          print
           mass.append(np.abs(np.log(np.abs(cfun[it+Dt]/tcfun)))/Dt)          
     return GetBootStats(mass)
 

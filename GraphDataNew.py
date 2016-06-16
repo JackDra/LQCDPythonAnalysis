@@ -272,7 +272,6 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
             PlotRF(data['RF'][iset],thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset.replace(legrem,'')))
         else:
             dataplot = deepcopy(data['RF'][iset])
-            print 'DEBUG',dataplot['Boot'],MassDt
             dataplot['Boot'] = MassFun(dataplot['Boot'],MassDt)
             dataplot['tVals'] = dataplot['tVals'][:-MassDt]
             PlotRF(dataplot,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(redset),MP=True)
