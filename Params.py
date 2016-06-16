@@ -86,7 +86,7 @@ VectorNorm = 0.8574 # normalisation for Vector Current
 PsVectorNorm = 0.8728 # normalisation for Pseudo Vector current
 TensorNorm = 0.9945 # normalisation for Tensor Current
 MultiCoreFitting = False # Multicore for Boot Fitting, not needed in current build
-DoMulticore = False # Runs multicore wherever implemented
+DoMulticore = True # Runs multicore wherever implemented
 DoContentsCheck = False # True makes sure the xml file has the correct momenta first field, turn off for more performance
 OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
 DoNorm = False # normalises the 2 point function (see CMSTech.py)
@@ -172,6 +172,11 @@ SourceList = ['source10',
               'source4',
               'source5',
               'source6',
+              'source7',
+              'source8',
+              'source9']
+
+SourceList = ['source6',
               'source7',
               'source8',
               'source9']
