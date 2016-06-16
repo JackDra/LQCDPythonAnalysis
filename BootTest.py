@@ -269,12 +269,8 @@ class BootStrap1:
                 tnboot=fac.nboot
                 result.Avg=self.Avg/fac.Avg
                 print 'Avg=',result.Avg
-                for iself in self.values:
-                    print iself
-                print
-                for iself in fac.values:
-                    print iself
-                print 
+                for index in enumerate(self.values):
+                    print self.values[index] , fac.values[index]
                 result.values=self.values/fac.values
                 print 'BootDivide Finished DEBUG'
             except:
