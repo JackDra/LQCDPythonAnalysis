@@ -157,7 +157,7 @@ def PlotMassData(data,thisSetList,thisMom,TitleFlag=''):
         pl.savefig(CreateFile('Dt'+str(thisDt),'twopt',thisMom,TitleFlag+' Mass Comparison')+'.pdf')
         pl.clf()
     PlotLogSet(data,thisSetList)
-    SetMassAxies()
+    SetLogAxies()
     pl.savefig(CreateFile('','twopt',thisMom,TitleFlag+' Log Comparison')+'.pdf')
     pl.clf()
 
