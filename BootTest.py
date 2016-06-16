@@ -272,7 +272,7 @@ class BootStrap1:
                 for iself in self.values:
                     print iself
                 print
-                for isefl in fac.values:
+                for iself in fac.values:
                     print iself
                 print 
                 result.values=self.values/fac.values
