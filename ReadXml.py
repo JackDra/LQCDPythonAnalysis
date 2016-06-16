@@ -87,7 +87,7 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
                 dictout[thismom]['Valserr'] = []
                 for bootlist in bootdata.itervalues():
                     dictout[thismom]['Boot'].append(BootStrap1(nboot,0))
-                    dictout[thismom]['Boot'][-1].values = [iboot*renorm for iboot in bootlist]
+                    dictout[thismom]['Boot'][-1].values = np.array([iboot*renorm for iboot in bootlist])
                     dictout[thismom]['Boot'][-1].Stats()
                     dictout[thismom]['Vals'].append(dictout[thismom]['Boot'][-1].Avg)
                     dictout[thismom]['Valserr'].append(dictout[thismom]['Boot'][-1].Std)
@@ -120,7 +120,7 @@ def ReadFitFile(filedir,filename,thisMomList=RunMomList):
                 for icut,cutdata in bootdata.iteritems():
                     dictout[thismom][icut] = {}
                     dictout[thismom][icut]['Boot'] = BootStrap1(nboot,0)
-                    dictout[thismom][icut]['Boot'].values = cutdata
+                    dictout[thismom][icut]['Boot'].values = np.array(cutdata)
                     dictout[thismom][icut]['Boot'].Stats()
                     dictout[thismom][icut]['Avg'] = dictout[thismom][icut]['Boot'].Avg
                     dictout[thismom][icut]['Std'] = dictout[thismom][icut]['Boot'].Std
@@ -148,7 +148,7 @@ def ReadSumFile(filedir,filename,thisMomList=RunMomList):
                         if 'tsink' in it:
                             dictout[thismom][icut][it] = {}
                             dictout[thismom][icut][it]['Boot'] = BootStrap1(nboot,0)
-                            dictout[thismom][icut][it]['Boot'].values = tdata
+                            dictout[thismom][icut][it]['Boot'].values = np.array(tdata)
                             dictout[thismom][icut][it]['Boot'].Stats()
                             dictout[thismom][icut][it]['Avg'] = dictout[thismom][icut][it]['Boot'].Avg
                             dictout[thismom][icut][it]['Std'] = dictout[thismom][icut][it]['Boot'].Std
@@ -157,7 +157,7 @@ def ReadSumFile(filedir,filename,thisMomList=RunMomList):
                                 thisfitr = FitFlagXmlToOld(it,ir)
                                 dictout[thismom][icut][thisfitr] = {}
                                 dictout[thismom][icut][thisfitr]['Boot'] = BootStrap1(nboot,0)
-                                dictout[thismom][icut][thisfitr]['Boot'].values = rdata
+                                dictout[thismom][icut][thisfitr]['Boot'].values = np.array(rdata)
                                 dictout[thismom][icut][thisfitr]['Boot'].Stats()
                                 dictout[thismom][icut][thisfitr]['Avg'] = dictout[thismom][icut][thisfitr]['Boot'].Avg
                                 dictout[thismom][icut][thisfitr]['Std'] = dictout[thismom][icut][thisfitr]['Boot'].Std
@@ -198,7 +198,7 @@ def ReadFFFile(filename):
                         dataout[iff] = OrderedDict()
                     dataout[iff][iq] = OrderedDict()
                     dataout[iff][iq]['Boot'] = BootStrap1(nboot,0)
-                    dataout[iff][iq]['Boot'].values = ffdata
+                    dataout[iff][iq]['Boot'].values = np.array(ffdata)
                     dataout[iff][iq]['Boot'].Stats()
                     dataout[iff][iq]['Avg'] = dataout[iff][iq]['Boot'].Avg
                     dataout[iff][iq]['Std'] =dataout[iff][iq]['Boot'].Std
@@ -245,7 +245,7 @@ def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
                         dictout[thismom][ipar][thisfit] = {}
                         if twoptread:
                             dictout[thismom][ipar][thisfit]['Boot'] = BootStrap1(nboot,0)
-                            dictout[thismom][ipar][thisfit]['Boot'].values = fitrdata
+                            dictout[thismom][ipar][thisfit]['Boot'].values = np.array(fitrdata)
                             dictout[thismom][ipar][thisfit]['Boot'].Stats()
                             dictout[thismom][ipar][thisfit]['Avg'] = dictout[thismom][ipar][thisfit]['Boot'].Avg
                             dictout[thismom][ipar][thisfit]['Std'] = dictout[thismom][ipar][thisfit]['Boot'].Std
@@ -254,7 +254,7 @@ def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
                             for icut,cutdata in fitrdata.iteritems():
                                 dictout[thismom][ipar][thisfit][icut] = {}
                                 dictout[thismom][ipar][thisfit][icut]['Boot'] = BootStrap1(nboot,0)
-                                dictout[thismom][ipar][thisfit][icut]['Boot'].values = cutdata
+                                dictout[thismom][ipar][thisfit][icut]['Boot'].values = np.array(cutdata)
                                 dictout[thismom][ipar][thisfit][icut]['Boot'].Stats()
                                 dictout[thismom][ipar][thisfit][icut]['Avg'] = dictout[thismom][ipar][thisfit][icut]['Boot'].Avg
                                 dictout[thismom][ipar][thisfit][icut]['Std'] = dictout[thismom][ipar][thisfit][icut]['Boot'].Std
