@@ -151,7 +151,9 @@ else:
         inputparams = []
         for igamma in thisGammaList:
             if any([idst in igamma for idst in ['doub','sing','twopt']]): continue
-            inputparams.append((['doub'+igamma,'sing'+igamma,igamma,'twopt'],feedin['mom'],feedin['set'],feedin['method']))
+            for imom in feedin['mom']:
+                if imom == 'q = 0 0 0' : continue
+                inputparams.append((['doub'+igamma,'sing'+igamma,igamma,'twopt'],['q = 0 0 0',imom],feedin['set'],feedin['method']))
         makeContextFunctions(ReadAndPlotDict)
         thisPool = Pool(min(len(inputparams),feedin['anaproc']))
         output = thisPool.map(ReadAndPlotDict.mapper,inputparams)
