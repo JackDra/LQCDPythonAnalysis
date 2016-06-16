@@ -162,7 +162,11 @@ else:
         thisPool.close()
         thisPool.join()
     else:
-        ReadAndPlotDict(thisGammaList,feedin['mom'],feedin['set'],feedin['method'])
+        passgammalist = ['twopt']
+        for igamma in thisGammaList:
+            if any([idst in igamma for idst in ['doub','sing','twopt']]): continue
+            passgammalist += ['doub'+igamma,'sing'+igamma,igamma]
+        ReadAndPlotDict(passgammalist,feedin['mom'],feedin['set'],feedin['method'])
         
 print 'Graphing all complete'
     
