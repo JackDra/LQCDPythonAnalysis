@@ -524,7 +524,6 @@ def PlotTSFMassLine(data2pt,col,smear,thisdt):
 
 def PlotOSFMassValue(data,col,smear,thisdt):
     smearindex,deltashift = RemoveToDt(smear),0
-    print smear, smearindex
     if 'sm' not in smear:
         if 'PoF' in smear:
             deltashift = PoFShifts*2
@@ -544,6 +543,7 @@ def PlotOSFMassValue(data,col,smear,thisdt):
         dataup,datadown = dataval+data['m0'][OSFfitr[smearindex]]['Std'],dataval-data['m0'][OSFfitr[smearindex]]['Std']
     else:
         return
+    print smear, smearindex
     pl.fill_between([OSFfitvals[smearindex][0]+deltashift,OSFfitvals[smearindex][1]+deltashift-thisdt],
                     [datadown,datadown],[dataup,dataup],facecolor=col,edgecolor='none',alpha=thisalpha)
     pl.plot([OSFfitvals[smearindex][0]+deltashift,OSFfitvals[smearindex][1]+deltashift-thisdt],[dataval,dataval],color=col)
