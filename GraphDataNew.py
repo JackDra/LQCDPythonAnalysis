@@ -527,7 +527,7 @@ def PlotOSFMassValue(data,col,smear,thisdt):
     if 'sm' not in smear:
         if 'PoF' in smear:
             deltashift = PoFShifts*2
-            smearindex = PickedStateStr+'PoF'
+            smearindex = PickedStateStr+'PoF'+str(PoFShifts)
         elif 'REvec' in smear:
             deltashift = 0
             smearindex = PickedStateStr+'REvec'
