@@ -98,7 +98,7 @@ def CombineVector(thisFF,thisMass):
     ## FF { { momsqrd } { Boot/Avg/Chi } }
     FFout = OrderedDict()
     for iq,qFF in thisFF.iteritems():
-        if len(qdata.keys()) > 0:
+        if len(qFF.keys()) > 0:
             FFout[iq] = {}
             Qsqrd = int(iq.replace('qsqrd',''))*(qunit**2)
             FFout[iq]['Chi'] = qFF['Chi']
