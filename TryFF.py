@@ -37,7 +37,7 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr):
     thisstart = time.time()
     FF,infodict = CreateFF(setdict,thisMass['Avg'],thisCurr)
     PrintFFSet(FF,theset,thisMass,thesetmass,thisCurr,infodict)
-    if 'Scalar' in thisCurr:
+    if 'Vector' in thisCurr:
         NewFF = CombineVector(FF,thisMass)
         PrintFFSet(NewFF,theset,thisMass,thesetmass,'GeGm',infodict)
     mprint( 'Fit and Print for ' , theset , ' took: ',str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s'    )
