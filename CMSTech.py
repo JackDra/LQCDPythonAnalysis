@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import numpy as np
-from scipy.linalg import eigh,eig,eigvals,inv
+from scipy.linalg import eigh,eig,eigvals,inv,sqrtm
 # from numpy.linalg import eigh,eig,inv
 from Params import *
 from copy import deepcopy
@@ -112,9 +112,13 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
     ci = np.array([0])
     for cutindex in range(1,len(Cfunto)):
         ci = np.append(ci,cutindex)
-        thiseig = eigvals(Simtodt[ci[:,None],ci],b=Simto[ci[:,None],ci])
-        posdef = eigvals(Simto[ci[:,None],ci])
-        if any(-np.log(abs(thiseig))/float(thisdt) < VarMassCutoff) or any(posdef < 0):
+        # thiseig = eigvals(Simtodt[ci[:,None],ci],b=Simto[ci[:,None],ci])
+        # posdef = eigvals(Simto[ci[:,None],ci])
+        # if any(-np.log(abs(thiseig))/float(thisdt) < VarMassCutoff) or any(posdef < 0):
+        ShalfInv = inv(sqrtm(Simto[ci[:,None],ci]))
+        ThisMat = ShalfInv*Simtodt[ci[:,None],ci]*ShalfInv
+        thiseig = eigvals(ThisMat)
+        if any(-np.log(abs(thiseig))/float(thisdt) < VarMassCutoff):
             # ibad = [ie < 0 for ie in thiseig].index(True)
             ci = np.delete(ci,ci.tolist().index(cutindex))
             buffindex.append(cutindex)
@@ -137,8 +141,15 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
     else:
         Simto = np.array(Cfunto)[ci[:,None],ci]
         Simtodt = np.array(Cfuntodt)[ci[:,None],ci]
-        [Evals,REvec] = eigh(Simtodt,b=Simto)
-        LEvec = REvec
+        Shalf = sqrtm(Simto)
+        ShalfInv = inv(Shalf)
+        ThisMat = ShalfInv*Simtodt*ShalfInv
+        # [Evals,REvec] = eigh(ThisMat)
+        # LEvec = REvec
+        [Evals,LEvec,REvec] = eig(ThisMat,left=True)
+        ## w = G^1/2 u
+        LEvec = LEvec.dot(Shalf)
+        REvec = Shalf.dot(REvec)
         Evals,LEvec,REvec = AddNullState(Evals,LEvec,REvec,buffindex,thisdt=thisdt)
     return sortEvec(Evals,LEvec,REvec,thisdt)
 
