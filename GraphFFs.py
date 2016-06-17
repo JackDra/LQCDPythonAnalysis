@@ -116,6 +116,9 @@ def PlotFFqPick(datadict,thisPSL):
 
 feedin = InputParams(sys.argv[1:])
 
+if 'Vector' in feedin['current']:
+    feedin['current'] += ['GeGm']
+
 thisCurrDict = GetCurrDict(feedin['current'])
 
 datadict,currPSL = ReadAndPlotFF(thisCurrDict)
