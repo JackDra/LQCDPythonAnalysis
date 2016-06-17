@@ -37,6 +37,9 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr):
     thisstart = time.time()
     FF,infodict = CreateFF(setdict,thisMass['Avg'],thisCurr)
     PrintFFSet(FF,theset,thisMass,thesetmass,thisCurr,infodict)
+    if 'Scalar' in thisCurr:
+        NewFF = CombineVector(FF,thisMass)
+        PrintFFSet(NewFF,theset,thisMass,thesetmass,'GeGm',infodict)
     mprint( 'Fit and Print for ' , theset , ' took: ',str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s'    )
 
 
@@ -57,8 +60,8 @@ def DoFF(thisMethodList,thisCurr,thisSetList,thisGammaList):
     mprint( 'Creating Form Factors:' )
     inputparams = [PickMassSet(MassSet,theset)+(theset,setdict,thisCurr) for theset,setdict in data.iteritems()]
     start = time.time()
-    for ipar in inputparams: CreateFFWrap(*ipar)
-    print 'Fit and Print for ' , ' '.join(thisMethodList) , thisCurr , ' '.join(thisSetList) ,' in total took: ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'    
+    for ipar in inputparams: CreateFFWrap(*ipar)        
+    print 'Fit and Print for ' , ' '.join(thisMethodList) , thisCurr , ' '.join(thisSetList) ,' in total took: ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
     mprint( '')
 
 

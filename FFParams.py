@@ -37,8 +37,8 @@ DictCurrOpps = {'Scalar'   : DictGMAiI,
                 'PsScalar' : DictGMAig5,
                 'PsVector' : DictGMAigig5,
                 'Tensor'   : DictGMAigigj,
-                'giDi'   : DictGMA4giDi,
-                'Test'    : {'GMA4':['g4']}}
+                'giDi'     : DictGMA4giDi,
+                'Test'     : {'GMA4':['g4']}}
 
 
 CurrOpps = {'Scalar'   : PiI,
