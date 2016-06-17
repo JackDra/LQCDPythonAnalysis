@@ -98,24 +98,25 @@ def CombineVector(thisFF,thisMass):
     ## FF { { momsqrd } { Boot/Avg/Chi } }
     FFout = OrderedDict()
     for iq,qFF in thisFF.iteritems():
-        FFout[iq] = {}
-        Qsqrd = int(iq.replace('qsqrd',''))*(qunit**2)
-        FFout[iq]['Chi'] = qFF['Chi']
-        if 'Boot' in qFF.keys():
-            FFout[iq]['Boot'] = []
-            FFout[iq]['Avg'] = []
-            
-            FFout[iq]['Boot'].append(qFF['Boot'][0] - (Qsqrd/(4*thisMass['Avg']**2))*qFF['Boot'][1])
-            FFout[iq]['Boot'][-1].Stats()
-            FFout[iq]['Avg'].append(FFout[iq]['Boot'][-1].Avg)
+        if len(qdata.keys()) > 0:
+            FFout[iq] = {}
+            Qsqrd = int(iq.replace('qsqrd',''))*(qunit**2)
+            FFout[iq]['Chi'] = qFF['Chi']
+            if 'Boot' in qFF.keys():
+                FFout[iq]['Boot'] = []
+                FFout[iq]['Avg'] = []
 
-            FFout[iq]['Boot'].append(qFF['Boot'][0] + qFF['Boot'][1])
-            FFout[iq]['Boot'][-1].Stats()
-            FFout[iq]['Avg'].append(FFout[iq]['Boot'][-1].Avg)
-        else:
-            FFout[iq]['Avg'] = []
-            FFout[iq]['Avg'].append(qFF['Avg'][0] - (Qsqrd/(4*thisMass['Avg']**2))*qFF['Avg'][1])
-            FFout[iq]['Avg'].append(qFF['Avg'][0] + qFF['Avg'][1])
+                FFout[iq]['Boot'].append(qFF['Boot'][0] - (Qsqrd/(4*thisMass['Avg']**2))*qFF['Boot'][1])
+                FFout[iq]['Boot'][-1].Stats()
+                FFout[iq]['Avg'].append(FFout[iq]['Boot'][-1].Avg)
+
+                FFout[iq]['Boot'].append(qFF['Boot'][0] + qFF['Boot'][1])
+                FFout[iq]['Boot'][-1].Stats()
+                FFout[iq]['Avg'].append(FFout[iq]['Boot'][-1].Avg)
+            else:
+                FFout[iq]['Avg'] = []
+                FFout[iq]['Avg'].append(qFF['Avg'][0] - (Qsqrd/(4*thisMass['Avg']**2))*qFF['Avg'][1])
+                FFout[iq]['Avg'].append(qFF['Avg'][0] + qFF['Avg'][1])
     return FFout
 
 ##Same as above, but only checks for 0:
