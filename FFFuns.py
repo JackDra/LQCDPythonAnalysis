@@ -105,7 +105,7 @@ def CombineVector(thisFF,thisMass):
             FFout[iq]['Boot'] = []
             FFout[iq]['Avg'] = []
             
-            FFout[iq]['Boot'].append(qFF['Boot'][0] - (Qsqrd/(4*thisMass**2))*qFF['Boot'][1])
+            FFout[iq]['Boot'].append(qFF['Boot'][0] - (Qsqrd/(4*thisMass['Avg']**2))*qFF['Boot'][1])
             FFout[iq]['Boot'][-1].Stats()
             FFout[iq]['Avg'].append(FFout[iq]['Boot'][-1].Avg)
 
@@ -114,7 +114,7 @@ def CombineVector(thisFF,thisMass):
             FFout[iq]['Avg'].append(FFout[iq]['Boot'][-1].Avg)
         else:
             FFout[iq]['Avg'] = []
-            FFout[iq]['Avg'].append(qFF['Avg'][0] - (Qsqrd/(4*thisMass**2))*qFF['Avg'][1])
+            FFout[iq]['Avg'].append(qFF['Avg'][0] - (Qsqrd/(4*thisMass['Avg']**2))*qFF['Avg'][1])
             FFout[iq]['Avg'].append(qFF['Avg'][0] + qFF['Avg'][1])
     return FFout
 
