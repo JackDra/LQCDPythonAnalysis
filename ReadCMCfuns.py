@@ -96,7 +96,8 @@ def CheckAllSet(FilePrefix,directory,Interps):
                            +FilePrefix+CreateEnd2pt(ism,jsm,iterp,jterp))
             print testfile2pt
             if not os.path.isfile(testfile2pt): return False
-        for iFlag in ['PoF','REvec','cm','tsink']:
+    for iFlag in ['PoF','REvec','cm','tsink']:
+        for iterp,ism in Elongate(Interps,SmearDictList[iFlag]):
             for itsink in TSinkDictList[iFlag]:
                 thisFlag = iFlag
                 C2C3Dis = ''

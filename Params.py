@@ -333,3 +333,11 @@ TSinkDictList = {'PoF' : PoFTSinkList,
                  'cm' : CMTSinkList,
                  'Tsink' : AllTSinkList,
                  'tsink' : AllTSinkList}
+
+
+SmearDictList = {'PoF' : DefSmearList,
+                 'REvec' : DefSmearList,
+                 'CM' : DefSmearList,
+                 'cm' : DefSmearList,
+                 'Tsink' : SingSmearList,
+                 'tsink' : SingSmearList}
