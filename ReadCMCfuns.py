@@ -105,7 +105,7 @@ def CheckAllSet(FilePrefix,directory,Interps):
                     thisFlag = 'RE'+PoFDirTvarList[0]
                     C2C3Dis = PoFC2C3Dis
                 else:
-                    Jsmlist = ['Xsm'+jsm for jsm in thisSmearList]
+                    Jsmlist = ['Xsm'+jsm for jsm in DefSmearList]
                 for jcsm,jsm3pt in enumerate(Jsmlist):
                     for iDS in DefDSList:
                         for iProj in DefProjGammaList:
@@ -113,7 +113,7 @@ def CheckAllSet(FilePrefix,directory,Interps):
                                                              CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
                                            +FilePrefix+CreateEnd3pt(ism,jsm3pt,itsink,iDS,iProj,''))
                             if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
-                        for iProj in thisProjDerList:
+                        for iProj in DefProjDerList:
                             testfile3pt = (directory.replace(CreateDir2pt(DefSmearList[0],DefSmearList[0]),
                                                              CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
                                            +FilePrefix+CreateEnd3pt(ism,jsm3pt,itsink,iDS,iProj,'D'))
