@@ -49,7 +49,7 @@ def CRFWrap(RunType,itsinkList,thisSmearList,iPrefList,thisMomList,iProj,igamma)
              DragpZ([qstrTOip(iq) for iq in thisMomList]),thisPGList={iProj:[igamma]},DontWriteZero=DRZ)
 
 
-def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
+def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedout=None):
 
     # print "running " + Curr + ' ' + thisCol + ' tsinks: ' + ' '.join(RunTSinkList)
     sys.stdout = sys.__stdout__
@@ -105,7 +105,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False):
         print 'Two Point Analysis'
         Wipe2pt(outputdir,statelist=StateSet,todtlist=TwoPtDefTvarList,smlist=DefSmearList)
         thisMomList = Get2ptSetMoms(outputdir,RunMomList,statelist=StateSet,todtlist=DefTvarList,smlist=DefSmearList)
-        CreateTwoPt(DragpZ([qstrTOip(iq) for iq in thisMomList]),DefSmearList)
+        CreateTwoPt(DragpZ([qstrTOip(iq) for iq in thisMomList]),DefSmearList,feedout=feedout)
         print 'Two Point Analysis Complete'
     else:
         print 'Three Point Analysis '+Curr + ' ' + RunType + ' tsinks: ' + ' '.join(RunTSinkList)
@@ -182,6 +182,7 @@ DefWipeWarning()
 if len(sys.argv) < 2: raise IOError("input current type as first argument")
 print sys.argv[1]
 CurrIn = sys.argv[1]
+feedin = InputParams(sys.argv[4:])
 
 with open( logdir+'LogAll.log.start','a') as f:
     f.write('\n')
@@ -189,15 +190,15 @@ with open( logdir+'LogAll.log.end','a') as f:
     f.write('\n')
 thisPool = False
 if CurrIn == 'TwoPt':
-    RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe)
+    RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe,feedout=feedout)
 else:
     if len(sys.argv) < 3: raise IOError("input Collection of Data To compute as second argument (CM,TSink,REvec)")
     thisColIn = sys.argv[2]
     if thisColIn != 'All':
         if len(sys.argv) < 4: raise IOError("input tsinks in third input parameter (CM,TSink,REvec)")
         thisTSinkIn = sys.argv[3].split()
-    if DoMulticore:
-        thisPool = Pool(processes=AnaProc)
+    if DoMulticore and feedout['anaproc'] > 1:
+        thisPool = Pool(processes=feedout['anaproc'])
     else:
         thisPool = False
     if CurrIn == 'All':
