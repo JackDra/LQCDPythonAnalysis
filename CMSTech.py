@@ -121,8 +121,7 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
         ShalfInv = inv(sqrtm(Simto[ci[:,None],ci]))
         ThisMat = ShalfInv.dot(Simtodt[ci[:,None],ci].dot(ShalfInv))
         thiseig,thisevec = eigh(ThisMat)
-        evecreal,evecimag = SplitCmplxReal(thisevec)
-        evecreal,evecimag = evecreal.flatten(),evecimag.flatten()
+        evecreal,evecimag = SplitCmplxReal(thisevec.flatten())
         if any(-np.log(map(abs,thiseig))/float(thisdt)) < VarMassCutoff) or any(evecreal < 0) or any(map(abs,evecimag) > 0):
             # ibad = [ie < 0 for ie in thiseig].index(True)
             ci = np.delete(ci,ci.tolist().index(cutindex))
@@ -149,12 +148,12 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
         Simtodt = np.array(Cfuntodt)[ci[:,None],ci]
         ShalfInv = inv(sqrtm(Simto))
         ThisMat = ShalfInv.dot(Simtodt.dot(ShalfInv))
-        # [Evals,REvec] = eigh(ThisMat)
-        [Evals,LEvec,REvec] = eig(ThisMat,left=True)
+        [Evals,REvec] = eigh(ThisMat)
+        # [Evals,LEvec,REvec] = eig(ThisMat,left=True)
         ## w = G^-1/2 u
-        LEvec = LEvec.dot(ShalfInv)
+        # LEvec = LEvec.dot(ShalfInv)
         REvec = ShalfInv.dot(REvec)
-        # LEvec = REvec
+        LEvec = REvec
         Evals,LEvec,REvec = AddNullState(Evals,LEvec,REvec,buffindex,thisdt=thisdt)
     return sortEvec(Evals,LEvec,REvec,thisdt)
 
