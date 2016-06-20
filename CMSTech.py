@@ -120,7 +120,7 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
         # if any(-np.log(abs(thiseig))/float(thisdt) < VarMassCutoff) or any(posdef < 0):
         ShalfInv = inv(sqrtm(Simto[ci[:,None],ci]))
         ThisMat = ShalfInv.dot(Simtodt[ci[:,None],ci].dot(ShalfInv))
-        ThisMat = SymmetrizeNoP(ThisMat)
+        ThisMat = SymmetrizeNoPAvg(ThisMat)
         # for iindex in range(len(ThisMat)):
         #     for jindex in range(len(ThisMat)):
         #         print ThisMat[iindex][jindex], ThisMat[jindex][iindex]
@@ -156,7 +156,7 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
         Simtodt = np.array(Cfuntodt)[ci[:,None],ci]
         ShalfInv = inv(sqrtm(Simto))
         ThisMat = ShalfInv.dot(Simtodt.dot(ShalfInv))
-        ThisMat = SymmetrizeNoP(ThisMat)
+        ThisMat = SymmetrizeNoPAvg(ThisMat)
         if Doeigh:
             [Evals,REvec] = eigh(ThisMat)
             REvec = ShalfInv.dot(REvec)
@@ -432,12 +432,12 @@ def Symmetrize(data2pt):
     GetBootStats(dataout)
     return dataout
 
-def SymmetrizeNoP(data2pt):
+def SymmetrizeNoPAvg(data2pt):
     dataout = deepcopy(data2pt)
     for ism,dataism in enumerate(data2pt):
         for jsm,datajsm in enumerate(dataism):
             dataout[ism][jsm] = (datajsm+data2pt[jsm][ism])/2.0
-    GetBootStats(dataout)
+    # GetBootStats(dataout)
     return dataout
 
 def PreptwoptCorr(data2pt):

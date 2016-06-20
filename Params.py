@@ -101,7 +101,6 @@ DoCmplx = True # reads complex opperator values as well as real values, should b
 DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
 Doeigh = True # variational method, uses a symetrix matrix solver.
 
-
 VarMassCutoff = 0.4 # used in correlation matrix for cutting artifacts out of eigenmass sorting.
 
 dirread = datadir+'/cfuns/k'+str(kappa)
