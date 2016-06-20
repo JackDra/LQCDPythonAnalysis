@@ -182,7 +182,6 @@ DefWipeWarning()
 if len(sys.argv) < 2: raise IOError("input current type as first argument")
 print sys.argv[1]
 CurrIn = sys.argv[1]
-feedin = InputParams(sys.argv[4:])
 
 with open( logdir+'LogAll.log.start','a') as f:
     f.write('\n')
@@ -190,6 +189,7 @@ with open( logdir+'LogAll.log.end','a') as f:
     f.write('\n')
 thisPool = False
 if CurrIn == 'TwoPt':
+    feedin = InputParams(sys.argv[2:])
     RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe,feedout=feedout)
 else:
     if len(sys.argv) < 3: raise IOError("input Collection of Data To compute as second argument (CM,TSink,REvec)")
@@ -201,6 +201,8 @@ else:
         thisPool = Pool(processes=feedout['anaproc'])
     else:
         thisPool = False
+    if len(sys.argv)>3:
+        feedin = InputParams(sys.argv[4:])
     if CurrIn == 'All':
         # RunOffCorrs(thisPool,'TwoPt','TwoPt')
         for iCurr in AllCurrTypes:
