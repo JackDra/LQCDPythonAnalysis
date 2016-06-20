@@ -201,7 +201,7 @@ DefRedGammaList = DefCombGammaList[len(DefGammaList):]
 
 # DeftoList = [17,18,19,20,21,22,23]
 DeftoList = [17,18,19,20]
-DefdtList = [2,3,4]
+DefdtList = [1,2,3,4]
 # DeftodtPicked = (18,2)
 DeftodtPicked = (18,2)
 DefTvarPicked = 'CMto'+str(DeftodtPicked[0])+'dt'+str(DeftodtPicked[1])
