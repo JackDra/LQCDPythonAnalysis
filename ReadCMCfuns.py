@@ -87,10 +87,10 @@ def CreateDir3pt(ism,jsm,Tsink,DS,Proj,Flag):
 def CreateDir2pt(ism,jsm):
     return 'twoptsm'+ism+'si'+jsm
 
-def CheckAllSet(FilePrefix,directory,,Interps):
+def CheckAllSet(FilePrefix,directory,Interps):
     for iterp,ism in Elongate(Interps,thisSmearList):
-        for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,thisSmearList)):
-            testfile2pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
+        for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,DefSmearList)):
+            testfile2pt = (directory.replace(CreateDir2pt(DefSmearList[0],DefSmearList[0]),
                                              CreateDir2pt(ism,jsm))
                            +FilePrefix+CreateEnd2pt(ism,jsm,iterp,jterp))
             if not os.path.isfile(testfile2pt): return False
