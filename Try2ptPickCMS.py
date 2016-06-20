@@ -17,7 +17,7 @@ import time,datetime
 from MultiWrap import *
 from multiprocessing import Pool
 
-def CreateTwoPt(thisMomList,thisSmearList,feedout= {'anaproc':AnaProc}):
+def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     logfile = logdir+'LogTwoPt.log'
     errfile = logdir+'LogTwoPt.log'
     touch(logfile)
@@ -49,8 +49,8 @@ def CreateTwoPt(thisMomList,thisSmearList,feedout= {'anaproc':AnaProc}):
         inputparams.append((data2pt,itodt,thisMomList))
 
 
-    if DoMulticore and feedout['anaproc'] > 1:
-        thisPool = Pool(min(len(inputparams),feedout['anaproc']))
+    if DoMulticore and feedin['anaproc'] > 1:
+        thisPool = Pool(min(len(inputparams),feedin['anaproc']))
         outputPoF = thisPool.map(CreatePoF2ptCfuns.mapper,inputparams)
         outputCM = thisPool.map(CreateCM2ptCfuns.mapper,inputparams)
         thisPool.close()
