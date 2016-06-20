@@ -103,22 +103,22 @@ def sortEvec(Evals,LEvec,REvec,thisdt):
 def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
     # Ctoinv = inv(Cfunto)
     # Mat = np.dot(Ctoinv,Cfuntodt)
-    # [Evals,REvec] = eig(Mat,right=True,left=False)
+s    # [Evals,REvec] = eig(Mat,right=True,left=False)
     # LEvec = REvec
     # [Evals,LEvec,REvec] = eig(Cfuntodt,b=Cfunto,left=True,right=True)
     Simto = np.array(Cfunto)
     Simtodt = np.array(Cfuntodt)
     buffindex = []
     ci = np.array([0])
-    for cutindex in range(1,len(Cfunto)):
+    Ctolen = len(Cfunto)
+    for cutindex in range(1,Ctolen):
         ci = np.append(ci,cutindex)
         # thiseig = eigvals(Simtodt[ci[:,None],ci],b=Simto[ci[:,None],ci])
         # posdef = eigvals(Simto[ci[:,None],ci])
         # if any(-np.log(abs(thiseig))/float(thisdt) < VarMassCutoff) or any(posdef < 0):
         ShalfInv = inv(sqrtm(Simto[ci[:,None],ci]))
-        ThisMat = ShalfInv*Simtodt[ci[:,None],ci]*ShalfInv
+        ThisMat = ShalfInv.dot(Simtodt[ci[:,None],ci].dot(ShalfInv))
         thiseig = eigvals(ThisMat)
-        print thiseig
         if any(-np.log(abs(thiseig))/float(thisdt) < VarMassCutoff):
             # ibad = [ie < 0 for ie in thiseig].index(True)
             ci = np.delete(ci,ci.tolist().index(cutindex))
