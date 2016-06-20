@@ -103,7 +103,7 @@ def sortEvec(Evals,LEvec,REvec,thisdt):
 def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
     # Ctoinv = inv(Cfunto)
     # Mat = np.dot(Ctoinv,Cfuntodt)
-s    # [Evals,REvec] = eig(Mat,right=True,left=False)
+    # [Evals,REvec] = eig(Mat,right=True,left=False)
     # LEvec = REvec
     # [Evals,LEvec,REvec] = eig(Cfuntodt,b=Cfunto,left=True,right=True)
     Simto = np.array(Cfunto)
