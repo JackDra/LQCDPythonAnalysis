@@ -122,7 +122,7 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
         ThisMat = ShalfInv.dot(Simtodt[ci[:,None],ci].dot(ShalfInv))
         thiseig,thisevec = eigh(ThisMat)
         evecreal,evecimag = SplitCmplxReal(thisevec.flatten())
-        if any(-np.log(np.abs(thiseig)/float(thisdt) < VarMassCutoff) or any(np.array(thiseig) < 0) or any(np.abs(evecimag) > 0):
+        if any(-np.log(np.abs(thiseig)/float(thisdt)) < VarMassCutoff) or any(np.array(thiseig) < 0) or any(np.abs(evecimag) > 0):
             # ibad = [ie < 0 for ie in thiseig].index(True)
             ci = np.delete(ci,ci.tolist().index(cutindex))
             buffindex.append(cutindex)
