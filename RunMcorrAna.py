@@ -49,7 +49,7 @@ def CRFWrap(RunType,itsinkList,thisSmearList,iPrefList,thisMomList,iProj,igamma)
              DragpZ([qstrTOip(iq) for iq in thisMomList]),thisPGList={iProj:[igamma]},DontWriteZero=DRZ)
 
 
-def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedout=None):
+def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin=None):
 
     # print "running " + Curr + ' ' + thisCol + ' tsinks: ' + ' '.join(RunTSinkList)
     sys.stdout = sys.__stdout__
@@ -105,7 +105,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedou
         print 'Two Point Analysis'
         Wipe2pt(outputdir,statelist=StateSet,todtlist=TwoPtDefTvarList,smlist=DefSmearList)
         thisMomList = Get2ptSetMoms(outputdir,RunMomList,statelist=StateSet,todtlist=DefTvarList,smlist=DefSmearList)
-        CreateTwoPt(DragpZ([qstrTOip(iq) for iq in thisMomList]),DefSmearList,feedout=feedout)
+        CreateTwoPt(DragpZ([qstrTOip(iq) for iq in thisMomList]),DefSmearList,feedin=feedin)
         print 'Two Point Analysis Complete'
     else:
         print 'Three Point Analysis '+Curr + ' ' + RunType + ' tsinks: ' + ' '.join(RunTSinkList)
