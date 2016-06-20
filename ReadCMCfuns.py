@@ -88,7 +88,7 @@ def CreateDir2pt(ism,jsm):
     return 'twoptsm'+ism+'si'+jsm
 
 def CheckAllSet(FilePrefix,directory,Interps):
-    for iterp,ism in Elongate(Interps,thisSmearList):
+    for iterp,ism in Elongate(Interps,DefSmearList):
         for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,DefSmearList)):
             testfile2pt = (directory.replace(CreateDir2pt(DefSmearList[0],DefSmearList[0]),
                                              CreateDir2pt(ism,jsm))
