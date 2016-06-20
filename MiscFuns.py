@@ -12,6 +12,18 @@ from collections import OrderedDict
 import time,datetime
 from copy import deepcopy
 
+def SplitCmplxReal(array):
+   realout,cmplxout = [],[]
+   for ia in array:
+      if isinstance(ia, complex):
+         cmplxout.append(ia.imag())
+         readlout.append(ia.real())
+      else:
+         realout.append(ia)
+         cmplxout.append(0.)
+   return realout,cmplxout
+   
+         
 def CheckZip(*data):
    for itd,idata in enumerate(data[1:]):
       if len(idata) != len(data[0]):
