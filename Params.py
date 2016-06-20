@@ -330,4 +330,6 @@ def mprint(*string):
 TSinkDictList = {'PoF' : PoFTSinkList,
                  'REvec' : REvecTSinkList,
                  'CM' : CMTSinkList,
+                 'cm' : CMTSinkList,
                  'Tsink' : AllTSinkList}
+                 'tsink' : AllTSinkList}
