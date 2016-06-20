@@ -258,3 +258,5 @@ elif kappa == 12104:
     DefSetCol[1] = CreateSet(thisTSinkL=[29],thisTvarL=[])[1]
     
 DefSetList,DefMassSetList,DefTSinkSetList = DefSetCol
+
+print DefSetList
