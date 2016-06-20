@@ -15,7 +15,7 @@ from MiscFuns import *
 from MomParams import *
 from FFParams import *
 from ReadTxt import Get3ptSetMoms,Get2ptSetMoms
-from InputArgs import DefWipeWarning
+from InputArgs import DefWipeWarning,InputParams
 import copy
 from multiprocessing import Pool
 
