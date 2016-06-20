@@ -121,9 +121,9 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
         ShalfInv = inv(sqrtm(Simto[ci[:,None],ci]))
         ThisMat = ShalfInv.dot(Simtodt[ci[:,None],ci].dot(ShalfInv))
         ThisMat = Symmetrize(ThisMat)
-        for iindex in range(len(ThisMat)):
-            for jindex in range(len(ThisMat)):
-                print ThisMat[iindex][jindex], ThisMat[jindex][iindex]
+        # for iindex in range(len(ThisMat)):
+        #     for jindex in range(len(ThisMat)):
+        #         print ThisMat[iindex][jindex], ThisMat[jindex][iindex]
         if Doeigh:
             thiseig,thisevec = eigh(ThisMat)
         else:
