@@ -120,8 +120,8 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
         # if any(-np.log(abs(thiseig))/float(thisdt) < VarMassCutoff) or any(posdef < 0):
         ShalfInv = inv(sqrtm(Simto[ci[:,None],ci]))
         ThisMat = ShalfInv.dot(Simtodt[ci[:,None],ci].dot(ShalfInv))
-        thiseigpass,dump = eig(ThisMat)
-        eigreal,eigimag = SplitCmplxReal(thiseigpass)
+        thiseig,dump = eig(ThisMat)
+        eigreal,eigimag = SplitCmplxReal(thiseig)
         if (any(-np.log(abs(thiseig))/float(thisdt) < VarMassCutoff) or any(eigreal < 0)) or any(map(abs,eigimag) > 0):
             # ibad = [ie < 0 for ie in thiseig].index(True)
             ci = np.delete(ci,ci.tolist().index(cutindex))
