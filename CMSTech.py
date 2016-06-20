@@ -123,7 +123,7 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
         thiseig,thisevec = eigh(ThisMat)
         evecreal,evecimag = SplitCmplxReal(thisevec.flatten())
         eigreal,eigimag = SplitCmplxReal(thiseig)
-        print ic
+        print ci
         print evecreal
         print evecimag
         print eigreal
