@@ -120,6 +120,7 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
         # if any(-np.log(abs(thiseig))/float(thisdt) < VarMassCutoff) or any(posdef < 0):
         ShalfInv = inv(sqrtm(Simto[ci[:,None],ci]))
         ThisMat = ShalfInv.dot(Simtodt[ci[:,None],ci].dot(ShalfInv))
+        ThisMat = Symmetrize(ThisMat)
         for iindex in range(len(ThisMat)):
             for jindex in range(len(ThisMat)):
                 print ThisMat[iindex][jindex], ThisMat[jindex][iindex]
@@ -155,6 +156,7 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
         Simtodt = np.array(Cfuntodt)[ci[:,None],ci]
         ShalfInv = inv(sqrtm(Simto))
         ThisMat = ShalfInv.dot(Simtodt.dot(ShalfInv))
+        ThisMat = Symmetrize(ThisMat)
         if Doeigh:
             [Evals,REvec] = eigh(ThisMat)
             REvec = ShalfInv.dot(REvec)

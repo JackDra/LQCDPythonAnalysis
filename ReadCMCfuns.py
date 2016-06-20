@@ -42,11 +42,16 @@ def ReadSet(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList, thisDSL
     for isource in SourceList:
         for (dirname,dirs,files) in walk(directory+'/'+isource):
             for file in files:
-                fileend2pt = CreateEnd2pt(thisSmearList[0],thisSmearList[0],Interps[0],Interps[0])
                 if fileend2pt not in file or ".metadata" in file: continue
                 fileprefix = file.replace(fileend2pt,'')
-                if CheckSet(fileprefix,dirname+'/',thisSmearList,thisProjGammaList,
-                            thisProjDerList,thisDSList,thisTSinkList,Flag,Interps):
+                if CfunConfigCheck:
+                    fileend2pt = CreateEnd2pt(DefSmearList[0],DefSmearList[0],Interps[0],Interps[0])
+                    CheckBool = CheckAllSet(fileprefix,dirname+'/')
+                else:
+                    fileend2pt = CreateEnd2pt(thisSmearList[0],thisSmearList[0],Interps[0],Interps[0])
+                    CheckBool = CheckSet(fileprefix,dirname+'/',thisSmearList,thisProjGammaList,
+                                         thisProjDerList,thisDSList,thisTSinkList,Flag,Interps)
+                if CheckBool:
                     f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
                     thisfilelist.append(directory+'/'+isource+'/@/'+fileprefix)
     f.close()
@@ -79,15 +84,22 @@ def CreateDir3pt(ism,jsm,Tsink,DS,Proj,Flag):
 def CreateDir2pt(ism,jsm):
     return 'twoptsm'+ism+'si'+jsm
 
-def CheckSet(FilePrefix,directory,thisSmearList,thisProjGammaList,thisProjDerList,thisDSList,
-             thisTSinkList,Flag,Interps):
-    CompSet = True
+def CheckAllSet(FilePrefix,directory,Interps):
+    for iterp,ism in Elongate(Interps,thisSmearList):
+        for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,DefSmearList)):
+            testfile2pt = (directory.replace(CreateDir2pt(DefSmearList[0],DefSmearList[0]),
+                                             CreateDir2pt(ism,jsm))
+                           +FilePrefix+CreateEnd2pt(ism,jsm,iterp,jterp))
+            if not os.path.isfile(testfile2pt): return False
+
+
+def CheckSet(FilePrefix,directory,thisSmearList,thisProjGammaList,thisProjDerList,thisDSList,thisTSinkList,Flag,Interps):
     for iterp,ism in Elongate(Interps,thisSmearList):
         for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,thisSmearList)):
             testfile2pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
                                              CreateDir2pt(ism,jsm))
                            +FilePrefix+CreateEnd2pt(ism,jsm,iterp,jterp))
-            if not os.path.isfile(testfile2pt): CompSet = False
+            if not os.path.isfile(testfile2pt): return False
         for iFlag,itsink in zip(Flag,thisTSinkList):
             thisFlag = iFlag
             C2C3Dis = ''
@@ -105,13 +117,13 @@ def CheckSet(FilePrefix,directory,thisSmearList,thisProjGammaList,thisProjDerLis
                         testfile3pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
                                                          CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
                                        +FilePrefix+CreateEnd3pt(ism,jsm3pt,itsink,iDS,iProj,''))
-                        if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): CompSet = False
+                        if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
                     for iProj in thisProjDerList:
                         testfile3pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
                                                          CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
                                        +FilePrefix+CreateEnd3pt(ism,jsm3pt,itsink,iDS,iProj,'D'))
-                        if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): CompSet = False
-    return CompSet
+                        if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
+    return True
 
 ##tempdata [ iconf ] .data [ ip , it ]
 ##thisdata2pt [ ism , jsm , ip , it ] bootdataclas
