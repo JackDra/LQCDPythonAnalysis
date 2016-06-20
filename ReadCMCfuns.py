@@ -108,7 +108,7 @@ def CheckAllSet(FilePrefix,directory,Interps):
                     thisFlag = 'RE'+PoFDirTvarList[0]
                     C2C3Dis = PoFC2C3Dis
                 else:
-                    Jsmlist = ['Xsm'+jsm for jsm in DefSmearList]
+                    Jsmlist = ['Xsm'+jsm for jsm in SmearDictList[iFlag]]
                 for jcsm,jsm3pt in enumerate(Jsmlist):
                     for iDS in DefDSList:
                         for iProj in DefProjGammaList:
