@@ -60,6 +60,7 @@ def ReadSet(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList, thisDSL
     f.close()
     print 'number of configs = ' , len(thisfilelist)
     print ''
+    if len(thisfilelist) == 0: raise IOError('No Configurations Found')
     if ShowConfNum:
         for ifile in thisfilelist:
             print ifile
