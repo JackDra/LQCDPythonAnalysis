@@ -259,4 +259,3 @@ elif kappa == 12104:
     
 DefSetList,DefMassSetList,DefTSinkSetList = DefSetCol
 
-print DefSetList
