@@ -98,7 +98,7 @@ def CheckAllSet(FilePrefix,directory,Interps):
             if not os.path.isfile(testfile2pt): return False
     for iFlag in ['PoF','REvec','cm','tsink']:
         for iterp,ism in Elongate(Interps,SmearDictList[iFlag]):
-            for itsink in TSinkDictList[iFlag].remove(29):
+            for itsink in TSinkDictList[iFlag]:
                 thisFlag = iFlag
                 C2C3Dis = ''
                 if 'REvec' in iFlag:
