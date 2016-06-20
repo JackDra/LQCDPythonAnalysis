@@ -197,11 +197,13 @@ else:
     if thisColIn != 'All':
         if len(sys.argv) < 4: raise IOError("input tsinks in third input parameter (CM,TSink,REvec)")
         thisTSinkIn = sys.argv[3].split()
+        feedin = InputParams(sys.argv[4:])
+    else:
+        feedin = InputParams(sys.argv[3:])
     if DoMulticore and feedin['anaproc'] > 1:
         thisPool = Pool(processes=feedin['anaproc'])
     else:
         thisPool = False
-    feedin = InputParams(sys.argv[4:])
     if CurrIn == 'All':
         # RunOffCorrs(thisPool,'TwoPt','TwoPt')
         for iCurr in AllCurrTypes:
