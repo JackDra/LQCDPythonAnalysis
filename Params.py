@@ -331,5 +331,5 @@ TSinkDictList = {'PoF' : PoFTSinkList,
                  'REvec' : REvecTSinkList,
                  'CM' : CMTSinkList,
                  'cm' : CMTSinkList,
-                 'Tsink' : AllTSinkList}
+                 'Tsink' : AllTSinkList,
                  'tsink' : AllTSinkList}
