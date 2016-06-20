@@ -201,8 +201,7 @@ else:
         thisPool = Pool(processes=feedout['anaproc'])
     else:
         thisPool = False
-    if len(sys.argv)>3:
-        feedin = InputParams(sys.argv[4:])
+    feedin = InputParams(sys.argv[4:])
     if CurrIn == 'All':
         # RunOffCorrs(thisPool,'TwoPt','TwoPt')
         for iCurr in AllCurrTypes:
