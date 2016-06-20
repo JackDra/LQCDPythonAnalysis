@@ -123,10 +123,6 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
         thiseig,thisevec = eigh(ThisMat)
         evecreal,evecimag = SplitCmplxReal(thisevec)
         evecreal,evecimag = evecreal.flatten(),evecimag.flatten()
-        print evecreal
-        print evecimag
-        print evecreal < 0
-        print map(abs,evecimag) > 0
         if any(-np.log(map(abs,thiseig))/float(thisdt)) < VarMassCutoff) or any(evecreal < 0) or any(map(abs,evecimag) > 0):
             # ibad = [ie < 0 for ie in thiseig].index(True)
             ci = np.delete(ci,ci.tolist().index(cutindex))
