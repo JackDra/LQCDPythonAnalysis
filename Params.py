@@ -202,7 +202,7 @@ DefRedGammaList = DefCombGammaList[len(DefGammaList):]
 DeftoList = [17,18,19,20,21,22,23]
 DefdtList = [2,3,4]
 # DeftodtPicked = (18,2)
-DeftodtPicked = (21,4)
+DeftodtPicked = (18,2)
 DefTvarPicked = 'CMto'+str(DeftodtPicked[0])+'dt'+str(DeftodtPicked[1])
 
 DeftodtList = []
@@ -272,7 +272,7 @@ REvecTSinkStrList = ['tsink'+str(its) for its in REvecTSinkList]
 DefREvecVarList = [18,2]
 REvecTvarList = ['REvecto'+str(DefREvecVarList[0])+'dt'+str(DefREvecVarList[1])]
 # REvecTvarList = []
-DefPoFVarList = [17,4]
+DefPoFVarList = [19,2]
 AllPoFTSinkList = {'12104':[],'12090':[26,27]}
 PoFTSinkList = AllPoFTSinkList[str(kappa)]
 PoFTSinkStrList = ['tsink'+str(its) for its in PoFTSinkList]
