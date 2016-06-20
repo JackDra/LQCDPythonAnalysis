@@ -54,7 +54,7 @@ def FormatToDictAvgStdChi(String):
 def LREVecToFormat(iLE,iRE,iEM,DoPoF):
     if DoPoF:
         SmPoFList = []
-        for iPoF in ['PoF'+str(ishift) for ishift in PoFShifts]:
+        for iPoF in ['PoF'+str(ishift) for ishift in range(PoFShifts+1)]:
             SmPoFList += [ism+'_'+iPoF for ism in DefSmList]
     else:
         SmPoFList = DefSmList
