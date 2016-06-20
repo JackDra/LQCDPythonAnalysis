@@ -16,8 +16,8 @@ def SplitCmplxReal(array):
    realout,cmplxout = [],[]
    for ia in array:
       if isinstance(ia, complex):
-         cmplxout.append(ia.imag())
-         readlout.append(ia.real())
+         cmplxout.append(ia.imag)
+         readlout.append(ia.real)
       else:
          realout.append(ia)
          cmplxout.append(0.)
