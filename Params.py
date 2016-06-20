@@ -98,7 +98,8 @@ ShowConfNum = False # debugging, show number of configs during read
 PrintRead = not DoMulticore # Screws up output if on and doing mulitcore reading
 DoCmplx = True # reads complex opperator values as well as real values, should be on
 DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
-    
+Doeigh = False
+
 
 VarMassCutoff = 0.4 # used in correlation matrix for cutting artifacts out of eigenmass sorting.
 
