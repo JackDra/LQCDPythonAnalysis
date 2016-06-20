@@ -141,15 +141,14 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
     else:
         Simto = np.array(Cfunto)[ci[:,None],ci]
         Simtodt = np.array(Cfuntodt)[ci[:,None],ci]
-        Shalf = sqrtm(Simto)
-        ShalfInv = inv(Shalf)
+        ShalfInv = inv(sqrtm(Simto))
         ThisMat = ShalfInv*Simtodt*ShalfInv
         # [Evals,REvec] = eigh(ThisMat)
         # LEvec = REvec
         [Evals,LEvec,REvec] = eig(ThisMat,left=True)
         ## w = G^1/2 u
-        LEvec = LEvec.dot(Shalf)
-        REvec = Shalf.dot(REvec)
+        LEvec = LEvec.dot(ShalfInv)
+        REvec = ShalfInv.dot(REvec)
         Evals,LEvec,REvec = AddNullState(Evals,LEvec,REvec,buffindex,thisdt=thisdt)
     return sortEvec(Evals,LEvec,REvec,thisdt)
 
