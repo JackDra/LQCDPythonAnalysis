@@ -190,15 +190,15 @@ with open( logdir+'LogAll.log.end','a') as f:
 thisPool = False
 if CurrIn == 'TwoPt':
     feedin = InputParams(sys.argv[2:])
-    RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe,feedout=feedout)
+    RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe,feedin=feedin)
 else:
     if len(sys.argv) < 3: raise IOError("input Collection of Data To compute as second argument (CM,TSink,REvec)")
     thisColIn = sys.argv[2]
     if thisColIn != 'All':
         if len(sys.argv) < 4: raise IOError("input tsinks in third input parameter (CM,TSink,REvec)")
         thisTSinkIn = sys.argv[3].split()
-    if DoMulticore and feedout['anaproc'] > 1:
-        thisPool = Pool(processes=feedout['anaproc'])
+    if DoMulticore and feedin['anaproc'] > 1:
+        thisPool = Pool(processes=feedin['anaproc'])
     else:
         thisPool = False
     feedin = InputParams(sys.argv[4:])
