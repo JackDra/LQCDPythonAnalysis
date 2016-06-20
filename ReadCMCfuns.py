@@ -42,18 +42,21 @@ def ReadSet(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList, thisDSL
     for isource in SourceList:
         for (dirname,dirs,files) in walk(directory+'/'+isource):
             for file in files:
-                if fileend2pt not in file or ".metadata" in file: continue
-                fileprefix = file.replace(fileend2pt,'')
                 if CfunConfigCheck:
                     fileend2pt = CreateEnd2pt(DefSmearList[0],DefSmearList[0],Interps[0],Interps[0])
-                    CheckBool = CheckAllSet(fileprefix,dirname+'/')
+                    if fileend2pt not in file or ".metadata" in file: continue
+                    fileprefix = file.replace(fileend2pt,'')
+                    if CheckAllSet(fileprefix,dirname+'/',Interps):
+                        f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
+                        thisfilelist.append(directory+'/'+isource+'/@/'+fileprefix)                    
                 else:
                     fileend2pt = CreateEnd2pt(thisSmearList[0],thisSmearList[0],Interps[0],Interps[0])
-                    CheckBool = CheckSet(fileprefix,dirname+'/',thisSmearList,thisProjGammaList,
-                                         thisProjDerList,thisDSList,thisTSinkList,Flag,Interps)
-                if CheckBool:
-                    f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
-                    thisfilelist.append(directory+'/'+isource+'/@/'+fileprefix)
+                    if fileend2pt not in file or ".metadata" in file: continue
+                    fileprefix = file.replace(fileend2pt,'')
+                    if CheckSet(fileprefix,dirname+'/',thisSmearList,thisProjGammaList,
+                                thisProjDerList,thisDSList,thisTSinkList,Flag,Interps):
+                        f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
+                        thisfilelist.append(directory+'/'+isource+'/@/'+fileprefix)
     f.close()
     print 'number of configs = ' , len(thisfilelist)
     print ''
@@ -84,16 +87,43 @@ def CreateDir3pt(ism,jsm,Tsink,DS,Proj,Flag):
 def CreateDir2pt(ism,jsm):
     return 'twoptsm'+ism+'si'+jsm
 
-def CheckAllSet(FilePrefix,directory,Interps):
+def CheckAllSet(FilePrefix,directory,,Interps):
     for iterp,ism in Elongate(Interps,thisSmearList):
-        for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,DefSmearList)):
-            testfile2pt = (directory.replace(CreateDir2pt(DefSmearList[0],DefSmearList[0]),
+        for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,thisSmearList)):
+            testfile2pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
                                              CreateDir2pt(ism,jsm))
                            +FilePrefix+CreateEnd2pt(ism,jsm,iterp,jterp))
             if not os.path.isfile(testfile2pt): return False
+        for iFlag in ['PoF','REvec','CM','Tsink']:
+            for itsink in TSinkDictList[iFlag]:
+                thisFlag = iFlag
+                C2C3Dis = ''
+                if 'REvec' in iFlag:
+                    Jsmlist = ['REvec']
+                elif 'PoF' in iFlag:
+                    Jsmlist = ['RE'+PoFReadTvarList[0]]
+                    thisFlag = 'RE'+PoFDirTvarList[0]
+                    C2C3Dis = PoFC2C3Dis
+                else:
+                    Jsmlist = ['Xsm'+jsm for jsm in thisSmearList]
+                for jcsm,jsm3pt in enumerate(Jsmlist):
+                    for iDS in DefDSList:
+                        for iProj in DefProjGammaList:
+                            testfile3pt = (directory.replace(CreateDir2pt(DefSmearList[0],DefSmearList[0]),
+                                                             CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
+                                           +FilePrefix+CreateEnd3pt(ism,jsm3pt,itsink,iDS,iProj,''))
+                            if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
+                        for iProj in thisProjDerList:
+                            testfile3pt = (directory.replace(CreateDir2pt(DefSmearList[0],DefSmearList[0]),
+                                                             CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
+                                           +FilePrefix+CreateEnd3pt(ism,jsm3pt,itsink,iDS,iProj,'D'))
+                            if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
+    return True
+                
 
 
-def CheckSet(FilePrefix,directory,thisSmearList,thisProjGammaList,thisProjDerList,thisDSList,thisTSinkList,Flag,Interps):
+def CheckSet(FilePrefix,directory,thisSmearList,thisProjGammaList,thisProjDerList,thisDSList,
+             thisTSinkList,Flag,Interps):
     for iterp,ism in Elongate(Interps,thisSmearList):
         for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,thisSmearList)):
             testfile2pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
@@ -111,7 +141,7 @@ def CheckSet(FilePrefix,directory,thisSmearList,thisProjGammaList,thisProjDerLis
                 C2C3Dis = PoFC2C3Dis
             else:
                 Jsmlist = ['Xsm'+jsm for jsm in thisSmearList]
-            for jcsm,(jsm3pt,jsm) in enumerate(zip(Jsmlist,thisSmearList)):
+            for jcsm,jsm3pt in enumerate(Jsmlist):
                 for iDS in thisDSList:
                     for iProj in thisProjGammaList:
                         testfile3pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),

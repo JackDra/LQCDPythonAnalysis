@@ -326,4 +326,7 @@ def mprint(*string):
         if not DoMulticore: print ' '.join(map(str,list(string)))
         
 
-    
+TSinkDictList = {'PoF' : PoFTSinkList,
+                 'REvec' : REvecTSinkList,
+                 'CM' : CMTSinkList,
+                 'Tsink' : AllTSinkList}
