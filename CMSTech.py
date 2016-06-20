@@ -436,7 +436,7 @@ def SymmetrizeNoP(data2pt):
     dataout = deepcopy(data2pt)
     for ism,dataism in enumerate(data2pt):
         for jsm,datajsm in enumerate(dataism):
-            dataout[ism][jsm] = (datap+data2pt[jsm][ism])/2.0
+            dataout[ism][jsm] = (datajsm+data2pt[jsm][ism])/2.0
     GetBootStats(dataout)
     return dataout
 
