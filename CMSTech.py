@@ -128,7 +128,7 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
         print evecimag
         print eigreal
         print eigimag
-        if any(-np.log(np.abs(eigreal)/float(thisdt)) < VarMassCutoff) or any(np.array(eigreal) < 0) or any(np.abs(eigimag) > 0)  or any(np.abs(evecimag) > 0):
+        if any(-map(np.log,np.abs(eigreal)/float(thisdt)) < VarMassCutoff) or any(np.array(eigreal) < 0) or any(np.abs(eigimag) > 0)  or any(np.abs(evecimag) > 0):
             # ibad = [ie < 0 for ie in thiseig].index(True)
             ci = np.delete(ci,ci.tolist().index(cutindex))
             buffindex.append(cutindex)
