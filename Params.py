@@ -264,6 +264,10 @@ DefSmList = ['sm'+ism for ism in DefSmearList]
 DefInterpSmearList = ElongateName(DefInterpList,DefSmList)
 CMTSinkList = [29]
 AllTSinkList = [26,29,32,35,38]
+AllTSinkListNoCM = []
+for its in AllTSinkList:
+    if its not in CMTSinkList:
+        AllTSinkListNoCM.append(its)
 AllTSinkListVar = [26,27,29,32,35,38]
 AllTSinkShift = [it-tsource for it in AllTSinkList]
 AllTSinkStrList = ['tsink'+str(its) for its in AllTSinkList]
@@ -332,7 +336,7 @@ TSinkDictList = {'PoF' : PoFTSinkList,
                  'CM' : CMTSinkList,
                  'cm' : CMTSinkList,
                  'Tsink' : AllTSinkList,
-                 'tsink' : AllTSinkList}
+                 'tsink' : AllTSinkListNoCM}
 
 
 SmearDictList = {'PoF' : DefSmearList,
