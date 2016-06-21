@@ -66,6 +66,7 @@ def InputParams(inputparams):
             print '-c= specifies Current to look at, choose from:\n' + '\n'.join(CurrOpps.keys())+'\n'
             print "-p= specifies the momentium list to use, form is 'q = X Y Z', X,Y,Z = -3,-2,-1,0,1,2,3"
             print "-np= specifies the maximum number of processors used for this job"
+            print "-noprompt does not display any prompts (for long runs)"
             print 
             exit()
         elif '-g' in isys:
