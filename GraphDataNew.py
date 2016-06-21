@@ -1,4 +1,4 @@
-# #!/usr/bin/env python
+#!/usr/bin/env python
 
 # import matplotlib
 # matplotlib.use('PDF') # Must be before importing matplotlib.pyplot or pylab!
@@ -598,7 +598,6 @@
 
 
 ##DEBUGGING##
-#!/usr/bin/env python
 
 import matplotlib
 matplotlib.use('PDF') # Must be before importing matplotlib.pyplot or pylab!
