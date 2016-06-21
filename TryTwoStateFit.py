@@ -245,7 +245,7 @@ for igamma in ReadGammaList:
 
 RunStart = time.time()
 if len(inputparams) > 0:
-    if DoMulticore:
+    if DoMulticore and feedin['anaproc'] > 1:
         print 'Running Multicore'
         makeContextFunctions(DoTSF)
         thisPool = Pool(min(len(inputparams),feedin['anaproc']))

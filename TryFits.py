@@ -77,7 +77,7 @@ for igamma in thisGammaList:
 
 
 if len(inputparams) > 0:
-    if DoMulticore:
+    if DoMulticore and feedin['anaproc'] > 1:
         print 'Running Multicore'
         makeContextFunctions(TryFitsFun)
         thisPool = Pool(min(len(inputparams),feedin['anaproc']))

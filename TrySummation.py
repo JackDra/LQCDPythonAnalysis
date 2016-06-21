@@ -84,7 +84,7 @@ for igamma in thisGammaList:
 makeContextFunctions(FitSumWrap)
 
 if len(inputparams) > 0:
-    if DoMulticore:
+    if DoMulticore and feedin['anaproc'] > 1:
         print 'Running multiprocessor fits'
         thisPool = Pool(processes=min(len(inputparams),feedin['anaproc']))
         thisPool.map(FitSumWrap.mapper,inputparams)
