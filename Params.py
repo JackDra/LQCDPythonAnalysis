@@ -331,11 +331,11 @@ def mprint(*string):
         if not DoMulticore: print ' '.join(map(str,list(string)))
         
 
-TSinkDictList = {'PoF' : PoFTSinkList,
+TSinkDictList = {'PoF' : PoFTSinkList+range(PoFTSinkList[-1],PoFTSinkList[-1]+1+PoFShifts),
                  'REvec' : REvecTSinkList,
                  'CM' : CMTSinkList,
                  'cm' : CMTSinkList,
-                 'Tsink' : AllTSinkList,
+                 'Tsink' : AllTSinkList
                  'tsink' : AllTSinkListNoCM}
 
 
