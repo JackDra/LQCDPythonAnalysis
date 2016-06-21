@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import matplotlib
-matplotlib.use('PDF') # Must be before importing matplotlib.pyplot or pylab!
-matplotlib.rc('text', usetex=True)
+matplotlib.use('Agg') # Must be before importing matplotlib.pyplot or pylab!
 import matplotlib.pyplot as pl
 from Params import *
 import numpy as np
@@ -33,20 +32,20 @@ Massyrange = 0.35,1.0
 
 ylimDict = {'P4giDi':[0.05,0.15]}
 
-params = {'legend.fontsize': 10,
-          'legend.numpoints': 1,
-          'axes.labelsize' : 20,
-          'axes.titlesize' : 20,
-          'figure.autolayout': True,
-          'axes.grid': True,
-          'axes.xmargin':0.01,
-          'axes.ymargin':0.01}
+# params = {'legend.fontsize': 10,
+#           'legend.numpoints': 1,
+#           'axes.labelsize' : 20,
+#           'axes.titlesize' : 20,
+#           'figure.autolayout': True,
+#           'axes.grid': True,
+#           'axes.xmargin':0.01,
+#           'axes.ymargin':0.01}
 
 symcyc = itertools.cycle(markerset)
 colcyc = itertools.cycle(colourset8)
 shiftcyc = itertools.cycle(shiftset)
 
-pl.rcParams.update(params)
+# pl.rcParams.update(params)
 RFylab = r'$ R \left(\tau,t\right) $'
 RFxlab = r'$ \frac{\tau}{a} - \frac{t}{2a}$'
 
