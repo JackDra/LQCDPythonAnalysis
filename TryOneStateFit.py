@@ -152,7 +152,7 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList,thisMomList):
     start = time.time()
     mprint( 'Printing OSF Results to file: \r',)
     # WipeSFSet(outputdir,thisGammaList+['twopt'],'OSF'+outfile,'One',setlist=thisSetList)
-    print 'Debugging: OSF ' + thisGammaList[0]+' ' + thisMom + ' took ' , str(datetime.timedelta(seconds=time.time()-totstart)) , ' h:m:s'
+    # print 'Debugging: OSF ' + thisGammaList[0]+' ' + thisMom + ' took ' , str(datetime.timedelta(seconds=time.time()-totstart)) , ' h:m:s'
     PrintOSFSetToFile(OneFit3pt,OneFit3ptChi,thisGammaMomList,thisSetList,thisFitOSFR,outfile,infolistRF)
 
     for icf,(ifit2pt,thispicklefile) in enumerate(zip(thisFitOSFR,thispicklelist)):
