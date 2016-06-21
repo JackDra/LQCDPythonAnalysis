@@ -48,7 +48,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                             if 'nconf'+str(thisnconf) not in NconfDict:
                                 NconfDict['nconf'+str(thisnconf)] = [checkfile+'.xml']
                             else:
-                                NconfDict['nconf'+str(thisnconf)].append(checkfile+'.xml']
+                                NconfDict['nconf'+str(thisnconf)].append(checkfile+'.xml')
                             # print ''
                             # print 'Changed nconfigs from ',nconf,' to ',thisnconf , ' in file:'
                             # print checkfile+'.xml'

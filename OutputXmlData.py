@@ -32,7 +32,7 @@ def CombineSetInfo(listin):
 
 def WriteXml(thisfile,outputdict):
     with open(thisfile+'.xml','w') as f:
-        f.write( xmltodict.unparse(Vals,pretty=True))
+        f.write( xmltodict.unparse(outputdict,pretty=True))
     
 
 def WriteXmlOutput(thisfile,outputdict):

@@ -6,6 +6,7 @@ from Params import *
 import sys
 from InputArgs import *
 from CheckXml import *
+from OutputXmlData import WriteXml
 
 
 
@@ -27,4 +28,4 @@ for imethod in feedin['method']:
         else:
             print nconf
         mkdir_p(outputdir+'/Nconfs')
-        WriteXml(outputdir+'/Nconfs/'+imethod+iset,nconfDict)
+        if len(nconfDict.keys()) > 0: WriteXml(outputdir+'/Nconfs/'+imethod+iset,{'Data':nconfDict})
