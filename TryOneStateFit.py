@@ -30,7 +30,6 @@ if len(sys.argv) < 2: raise IOError('Input CM, Tsink, JustPoF or REvec as first 
 outfile = sys.argv[1]
 
 feedin = InputParams(sys.argv[2:])
-DefWipeWarning()
 
 print 'Gamma Input (For re-running): -g=' , feedin['gamma']
 ReadGammaList = CreateGammaList(feedin['gamma'],twopt=True)

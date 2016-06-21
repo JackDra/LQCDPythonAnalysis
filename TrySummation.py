@@ -40,7 +40,6 @@ def FitSumWrap(thisGammaList,thisReadSetList,thisTSinkList,this2ptSetList,thisRe
 ReadSmearList = ['32']
 ReadTSinkList = [26,29,32,35,38]
 feedin = InputParams(sys.argv[1:])
-DefWipeWarning()
 
 thisGammaList = CreateGammaList(feedin['gamma'])
 

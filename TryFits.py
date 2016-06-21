@@ -55,7 +55,6 @@ def TryFitsFun(thisGammaList,thisSetList,thisReadMomList,thisTSinkList,thischunk
 
 
 feedin = InputParams(sys.argv[1:])
-DefWipeWarning()
 thisGammaList = CreateGammaList(feedin['gamma'])
 
 ShowSetLists(feedin['set'])

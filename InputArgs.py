@@ -51,6 +51,7 @@ def InputParams(inputparams):
     feedout['method'] = MethodList
     feedout['current'] = CurrOpps.keys()
     feedout['mom'] = RunMomList
+    SkipDefWipe = False
     for isys in inputparams:
         if isys[0] != '-':
             raise IOError("input arguments are specified with -, see -h for help")
@@ -118,5 +119,8 @@ def InputParams(inputparams):
             else:
                 print 'number of processors = ',thisAnaProc
                 feedout['anaproc'] = thisAnaProc
+        elif '-noprompt' in isys:
+            SkipDefWipe = True
+    if not SkipDefWipe: DefWipeWarning()
     return feedout
 

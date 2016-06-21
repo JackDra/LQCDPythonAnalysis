@@ -36,7 +36,6 @@ print '-------------------------------------------------------------------------
 if len(sys.argv) < 2: raise IOError('Input CM, Tsink or Sm as first arg')
 outfile = sys.argv[1]
 feedin = InputParams(sys.argv[2:])
-DefWipeWarning()
 
 print 'Gamma Input (For re-running): -g=' , feedin['gamma']
 ReadGammaList = CreateGammaList(feedin['gamma'],twopt=True)
@@ -236,7 +235,6 @@ for igamma in ReadGammaList:
             inputparams.append((ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],TSF2ptarray,twoptGammaMomList,[imom]))
     elif igamma.replace('doub','').replace('sing','') not in ReadGammaList:
         if DefWipe:
-            DefWipeWarning()
             QueMomList = feedin['mom']
         else:
             QueMomList = Check3ptAllSets([igamma],ReadSetList,thisMomList=feedin['mom'],CheckType='TSF'+outfile)

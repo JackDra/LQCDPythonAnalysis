@@ -15,7 +15,7 @@ from MiscFuns import *
 from MomParams import *
 from FFParams import *
 from ReadTxt import Get3ptSetMoms,Get2ptSetMoms
-from InputArgs import DefWipeWarning,InputParams
+from InputArgs import InputParams
 import copy
 from multiprocessing import Pool
 
@@ -178,7 +178,6 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
     sys.stderr = sys.__stderr__
     if 'TwoPt' not in RunType: print 'Three Point Analysis '+Curr + ' ' + RunType + ' tsinks: ' + ' '.join(RunTSinkList) + ' Added to jobs'
 
-DefWipeWarning()
 if len(sys.argv) < 2: raise IOError("input current type as first argument")
 print sys.argv[1]
 CurrIn = sys.argv[1]
