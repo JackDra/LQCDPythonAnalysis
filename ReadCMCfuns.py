@@ -119,7 +119,6 @@ def CheckAllSet(FilePrefix,directory,Interps):
                             testfile3pt = (directory.replace(CreateDir2pt(DefSmearList[0],DefSmearList[0]),
                                                              CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
                                            +FilePrefix+CreateEnd3pt(ism,jsm3pt,itsink,iDS,iProj,'D'))
-                            print testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
                             if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
     return True
                 
