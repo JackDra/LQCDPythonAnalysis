@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import matplotlib
-matplotlib.use('Agg') # Must be before importing matplotlib.pyplot or pylab!
+matplotlib.use('PDF') # Must be before importing matplotlib.pyplot or pylab!
 import matplotlib.pyplot as pl
 from Params import *
 import numpy as np
