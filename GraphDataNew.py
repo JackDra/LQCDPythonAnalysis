@@ -611,6 +611,7 @@ pl.xlabel(FFxlab)
 pl.ylabel(FFylab)
 pl.legend()
 pl.savefig('./debugging.pdf')
+pl.clf()
 
 
 FFylab = r'$ FF $'
@@ -619,4 +620,5 @@ pl.plot([1,2,3,4],[4,5,6,8],label='pie')
 pl.xlabel(FFxlab)
 pl.ylabel(FFylab)
 pl.legend()
-pl.savefig('./debugging.pdf')
+pl.savefig('./debugging2.pdf')
+pl.clf()
