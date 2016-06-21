@@ -15,6 +15,7 @@ import time
 def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=False):
     nconf = 10e16
     thisdir = outputdir
+    NconfDict = {}
     for CheckType in CheckList:
         # print 'Checking' , CheckType
         if 'RF' == CheckType: CheckType = ''
@@ -42,22 +43,24 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                         dump,checkfile = SetUpPDict(ip,gammadir,filename)
                         thisnconf = CheckNconfFile(checkfile+'.xml')
                         if 'File Missing' == thisnconf:
-                            return 'File Missing: ' + checkfile+'.xml'
+                            return 'File Missing: ' + checkfile+'.xml' , NconfDict
                         else:
-                            if thisnconf != nconf and 0< nconf < 1e10 and 0<thisnconf < 1e10:
-                                print ''
-                                print 'Changed nconfigs from ',nconf,' to ',thisnconf , ' in file:'
-                                print checkfile+'.xml'
-                                print ''
+                            if 'nconf'+str(thisnconf) not in NconfDict:
+                                NconfDict['nconf'+str(thisnconf)] = [checkfile+'.xml']
+                            else:
+                                NconfDict['nconf'+str(thisnconf)].append(checkfile+'.xml']
+                            # print ''
+                            # print 'Changed nconfigs from ',nconf,' to ',thisnconf , ' in file:'
+                            # print checkfile+'.xml'
+                            # print ''
                             # elif thisnconf > nconf and thisnconf < 1e10:
                             #     print ''
                             #     print 'Larger nconfigs from ',nconf,' compared to ',thisnconf , ' in file:'
                             #     print checkfile+'.xml'
                             #     print ''
-                            # nconf = min(nconf, thisnconf)
-                            nconf = thisnconf
+                            nconf = min(nconf, thisnconf),NconfDict
     print ' '*50
-    return nconf
+    return nconf,NconfDict
     
 
 ##Also works for cfuns##

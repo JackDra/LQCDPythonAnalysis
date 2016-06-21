@@ -30,6 +30,11 @@ def CombineSetInfo(listin):
             nconf = min(ismlist['nconfig'],nconf)
     return {'nconfig':nconf}
 
+def WriteXml(thisfile,outputdict):
+    with open(thisfile+'.xml','w') as f:
+        f.write( xmltodict.unparse(Vals,pretty=True))
+    
+
 def WriteXmlOutput(thisfile,outputdict):
     firstkey = outputdict.keys()[0]
     Vals = {firstkey:{'Values':outputdict[firstkey]['Values']}}
@@ -40,8 +45,7 @@ def WriteXmlOutput(thisfile,outputdict):
     bootout = '/'.join(outdirlist[:-1]+['boots']+[outdirlist[-1]])
     mkdir_p(bootdir)
     Vals[firstkey]['Boots'] = bootout+'.boot.p'
-    with open(thisfile+'.xml','w') as f:
-        f.write( xmltodict.unparse(Vals,pretty=True))
+    WriteXml(thisfile,Vals)
     with open( bootout+'.boot.p', "wb" ) as pfile:
         pickle.dump( Boots, pfile )
     
