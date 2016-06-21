@@ -2,6 +2,7 @@
 
 import matplotlib
 matplotlib.use('PDF') # Must be before importing matplotlib.pyplot or pylab!
+matplotlib.rc('text', usetex=True)
 import matplotlib.pyplot as pl
 from Params import *
 import numpy as np
