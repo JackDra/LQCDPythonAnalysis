@@ -611,3 +611,12 @@ pl.xlabel(FFxlab)
 pl.ylabel(FFylab)
 pl.legend()
 pl.savefig('./debugging.pdf')
+
+
+FFylab = r'$ FF $'
+FFxlab = r'$ q^{2} $'
+pl.plot([1,2,3,4],[4,5,6,8],label='pie')
+pl.xlabel(FFxlab)
+pl.ylabel(FFylab)
+pl.legend()
+pl.savefig('./debugging.pdf')
