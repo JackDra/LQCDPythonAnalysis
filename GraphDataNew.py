@@ -595,3 +595,10 @@ def PlotTSFLog(data,col,smear,norm):
     datadown = dataAvg-dataErr
     pl.fill_between(tdata,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
     pl.plot(tdata,dataAvg,color=col)
+
+
+##DEBUGGING##
+pl.plot([1,2,3,4],[4,5,6,8],label='pie')
+SetFFAxies()
+pl.show()
+pl.cfg()
