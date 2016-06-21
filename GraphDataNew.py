@@ -600,7 +600,7 @@
 ##DEBUGGING##
 
 import matplotlib
-matplotlib.use('PDF') # Must be before importing matplotlib.pyplot or pylab!
+# matplotlib.use('PDF') # Must be before importing matplotlib.pyplot or pylab!
 matplotlib.rc( {'usetex':True} )
 import matplotlib.pyplot as pl
 
