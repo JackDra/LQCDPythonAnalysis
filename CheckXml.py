@@ -44,7 +44,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                         if 'File Missing' == thisnconf:
                             return 'File Missing: ' + checkfile+'.xml'
                         else:
-                            if thisnconf <nconf and nconf < 1e10:
+                            if thisnconf != conf and nconf < 1e10 and thisncfon < 1e10:
                                 print ''
                                 print 'Changed nconfigs from ',nconf,' to ',thisnconf , ' in file:'
                                 print checkfile+'.xml'
@@ -54,7 +54,8 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                             #     print 'Larger nconfigs from ',nconf,' compared to ',thisnconf , ' in file:'
                             #     print checkfile+'.xml'
                             #     print ''
-                            nconf = min(nconf, thisnconf)
+                            # nconf = min(nconf, thisnconf)
+                            nconf = thisnconf
     print ' '*50
     return nconf
     
