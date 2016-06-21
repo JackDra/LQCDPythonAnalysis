@@ -10,12 +10,13 @@ from ReadXml import CheckMomFile,CheckNconfFile
 from OutputXmlData import SetUpPDict
 from SetLists import *
 from MiscFuns import *
+from collections import OrderedDict as OD
 import time
 
 def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=False):
     nconf = 10e16
     thisdir = outputdir
-    NconfDict = {}
+    NconfDict = OD()
     for CheckType in CheckList:
         # print 'Checking' , CheckType
         if 'RF' == CheckType: CheckType = ''
@@ -46,12 +47,8 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                             return 'File Missing: ' + checkfile+'.xml' , NconfDict
                         else:
                             if 'nconf'+str(thisnconf) not in NconfDict:
-                                NconfDict['nconf'+str(thisnconf)] = {}
-                            if igamma not in NconfDict['nconf'+str(thisnconf)].keys():
-                                NconfDict['nconf'+str(thisnconf)][igamma] = []
-                                    
-
-                            NconfDict['nconf'+str(thisnconf)][igamma].append(checkfile+'.xml')
+                                NconfDict['nconf'+str(thisnconf)] = OD()
+                            NconfDict['nconf'+str(thisnconf)].append(checkfile+'.xml')
                             # print ''
                             # print 'Changed nconfigs from ',nconf,' to ',thisnconf , ' in file:'
                             # print checkfile+'.xml'
