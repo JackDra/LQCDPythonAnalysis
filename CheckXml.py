@@ -46,9 +46,12 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                             return 'File Missing: ' + checkfile+'.xml' , NconfDict
                         else:
                             if 'nconf'+str(thisnconf) not in NconfDict:
-                                NconfDict['nconf'+str(thisnconf)] = [checkfile+'.xml']
-                            else:
-                                NconfDict['nconf'+str(thisnconf)].append(checkfile+'.xml')
+                                NconfDict['nconf'+str(thisnconf)] = {}
+                            if igamma not in NconfDict['nconf'+str(thisnconf)].keys():
+                                NconfDict['nconf'+str(thisnconf)][igamma] = []
+                                    
+
+                            NconfDict['nconf'+str(thisnconf)][igamma].append(checkfile+'.xml')
                             # print ''
                             # print 'Changed nconfigs from ',nconf,' to ',thisnconf , ' in file:'
                             # print checkfile+'.xml'
