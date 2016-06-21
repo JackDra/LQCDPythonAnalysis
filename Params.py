@@ -335,7 +335,7 @@ TSinkDictList = {'PoF' : PoFTSinkList+range(PoFTSinkList[-1],PoFTSinkList[-1]+1+
                  'REvec' : REvecTSinkList,
                  'CM' : CMTSinkList,
                  'cm' : CMTSinkList,
-                 'Tsink' : AllTSinkList
+                 'Tsink' : AllTSinkList,
                  'tsink' : AllTSinkListNoCM}
 
 
