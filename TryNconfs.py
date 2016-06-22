@@ -22,19 +22,15 @@ ShowSetLists(feedin['set'])
 
 ShowMethodList(feedin['method'])
 RedSetList = ReduceTooMassSet(feedin['set'])
-print RedSetList
 
 for imethod in feedin['method']:
-    print 'TSF' in imethod
     if 'TSF' in imethod:
         thisSetList = RedSetList
-    if 'SumMeth' in imethod:
+    elif 'SumMeth' in imethod:
         thisSetList = SingSmList
     else:
         thisSetList = feedin['set']
     for iset in thisSetList:
-        print 'DEBUG ' , iset
-        print ''
         nconf,nconfDict = CheckNconf(thisGammaList,[iset],thisMomList=feedin['mom'],CheckList=[imethod],minmax=minmax)
         if not isinstance(nconf, str):
             if nconf > 10e9 or nconf < 0:
