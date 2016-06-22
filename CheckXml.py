@@ -19,10 +19,11 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
     NconfDict = OD()
     for CheckType in CheckList:
         # print 'Checking' , CheckType
+        thisSetList = CheckSetList
         if 'RF' == CheckType: CheckType = ''
         if len(CheckType) > 0:
             CheckType += '/'
-            if any([itype in CheckType for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(CheckSetList)
+            if any([itype in CheckType for itype in ['SumMeth','TSF']]): thisSetList = ReduceTsink(CheckSetList)
             if cfuns: thisdir = outputdir + 'cfuns/'
         SFList = ['']
         if 'OSF' in CheckType:
@@ -30,7 +31,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
         if 'TSF' in CheckType:
             SFList = TwoStateParList['C3']
 
-        for iset in CheckSetList:
+        for iset in thisSetList:
             # print '    Checking', iset
             for iSF in SFList:
                 # if len(iSF) > 0: print '       Checking', iSF , ' '*50

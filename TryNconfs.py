@@ -25,7 +25,6 @@ RedSetList = ReduceTooMassSet(feedin['set'])
 
 for imethod in feedin['method']:
     if 'TSF' in imethod:
-        print 'DEBUG DOING RED SET LIST'
         thisSetList = RedSetList
     if 'SumMeth' in imethod:
         thisSetList = SingSmList
