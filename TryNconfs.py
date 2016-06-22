@@ -21,11 +21,10 @@ thisGammaList = CreateGammaList(feedin['gamma'])
 ShowSetLists(feedin['set'])
 
 ShowMethodList(feedin['method'])
-RedSetList = ReduceTooMassSet(feedin['set'])
 
 for imethod in feedin['method']:
     if 'TSF' in imethod:
-        thisSetList = RedSetList
+        thisSetList = ReduceTsink(feedin['set'],NoPoF=True)
     elif 'SumMeth' in imethod:
         thisSetList = SingSmList
     else:

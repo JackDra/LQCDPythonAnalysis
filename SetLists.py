@@ -210,15 +210,18 @@ def PickSmSet(SetList,Sm):
             ListOut.append(Sm)
     return ListOut
 
-def ReduceTsink(listin,NoCM=False,NoREvec=True):
+def ReduceTsink(listin,NoCM=False,NoREvec=True,NoPoF=False):
     listout = []
     for ilist in listin:
         tsinkstr,smstr = SplitTSinkString(ilist)
         if smstr not in listout:
             listout.append(smstr)
+    if NoPoF:
+        for i,ilo in enumerate(listout):
+            if 'PoF' in ilo:del listout[i]
     if NoCM:
         for i,ilo in enumerate(listout):
-            if 'state' in ilo:del listout[i]
+            if 'CM' in ilo:del listout[i]
     if NoREvec:
         for i,ilo in enumerate(listout):
             if 'REvec' in ilo:del listout[i]
