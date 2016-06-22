@@ -261,6 +261,7 @@ PickedStateStr = 'state'+str(PickedState)
 DefInterpList = ['nucleon']
 # DefInterpList = ['nucleon','nucleon2']
 DefSmList = ['sm'+ism for ism in DefSmearList]
+SingSmList = ['sm'+ism for ism in SingSmearList]
 DefInterpSmearList = ElongateName(DefInterpList,DefSmList)
 CMTSinkList = [29]
 AllTSinkList = [26,29,32,35,38]

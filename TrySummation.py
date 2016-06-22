@@ -37,14 +37,14 @@ def FitSumWrap(thisGammaList,thisReadSetList,thisTSinkList,this2ptSetList,thisRe
 
 
 # if len(sys.argv) < 2: raise IOError("Enter gamma matrix stuff (See OppFuns.py : CreateGammaList)")
-ReadSmearList = ['32']
-ReadTSinkList = [26,29,32,35,38]
 feedin = InputParams(sys.argv[1:])
+
+
 
 thisGammaList = CreateGammaList(feedin['gamma'])
 
 ParsTSinkList = []
-for ict,its in enumerate(ReadTSinkList):
+for ict,its in enumerate(AllTSinkList):
     if any(['tsink'+str(its) in rts for rts in feedin['set']]):
         ParsTSinkList.append(its)
 

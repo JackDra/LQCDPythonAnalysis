@@ -23,8 +23,10 @@ ShowMethodList(feedin['method'])
 RedSetList = ReduceTooMassSet(feedin['set'])
 
 for imethod in feedin['method']:
-    if 'TSF' in imethod or 'SumMeth' in imethod:
+    if 'TSF' in imethod:
         thisSetList = RedSetList
+    if 'SumMeth' in imethod:
+        thisSetList = SingSmList
     else:
         thisSetList = feedin['set']
     for iset in thisSetList:
