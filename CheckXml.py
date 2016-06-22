@@ -61,8 +61,10 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                             #     print ''
                             if minmax == 'min' or thisnconf > 10e10:
                                 nconf = min(nconf, thisnconf)
-                            elif minmax == 'max' :
+                            elif minmax == 'max' and nconf < 10e10:
                                 nconf = max(nconf, thisnconf)
+                            else:
+                                nconf = thisnconf
     print ' '*50
     return nconf,NconfDict
     
