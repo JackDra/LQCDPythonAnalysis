@@ -62,7 +62,7 @@ def CheckNconfFile(filein):
                 return Nconf
             elif '<nconfig>' in strpline and '</nconfig>' in strpline:
                 Nconf = min(Nconf,int(strpline.replace('<nconfig>','').replace('</nconfig>','')))
-    if Nconf > 10e10:
+    if Nconf > 10e10 or Nconf < 0:
         return 'depreciated'
     else:
         return Nconf
