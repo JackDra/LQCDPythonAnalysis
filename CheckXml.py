@@ -53,7 +53,6 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                         elif 'depreciated' == thisnconf:
                             if not any(igamma in inconf for inconf in NconfDict['Dep']):
                                 NconfDict['Dep'].append(igamma+' '+qstrTOqcond(pstr))
-                                
                         else:
                             thiskey = 'nconf'+str(thisnconf)
                             if thiskey not in NconfDict:
