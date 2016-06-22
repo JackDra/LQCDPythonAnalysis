@@ -33,7 +33,7 @@ for imethod in feedin['method']:
     for iset in thisSetList:
         nconf,nconfDict = CheckNconf(thisGammaList,[iset],thisMomList=feedin['mom'],CheckList=[imethod],minmax=minmax)
         if not isinstance(nconf, str):
-            print imethod, iset , 'Nconfs= ', nconf
+            print imethod, iset , 'Nconfs =', nconf
         else:
             print imethod, iset , nconf
         mkdir_p(outputdir+'/Nconfs')
