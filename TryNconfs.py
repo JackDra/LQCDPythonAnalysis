@@ -7,6 +7,7 @@ import sys
 from InputArgs import *
 from CheckXml import *
 from OutputXmlData import WriteXml
+from SetLists import ReduceTooMassSet
 
 minmax = 'max'
 if len(sys.argv) > 1:
@@ -24,6 +25,7 @@ RedSetList = ReduceTooMassSet(feedin['set'])
 
 for imethod in feedin['method']:
     if 'TSF' in imethod:
+        print 'DEBUG DOING RED SET LIST'
         thisSetList = RedSetList
     if 'SumMeth' in imethod:
         thisSetList = SingSmList
