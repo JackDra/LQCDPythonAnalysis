@@ -17,6 +17,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
     nconf = 10e16
     thisdir = outputdir
     NconfDict = OD()
+    NconfDict['Missing'] = []
     for CheckType in CheckList:
         # print 'Checking' , CheckType
         thisSetList = CheckSetList
@@ -45,7 +46,9 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                         dump,checkfile = SetUpPDict(ip,gammadir,filename)
                         thisnconf = CheckNconfFile(checkfile+'.xml')
                         if 'File Missing' == thisnconf:
-                            return 'File Missing: ' + checkfile+'.xml' , NconfDict
+                            if not any(igamma in inconf for inconf in NconfDict['Missing']):
+                                NconfDict['Missing'].append(igamma+' '+qstrTOqcond(pstr))
+                            # return 'File Missing: ' + checkfile+'.xml' , NconfDict
                         else:
                             thiskey = 'nconf'+str(thisnconf)
                             if thisnconf < 0:
