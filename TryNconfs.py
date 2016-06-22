@@ -31,6 +31,7 @@ for imethod in feedin['method']:
     else:
         thisSetList = feedin['set']
     for iset in thisSetList:
+        print 'DEBUG ' , iset
         nconf,nconfDict = CheckNconf(thisGammaList,[iset],thisMomList=feedin['mom'],CheckList=[imethod],minmax=minmax)
         if not isinstance(nconf, str):
             if nconf > 10e9 or nconf < 0:
