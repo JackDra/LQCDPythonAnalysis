@@ -49,7 +49,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                             if not any(igamma in inconf for inconf in NconfDict['Missing']):
                                 NconfDict['Missing'].append(igamma+' '+qstrTOqcond(pstr))
                             # return 'File Missing: ' + checkfile+'.xml' , NconfDict
-                        elif 'depreciated' in thisnconf:
+                        elif 'depreciated' == thisnconf:
                             if not any(igamma in inconf for inconf in NconfDict['Dep']):
                                 NconfDict['Dep'].append(igamma+' '+qstrTOqcond(pstr))
                                 
@@ -76,6 +76,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                                 elif minmax == 'max':
                                     nconf = max(nconf, thisnconf)
     print ' '*50
+    if nconf > 10e10: nconf = 'All files used depreciated code'
     return nconf,NconfDict
     
 
