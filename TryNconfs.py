@@ -25,7 +25,7 @@ for imethod in feedin['method']:
     for iset in feedin['set']:
         nconf,nconfDict = CheckNconf(thisGammaList,[iset],thisMomList=feedin['mom'],CheckList=[imethod],minmax=minmax)
         if not isinstance(nconf, str):
-            if nconf > 10e9:
+            if nconf > 10e9 or nconf < 0:
                 print imethod, iset ,'No nconfs in file (depreceated code)'
             else:
                 print imethod, iset , 'Nconfs=', nconf
