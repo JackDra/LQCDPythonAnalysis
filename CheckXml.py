@@ -59,7 +59,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                             #     print 'Larger nconfigs from ',nconf,' compared to ',thisnconf , ' in file:'
                             #     print checkfile+'.xml'
                             #     print ''
-                            nconf = min(nconf, thisnconf),NconfDict
+                            nconf = min(nconf, thisnconf)
     print ' '*50
     return nconf,NconfDict
     
