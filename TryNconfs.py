@@ -22,6 +22,7 @@ ShowSetLists(feedin['set'])
 
 ShowMethodList(feedin['method'])
 RedSetList = ReduceTooMassSet(feedin['set'])
+print RedSetList
 
 for imethod in feedin['method']:
     if 'TSF' in imethod:
