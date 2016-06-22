@@ -46,10 +46,13 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                         if 'File Missing' == thisnconf:
                             return 'File Missing: ' + checkfile+'.xml' , NconfDict
                         else:
-                            if 'nconf'+str(thisnconf) not in NconfDict:
-                                NconfDict['nconf'+str(thisnconf)] = []
-                            if not any(igamma in inconf for inconf in NconfDict['nconf'+str(thisnconf)]):
-                                NconfDict['nconf'+str(thisnconf)].append(igamma+' '+qstrTOqcond(pstr))
+                            thiskey = 'nconf'+str(thisnconf)
+                            if thisnconf < 0:
+                                thiskey = 'Dep'
+                            if thiskey not in NconfDict:
+                                NconfDict[thiskey] = []
+                            if not any(igamma in inconf for inconf in NconfDict[thiskey]):
+                                NconfDict[thiskey].append(igamma+' '+qstrTOqcond(pstr))
                             # print ''
                             # print 'Changed nconfigs from ',nconf,' to ',thisnconf , ' in file:'
                             # print checkfile+'.xml'
@@ -59,12 +62,13 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                             #     print 'Larger nconfigs from ',nconf,' compared to ',thisnconf , ' in file:'
                             #     print checkfile+'.xml'
                             #     print ''
-                            if minmax == 'min' or thisnconf > 10e10:
-                                nconf = min(nconf, thisnconf)
-                            elif minmax == 'max' and nconf < 10e10:
-                                nconf = max(nconf, thisnconf)
-                            else:
+                            if nconf > 10e10 :
                                 nconf = thisnconf
+                            elif thisnconf > 0:
+                                if minmax == 'min':
+                                    nconf = min(nconf, thisnconf)
+                                elif minmax == 'max':
+                                    nconf = max(nconf, thisnconf)
     print ' '*50
     return nconf,NconfDict
     
