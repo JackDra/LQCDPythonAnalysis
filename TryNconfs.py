@@ -38,6 +38,7 @@ for imethod in feedin['method']:
             else:
                 print imethod, iset , 'Nconfs=', nconf
         else:
+            print imethod, iset
             print nconf
         mkdir_p(outputdir+'/Nconfs')
         if len(nconfDict.keys()) > 0: WriteXml(outputdir+'/Nconfs/'+imethod+iset,{'Data':nconfDict})
