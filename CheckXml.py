@@ -49,10 +49,12 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                             if not any(igamma in inconf for inconf in NconfDict['Missing']):
                                 NconfDict['Missing'].append(igamma+' '+qstrTOqcond(pstr))
                             # return 'File Missing: ' + checkfile+'.xml' , NconfDict
+                        elif 'depreciated' in thisnconf:
+                            if not any(igamma in inconf for inconf in NconfDict['Dep']):
+                                NconfDict['Dep'].append(igamma+' '+qstrTOqcond(pstr))
+                                
                         else:
                             thiskey = 'nconf'+str(thisnconf)
-                            if thisnconf < 0:
-                                thiskey = 'Dep'
                             if thiskey not in NconfDict:
                                 NconfDict[thiskey] = []
                             if not any(igamma in inconf for inconf in NconfDict[thiskey]):

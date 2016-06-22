@@ -54,7 +54,7 @@ def CheckMomFile(filein):
 
 def CheckNconfFile(filein):
     if not os.path.isfile(filein): return 'File Missing'
-    Nconf = 10e16
+    Nconf = 10e17
     with open(filein,'r') as thisfile:
         for line in thisfile:
             strpline = line.strip()
@@ -62,7 +62,10 @@ def CheckNconfFile(filein):
                 return Nconf
             elif '<nconfig>' in strpline and '</nconfig>' in strpline:
                 Nconf = min(Nconf,int(strpline.replace('<nconfig>','').replace('</nconfig>','')))
-    return Nconf
+    if Nconf > 10e10:
+        return 'depreciated'
+    else:
+        return Nconf
                     
 
 ##Also works for cfuns##
