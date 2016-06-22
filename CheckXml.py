@@ -18,6 +18,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
     thisdir = outputdir
     NconfDict = OD()
     NconfDict['Missing'] = []
+    NconfDict['Dep'] = []
     for CheckType in CheckList:
         # print 'Checking' , CheckType
         thisSetList = CheckSetList
