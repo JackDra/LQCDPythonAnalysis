@@ -13,7 +13,7 @@ from MiscFuns import *
 from collections import OrderedDict as OD
 import time
 
-def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=False):
+def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=False,minmax='min'):
     nconf = 10e16
     thisdir = outputdir
     NconfDict = OD()
@@ -49,7 +49,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                             if 'nconf'+str(thisnconf) not in NconfDict:
                                 NconfDict['nconf'+str(thisnconf)] = []
                             if not any(igamma in inconf for inconf in NconfDict['nconf'+str(thisnconf)]):
-                                NconfDict['nconf'+str(thisnconf)].append(igamma+' '+qstrTOqcond(pstr)) 
+                                NconfDict['nconf'+str(thisnconf)].append(igamma+' '+qstrTOqcond(pstr))
                             # print ''
                             # print 'Changed nconfigs from ',nconf,' to ',thisnconf , ' in file:'
                             # print checkfile+'.xml'
@@ -59,7 +59,10 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                             #     print 'Larger nconfigs from ',nconf,' compared to ',thisnconf , ' in file:'
                             #     print checkfile+'.xml'
                             #     print ''
-                            nconf = min(nconf, thisnconf)
+                            if minmax == 'min' or thisnconf > 10e10:
+                                nconf = min(nconf, thisnconf)
+                            elif minmax == 'max' :
+                                nconf = max(nconf, thisnconf)
     print ' '*50
     return nconf,NconfDict
     

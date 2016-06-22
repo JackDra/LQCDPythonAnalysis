@@ -8,8 +8,11 @@ from InputArgs import *
 from CheckXml import *
 from OutputXmlData import WriteXml
 
-
-
+minmax = 'max'
+if sys.argv[1] == 'min' or sys.argv[1] == 'max':
+    minmax = sys.argv[1]
+    sys.argv = sys.argv[0] + sys.argv[2:]
+        
 feedin = InputParams(sys.argv[1:] + ['-noprompt'])
 thisGammaList = CreateGammaList(feedin['gamma'])
 
