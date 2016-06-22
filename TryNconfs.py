@@ -20,9 +20,14 @@ thisGammaList = CreateGammaList(feedin['gamma'])
 ShowSetLists(feedin['set'])
 
 ShowMethodList(feedin['method'])
+RedSetList = ReduceTooMassSet(feedin['set'])
 
 for imethod in feedin['method']:
-    for iset in feedin['set']:
+    if 'TSF' in imethod or 'SumMeth' in imethod:
+        thisSetList = RedSetList
+    else:
+        thisSetList = feedin['set']
+    for iset in thisSetList:
         nconf,nconfDict = CheckNconf(thisGammaList,[iset],thisMomList=feedin['mom'],CheckList=[imethod],minmax=minmax)
         if not isinstance(nconf, str):
             if nconf > 10e9 or nconf < 0:
