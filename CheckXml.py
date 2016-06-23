@@ -131,16 +131,9 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
             outlist[igamma][iset] = []
             for pstr in GetMomFromGamma(igamma,thisMomList=thisMomList):
                 ip = qstrTOqcond(pstr)
-                if ('doub' not in igamma) and ('sing' not in igamma):
-                    CheckBool = True
-                    for dsgamma in ['doub'+igamma,'sing'+igamma]:
-                        filename = iset+dsgamma
-                        gammadir = thisdir+CreateOppDir(dsgamma)+'/' + CheckType
-                        CheckBool = CheckBool and all([CheckMomFile(SetUpPDict(ip,gammadir,filename+iSF)[1]+'.xml',nconftest=thisNconf) for iSF in SFList])
-                else:
-                    filename = iset+igamma
-                    gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
-                    CheckBool = all([CheckMomFile(SetUpPDict(ip,gammadir,filename+iSF)[1]+'.xml',nconftest=thisNconf) for iSF in SFList])
+                filename = iset+igamma
+                gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
+                CheckBool = all([CheckMomFile(SetUpPDict(ip,gammadir,filename+iSF)[1]+'.xml',nconftest=thisNconf) for iSF in SFList])
                 if not CheckBool:
                     outlist[igamma][iset].append(pstr)
     if len(thisGammaList) < 5:
