@@ -68,7 +68,7 @@ for igamma in thisGammaList:
             if DefWipe:
                 thisMomList = feedin['mom']
             else:
-                thisMomList = Check3ptArray([igamma],[iSet],thisMomList=feedin['mom'],CheckType='Fits',printout=False)
+                thisMomList = Check3ptArray([igamma],[iSet],thisMomList=feedin['mom'],CheckType='Fits',printout=False,thisNconf=975)
                 thisMomList = thisMomList[igamma][iSet]
             for imom in thisMomList:
                 # print 'adding to que: ' , igamma , iSet , imom
