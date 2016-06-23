@@ -78,7 +78,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                                 elif minmax == 'max':
                                     nconf = max(nconf, thisnconf)
     print ' '*50
-    if ExistsDep:
+    if existsDep:
         nconf = 'Depreciated code results'
     elif nconf > 10e10:
         nconf = 'No Files Found'
