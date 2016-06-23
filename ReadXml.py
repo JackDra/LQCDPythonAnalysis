@@ -64,7 +64,7 @@ def CheckNconfFile(filein):
 
 def CheckMomFile(filein,nconftest = False):
     if nconftest != False:
-        if nconftest == CheckNconf(filein):
+        if nconftest == CheckNconfFile(filein):
             return True
         else:
             return False
