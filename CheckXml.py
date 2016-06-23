@@ -141,7 +141,6 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
                     filename = iset+igamma
                     gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
                     CheckBool = all([CheckMomFile(SetUpPDict(ip,gammadir,filename+iSF)[1]+'.xml',nconftest=thisNconf) for iSF in SFList])
-                print igamma, iset , pstr , not CheckBool
                 if not CheckBool:
                     outlist[igamma][iset].append(pstr)
     if len(thisGammaList) < 5:
@@ -161,7 +160,9 @@ def Check3ptAllSets(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='
         for setlist in outlist[igamma].itervalues():
             for ip in setlist:
                 outnoset[igamma].append(ip)
+        print igamma , outnoset[igamma]
         outnoset[igamma] = OrderMomList(outnoset[igamma])
+
     return outnoset
             
         
