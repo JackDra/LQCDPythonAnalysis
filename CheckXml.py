@@ -131,7 +131,6 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
             outlist[igamma][iset] = []
             for pstr in GetMomFromGamma(igamma,thisMomList=thisMomList):
                 ip = qstrTOqcond(pstr)
-                print igamma , iset , pstr
                 if ('doub' not in igamma) and ('sing' not in igamma):
                     CheckBool = True
                     for dsgamma in ['doub'+igamma,'sing'+igamma]:
