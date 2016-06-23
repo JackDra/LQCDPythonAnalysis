@@ -63,6 +63,7 @@ def CheckNconfFile(filein):
 
 
 def CheckMomFile(filein,nconftest = False):
+    print 'Checking ' , filein
     if nconftest != False:
         if nconftest == CheckNconf(filein):
             return True
