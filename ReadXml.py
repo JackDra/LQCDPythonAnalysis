@@ -46,6 +46,7 @@ def ReadXmlAndPickle(filein):
 
 def CheckNconfFile(filein):
     if not os.path.isfile(filein): return 'File Missing'
+    mprint('reading: ' + filein)
     Nconf = 10e17
     with open(filein,'r') as thisfile:
         for line in thisfile:
