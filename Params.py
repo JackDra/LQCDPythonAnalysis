@@ -275,6 +275,8 @@ AllTSinkListVar = [26,27,29,32,35,38]
 AllTSinkShift = [it-tsource for it in AllTSinkList]
 AllTSinkStrList = ['tsink'+str(its) for its in AllTSinkList]
 AllTSinkStrListVar = ['tsink'+str(its) for its in AllTSinkListVar]
+CMTSinkStrList = ['tsink'+str(its) for its in CMTSinkList]
+AllTSinkStrListNoCM = ['tsink'+str(its) for its in AllTSinkListNoCM]
 
 # AllREvecTSinkList = {'12104':[29],'12090':[26,32]}
 AllREvecTSinkList = {'12104':[29],'12090':[]}
@@ -282,6 +284,8 @@ REvecTSinkList = AllREvecTSinkList[str(kappa)]
 REvecTSinkStrList = ['tsink'+str(its) for its in REvecTSinkList]
 DefREvecVarList = [18,2]
 REvecTvarList = ['REvecto'+str(DefREvecVarList[0])+'dt'+str(DefREvecVarList[1])]
+REvecFlagList = [PickedStateStr+iREvec for iREvec in REvecTvarList]
+
 # REvecTvarList = []
 DefPoFVarList = [17,2]
 AllPoFTSinkList = {'12104':[],'12090':[26,27]}
@@ -295,6 +299,9 @@ PoFTSinkStrList = ['tsink'+str(its) for its in PoFTSinkList]
 PoFTvarList = ['PoF'+str(PoFShifts)+'to'+str(DefPoFVarList[0])+'dt'+str(DefPoFVarList[1])]
 PoFDirTvarList = ['PoFto'+str(DefPoFVarList[0]-1)+'dt'+str(DefPoFVarList[1])]
 PoFReadTvarList = ['PoFto'+str(DefPoFVarList[0]-1)+'dt'+str(DefPoFVarList[1])+'nD'+str(PoFShifts)]
+
+PoFFlagList = [PickedStateStr+iPoF for iPoF in PoFTvarList]
+
 
 # REvecPar26 = [[ 0.0004799, -0.0119381, 0.9999286 ],[0,0,0],[0,0,0]]
 # REvecPar32 = [[ 0.0007567612, -0.0182265391, 0.9998335964],[0,0,0],[0,0,0]]
@@ -334,7 +341,7 @@ def mprint(*string):
         if not DoMulticore: print ' '.join(map(str,list(string)))
         
 
-TSinkDictList = {'PoF' : PoFTSinkList+range(PoFTSinkList[-1],PoFTSinkList[-1]+1+PoFShifts),
+TSinkDictList = {'PoF' : PoFTSinkList+range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts),
                  'REvec' : REvecTSinkList,
                  'CM' : CMTSinkList,
                  'cm' : CMTSinkList,
@@ -342,9 +349,18 @@ TSinkDictList = {'PoF' : PoFTSinkList+range(PoFTSinkList[-1],PoFTSinkList[-1]+1+
                  'tsink' : AllTSinkListNoCM}
 
 
-SmearDictList = {'PoF' : DefSmearList,
-                 'REvec' : DefSmearList,
-                 'CM' : DefSmearList,
-                 'cm' : DefSmearList,
-                 'Tsink' : SingSmearList,
-                 'tsink' : SingSmearList}
+TSinkStrDictList = {'PoF' : PoFTSinkStrList+['tsink'+str(its) for its in range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)],
+                 'REvec' : REvecTSinkStrList,
+                 'CM' : CMTSinkStrList,
+                 'cm' : CMTSinkStrList,
+                 'Tsink' : AllTSinkStrList,
+                 'tsink' : AllTSinkStrListNoCM}
+
+
+
+SmearDictList = {'PoF' : PoFFlagList,
+                 'REvec' : REvecFlagList,
+                 'CM' : DefSmList,
+                 'cm' : DefSmList,
+                 'Tsink' : SingSmList,
+                 'tsink' : SingSmList}

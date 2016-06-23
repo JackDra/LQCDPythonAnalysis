@@ -262,6 +262,28 @@ def PickSetForMethod(thismethod,thisSetList):
         for itsink in AllTSinkStrList:
             if itsink+SingSmList[0] in thisSetList:
                 outSetList.append(itsink+SingSmList[0])
+    elif 'CM' in thismethod:
+        outSetList = []
+        for iset in thisSetList:
+            for ikey in ['CM','PoF']:
+                for itsink in TSinkStrDictList[ikey]:
+                    for ism in SmearDictList[ikey]:
+                        if itsink+ism in iset:
+                            outSetList.append(iset)
+    elif 'PoF' in thismethod:
+        outSetList = []
+        for iset in thisSetList:
+            ikey = 'PoF'
+            for itsink in TSinkStrDictList[ikey]:
+                for ism in SmearDictList[ikey]:
+                    if itsink+ism in iset:
+                        outSetList.append(iset)
+    elif 'REvec' in thismethod:
+        ikey = 'REvec'
+        for itsink in TSinkStrDictList[ikey]:
+            for ism in SmearDictList[ikey]:
+                if itsink+ism in iset:
+                    outSetList.append(iset)
     if 'TSF' in thismethod:
         outSetList = ReduceTsink(outSetList,NoPoF=True)
     elif 'SumMeth' in thismethod:
