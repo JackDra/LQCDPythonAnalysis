@@ -115,6 +115,7 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
     CheckSetList,thisdir = thisSetList,outputdir
     totstart = time.time()
     outlist = {}
+    print 'DEBUG'
     if len(CheckType) > 0:
         CheckType += '/'
         # if any([itype in CheckType for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(thisSetList)
@@ -136,7 +137,6 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
                     for dsgamma in ['doub'+igamma,'sing'+igamma]:
                         filename = iset+dsgamma
                         gammadir = thisdir+CreateOppDir(dsgamma)+'/' + CheckType
-                        print 'DEBUG'
                         CheckBool = CheckBool and all([CheckMomFile(SetUpPDict(ip,gammadir,filename+iSF)[1]+'.xml',nconftest=thisNconf) for iSF in SFList])
                 else:
                     filename = iset+igamma
