@@ -68,7 +68,7 @@ for igamma in thisGammaList:
             if DefWipe:
                 thisMomList = feedin['mom']
             else:
-                thisMomList = Check3ptArray(['doub'+igamma,'sing'+igamma,igamma],[iSet],thisMomList=feedin['mom'],CheckType='Fits',printout=False)
+                thisMomList = Check3ptArray([igamma],[iSet],thisMomList=feedin['mom'],CheckType='Fits',printout=False)
                 thisMomList = thisMomList[igamma][iSet]
             for imom in thisMomList:
                 # print 'adding to que: ' , igamma , iSet , imom
@@ -89,12 +89,13 @@ if len(inputparams) > 0:
         output = []
         for icount,iin in enumerate(inputparams):
             output.append(TryFitsFun(*iin))
-            print int((icount*100)/float(len(inputparams))) , '% done'
+            print int((icount*100)/float(len(inputparams))) , '% done' + ' '*50 + '\r',
 else:
     print 'nothing to calculate'        
     output = []
     
 # WipeSet(outputdir,RunGammaList,feedin['set'],filepref='Fits/')
+print 'Done Fits ' + ' '*50
 for iout in output:
     PrintFitSetToFile(*iout)
 

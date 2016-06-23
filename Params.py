@@ -98,7 +98,7 @@ DebugCM = False # for debugging Correlation Matrix stuff
 ShowConfNum = False # debugging, show number of configs during read
 PrintRead = not DoMulticore # Screws up output if on and doing mulitcore reading
 DoCmplx = True # reads complex opperator values as well as real values, should be on
-DefWipe = True # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
+DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
 Doeigh = True # variational method, uses a symetrix matrix solver.
 
 

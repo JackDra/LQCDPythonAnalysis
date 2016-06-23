@@ -44,14 +44,6 @@ def ReadXmlAndPickle(filein):
                 xmldata[firstkey[0]]['Info'] = {'nconfig':-1}
     return xmldata,bootfile
 
-def CheckMomFile(filein):
-    if not os.path.isfile(filein): return False
-    if not DoContentsCheck: return True
-    xmldata,bootfile = ReadXmlDict(filein)
-    if GetqcondFromFilename(filein) in xmldata.keys()[0]: return True
-    return False
-
-
 def CheckNconfFile(filein):
     if not os.path.isfile(filein): return 'File Missing'
     Nconf = 10e17
@@ -67,6 +59,24 @@ def CheckNconfFile(filein):
         return 'depreciated'
     else:
         return Nconf
+
+
+def CheckMomFile(filein,nconftest = False):
+    if nconftest != False:
+        if nconftest == CheckNconf(filein):
+            return True
+        else:
+            return False
+    else:
+        if not os.path.isfile(filein): return False
+        if not DoContentsCheck: return True
+        xmldata,bootfile = ReadXmlDict(filein)
+        if GetqcondFromFilename(filein) in xmldata.keys()[0]:
+            return True
+        else:
+            return False
+
+
                     
 
 ##Also works for cfuns##

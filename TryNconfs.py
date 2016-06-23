@@ -22,13 +22,23 @@ ShowSetLists(feedin['set'])
 
 ShowMethodList(feedin['method'])
 
-for imethod in feedin['method']:
-    if 'TSF' in imethod:
-        thisSetList = ReduceTsink(feedin['set'],NoPoF=True)
-    elif 'SumMeth' in imethod:
-        thisSetList = SingSmList
+def PickSetForMethod(thismethod,thisSetList):
+    if 'Tsink' in thismethod:
+        outSetList = []
+        for itsink in AllTSinkStrList:
+            if itsink+SingSmList[0] in thisSetList:
+                outSetList.append(itsink+SingSmList[0])
+    ##HERE NOT DONE##
+    if 'TSF' in thismethod:
+        outSetList = ReduceTsink(outSetList,NoPoF=True)
+    elif 'SumMeth' in thismethod:
+        outSetList = SingSmList
     else:
-        thisSetList = feedin['set']
+        outSetList = thisSetList
+    
+
+for imethod in feedin['method']:
+    PickSetForMethod(thismethod,feedin['set']
     for iset in thisSetList:
         nconf,nconfDict = CheckNconf(thisGammaList,[iset],thisMomList=feedin['mom'],CheckList=[imethod],minmax=minmax)
         if not isinstance(nconf, str):
