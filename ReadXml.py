@@ -64,9 +64,10 @@ def CheckNconfFile(filein):
 
 def CheckMomFile(filein,nconftest = False):
     if nconftest != False:
-        print 'Debuging' , filein
-        print CheckNconfFile(filein)
-        if nconftest == CheckNconfFile(filein):
+        filenconf = CheckNconfFile(filein)
+        mprint(filein)
+        mprint('has nconf = ' + filenconf
+        if nconftest == filenconf:
             return True
         else:
             return False
