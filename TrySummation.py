@@ -65,7 +65,6 @@ for igamma in thisGammaList:
         if DefWipe:
             QueMomList = feedin['mom']
         else:
-            print igamma
             QueMomList = Check3ptAllSets([igamma],thisReadSetList,thisMomList=feedin['mom'],CheckType='SumMeth')
             QueMomList = QueMomList[igamma]
         for imom in QueMomList:
