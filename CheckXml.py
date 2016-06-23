@@ -117,7 +117,7 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
     outlist = {}
     if len(CheckType) > 0:
         CheckType += '/'
-        # if any([itype in CheckType for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(thisSetList)
+        if any([itype in CheckType for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(thisSetList)
         if cfuns: thisdir = outputdir + 'cfuns/'
     SFList = ['']
     if 'OSF' in CheckType:
