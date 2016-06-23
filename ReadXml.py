@@ -57,7 +57,7 @@ def CheckNconfFile(filein):
                 thisNconf = int(strpline.replace('<nconfig>','').replace('</nconfig>',''))
                 if thisNconf > 0: Nconf = min(Nconf,thisNconf)
     if Nconf > 10e10 or Nconf < 0:
-        return 'depreciated'
+        return 'Dep'
     else:
         return Nconf
 

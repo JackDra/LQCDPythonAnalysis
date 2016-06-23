@@ -253,7 +253,25 @@ def ReduceTooMassSet(thisSetList):
     for ic,ism in enumerate(notsinkList):
         if 'REvec' in ism: del notsinkList[ic]
     return notsinkList
-    
+
+
+def PickSetForMethod(thismethod,thisSetList):
+    outSetList = thisSetList
+    if 'Tsink' in thismethod or 'SmallSet' in thismethod or 'test32' in thismethod:
+        outSetList = []
+        for itsink in AllTSinkStrList:
+            if itsink+SingSmList[0] in thisSetList:
+                outSetList.append(itsink+SingSmList[0])
+    if 'TSF' in thismethod:
+        outSetList = ReduceTsink(outSetList,NoPoF=True)
+    elif 'SumMeth' in thismethod:
+        outSetList = SingSmList
+    return outSetList
+                
+
+
+
+
 if kappa == 12090:
     DefSetCol = CreateSet()
 elif kappa == 12104:

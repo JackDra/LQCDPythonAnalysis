@@ -7,7 +7,7 @@ import sys
 from InputArgs import *
 from CheckXml import *
 from OutputXmlData import WriteXml
-from SetLists import ReduceTooMassSet
+from SetLists import PickSetForMethod
 
 minmax = 'max'
 if len(sys.argv) > 1:
@@ -22,23 +22,9 @@ ShowSetLists(feedin['set'])
 
 ShowMethodList(feedin['method'])
 
-def PickSetForMethod(thismethod,thisSetList):
-    if 'Tsink' in thismethod:
-        outSetList = []
-        for itsink in AllTSinkStrList:
-            if itsink+SingSmList[0] in thisSetList:
-                outSetList.append(itsink+SingSmList[0])
-    ##HERE NOT DONE##
-    if 'TSF' in thismethod:
-        outSetList = ReduceTsink(outSetList,NoPoF=True)
-    elif 'SumMeth' in thismethod:
-        outSetList = SingSmList
-    else:
-        outSetList = thisSetList
-    
 
 for imethod in feedin['method']:
-    PickSetForMethod(thismethod,feedin['set']
+    thisSetList = PickSetForMethod(imethod,feedin['set'])
     for iset in thisSetList:
         nconf,nconfDict = CheckNconf(thisGammaList,[iset],thisMomList=feedin['mom'],CheckList=[imethod],minmax=minmax)
         if not isinstance(nconf, str):

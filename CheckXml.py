@@ -33,6 +33,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
         if 'TSF' in CheckType:
             SFList = TwoStateParList['C3']
 
+        existsDep = False
         for iset in thisSetList:
             # print '    Checking', iset
             for iSF in SFList:
@@ -50,7 +51,8 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                             if not any(igamma in inconf for inconf in NconfDict['Missing']):
                                 NconfDict['Missing'].append(igamma+' '+qstrTOqcond(pstr))
                             # return 'File Missing: ' + checkfile+'.xml' , NconfDict
-                        elif 'depreciated' == thisnconf:
+                        elif 'Dep' == thisnconf:
+                            existsDep = True
                             if not any(igamma in inconf for inconf in NconfDict['Dep']):
                                 NconfDict['Dep'].append(igamma+' '+qstrTOqcond(pstr))
                         else:
@@ -76,7 +78,10 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                                 elif minmax == 'max':
                                     nconf = max(nconf, thisnconf)
     print ' '*50
-    if nconf > 10e10: nconf = 'All files used depreciated code'
+    if ExistsDep:
+        nconf = 'Depreciated code results'
+    elif nconf > 10e10:
+        nconf = 'No Files Found'
     return nconf,NconfDict
     
 
