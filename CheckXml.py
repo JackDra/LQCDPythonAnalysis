@@ -115,7 +115,6 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
     CheckSetList,thisdir = thisSetList,outputdir
     totstart = time.time()
     outlist = {}
-    print 'DEBUG'
     if len(CheckType) > 0:
         CheckType += '/'
         # if any([itype in CheckType for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(thisSetList)
@@ -132,6 +131,7 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
             outlist[igamma][iset] = []
             for pstr in GetMomFromGamma(igamma,thisMomList=thisMomList):
                 ip = qstrTOqcond(pstr)
+                print igamma , iset , pstr
                 if ('doub' not in igamma) and ('sing' not in igamma):
                     CheckBool = True
                     for dsgamma in ['doub'+igamma,'sing'+igamma]:
