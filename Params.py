@@ -74,6 +74,8 @@ with open('./setup.cfg','r') as f:
                     PoFShifts = int(thisline)
                 elif 'kappa' in thisread:
                     kappa = int(thisline)
+                elif 'Nconfs' in thisread:
+                    RunNconfs = int(thisline)
                 
 
         

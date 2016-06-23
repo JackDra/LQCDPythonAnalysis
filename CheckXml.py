@@ -111,7 +111,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
 
 
 ## list of booleans corresponding to what needs to be done relative to list thisMomList
-def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',cfuns=False,printout=True,thisNconf = False):
+def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',cfuns=False,printout=True,thisNconf = Nconfs):
     CheckSetList,thisdir = thisSetList,outputdir
     totstart = time.time()
     outlist = {}
@@ -144,7 +144,7 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
                 
 
 ## list of booleans corresponding to what needs to be done relative to list thisMomList
-def Check3ptAllSets(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',cfuns=False,printout=True,thisNconf = False):
+def Check3ptAllSets(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',cfuns=False,printout=True,thisNconf = Nconfs):
     outlist = Check3ptArray(thisGammaList,thisSetList,thisMomList=thisMomList,CheckType=CheckType,cfuns=cfuns,printout = printout,thisNconf=thisNconf)
     CheckSetList = thisSetList
     outnoset = {}
