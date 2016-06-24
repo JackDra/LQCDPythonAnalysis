@@ -24,7 +24,7 @@ print 'SetLists:\n','\n'.join(feedin['set']) + '\n'
 # print 'MomList:\n','\n'.join(feedin['mom']) + '\n'
 if 'RF' in feedin['method']: feedin['method'].remove('RF')
 
-if DoMulticore:
+if DoMulticore and feedin['anaproc'] > 1:
     inputparams = []
     for igamma in thisGammaList:
         inputparams.append((feedin['method'],[igamma,'twopt'],feedin['set'],feedin['mom']))

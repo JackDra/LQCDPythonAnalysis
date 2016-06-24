@@ -89,7 +89,7 @@ for thisCurr in feedin['current']:
                 inputparams.append(([imeth],thisCurr,[iSet],thisGammaList))
             
 tottime = time.time()
-if DoMulticore:
+if DoMulticore and feedin['anaproc'] > 1:
     makeContextFunctions(DoFF)
     thisPool = Pool(min(feedin['anaproc'],len(inputparams)))
     thisPool.map(DoFF.mapper,inputparams)

@@ -147,7 +147,7 @@ else:
     #     feedin['method'] = ['RF']
     print 'MethodList:\n' + '\n'.join(feedin['method'])
     print 'thisSetList:\n' + '\n'.join(feedin['set'])
-    if DoMulticore and len(thisGammaList) > 1:
+    if DoMulticore and len(thisGammaList) > 1 and feedin['anaproc'] > 1:
         inputparams = []
         for igamma in thisGammaList:
             if any([idst in igamma for idst in ['doub','sing','twopt']]): continue
