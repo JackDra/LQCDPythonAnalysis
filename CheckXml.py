@@ -93,10 +93,9 @@ def CheckNconf(inputGammaList,CheckSetList,thisMomList=RunMomList,CheckList=['']
 
     if ('twopt' in inputGammaList or 'Mass' in inputGammaList) and not any(icheck in CheckList for icheck in ['RF','Fits','SumMeth']):
         massnconf,MassNconfDict = CheckNconfMass(CheckSetList,thisMomList=thisMomList,CheckList=CheckList,minmax=minmax)
-        thisGammaList = list(inputGammaList)
     else:
         massnconf = False
-        thisGammaList=inputGammaList
+    thisGammaList = list(inputGammaList)
     if 'twopt' in thisGammaList: thisGammaList.remove('twopt')
     if 'Mass' in thisGammaList: thisGammaList.remove('Mass')
         
@@ -160,7 +159,6 @@ def CheckNconf(inputGammaList,CheckSetList,thisMomList=RunMomList,CheckList=['']
                                 elif minmax == 'max':
                                     nconf = max(nconf, thisnconf)
     print ' '*50
-    if Debug: print nconf
     if massnconf != False:
         if minmax == 'min':
             nconf = min(nconf, massnconf)
