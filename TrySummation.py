@@ -65,7 +65,7 @@ for igamma in thisGammaList:
         if DefWipe:
             QueMomList = feedin['mom']
         else:
-            QueMomList = Check3ptAllSets([igamma],thisReadSetList,thisMomList=feedin['mom'],CheckType='SumMeth')
+            QueMomList = Check3ptAllSets(parsegammalist,thisReadSetList,thisMomList=feedin['mom'],CheckType='SumMeth')
             QueMomList = QueMomList[igamma]
         for imom in QueMomList:
             print 'adding to que: ' , igamma , imom 
