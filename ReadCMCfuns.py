@@ -82,7 +82,7 @@ def CreateEnd2pt(ism,jsm,iterp,jterp):
     if iterp == jterp: return '.t'+str(tsource)+'sm'+ism+'k'+str(kappa)+'.ifmssi'+jsm+'.'+iterp+'.u.2cf'
     else: return '.t'+str(tsource)+'sm'+ism+'k'+str(kappa)+'.ifmssi'+jsm+'.'+iterp+'_'+jterp+'.u.2cf'
 
-def CreateDir3pt(ism,jsm,Tsink,DS,Proj,Flag):
+def CreateDir3pt(ism,jsm,Tsink,DS,Proj,Flag):    
     return Flag+'sm'+ism+jsm+Proj+'t'+str(Tsink)+'p000.'+DS
 
 def CreateDir2pt(ism,jsm):
@@ -96,8 +96,7 @@ def CheckAllSet(FilePrefix,directory,Interps):
                            +FilePrefix+CreateEnd2pt(ism,jsm,iterp,jterp))
             if Debug: print 'Checking ' ,testfile2pt
             if not os.path.isfile(testfile2pt): return False
-    if Debug: print iFlag
-    for iFlag in ['PoF','REvec','cm','tsink']:
+    for iFlag in ['PoFRead','REvecRead','CMRead','TsinkRead']:
         for iterp,ism in Elongate(Interps,SmearDictList[iFlag]):
             for itsink in TSinkDictList[iFlag]:
                 thisFlag = iFlag

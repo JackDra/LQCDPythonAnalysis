@@ -342,25 +342,31 @@ def mprint(*string):
         
 
 TSinkDictList = {'PoF' : PoFTSinkList+range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts),
+                 'PoFRead' : PoFTSinkList+range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts),
                  'REvec' : REvecTSinkList,
+                 'REvecRead' : REvecTSinkList,
                  'CM' : CMTSinkList,
-                 'cm' : CMTSinkList,
+                 'CMRead' : CMTSinkList,
                  'Tsink' : AllTSinkList,
-                 'tsink' : AllTSinkListNoCM}
+                 'TsinkRead' : AllTSinkListNoCM}
 
 
 TSinkStrDictList = {'PoF' : PoFTSinkStrList+['tsink'+str(its) for its in range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)],
-                 'REvec' : REvecTSinkStrList,
-                 'CM' : CMTSinkStrList,
-                 'cm' : CMTSinkStrList,
-                 'Tsink' : AllTSinkStrList,
-                 'tsink' : AllTSinkStrListNoCM}
+                    'PoFRead' : PoFTSinkStrList+['tsink'+str(its) for its in range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)],
+                    'REvec' : REvecTSinkStrList,
+                    'REvecRead' : REvecTSinkStrList,
+                    'CM' : CMTSinkStrList,
+                    'CMRead' : CMTSinkStrList,
+                    'Tsink' : AllTSinkStrList,
+                    'TsinkRead' : AllTSinkStrListNoCM}
 
 
 
 SmearDictList = {'PoF' : PoFFlagList,
+                 'PoFRead' : DefSmearList,
                  'REvec' : REvecFlagList,
+                 'REvecRead' : DefSmearList,
                  'CM' : DefSmList,
-                 'cm' : DefSmList,
+                 'CMRead' : DefSmearList,
                  'Tsink' : SingSmList,
-                 'tsink' : SingSmList}
+                 'TsinkRead' : SingSmList}
