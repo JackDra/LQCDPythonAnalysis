@@ -39,7 +39,7 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
             for iSF in SFList:
                 # if len(iSF) > 0: print '       Checking', iSF , ' '*50
                 for igamma in thisGammaList:
-                    print CheckType
+                    print CheckType , CheckType[0] =='/'
                     if ('doub' not in igamma) and ('sing' not in igamma) and CheckType[0] == '/': continue
                     print CheckType
                     print ''
