@@ -165,6 +165,8 @@ def CheckNconf(inputGammaList,CheckSetList,thisMomList=RunMomList,CheckList=['']
             nconf = min(nconf, massnconf)
         elif minmax == 'max':
             if len(thisGammaList) == 0: nconf = -1
+            if Debug: print 'nconf, massnconf'
+            if Debug: print nconf, massnconf
             nconf = max(nconf, massnconf)
         for imasskey in MassNconfDict.iterkeys():
             if imasskey in NconfDict.keys():
