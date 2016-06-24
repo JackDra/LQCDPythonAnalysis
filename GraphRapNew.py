@@ -14,7 +14,7 @@ from MultiWrap import *
 from multiprocessing import Pool
 from InputArgs import *
 
-DoDS = True
+DoDS = False
 
 
 ##datadict = { gamma } { mom } { method } { set }
@@ -127,6 +127,7 @@ if thisGammaList == ['twopt']:
     #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto20)],'PoFto20')]
     thisAllSetList = thisSmList+TvarPicked
     print 'AllSetList:\n' + '\n'.join(thisAllSetList)
+    print ''
     print 'MethodList:\n' + '\n'.join(feedin['method'])
     if DoMulticore and len(feedin['mom']) > 1:
         inputparams = []
