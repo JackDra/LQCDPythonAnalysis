@@ -63,7 +63,7 @@ for igamma in thisGammaList:
     if 'doub' not in igamma and 'sing' not in igamma and 'twopt' not in igamma:
         parsegammalist = ['doub'+igamma,'sing'+igamma,igamma]
         if DefWipe:
-            QueMomList = feedin['mom']
+            QueMomList = GetMomFromGamma(igamma,thisMomList=feedin['mom'])
         else:
             QueMomList = Check3ptAllSets(parsegammalist,thisReadSetList,thisMomList=feedin['mom'],CheckType='SumMeth')
             QueMomList = QueMomList[igamma]
@@ -73,7 +73,7 @@ for igamma in thisGammaList:
     elif igamma.replace('sing','').replace('doub','') not in thisGammaList and 'twopt' not in igamma:
         parsegammalist = [igamma]
         if DefWipe:
-            QueMomList = feedin['mom']
+            QueMomList = GetMomFromGamma(igamma,thisMomList=feedin['mom'])
         else:
             QueMomList = Check3ptAllSets([igamma],thisReadSetList,thisMomList=feedin['mom'],CheckType='SumMeth')
             QueMomList = QueMomList[igamma]

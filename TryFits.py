@@ -67,7 +67,7 @@ for igamma in thisGammaList:
         print 'adding to que: ' , igamma
         for iChunk,(iSet,iTS) in enumerate(zip(feedin['set'],DefTSinkSetList)):
             if DefWipe:
-                thisMomList = feedin['mom']
+                QueMomList = GetMomFromGamma(igamma,thisMomList=feedin['mom'])
             else:
                 thisMomList = Check3ptArray(['doub'+igamma,'sing'+igamma,igamma],[iSet],thisMomList=feedin['mom'],CheckType='Fits',printout=False)
                 thisMomList = thisMomList[igamma][iSet]
