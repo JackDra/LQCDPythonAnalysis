@@ -65,7 +65,8 @@ def CheckNconfMass(CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=True
                     else:
                         thiskey = 'nconf'+str(thisnconf)
                         if thiskey not in NconfDict: NconfDict[thiskey] = []
-                        NconfDict[thiskey].append('twopt '+ip)
+                        if not any('twopt' in inconf for inconf in NconfDict[thiskey]):
+                            NconfDict[thiskey].append('twopt '+ip)
                         # print ''
                         # print 'Changed nconfigs from ',nconf,' to ',thisnconf , ' in file:'
                         # print checkfile+'.xml'
