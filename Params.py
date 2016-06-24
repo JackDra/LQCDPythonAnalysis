@@ -369,4 +369,4 @@ SmearDictList = {'PoF' : PoFFlagList,
                  'CM' : DefSmList,
                  'cmRead' : DefSmearList,
                  'Tsink' : SingSmList,
-                 'tsinkRead' : SingSmList}
+                 'tsinkRead' : SingSmearList}
