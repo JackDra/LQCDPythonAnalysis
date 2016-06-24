@@ -45,9 +45,15 @@ def CheckNconfMass(CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=True
                 for pstr in thisMomList:
                     ip = qstrTOqcond(pstr)
                     if cfuns:
-                        filename = iset+ 'twopt' + iSF
+                        if 'TSF' in CheckType and ('m0' in iSF or 'Dm' in iSF):
+                            filename = 'twopt' + iSF
+                        else:
+                            filename = iset+ 'twopt' + iSF
                     else:
-                        filename = iset + 'Mass' + iSF
+                        if 'TSF' in CheckType and ('m0' in iSF or 'Dm' in iSF):
+                            filename = 'Mass' + iSF
+                        else:
+                            filename = iset+ 'Mass' + iSF
                     dump,checkfile = SetUpPDict(ip,twoptdir,filename)
                     thisnconf = CheckNconfFile(checkfile+'.xml')
                     if 'File Missing' == thisnconf:
