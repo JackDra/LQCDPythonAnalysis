@@ -131,17 +131,18 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
     elif 'TSF' in CheckType:
         SFList = TwoStateParList['C3']
     for icg,igamma in enumerate(thisGammaList):
+        keygamma = igamma.replace('doub','').replace('sing','')
         if printout: print 'Checking: ' , GetTimeForm(icg,len(thisGammaList),time.time()-totstart) , igamma ,  '          \r',
-        outlist[igamma] = {}
+        if keygamma not in outlist.keys(): outlist[keygamma] = {}
         for iset in CheckSetList:
-            outlist[igamma][iset] = []
+            if iset not in outlist[keygamma].keys(): outlist[keygamma][iset] = []
             for pstr in GetMomFromGamma(igamma,thisMomList=thisMomList):
                 ip = qstrTOqcond(pstr)
                 filename = iset+igamma
                 gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
                 CheckBool = all([CheckMomFile(SetUpPDict(ip,gammadir,filename+iSF)[1]+'.xml',nconftest=thisNconf) for iSF in SFList])
-                if not CheckBool:
-                    outlist[igamma][iset].append(pstr)
+                if not CheckBool and pstr not in outlist[keygamma][iset]:
+                    outlist[keygamma][iset].append(pstr)
     if len(thisGammaList) < 5:
         if printout: print 'Checking complete, Total Time: ' , GetTimeStr(time.time()-totstart) +thisGammaList[0].replace('doub','').replace('sing','')+ ' '*40
     else:
@@ -156,6 +157,7 @@ def Check3ptAllSets(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='
     outnoset = {}
     for igamma in thisGammaList:
         outnoset[igamma] = []
+        if igamma not in outlist.keys(): continue
         for setlist in outlist[igamma].itervalues():
             for ip in setlist:
                 outnoset[igamma].append(ip)
