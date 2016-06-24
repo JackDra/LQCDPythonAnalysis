@@ -36,23 +36,19 @@ thiskappa = int(raw_input("Kappa Value: (0.XXXXX)\n"))
 print ''
 thisNShifts = int(raw_input("How Many Shifts?\n"))
 
-
-
-f = open(thisscriptdir+'/setup.cfg','w')
-f.write('\nscriptdir:\n')
-f.write(thisscriptdir+'/\n')
-f.write('\ndatadir:\n')
-f.write(thisdatadir+'\n')
-f.write('\nAnaProc:\n')
-f.write(str(thisAnaProc)+'\n')
-f.write('\nListOrSet:\n')
-f.write(thisListOrSet+'\n')
-f.write('\nkappa:\n')
-f.write(str(thiskappa)+'\n')
-f.write('\nPoFShifts:\n')
-f.write(str(thisNShifts)+'\n')
-
-f.close()
+with open(thisscriptdir+'/setup.cfg','w') as f:
+    f.write('\nscriptdir:\n')
+    f.write(thisscriptdir+'/\n')
+    f.write('\ndatadir:\n')
+    f.write(thisdatadir+'\n')
+    f.write('\nAnaProc:\n')
+    f.write(str(thisAnaProc)+'\n')
+    f.write('\nListOrSet:\n')
+    f.write(thisListOrSet+'\n')
+    f.write('\nkappa:\n')
+    f.write(str(thiskappa)+'\n')
+    f.write('\nPoFShifts:\n')
+    f.write(str(thisNShifts)+'\n')
 
 
 from FFParams import DumpAllMomLists

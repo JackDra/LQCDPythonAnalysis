@@ -54,6 +54,7 @@ except:
 
 
 if not os.path.isfile('./setup.cfg'): raise EnvironmentError('Please Run Setup.py to create setup.cfg')
+RunNconfs = False
 with open('./setup.cfg','r') as f:
     thisread = ''
     for line in f:
@@ -75,10 +76,11 @@ with open('./setup.cfg','r') as f:
                 elif 'kappa' in thisread:
                     kappa = int(thisline)
                 elif 'Nconfs' in thisread:
-                    RunNconfs = int(thisline)
-                
-
-        
+                    if 'False' in thisline:
+                        RunNconfs = False
+                    else:
+                        RunNconfs = int(thisline)
+                    
 PoFC2C3Dis = '665.'
 
 myeps = np.finfo(0.0).eps
@@ -103,7 +105,7 @@ DoCmplx = True # reads complex opperator values as well as real values, should b
 DefWipe = True # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
 Doeigh = True # variational method, uses a symetrix matrix solver.
 
-
+if Debug: print RunNconfs
 
 VarMassCutoff = 0.4 # used in correlation matrix for cutting artifacts out of eigenmass sorting.
 
