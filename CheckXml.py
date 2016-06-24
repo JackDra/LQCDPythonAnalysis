@@ -91,14 +91,14 @@ def CheckNconf(inputGammaList,CheckSetList,thisMomList=RunMomList,CheckList=['']
     NconfDict['Missing'] = []
     NconfDict['Dep'] = []
 
-    if 'twopt' in inputGammaList or 'Mass' in inputGammaList:
+    if ('twopt' in inputGammaList or 'Mass' in inputGammaList) and not any(icheck in CheckList for icheck in ['RF','Fits','SumMeth']):
         massnconf,MassNconfDict = CheckNconfMass(CheckSetList,thisMomList=thisMomList,CheckList=CheckList,minmax=minmax)
         thisGammaList = list(inputGammaList)
-        if 'twopt' in thisGammaList: thisGammaList.remove('twopt')
-        if 'Mass' in thisGammaList: thisGammaList.remove('Mass')
     else:
         massnconf = False
         thisGammaList=inputGammaList
+    if 'twopt' in thisGammaList: thisGammaList.remove('twopt')
+    if 'Mass' in thisGammaList: thisGammaList.remove('Mass')
         
     for CheckType in CheckList:
         # print 'Checking' , CheckType
@@ -160,17 +160,17 @@ def CheckNconf(inputGammaList,CheckSetList,thisMomList=RunMomList,CheckList=['']
                                 elif minmax == 'max':
                                     nconf = max(nconf, thisnconf)
     print ' '*50
-    if isinstance(massnconf,int) :
+    if massnconf != False:
         if minmax == 'min':
             nconf = min(nconf, massnconf)
         elif minmax == 'max':
             if len(thisGammaList) == 0: nconf = -1
             nconf = max(nconf, massnconf)
-    for imasskey in MassNconfDict.iterkeys():
-        if imasskey in NconfDict.keys():
-            NconfDict[imasskey] += MassNconfDict[imasskey]
-        else:
-            NconfDict[imasskey] = MassNconfDict[imasskey]
+        for imasskey in MassNconfDict.iterkeys():
+            if imasskey in NconfDict.keys():
+                NconfDict[imasskey] += MassNconfDict[imasskey]
+            else:
+                NconfDict[imasskey] = MassNconfDict[imasskey]
     if existsDep:
         nconf = 'Depreciated code results'
     elif nconf > 10e10:
