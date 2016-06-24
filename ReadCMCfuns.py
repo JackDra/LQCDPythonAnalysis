@@ -99,7 +99,7 @@ def CheckAllSet(FilePrefix,directory,Interps):
     for iFlag in ['PoFRead','REvecRead','CMRead','TsinkRead']:
         for iterp,ism in Elongate(Interps,SmearDictList[iFlag]):
             for itsink in TSinkDictList[iFlag]:
-                thisFlag = iFlag
+                thisFlag = iFlag.replace('Read','')
                 C2C3Dis = ''
                 if 'REvec' in iFlag:
                     Jsmlist = ['REvec']
