@@ -61,7 +61,7 @@ def ExpandMethodList(thisML):
 def InputParams(inputparams):
     feedout = {}
     feedout['anaproc'] = AnaProc
-    feedout['gamma'] = ''
+    feedout['gamma'] = ['']
     feedout['set'] = DefSetList
     feedout['method'] = MethodList
     feedout['current'] = CurrOpps.keys()
