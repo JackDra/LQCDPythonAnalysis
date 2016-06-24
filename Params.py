@@ -346,9 +346,9 @@ TSinkDictList = {'PoF' : PoFTSinkList+range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+
                  'REvec' : REvecTSinkList,
                  'REvecRead' : REvecTSinkList,
                  'CM' : CMTSinkList,
-                 'CMRead' : CMTSinkList,
+                 'cmRead' : CMTSinkList,
                  'Tsink' : AllTSinkList,
-                 'TsinkRead' : AllTSinkListNoCM}
+                 'tsinkRead' : AllTSinkListNoCM}
 
 
 TSinkStrDictList = {'PoF' : PoFTSinkStrList+['tsink'+str(its) for its in range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)],
@@ -356,9 +356,9 @@ TSinkStrDictList = {'PoF' : PoFTSinkStrList+['tsink'+str(its) for its in range(P
                     'REvec' : REvecTSinkStrList,
                     'REvecRead' : REvecTSinkStrList,
                     'CM' : CMTSinkStrList,
-                    'CMRead' : CMTSinkStrList,
+                    'cmRead' : CMTSinkStrList,
                     'Tsink' : AllTSinkStrList,
-                    'TsinkRead' : AllTSinkStrListNoCM}
+                    'tsinkRead' : AllTSinkStrListNoCM}
 
 
 
@@ -367,6 +367,6 @@ SmearDictList = {'PoF' : PoFFlagList,
                  'REvec' : REvecFlagList,
                  'REvecRead' : DefSmearList,
                  'CM' : DefSmList,
-                 'CMRead' : DefSmearList,
+                 'cmRead' : DefSmearList,
                  'Tsink' : SingSmList,
-                 'TsinkRead' : SingSmList}
+                 'tsinkRead' : SingSmList}
