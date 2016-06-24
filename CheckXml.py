@@ -38,7 +38,7 @@ def CheckNconfMass(CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=True
                 # if len(iSF) > 0: print '       Checking', iSF , ' '*50
                 print 'Checking', iSF , ' '*50 ,' \r',
                 if cfuns:
-                    twoptdir = thisdir+CreateOppDir('cfuns')+'/' + CheckType
+                    twoptdir = thisdir+CreateOppDir('twopt')+'/' + CheckType
                 else:
                     twoptdir = thisdir+CreateOppDir('Mass')+'/' + CheckType
                     
@@ -92,7 +92,7 @@ def CheckNconf(inputGammaList,CheckSetList,thisMomList=RunMomList,CheckList=['']
     NconfDict['Dep'] = []
 
     if 'twopt' in inputGammaList or 'Mass' in inputGammaList:
-        massnconf,MassNconfDict = CheckNconfMass(CheckSetList,thisMomList=thisMomList,CheckList=CheckList,cfuns=cfuns,minmax=minmax)
+        massnconf,MassNconfDict = CheckNconfMass(CheckSetList,thisMomList=thisMomList,CheckList=CheckList,minmax=minmax)
         thisGammaList = list(inputGammaList)
         if 'twopt' in thisGammaList: thisGammaList.remove('twopt')
         if 'Mass' in thisGammaList: thisGammaList.remove('Mass')
