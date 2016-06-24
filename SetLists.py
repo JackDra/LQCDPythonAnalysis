@@ -257,7 +257,7 @@ def ReduceTooMassSet(thisSetList):
 
 def PickSetForMethod(thismethod,thisSetList):
     outSetList = thisSetList
-    if 'Tsink' in thismethod or 'SmallSet' in thismethod or 'test32' in thismethod:
+    if 'Tsink' in thismethod or 'Small' in thismethod or 'test32' in thismethod:
         outSetList = []
         for itsink in AllTSinkStrList:
             if itsink+SingSmList[0] in thisSetList:

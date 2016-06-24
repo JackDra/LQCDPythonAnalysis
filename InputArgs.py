@@ -3,6 +3,7 @@
 from Params import *
 from SetLists import *
 from FFParams import *
+from MiscFuns import DelDubs
 import sys
     
     
@@ -42,6 +43,20 @@ def ExpandSetList(thisSL):
             SLout.append(iset)
     return SortMySet(SLout)
 
+def ExpandMethodList(thisML):
+    MLout = []
+    for imethod in thisML:
+        if imethod == 'OSF':
+            MLout += ['OSF'+iOSF for iOSF in OSFFileFlags]
+        elif imethod == 'TSF':
+            MLout += ['TSF'+iTSF for iTSF in TSFFileFlags]
+        elif imethod == 'Tsink':
+            MLout += ['RF','Fits','SumMeth','OSFTsink','TSFTsink','TSFtest32','TSFSmall']
+        elif imethod == 'CM' or imethod == 'PoF':
+            MLout += ['RF','Fits','OSFCM','TSFCM']
+        else:
+            MLout.append(imethod)
+    return DelDubs(MLout)
 
 def InputParams(inputparams):
     feedout = {}
@@ -96,9 +111,9 @@ def InputParams(inputparams):
                 print 'Nothing found for mom list, using default list'
                 feedout['set'] = RunMomList
         elif '-m' in isys:
-            feedout['method'] = isys.replace('-m=','').split(',')
+            feedout['method'] = ExpandMethodList(isys.replace('-m=','').split(','))
             for iml in feedout['method']:
-                if iml not in MethodList:
+                if iml not in MethodList + ['CM','Tsink','OSF','TSF']:
                     print 'Warning, ' + iml + ' not found in method list, skipping.'
                     feedout['method'].remove(iml)
             if len(feedout['method']) == 0:

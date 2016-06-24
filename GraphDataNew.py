@@ -596,29 +596,3 @@ def PlotTSFLog(data,col,smear,norm):
     pl.fill_between(tdata,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
     pl.plot(tdata,dataAvg,color=col)
 
-
-##DEBUGGING##
-
-# # import matplotlib
-# # matplotlib.use('PDF') # Must be before importing matplotlib.pyplot or pylab!
-# # matplotlib.rc( {'usetex':True} )
-# import matplotlib.pyplot as pl
-
-# FFylab = r'$ FF $'
-# FFxlab = r'$ q^{2} $'
-# pl.plot([1,2,3,4],[4,5,6,8],label='pie')
-# pl.xlabel(FFxlab)
-# pl.ylabel(FFylab)
-# pl.legend()
-# pl.savefig('./debugging.pdf')
-# pl.clf()
-
-
-# FFylab = r'$ FF $'
-# FFxlab = r'$ q^{2} $'
-# pl.plot([1,2,3,4],[4,5,6,8],label='pie')
-# pl.xlabel(FFxlab)
-# pl.ylabel(FFylab)
-# pl.legend()
-# pl.savefig('./debugging2.pdf')
-# pl.clf()

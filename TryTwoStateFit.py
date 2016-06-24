@@ -228,7 +228,7 @@ for igamma in ReadGammaList:
         if DefWipe:
             QueMomList = feedin['mom']
         else:
-            QueMomList = Check3ptAllSets([igamma,'doub'+igamma,'sing'+igamma],ReadSetList,thisMomList=feedin['mom'],CheckType='TSF'+outfile)
+            QueMomList = Check3ptAllSets([igamma],ReadSetList,thisMomList=feedin['mom'],CheckType='TSF'+outfile)
             QueMomList = QueMomList[igamma]
         for imom in QueMomList:
             # print 'adding to que: ' , igamma , imom
