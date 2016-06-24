@@ -16,7 +16,7 @@ if len(sys.argv) > 1:
         sys.argv = [sys.argv[0]] + sys.argv[2:]
         
 feedin = InputParams(sys.argv[1:] + ['-noprompt'])
-thisGammaList = CreateGammaList(feedin['gamma'])
+thisGammaList = CreateGammaList(feedin['gamma'] + ['twopt'])
 ShowSetLists(feedin['set'])
 
 ShowMethodList(feedin['method'])
