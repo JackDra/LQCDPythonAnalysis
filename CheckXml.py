@@ -21,7 +21,7 @@ def CheckNconfMass(CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=True
     NconfDict['Dep'] = []
     for CheckType in CheckList:
         # print 'Checking' , CheckType
-        thisSetList = CheckSetList
+        thisSetList = ReduceTsink(CheckSetList)
         if 'RF' == CheckType: CheckType = ''
         if len(CheckType) > 0: CheckType += '/'
         if cfuns: thisdir = outputdir + 'cfuns/'
