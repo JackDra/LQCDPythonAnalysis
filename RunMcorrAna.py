@@ -112,8 +112,6 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         for it,itsink in enumerate(thisTSinkList):
             if RunType == 'PoF':
                 itsinkList = range(int(itsink),int(itsink)+PoFShifts+1)
-                # DEBUG##
-                # itsinkList = [30,30]
                 iPrefList = [thisPrefList[it]]*len(itsinkList)
             else:
                 itsinkList,iPrefList = [int(itsink)],[thisPrefList[it]]

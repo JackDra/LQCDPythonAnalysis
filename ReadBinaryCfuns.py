@@ -54,8 +54,7 @@ class ReadFSCfunPick:
                     tmpdata.byteswap()
                     self.data[igamma][ip].append(tmpdata[0])
                     if np.isnan(self.data[igamma][ip][it]):
-                        ##DEBUG#
-                        # self.data[igamma][ip][it] = 0.0
+                        if Debug: self.data[igamma][ip][it] = 0.0
                         raise NaNCfunError('NaN Values: '+thisgamma+ ' ' +qvecSet[iploc] + ' it='+str(it+1) )
         f.close()
 
