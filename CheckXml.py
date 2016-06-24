@@ -160,6 +160,7 @@ def CheckNconf(inputGammaList,CheckSetList,thisMomList=RunMomList,CheckList=['']
                                 elif minmax == 'max':
                                     nconf = max(nconf, thisnconf)
     print ' '*50
+    print massnconf
     if isinstance(massnconf,int) :
         if minmax == 'min':
             nconf = min(nconf, massnconf)
