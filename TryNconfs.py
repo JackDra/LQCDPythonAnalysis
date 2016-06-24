@@ -17,7 +17,6 @@ if len(sys.argv) > 1:
         
 feedin = InputParams(sys.argv[1:] + ['-noprompt'])
 thisGammaList = CreateGammaList(feedin['gamma'])
-
 ShowSetLists(feedin['set'])
 
 ShowMethodList(feedin['method'])

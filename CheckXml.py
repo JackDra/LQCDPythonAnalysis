@@ -39,10 +39,8 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
             for iSF in SFList:
                 # if len(iSF) > 0: print '       Checking', iSF , ' '*50
                 for igamma in thisGammaList:
-                    print CheckType , CheckType[0] =='/'
-                    if ('doub' not in igamma) and ('sing' not in igamma) and CheckType[0] == '/': continue
-                    print CheckType
-                    print ''
+                    if ('doub' not in igamma) and ('sing' not in igamma) and len(CheckType) == 0: continue
+                    keygamma = igamma.replace('doub','').replace('sing','')
                     print 'Checking', iSF , igamma, ' '*50 ,' \r',
                     gammadir = thisdir+CreateOppDir(igamma)+'/' + CheckType
                     for pstr in GetMomFromGamma(igamma,thisMomList=thisMomList):
@@ -51,19 +49,19 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                         dump,checkfile = SetUpPDict(ip,gammadir,filename)
                         thisnconf = CheckNconfFile(checkfile+'.xml')
                         if 'File Missing' == thisnconf:
-                            if not any(igamma in inconf for inconf in NconfDict['Missing']):
-                                NconfDict['Missing'].append(igamma+' '+qstrTOqcond(pstr))
+                            if not any(keygamma in inconf for inconf in NconfDict['Missing']):
+                                NconfDict['Missing'].append(keygamma+' '+qstrTOqcond(pstr))
                             # return 'File Missing: ' + checkfile+'.xml' , NconfDict
                         elif 'Dep' == thisnconf:
                             existsDep = True
-                            if not any(igamma in inconf for inconf in NconfDict['Dep']):
-                                NconfDict['Dep'].append(igamma+' '+qstrTOqcond(pstr))
+                            if not any(keygamma in inconf for inconf in NconfDict['Dep']):
+                                NconfDict['Dep'].append(keygamma+' '+qstrTOqcond(pstr))
                         else:
                             thiskey = 'nconf'+str(thisnconf)
                             if thiskey not in NconfDict:
                                 NconfDict[thiskey] = []
-                            if not any(igamma in inconf for inconf in NconfDict[thiskey]):
-                                NconfDict[thiskey].append(igamma+' '+qstrTOqcond(pstr))
+                            if not any(keygamma in inconf for inconf in NconfDict[thiskey]):
+                                NconfDict[thiskey].append(keygamma+' '+qstrTOqcond(pstr))
                             # print ''
                             # print 'Changed nconfigs from ',nconf,' to ',thisnconf , ' in file:'
                             # print checkfile+'.xml'
