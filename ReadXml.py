@@ -45,6 +45,7 @@ def ReadXmlAndPickle(filein):
     return xmldata,bootfile
 
 def CheckNconfFile(filein):
+    if Debug: print 'reading: ' + filein
     if not os.path.isfile(filein): return 'File Missing'
     mprint('reading: ' + filein)
     Nconf = 10e17

@@ -96,7 +96,7 @@ CfunConfigCheck = True # Checks all two and three point correlators before runni
 
 ##DEBUG toggles (True/False):
 ScaleByP4g4 = False ## scales out all operators by P4g4 instead of 2 point correlator at tsink for Ratio value (RF)
-Debug = False # for debugging Correlation Matrix stuff
+Debug = True # for debugging Correlation Matrix stuff
 ShowConfNum = Debug # debugging, show number of configs during read
 PrintRead = not DoMulticore # Screws up output if on and doing mulitcore reading
 DoCmplx = True # reads complex opperator values as well as real values, should be on

@@ -13,7 +13,7 @@ from MiscFuns import *
 from collections import OrderedDict as OD
 import time
 
-def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=False,minmax='min'):
+def CheckNconfMass(CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=True,minmax='mim'):
     nconf = 10e16
     thisdir = outputdir
     NconfDict = OD()
@@ -23,10 +23,91 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
         # print 'Checking' , CheckType
         thisSetList = CheckSetList
         if 'RF' == CheckType: CheckType = ''
+        if len(CheckType) > 0: CheckType += '/'
+        if cfuns: thisdir = outputdir + 'cfuns/'
+        SFList = ['']
+        if 'OSF' in CheckType:
+            SFList = OneStateParList['C2']
+        if 'TSF' in CheckType:
+            SFList = TwoStateParList['C2']
+
+        existsDep = False
+        for iset in thisSetList:
+            # print '    Checking', iset
+            for iSF in SFList:
+                # if len(iSF) > 0: print '       Checking', iSF , ' '*50
+                print 'Checking', iSF , ' '*50 ,' \r',
+                if cfuns:
+                    twoptdir = thisdir+CreateOppDir('cfuns')+'/' + CheckType
+                else:
+                    twoptdir = thisdir+CreateOppDir('Mass')+'/' + CheckType
+                    
+                for pstr in thisMomList:
+                    ip = qstrTOqcond(pstr)
+                    if cfuns:
+                        filename = iset+ 'twopt' + iSF
+                    else:
+                        filename = iset + 'Mass' + iSF
+                    dump,checkfile = SetUpPDict(ip,twoptdir,filename)
+                    thisnconf = CheckNconfFile(checkfile+'.xml')
+                    if 'File Missing' == thisnconf:
+                        NconfDict['Missing'].append('twopt '+ip)
+                    elif 'Dep' == thisnconf:
+                        existsDep = True
+                        if not any(keygamma in inconf for inconf in NconfDict['Dep']):
+                            NconfDict['Dep'].append('twopt '+ip)
+                    else:
+                        thiskey = 'nconf'+str(thisnconf)
+                        if thiskey not in NconfDict: NconfDict[thiskey] = []
+                        NconfDict[thiskey].append('twopt '+ip)
+                        # print ''
+                        # print 'Changed nconfigs from ',nconf,' to ',thisnconf , ' in file:'
+                        # print checkfile+'.xml'
+                        # print ''
+                        # elif thisnconf > nconf and thisnconf < 1e10:
+                        #     print ''
+                        #     print 'Larger nconfigs from ',nconf,' compared to ',thisnconf , ' in file:'
+                        #     print checkfile+'.xml'
+                        #     print ''
+                        if nconf > 10e10 :
+                            nconf = thisnconf
+                        elif thisnconf > 0:
+                            if minmax == 'min':
+                                nconf = min(nconf, thisnconf)
+                            elif minmax == 'max':
+                                nconf = max(nconf, thisnconf)
+    print ' '*50
+    if existsDep:
+        nconf = 'Depreciated code results'
+    elif nconf > 10e10:
+        nconf = 'No Files Found'
+    return nconf,NconfDict
+    
+
+def CheckNconf(inputGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=False,minmax='min'):
+    nconf = 10e16
+    thisdir = outputdir
+    NconfDict = OD()
+    NconfDict['Missing'] = []
+    NconfDict['Dep'] = []
+
+    if 'twopt' in inputGammaList or 'Mass' in inputGammaList:
+        massnconf,MassNconfDict = CheckNconfMass(CheckSetList,thisMomList=thisMomList,CheckList=CheckList,cfuns=cfuns,minmax=minmax)
+        thisGammaList = list(inputGammaList)
+        if 'twopt' in thisGammaList: thisGammaList.remove('twopt')
+        if 'Mass' in thisGammaList: thisGammaList.remove('Mass')
+    else:
+        massnconf = False
+        thisGammaList=inputGammaList
+        
+    for CheckType in CheckList:
+        # print 'Checking' , CheckType
+        thisSetList = CheckSetList
+        if 'RF' == CheckType: CheckType = ''
         if len(CheckType) > 0:
             CheckType += '/'
             if any([itype in CheckType for itype in ['SumMeth','TSF']]): thisSetList = ReduceTsink(CheckSetList)
-            if cfuns: thisdir = outputdir + 'cfuns/'
+        if cfuns: thisdir = outputdir + 'cfuns/'
         SFList = ['']
         if 'OSF' in CheckType:
             SFList = OneStateParList['C3']
@@ -50,18 +131,18 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                         thisnconf = CheckNconfFile(checkfile+'.xml')
                         if 'File Missing' == thisnconf:
                             if not any(keygamma in inconf for inconf in NconfDict['Missing']):
-                                NconfDict['Missing'].append(keygamma+' '+qstrTOqcond(pstr))
+                                NconfDict['Missing'].append(keygamma+' '+ip)
                             # return 'File Missing: ' + checkfile+'.xml' , NconfDict
                         elif 'Dep' == thisnconf:
                             existsDep = True
                             if not any(keygamma in inconf for inconf in NconfDict['Dep']):
-                                NconfDict['Dep'].append(keygamma+' '+qstrTOqcond(pstr))
+                                NconfDict['Dep'].append(keygamma+' '+ip)
                         else:
                             thiskey = 'nconf'+str(thisnconf)
                             if thiskey not in NconfDict:
                                 NconfDict[thiskey] = []
                             if not any(keygamma in inconf for inconf in NconfDict[thiskey]):
-                                NconfDict[thiskey].append(keygamma+' '+qstrTOqcond(pstr))
+                                NconfDict[thiskey].append(keygamma+' '+ip)
                             # print ''
                             # print 'Changed nconfigs from ',nconf,' to ',thisnconf , ' in file:'
                             # print checkfile+'.xml'
@@ -79,6 +160,16 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                                 elif minmax == 'max':
                                     nconf = max(nconf, thisnconf)
     print ' '*50
+    if massnconf != False:
+        if minmax == 'min':
+            nconf = min(nconf, massnconf)
+        elif minmax == 'max':
+            nconf = max(nconf, massnconf)
+        for imasskey in MassNconfDict.iterkeys():
+            if imasskey in NconfDict.keys():
+                NconfDict[imasskey] += MassNconfDict[imasskey]
+            else:
+                NconfDict[imasskey] = MassNconfDict[imasskey]
     if existsDep:
         nconf = 'Depreciated code results'
     elif nconf > 10e10:
@@ -124,7 +215,7 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
     if len(CheckType) > 0:
         CheckType += '/'
         if any([itype in CheckType for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(thisSetList)
-        if cfuns: thisdir = outputdir + 'cfuns/'
+    if cfuns: thisdir = outputdir + 'cfuns/'
     SFList = ['']
     if 'OSF' in CheckType:
         SFList = OneStateParList['C3']

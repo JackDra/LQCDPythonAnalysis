@@ -94,6 +94,7 @@ def CheckAllSet(FilePrefix,directory,Interps):
             testfile2pt = (directory.replace(CreateDir2pt(DefSmearList[0],DefSmearList[0]),
                                              CreateDir2pt(ism,jsm))
                            +FilePrefix+CreateEnd2pt(ism,jsm,iterp,jterp))
+            if Debug: print 'Checking ' ,testfile2pt
             if not os.path.isfile(testfile2pt): return False
     for iFlag in ['PoF','REvec','cm','tsink']:
         for iterp,ism in Elongate(Interps,SmearDictList[iFlag]):
@@ -114,11 +115,13 @@ def CheckAllSet(FilePrefix,directory,Interps):
                             testfile3pt = (directory.replace(CreateDir2pt(DefSmearList[0],DefSmearList[0]),
                                                              CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
                                            +FilePrefix+CreateEnd3pt(ism,jsm3pt,itsink,iDS,iProj,''))
+                            if Debug: print 'Checking ' ,  testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
                             if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
                         for iProj in DefProjDerList:
                             testfile3pt = (directory.replace(CreateDir2pt(DefSmearList[0],DefSmearList[0]),
                                                              CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
                                            +FilePrefix+CreateEnd3pt(ism,jsm3pt,itsink,iDS,iProj,'D'))
+                            if Debug: print 'Checking ' ,testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
                             if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
     return True
                 
@@ -131,6 +134,7 @@ def CheckSet(FilePrefix,directory,thisSmearList,thisProjGammaList,thisProjDerLis
             testfile2pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
                                              CreateDir2pt(ism,jsm))
                            +FilePrefix+CreateEnd2pt(ism,jsm,iterp,jterp))
+            if Debug: print 'Checking ' ,testfile2pt
             if not os.path.isfile(testfile2pt): return False
         for iFlag,itsink in zip(Flag,thisTSinkList):
             thisFlag = iFlag
@@ -149,11 +153,13 @@ def CheckSet(FilePrefix,directory,thisSmearList,thisProjGammaList,thisProjDerLis
                         testfile3pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
                                                          CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
                                        +FilePrefix+CreateEnd3pt(ism,jsm3pt,itsink,iDS,iProj,''))
+                        if Debug: print 'Checking ' ,  testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
                         if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
                     for iProj in thisProjDerList:
                         testfile3pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
                                                          CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
                                        +FilePrefix+CreateEnd3pt(ism,jsm3pt,itsink,iDS,iProj,'D'))
+                        if Debug: print 'Checking ' ,  testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
                         if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
     return True
 
