@@ -48,6 +48,8 @@ def CheckNconf(thisGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],
                         filename = iset+igamma+ iSF
                         dump,checkfile = SetUpPDict(ip,gammadir,filename)
                         thisnconf = CheckNconfFile(checkfile+'.xml')
+                        print 
+                        print igamma, pstr, thisnconf
                         if 'File Missing' == thisnconf:
                             if not any(keygamma in inconf for inconf in NconfDict['Missing']):
                                 NconfDict['Missing'].append(keygamma+' '+qstrTOqcond(pstr))
