@@ -50,7 +50,6 @@ def CheckNconfMass(CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=True
                         filename = iset + 'Mass' + iSF
                     dump,checkfile = SetUpPDict(ip,twoptdir,filename)
                     thisnconf = CheckNconfFile(checkfile+'.xml')
-                    print thisnconf
                     if 'File Missing' == thisnconf:
                         NconfDict['Missing'].append('twopt '+ip)
                     elif 'Dep' == thisnconf:
@@ -161,16 +160,16 @@ def CheckNconf(inputGammaList,CheckSetList,thisMomList=RunMomList,CheckList=['']
                                 elif minmax == 'max':
                                     nconf = max(nconf, thisnconf)
     print ' '*50
-    if massnconf != False:
+    if isinstance(massnconf,int) :
         if minmax == 'min':
             nconf = min(nconf, massnconf)
         elif minmax == 'max':
             nconf = max(nconf, massnconf)
-        for imasskey in MassNconfDict.iterkeys():
-            if imasskey in NconfDict.keys():
-                NconfDict[imasskey] += MassNconfDict[imasskey]
-            else:
-                NconfDict[imasskey] = MassNconfDict[imasskey]
+    for imasskey in MassNconfDict.iterkeys():
+        if imasskey in NconfDict.keys():
+            NconfDict[imasskey] += MassNconfDict[imasskey]
+        else:
+            NconfDict[imasskey] = MassNconfDict[imasskey]
     if existsDep:
         nconf = 'Depreciated code results'
     elif nconf > 10e10:
