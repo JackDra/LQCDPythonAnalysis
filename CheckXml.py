@@ -50,6 +50,7 @@ def CheckNconfMass(CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=True
                         filename = iset + 'Mass' + iSF
                     dump,checkfile = SetUpPDict(ip,twoptdir,filename)
                     thisnconf = CheckNconfFile(checkfile+'.xml')
+                    print thisnconf
                     if 'File Missing' == thisnconf:
                         NconfDict['Missing'].append('twopt '+ip)
                     elif 'Dep' == thisnconf:
