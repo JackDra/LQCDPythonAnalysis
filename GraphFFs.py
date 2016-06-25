@@ -114,7 +114,7 @@ def PlotFFqPick(datadict,thisPSL):
         print 'Plotting Summary for qsqrd ' , thiscurr ,'Complete, took: ', GetTimeStr(time.time()-start)
 
 
-feedin = InputParams(sys.argv[1:])
+feedin = InputParams(sys.argv[1:]+['-noprompt'])
 
 if 'Vector' in feedin['current']:
     feedin['current'] += ['GeGm']
