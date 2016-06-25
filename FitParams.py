@@ -63,7 +63,7 @@ OSFfitr = {'sm32':str(OSFfitvals['sm32'][0])+'-'+str(OSFfitvals['sm32'][1]),
            'sm128':str(OSFfitvals['sm128'][0])+'-'+str(OSFfitvals['sm128'][1]),
            PickedStateStr+'REvec':str(OSFfitvals[PickedStateStr+'REvec'][0])+'-'+str(OSFfitvals[PickedStateStr+'REvec'][1]),
            PickedStateStr+'PoF'+str(PoFShifts):str(OSFfitvals[PickedStateStr+'PoF'+str(PoFShifts)][0])+'-'+str(OSFfitvals[PickedStateStr+'PoF'+str(PoFShifts)][1]),
-           PickedStateStr+'CM':str(OSFfitvals[PickedStateStr+DefTvarPicked][0])+'-'+str(OSFfitvals[PickedStateStr+DefTvarPicked][1])}
+           PickedStateStr+DefTvarPicked:str(OSFfitvals[PickedStateStr+DefTvarPicked][0])+'-'+str(OSFfitvals[PickedStateStr+DefTvarPicked][1])}
 
 
 
