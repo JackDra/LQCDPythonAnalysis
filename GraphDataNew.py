@@ -535,7 +535,7 @@ def PlotOSFMassValue(data,col,smear,thisdt):
         smearindex = PickedStateStr+'REvec'
     elif 'CM' in smear:
         deltashift = 0
-        smearindex = PickedStateStr+'CM'+DefTvarPicked
+        smearindex = PickedStateStr+DefTvarPicked
     if CheckDict(data,'m0',OSFfitr[smearindex],'Boot'): 
         databoot = data['m0'][OSFfitr[smearindex]]['Boot']
         dataval = abs(databoot.Avg)
