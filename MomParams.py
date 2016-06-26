@@ -155,8 +155,10 @@ def qvecTOE(ip,mass):
     return np.sqrt((qsqrdstr(qvecTOqstr(ip))*qunit)**2 + mass**2)
                 
 def MakeMomDir(ip):
-    iqsqrd = qsqrdstr(qcondTOqstr(ip))
-    return '/qsqrd'+str(iqsqrd)+'/'+ip+'/'
+    thisip = ip
+    if ' ' in ip: thisip = qstrTOqcond(ip)    
+    iqsqrd = qsqrdstr(qcondTOqstr(thisip))
+    return '/qsqrd'+str(iqsqrd)+'/'+thisip+'/'
 
 def GetqcondFromFilename(filename):
     for ip in qvecSet:
