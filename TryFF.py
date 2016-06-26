@@ -84,7 +84,7 @@ for thisCurr in feedin['current']:
                 print 'Adding to queue FF: ' , imeth , thisCurr , iSet
                 inputparams.append(([imeth],thisCurr,[iSet],thisGammaList))
         else:
-            for iSet in GetTsinkSmLists(feedin['set'])[1]:
+            for iSet in ReduceTsink(feedin['set']):
                 print 'Adding to queue FF: ' , imeth , thisCurr , iSet
                 inputparams.append(([imeth],thisCurr,[iSet],thisGammaList))
             
