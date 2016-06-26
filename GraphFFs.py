@@ -119,7 +119,10 @@ feedin = InputParams(sys.argv[1:]+['-noprompt'])
 if 'Vector' in feedin['current']:
     feedin['current'] += ['GeGm']
 
-thisCurrDict = GetCurrDict(feedin['current'])
+thisCurrDict = []
+for icurr in feedin['current']:
+    thisCurrDict.append(GetCurrDict([icurr]))
+
 makeContextFunctions(ReadAndPlotFF)
 
 if len(thisCurrDict) > 0:
