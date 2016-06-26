@@ -109,7 +109,7 @@ def ReadAndPlotFF(thisCurrDict,DoList='All'):
     
 def PlotFFqPick(datadict,thisPSL):
     start = time.time()
-    for thisSL,(thiscurr,currdata) in zip(currPSL,datadict.iteritems()):
+    for thisSL,(thiscurr,currdata) in zip(thisPSL,datadict.iteritems()):
         PlotFFSummary(thisSL,thiscurr,currdata)
         print 'Plotting Summary for qsqrd ' , thiscurr ,'Complete, took: ', GetTimeStr(time.time()-start)
 
