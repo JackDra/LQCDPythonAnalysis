@@ -94,7 +94,7 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref,subdir=''):
     pl.title(thistitle)
     thisdir = outputdir + 'graphs/'+CreateOppDir(thisGamma)
     thisfile = TitlePref.replace(' ','')+thisflag
-    if 'q = 0 0 0' not in thisMom: thisdir += MakeMomDir(thisMom)
+    thisdir += MakeMomDir(thisMom)
     mkdir_p(thisdir)
     return thisdir+thisfile
 
