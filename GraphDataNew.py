@@ -493,7 +493,7 @@ def PlotTSFLine(data,data2pt,thistsink,col,thisshift,TSFcut,smear):
 def PlotOSFValue(data,col,thisshift,OSFcut,smear,thistsink):
     LRM = max((int(thistsink)-tsource)/2.-int(OSFcut.replace('cut','')),0)
     tvals = np.array([-LRM+thisshift,LRM+thisshift])
-    osfsmear = RemoveToDt(smear)
+    osfsmear,dump = CreateOSFfitKey(smear)
     if not CheckDict(data,'B00',OSFfitr[osfsmear],OSFcut,'Avg'): return
     if not CheckDict(data,'B00',OSFfitr[osfsmear],OSFcut,'Std'): return
     dataval = abs(data['B00'][OSFfitr[osfsmear]][OSFcut]['Avg'])
@@ -526,16 +526,7 @@ def PlotTSFMassLine(data2pt,col,smear,thisdt):
 
 
 def PlotOSFMassValue(data,col,smear,thisdt):
-    smearindex,deltashift = RemoveToDt(smear),0
-    if 'PoF' in smear:
-        deltashift = PoFShifts*2
-        smearindex = PickedStateStr+'PoF'+str(PoFShifts)
-    elif 'REvec' in smear:
-        deltashift = 0
-        smearindex = PickedStateStr+'REvec'
-    elif 'CM' in smear:
-        deltashift = 0
-        smearindex = PickedStateStr+DefTvarPicked
+    smearindex,deltashift = CreateOSFfitKey(smear)
     if CheckDict(data,'m0',OSFfitr[smearindex],'Boot'): 
         databoot = data['m0'][OSFfitr[smearindex]]['Boot']
         dataval = abs(databoot.Avg)
@@ -557,16 +548,7 @@ def PlotTSFMassValue(data,thisdt):
 
 
 def PlotOSFLog(data,col,smear,norm):
-    smearindex = RemoveToDt(smear)
-    if 'PoF' in smear:
-        deltashift = PoFShifts*2
-        smearindex = PickedStateStr+'PoF'+str(PoFShifts)
-    elif 'REvec' in smear:
-        deltashift = 0
-        smearindex = PickedStateStr+'REvec'
-    elif 'CM' in smear:
-        deltashift = 0
-        smearindex = PickedStateStr+DefTvarPicked
+    smearindex,deltashift = CreateOSFfitKey(smear)
     if 'sum' in smear: smearindex = PickedStateStr+'sum'    
     if not CheckDict(data,'m0',OSFfitr[smearindex],'Boot'): return
     if not CheckDict(data,'Am',OSFfitr[smearindex],'Boot'): return
@@ -581,7 +563,7 @@ def PlotOSFLog(data,col,smear,norm):
     dataup = dataAvg+dataErr
     datadown = dataAvg-dataErr
     pl.fill_between(tdata,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
-    pl.plot(OSFfitvals[smearindex],[dataAvg[0],dataAvg[-1]],color=col)
+    pl.plot([OSFfitvals[smearindex][0]+deltashift,OSFfitvals[smearindex][1]],[dataAvg[0],dataAvg[-1]],color=col)
 
 
 def PlotTSFLog(data,col,smear,norm):

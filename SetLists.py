@@ -302,3 +302,15 @@ elif kappa == 12104:
     
 DefSetList,DefMassSetList,DefTSinkSetList = DefSetCol
 
+def CreateOSFfitKey(smear):
+    smearindex,deltashift = RemoveToDt(smear),0
+    if 'PoF' in smear:
+        deltashift = PoFShifts*2
+        smearindex = PickedStateStr+'PoF'+str(PoFShifts)
+    elif 'REvec' in smear:
+        deltashift = 0
+        smearindex = PickedStateStr+'REvec'
+    elif 'CM' in smear:
+        deltashift = 0
+        smearindex = PickedStateStr+DefTvarPicked
+    return smearindex,deltashift

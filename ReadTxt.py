@@ -83,15 +83,15 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                             datamassout[ism+iMeth] = thismassdict['m0'][TSFfitr]
                             datamassout[ism+iMeth]['Info'] = thismassdict['m0']['Info']
                     elif 'OSF' in iMeth:
-                        if CheckDict(thismassdict,'m0',OSFfitr[RemoveToDt(ism)]):
-                            datamassout[ism+iMeth] = thismassdict['m0'][OSFfitr[RemoveToDt(ism)]]
+                        if CheckDict(thismassdict,'m0',OSFfitr[CreateOSFfitKey(ism)]):
+                            datamassout[ism+iMeth] = thismassdict['m0'][OSFfitr[CreateOSFfitKey(ism)]]
                             datamassout[ism+iMeth]['Info'] = thismassdict['m0']['Info']
         else:
             for imom,momdata in readdata[igamma].iteritems():
                 for iMeth,Methdata in momdata.iteritems():
                     for iSet,thisdict in Methdata.iteritems():
                         itsink,ism = SplitTSinkString(iSet)
-                        fitsm = RemoveToDt(ism)
+                        fitsm = CreateOSFfitKey(ism)
                         if DefTvarPicked in ism: ism = PickedStateStr+DefTvarPicked
                         if 'TSF' in iMeth:
                             for icut in TSFCutList:
@@ -219,7 +219,7 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
                                 for ipar in StateParList['One']['C2']:
                                     fitrkey = RemoveTSink(iset)
                                     if DefTvarPicked in fitrkey: fitrkey = PickedStateStr+DefTvarPicked
-                                    pars2pt.append(datadict['twopt'][imom][iSF][RemoveTSink(iset)][ipar][OSFfitr[RemoveToDt(fitrkey)]]['Boot'])
+                                    pars2pt.append(datadict['twopt'][imom][iSF][RemoveTSink(iset)][ipar][OSFfitr[CreateOSFfitKey(fitrkey)]]['Boot'])
                                 data2ptZ =  ff.C2OneStateFitFunNoExp(GetintTSink(iset)-tsource,pars2pt)
                             elif 'TSF' in iSF:
                                 if not all([iState in datadict['twopt'][imom][iSF][RemoveTSink(iset)].keys() for iState in StateParList['Two']['C2']]): continue
