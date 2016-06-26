@@ -30,7 +30,8 @@ thisalpha = 0.3
 MassTVals = 16,34
 Massyrange = 0.35,1.0
 
-ylimDict = {'P4giDi':[0.05,0.15]}
+ylimDict = {'P4giDi':[0.05,0.15],
+            'P4g4':[0,1.0]}
 
 params = {'legend.fontsize': 10,
           'legend.numpoints': 1,
