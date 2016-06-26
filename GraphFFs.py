@@ -121,7 +121,7 @@ if 'Vector' in feedin['current']:
 
 thisCurrDict = []
 for icurr in feedin['current']:
-    thisCurrDict.append(GetCurrDict([icurr]))
+    thisCurrDict.append([GetCurrDict([icurr])])
 
 makeContextFunctions(ReadAndPlotFF)
 
