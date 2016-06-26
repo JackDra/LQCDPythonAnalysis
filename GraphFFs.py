@@ -141,8 +141,8 @@ else:
 
 # datadict,currPSL = ReadAndPlotFF(thisCurrDict)
 # # datadict,currPSL = ReadAndPlotFF(thisCurrDict)
- if kappa == 12090:
-     for iout in output:
-         PlotFFqPick(*iout)
+if kappa == 12090:
+    for iout in output:
+        PlotFFqPick(*iout)
 
 print 'All Plotting Complete'
