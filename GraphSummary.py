@@ -204,7 +204,7 @@ def PlotSummaryMethods(data,thisMethodSetList,igamma,iq,outputdir,dirpref=''):
     pl.grid(False,axis='x')
     if 'FF' in igamma: thisgammadir = dirpref + '/'
     else: thisgammadir = CreateOppDir(igamma)
-    thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/'+str(qsqrdstr(thisip))+'/'
+    thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/'+str(qsqrdstr(iq))+'/'
     mkdir_p(thisdir)
     pl.savefig(thisdir+'SummaryPlot'+dirpref+igamma+qstrTOqcond(iq)+'.pdf')
     pl.clf()
