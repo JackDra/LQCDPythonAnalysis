@@ -89,19 +89,19 @@ def ReadAndPlotFF(thisCurrDict,DoList='All'):
     currPSL = []
     for thiscurr,currdata in datadict.iteritems():
         if 'TSF' in DoList or 'All' in DoList:
-            print 'Plotting ' , thiscurr ,'1/5 TSF             ',
+            print 'Plotting ' , thiscurr ,'1/5 TSF             '
             PlotTSFSets(currdata,thiscurr,thisCurrDict[thiscurr])
         if 'OSF' in DoList or 'All' in DoList:
-            print 'Plotting ' , thiscurr ,'2/5 OSF             ',
+            print 'Plotting ' , thiscurr ,'2/5 OSF             '
             PlotOSFSets(currdata,thiscurr,thisCurrDict[thiscurr])
         if 'Sum' in DoList or 'All' in DoList:
-            print 'Plotting ' , thiscurr ,'3/5 Summation       ',
+            print 'Plotting ' , thiscurr ,'3/5 Summation       '
             PlotSumMethSets(currdata,thiscurr,thisCurrDict[thiscurr])
         if 'Fits' in DoList or 'All' in DoList:
-            print 'Plotting ' , thiscurr ,'4/5 Fits            ',
+            print 'Plotting ' , thiscurr ,'4/5 Fits            '
             PlotFitMethSets(currdata,thiscurr,thisCurrDict[thiscurr])
         if 'Fits' in DoList or 'All' in DoList:
-            print 'Plotting ' , thiscurr ,'5/5 Fits            ',
+            print 'Plotting ' , thiscurr ,'5/5 Fits            '
             currPSL.append(PickFFAllSets(currdata,thiscurr,thisCurrDict[thiscurr]))
         PlotFFs(currdata,thiscurr,PickFFFewSets(currdata,thiscurr,thisCurrDict[thiscurr]),'Summary')
         print 'Plotting ' , thiscurr ,'Complete, took: ', GetTimeStr(time.time()-start)
