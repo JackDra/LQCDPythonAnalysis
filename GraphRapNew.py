@@ -106,8 +106,11 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList):
                     
 
 
-feedin = InputParams(sys.argv[1:] + ['-noprompt'])
-
+if all('-m' not in iin for iin in sys.argv[1:]):
+    feedin = InputParams(sys.argv[1:] + ['-noprompt'] + ['-m=Fits,TSFTsink,TSFtest32,OSF'])
+else:
+    feedin = InputParams(sys.argv[1:] + ['-noprompt'])
+    
 thisGammaList = CreateGammaList(feedin['gamma'],twopt=True)
 
 if thisGammaList == ['twopt']:
