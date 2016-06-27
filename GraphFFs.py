@@ -32,7 +32,7 @@ def PlotTSFSets(currdata,thiscurr,thisSetList):
         else:
             PlotFFs(currdata,thiscurr,FlagList(thisSetList,'TSF',iTSF),'TSF'+iTSF+'CutComp')
     for icut in TSFCutList:
-        PlotFFs(currdata,thiscurr,FlagList(thisSetList,'TSF',icut),'TSF'+icut+'MethComp')
+        PlotFFs(currdata,thiscurr,FlagList(thisSetList,'TSF',icut),'TSFAll'+icut+'MethComp')
 
 
 def PlotOSFSets(currdata,thiscurr,thisSetList):
@@ -51,7 +51,7 @@ def PlotSumMethSets(currdata,thiscurr,thisSetList):
         PlotFFs(currdata,thiscurr,FlagList(thisSetList,'SumMeth',ifitr),'SumMeth'+ifitr+'CutComp')
 
 def PlotFitMethSets(currdata,thiscurr,thisSetList):
-    PlotFFs(currdata,thiscurr,FlagList(thisSetList,'Fit','tsink29','cut6'),'FitMytsink29')
+    PlotFFs(currdata,thiscurr,FlagList(thisSetList,'Fit','tsink29','cut6')+FlagList(thisSetList,'Fit','PoF','cut6'),'FitMytsink29')
     PlotFFs(currdata,thiscurr,FlagList(thisSetList,'Fit','sm32','cut6'),'FitMysm32')
     for iset in DefSetList:
         PlotFFs(currdata,thiscurr,FlagList(thisSetList,'Fit',iset),'Fit'+iset+'CutComp')
@@ -77,10 +77,10 @@ def PickFFFewSets(currdata,thiscurr,thisSetList):
     # for Fitkey,FitCutVal in FitCutPicked.iteritems():
     PickedSetList += FlagList(thisSetList,'Fit','tsink29'+PickedStateStr+'CM',FitCutPicked['tsink29'+PickedStateStr+'CM'])
     PickedSetList += FlagList(thisSetList,'Fit','tsink26'+PickedStateStr+'PoF',FitCutPicked['tsink26'+PickedStateStr+'PoF'+str(PoFShifts)])
-    PickedSetList += FlagList(thisSetList,'Fit','tsink35sm32',FitCutPicked['tsink35sm32'])
-    PickedSetList += FlagList(thisSetList,'SumMeth',SumFitRPicked,SumCutPar)
-    PickedSetList += FlagList(thisSetList,'OSF',OSFCutPicked)
-    PickedSetList += FlagList(thisSetList,'TSFTsink',TSFCutPicked)
+    # PickedSetList += FlagList(thisSetList,'Fit','tsink35sm32',FitCutPicked['tsink35sm32'])
+    # PickedSetList += FlagList(thisSetList,'SumMeth',SumFitRPicked,SumCutPar)
+    # PickedSetList += FlagList(thisSetList,'OSF',OSFCutPicked)
+    # PickedSetList += FlagList(thisSetList,'TSFTsink',TSFCutPicked)
     return PickedSetList
 
 def ReadAndPlotFF(thisCurrDict,DoList='All'):
@@ -101,7 +101,7 @@ def ReadAndPlotFF(thisCurrDict,DoList='All'):
             print 'Plotting ' , thiscurr ,'4/5 Fits            '
             PlotFitMethSets(currdata,thiscurr,thisCurrDict[thiscurr])
         if 'Fits' in DoList or 'All' in DoList:
-            print 'Plotting ' , thiscurr ,'5/5 Fits            '
+            print 'Plotting ' , thiscurr ,'5/5 Fits Summary            '
             currPSL.append(PickFFAllSets(currdata,thiscurr,thisCurrDict[thiscurr]))
         PlotFFs(currdata,thiscurr,PickFFFewSets(currdata,thiscurr,thisCurrDict[thiscurr]),'Summary')
         print 'Plotting ' , thiscurr ,'Complete, took: ', GetTimeStr(time.time()-start)
