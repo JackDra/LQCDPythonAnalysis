@@ -116,9 +116,6 @@ def PlotFFqPick(datadict,thisPSL):
 
 feedin = InputParams(sys.argv[1:]+['-noprompt'])
 
-if 'Vector' in feedin['current']:
-    feedin['current'] += ['GeGm']
-
 thisCurrDict = []
 for icurr in feedin['current']:
     thisCurrDict.append([GetCurrDict([icurr])])
