@@ -33,6 +33,9 @@ Massyrange = 0.35,1.0
 ylimDict = {'P4giDi':[0.05,0.15],
             'P4g4':[0,1.0]}
 
+ylimFFDict = {'Vector':[0,2],
+              'GeGm':[0,1.2]}
+
 params = {'legend.fontsize': 10,
           'legend.numpoints': 1,
           'axes.labelsize' : 20,
@@ -109,9 +112,13 @@ def SetRFAxies(thisGamma):
     SetxTicks()
     pl.legend()
 
-def SetFFAxies():
+def SetFFAxies(thisCurr):
     pl.xlabel(FFxlab)
     pl.ylabel(FFylab)
+    if thisCurr not in ylimFFDict.keys():
+        pl.ylim(max(pl.ylim()[0],-1),min(pl.ylim()[1],2))
+    else:
+        pl.ylim(ylimFFDict[thisCurr])
     pl.legend()
 
 
@@ -362,7 +369,7 @@ def PlotFFs(data,thisCurr,thisSetList,CollName):
     for iFF in range(1,NoFFPars[thisCurr]+1):
         thisFF = 'FF'+str(iFF)
         PlotFFSet(data,thisFF,thisSetList)
-        SetFFAxies()
+        SetFFAxies(thisCurr)
         pl.savefig(CreateFFFile(CollName,thisCurr,thisFF)+'.pdf')
         pl.clf()
         
