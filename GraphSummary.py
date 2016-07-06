@@ -204,6 +204,7 @@ def PlotSummaryMethods(data,thisMethodSetList,igamma,iq,outputdir,dirpref=''):
     pl.grid(False,axis='x')
     if 'FF' in igamma:
         thisgammadir = dirpref + '/'
+        print iq
         iq = qcondTOqstr(iq)
     else:
         thisgammadir = CreateOppDir(igamma)
