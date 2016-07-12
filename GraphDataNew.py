@@ -112,7 +112,8 @@ def SetRFAxies(thisGamma):
         pl.ylim(ylimDict[thisGamma])
     SetxTicks()
     pl.legend()
-
+    pl.tight_layout()
+    
 def SetFFAxies(thisCurr):
     pl.xlabel(FFxlab)
     pl.ylabel(FFylab)
@@ -121,6 +122,7 @@ def SetFFAxies(thisCurr):
     else:
         pl.ylim(ylimFFDict[thisCurr])
     pl.legend()
+    pl.tight_layout()
 
 
 def SetMassAxies():
@@ -130,6 +132,7 @@ def SetMassAxies():
     pl.ylim(Massyrange)
     SetxTicks()
     pl.legend()
+    pl.tight_layout()
 
 def SetLogAxies():
     pl.xlabel('time')
@@ -138,6 +141,7 @@ def SetLogAxies():
     pl.ylim(0,20)
     SetxTicks()
     pl.legend()
+    pl.tight_layout()
 
 
 def PlotTSinkData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
@@ -163,30 +167,30 @@ def PlotMassData(data,thisSetList,thisMom,TitleFlag=''):
     for thisDt in [2,4,6,8]:
         PlotRFSet(data,thisSetList,MassDt=thisDt)
         SetMassAxies()        
-        pl.savefig(CreateFile('Dt'+str(thisDt),'twopt',thisMom,TitleFlag+' Mass Comparison')+'.pdf',bbox_inches='tight')
+        pl.savefig(CreateFile('Dt'+str(thisDt),'twopt',thisMom,TitleFlag+' Mass Comparison')+'.pdf')
         pl.clf()
     PlotLogSet(data,thisSetList)
     SetLogAxies()
-    pl.savefig(CreateFile('','twopt',thisMom,TitleFlag+' Log Comparison')+'.pdf',bbox_inches='tight')
+    pl.savefig(CreateFile('','twopt',thisMom,TitleFlag+' Log Comparison')+'.pdf')
     pl.clf()
 
 def PlotMassSFData(data,thisSetList,thisMom,thisSF='SFCM'):
     for thisDt in [2,4,6,8]:
         PlotMassSetOSF(data,thisSetList,thisDt,thisSF)
         SetMassAxies()
-        pl.savefig(CreateFile('Dt'+str(thisDt),'twopt',thisMom,'O'+thisSF+' Mass Comparison')+'.pdf',bbox_inches='tight')
+        pl.savefig(CreateFile('Dt'+str(thisDt),'twopt',thisMom,'O'+thisSF+' Mass Comparison')+'.pdf')
         pl.clf()
         PlotMassSetTSF(data,thisSetList,thisDt,thisSF)
         SetMassAxies()
-        pl.savefig(CreateFile('Dt'+str(thisDt),'twopt',thisMom,'T'+thisSF+' Mass Comparison')+'.pdf',bbox_inches='tight')
+        pl.savefig(CreateFile('Dt'+str(thisDt),'twopt',thisMom,'T'+thisSF+' Mass Comparison')+'.pdf')
         pl.clf()
     PlotLogSetOSF(data,thisSetList,thisSF)
     SetLogAxies()
-    pl.savefig(CreateFile('','twopt',thisMom,'O'+thisSF+' Log Comparison')+'.pdf',bbox_inches='tight')
+    pl.savefig(CreateFile('','twopt',thisMom,'O'+thisSF+' Log Comparison')+'.pdf')
     pl.clf()
     PlotLogSetTSF(data,thisSetList,thisSF)
     SetLogAxies()
-    pl.savefig(CreateFile('','twopt',thisMom,'T'+thisSF+' Log Comparison')+'.pdf',bbox_inches='tight')
+    pl.savefig(CreateFile('','twopt',thisMom,'T'+thisSF+' Log Comparison')+'.pdf')
     pl.clf()
 
 def PlotCMOSFData(data,data2pt,thisSetList,thisGamma,thisMom,thistsink='tsink29',thisSF='OSFCM'):
@@ -202,30 +206,30 @@ def PlotCMTSFData(data,data2pt,thisSetList,thisGamma,thisMom,thistsink='tsink29'
 def PlotCol(data,thisSetList,thisflag,thisGamma,thisMom,TitlePref):
     PlotRFSet(data,SiftAndSort(thisSetList,thisflag,nocm=False),legrem=thisflag[0])
     SetRFAxies(thisGamma)
-    pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+'.pdf',bbox_inches='tight')
+    pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+'.pdf')
     pl.clf()
 
 def PlotColTSF(data,data2pt,thisSetList,thisflag,thisGamma,thisMom,TitlePref,TSFcut,thisTSF):
     PlotRFSetTSF(data,data2pt,SiftAndSort(thisSetList,thisflag),TSFcut,thisTSF,legrem=thisflag[0])
     SetRFAxies(thisGamma)
-    pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+str(TSFcut)+'.pdf',bbox_inches='tight')
+    pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+str(TSFcut)+'.pdf')
     pl.clf()
 
 def PlotColOSF(data,data2pt,thisSetList,thisflag,thisGamma,thisMom,TitlePref,OSFcut,thisOSF):
     PlotRFSetOSF(data,data2pt,SiftAndSort(thisSetList,thisflag,nocm=False),OSFcut,thisOSF,legrem=thisflag[0])
     SetRFAxies(thisGamma)
-    pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+str(OSFcut)+'.pdf',bbox_inches='tight')
+    pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+str(OSFcut)+'.pdf')
     pl.clf()
 
 def PlotColSum(data,thisSetList,thissm,thisGamma,thisMom,TitlePref,thisTsinkR='fit sl 0-4'):
     PlotRFSetSum(data,SiftAndSort(thisSetList,thissm),thisTsinkR,legrem=thissm[0])
     outTR = thisTsinkR.replace('-','_')
     SetRFAxies(thisGamma)
-    pl.savefig(CreateFile(thissm[0],thisGamma,thisMom,TitlePref+outTR)+'.pdf',bbox_inches='tight')
+    pl.savefig(CreateFile(thissm[0],thisGamma,thisMom,TitlePref+outTR)+'.pdf')
     pl.clf()
     if CheckDict(data,'SumMeth',thissm[0]):
         PlotSummedRF(data['SumMeth'][thissm[0]],thisTsinkR)
-        pl.savefig(CreateFile(thissm[0],thisGamma,thisMom,TitlePref+outTR)+'Sfun'+'.pdf',bbox_inches='tight')
+        pl.savefig(CreateFile(thissm[0],thisGamma,thisMom,TitlePref+outTR)+'Sfun'+'.pdf')
         pl.clf()
 
 def PlotRFSetTSF(data,data2pt,thisSetList,TSFcut,thisTSF,legrem=''):
@@ -371,7 +375,7 @@ def PlotFFs(data,thisCurr,thisSetList,CollName):
         thisFF = 'FF'+str(iFF)
         PlotFFSet(data,thisFF,thisSetList)
         SetFFAxies(thisCurr)
-        pl.savefig(CreateFFFile(CollName,thisCurr,thisFF)+'.pdf',bbox_inches='tight')
+        pl.savefig(CreateFFFile(CollName,thisCurr,thisFF)+'.pdf')
         pl.clf()
         
 
