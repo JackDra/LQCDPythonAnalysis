@@ -34,7 +34,8 @@ ylimDict = {'P4giDi':[0.05,0.15],
             'P4g4':[0,1.0]}
 
 ylimFFDict = {'Vector':[0,2],
-              'GeGm':[0,1.2]}
+              'GeGmFF1':[0,1.2],
+              'GeGmFF2':[0,3.0]}
 
 params = {'legend.fontsize': 10,
           'legend.numpoints': 1,
