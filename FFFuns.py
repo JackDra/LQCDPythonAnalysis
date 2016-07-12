@@ -100,7 +100,7 @@ def CombineVector(thisFF,thisMass):
     for iq,qFF in thisFF.iteritems():
         if len(qFF.keys()) > 0:
             FFout[iq] = {}
-            Qsqrd = int(iq.replace('qsqrd',''))*(qunit**2)
+            Qsqrd = -int(iq.replace('qsqrd',''))*(qunit**2)
             FFout[iq]['Chi'] = qFF['Chi']
             if 'Boot' in qFF.keys():
                 FFout[iq]['Boot'] = []
