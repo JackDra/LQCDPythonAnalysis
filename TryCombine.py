@@ -22,6 +22,6 @@ if CombType == 'Proton':
 if CombType == 'Neutron':
     ReadAndComb(feedin,FFNeutron,CombType)
 if CombType == 'IsoVector':
-    ReadAndComb(feedin,IsoVector,'UmD')
+    ReadAndComb(feedin,IsoVector,CombType)
 if CombType == 'Vector':
-    ReadAndComb(feedin,IsoVector,'UpD')
+    ReadAndComb(feedin,IsoVector,CombType)

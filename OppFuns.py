@@ -198,7 +198,6 @@ def WipeSFSet(outputdir,thisGammaList,RunName,OoT,setlist=[]):
 
 def SplitOpp(All):
     Split,OrdSplit,contents = [],[],[]
-    print All
     if any([igamma in All for igamma in GammaSet]):
         contents.append('Gamma')
         gammalen,thisgamma = 0,''
@@ -214,7 +213,6 @@ def SplitOpp(All):
             if iDer in All: Split.append(iDer)
     if any([iDS in All for iDS in DefDSList]) or any([icomb in All for icomb in DefCombList]):
         contents.append('DS')
-        print DefCombList
         for iDS in DefDSList+DefCombList:
             if iDS in All:
                 Split.append(iDS)
