@@ -156,7 +156,7 @@ def ReadAndComb(inputargs,Funct,funname):
                 thisSetList = ReduceTsink(inputargs['set'])
             if 'TSF' in imethod:
                 preflist = TwoStateParList['C3']
-            if 'OSF' in imethod:
+            elif 'OSF' in imethod:
                 preflist = OneStateParList['C3']
             else:
                 preflist = ['']
