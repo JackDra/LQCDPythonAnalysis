@@ -32,7 +32,7 @@ def CreateOppDir(Opp):
         Proj = thisSplitOpp[count]
     if 'Run' in contents: iscmplx = 'cmplx'
     try:
-        return igamma + '/' + DS + Proj + iscmplx + '/'
+        return igamma + '/' +Proj + iscmplx + '/' + DS + '/'
     except:
         raise  IOError('Invalid Opp string '+Opp)
 
