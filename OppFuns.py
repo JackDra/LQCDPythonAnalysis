@@ -198,22 +198,6 @@ def WipeSFSet(outputdir,thisGammaList,RunName,OoT,setlist=[]):
 
 def SplitOpp(All):
     Split,OrdSplit,contents = [],[],[]
-    if any([iDS in All for iDS in DefDSList]) or any([icomb in All for icomb in DefCombList]):
-        contents.append('DS')
-        for iDS in DefDSList+DefCombList:
-            if iDS in All:
-                Split.append(iDS)
-    if 'cmplx' in All:
-        contents.append('Run')
-        Split.append('cmplx')
-    if 'P4' in All or 'P3' in All:
-        contents.append('Proj')
-        if 'P4' in All: Split.append('P4')
-        if 'P3' in All: Split.append('P3')
-    if 'D' in All:
-        contents.append('Der')
-        for iDer in DerSet+['Di']:
-            if iDer in All: Split.append(iDer)
     if any([igamma in All for igamma in GammaSet]):
         contents.append('Gamma')
         gammalen,thisgamma = 0,''
@@ -223,6 +207,22 @@ def SplitOpp(All):
                     thisgamma = igamma
                 gammalen = len(igamma)
         Split.append(thisgamma)
+    if 'D' in All:
+        contents.append('Der')
+        for iDer in DerSet+['Di']:
+            if iDer in All: Split.append(iDer)
+    if any([iDS in All for iDS in DefDSList]) or any([icomb in All for icomb in DefCombList]):
+        contents.append('DS')
+        for iDS in DefDSList+DefCombList:
+            if iDS in All:
+                Split.append(iDS)
+    if 'P4' in All or 'P3' in All:
+        contents.append('Proj')
+        if 'P4' in All: Split.append('P4')
+        if 'P3' in All: Split.append('P3')
+    if 'cmplx' in All:
+        contents.append('Run')
+        Split.append('cmplx')
         
     # for ichar,char in enumerate(All):
     #     if char in ['d','s']:
@@ -253,11 +253,10 @@ def SplitOpp(All):
     #         Split.append(All[ichar])
     #         gdone == True
     #         contents.append('Gamma')
-    # for iflag in SearchFlags:
-    #     for ichar,(char,icont) in enumerate(zip(Split,contents)):
-    #         if char[0] in iflag:
-    #             OrdSplit.append(char)
-    #             break
+    # for ichar,(char,icont) in enumerate(zip(Split,contents)):
+    #     if char[0] in iflag:
+    #         OrdSplit.append(char)
+    #         break
     return Split,contents
 
 def PrintOpps(AllList):
