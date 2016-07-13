@@ -9,6 +9,7 @@ from ReadXml import ReadXmlAndPickle
 from OppFuns import CreateOppDir
 from OutputXmlData import MergeXmlOutput
 import operator
+from MomParams import *
 
 giDiVecSet = ['P4g1D1','P4g2D2','P4g3D3']
 ##Proton: doublet is up quark, singlet is down quark
@@ -144,13 +145,14 @@ def ReadAndComb(inputargs,Funct,funname):
                 preflist = ['']
             for ipref in preflist:
                 for imom in inputargs['mom']:
+                    momstr = qstrTOqcond(imom)
                     momdir = MakeMomDir(imom)
                     for iset in inputargs['set']:
-                        filedoub = outputdir +'/'+ doubgammadir + '/' + imethod + '/'+momdir + '/' + iset+doubgamma+ipref+imom+'.xml'
-                        filesing = outputdir +'/'+ singgammadir + '/' + imethod + '/'+momdir + '/' + iset+singgamma+ipref+imom+'.xml'
+                        filedoub = outputdir +'/'+ doubgammadir + '/' + imethod + '/'+momdir + '/' + iset+doubgamma+ipref+momstr+'.xml'
+                        filesing = outputdir +'/'+ singgammadir + '/' + imethod + '/'+momdir + '/' + iset+singgamma+ipref+momstr+'.xml'
                         print filedoub
                         print filesing
                         outdata = CombTwoFiles(filedoub,filesing,Funct)
                         mkdir_p( outputdir +'/'+ gammadir + '/'+funname+'/' + imethod + '/'+momdir + '/')
-                        outfile = outputdir +'/'+ gammadir + '/'+funname+'/' + imethod + '/'+momdir + '/' + iset+funname+igamma+ipref+imom+'.xml'
+                        outfile = outputdir +'/'+ gammadir + '/'+funname+'/' + imethod + '/'+momdir + '/' + iset+funname+igamma+ipref+momstr+'.xml'
                         MergeXmlOutput(outfile,outdata)
