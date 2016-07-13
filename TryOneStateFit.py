@@ -7,7 +7,6 @@ from Fitting import OneStateSetFit,OneStateSet2pt
 from ReadTxt import ReadCfunsnp
 from SetLists import *
 from OutputData import PrintOSFMassToFile,PrintOSFSetToFile
-from CreateCombs import MakeUmD
 from OppFuns import CreateGammaList,PrintOpps,WipeSFSet
 from FFParams import *
 from multiprocessing import Pool

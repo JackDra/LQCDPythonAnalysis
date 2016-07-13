@@ -5,6 +5,7 @@ from Params import *
 from MiscFuns import *
 from collections import OrderedDict
 from copy import deepcopy
+from ReadXml import ReadXmlAndPickle
 import operator
 
 giDiVecSet = ['P4g1D1','P4g2D2','P4g3D3']
@@ -15,21 +16,21 @@ downCharge = -1.0/3.0
 DSCombs = [('P4I',upCharge,downCharge),('P4g4',upCharge,downCharge),('P4g3g5',-1,1)]
 ops = { "+": operator.add, "-": operator.sub } 
 
-## data = [ itsink , ism/istate , igamma , ip , it ]
-def MakeUmD(data,gammalist):
-    dataout = deepcopy(data)
-    newgammalist,pairindex = UDIndex(gammalist)
-    for tsink,tsinkdata in enumerate(data):
-        for state,statedata in enumerate(tsinkdata):
-            for idu,index in enumerate(pairindex):
-                dataout[tsink][state].append([])
-                dgamma,ugamma = statedata[index[0]],statedata[index[1]]
-                for ip,(pd,pu) in enumerate(zip(dgamma,ugamma)):
-                    dataout[tsink][state][len(data[0][0])+idu].append([])
-                    for it,(td,tu) in enumerate(zip(pd,pu)):
-                        dataout[tsink][state][len(data[0][0])+idu][ip].append(td-tu)
-                        dataout[tsink][state][len(data[0][0])+idu][ip][it].Stats()
-    return dataout,newgammalist
+# ## data = [ itsink , ism/istate , igamma , ip , it ]
+# def MakeUmD(data,gammalist):
+#     dataout = deepcopy(data)
+#     newgammalist,pairindex = UDIndex(gammalist)
+#     for tsink,tsinkdata in enumerate(data):
+#         for state,statedata in enumerate(tsinkdata):
+#             for idu,index in enumerate(pairindex):
+#                 dataout[tsink][state].append([])
+#                 dgamma,ugamma = statedata[index[0]],statedata[index[1]]
+#                 for ip,(pd,pu) in enumerate(zip(dgamma,ugamma)):
+#                     dataout[tsink][state][len(data[0][0])+idu].append([])
+#                     for it,(td,tu) in enumerate(zip(pd,pu)):
+#                         dataout[tsink][state][len(data[0][0])+idu][ip].append(td-tu)
+#                         dataout[tsink][state][len(data[0][0])+idu][ip][it].Stats()
+#     return dataout,newgammalist
 
 def CreateDS(datadoub,datasing,thisGammaList):
     dataout = Swap3ptSS(datadoub)
@@ -74,3 +75,26 @@ def Swap3ptSS(cfunin):
 
 def SwapBack3ptSS(cfunin):
     return np.rollaxis(np.array(cfunin),0,3)
+        
+
+def FunctOfDicts(a, b,Funct):
+    for key in b:
+        if key in a:
+            if isinstance(a[key], dict) and isinstance(b[key], dict):
+                merge_dicts(a[key], b[key],Funct)
+            elif hasattr(a[key],"__len__") and hasattr(b[key],"__len__"):
+                if len(a[key]) == nboot and len(b[key]) == nboot:
+                    a[key] = [Funct(ia,ib) for ia,ib in zip(a[key],b[key])]
+            elif key == 'Chi':
+                a[key] = a[key] + b[key]
+            else:
+                pass
+        else:
+            raise IOError('Dictionaries not equal in keys')
+    return a
+
+def CombTwoFiles(file1,file2,funct):
+    data1,dump = ReadXmlAndPickle(file1)
+    data2,dump = ReadXmlAndPickle(file2)
+    return FunctOfDicts
+    

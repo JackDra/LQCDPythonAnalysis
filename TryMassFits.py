@@ -8,7 +8,6 @@ from SetLists import CreateMassSet,SplitSet,PickTSinkSet
 from Fitting import FitMassSet
 from OutputData import PrintFitMassSetToFile
 from FitParams import *
-from CreateCombs import MakeUmD
 import itertools as it
 import sys
 

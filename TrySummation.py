@@ -6,7 +6,6 @@ from FitParams import *
 from ReadTxt import ReadRFnp
 from SumMeth import *
 from SetLists import *
-from CreateCombs import MakeUmD
 from OppFuns import CreateGammaList,WipeSet
 from OutputData import PrintSumSetToFile
 from FFParams import *

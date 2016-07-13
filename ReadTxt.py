@@ -276,7 +276,7 @@ def ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=R
             DataDict[thisgamma] = MakeMethodsDict(gammadirin,thisgamma+'.xml',
                                                   thisMethodList,thisSetList,thisMomList=thisMomList,
                                                   thisPrintRead=thisPrintRead)
-    if 'RF' in thisMethodList: DataDict = CombSetBoot(DataDict,'-',thisPrintRead=thisPrintRead)
+    # if 'RF' in thisMethodList: DataDict = CombSetBoot(DataDict,'-',thisPrintRead=thisPrintRead)
     if thisPrintRead: print 'Reading took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
     return DataDict
 
@@ -297,7 +297,7 @@ def ReadCfunsDict(thisindir,thisSetList,thisGammaList,thisMomList=RunMomList,thi
                                                   ['RF'],thisSetList,thisMomList=thisMomList,
                                                   thisPrintRead=thisPrintRead)
     if thisPrintRead: print 'Reading Cfuns took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
-    DataDict = CombSetBoot(DataDict,'-',thisPrintRead=thisPrintRead)
+    # DataDict = CombSetBoot(DataDict,'-',thisPrintRead=thisPrintRead)
     return DataDict
 
 
@@ -353,51 +353,51 @@ def SetRFDictToList(DictData,thisPrintRead=PrintRead):
 
 
 
-def CombBoot(udata,ddata,opp):
-    dataout = {'Boot':ops[opp](np.array(udata['Boot']),np.array(ddata['Boot']))}
-    GetBootStats(dataout['Boot'])
-    dataout['tVals'] = udata['tVals']
-    dataout['Info'] = min(udata['Info'],ddata['Info'])
-    dataout['Vals'] = Pullflag(dataout['Boot'],'Avg')
-    dataout['Valserr'] = Pullflag(dataout['Boot'],'Std')
-    return dataout
+# def CombBoot(udata,ddata,opp):
+#     dataout = {'Boot':ops[opp](np.array(udata['Boot']),np.array(ddata['Boot']))}
+#     GetBootStats(dataout['Boot'])
+#     dataout['tVals'] = udata['tVals']
+#     dataout['Info'] = min(udata['Info'],ddata['Info'])
+#     dataout['Vals'] = Pullflag(dataout['Boot'],'Avg')
+#     dataout['Valserr'] = Pullflag(dataout['Boot'],'Std')
+#     return dataout
 
-def CombMethBoot(udata,ddata,opp,imom,igamma):
-    dataout = OrderedDict()
-    for iSet in udata.keys():
-        if 'Boot' in udata[iSet].keys() and 'Boot' in ddata[iSet].keys():
-            dataout[iSet] = CombBoot(udata[iSet],ddata[iSet],opp)
-        else:
-            raise IOError(iSet +' does not contain Boot for ' + igamma + ' ' + imom)
-    return dataout
+# def CombMethBoot(udata,ddata,opp,imom,igamma):
+#     dataout = OrderedDict()
+#     for iSet in udata.keys():
+#         if 'Boot' in udata[iSet].keys() and 'Boot' in ddata[iSet].keys():
+#             dataout[iSet] = CombBoot(udata[iSet],ddata[iSet],opp)
+#         else:
+#             raise IOError(iSet +' does not contain Boot for ' + igamma + ' ' + imom)
+#     return dataout
 
 
-def CombSetBoot(data,opp,thisPrintRead=PrintRead):
-    dataout = deepcopy(data)
-    start = time.time()
-    for dgamma,dgammadata in data.iteritems():
-        if 'doub' in dgamma:
-            combgamma = dgamma.replace('doub','')
-            for sgamma,sgammadata in data.iteritems():
-                if 'sing'+combgamma == sgamma:
-                    if thisPrintRead: print 'Combining ' , dgamma , ' ' , sgamma ,'             \r',
-                    if combgamma not in dataout.keys():
-                        dataout[combgamma] = OrderedDict()
-                    for imom in dgammadata.iterkeys():
-                        if imom in sgammadata.keys():
-                            if 'RF' in sgammadata[imom].keys():
-                                if imom not in dataout[combgamma].keys():
-                                    dataout[combgamma][imom] = OrderedDict()
-                                dataout[combgamma][imom]['RF'] = CombMethBoot(data[sgamma][imom]['RF'],
-                                                                              data[dgamma][imom]['RF'],opp,imom,combgamma)
-                            else:
-                                print ''
-                                print 'Warning: ', imom , ' in ' , dgamma , ' but not in ' , sgamma 
-                        else:
-                            print ''
-                            print 'Warning: ', imom , ' in ' , dgamma , ' but not in ' , sgamma 
-    if thisPrintRead: print 'Combining took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
-    return dataout
+# def CombSetBoot(data,opp,thisPrintRead=PrintRead):
+#     dataout = deepcopy(data)
+#     start = time.time()
+#     for dgamma,dgammadata in data.iteritems():
+#         if 'doub' in dgamma:
+#             combgamma = dgamma.replace('doub','')
+#             for sgamma,sgammadata in data.iteritems():
+#                 if 'sing'+combgamma == sgamma:
+#                     if thisPrintRead: print 'Combining ' , dgamma , ' ' , sgamma ,'             \r',
+#                     if combgamma not in dataout.keys():
+#                         dataout[combgamma] = OrderedDict()
+#                     for imom in dgammadata.iterkeys():
+#                         if imom in sgammadata.keys():
+#                             if 'RF' in sgammadata[imom].keys():
+#                                 if imom not in dataout[combgamma].keys():
+#                                     dataout[combgamma][imom] = OrderedDict()
+#                                 dataout[combgamma][imom]['RF'] = CombMethBoot(data[sgamma][imom]['RF'],
+#                                                                               data[dgamma][imom]['RF'],opp,imom,combgamma)
+#                             else:
+#                                 print ''
+#                                 print 'Warning: ', imom , ' in ' , dgamma , ' but not in ' , sgamma 
+#                         else:
+#                             print ''
+#                             print 'Warning: ', imom , ' in ' , dgamma , ' but not in ' , sgamma 
+#     if thisPrintRead: print 'Combining took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
+#     return dataout
 
 
 def MakeMethodsDict(readdir,readfile,thisMethodList,thisSetList,thisMomList=RunMomList,thisPrintRead=PrintRead):

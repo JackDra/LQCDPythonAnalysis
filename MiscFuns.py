@@ -31,7 +31,6 @@ def CheckZip(*data):
       
       
 def merge_dicts(a, b, path=None):
-   "merges b into a"
    if path is None: path = []
    for key in b:
       if key in a:

@@ -203,8 +203,6 @@ for iDS in DefDSList:
         ReadGammaList += [iDS+'P'+Proj[3]+iGL for iGL in GL]
     for Proj,GL in ReadProjDerList.iteritems():
         ReadGammaList += [iDS+'P'+Proj[3]+iGL for iGL in GL]
-DefCombGammaList,dump = UDIndex(DefGammaList)
-DefRedGammaList = DefCombGammaList[len(DefGammaList):]
 
 # DeftoList = [17,18,19,20,21,22,23]
 DeftoList = [16,17,18,19,20]

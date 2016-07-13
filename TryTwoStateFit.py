@@ -7,7 +7,6 @@ from Fitting import MomTSSetFit,MomTSSetFit2pt
 from ReadTxt import ReadCfunsnp
 from SetLists import *
 from OutputData import PrintTSFMassToFile,PrintTSFSetToFile
-from CreateCombs import MakeUmD
 from OppFuns import CreateGammaList,PrintOpps,WipeSF
 from FFParams import *
 # from multiprocessing.pool import ThreadPool
@@ -118,7 +117,6 @@ def DoTSF(thisSetList,thisGammaList,TSF2ptarray,twoptGammaMomList,thisMomList):
     ## data2pt = [ ip , iset2pt , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     ## data3pt = [ igamma , ip , iset , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 
-    # data3pt,thisGammaList = MakeUmD(data3pt,thisGammaList)
     thisGammaList.remove('twopt')
 
     # thisFitTSFR = [thisFitTSFR[0]]
