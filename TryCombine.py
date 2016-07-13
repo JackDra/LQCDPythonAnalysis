@@ -3,7 +3,7 @@
 from Params import *
 from CreateCombs import *
 from InputArgs import *
-
+from OppFuns import *
 
 
 
@@ -13,13 +13,13 @@ thisGammaList = CreateGammaList(feedin['gamma'])
 
 ShowSetLists(feedin['set'])
 
-CombType = raw_input("What Combination do you want? (Proton, Neutron, IsoVector)")
+CombType = raw_input("What Combination do you want? (Proton, Neutron, IsoVector) \n")
 if CombType not in ['Proton','Neutron','IsoVector']:
     raise IOError("choose Proton, Neutron, IsoVector")
 
 if CombType == 'Proton':
-    ReadAndComb(inputargs,FFProton,CombType)
+    ReadAndComb(feedin,FFProton,CombType)
 if CombType == 'Neutron':
-    ReadAndComb(inputargs,FFNeutron,CombType)
+    ReadAndComb(feedin,FFNeutron,CombType)
 if CombType == 'IsoVector':
-    ReadAndComb(inputargs,IsoVector,'')
+    ReadAndComb(feedin,IsoVector,'')
