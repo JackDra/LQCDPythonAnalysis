@@ -103,9 +103,9 @@ def XmlBootToAvg(datadict,BootDict=None):
             else:
                 XmlBootToAvg(datadict[key],BootDict = BootDict[key])          
         elif key == 'Avg':
-            datadict[key] = np.mean(BootDict[key])
+            datadict[key] = np.mean(BootDict)
         elif key == 'Std':
-            datadict[key] = np.std(BootDict[key])
+            datadict[key] = np.std(BootDict)
         else:
             pass
     return datadict
