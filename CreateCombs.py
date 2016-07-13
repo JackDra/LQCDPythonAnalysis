@@ -99,9 +99,9 @@ def XmlBootToAvg(datadict,BootDict=None):
         if key == 'Boot': continue
         if isinstance(datadict[key], dict):
             if key == 'Values':
-                FunctOfDicts(datadict[key],BootDict = BootDict['Boots'])
+                XmlBootToAvg(datadict[key],BootDict = BootDict['Boots'])
             else:
-                FunctOfDicts(datadict[key],BootDict = BootDict[key])          
+                XmlBootToAvg(datadict[key],BootDict = BootDict[key])          
         elif key == 'Avg':
             datadict[key] = np.mean(BootDict[key])
         elif key == 'Std':
