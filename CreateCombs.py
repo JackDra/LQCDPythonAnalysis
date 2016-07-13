@@ -169,6 +169,8 @@ def ReadAndComb(inputargs,Funct,funname):
                         filedoub = outputdir +'/'+ doubgammadir + '/' + imethod + '/'+momdir + '/' + iset+doubgamma+ipref+momstr+'.xml'
                         filesing = outputdir +'/'+ singgammadir + '/' + imethod + '/'+momdir + '/' + iset+singgamma+ipref+momstr+'.xml'
                         outdata = CombTwoFiles(filedoub,filesing,Funct)
+                        if Debug: print filedoub
+                        if Debug: print filesing                        
                         mkdir_p( outputdir +'/'+ gammadir +'/' + imethod + '/'+momdir + '/')
                         outfile = outputdir +'/'+ gammadir +'/' + imethod + '/'+momdir + '/' + iset+funname+igamma+ipref+momstr
                         WriteXmlOutput(outfile,outdata)
