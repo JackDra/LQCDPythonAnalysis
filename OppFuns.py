@@ -18,6 +18,7 @@ def CreateOppDir(Opp):
     if Opp in ['Mass','twopt']: return Opp+'/'
     thisSplitOpp,contents = SplitOpp(Opp)
     count,iscmplx = 0,''
+    print SplitOpps
     DS = ''
     if 'Gamma' in contents:
         igamma = thisSplitOpp[count]
