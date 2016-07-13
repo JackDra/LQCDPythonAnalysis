@@ -12,6 +12,7 @@ import operator
 from MomParams import *
 from XmlFormatting import *
 from FitParams import *
+from SetLists import *
 
 giDiVecSet = ['P4g1D1','P4g2D2','P4g3D3']
 ##Proton: doublet is up quark, singlet is down quark
@@ -150,17 +151,21 @@ def ReadAndComb(inputargs,Funct,funname):
         singgammadir = CreateOppDir(singgamma)
         gammadir = CreateOppDir(funname+igamma)
         for imethod in inputargs['method']:
+            thisSetList = inputargs['set']
+            if 'TSF' in imethod or 'SumMeth' in imethod:
+                thisSetList = ReduceTsink(inputargs['set'])
             if 'TSF' in imethod:
                 preflist = TwoStateParList['C3']
             if 'OSF' in imethod:
                 preflist = OneStateParList['C3']
             else:
                 preflist = ['']
+                
             for ipref in preflist:
                 for imom in inputargs['mom']:
                     momstr = qstrTOqcond(imom)
                     momdir = MakeMomDir(imom)
-                    for iset in inputargs['set']:
+                    for iset in thisSetList:
                         filedoub = outputdir +'/'+ doubgammadir + '/' + imethod + '/'+momdir + '/' + iset+doubgamma+ipref+momstr+'.xml'
                         filesing = outputdir +'/'+ singgammadir + '/' + imethod + '/'+momdir + '/' + iset+singgamma+ipref+momstr+'.xml'
                         outdata = CombTwoFiles(filedoub,filesing,Funct)
