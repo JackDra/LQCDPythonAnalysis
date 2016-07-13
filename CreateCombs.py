@@ -93,8 +93,25 @@ def FunctOfDicts(a, b,Funct):
             raise IOError('Dictionaries not equal in keys')
     return a
 
+def XmlBootToAvg(datadict,BootDict=None):
+    if BootDict == None: BootDict = datadict
+    for key in datadict:
+        if key == 'Boot': continue
+        if isinstance(datadict[key], dict):
+            if key == 'Values':
+                FunctOfDicts(datadict[key],BootDict = BootDict['Boots'])
+            else:
+                FunctOfDicts(datadict[key],BootDict = BootDict[keys])          
+        elif key == 'Avg':
+            datadict[key] = np.mean(BootDict[key])
+        elif key == 'Std':
+            datadict[key] = np.std(BootDict[key])
+        else:
+            pass
+    return datadict
+    
+
 def CombTwoFiles(file1,file2,funct):
     data1,dump = ReadXmlAndPickle(file1)
     data2,dump = ReadXmlAndPickle(file2)
-    return FunctOfDicts(data1,data2,funct)
-    
+    return XmlBootToAvg(FunctOfDicts(data1,data2,funct))
