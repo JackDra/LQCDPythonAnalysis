@@ -214,7 +214,7 @@ def SplitOpp(All):
     if any([iDS in All for iDS in DefDSList]) or any([icomb in All for icomb in DefCombList]):
         contents.append('DS')
         for iDS in DefDSList+DefCombList:
-            if iDS in All:
+            if iDS in All and 'Iso'+iDS not in All:
                 Split.append(iDS)
     if 'P4' in All or 'P3' in All:
         contents.append('Proj')
