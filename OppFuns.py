@@ -200,9 +200,9 @@ def SplitOpp(All):
     Split,OrdSplit,contents = [],[],[]
     SearchFlags = [['g','I'],['D'],['d','s'],['P'],['c']]
     gdone = False
-    if any([iDS in All for iDS in DefDSList]):
+    if any([iDS in All for iDS in DefDSList]) or any([icomb in All for icomb in DefCombList]):
         contents.append('DS')
-        for iDS in DefDSList:
+        for iDS in DefDSList+DefCombList:
             if iDS in All:
                 Split.append(iDS)
     if 'cmplx' in All:

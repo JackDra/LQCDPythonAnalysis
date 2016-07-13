@@ -22,6 +22,9 @@ ops = { "+": operator.add, "-": operator.sub }
 def IsoVector(val1,val2):
     return val1 - val2
 
+def Vector(val1,val2):
+    return val1 + val2
+
 def FFProton(val1,val2):
     return upCharge*val1 - downCharge*val2
 
@@ -135,7 +138,7 @@ def ReadAndComb(inputargs,Funct,funname):
         singgamma = 'sing'+igamma
         doubgammadir = CreateOppDir(doubgamma)
         singgammadir = CreateOppDir(singgamma)
-        gammadir = CreateOppDir(igamma)
+        gammadir = CreateOppDir(funname+igamma)
         for imethod in inputargs['method']:
             if 'TSF' in imethod:
                 preflist = TwoStateParList['C3']
@@ -150,9 +153,7 @@ def ReadAndComb(inputargs,Funct,funname):
                     for iset in inputargs['set']:
                         filedoub = outputdir +'/'+ doubgammadir + '/' + imethod + '/'+momdir + '/' + iset+doubgamma+ipref+momstr+'.xml'
                         filesing = outputdir +'/'+ singgammadir + '/' + imethod + '/'+momdir + '/' + iset+singgamma+ipref+momstr+'.xml'
-                        print filedoub
-                        print filesing
                         outdata = CombTwoFiles(filedoub,filesing,Funct)
-                        mkdir_p( outputdir +'/'+ gammadir + '/'+funname+'/' + imethod + '/'+momdir + '/')
-                        outfile = outputdir +'/'+ gammadir + '/'+funname+'/' + imethod + '/'+momdir + '/' + iset+funname+igamma+ipref+momstr
+                        mkdir_p( outputdir +'/'+ gammadir +'/' + imethod + '/'+momdir + '/')
+                        outfile = outputdir +'/'+ gammadir +'/' + imethod + '/'+momdir + '/' + iset+funname+igamma+ipref+momstr
                         MergeXmlOutput(outfile,outdata)
