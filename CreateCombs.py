@@ -81,7 +81,7 @@ def FunctOfDicts(a, b,Funct):
     for key in b:
         if key in a:
             if isinstance(a[key], dict) and isinstance(b[key], dict):
-                merge_dicts(a[key], b[key],Funct)
+                FunctOfDicts(a[key], b[key],Funct)
             elif hasattr(a[key],"__len__") and hasattr(b[key],"__len__"):
                 if len(a[key]) == nboot and len(b[key]) == nboot:
                     a[key] = [Funct(ia,ib) for ia,ib in zip(a[key],b[key])]
