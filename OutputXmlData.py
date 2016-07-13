@@ -36,6 +36,7 @@ def WriteXml(thisfile,outputdict):
     
 
 def WriteXmlOutput(thisfile,outputdict):
+    print 'DEBUG' , outputdict
     firstkey = outputdict.keys()[0]
     Vals = {firstkey:{'Values':outputdict[firstkey]['Values']}}
     if 'Info' in outputdict[firstkey].keys(): Vals[firstkey]['Info'] = outputdict[firstkey]['Info']
