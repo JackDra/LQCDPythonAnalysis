@@ -96,5 +96,5 @@ def FunctOfDicts(a, b,Funct):
 def CombTwoFiles(file1,file2,funct):
     data1,dump = ReadXmlAndPickle(file1)
     data2,dump = ReadXmlAndPickle(file2)
-    return FunctOfDicts
+    return FunctOfDicts(data1,data2,funct)
     
