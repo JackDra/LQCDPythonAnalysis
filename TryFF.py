@@ -35,11 +35,17 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr):
     # mprint( 'Set:' + theset + ' MassSetPicked:'+thesetmass)
 ## FF { { momsqrd } { Boot/Avg/Chi } }
     thisstart = time.time()
-    FF,infodict = CreateFF(setdict,thisMass['Avg'],thisCurr)
-    PrintFFSet(FF,theset,thisMass,thesetmass,thisCurr,infodict)
+    FF,infodict = CreateFF(setdict,thisMass['Avg'],thisCurr,gammaflag='doub')
+    PrintFFSet(FF,theset,thisMass,thesetmass,'doub'+thisCurr,infodict)
     if 'Vector' in thisCurr:
         NewFF = CombineVector(FF,thisMass)
-        PrintFFSet(NewFF,theset,thisMass,thesetmass,'GeGm',infodict)
+        PrintFFSet(NewFF,theset,thisMass,thesetmass,'doubGeGm',infodict)
+
+    FF,infodict = CreateFF(setdict,thisMass['Avg'],thisCurr,gammaflag='sing')
+    PrintFFSet(FF,theset,thisMass,thesetmass,'sing'+thisCurr,infodict)
+    if 'Vector' in thisCurr:
+        NewFF = CombineVector(FF,thisMass)
+        PrintFFSet(NewFF,theset,thisMass,thesetmass,'singGeGm',infodict)
     mprint( 'Fit and Print for ' , theset , ' took: ',str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s'    )
 
 
@@ -78,7 +84,8 @@ thisGammaList = []
 if 'RF' in feedin['set']: del feedin['set']['RF']
 if 'GeGm' in feedin['current']: del feedin['current']['GeGm']
 for thisCurr in feedin['current']:
-    thisGammaList = CurrOpps[thisCurr] + [iC+'cmplx' for iC in CurrOpps[thisCurr]] + ['twopt']
+    thisGammaList = CurrOpps[thisCurr] + [iC+'cmplx' for iC in CurrOpps[thisCurr]]
+    thisGammaList = ['doub'+ig for ig in thisGammaList] + ['sing'+ig for ig in thisGammaList]+ ['twopt']
     for imeth in feedin['method']:
         if 'Fits' in imeth or 'OSF' in imeth:
             for iSet in feedin['set']:

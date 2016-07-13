@@ -14,7 +14,7 @@ from LLSBoot import *
 ## data { { gamma } { mom } { Fit(Boot/Avg/Std/Chi) } }
 ## dataout { { momsqrd } { Boot/Avg/Chi }
 ##REMEBER deal with cmplx signals
-def CreateFF(data,mass,iCurr):
+def CreateFF(data,mass,iCurr,gammaflag=''):
     thisdataout = {}
     Opps = CurrOpps[iCurr]
     thisdataout = OrderedDict()
@@ -26,26 +26,27 @@ def CreateFF(data,mass,iCurr):
         for iff in range(NoFFPars[iCurr]):
             FFcoeff.append([])
         for iopp in Opps:                    
+            flagopp = gammaflag+iopp
             RealVal,CmplxVal = False,False
-            if iopp in data.keys(): RealVal = True
-            if iopp+'cmplx' in data.keys(): CmplxVal = True
+            if flagopp in data.keys(): RealVal = True
+            if flagopp+'cmplx' in data.keys(): CmplxVal = True
             if not RealVal and not CmplxVal: continue
             for iq in qvecINqsqrd(int(iqsqrd)):
                 if RealVal: 
-                    if iq not in data[iopp].keys(): continue 
+                    if iq not in data[flagopp].keys(): continue 
                 if CmplxVal: 
-                    if iq not in data[iopp+'cmplx'].keys(): continue 
+                    if iq not in data[flagopp+'cmplx'].keys(): continue 
                 FFcoeffhold,rcheck,ccheck = CurrFFs[iCurr](iopp,np.array(qstrTOqvec(iq))*qunit,[0,0,0],mass)
                 if CmplxVal and ccheck:
                     for iFF,iFFcof in enumerate(FFcoeffhold):
                         FFcoeff[iFF].append(iFFcof.imag)
-                    datavals.append(data[iopp+'cmplx'][iq]['Boot'])
-                    infodict[iqs] = data[iopp+'cmplx'][iq]['Info']
+                    datavals.append(data[flagopp+'cmplx'][iq]['Boot'])
+                    infodict[iqs] = data[flagopp+'cmplx'][iq]['Info']
                 if RealVal and rcheck:
                     for iFF,iFFcof in enumerate(FFcoeffhold):
                         FFcoeff[iFF].append(iFFcof.real)
-                    datavals.append(data[iopp][iq]['Boot'])
-                    infodict[iqs] = data[iopp][iq]['Info']
+                    datavals.append(data[flagopp][iq]['Boot'])
+                    infodict[iqs] = data[flagopp][iq]['Info']
         if len(datavals) == 0: continue
         zboot,zvec = [BootStrap1(nboot,0)],[0.0]
         if 'Scalar' in iCurr :
