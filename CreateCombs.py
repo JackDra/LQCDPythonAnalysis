@@ -127,7 +127,7 @@ def XmlBootToAvg(datadict,BootDict=None):
                     if 'Chi' in datadict[key].keys():
                         datadict[key] = DictAvgStdChiToFormat(datadict[key],datadict[key]['Chi'])
                     else:
-                        datadict[key] = DictAvgStdChiToFormat(datadict[key])
+                        datadict[key] = DictAvgStdToFormat(datadict[key])
         elif key == 'Avg':
             datadict[key] = np.mean(BootDict)
         elif key == 'Std':
