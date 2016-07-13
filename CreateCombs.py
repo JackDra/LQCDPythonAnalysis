@@ -7,7 +7,7 @@ from collections import OrderedDict
 from copy import deepcopy
 from ReadXml import ReadXmlAndPickle
 from OppFuns import CreateOppDir
-from OutputXmlData import MergeXmlOutput,WriteXmlOut
+from OutputXmlData import MergeXmlOutput,WriteXmlOutput
 import operator
 from MomParams import *
 from XmlFormatting import *
