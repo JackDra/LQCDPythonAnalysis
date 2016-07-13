@@ -17,7 +17,6 @@ def DoubSingCmplxList(listin):
 def CreateOppDir(Opp):
     if Opp in ['Mass','twopt']: return Opp+'/'
     thisSplitOpp,contents = SplitOpp(Opp)
-    print thisSplitOpp,contents
     count,iscmplx = 0,''
     DS = ''
     if 'Gamma' in contents:
@@ -199,8 +198,8 @@ def WipeSFSet(outputdir,thisGammaList,RunName,OoT,setlist=[]):
 
 def SplitOpp(All):
     Split,OrdSplit,contents = [],[],[]
-    SearchFlags = [['g','I'],['D'],['d','s'],['P'],['c']]
-    gdone = False
+    # SearchFlags = [['g','I'],['D'],['d','s'],['P'],['c']]
+    # gdone = False
     if any([iDS in All for iDS in DefDSList]) or any([icomb in All for icomb in DefCombList]):
         contents.append('DS')
         for iDS in DefDSList+DefCombList:
@@ -256,11 +255,11 @@ def SplitOpp(All):
     #         Split.append(All[ichar])
     #         gdone == True
     #         contents.append('Gamma')
-    for iflag in SearchFlags:
-        for ichar,(char,icont) in enumerate(zip(Split,contents)):
-            if char[0] in iflag:
-                OrdSplit.append(char)
-                break
+    # for iflag in SearchFlags:
+    #     for ichar,(char,icont) in enumerate(zip(Split,contents)):
+    #         if char[0] in iflag:
+    #             OrdSplit.append(char)
+    #             break
     return OrdSplit,contents
 
 def PrintOpps(AllList):
