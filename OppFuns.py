@@ -19,7 +19,6 @@ def CreateOppDir(Opp):
     thisSplitOpp,contents = SplitOpp(Opp)
     count,iscmplx = 0,''
     DS = ''
-    print thisSplitOpp,contents
     if 'Gamma' in contents:
         igamma = thisSplitOpp[count]
         count += 1
@@ -199,8 +198,6 @@ def WipeSFSet(outputdir,thisGammaList,RunName,OoT,setlist=[]):
 
 def SplitOpp(All):
     Split,OrdSplit,contents = [],[],[]
-    # SearchFlags = [['g','I'],['D'],['d','s'],['P'],['c']]
-    # gdone = False
     if any([iDS in All for iDS in DefDSList]) or any([icomb in All for icomb in DefCombList]):
         contents.append('DS')
         for iDS in DefDSList+DefCombList:
@@ -261,7 +258,7 @@ def SplitOpp(All):
     #         if char[0] in iflag:
     #             OrdSplit.append(char)
     #             break
-    return OrdSplit,contents
+    return Split,contents
 
 def PrintOpps(AllList):
     Extra,thisGS,thisDSS,thisProjS,RunRS = SetOpps(AllList)
