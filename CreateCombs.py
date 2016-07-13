@@ -11,6 +11,7 @@ from OutputXmlData import MergeXmlOutput,WriteXmlOutput
 import operator
 from MomParams import *
 from XmlFormatting import *
+from FFParams import *
 
 giDiVecSet = ['P4g1D1','P4g2D2','P4g3D3']
 ##Proton: doublet is up quark, singlet is down quark
