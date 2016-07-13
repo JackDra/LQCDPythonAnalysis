@@ -10,6 +10,7 @@ from OppFuns import CreateOppDir
 from OutputXmlData import MergeXmlOutput
 import operator
 from MomParams import *
+from XmlFormatting import *
 
 giDiVecSet = ['P4g1D1','P4g2D2','P4g3D3']
 ##Proton: doublet is up quark, singlet is down quark
@@ -116,7 +117,15 @@ def XmlBootToAvg(datadict,BootDict=None):
             if key == 'Values':
                 XmlBootToAvg(datadict[key],BootDict = BootDict['Boots'])
             else:
-                XmlBootToAvg(datadict[key],BootDict = BootDict[key])          
+                datadict[key]['Avg'] = np.mean(BootDict)
+                datadict[key]['Std'] = np.std(BootDict)
+                if 'Avg' not in datadict[key].keys():
+                    XmlBootToAvg(datadict[key],BootDict = BootDict[key])          
+                else:
+                    if 'Chi' in datadict[key].keys():
+                        datadict[key] = DictAvgStdChiToFormat(datadict[keys],datadict[key]['Chi'])
+                    else:
+                        datadict[key] = DictAvgStdChiToFormat(datadict[keys])
         elif key == 'Avg':
             datadict[key] = np.mean(BootDict)
         elif key == 'Std':
