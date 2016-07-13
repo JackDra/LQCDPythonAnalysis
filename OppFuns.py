@@ -19,6 +19,7 @@ def CreateOppDir(Opp):
     thisSplitOpp,contents = SplitOpp(Opp)
     count,iscmplx = 0,''
     DS = ''
+    print thisSplitOpp,contents
     if 'Gamma' in contents:
         igamma = thisSplitOpp[count]
         count += 1
