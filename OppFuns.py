@@ -17,6 +17,7 @@ def DoubSingCmplxList(listin):
 def CreateOppDir(Opp):
     if Opp in ['Mass','twopt']: return Opp+'/'
     thisSplitOpp,contents = SplitOpp(Opp)
+    print thisSplitOpp,contents
     count,iscmplx = 0,''
     DS = ''
     if 'Gamma' in contents:
