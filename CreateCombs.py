@@ -145,7 +145,7 @@ def ReadAndComb(inputargs,Funct,funname):
             for ipref in preflist:
                 for imom in inputargs['mom']:
                     momdir = MakeMomDir(imom)
-                    for iset in inputargs['iset']:
+                    for iset in inputargs['set']:
                         filedoub = outputdir +'/'+ doubgammadir + '/' + imethod + '/'+momdir + '/' + iset+doubgamma+ipref+imom+'.xml'
                         filesing = outputdir +'/'+ singgammadir + '/' + imethod + '/'+momdir + '/' + iset+singgamma+ipref+imom+'.xml'
                         outdata = CombTwoFiles(filedoub,filesing,Funct)
