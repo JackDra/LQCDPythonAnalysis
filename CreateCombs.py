@@ -151,6 +151,8 @@ def ReadAndComb(inputargs,Funct,funname):
         singgammadir = CreateOppDir(singgamma)
         gammadir = CreateOppDir(funname+igamma)
         for imethod in inputargs['method']:
+            if imethod == 'RF': methoddir = ''
+            else: methoddir = '/'+imethod
             thisSetList = inputargs['set']
             if 'TSF' in imethod or 'SumMeth' in imethod:
                 thisSetList = ReduceTsink(inputargs['set'])
@@ -166,12 +168,12 @@ def ReadAndComb(inputargs,Funct,funname):
                     momstr = qstrTOqcond(imom)
                     momdir = MakeMomDir(imom)
                     for iset in thisSetList:
-                        filedoub = outputdir +'/'+ doubgammadir + '/' + imethod + '/'+momdir + '/' + iset+doubgamma+ipref+momstr+'.xml'
-                        filesing = outputdir +'/'+ singgammadir + '/' + imethod + '/'+momdir + '/' + iset+singgamma+ipref+momstr+'.xml'
+                        filedoub = outputdir +'/'+ doubgammadir + methoddir + '/'+momdir + '/' + iset+doubgamma+ipref+momstr+'.xml'
+                        filesing = outputdir +'/'+ singgammadir + methoddir + '/'+momdir + '/' + iset+singgamma+ipref+momstr+'.xml'
                         outdata = CombTwoFiles(filedoub,filesing,Funct)
                         if Debug: print filedoub
                         if Debug: print filesing                        
-                        mkdir_p( outputdir +'/'+ gammadir +'/' + imethod + '/'+momdir + '/')
-                        outfile = outputdir +'/'+ gammadir +'/' + imethod + '/'+momdir + '/' + iset+funname+igamma+ipref+momstr
+                        mkdir_p( outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/')
+                        outfile = outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/' + iset+funname+igamma+ipref+momstr
                         WriteXmlOutput(outfile,outdata)
                         # MergeXmlOutput(outfile,outdata)
