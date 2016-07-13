@@ -6,6 +6,8 @@ from MiscFuns import *
 from collections import OrderedDict
 from copy import deepcopy
 from ReadXml import ReadXmlAndPickle
+from OppFuns import CreateOppDir
+from OutputXmlData import MergeXmlOutput
 import operator
 
 giDiVecSet = ['P4g1D1','P4g2D2','P4g3D3']
@@ -15,6 +17,15 @@ upCharge = 2.0/3.0
 downCharge = -1.0/3.0
 DSCombs = [('P4I',upCharge,downCharge),('P4g4',upCharge,downCharge),('P4g3g5',-1,1)]
 ops = { "+": operator.add, "-": operator.sub } 
+
+def IsoVector(val1,val2):
+    return val1 - val2
+
+def FFProton(val1,val2):
+    return upCharge*val1 - downCharge*val2
+
+def FFNeutron(val1,val2):
+    return downCharge*val1 - upCharge*val2
 
 # ## data = [ itsink , ism/istate , igamma , ip , it ]
 # def MakeUmD(data,gammalist):
@@ -115,3 +126,28 @@ def CombTwoFiles(file1,file2,funct):
     data1,dump = ReadXmlAndPickle(file1)
     data2,dump = ReadXmlAndPickle(file2)
     return XmlBootToAvg(FunctOfDicts(data1,data2,funct))
+
+def ReadAndComb(inputargs,Funct,funname):
+    for igamma in inputargs['gamma']:
+        if 'doub' in igamma or 'sing' in igamma: continue
+        doubgamma = 'doub'+igamma
+        singgamma = 'sing'+igamma
+        doubgammadir = CreateOppDir(doubgamma)
+        singgammadir = CreateOppDir(singgamma)
+        gammadir = CreateOppDir(igamma)
+        for imethod in inputargs['method']:
+            if 'TSF' in imethod:
+                preflist = TwoStateParList['C3']
+            if 'OSF' in imethod:
+                preflist = OneStateParList['C3']
+            else:
+                preflist = ['']
+            for ipref in preflist:
+                for imom in inputargs['mom']:
+                    momdir = MakeMomDir(imom)
+                    for iset in inputargs['iset']:
+                        filedoub = outputdir +'/'+ doubgammadir + '/' + imethod + '/'+momdir + '/' + iset+doubgamma+ipref+imom+'.xml'
+                        filesing = outputdir +'/'+ singgammadir + '/' + imethod + '/'+momdir + '/' + iset+singgamma+ipref+imom+'.xml'
+                        outdata = CombTwoFiles(filedoub,filesing,Funct)
+                        outfile = outputdir +'/'+ gammadir + '/'+funname+'/' + imethod + '/'+momdir + '/' + iset+funname+igamma+ipref+imom+'.xml'
+                        MergeXmlOutput(outfile,outdata)

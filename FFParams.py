@@ -74,7 +74,6 @@ NoFFList = {'Scalar'   : ['FF1'],
             'PsVector' : ['FF1','FF2'],
             'Tensor'   : ['FF1','FF2','FF3']}
 
-DSCombsList = ['doub','sing','','proton','neutron','UpD']
 
 
 def FindMomFromGamma(igamma,thisMomList=qvecSet):
