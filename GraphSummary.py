@@ -18,6 +18,7 @@ import itertools
 from FormFactors import NoFFPars
 from SetLists import *
 from FFParams import *
+from CreateCombs import CreateDictOldCombs
 
 colourset8 = [ '#000080','#B22222','#00B800','#8B008B', '#0000FF','#FF0000','#000000','#32CD32','#FF0066']
 markerset = ['o','s','^','v','d']
@@ -241,8 +242,9 @@ def PlotSummarySet(igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
     return xstart+len(xdata),Xlables+['']
 
 
-def ReadAndPlotSummary(thisMethodList,thisGammaList,thisSetList,thisMomList):
+def ReadAndPlotSummary(thisMethodList,thisGammaList,thisSetList,thisMomList,thisCombList):
     data,massdata = ExtractValues(outputdir,thisGammaList,thisSetList,thisMethodList,thisMomList=thisMomList)
+    combdatadict = CreateDictOldCombs(datadict,thisCombList)
     thisMethodSetList = CreateMethodSetList(thisMethodList,data.keys())
     for igamma in thisGammaList:
         if igamma == 'twopt': continue

@@ -27,14 +27,14 @@ if 'RF' in feedin['method']: feedin['method'].remove('RF')
 if DoMulticore and feedin['anaproc'] > 1:
     inputparams = []
     for igamma in thisGammaList:
-        inputparams.append((feedin['method'],[igamma,'twopt'],feedin['set'],feedin['mom']))
+        inputparams.append((feedin['method'],[igamma,'twopt'],feedin['set'],feedin['mom'],feedin['comb']))
     makeContextFunctions(ReadAndPlotSummary)
     thisPool = Pool(min(len(inputparams),feedin['anaproc']))
     thisPool.map(ReadAndPlotSummary.mapper,inputparams)
     thisPool.close()
     thisPool.join()
 else:
-    ReadAndPlotSummary(feedin['method'],thisGammaList,feedin['set'],feedin['mom'])    
+    ReadAndPlotSummary(feedin['method'],thisGammaList,feedin['set'],feedin['mom'],feedin['comb'])    
     
 
 # for iin in inputparams: ReadAndPlotSummary(*iin)
