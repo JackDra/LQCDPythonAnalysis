@@ -276,12 +276,13 @@ def ReadAndPlotSummary(thisMethodList,thisGammaList,thisSetList,thisMomList,this
                 PlotSummaryMethods(data,thisMethodSetList,iDS,gammastrip,imom,outputdir)
 
 
-def PlotFFSummary(thisSL,thiscurr,currdata):
+def PlotFFSummary(thisSL,DSCurr,currdata):
     if 'RF' in MethodList: MethodList.remove('RF')
     thisMethodSetList = CreateMethodSetList(MethodList,thisSL)
-    for iFF in NoFFList[thiscurr]:
+    thisDS,thisCurr = SplitDSCurr(DSCurr)
+    for iFF in NoFFList[thisCurr]:
         for iqsqrd in QsqrdSet:
-            PlotSummaryMethods(currdata,thisMethodSetList,'',iFF,iqsqrd,outputdir,dirpref=thiscurr) 
+            PlotSummaryMethods(currdata,thisMethodSetList,'',iFF,iqsqrd,outputdir,dirpref=thisCurr) 
 
 # def PlotSummary(thisdata,thisopfile):
 #     pl.rcParams.update({'axes.labelsize' : 15})
