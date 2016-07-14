@@ -148,7 +148,7 @@ def InputParams(inputparams):
             SkipDefWipe = True
         elif '-DS' in isys:
             feedout['comb'] = isys.replace('-DS=','').split(',')
-            for iDS in feedout['current']:
+            for iDS in feedout['comb']:
                 if iDS not in CombList:
                     print 'Warning, ' + iDS + ' not found in comb list, skipping.'
                     feedout['comb'].remove(iDS)
