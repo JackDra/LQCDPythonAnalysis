@@ -337,9 +337,9 @@ def GetRenorm(thisstring):
 
 def mprint(*string):
     if isinstance(string,str):
-        if not DoMulticore: print string
+        if not DoMulticore or Debug: print string
     else:
-        if not DoMulticore: print ' '.join(map(str,list(string)))
+        if not DoMulticore or Debug: print ' '.join(map(str,list(string)))
         
 
 TSinkDictList = {'PoF' : PoFTSinkList+range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts),

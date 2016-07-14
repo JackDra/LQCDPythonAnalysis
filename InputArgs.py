@@ -159,5 +159,6 @@ def InputParams(inputparams):
                 print 'Nothing found for comb list, using default list'
                 feedout['comb'] = CombList            
     if not SkipDefWipe: DefWipeWarning()
+    if Debug: feedout['anaproc'] = 1
     return feedout
 
