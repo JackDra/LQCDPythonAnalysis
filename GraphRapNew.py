@@ -48,9 +48,9 @@ def ReadAndPlotMass(thisMomList,thisSmearList,thisSetList,thisSetPoFLists,thisMe
         print 'Plotting ' , imom, 'Took: ' , str(datetime.timedelta(seconds=(time.time()-momstart))) ,' h:m:s                      '
     
     
-def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList):
+def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCombList):
     datadict = ReadSetFitRFDict(outputdir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
-    combdatadict = CreateDictOldCombs(datadict,CombFunsDict)
+    combdatadict = CreateDictOldCombs(datadict,thisCombList)
     ##TESTING THE COMBINING STUFF ON READING SIDE##
     if Debug:
         print combdatadict

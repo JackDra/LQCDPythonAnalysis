@@ -212,7 +212,7 @@ def XmlBootToAvgOld(datadict):
     return datadict
 
 
-def CreateDictOldCombs(datadict,Functs):
+def CreateDictOldCombs(datadict,thisCombList):
     datadictout = {'doub':{} , 'sing':{}}
     for igamma,gammadict in datadict.iteritems():
         if 'doub' in igamma:
@@ -224,7 +224,7 @@ def CreateDictOldCombs(datadict,Functs):
         if doubgamma not in datadict.keys() or singgamma not in datadict.keys(): continue
         datadictout['doub'][gamma] = datadict[doubgamma]
         datadictout['sing'][gamma] = datadict[singgamma]
-        for funtype,ifun in Functs.iteritems():
+        for funtype in thisCombList:
             if funtype not in datadictout.keys(): datadictout[ifun] = {}
-            datadictout[ifun][gamma] = XmlBootToAvgOld(FunctOfDictsOld(datadict[doubgamma],datadict[singgamma],ifun))
+            datadictout[ifun][gamma] = XmlBootToAvgOld(FunctOfDictsOld(datadict[doubgamma],datadict[singgamma],CombFunsDict[funtype]))
     return datadictout
