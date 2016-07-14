@@ -221,7 +221,6 @@ def PlotSummarySet(iDS,igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
     dataval,dataerr,Xlables = [],[],[]
     keylist = SortMySet(data.keys())[0]
     for datakey in keylist:
-        print 'DEBUG'
         if iDS == False:
             idata = data
         elif iDS in DefDSList:
@@ -236,6 +235,8 @@ def PlotSummarySet(iDS,igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
                     if not CheckDict(idata,iDS,igamma,iq): continue
                     if not GraphCondit(iDS,igamma,iq,methcomp,iSet): continue
                 else:
+                    print idata.keys(),igamma
+                    print idata[igamma].keys(), iq
                     if not CheckDict(idata,igamma,iq): continue
                     if not GraphCondit('',igamma,iq,methcomp,iSet): continue
                 Xlables.append(LabToXaxis(iSet,thisMeth))
@@ -265,9 +266,9 @@ def ReadAndPlotSummary(thisMethodList,thisGammaList,thisSetList,thisMomList,this
             thisDSList = []
         for iDS in thisDSList:
             for imom in thisMomList:
-                gammastrip = igamma.replace('doub','').replace('sing','')
-                PlotSummaryMethods(data,thisMethodSetList,iDS,gammastrip,imom,outputdir)
+                gammastrip = igamma.replace('doub','').replace('sing','') 
                 print 'Plotting: ', iDS , gammastrip , imom , ' Complete  '
+                PlotSummaryMethods(data,thisMethodSetList,iDS,gammastrip,imom,outputdir)
 
 
 def PlotFFSummary(thisSL,thiscurr,currdata):
