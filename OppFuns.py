@@ -297,6 +297,8 @@ def CreateGammaList(thislist,twopt=False):
                 GLout += DoubSingList(['P4g4','P3g3g5','P4I','P3g1g2','P4giDi'])
             elif 'OnlyDS' in ig :
                 GLout += DefGammaList
+            elif 'OnlyGamma' in ig :
+                GLout += DefNoDSGammaList
             elif ig in DerCurrTypes:
                 GLout += DoubSingList(['P4'+ig])
             elif ig in DefCombGammaList:

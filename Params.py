@@ -7,7 +7,6 @@ import operator as op
 import socket
 import os
 import re
-from copy import copy
 try:
     import xmltodict
 except:
@@ -206,11 +205,13 @@ for iDS in DefDSList:
     for Proj,GL in ReadProjDerList.iteritems():
         ReadGammaList += [iDS+'P'+Proj[3]+iGL for iGL in GL]
 
-DefCombGammaList = copy(DefGammaList)
+DefNoDSGammaList = []
 for Proj,GL in DefProjGammaList.iteritems():
-    DefCombGammaList += ['P'+Proj[3]+iGL for iGL in GL]
+    DefNoDSGammaList += ['P'+Proj[3]+iGL for iGL in GL]
 for Proj,GL in DefProjDerList.iteritems():
-    DefCombGammaList += ['P'+Proj[3]+iGL for iGL in GL]
+    DefNoDSGammaList += ['P'+Proj[3]+iGL for iGL in GL]
+DefCombGammaList = DefGammaList+DefNoDSGammaList
+
 # DeftoList = [17,18,19,20,21,22,23]
 DeftoList = [16,17,18,19,20]
 DefdtList = [1,2,3,4]

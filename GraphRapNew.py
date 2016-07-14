@@ -54,7 +54,6 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCom
     ##TESTING THE COMBINING STUFF ON READING SIDE##
     if Debug:
         print combdatadict
-        print datadict['twopt'].keys()
     thisGammaList = datadict.keys()
     if not CheckDict(datadict,'twopt','q = 0 0 0'):
         # raise IOError('Mass data dict not found')
