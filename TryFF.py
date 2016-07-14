@@ -53,9 +53,8 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr):
 
 
 #FitMasses later
-def DoFF(thisMethodList,thisCurr,thisSetList,thisGammaList):
-
-    data,MassSet = ExtractValues(outputdir,thisGammaList,thisSetList,thisMethodList)
+def DoFF(thisMethodList,thisCurr,thisSetList,thisGammaList,thisMomList):
+    data,MassSet = ExtractValues(outputdir,thisGammaList,thisSetList,thisMethodList,thisMomList=thisMomList)
     if len(data.keys()) == 0:
         mprint( 'No Sets Found, returning')
         return
@@ -99,11 +98,11 @@ for thisCurr in feedin['current']:
         if 'Fits' in imeth or 'OSF' in imeth:
             for iSet in feedin['set']:
                 print 'Adding to queue FF: ' , imeth , thisCurr , iSet
-                inputparams.append(([imeth],thisCurr,[iSet],thisGammaList))
+                inputparams.append(([imeth],thisCurr,[iSet],thisGammaList,feedin['mom']))
         else:
             for iSet in ReduceTsink(feedin['set']):
                 print 'Adding to queue FF: ' , imeth , thisCurr , iSet
-                inputparams.append(([imeth],thisCurr,[iSet],thisGammaList))
+                inputparams.append(([imeth],thisCurr,[iSet],thisGammaList,feedin['mom']))
             
 tottime = time.time()
 if DoMulticore and feedin['anaproc'] > 1:
