@@ -14,6 +14,7 @@ from XmlFormatting import *
 from FitParams import *
 from SetLists import *
 from CombParams import *
+from ReadDir import CheckCurrentSets
 
 giDiVecSet = ['P4g1D1','P4g2D2','P4g3D3']
 ##Proton: doublet is up quark, singlet is down quark
@@ -159,18 +160,19 @@ def ReadAndComb(inputargs,Funct,funname):
                     for iset in thisSetList:
                         filedoub = outputdir +'/'+ doubgammadir + methoddir + '/'+momdir + '/' + iset+doubgamma+ipref+momstr+'.xml'
                         filesing = outputdir +'/'+ singgammadir + methoddir + '/'+momdir + '/' + iset+singgamma+ipref+momstr+'.xml'
-                        outdata = CombTwoFiles(filedoub,filesing,Funct)
                         if Debug: print filedoub
                         if Debug: print filesing                        
+                        outdata = CombTwoFiles(filedoub,filesing,Funct)
                         mkdir_p( outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/')
                         outfile = outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/' + iset+funname+igamma+ipref+momstr
                         # WriteXmlOutput(outfile,outdata)
                         MergeXmlOutput(outfile,outdata)
 
-                        
 
+                        
 def ReadAndCombFF(thisCurrDict,Funct,funname):
-    for icurr,isetlist in thisCurrDict.iteritems():
+    newCurrDict = CheckCurrentSets(thisCurrDict)
+    for icurr,isetlist in newCurrDict.iteritems():
         doubcurr = 'doub'+icurr
         singcurr = 'sing'+icurr
         for iset in isetlist:

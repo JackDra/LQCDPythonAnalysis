@@ -53,3 +53,28 @@ def GetCurrDict(thisCurrTypes):
     thisSetList.sort()
     print 'Sets Found:\n','\n'.join(thisSetList)
     return thisCurrDict
+
+def CheckCurrentSets(thisCurDict):
+    outCurrDict = {}
+    for icurr,currset in thisCurrDict.iteritems():
+        if 'doub' in icurr:
+            singcurr = icurr.replace('doub','sing')
+            if singcurr not in thisCurrDict.keys():
+                raise LookupError(singcurr +' not found in current list')
+            else:
+                if currset != thiscurr[singcurr]:
+                    raise LookupError(singcurr +' has different set list as ' + doubcurr)
+                else:
+                    outCurrDict[icurr.replace('doub','')] = currset
+        elif 'sing' in icurr:
+            doubcurr = icurr.replace('doub','doub')
+            if doubcurr not in thisCurrDict.keys():
+                raise LookupError(doubcurr +' not found in current list')
+            else:
+                if currset != thiscurr[doubcurr]:
+                    raise LookupError(doubcurr +' has different set list as ' + doubcurr)
+                else:
+                    outCurrDict[icurr.replace('sing','')] = currset
+        else:
+            raise IOError('Depreciated file structure for current'+icurr+' , please check current list')
+    return outCurrDict

@@ -15,13 +15,12 @@ ShowCombList(feedin['comb'])
 
 thisCurrList = deepcopy(feedin['current'])
 for icurr in feedin['current']:
-    if 'doub' not in icurr and 'sing' not in icurr:
+    if ('doub' not in icurr) and ('sing' not in icurr):
         if 'doub'+icurr not in feedin['current']:
             thisCurrList.append('doub'+icurr)
         if 'sing'+icurr not in feedin['current']:
             thisCurrList.append('sing'+icurr)
         thisCurrList.remove(icurr)
-            
 
 for iCombType in feedin['comb']:
     ReadAndComb(feedin,CombFunsDict[iCombType],iCombType)
