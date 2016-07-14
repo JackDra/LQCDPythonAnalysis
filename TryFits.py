@@ -63,16 +63,21 @@ totstart = time.time()
 inputparams = []
 # RunGammaList = []
 for igamma in thisGammaList:
-    print 'adding to que: ' , igamma
-    for iChunk,(iSet,iTS) in enumerate(zip(feedin['set'],DefTSinkSetList)):
-        if DefWipe:
-            QueMomList = GetMomFromGamma(igamma,thisMomList=feedin['mom'])
-        else:
-            thisMomList = Check3ptArray([igamma],[iSet],thisMomList=feedin['mom'],CheckType='Fits',printout=False)
-            thisMomList = thisMomList[igamma][iSet]
-        for imom in thisMomList:
-            # RunGammaList.append(igamma)
-            inputparams.append(([igamma],[iSet],[imom],[iTS],(iChunk*100)/float(len(feedin['set']))))
+    if all([iDS not in igamma for iDS in DefDSList]):
+        thisDSList = DefDSList
+    else:
+        thisDSList = []
+    for iDS in thisDSList:
+        print 'adding to que: ' , iDS+igamma
+        for iChunk,(iSet,iTS) in enumerate(zip(feedin['set'],DefTSinkSetList)):
+            if DefWipe:
+                QueMomList = GetMomFromGamma(iDS+igamma,thisMomList=feedin['mom'])
+            else:
+                thisMomList = Check3ptArray([iDS+igamma],[iSet],thisMomList=feedin['mom'],CheckType='Fits',printout=False)
+                thisMomList = thisMomList[iDS+igamma][iSet]
+            for imom in thisMomList:
+                # RunGammaList.append(iDS+igamma)
+                inputparams.append(([iDS+igamma],[iSet],[imom],[iTS],(iChunk*100)/float(len(feedin['set']))))
 
 
 if len(inputparams) > 0:
