@@ -79,7 +79,8 @@ feedin = InputParams(sys.argv[1:])
 print 'CurrList:\n' , '\n'.join(feedin['current'])
 print ''
 
-if 'RF' in feedin['method']: del feedin['method'].remove('RF')
+print feedin['method']
+if 'RF' in feedin['method']: feedin['method'].remove('RF')
 print 'MethodList:\n' , '\n'.join(feedin['method'])
 print ''
 
