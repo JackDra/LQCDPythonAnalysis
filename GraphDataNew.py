@@ -106,10 +106,12 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref):
 def SetRFAxies(thisGamma):
     pl.xlabel(RFxlab)
     pl.ylabel(RFylab)
+    print thisGamma, ylimDict.keys()
     if thisGamma not in ylimDict.keys():
         pl.ylim(max(pl.ylim()[0],-2),min(pl.ylim()[1],2))
     else:
-        pl.ylim(max(ylimDict[thisGamma][0],pl.ylim()[0]),min(ylimDict[thisGamma][1],pl.ylim()[1]))
+        # pl.ylim(max(ylimDict[thisGamma][0],pl.ylim()[0]),min(ylimDict[thisGamma][1],pl.ylim()[1]))
+        pl.ylim(*ylimDict[thisGamma])
     SetxTicks()
     pl.legend()
     pl.tight_layout()
