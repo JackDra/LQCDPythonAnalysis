@@ -130,13 +130,17 @@ def InputParams(inputparams):
                 feedout['method'] = MethodList
         elif '-c' in isys:
             feedout['current'] = isys.replace('-c=','').split(',')
+            thisNone = False
             for icl in feedout['current']:
+                if icl == 'None': thisNone = True
                 if icl not in CurrentDSList:
                     print 'Warning, ' + icl + ' not found in current list, skipping.'
                     feedout['current'].remove(icl)
-            if len(feedout['current']) == 0:
+            if thisNone:
+                feedout['current'] = []
+            elif len(feedout['current']) == 0:
                 print 'Nothing found for current list, using default list'
-                feedout['current'] = NoFFList.keys()
+                feedout['current'] = NoFFList.keys()            
         elif '-np' in isys:
             thisAnaProc = int(isys.replace('-np=',''))
             if AnaProc < thisAnaProc:
