@@ -200,6 +200,7 @@ def FunctOfDictsOld(a, b,Funct):
     return a
 
 def XmlBootToAvgOld(datadict):
+    print datadict
     for key in datadict.keys():
         if isinstance(datadict[key], dict):
             XmlBootToAvgOld(datadict[key])          
