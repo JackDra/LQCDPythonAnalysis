@@ -63,6 +63,7 @@ totstart = time.time()
 inputparams = []
 # RunGammaList = []
 for igamma in thisGammaList:
+    print 'adding to que: ' , igamma
     if 'doub' not in igamma and 'sing' not in igamma and 'twopt' not in igamma:    
         parsegammalist = ['doub'+igamma,'sing'+igamma]
         for iChunk,(iSet,iTS) in enumerate(zip(feedin['set'],DefTSinkSetList)):
@@ -73,7 +74,6 @@ for igamma in thisGammaList:
                 thisMomList = thisMomList[igamma][iSet]
             for imom in thisMomList:
                 # RunGammaList.append(iDS+igamma)
-                print 'adding to que: ' , igamma
                 inputparams.append((parsegammalist,[iSet],[imom],[iTS],(iChunk*100)/float(len(feedin['set']))))
     elif igamma.replace('sing','').replace('doub','') not in thisGammaList and 'twopt' not in igamma:
         parsegammalist = [igamma]
@@ -85,7 +85,6 @@ for igamma in thisGammaList:
                 thisMomList = thisMomList[igamma][iSet]
             for imom in thisMomList:
                 # RunGammaList.append(iDS+igamma)
-                print 'adding to que: ' , igamma
                 inputparams.append((parsegammalist,[iSet],[imom],[iTS],(iChunk*100)/float(len(feedin['set']))))
 
 if len(inputparams) > 0:
