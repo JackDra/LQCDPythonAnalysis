@@ -204,7 +204,7 @@ def XmlBootToAvgOld(datadict):
         if isinstance(datadict[key], dict):
             XmlBootToAvgOld(datadict[key])          
         elif key == 'Avg' or key == 'Vals' or key == 'Std' or key == 'Valserr':
-            datadict['Boot'].Stats()
+            GetBootStats(datadict['Boot'])
             if key == 'Avg' or key == 'Vals':
                 datadict[key] = datadict['Boot'].Avg
             elif key == 'Std' or key == 'Valserr':
