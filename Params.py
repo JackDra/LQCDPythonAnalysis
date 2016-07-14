@@ -105,7 +105,7 @@ DoCmplx = True # reads complex opperator values as well as real values, should b
 DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
 Doeigh = True # variational method, uses a symetrix matrix solver.
 
-if Debug: print RunNconfs
+if Debug: print 'nconfs saved is: ' , RunNconfs
 
 VarMassCutoff = 0.4 # used in correlation matrix for cutting artifacts out of eigenmass sorting.
 
@@ -197,7 +197,7 @@ for iDS in DefDSList:
         DefGammaList += [iDS+'P'+Proj[3]+iGL for iGL in GL]
     for Proj,GL in DefProjDerList.iteritems():
         DefGammaList += [iDS+'P'+Proj[3]+iGL for iGL in GL]
-
+        
 ReadGammaList = []
 for iDS in DefDSList:
     for Proj,GL in DefProjGammaList.iteritems():
@@ -205,6 +205,11 @@ for iDS in DefDSList:
     for Proj,GL in ReadProjDerList.iteritems():
         ReadGammaList += [iDS+'P'+Proj[3]+iGL for iGL in GL]
 
+DefCombGammaList = DefGammaList
+for Proj,GL in DefProjGammaList.iteritems():
+    DefCombGammaList += ['P'+Proj[3]+iGL for iGL in GL]
+for Proj,GL in DefProjDerList.iteritems():
+    DefCombGammaList += ['P'+Proj[3]+iGL for iGL in GL]
 # DeftoList = [17,18,19,20,21,22,23]
 DeftoList = [16,17,18,19,20]
 DefdtList = [1,2,3,4]
