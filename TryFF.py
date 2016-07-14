@@ -37,18 +37,18 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr):
     thisstart = time.time()
     thisDS,baseCurr = SplitDSCurr(thisCurr)
     if thisDS == '':
-        thisCurrList = [ids+thisCurr for ids in DefDSList]
+        thisCurrList = [thisCurr for ids in DefDSList]
         thisgflist = DefDSList
     else:
-        thisCurrList = [thisCurr]
+        thisCurrList = [thisCurr.replace(thisDS,'')]
         thisgflist = [thisDS]
     for iCurr,igf in zip(thisCurrList,thisgflist):
-        stripCurr = iCurr.replace('doub','').replace('sing','')
-        FF,infodict = CreateFF(setdict,thisMass['Avg'],stripCurr,gammaflag=igf)
-        PrintFFSet(FF,theset,thisMass,thesetmass,iCurr,infodict)
+        combCurr = igf+iCurr
+        FF,infodict = CreateFF(setdict,thisMass['Avg'],iCurr,gammaflag=igf)
+        PrintFFSet(FF,theset,thisMass,thesetmass,combCurr,infodict)
         if 'Vector' in thisCurr:
             NewFF = CombineVector(FF,thisMass)
-            PrintFFSet(NewFF,theset,thisMass,thesetmass,iCurr.replace('Vector','GeGm'),infodict)
+            PrintFFSet(NewFF,theset,thisMass,thesetmass,combCurr.replace('Vector','GeGm'),infodict)
 
     mprint( 'Fit and Print for ' , theset , ' took: ',str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s'    )
 
