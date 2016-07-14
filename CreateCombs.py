@@ -13,6 +13,7 @@ from MomParams import *
 from XmlFormatting import *
 from FitParams import *
 from SetLists import *
+from CombParams import *
 
 giDiVecSet = ['P4g1D1','P4g2D2','P4g3D3']
 ##Proton: doublet is up quark, singlet is down quark
@@ -22,17 +23,6 @@ downCharge = -1.0/3.0
 DSCombs = [('P4I',upCharge,downCharge),('P4g4',upCharge,downCharge),('P4g3g5',-1,1)]
 ops = { "+": operator.add, "-": operator.sub } 
 
-def IsoVector(val1,val2):
-    return val1 - val2
-
-def Vector(val1,val2):
-    return val1 + val2
-
-def FFProton(val1,val2):
-    return upCharge*val1 + downCharge*val2
-
-def FFNeutron(val1,val2):
-    return downCharge*val1 + upCharge*val2
 
 # ## data = [ itsink , ism/istate , igamma , ip , it ]
 # def MakeUmD(data,gammalist):
@@ -179,39 +169,18 @@ def ReadAndComb(inputargs,Funct,funname):
 
                         
 
-def ReadAndCombFF(inputargs,Funct,funname):
-    for icurr in inputargs['current']:
-        if 'doub' in igamma or 'sing' in igamma: continue
-        doubgamma = 'doub'+igamma
-        singgamma = 'sing'+igamma
-        doubgammadir = CreateOppDir(doubgamma)
-        singgammadir = CreateOppDir(singgamma)
-        gammadir = CreateOppDir(funname+igamma)
-        for imethod in inputargs['method']:
-            if imethod == 'RF': methoddir = ''
-            else: methoddir = '/'+imethod
-            thisSetList = inputargs['set']
-            if 'TSF' in imethod or 'SumMeth' in imethod:
-                thisSetList = ReduceTsink(inputargs['set'])
-            if 'TSF' in imethod:
-                preflist = TwoStateParList['C3']
-            elif 'OSF' in imethod:
-                preflist = OneStateParList['C3']
-            else:
-                preflist = ['']                
-            for ipref in preflist:
-                for imom in inputargs['mom']:
-                    momstr = qstrTOqcond(imom)
-                    momdir = MakeMomDir(imom)
-                    for iset in thisSetList:
-                        filedoub = outputdir +'/'+ doubgammadir + methoddir + '/'+momdir + '/' + iset+doubgamma+ipref+momstr+'.xml'
-                        filesing = outputdir +'/'+ singgammadir + methoddir + '/'+momdir + '/' + iset+singgamma+ipref+momstr+'.xml'
-                        outdata = CombTwoFiles(filedoub,filesing,Funct)
-                        if Debug: print filedoub
-                        if Debug: print filesing                        
-                        mkdir_p( outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/')
-                        outfile = outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/' + iset+funname+igamma+ipref+momstr
-                        # WriteXmlOutput(outfile,outdata)
-                        MergeXmlOutput(outfile,outdata)
+def ReadAndCombFF(thisCurrDict,Funct,funname):
+    for icurr,isetlist in thisCurrDict.iteritems():
+        doubcurr = 'doub'+icurr
+        singcurr = 'sing'+icurr
+        for iset in isetlist:
+            if Debug: print filedoub
+            if Debug: print filesing                        
+            filedoub = outputdir+'FormFactors/'+doubcurr+'/' doubcurr+iset+'.xml'
+            filesing = outputdir+'FormFactors/'+singcurr+'/' singcurr+iset+'.xml'
+            outdata = CombTwoFiles(filedoub,filesing,Funct)
+            mkdir_p( outputdir+'FormFactors/'+funname+curr+'/')
+            outfile = outputdir+'FormFactors/'+funnamecurr+'/' funname+curr+iset
+            MergeXmlOutput(outfile,outdata)
 
                         

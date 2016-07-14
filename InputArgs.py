@@ -4,6 +4,7 @@ from Params import *
 from SetLists import *
 from FFParams import *
 from MiscFuns import DelDubs
+from CombParams import *
 import sys
     
     
@@ -22,6 +23,12 @@ def ShowMethodList(thismethodlist):
     print 
     print 'Method Lists:'
     print '\n'.join(thismethodlist)
+    print 
+
+def ShowCombList(thiscomblist):
+    print 
+    print 'Combinging Lists:'
+    print '\n'.join(thiscomblist)
     print 
 
 def ExpandSetList(thisSL):
@@ -66,6 +73,7 @@ def InputParams(inputparams):
     feedout['method'] = MethodList
     feedout['current'] = NoFFList.keys()
     feedout['mom'] = RunMomList
+    feedout['comb'] = CombList
     SkipDefWipe = False
     for isys in inputparams:
         if isys[0] != '-':
@@ -79,6 +87,7 @@ def InputParams(inputparams):
             print '-s= specifies set list to use, choose from:\n' + '\n'.join(DefSetList)+'\n'
             print '-m= specifies Method used, choose from:\n' + '\n'.join(MethodList)+'\n'
             print '-c= specifies Current to look at, choose from:\n' + '\n'.join(CurrentDSList)+'\n'
+            print '-DS= specifies how to combine DS, choose from:\n' + '\n'.join(CombList)+'\n'
             print "-p= specifies the momentium list to use, form is 'q = X Y Z', X,Y,Z = -3,-2,-1,0,1,2,3"
             print "-np= specifies the maximum number of processors used for this job"
             print "-noprompt does not display any prompts (for long runs)"
@@ -137,6 +146,15 @@ def InputParams(inputparams):
                 feedout['anaproc'] = thisAnaProc
         elif '-noprompt' in isys:
             SkipDefWipe = True
+        elif '-DS' in isys:
+            feedout['comb'] = isys.replace('-DS=','').split(',')
+            for iDS in feedout['current']:
+                if iDS not in CombList:
+                    print 'Warning, ' + iDS + ' not found in comb list, skipping.'
+                    feedout['comb'].remove(iDS)
+            if len(feedout['comb']) == 0:
+                print 'Nothing found for comb list, using default list'
+                feedout['comb'] = CombList            
     if not SkipDefWipe: DefWipeWarning()
     return feedout
 
