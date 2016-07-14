@@ -235,5 +235,5 @@ def CreateDictOldCombs(datadict,thisCombList):
             if funtype not in datadictout.keys(): datadictout[funtype] = {}
             masterddict = deepcopy(datadict[doubgamma])
             datadictout[funtype][gamma] = deepcopy(XmlBootToAvgOld( FunctOfDictsOld(masterddict,datadict[singgamma],CombFunsDict[funtype])))
-            datadict[doubgamma] = masterdict
+            datadict[doubgamma] = masterddict
     return datadictout
