@@ -23,6 +23,8 @@ for icurr in feedin['current']:
             thisCurrList.append('sing'+icurr)
         thisCurrList.remove(icurr)
 
+
+        
 for iCombType in feedin['comb']:
     ReadAndComb(feedin,CombFunsDict[iCombType],iCombType)
 
