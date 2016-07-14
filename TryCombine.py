@@ -12,7 +12,7 @@ thisGammaList = CreateGammaList(feedin['gamma'])
 
 ShowSetLists(feedin['set'])
 ShowCombList(feedin['comb'])
-ShowMethodList(feedin['meth'])
+ShowMethodList(feedin['method'])
 
 thisCurrList = deepcopy(feedin['current'])
 for icurr in feedin['current']:
