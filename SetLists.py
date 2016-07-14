@@ -316,10 +316,10 @@ def CreateOSFfitKey(smear):
     return smearindex,deltashift
 
 def SplitDSCurr(thisstr):
-    for iDS in DefDSList:
+    for iDS in DefDSList+CombList:
         if iDS in thisstr:
             DSout = iDS
-            strout = thisstr.replace(iDS,'')
+            strout = thisstr.replace(iDS,'',1)
             return DSout,strout
     return '',thisstr
         
