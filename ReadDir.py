@@ -63,7 +63,7 @@ def CheckCurrentSets(thisCurrDict):
                 raise LookupError(singcurr +' not found in current list')
             else:
                 if currset != thisCurrDict[singcurr]:
-                    raise LookupError(singcurr +' has different set list as ' + doubcurr)
+                    raise LookupError(singcurr +' has different set list as ' + icurr)
                 else:
                     outCurrDict[icurr.replace('doub','')] = currset
         elif 'sing' in icurr:
@@ -72,7 +72,7 @@ def CheckCurrentSets(thisCurrDict):
                 raise LookupError(doubcurr +' not found in current list')
             else:
                 if currset != thisCurrDict[doubcurr]:
-                    raise LookupError(doubcurr +' has different set list as ' + doubcurr)
+                    raise LookupError(doubcurr +' has different set list as ' + icurr)
                 else:
                     outCurrDict[icurr.replace('sing','')] = currset
         else:
