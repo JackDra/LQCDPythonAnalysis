@@ -187,17 +187,18 @@ def FunctOfDictsOld(a, b,Funct):
             if isinstance(a[key], dict) and isinstance(b[key], dict):
                 FunctOfDictsOld(a[key], b[key],Funct)
             elif hasattr(a[key],"values") and hasattr(b[key],"values"):
-                print key
                 if len(a[key].values) == nboot and len(b[key].values) == nboot:
                     a[key].values = np.array([Funct(ia,ib) for ia,ib in zip(a[key].values,b[key].values)])
                     a[key].Stats()
+                elif hasattr(a[key],"__len__") and hasattr(b[key],"__len__"):
+                    for j,ja,jb in enumerate(zip(a[key],b[key])):
+                        a[key][j].values = np.array([Funct(ia,ib) for ia,ib in zip(ja.values,ja.values)])
+                        a[key][j].Stats()                    
                 else:
                     raise IOError('nboot missmatch, file: ', len(a[key].values), ' params: ',nboot)
             elif key == 'Chi':
-                print key
                 a[key] = a[key] + b[key]
             else:
-                print key
                 pass
         else:
             raise IOError('Dictionaries not equal in keys')
