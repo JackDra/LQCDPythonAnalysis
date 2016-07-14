@@ -231,7 +231,6 @@ class BootStrap1:
     def __mul__(self,fac):
         result=BootStrap1(self.nboot, self.confidence)
         try:
-            print fac, self.Avg
             real=float(fac)
             result.Avg=self.Avg*real
             result.values=self.values*real            
@@ -242,6 +241,7 @@ class BootStrap1:
                 result.values=self.values*fac.values
             except:
                 print "ERROR: UNknown boot multiply"
+                print fac, self.Avg
                 print fac.nboot
                 assert 1==0
         return result
