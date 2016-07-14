@@ -134,7 +134,7 @@ def CombTwoFiles(file1,file2,funct):
 
 def ReadAndComb(inputargs,Funct,funname):
     for igamma in inputargs['gamma']:
-        if 'doub' in igamma or 'sing' in igamma: continue
+        if 'doub' in igamma or 'sing' in igamma or 'twopt' in igamma: continue
         doubgamma = 'doub'+igamma
         singgamma = 'sing'+igamma
         doubgammadir = CreateOppDir(doubgamma)
