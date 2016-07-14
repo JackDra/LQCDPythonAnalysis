@@ -188,6 +188,7 @@ def FunctOfDictsOld(a, b,Funct):
                 FunctOfDictsOld(a[key], b[key],Funct)
             elif hasattr(a[key],"values") and hasattr(b[key],"values"):
                 if len(a[key].values) == nboot and len(b[key].values) == nboot:
+                    print 'DEBUG', a[key].values[0],b[key].values[0],Funct(a[key].values[0],b[key].values[0])
                     a[key].values = np.array([Funct(ia,ib) for ia,ib in zip(a[key].values,b[key].values)])
                 else:
                     raise IOError('nboot missmatch, file: ', len(a[key].values), ' params: ',nboot)
