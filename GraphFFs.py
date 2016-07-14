@@ -119,7 +119,7 @@ def PlotFFqPick(datadict,thisPSL):
 feedin = InputParams(sys.argv[1:]+['-noprompt'])
 
 thisCurrDict = []
-for icurr in feedin['current']:
+for icurr in feedin['current'] + ElongateName(DefDSList+feedin['comb'],feedin['current']):
     thisCurrDict.append([GetCurrDict([icurr])])
 
 makeContextFunctions(ReadAndPlotFF)
