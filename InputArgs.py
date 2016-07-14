@@ -64,7 +64,7 @@ def InputParams(inputparams):
     feedout['gamma'] = ''
     feedout['set'] = DefSetList
     feedout['method'] = MethodList
-    feedout['current'] = CurrentDSList
+    feedout['current'] = NoFFList.keys()
     feedout['mom'] = RunMomList
     SkipDefWipe = False
     for isys in inputparams:
@@ -127,7 +127,7 @@ def InputParams(inputparams):
                     feedout['current'].remove(icl)
             if len(feedout['current']) == 0:
                 print 'Nothing found for current list, using default list'
-                feedout['current'] = CurrentDSList
+                feedout['current'] = NoFFList.keys()
         elif '-np' in isys:
             thisAnaProc = int(isys.replace('-np=',''))
             if AnaProc < thisAnaProc:
