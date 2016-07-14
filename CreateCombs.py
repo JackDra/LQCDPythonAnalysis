@@ -189,6 +189,7 @@ def FunctOfDictsOld(a, b,Funct):
             elif hasattr(a[key],"values") and hasattr(b[key],"values"):
                 if len(a[key].values) == nboot and len(b[key].values) == nboot:
                     a[key].values = np.array([Funct(ia,ib) for ia,ib in zip(a[key].values,b[key].values)])
+                    a[key].Stats()
                 else:
                     raise IOError('nboot missmatch, file: ', len(a[key].values), ' params: ',nboot)
             elif key == 'Chi':
@@ -197,19 +198,17 @@ def FunctOfDictsOld(a, b,Funct):
                 pass
         else:
             raise IOError('Dictionaries not equal in keys')
+    print a
     return a
 
 def XmlBootToAvgOld(datadict):
-    print datadict
     for key in datadict.keys():
         if isinstance(datadict[key], dict):
             XmlBootToAvgOld(datadict[key])          
-        elif key == 'Avg' or key == 'Vals' or key == 'Std' or key == 'Valserr':
-            GetBootStats(datadict['Boot'])
-            if key == 'Avg' or key == 'Vals':
-                datadict[key] = Pullflag(datadict['Boot'],'Avg')
-            elif key == 'Std' or key == 'Valserr':
-                datadict[key] = Pullflag(datadict['Boot'],'Std')
+        elif key == 'Avg' or key == 'Vals':
+            datadict[key] = Pullflag(datadict['Boot'],'Avg')
+        elif key == 'Std' or key == 'Valserr':
+            datadict[key] = Pullflag(datadict['Boot'],'Std')
         else:
             pass
     return datadict
@@ -228,5 +227,4 @@ def CreateDictOldCombs(datadict,thisCombList):
         for funtype in thisCombList:
             if funtype not in datadictout.keys(): datadictout[funtype] = {}
             datadictout[funtype][gamma] = XmlBootToAvgOld(FunctOfDictsOld(datadict[doubgamma],datadict[singgamma],CombFunsDict[funtype]))
-            print funtype, gamma, datadictout[funtype][gamma]
     return datadictout
