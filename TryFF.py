@@ -43,7 +43,8 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr):
         thisCurrList = [thisCurr]
         thisgflist = [thisDS]
     for iCurr,igf in zip(thisCurrList,thisgflist):
-        FF,infodict = CreateFF(setdict,thisMass['Avg'],iCurr,gammaflag=igf)
+        stripCurr = iCurr.replace('doub','').replace('sing','')
+        FF,infodict = CreateFF(setdict,thisMass['Avg'],stripCurr,gammaflag=igf)
         PrintFFSet(FF,theset,thisMass,thesetmass,iCurr,infodict)
         if 'Vector' in thisCurr:
             NewFF = CombineVector(FF,thisMass)

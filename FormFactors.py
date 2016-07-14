@@ -56,11 +56,11 @@ def CreateFF(data,mass,iCurr,gammaflag=''):
             thisdataout[iqs]['Avg'] = FFAvghold
         elif 'Vector' in baseCurr :
             ## DEBUG ##
-            if Debug:
-                print 'Printing Form Factors debug:'
-                for FF1,FF2,res in zip(FFcoeff[0],FFcoeff[1],datavals):
-                    print iq, '   ' , FF1,'FF1 + ',FF2,'FF2 = ',res.Avg
-                print ''
+            # if Debug:
+            #     print 'Printing Form Factors debug:'
+            #     for FF1,FF2,res in zip(FFcoeff[0],FFcoeff[1],datavals):
+            #         print iq, '   ' , FF1,'FF1 + ',FF2,'FF2 = ',res.Avg
+            #     print ''
             if [0.0] not in FFcoeff and len(datavals) == 1: continue
             if FFcoeff[0] == [0.0]:
                 FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff[1],FFFitFuns['Scalar'])
