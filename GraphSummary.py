@@ -221,6 +221,7 @@ def PlotSummarySet(iDS,igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
     dataval,dataerr,Xlables = [],[],[]
     keylist = SortMySet(data.keys())[0]
     for datakey in keylist:
+        print 'DEBUG'
         if iDS == False:
             idata = data
         elif iDS in DefDSList:
@@ -264,8 +265,9 @@ def ReadAndPlotSummary(thisMethodList,thisGammaList,thisSetList,thisMomList,this
             thisDSList = []
         for iDS in thisDSList:
             for imom in thisMomList:
-                PlotSummaryMethods(data,thisMethodSetList,iDS,igamma.replace('doub','').replace('sing',''),imom,outputdir)
-                print 'Plotting: ', iDS , igamma , imom , ' Complete  '
+                gammastrip = igamma.replace('doub','').replace('sing','')
+                PlotSummaryMethods(data,thisMethodSetList,iDS,gammastrip,imom,outputdir)
+                print 'Plotting: ', iDS , gammastrip , imom , ' Complete  '
 
 
 def PlotFFSummary(thisSL,thiscurr,currdata):
