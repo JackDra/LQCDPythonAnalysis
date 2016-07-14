@@ -322,7 +322,7 @@ def SplitDSCurr(thisstr):
         if iDS in thisstr:
             DSout = iDS
             strout = thisstr.replace(iDS,'',1)
-            if strout in CurrTypes:
+            if strout in NoFFList.keys():
                 return DSout,strout
     return '',thisstr
         
