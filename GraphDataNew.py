@@ -31,7 +31,8 @@ MassTVals = 16,34
 Massyrange = 0.35,1.0
 
 ylimDict = {'P4giDi':[-0.15,0.15],
-            'P4g4':[-4.0,4.0]}
+            'VectorP4g4':[0,4.0],
+            'IsoVectorP4g4':[0,1.1]}
 
 ylimFFDict = {'Vector':[0,2],
               'GeGmFF1':[0,1.2],
@@ -106,8 +107,8 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref):
 def SetRFAxies(thisGamma):
     pl.xlabel(RFxlab)
     pl.ylabel(RFylab)
-    if all([iylim not in thisGamma for iylim in ylimDict.keys()]):
-        pl.ylim(max(pl.ylim()[0],-2),min(pl.ylim()[1],2))
+    if thisGamma in ylimDict.keys():
+        pl.ylim(max(pl.ylim()[0],-4),min(pl.ylim()[1],4))
     else:
         # pl.ylim(max(ylimDict[thisGamma][0],pl.ylim()[0]),min(ylimDict[thisGamma][1],pl.ylim()[1]))
         pl.ylim(*ylimDict[thisGamma])
