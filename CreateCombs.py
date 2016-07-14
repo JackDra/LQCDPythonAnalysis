@@ -176,11 +176,11 @@ def ReadAndCombFF(thisCurrDict,Funct,funname):
         for iset in isetlist:
             if Debug: print filedoub
             if Debug: print filesing                        
-            filedoub = outputdir+'FormFactors/'+doubcurr+'/' doubcurr+iset+'.xml'
-            filesing = outputdir+'FormFactors/'+singcurr+'/' singcurr+iset+'.xml'
+            filedoub = outputdir+'FormFactors/'+doubcurr+'/' +doubcurr+iset+'.xml'
+            filesing = outputdir+'FormFactors/'+singcurr+'/' +singcurr+iset+'.xml'
             outdata = CombTwoFiles(filedoub,filesing,Funct)
             mkdir_p( outputdir+'FormFactors/'+funname+curr+'/')
-            outfile = outputdir+'FormFactors/'+funnamecurr+'/' funname+curr+iset
+            outfile = outputdir+'FormFactors/'+funnamecurr+'/'+ funname+curr+iset
             MergeXmlOutput(outfile,outdata)
 
                         
