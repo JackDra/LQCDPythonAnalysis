@@ -63,22 +63,30 @@ totstart = time.time()
 inputparams = []
 # RunGammaList = []
 for igamma in thisGammaList:
-    if all([iDS not in igamma for iDS in DefDSList]):
-        thisDSList = DefDSList
-    else:
-        thisDSList = []
-    for iDS in thisDSList:
-        print 'adding to que: ' , iDS+igamma
+    if 'doub' not in igamma and 'sing' not in igamma and 'twopt' not in igamma:    
+        parsegammalist = ['doub'+igamma,'sing'+igamma]
         for iChunk,(iSet,iTS) in enumerate(zip(feedin['set'],DefTSinkSetList)):
             if DefWipe:
-                QueMomList = GetMomFromGamma(iDS+igamma,thisMomList=feedin['mom'])
+                thisMomList = GetMomFromGamma(igamma,thisMomList=feedin['mom'])
             else:
-                thisMomList = Check3ptArray([iDS+igamma],[iSet],thisMomList=feedin['mom'],CheckType='Fits',printout=False)
-                thisMomList = thisMomList[iDS+igamma][iSet]
+                thisMomList = Check3ptArray(parsegammalist,[iSet],thisMomList=feedin['mom'],CheckType='Fits',printout=False)
+                thisMomList = thisMomList[igamma][iSet]
             for imom in thisMomList:
                 # RunGammaList.append(iDS+igamma)
-                inputparams.append(([iDS+igamma],[iSet],[imom],[iTS],(iChunk*100)/float(len(feedin['set']))))
-
+                print 'adding to que: ' , igamma
+                inputparams.append((parsegammalist,[iSet],[imom],[iTS],(iChunk*100)/float(len(feedin['set']))))
+    elif igamma.replace('sing','').replace('doub','') not in thisGammaList and 'twopt' not in igamma:
+        parsegammalist = [igamma]
+        for iChunk,(iSet,iTS) in enumerate(zip(feedin['set'],DefTSinkSetList)):
+            if DefWipe:
+                thisMomList = GetMomFromGamma(igamma,thisMomList=feedin['mom'])
+            else:
+                thisMomList = Check3ptArray(parsegammalist,[iSet],thisMomList=feedin['mom'],CheckType='Fits',printout=False)
+                thisMomList = thisMomList[igamma][iSet]
+            for imom in thisMomList:
+                # RunGammaList.append(iDS+igamma)
+                print 'adding to que: ' , igamma
+                inputparams.append((parsegammalist,[iSet],[imom],[iTS],(iChunk*100)/float(len(feedin['set']))))
 
 if len(inputparams) > 0:
     if DoMulticore and feedin['anaproc'] > 1 and len(inputparams) > 1:

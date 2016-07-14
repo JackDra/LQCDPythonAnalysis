@@ -230,8 +230,8 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
     elif 'TSF' in CheckType:
         SFList = TwoStateParList['C3']
     for icg,igamma in enumerate(thisGammaList):
-        # keygamma = igamma.replace('doub','').replace('sing','')
-        keygamma = igamma
+        keygamma = igamma.replace('doub','').replace('sing','')
+        # keygamma = igamma
         if printout: print 'Checking: ' , GetTimeForm(icg,len(thisGammaList),time.time()-totstart) , igamma ,  '          \r',
         if keygamma not in outlist.keys(): outlist[keygamma] = {}
         for iset in CheckSetList:
