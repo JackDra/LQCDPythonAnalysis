@@ -58,8 +58,7 @@ def CreategiDi(data3pt,thisGammaList,thisDSList):
         giDii = []
         for ivec,igamma in enumerate(giDiVecSet):
             giDii.append(thisGammaListOut.tolist().index(iDS+igamma))
-            data3ptout[g4D4i] -= data3ptout[giDii[ivec]]/3.0
-            
+            data3ptout[g4D4i] -= data3ptout[giDii[ivec]]/3.0            
             data3ptout = np.delete(data3ptout,giDii,axis=0)
             thisGammaListOut = np.delete(thisGammaListOut,giDii)
     return [SwapBack3ptSS(data3ptout),thisGammaListOut.tolist()]
@@ -233,7 +232,7 @@ def CreateDictOldCombs(datadict,thisCombList):
         datadictout['sing'][gamma] = datadict[singgamma]
         for funtype in thisCombList:
             if funtype not in datadictout.keys(): datadictout[funtype] = {}
-            masterdoubdict,mastersingdict = deepcopy(datadict[doubgamma]),deepcopy(datadict[singgamma])
-            datadictout[funtype][gamma] = deepcopy(XmlBootToAvgOld( FunctOfDictsOld(masterdoubdict,mastersingdict,CombFunsDict[funtype])))
-            datadict[doubgamma],datadict[singgamma] = masterdoubdict,mastersingdict
+            datadictout[funtype][gamma] = deepcopy(XmlBootToAvgOld( FunctOfDictsOld(datadict[doubgamma],datadict[singgamma],CombFunsDict[funtype])))
+            if Debug:
+                print funtype, gamma, datadictout[funtype][gamma]
     return datadictout
