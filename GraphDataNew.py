@@ -415,12 +415,12 @@ def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
         tvals = tvals-(tvals[-1]+tvals[0])/2.0 + shift
     dataavg = Pullflag(data['Boot'],'Avg')
     dataerr = Pullflag(data['Boot'],'Std')
-    pl.errorbar(tvals,map(abs,dataavg),dataerr,color=col,fmt=sym,label=lab)
+    pl.errorbar(tvals,dataavg,dataerr,color=col,fmt=sym,label=lab)
 
 def PlotSumMeth(data,col,lab,thisTsinkR):
     if not CheckDict(data,SumCutPar,thisTsinkR,'Avg'): return
     if not CheckDict(data,SumCutPar,thisTsinkR,'Std'): return
-    dataavg = abs(data[SumCutPar][thisTsinkR]['Avg'])
+    dataavg = data[SumCutPar][thisTsinkR]['Avg']
     dataerr = data[SumCutPar][thisTsinkR]['Std']
     dataup,datadown = dataavg+dataerr,dataavg-dataerr
     pl.axhline(dataavg,color=col,label=lab)
@@ -438,7 +438,7 @@ def PlotSummedRF(data,thisfitr):
         for itsink,tsinkdata in cutdata.iteritems():
             if 'fit' not in itsink and 'nconf' not in itsink:
                 tdata.append(int(itsink.replace('tsink',''))-tsource)
-                dataplot.append(abs(tsinkdata['Avg']))
+                dataplot.append(tsinkdata['Avg'])
                 dataploterr.append(tsinkdata['Std'])
         tdata,dataplot,dataploterr = zip(*sorted(zip(tdata,dataplot,dataploterr)))
         pl.errorbar(tdata,dataplot,dataploterr,color=thiscol,fmt=thissym,label=icut)
@@ -447,8 +447,8 @@ def PlotSummedRF(data,thisfitr):
         parcon,parsl = cutdata['fit con '+thisfitr]['Boot'],cutdata['fit sl '+thisfitr]['Boot']
         fittdata = np.arange(tdata[int(thisfitmin)],tdata[int(thisfitmax)]+incr,incr)
         fittdashed = np.arange(tdata[0],tdata[int(thisfitmin)]+incr,incr)
-        fitbootdata = [abs((parsl* (it+tsource)) + parcon) for it in fittdata]
-        fitbootdashed = [abs((parsl* (it+tsource)) + parcon) for it in fittdashed]
+        fitbootdata = [(parsl* (it+tsource)) + parcon for it in fittdata]
+        fitbootdashed = [(parsl* (it+tsource)) + parcon for it in fittdashed]
         GetBootStats(fitbootdata),GetBootStats(fitbootdashed)
         plotup = Pullflag(fitbootdata,'Avg')+Pullflag(fitbootdata,'Std')
         plotdown = Pullflag(fitbootdata,'Avg')-Pullflag(fitbootdata,'Std')
@@ -457,8 +457,8 @@ def PlotSummedRF(data,thisfitr):
         else:
             plotdashedup = Pullflag(fitbootdashed,'Avg')+Pullflag(fitbootdashed,'Std')
             plotdasheddown = Pullflag(fitbootdashed,'Avg')-Pullflag(fitbootdashed,'Std')
-        pl.plot(fittdata,map(abs,Pullflag(fitbootdata,'Avg')),
-                label='slope='+MakeValAndErr(abs(parsl.Avg),parsl.Std),color=thiscol)
+        pl.plot(fittdata,Pullflag(fitbootdata,'Avg'),
+                label='slope='+MakeValAndErr(parsl.Avg,parsl.Std),color=thiscol)
         pl.fill_between(fittdata,plotup,plotdown,color=thiscol,alpha=thisalpha,edgecolor='none')
         pl.plot(fittdashed,plotdashedup,color=thiscol,ls='--')
         pl.plot(fittdashed,plotdasheddown,color=thiscol,ls='--')
@@ -500,7 +500,7 @@ def PlotTSFLine(data,data2pt,thistsink,col,thisshift,TSFcut,smear):
     # tplotdata = np.arange(-LRM,LRM+incr,incr) 
     dataline = (np.array(ff.C3TSFLineFun(pars2pt+pars3pt,tdata,thistsink))/
                 ff.C2TSFLineFun(thistsink,pars2pt))
-    pl.plot(tplotdata,map(abs,dataline),color=col)
+    pl.plot(tplotdata,dataline,color=col)
 
 
 def PlotOSFValue(data,col,thisshift,OSFcut,smear,thistsink):
@@ -509,7 +509,7 @@ def PlotOSFValue(data,col,thisshift,OSFcut,smear,thistsink):
     osfsmear,dump = CreateOSFfitKey(smear)
     if not CheckDict(data,'B00',OSFfitr[osfsmear],OSFcut,'Avg'): return
     if not CheckDict(data,'B00',OSFfitr[osfsmear],OSFcut,'Std'): return
-    dataval = abs(data['B00'][OSFfitr[osfsmear]][OSFcut]['Avg'])
+    dataval = data['B00'][OSFfitr[osfsmear]][OSFcut]['Avg']
     dataerr = data['B00'][OSFfitr[osfsmear]][OSFcut]['Std']
     dataup,datadown = dataval+dataerr,dataval-dataerr
     pl.fill_between(tvals,[datadown,datadown],[dataup,dataup],facecolor=col,edgecolor='none',alpha=thisalpha)
@@ -519,7 +519,7 @@ def PlotTSFValue(data,col,thisshift,TSFcut,smear,thistsink):
     LRM = max((int(thistsink)-tsource)/2.-int(TSFcut.replace('cut','')),0)
     tvals = np.array([-LRM+thisshift,LRM+thisshift])
     if not CheckDict(data,'B00',TSFfitr,TSFcut,'Avg'): return
-    dataAvg,dataErr = abs(data['B00'][TSFfitr][TSFcut]['Avg']),data['B00'][TSFfitr][TSFcut]['Std']
+    dataAvg,dataErr = data['B00'][TSFfitr][TSFcut]['Avg'],data['B00'][TSFfitr][TSFcut]['Std']
     dataup,datadown = dataAvg-dataErr,dataAvg+dataErr
     pl.fill_between(tvals,[datadown,datadown],[dataup,dataup],facecolor=col,edgecolor='none',alpha=thisalpha)
 
