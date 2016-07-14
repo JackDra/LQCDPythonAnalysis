@@ -54,7 +54,7 @@ def GetPlotIters():
 
 
 ## Add special exclusions here: ##
-def GraphCondit(igamma,iq,thisMeth,iSet):
+def GraphCondit(iDS,igamma,iq,thisMeth,iSet):
     graphthis = True
     # if 'OSF' in thisMeth and 'tsink26sm32' in iSet: graphthis = False
     if 'Fits' in thisMeth and 'tsink32' in iSet and 'to18dt2' in iSet: graphthis = False
@@ -170,13 +170,13 @@ def CreateMethodSetList(thisMethodList,setlist):
     return mslout
     
 # data { collection , gamma , mom }
-def PlotSummaryMethods(data,thisMethodSetList,igamma,iq,outputdir,dirpref=''):
+def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''):
     xvalues,Xlabs,Xbox1,Xbox2,Xbox3 = 0,[],[],[],[]
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     for iMeth,thisSetList in thisMethodSetList.iteritems():
         if len(thisSetList) == 0: continue
         prevxval = xvalues
-        nextxvalue,thisxlab = PlotSummarySet(igamma,iq,data,iMeth,thisSetList,prevxval,thiscolcyc.next(),thissymcyc.next())
+        nextxvalue,thisxlab = PlotSummarySet(iDS,igamma,iq,data,iMeth,thisSetList,prevxval,thiscolcyc.next(),thissymcyc.next())
         if prevxval == nextxvalue: continue
         xvalues = 1+nextxvalue
         Xlabs += thisxlab
@@ -200,34 +200,37 @@ def PlotSummaryMethods(data,thisMethodSetList,igamma,iq,outputdir,dirpref=''):
         pl.text(xmid,ylow+(ysize*xlabshift),line3,horizontalalignment='center')
     pl.xlabel('Methods')
     pl.ylabel('Value')
-    pl.title(TitleFix('SummaryPlot ' + igamma + ' ' + iq))
+    pl.title(TitleFix('SummaryPlot ' +iDS + ' ' + igamma + ' ' + iq))
     pl.xlim(-1,xvalues-1)
     pl.grid(False,axis='x')
     if 'FF' in igamma:
         thisgammadir = dirpref + '/'
         thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/'+iq+'/'
         mkdir_p(thisdir)
-        pl.savefig(thisdir+'SummaryPlot'+dirpref+igamma+iq+'.pdf')
+        pl.savefig(thisdir+'SummaryPlot'+dirpref+iDS+igamma+iq+'.pdf')
     else:
-        thisgammadir = CreateOppDir(igamma)
+        thisgammadir = CreateOppDir(iDS+igamma)
         thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/qsqrd'+str(qsqrdstr(iq))+'/'
         mkdir_p(thisdir)
-        pl.savefig(thisdir+'SummaryPlot'+dirpref+igamma+qstrTOqcond(iq)+'.pdf')
+        pl.savefig(thisdir+'SummaryPlot'+dirpref+iDS+igamma+qstrTOqcond(iq)+'.pdf')
     pl.clf()
 
 
         
-def PlotSummarySet(igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
+def PlotSummarySet(iDS,igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
     dataval,dataerr,Xlables = [],[],[]
     keylist = SortMySet(data.keys())[0]
     for datakey in keylist:
-        idata = data[datakey]
+        if iDS in DefDSList:
+            idata = CreateDictOldCombs(data[datakey],[]) 
+        else:
+            idata = CreateDictOldCombs(data[datakey],[iDS]) 
         for iSet in thisSetList:
             methcomp = thisMeth
             if 'Fits' in thisMeth: methcomp = 'Fits'
             if iSet in datakey.replace(methcomp,'') and methcomp in datakey: 
-                if not CheckDict(idata,igamma,iq): continue
-                if not GraphCondit(igamma,iq,methcomp,iSet): continue
+                if not CheckDict(idata,iDS,igamma,iq): continue
+                if not GraphCondit(iDS,igamma,iq,methcomp,iSet): continue
                 Xlables.append(LabToXaxis(iSet,thisMeth))
                 if 'Avg' in idata[igamma][iq].keys() and 'Std' in idata[igamma][iq].keys():
                     dataval.append(abs(idata[igamma][iq]['Avg']))
@@ -244,13 +247,17 @@ def PlotSummarySet(igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
 
 def ReadAndPlotSummary(thisMethodList,thisGammaList,thisSetList,thisMomList,thisCombList):
     data,massdata = ExtractValues(outputdir,thisGammaList,thisSetList,thisMethodList,thisMomList=thisMomList)
-    combdatadict = CreateDictOldCombs(datadict,thisCombList)
     thisMethodSetList = CreateMethodSetList(thisMethodList,data.keys())
     for igamma in thisGammaList:
-        if igamma == 'twopt': continue
-        for imom in thisMomList:
-            PlotSummaryMethods(data,thisMethodSetList,igamma,imom,outputdir)
-            print 'Plotting: ' , igamma , imom , ' Complete  '
+        if 'twopt' in gamma: continue
+        if 'sing' in igamma:
+            thisDSList = ['sing']
+        elif 'doub' in igamma:
+            thisDSList = thisCombList+['doub']
+        for iDS in thisDSList:
+            for imom in thisMomList:
+                PlotSummaryMethods(data,thisMethodSetList,iDS,igamma.replace('doub','').replace('sing',''),imom,outputdir)
+                print 'Plotting: ' iDS , igamma , imom , ' Complete  '
 
 
 def PlotFFSummary(thisSL,thiscurr,currdata):
