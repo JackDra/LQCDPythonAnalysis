@@ -16,13 +16,6 @@ from SetLists import *
 from CombParams import *
 from ReadDir import CheckCurrentSets
 
-giDiVecSet = ['P4g1D1','P4g2D2','P4g3D3']
-##Proton: doublet is up quark, singlet is down quark
-##Neutron: doublet is down quark, singlet is up quark
-upCharge = 2.0/3.0
-downCharge = -1.0/3.0
-DSCombs = [('P4I',upCharge,downCharge),('P4g4',upCharge,downCharge),('P4g3g5',-1,1)]
-ops = { "+": operator.add, "-": operator.sub } 
 
 
 # ## data = [ itsink , ism/istate , igamma , ip , it ]
