@@ -101,8 +101,8 @@ def CombineVector(thisFF,thisMass):
         if len(qFF.keys()) > 0:
             FFout[iq] = {}
             qvecsqrd = int(iq.replace('qsqrd',''))*(qunit**2)
-            E = np.sqrt(thisMass**2 + qvecsqrd**2)
-            Qsqrd = qvecsqrd - (E-m)**2
+            Ep = np.sqrt(thisMass['Avg']**2 + qvecsqrd**2)
+            Qsqrd = qvecsqrd - (Ep-thisMass['Avg'])**2
             FFout[iq]['Chi'] = qFF['Chi']
             if 'Boot' in qFF.keys():
                 FFout[iq]['Boot'] = []
