@@ -187,8 +187,10 @@ def FunctOfDictsOld(a, b,Funct):
             if isinstance(a[key], dict) and isinstance(b[key], dict):
                 FunctOfDictsOld(a[key], b[key],Funct)
             elif hasattr(a[key],"values") and hasattr(b[key],"values"):
-                if len(a[key]) == nboot and len(b[key]) == nboot:
+                if len(a[key].values) == nboot and len(b[key].values) == nboot:
                     a[key].values = [Funct(ia,ib) for ia,ib in zip(a[key].values,b[key].values)]
+                else:
+                    raise IOError('nboot missmatch, file: ', len(a[key].values), ' params: ',nboot)
             elif key == 'Chi':
                 a[key] = a[key] + b[key]
             else:
