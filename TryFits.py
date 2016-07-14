@@ -82,7 +82,7 @@ for igamma in thisGammaList:
                 thisMomList = GetMomFromGamma(igamma,thisMomList=feedin['mom'])
             else:
                 thisMomList = Check3ptArray(parsegammalist,[iSet],thisMomList=feedin['mom'],CheckType='Fits',printout=False)
-                thisMomList = thisMomList[igamma][iSet]
+                thisMomList = thisMomList[igamma.replace('sing','').replace('doub','')][iSet]
             for imom in thisMomList:
                 # RunGammaList.append(iDS+igamma)
                 inputparams.append((parsegammalist,[iSet],[imom],[iTS],(iChunk*100)/float(len(feedin['set']))))
