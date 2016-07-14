@@ -51,9 +51,6 @@ def ReadAndPlotMass(thisMomList,thisSmearList,thisSetList,thisSetPoFLists,thisMe
 def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCombList):
     datadict = ReadSetFitRFDict(outputdir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
     combdatadict = CreateDictOldCombs(datadict,thisCombList)
-    ##TESTING THE COMBINING STUFF ON READING SIDE##
-    if Debug:
-        print combdatadict
     thisGammaList = datadict.keys()
     if not CheckDict(datadict,'twopt','q = 0 0 0'):
         # raise IOError('Mass data dict not found')
