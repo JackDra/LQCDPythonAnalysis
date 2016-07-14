@@ -30,8 +30,8 @@ thisalpha = 0.3
 MassTVals = 16,34
 Massyrange = 0.35,1.0
 
-ylimDict = {'P4giDi':[0.05,0.15],
-            'P4g4':[0,1.0]}
+ylimDict = {'P4giDi':[-0.15,0.15],
+            'P4g4':[-2.0,2.0]}
 
 ylimFFDict = {'Vector':[0,2],
               'GeGmFF1':[0,1.2],
@@ -107,7 +107,7 @@ def SetRFAxies(thisGamma):
     pl.xlabel(RFxlab)
     pl.ylabel(RFylab)
     if thisGamma not in ylimDict.keys():
-        pl.ylim(max(pl.ylim()[0],0),min(pl.ylim()[1],2))
+        pl.ylim(max(pl.ylim()[0],-2),min(pl.ylim()[1],2))
     else:
         pl.ylim(ylimDict[thisGamma])
     SetxTicks()
