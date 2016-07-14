@@ -93,7 +93,7 @@ def CreateFFFile(thisCol,thisCurr,thisFF):
     thisfile = thisCol+thisCurr + thisFF
     return thisdir + thisfile
 
-def CreateFile(thisflag,thisGamma,thisMom,TitlePref,subdir=''):
+def CreateFile(thisflag,thisGamma,thisMom,TitlePref):
     thistitle = thisGamma+' '+TitlePref+' '+thisflag
     if 'q = 0 0 0' not in thisMom: thistitle += ' '+thisMom
     pl.title(thistitle)

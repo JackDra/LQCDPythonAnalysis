@@ -7,6 +7,7 @@ import operator as op
 import socket
 import os
 import re
+from copy import copy
 try:
     import xmltodict
 except:
@@ -97,7 +98,7 @@ DoNorm = False # normalises the 2 point function (see CMSTech.py)
 CfunConfigCheck = True # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
 
 ##DEBUG toggles (True/False):
-Debug = False # for debugging, toggles alot of print statements on
+Debug = True # for debugging, toggles alot of print statements on
 ScaleByP4g4 = False ## scales out all operators by P4g4 instead of 2 point correlator at tsink for Ratio value (RF)
 ShowConfNum = Debug # debugging, show number of configs during read
 PrintRead = not DoMulticore # Screws up output if on and doing mulitcore reading
@@ -205,7 +206,7 @@ for iDS in DefDSList:
     for Proj,GL in ReadProjDerList.iteritems():
         ReadGammaList += [iDS+'P'+Proj[3]+iGL for iGL in GL]
 
-DefCombGammaList = DefGammaList
+DefCombGammaList = copy(DefGammaList)
 for Proj,GL in DefProjGammaList.iteritems():
     DefCombGammaList += ['P'+Proj[3]+iGL for iGL in GL]
 for Proj,GL in DefProjDerList.iteritems():

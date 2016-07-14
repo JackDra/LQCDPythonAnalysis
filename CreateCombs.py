@@ -180,3 +180,51 @@ def ReadAndCombFF(thisCurrDict,Funct,funname):
             MergeXmlOutput(outfile,outdata)
 
                         
+
+def FunctOfDictsOld(a, b,Funct):
+    for key in b:
+        if key in a:
+            if isinstance(a[key], dict) and isinstance(b[key], dict):
+                FunctOfDictsOld(a[key], b[key],Funct)
+            elif hasattr(a[key],"values") and hasattr(b[key],"values"):
+                if len(a[key]) == nboot and len(b[key]) == nboot:
+                    a[key].values = [Funct(ia,ib) for ia,ib in zip(a[key].values,b[key].values)]
+            elif key == 'Chi':
+                a[key] = a[key] + b[key]
+            else:
+                pass
+        else:
+            raise IOError('Dictionaries not equal in keys')
+    return a
+
+def XmlBootToAvgOld(datadict):
+    for key in datadict.keys():
+        if isinstance(datadict[key], dict):
+            XmlBootToAvgOld(datadict[key])          
+        elif key == 'Avg' or key == 'Vals' or key == 'Std' or key == 'Valserr':
+            datadict['Boot'].Stats()
+            if key == 'Avg' or key == 'Vals':
+                datadict[key] = datadict['Boot'].Avg
+            elif key == 'Std' or key == 'Valserr':
+                datadict[key] = datadict['Boot'].Std
+        else:
+            pass
+    return datadict
+
+
+def CreateDictOldCombs(datadict,Functs):
+    datadictout = {'doub':{} , 'sing':{}}
+    for igamma,gammadict in datadict.iteritems():
+        if 'doub' in igamma:
+            doubgamma,singgamma,gamma = igamma,igamma.replace('doub','sing'),igamma.replace('doub','')
+        elif 'sing' in igamma:
+            doubgamma,singgamma,gamma = igamma.replace('sing','doub'),igamma,igamma.replace('sing','')
+        else:
+            continue
+        if doubgamma not in datadict.keys() or singgamma not in datadict.keys(): continue
+        datadictout['doub'][gamma] = datadict[doubgamma]
+        datadictout['sing'][gamma] = datadict[singgamma]
+        for funtype,ifun in Functs.iteritems():
+            if funtype not in datadictout.keys(): datadictout[ifun] = {}
+            datadictout[ifun][gamma] = XmlBootToAvgOld(FunctOfDictsOld(datadict[doubgamma],datadict[singgamma],ifun))
+    return datadictout

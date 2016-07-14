@@ -13,6 +13,8 @@ import time,datetime
 from MultiWrap import *
 from multiprocessing import Pool
 from InputArgs import *
+from CreateCombs import CreateDictOldCombs
+from CombParams import *
 
 DoDS = True
 
@@ -48,11 +50,17 @@ def ReadAndPlotMass(thisMomList,thisSmearList,thisSetList,thisSetPoFLists,thisMe
     
 def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList):
     datadict = ReadSetFitRFDict(outputdir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
+    combdatadict = CreateDictOldCombs(datadict,CombFunsDict)
+    ##TESTING THE COMBINING STUFF ON READING SIDE##
+    if Debug:
+        print combdatadict
+        print datadict['twopt'].keys()
     thisGammaList = datadict.keys()
+    if not CheckDict(thisMassDict,'twopt','q = 0 0 0'): raise IOError('Mass data dict not found')
     thisMassdict = datadict['twopt']['q = 0 0 0']
     start = time.time()
     for imom in thisMomList:
-        if imom == 'q = 0 0 0' and len(thisMomList) > 1 and DoMulticore: continue
+        # if imom == 'q = 0 0 0' and len(thisMomList) > 1 and DoMulticore: continue
         for icg,igamma in enumerate(thisGammaList):
             if any([idst in igamma for idst in ['twopt']]): continue
             if any([idst in igamma for idst in ['doub','sing']]) and DoDS==False: continue

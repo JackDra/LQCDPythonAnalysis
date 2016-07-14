@@ -198,10 +198,10 @@ def WipeSFSet(outputdir,thisGammaList,RunName,OoT,setlist=[]):
 
 def SplitOpp(All):
     Split,OrdSplit,contents = [],[],[]
-    if any([igamma in All for igamma in GammaSet]):
+    if any([igamma in All for igamma in GammaSet + ['gi']]):
         contents.append('Gamma')
         gammalen,thisgamma = 0,''
-        for igamma in GammaSet:
+        for igamma in GammaSet+['gi']:
             if igamma in All:
                 if len(igamma) > gammalen:
                     thisgamma = igamma
@@ -281,7 +281,7 @@ def PrintOpps(AllList):
 def CreateGammaList(thislist,twopt=False):
     if len(thislist) == 0:
         print 'No Gamma Inputted, using whole set (see Params.py DefGammaList)'
-        GLout = DefGammaList
+        GLout = DefCombGammaList
     else:
         GLout = []
         for ig in thislist:
@@ -295,9 +295,11 @@ def CreateGammaList(thislist,twopt=False):
                 GLout += DoubSingCmplxList(CurrOpps[ig])      
             elif 'SmallSet' in ig :
                 GLout += DoubSingList(['P4g4','P3g3g5','P4I','P3g1g2','P4giDi'])
+            elif 'OnlyDS' in ig :
+                GLout += DefGammaList
             elif ig in DerCurrTypes:
                 GLout += DoubSingList(['P4'+ig])
-            elif ig in DefGammaList+DefCombGammaList:
+            elif ig in DefCombGammaList:
                 GLout += [ig]
             elif ig in ['twopt','Mass']:
                 GLout += ['twopt']
