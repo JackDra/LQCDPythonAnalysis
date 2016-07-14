@@ -263,7 +263,7 @@ def ReadAndPlotSummary(thisMethodList,thisGammaList,thisSetList,thisMomList,this
         for iDS in thisDSList:
             for imom in thisMomList:
                 PlotSummaryMethods(data,thisMethodSetList,iDS,igamma.replace('doub','').replace('sing',''),imom,outputdir)
-                print 'Plotting: ' iDS , igamma , imom , ' Complete  '
+                print 'Plotting: ', iDS , igamma , imom , ' Complete  '
 
 
 def PlotFFSummary(thisSL,thiscurr,currdata):
