@@ -25,4 +25,7 @@ for icurr in feedin['current']:
 
 for iCombType in feedin['comb']:
     ReadAndComb(feedin,CombFunsDict[iCombType],iCombType)
-    ReadAndCombFF(GetCurrDict(thisCurrList),CombFunsDict[iCombType],iCombType)
+
+if feedin['DoCurr']:
+    for iCombType in feedin['comb']:
+        ReadAndCombFF(GetCurrDict(thisCurrList),CombFunsDict[iCombType],iCombType)

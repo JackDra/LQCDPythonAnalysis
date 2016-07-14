@@ -74,6 +74,7 @@ def InputParams(inputparams):
     feedout['current'] = NoFFList.keys()
     feedout['mom'] = RunMomList
     feedout['comb'] = CombList
+    feedout['DoCur'] = True
     SkipDefWipe = False
     for isys in inputparams:
         if isys[0] != '-':
@@ -93,6 +94,8 @@ def InputParams(inputparams):
             print "-noprompt does not display any prompts (for long runs)"
             print 
             exit()
+        elif '-NoCurr' in isys:
+            feedout['DoCur'] = False
         elif '-g' in isys:
             feedout['gamma'] = isys.replace('-g=','').split(',')
         elif '-s' in isys:
