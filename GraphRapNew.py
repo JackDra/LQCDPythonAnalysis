@@ -166,9 +166,9 @@ else:
             if any([idst in igamma for idst in ['doub','sing','twopt']]): continue
             for imom in feedin['mom']:
                 if imom == 'q = 0 0 0' :
-                    inputparams.append((['doub'+igamma,'sing'+igamma,igamma,'twopt'],[imom],feedin['set'],feedin['method'])) 
+                    inputparams.append((['doub'+igamma,'sing'+igamma,igamma,'twopt'],[imom],feedin['set'],feedin['method'],feedin['comb'])) 
                 else:
-                    inputparams.append((['doub'+igamma,'sing'+igamma,igamma,'twopt'],['q = 0 0 0',imom],feedin['set'],feedin['method']))
+                    inputparams.append((['doub'+igamma,'sing'+igamma,igamma,'twopt'],['q = 0 0 0',imom],feedin['set'],feedin['method'],feedin['comb']))
         makeContextFunctions(ReadAndPlotDict)
         thisPool = Pool(min(len(inputparams),feedin['anaproc']))
         output = thisPool.map(ReadAndPlotDict.mapper,inputparams)
