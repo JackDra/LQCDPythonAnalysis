@@ -174,10 +174,10 @@ def ReadAndCombFF(thisCurrDict,Funct,funname):
         doubcurr = 'doub'+icurr
         singcurr = 'sing'+icurr
         for iset in isetlist:
-            if Debug: print filedoub
-            if Debug: print filesing                        
             filedoub = outputdir+'FormFactors/'+doubcurr+'/' +doubcurr+iset+'.xml'
             filesing = outputdir+'FormFactors/'+singcurr+'/' +singcurr+iset+'.xml'
+            if Debug: print filedoub
+            if Debug: print filesing                        
             outdata = CombTwoFiles(filedoub,filesing,Funct)
             mkdir_p( outputdir+'FormFactors/'+funname+icurr+'/')
             outfile = outputdir+'FormFactors/'+funname+icurr+'/'+ funname+icurr+iset
