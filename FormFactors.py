@@ -16,14 +16,15 @@ from LLSBoot import *
 ##REMEBER deal with cmplx signals
 def CreateFF(data,mass,iCurr,gammaflag=''):
     thisdataout = {}
-    Opps = CurrOpps[iCurr]
+    baseCurr = iCurr.replace(gammaflag,'')
+    Opps = CurrOpps[baseCurr]
     thisdataout = OrderedDict()
     infodict = {}
     for iqsqrd in MomSqrdSet:        
         iqs = 'qsqrd'+str(iqsqrd)
         thisdataout['qsqrd'+str(iqsqrd)] = {}
         datavals,FFcoeff = [],[]
-        for iff in range(NoFFPars[iCurr]):
+        for iff in range(NoFFPars[baseCurr]):
             FFcoeff.append([])
         for iopp in Opps:                    
             flagopp = gammaflag+iopp
@@ -36,7 +37,7 @@ def CreateFF(data,mass,iCurr,gammaflag=''):
                     if iq not in data[flagopp].keys(): continue 
                 if CmplxVal: 
                     if iq not in data[flagopp+'cmplx'].keys(): continue 
-                FFcoeffhold,rcheck,ccheck = CurrFFs[iCurr](iopp,np.array(qstrTOqvec(iq))*qunit,[0,0,0],mass)
+                FFcoeffhold,rcheck,ccheck = CurrFFs[baseCurr](iopp,np.array(qstrTOqvec(iq))*qunit,[0,0,0],mass)
                 if CmplxVal and ccheck:
                     for iFF,iFFcof in enumerate(FFcoeffhold):
                         FFcoeff[iFF].append(iFFcof.imag)
@@ -49,11 +50,11 @@ def CreateFF(data,mass,iCurr,gammaflag=''):
                     infodict[iqs] = data[flagopp][iq]['Info']
         if len(datavals) == 0: continue
         zboot,zvec = [BootStrap1(nboot,0)],[0.0]
-        if 'Scalar' in iCurr :
-            FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff,FFFitFuns[iCurr])
+        if 'Scalar' in baseCurr :
+            FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff,FFFitFuns[baseCurr])
             thisdataout[iqs]['Boot'] = FFBoothold
             thisdataout[iqs]['Avg'] = FFAvghold
-        elif 'Vector' in iCurr :
+        elif 'Vector' in baseCurr :
             ## DEBUG ##
             if Debug:
                 print 'Printing Form Factors debug:'
@@ -70,10 +71,10 @@ def CreateFF(data,mass,iCurr,gammaflag=''):
                 thisdataout[iqs]['Boot'] = FFBoothold+zboot
                 thisdataout[iqs]['Avg'] = FFAvghold+zvec
             else:
-                FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff,FFFitFuns[iCurr])
+                FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff,FFFitFuns[baseCurr])
                 thisdataout[iqs]['Boot'] = FFBoothold
                 thisdataout[iqs]['Avg'] = FFAvghold
-        elif 'Tensor' in iCurr:
+        elif 'Tensor' in baseCurr:
             if len(datavals) == 1:
                 if sum(ia == [0.0] for ia in FFcoeff) != 2: continue
                 if FFcoeff[0] != [0.0]:
@@ -103,7 +104,7 @@ def CreateFF(data,mass,iCurr,gammaflag=''):
                     thisdataout[iqs]['Boot'] = FFBoothold+zboot
                     thisdataout[iqs]['Avg'] = FFAvghold+zvec
             else:
-                FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff,FFFitFuns[iCurr])
+                FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff,FFFitFuns[baseCurr])
                 thisdataout[iqs]['Boot'] = FFBoothold
                 thisdataout[iqs]['Avg'] = FFAvghold
         thisdataout[iqs]['Chi'] = FFChihold[0]

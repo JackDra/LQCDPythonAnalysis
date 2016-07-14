@@ -161,8 +161,7 @@ def ReadAndComb(inputargs,Funct,funname):
             elif 'OSF' in imethod:
                 preflist = OneStateParList['C3']
             else:
-                preflist = ['']
-                
+                preflist = ['']                
             for ipref in preflist:
                 for imom in inputargs['mom']:
                     momstr = qstrTOqcond(imom)
@@ -175,5 +174,44 @@ def ReadAndComb(inputargs,Funct,funname):
                         if Debug: print filesing                        
                         mkdir_p( outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/')
                         outfile = outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/' + iset+funname+igamma+ipref+momstr
-                        WriteXmlOutput(outfile,outdata)
-                        # MergeXmlOutput(outfile,outdata)
+                        # WriteXmlOutput(outfile,outdata)
+                        MergeXmlOutput(outfile,outdata)
+
+                        
+
+def ReadAndCombFF(inputargs,Funct,funname):
+    for icurr in inputargs['current']:
+        if 'doub' in igamma or 'sing' in igamma: continue
+        doubgamma = 'doub'+igamma
+        singgamma = 'sing'+igamma
+        doubgammadir = CreateOppDir(doubgamma)
+        singgammadir = CreateOppDir(singgamma)
+        gammadir = CreateOppDir(funname+igamma)
+        for imethod in inputargs['method']:
+            if imethod == 'RF': methoddir = ''
+            else: methoddir = '/'+imethod
+            thisSetList = inputargs['set']
+            if 'TSF' in imethod or 'SumMeth' in imethod:
+                thisSetList = ReduceTsink(inputargs['set'])
+            if 'TSF' in imethod:
+                preflist = TwoStateParList['C3']
+            elif 'OSF' in imethod:
+                preflist = OneStateParList['C3']
+            else:
+                preflist = ['']                
+            for ipref in preflist:
+                for imom in inputargs['mom']:
+                    momstr = qstrTOqcond(imom)
+                    momdir = MakeMomDir(imom)
+                    for iset in thisSetList:
+                        filedoub = outputdir +'/'+ doubgammadir + methoddir + '/'+momdir + '/' + iset+doubgamma+ipref+momstr+'.xml'
+                        filesing = outputdir +'/'+ singgammadir + methoddir + '/'+momdir + '/' + iset+singgamma+ipref+momstr+'.xml'
+                        outdata = CombTwoFiles(filedoub,filesing,Funct)
+                        if Debug: print filedoub
+                        if Debug: print filesing                        
+                        mkdir_p( outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/')
+                        outfile = outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/' + iset+funname+igamma+ipref+momstr
+                        # WriteXmlOutput(outfile,outdata)
+                        MergeXmlOutput(outfile,outdata)
+
+                        

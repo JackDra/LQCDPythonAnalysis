@@ -1,4 +1,4 @@
- #!/usr/bin/env python
+#!/usr/bin/env python
 
 from Params import *
 from FitParams import *
@@ -314,3 +314,12 @@ def CreateOSFfitKey(smear):
         deltashift = 0
         smearindex = PickedStateStr+DefTvarPicked
     return smearindex,deltashift
+
+def SplitDSCurr(thisstr):
+    for iDS in DefDSList:
+        if iDS in thisstr:
+            DSout = iDS
+            strout = thisstr.replace(iDS,'')
+            return DSout,strout
+    return '',strout
+        

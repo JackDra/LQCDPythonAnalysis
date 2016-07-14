@@ -64,7 +64,7 @@ def InputParams(inputparams):
     feedout['gamma'] = ''
     feedout['set'] = DefSetList
     feedout['method'] = MethodList
-    feedout['current'] = NoFFList.keys()
+    feedout['current'] = CurrentDSList
     feedout['mom'] = RunMomList
     SkipDefWipe = False
     for isys in inputparams:
@@ -78,7 +78,7 @@ def InputParams(inputparams):
             print 
             print '-s= specifies set list to use, choose from:\n' + '\n'.join(DefSetList)+'\n'
             print '-m= specifies Method used, choose from:\n' + '\n'.join(MethodList)+'\n'
-            print '-c= specifies Current to look at, choose from:\n' + '\n'.join(NoFFList.keys())+'\n'
+            print '-c= specifies Current to look at, choose from:\n' + '\n'.join(CurrentDSList)+'\n'
             print "-p= specifies the momentium list to use, form is 'q = X Y Z', X,Y,Z = -3,-2,-1,0,1,2,3"
             print "-np= specifies the maximum number of processors used for this job"
             print "-noprompt does not display any prompts (for long runs)"
@@ -122,12 +122,12 @@ def InputParams(inputparams):
         elif '-c' in isys:
             feedout['current'] = isys.replace('-c=','').split(',')
             for icl in feedout['current']:
-                if icl not in NoFFList.keys():
+                if icl not in CurrentDSList:
                     print 'Warning, ' + icl + ' not found in current list, skipping.'
                     feedout['current'].remove(icl)
             if len(feedout['current']) == 0:
                 print 'Nothing found for current list, using default list'
-                feedout['current'] = NoFFList.keys()
+                feedout['current'] = CurrentDSList
         elif '-np' in isys:
             thisAnaProc = int(isys.replace('-np=',''))
             if AnaProc < thisAnaProc:

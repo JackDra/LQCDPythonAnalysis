@@ -74,6 +74,7 @@ NoFFList = {'Scalar'   : ['FF1'],
             'PsVector' : ['FF1','FF2'],
             'Tensor'   : ['FF1','FF2','FF3']}
 
+CurrentDSList = NoFFList.keys() + ['doub'+iFF for iFF in NoFFList.keys()] + ['sing'+iFF for iFF in NoFFList.keys()]
 
 
 def FindMomFromGamma(igamma,thisMomList=qvecSet):

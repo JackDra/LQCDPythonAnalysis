@@ -35,17 +35,20 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr):
     # mprint( 'Set:' + theset + ' MassSetPicked:'+thesetmass)
 ## FF { { momsqrd } { Boot/Avg/Chi } }
     thisstart = time.time()
-    FF,infodict = CreateFF(setdict,thisMass['Avg'],thisCurr,gammaflag='doub')
-    PrintFFSet(FF,theset,thisMass,thesetmass,'doub'+thisCurr,infodict)
-    if 'Vector' in thisCurr:
-        NewFF = CombineVector(FF,thisMass)
-        PrintFFSet(NewFF,theset,thisMass,thesetmass,'doubGeGm',infodict)
+    thisDS,baseCurr = SplitDSCurr(thisCurr)
+    if thisDS == '':
+        thisCurrList = [ids+thisCurr for ids in DefDSList]
+        thisgflist = DefDSList
+    else:
+        thisCurrList = [thisCurr]
+        thisgflist = [thisDS]
+    for iCurr,igf in zip(thisCurrList,thisgflist):
+        FF,infodict = CreateFF(setdict,thisMass['Avg'],iCurr,gammaflag=igf)
+        PrintFFSet(FF,theset,thisMass,thesetmass,iCurr,infodict)
+        if 'Vector' in thisCurr:
+            NewFF = CombineVector(FF,thisMass)
+            PrintFFSet(NewFF,theset,thisMass,thesetmass,iCurr.replace('Vector','GeGm'),infodict)
 
-    FF,infodict = CreateFF(setdict,thisMass['Avg'],thisCurr,gammaflag='sing')
-    PrintFFSet(FF,theset,thisMass,thesetmass,'sing'+thisCurr,infodict)
-    if 'Vector' in thisCurr:
-        NewFF = CombineVector(FF,thisMass)
-        PrintFFSet(NewFF,theset,thisMass,thesetmass,'singGeGm',infodict)
     mprint( 'Fit and Print for ' , theset , ' took: ',str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s'    )
 
 
@@ -84,8 +87,14 @@ thisGammaList = []
 if 'RF' in feedin['set']: del feedin['set']['RF']
 if 'GeGm' in feedin['current']: del feedin['current']['GeGm']
 for thisCurr in feedin['current']:
-    thisGammaList = CurrOpps[thisCurr] + [iC+'cmplx' for iC in CurrOpps[thisCurr]]
-    thisGammaList = ['doub'+ig for ig in thisGammaList] + ['sing'+ig for ig in thisGammaList]+ ['twopt']
+    thisDS,baseCurr = SplitDSCurr(thisCurr)
+    if thisDS == '':
+        thisGammaList = CurrOpps[thisCurr] + [iC+'cmplx' for iC in CurrOpps[thisCurr]]
+        thisGammaList = ['doub'+ig for ig in thisGammaList] + ['sing'+ig for ig in thisGammaList]+ ['twopt']
+    else:
+        thisGammaList = CurrOpps[thisCurr] + [iC+'cmplx' for iC in CurrOpps[thisCurr]]
+        thisGammaList = [thisDS+ig for ig in thisGammaList] + ['twopt']
+        
     for imeth in feedin['method']:
         if 'Fits' in imeth or 'OSF' in imeth:
             for iSet in feedin['set']:
