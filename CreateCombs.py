@@ -197,6 +197,8 @@ def FunctOfDictsOld(a, b,Funct):
                         if len(ja.values) == nboot and len(jb.values) == nboot:
                             a[key][j].values = np.array([Funct(ia,ib) for ia,ib in zip(ja.values,ja.values)])
                             a[key][j].Stats()                    
+                            if Debug:
+                                print a[key][j].Avg
                         else:
                             raise IOError('nboot missmatch, file1: ', len(ja.values), 'file2: ', len(jb.values),' params: ',nboot)
             elif key == 'Chi':
@@ -232,7 +234,5 @@ def CreateDictOldCombs(datadict,thisCombList):
         datadictout['sing'][gamma] = datadict[singgamma]
         for funtype in thisCombList:
             if funtype not in datadictout.keys(): datadictout[funtype] = {}
-            datadictout[funtype][gamma] = deepcopy(XmlBootToAvgOld( deepcopy(FunctOfDictsOld(deepcopy(datadict[doubgamma]),deepcopy(datadict[singgamma]),CombFunsDict[funtype]))))
-            if Debug:
-                print funtype, gamma, datadictout[funtype][gamma]
+            datadictout[funtype][gamma] = XmlBootToAvgOld( FunctOfDictsOld(deepcopy(datadict[doubgamma]),datadict[singgamma],CombFunsDict[funtype]))
     return datadictout
