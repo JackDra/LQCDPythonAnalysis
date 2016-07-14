@@ -318,7 +318,7 @@ def CreateOSFfitKey(smear):
 
 def SplitDSCurr(thisstr):
     for iDS in DefDSList+CombList:
-        if iDS in thisstr:
+        if iDS in thisstr and 'PsVector' not in thisstr:
             DSout = iDS
             strout = thisstr.replace(iDS,'',1)
             return DSout,strout
