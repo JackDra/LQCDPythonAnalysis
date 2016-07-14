@@ -78,13 +78,14 @@ feedin = InputParams(sys.argv[1:])
 
 print 'CurrList:\n' , '\n'.join(feedin['current'])
 print ''
+
+if 'RF' in feedin['method']: del feedin['method'].remove('RF')
 print 'MethodList:\n' , '\n'.join(feedin['method'])
 print ''
 
 inputparams = []
 thisGammaList = []
-if 'RF' in feedin['set']: del feedin['set']['RF']
-if 'GeGm' in feedin['current']: del feedin['current']['GeGm']
+if 'GeGm', in feedin['current']: feedin['current'].remove('GeGm')
 for thisCurr in feedin['current']:
     thisDS,baseCurr = SplitDSCurr(thisCurr)
     if thisDS == '':
