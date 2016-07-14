@@ -234,16 +234,23 @@ def PlotSummarySet(iDS,igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
                 if iDS == False:
                     if not CheckDict(idata,igamma,iq): continue
                     if not GraphCondit('',igamma,iq,methcomp,iSet): continue
+                    Xlables.append(LabToXaxis(iSet,thisMeth))
+                    if 'Avg' in idata[igamma][iq].keys() and 'Std' in idata[igamma][iq].keys():
+                        dataval.append(abs(idata[igamma][iq]['Avg']))
+                        dataerr.append(idata[igamma][iq]['Std'])
+                    else:
+                        dataval.append(abs(idata[igamma][iq]['Boot'].Avg))
+                        dataerr.append(idata[igamma][iq]['Boot'].Std)
                 else:
                     if not CheckDict(idata,iDS,igamma,iq): continue
                     if not GraphCondit(iDS,igamma,iq,methcomp,iSet): continue
-                Xlables.append(LabToXaxis(iSet,thisMeth))
-                if 'Avg' in idata[igamma][iq].keys() and 'Std' in idata[igamma][iq].keys():
-                    dataval.append(abs(idata[igamma][iq]['Avg']))
-                    dataerr.append(idata[igamma][iq]['Std'])
-                else:
-                    dataval.append(abs(idata[igamma][iq]['Boot'].Avg))
-                    dataerr.append(idata[igamma][iq]['Boot'].Std)
+                    Xlables.append(LabToXaxis(iSet,thisMeth))
+                    if 'Avg' in idata[iDS][igamma][iq].keys() and 'Std' in idata[iDS][igamma][iq].keys():
+                        dataval.append(abs(idata[iDS][igamma][iq]['Avg']))
+                        dataerr.append(idata[iDS][igamma][iq]['Std'])
+                    else:
+                        dataval.append(abs(idata[iDS][igamma][iq]['Boot'].Avg))
+                        dataerr.append(idata[iDS][igamma][iq]['Boot'].Std)
     if len(dataval) == 0: return xstart,[]
     xdata = range(xstart,xstart+len(dataval))
     pl.errorbar(xdata,dataval,dataerr,color=col,fmt=sym)
