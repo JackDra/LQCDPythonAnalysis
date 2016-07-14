@@ -89,10 +89,10 @@ if 'GeGm' in feedin['current']: del feedin['current']['GeGm']
 for thisCurr in feedin['current']:
     thisDS,baseCurr = SplitDSCurr(thisCurr)
     if thisDS == '':
-        thisGammaList = CurrOpps[thisCurr] + [iC+'cmplx' for iC in CurrOpps[thisCurr]]
+        thisGammaList = CurrOpps[baseCurr] + [iC+'cmplx' for iC in CurrOpps[baseCurr]]
         thisGammaList = ['doub'+ig for ig in thisGammaList] + ['sing'+ig for ig in thisGammaList]+ ['twopt']
     else:
-        thisGammaList = CurrOpps[thisCurr] + [iC+'cmplx' for iC in CurrOpps[thisCurr]]
+        thisGammaList = CurrOpps[baseCurr] + [iC+'cmplx' for iC in CurrOpps[baseCurr]]
         thisGammaList = [thisDS+ig for ig in thisGammaList] + ['twopt']
         
     for imeth in feedin['method']:
