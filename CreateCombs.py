@@ -186,7 +186,6 @@ def FunctOfDictsOld(a, b,Funct):
         if key in a:
             if isinstance(a[key], dict) and isinstance(b[key], dict):
                 FunctOfDictsOld(a[key], b[key],Funct)
-                print a[key]
             elif hasattr(a[key],"values") and hasattr(b[key],"values"):
                 if len(a[key].values) == nboot and len(b[key].values) == nboot:
                     a[key].values = np.array([Funct(ia,ib) for ia,ib in zip(a[key].values,b[key].values)])
@@ -194,7 +193,7 @@ def FunctOfDictsOld(a, b,Funct):
                 else:
                     raise IOError('nboot missmatch, file1: ', len(a[key].values), 'file2: ', len(b[key].values), ' params: ',nboot)
             elif hasattr(a[key],"__len__") and hasattr(b[key],"__len__"):
-                for j,ja,jb in enumerate(zip(a[key],b[key])):
+                for j,(ja,jb) in enumerate(zip(a[key],b[key])):
                     if len(ja.values) == nboot and len(jb.values) == nboot:
                         a[key][j].values = np.array([Funct(ia,ib) for ia,ib in zip(ja.values,ja.values)])
                         a[key][j].Stats()                    
