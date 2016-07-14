@@ -56,8 +56,11 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCom
         print combdatadict
         print datadict['twopt'].keys()
     thisGammaList = datadict.keys()
-    if not CheckDict(thisMassDict,'twopt','q = 0 0 0'): raise IOError('Mass data dict not found')
-    thisMassdict = datadict['twopt']['q = 0 0 0']
+    if not CheckDict(datadict,'twopt','q = 0 0 0'):
+        # raise IOError('Mass data dict not found')
+        print 'WARNING: mass dictionary not found, is needed for OSF and TSF'
+    else:
+        thisMassdict = datadict['twopt']['q = 0 0 0']
     start = time.time()
     for imom in thisMomList:
         # if imom == 'q = 0 0 0' and len(thisMomList) > 1 and DoMulticore: continue
@@ -114,10 +117,10 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCom
                     
 
 
-if all('-m' not in iin for iin in sys.argv[1:]):
-    feedin = InputParams(sys.argv[1:] + ['-noprompt'] + ['-m=Fits,TSFTsink,TSFtest32,OSF'])
-else:
-    feedin = InputParams(sys.argv[1:] + ['-noprompt'])
+# if all('-m' not in iin for iin in sys.argv[1:]):
+#     feedin = InputParams(sys.argv[1:] + ['-noprompt'] + ['-m=Fits,TSFTsink,TSFtest32,OSF'])
+# else:
+feedin = InputParams(sys.argv[1:] + ['-noprompt'])
     
 thisGammaList = CreateGammaList(feedin['gamma'],twopt=True)
 
@@ -179,7 +182,7 @@ else:
         for igamma in thisGammaList:
             if any([idst in igamma for idst in ['doub','sing','twopt']]): continue
             passgammalist += ['doub'+igamma,'sing'+igamma,igamma]
-        ReadAndPlotDict(passgammalist,feedin['mom'],feedin['set'],feedin['method'])
+        ReadAndPlotDict(passgammalist,feedin['mom'],feedin['set'],feedin['method'],feedin['comb'])
         
 print 'Graphing all complete'
     

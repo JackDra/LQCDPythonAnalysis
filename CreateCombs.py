@@ -225,6 +225,6 @@ def CreateDictOldCombs(datadict,thisCombList):
         datadictout['doub'][gamma] = datadict[doubgamma]
         datadictout['sing'][gamma] = datadict[singgamma]
         for funtype in thisCombList:
-            if funtype not in datadictout.keys(): datadictout[ifun] = {}
-            datadictout[ifun][gamma] = XmlBootToAvgOld(FunctOfDictsOld(datadict[doubgamma],datadict[singgamma],CombFunsDict[funtype]))
+            if funtype not in datadictout.keys(): datadictout[funtype] = {}
+            datadictout[funtype][gamma] = XmlBootToAvgOld(FunctOfDictsOld(datadict[doubgamma],datadict[singgamma],CombFunsDict[funtype]))
     return datadictout
