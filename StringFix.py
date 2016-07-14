@@ -106,7 +106,7 @@ def TitleFix(string):
     return (r'$'+string.replace('P4giDi','\\langle x \\rangle ')
             .replace('giDi','\\langle x \\rangle ')
             .replace('P4I','g_{S}')
-            .replace('I','g_{S}')
+            # .replace('I','g_{S}')
             .replace('P3g3g5','g_{A}')
             .replace('g3g5','g_{A}')
             .replace('P3','\ \\Gamma_{3}\ ')
