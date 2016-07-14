@@ -112,7 +112,7 @@ def XmlBootToAvg(datadict,BootDict=None):
             else:
                 if 'Avg' not in datadict[key].keys():
                     XmlBootToAvg(datadict[key],BootDict = BootDict[key])          
-                else:
+                elif key in BootDict.keys():
                     datadict[key]['Avg'] = np.mean(BootDict[key])
                     datadict[key]['Std'] = np.std(BootDict[key])
                     if 'Chi' in datadict[key].keys():
