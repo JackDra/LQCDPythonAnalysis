@@ -371,13 +371,14 @@ def PlotMassSetTSF(data2pt,thisSetList,MassDt,thisSF):
     if CheckDict(data2pt,'T'+thisSF,iterSetList[0]):
         PlotTSFMassValue(data2pt['T'+thisSF][iterSetList[0]],MassDt)
 
-def PlotFFs(data,thisCurr,thisSetList,CollName):
+def PlotFFs(data,DSCurr,thisSetList,CollName):
     if len(thisSetList) == 0: return
+    thisDS,thisCurr = SplitDSCurr(DSCurr)
     for iFF in range(1,NoFFPars[thisCurr]+1):
         thisFF = 'FF'+str(iFF)
         PlotFFSet(data,thisFF,thisSetList)
         SetFFAxies(thisCurr)
-        pl.savefig(CreateFFFile(CollName,thisCurr,thisFF)+'.pdf')
+        pl.savefig(CreateFFFile(CollName,DSCurr,thisFF)+'.pdf')
         pl.clf()
         
 
