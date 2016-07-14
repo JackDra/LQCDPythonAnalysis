@@ -86,6 +86,8 @@ print ''
 inputparams = []
 thisGammaList = []
 if 'GeGm', in feedin['current']: feedin['current'].remove('GeGm')
+for iDS in DefDSList:
+    if iDS+'GeGm', in feedin['current']: feedin['current'].remove(iDS+'GeGm')
 for thisCurr in feedin['current']:
     thisDS,baseCurr = SplitDSCurr(thisCurr)
     if thisDS == '':
