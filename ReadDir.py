@@ -62,7 +62,7 @@ def CheckCurrentSets(thisCurrDict):
             if singcurr not in thisCurrDict.keys():
                 raise LookupError(singcurr +' not found in current list')
             else:
-                if currset != thisCurrDict[singcurr]:
+                if sorted(currset) != sorted(thisCurrDict[singcurr]):
                     if Debug:
                         for icount in range(len(currset)):
                             print currset[icount], thisCurrDict[singcurr][icount],currset[icount] ==  thisCurrDict[singcurr][icount]
@@ -74,7 +74,7 @@ def CheckCurrentSets(thisCurrDict):
             if doubcurr not in thisCurrDict.keys():
                 raise LookupError(doubcurr +' not found in current list')
             else:
-                if currset != thisCurrDict[doubcurr]:
+                if sorted(currset) != sorted(thisCurrDict[doubcurr]):
                     if Debug:
                         for icount in range(len(currset)):
                             print currset[icount], thisCurrDict[doubcurr][icount],currset[icount] ==  thisCurrDict[doubcurr][icount]
