@@ -321,5 +321,5 @@ def SplitDSCurr(thisstr):
             DSout = iDS
             strout = thisstr.replace(iDS,'')
             return DSout,strout
-    return '',strout
+    return '',thisstr
         
