@@ -74,6 +74,7 @@ for igamma in thisGammaList:
                 QueMomList = GetMomFromGamma(iDS+igamma,thisMomList=feedin['mom'])
             else:
                 thisMomList = Check3ptArray([iDS+igamma],[iSet],thisMomList=feedin['mom'],CheckType='Fits',printout=False)
+                print thisMomList
                 thisMomList = thisMomList[iDS+igamma][iSet]
             for imom in thisMomList:
                 # RunGammaList.append(iDS+igamma)
