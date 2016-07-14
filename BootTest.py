@@ -242,6 +242,7 @@ class BootStrap1:
             except:
                 print "ERROR: UNknown boot multiply"
                 print fac, self.Avg
+                print self.values
                 print fac.nboot
                 assert 1==0
         return result
