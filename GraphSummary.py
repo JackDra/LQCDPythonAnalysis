@@ -221,7 +221,9 @@ def PlotSummarySet(iDS,igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
     dataval,dataerr,Xlables = [],[],[]
     keylist = SortMySet(data.keys())[0]
     for datakey in keylist:
-        if iDS in DefDSList:
+        if iDS == False:
+            idata = data
+        elif iDS in DefDSList:
             idata = CreateDictOldCombs(data[datakey],[]) 
         else:
             idata = CreateDictOldCombs(data[datakey],[iDS]) 
@@ -229,8 +231,12 @@ def PlotSummarySet(iDS,igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
             methcomp = thisMeth
             if 'Fits' in thisMeth: methcomp = 'Fits'
             if iSet in datakey.replace(methcomp,'') and methcomp in datakey: 
-                if not CheckDict(idata,iDS,igamma,iq): continue
-                if not GraphCondit(iDS,igamma,iq,methcomp,iSet): continue
+                if iDS == False:
+                    if not CheckDict(idata,iDS,igamma,iq): continue
+                    if not GraphCondit(iDS,igamma,iq,methcomp,iSet): continue
+                else:
+                    if not CheckDict(idata,igamma,iq): continue
+                    if not GraphCondit('',igamma,iq,methcomp,iSet): continue
                 Xlables.append(LabToXaxis(iSet,thisMeth))
                 if 'Avg' in idata[igamma][iq].keys() and 'Std' in idata[igamma][iq].keys():
                     dataval.append(abs(idata[igamma][iq]['Avg']))
@@ -265,7 +271,7 @@ def PlotFFSummary(thisSL,thiscurr,currdata):
     thisMethodSetList = CreateMethodSetList(MethodList,thisSL)
     for iFF in NoFFList[thiscurr]:
         for iqsqrd in QsqrdSet:
-            PlotSummaryMethods(currdata,thisMethodSetList,iFF,iqsqrd,outputdir,dirpref=thiscurr) 
+            PlotSummaryMethods(currdata,thisMethodSetList,'',iFF,iqsqrd,outputdir,dirpref=thiscurr) 
 
 # def PlotSummary(thisdata,thisopfile):
 #     pl.rcParams.update({'axes.labelsize' : 15})
