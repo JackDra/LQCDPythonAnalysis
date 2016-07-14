@@ -206,9 +206,9 @@ def XmlBootToAvgOld(datadict):
         elif key == 'Avg' or key == 'Vals' or key == 'Std' or key == 'Valserr':
             GetBootStats(datadict['Boot'])
             if key == 'Avg' or key == 'Vals':
-                datadict[key] = PullFlag(datadict['Boot'],'Avg')
+                datadict[key] = Pullflag(datadict['Boot'],'Avg')
             elif key == 'Std' or key == 'Valserr':
-                datadict[key] = PullFlag(datadict['Boot'],'Std')
+                datadict[key] = Pullflag(datadict['Boot'],'Std')
         else:
             pass
     return datadict
