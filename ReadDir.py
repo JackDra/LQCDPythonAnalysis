@@ -54,7 +54,7 @@ def GetCurrDict(thisCurrTypes):
     print 'Sets Found:\n','\n'.join(thisSetList)
     return thisCurrDict
 
-def CheckCurrentSets(thisCurDict):
+def CheckCurrentSets(thisCurrDict):
     outCurrDict = {}
     for icurr,currset in thisCurrDict.iteritems():
         if 'doub' in icurr:
@@ -62,7 +62,7 @@ def CheckCurrentSets(thisCurDict):
             if singcurr not in thisCurrDict.keys():
                 raise LookupError(singcurr +' not found in current list')
             else:
-                if currset != thiscurr[singcurr]:
+                if currset != thisCurrDict[singcurr]:
                     raise LookupError(singcurr +' has different set list as ' + doubcurr)
                 else:
                     outCurrDict[icurr.replace('doub','')] = currset
@@ -71,7 +71,7 @@ def CheckCurrentSets(thisCurDict):
             if doubcurr not in thisCurrDict.keys():
                 raise LookupError(doubcurr +' not found in current list')
             else:
-                if currset != thiscurr[doubcurr]:
+                if currset != thisCurrDict[doubcurr]:
                     raise LookupError(doubcurr +' has different set list as ' + doubcurr)
                 else:
                     outCurrDict[icurr.replace('sing','')] = currset
