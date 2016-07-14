@@ -179,8 +179,8 @@ def ReadAndCombFF(thisCurrDict,Funct,funname):
             filedoub = outputdir+'FormFactors/'+doubcurr+'/' +doubcurr+iset+'.xml'
             filesing = outputdir+'FormFactors/'+singcurr+'/' +singcurr+iset+'.xml'
             outdata = CombTwoFiles(filedoub,filesing,Funct)
-            mkdir_p( outputdir+'FormFactors/'+funname+curr+'/')
-            outfile = outputdir+'FormFactors/'+funnamecurr+'/'+ funname+curr+iset
+            mkdir_p( outputdir+'FormFactors/'+funname+icurr+'/')
+            outfile = outputdir+'FormFactors/'+funname+icurr+'/'+ funname+icurr+iset
             MergeXmlOutput(outfile,outdata)
 
                         
