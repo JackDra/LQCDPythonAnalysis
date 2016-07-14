@@ -213,7 +213,7 @@ for igamma in ReadGammaList:
             QueMomList = GetMomFromGamma(igamma,thisMomList=feedin['mom'])
         else:
             QueMomList = Check3ptAllSets([igamma],ReadSetList,thisMomList=feedin['mom'],CheckType='OSF'+outfile,cfuns=True)
-            QueMomList = QueMomList[igamma]
+            QueMomList = QueMomList[igamma.replace('doub','').replace('sing','')]
         for imom in QueMomList:
             # print 'adding to que: ' , igamma , imom
             inputparams.append((ReadSetList,[igamma],OSF2ptarray,twoptGammaMomList,[imom]))
