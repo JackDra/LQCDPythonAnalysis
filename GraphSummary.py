@@ -260,6 +260,8 @@ def ReadAndPlotSummary(thisMethodList,thisGammaList,thisSetList,thisMomList,this
             thisDSList = ['sing']
         elif 'doub' in igamma:
             thisDSList = thisCombList+['doub']
+        else:
+            thisDSList = []
         for iDS in thisDSList:
             for imom in thisMomList:
                 PlotSummaryMethods(data,thisMethodSetList,iDS,igamma.replace('doub','').replace('sing',''),imom,outputdir)
