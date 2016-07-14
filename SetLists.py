@@ -3,6 +3,7 @@
 from Params import *
 from FitParams import *
 from collections import OrderedDict
+from CombParams import CombList
 import re
 
 def CutDupSet(SetList):
