@@ -255,7 +255,7 @@ def ReadAndPlotSummary(thisMethodList,thisGammaList,thisSetList,thisMomList,this
     data,massdata = ExtractValues(outputdir,thisGammaList,thisSetList,thisMethodList,thisMomList=thisMomList)
     thisMethodSetList = CreateMethodSetList(thisMethodList,data.keys())
     for igamma in thisGammaList:
-        if 'twopt' in gamma: continue
+        if 'twopt' in igamma: continue
         if 'sing' in igamma:
             thisDSList = ['sing']
         elif 'doub' in igamma:
