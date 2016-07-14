@@ -203,11 +203,11 @@ for igamma in ReadGammaList:
         if DefWipe:
             QueMomList = GetMomFromGamma(igamma,thisMomList=feedin['mom'])
         else:
-            QueMomList = Check3ptAllSets([igamma,'doub'+igamma,'sing'+igamma],ReadSetList,thisMomList=feedin['mom'],CheckType='OSF'+outfile,cfuns=True)
+            QueMomList = Check3ptAllSets(['doub'+igamma,'sing'+igamma],ReadSetList,thisMomList=feedin['mom'],CheckType='OSF'+outfile,cfuns=True)
             QueMomList = QueMomList[igamma]
         for imom in QueMomList:
             # print 'adding to que: ' , igamma , imom
-            inputparams.append((ReadSetList,[igamma,'doub'+igamma,'sing'+igamma],OSF2ptarray,twoptGammaMomList,[imom]))
+            inputparams.append((ReadSetList,['doub'+igamma,'sing'+igamma],OSF2ptarray,twoptGammaMomList,[imom]))
     elif igamma.replace('doub','').replace('sing','') not in ReadGammaList:
         if DefWipe:
             QueMomList = GetMomFromGamma(igamma,thisMomList=feedin['mom'])

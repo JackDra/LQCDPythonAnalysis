@@ -60,7 +60,7 @@ start = time.time()
 inputparams = []
 for igamma in thisGammaList:
     if 'doub' not in igamma and 'sing' not in igamma and 'twopt' not in igamma:
-        parsegammalist = ['doub'+igamma,'sing'+igamma,igamma]
+        parsegammalist = ['doub'+igamma,'sing'+igamma]
         if DefWipe:
             QueMomList = GetMomFromGamma(igamma,thisMomList=feedin['mom'])
         else:
