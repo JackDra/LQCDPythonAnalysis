@@ -231,6 +231,7 @@ class BootStrap1:
     def __mul__(self,fac):
         result=BootStrap1(self.nboot, self.confidence)
         try:
+            print frac, self
             real=float(fac)
             result.Avg=self.Avg*real
             result.values=self.values*real            
