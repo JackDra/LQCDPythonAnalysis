@@ -75,7 +75,7 @@ for igamma in thisGammaList:
             QueMomList = GetMomFromGamma(igamma,thisMomList=feedin['mom'])
         else:
             QueMomList = Check3ptAllSets([igamma],thisReadSetList,thisMomList=feedin['mom'],CheckType='SumMeth')
-            QueMomList = QueMomList[igamma]
+            QueMomList = QueMomList[igamma.replace('sing','').replace('doub','')]
         for imom in QueMomList:
             print 'adding to que: ' , igamma , imom
             inputparams.append((parsegammalist,thisReadSetList,thisTSinkList,thisReadSet2pt,[imom]))
