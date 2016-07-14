@@ -219,11 +219,9 @@ def CreateDictOldCombs(datadict,thisCombList):
     for igamma,gammadict in datadict.iteritems():
         if 'doub' in igamma:
             doubgamma,singgamma,gamma = igamma,igamma.replace('doub','sing'),igamma.replace('doub','')
-        elif 'sing' in igamma:
-            doubgamma,singgamma,gamma = igamma.replace('sing','doub'),igamma,igamma.replace('sing','')
         else:
             continue
-        if doubgamma not in datadict.keys() or singgamma not in datadict.keys(): continue
+        if singgamma not in datadict.keys(): continue
         datadictout['doub'][gamma] = datadict[doubgamma]
         datadictout['sing'][gamma] = datadict[singgamma]
         for funtype in thisCombList:
