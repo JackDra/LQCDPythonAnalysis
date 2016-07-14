@@ -271,8 +271,8 @@ def PlotRFSetSum(data,thisSetList,thisTsinkR,legrem=''):
         thistsink,thissm = SplitTSinkString(iset)
         if not CheckDict(data,'RF',iset): continue
         PlotRF(data['RF'][iset],thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset.replace(legrem,'')))
-    if CheckDict(data,'SumMeth',thissm):
-        PlotSumMeth(data['SumMeth'][thissm],thiscolcyc.next(),'Sum '+SumCutPar,thisTsinkR)
+        if CheckDict(data,'SumMeth',thissm):
+            PlotSumMeth(data['SumMeth'][thissm],thiscolcyc.next(),'Sum '+SumCutPar,thisTsinkR)
 
 
 
