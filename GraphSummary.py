@@ -233,11 +233,12 @@ def PlotSummarySet(iDS,igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
             if iSet in datakey.replace(methcomp,'') and methcomp in datakey: 
                 if iDS == False:
                     if Debug:
-                        print idata.keys() , igamma
-                        print idata[igamma].keys() , iq
+                        print idata.keys() , iSet
+                        print idata[iSet].keys() , igamma
+                        print idata[iSet][igamma].keys() , iq
                         print GraphCondit('',igamma,iq,methcomp,iSet)
                     if not CheckDict(idata,igamma,iq): continue
-                    if not GraphCondit('',igamma,iq,methcomp,iSet): continue
+                    if not GraphCondit('',iSet,igamma,iq,methcomp,iSet): continue
                     Xlables.append(LabToXaxis(iSet,thisMeth))
                     if 'Avg' in idata[igamma][iq].keys() and 'Std' in idata[igamma][iq].keys():
                         dataval.append(abs(idata[igamma][iq]['Avg']))
