@@ -317,6 +317,7 @@ def CreateOSFfitKey(smear):
         smearindex = PickedStateStr+DefTvarPicked
     return smearindex,deltashift
 
+
 def SplitDSCurr(thisstr):
     for iDS in DefDSList+CombList:
         hold = thisstr.replace(iDS,'',1)
@@ -332,3 +333,6 @@ def SplitDSCurr(thisstr):
             return '',hold,iFFComb
     return '',thisstr,''
         
+def CreateCurrCombFn(thisstr):
+    DS,Curr,FFComb = SplitDSCurr(thisstr)
+    return FFComb+DS+Curr

@@ -250,7 +250,7 @@ def ReadFFDict(thisindir,thisFFDict,thisPrintRead=PrintRead):
         for iset,thisset in enumerate(FFSetList):
             if thisPrintRead: print 'Reading ',thisFF,'at : ' ,int((iset*100)/float(len(FFSetList))),'%     \r',
             thisdir = thisindir+'FormFactors/'+thisFF+'/'
-            thisfile = thisdir+thisFF+thisset+'.xml'
+            thisfile = thisdir+CreateCurrCombFn(thisFF)+thisset+'.xml'
             mprint('FFread: ' ,thisfile)
             if '/' in thisFF:
                 DataDict[thisFF][thisset] = ReadFFCombFile(thisfile)            
