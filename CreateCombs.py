@@ -143,9 +143,11 @@ def CombFFOneFile(thisfile,thisFun):
         qdatalist = [False]*thisFun.func_code.co_argcount
         for iff,ffval in qdict.iteritems():
             if 'FF' in iff: qdatalist[int(iff.replace('FF',''))-1] = np.array(ffval)
-        dictout['Form_Factors']['Boots'][qsqrd] = thisFun(*qdatalist)
-        dictout['Form_Factors']['Values'][qsqrd]['Avg'] = np.mean(dictout['Form_Factors']['Boots'][qsqrd])
-        dictout['Form_Factors']['Values'][qsqrd]['Std'] = np.std(dictout['Form_Factors']['Boots'][qsqrd])
+        dictout['Form_Factors']['Boots'][qsqrd] = BootStrap1(nboot,5)
+        dictout['Form_Factors']['Boots'][qsqrd].values = thisFun(*qdatalist)
+        dictout['Form_Factors']['Boots'][qsqrd].Stats()
+        dictout['Form_Factors']['Values'][qsqrd]['Avg'] = dictout['Form_Factors']['Boots'][qsqrd].Avg
+        dictout['Form_Factors']['Values'][qsqrd]['Std'] = dictout['Form_Factors']['Boots'][qsqrd].Std
     return dictout
         
 def ReadAndComb(inputargs,Funct,funname):
