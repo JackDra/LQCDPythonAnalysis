@@ -174,7 +174,7 @@ def InputParams(inputparams):
                 feedout['FFcomb'] = CombFFList            
         elif '-DoList' in isys:
             feedout['ffgraph'] = isys.replace('-DoList=','')
-            if iDS not in DefGraphDoList:
+            if feedout['ffgraph'] not in DefGraphDoList:
                 print 'Warning, ' + iDS + ' not found in graphing list list, Doing all.'
                 feedout['ffgraph'] = 'All'
     if not SkipDefWipe: DefWipeWarning()
