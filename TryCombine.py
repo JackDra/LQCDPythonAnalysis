@@ -24,6 +24,8 @@ for icurr in feedin['current']:
         thisCurrList.remove(icurr)
 
 
+for iDS in DefDSList:
+    if iDS in feedin['comb']: feedin['comb'].remove(iDS)
         
 for iCombType in feedin['comb']:
     print 'Creating ' , iCombType
