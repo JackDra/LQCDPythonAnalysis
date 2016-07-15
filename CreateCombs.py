@@ -15,6 +15,7 @@ from FitParams import *
 from SetLists import *
 from CombParams import *
 from ReadDir import CheckCurrentSets
+import inspect
 
 
 
@@ -120,11 +121,31 @@ def XmlBootToAvg(datadict,BootDict=None):
     return datadict
     
 
-def CombTwoFiles(file1,file2,funct):
+def CombTwoFiles(file1,file2,funct,CombFF=True):
     data1,dump = ReadXmlAndPickle(file1)
     data2,dump = ReadXmlAndPickle(file2)
     return XmlBootToAvg(FunctOfDicts(data1,data2,funct))
 
+def CombFFOneFile(thisfile,thisFun):
+    datadict,dump = ReadXmlAndPickle(thisfile)
+    dictout = {'Form_Factors':{'Info':datadict['Form_Factors']['Info'],'Values':{'Mass':datadict['Form_Factors']['Values']['Mass']}}}
+    for qsqrd,qdict in datadict['Form_Factors']['Boots'].iteritems():
+        if 'qsqrd' not in qsqrd: continue
+        if 'FF'+str(inspect.getargspec(someMethod)) not in qdict.keys():
+            print 
+            print 'WARNING: file ', thisfile
+            print qdict.keys(), ' FF found, Function requires' , inspect.getargspec(someMethod), ' FFs '
+            print 
+        dictout['Form_Factors']['Values'][qsqrd]['Chi'] = qdict['Chi']
+        qdatalist = [0]*inspect.getargspec(someMethod)
+        for iff,ffval in qdict.iteritems():
+            if 'FF' in iff: qdatalist[int(iFF.replace('FF',''))-1] = ffval
+        dictout['Form_Factors']['Boots'][qsqrd]['FF1'] = thisFun(*qdatalist)
+        dictout['Form_Factors']['Boots'][qsqrd]['FF1'].Stats()
+        dictout['Form_Factors']['Values'][qsqrd]['FF1']['Avg'] = dictout['Form_Factors']['Boots'][qsqrd]['FF1'].Avg
+        dictout['Form_Factors']['Values'][qsqrd]['FF1']['Std'] = dictout['Form_Factors']['Boots'][qsqrd]['FF1'].Std
+    return dictout
+        
 def ReadAndComb(inputargs,Funct,funname):
     for igamma in inputargs['gamma']:
         if 'doub' in igamma or 'sing' in igamma or 'twopt' in igamma: continue
@@ -178,7 +199,16 @@ def ReadAndCombFF(thisCurrDict,Funct,funname):
             outfile = outputdir+'FormFactors/'+funname+icurr+'/'+ funname+icurr+iset
             MergeXmlOutput(outfile,outdata)
 
-                        
+            
+def ReadAndCombTheFFs(thisCurrDict,Funct,FFcombName):
+    for icurr,isetlist in thisCurrDict.iteritems():
+        for iset in isetlist:
+            filecurr = outputdir+'FormFactors/'+icurr+'/' +icurr+iset+'.xml'
+            if Debug: print filecurr
+            outdata = CombFFOneFile(filecurr,Funct)
+            mkdir_p( outputdir+'FormFactors/'+icurr+'/'+FFcombName+'/')
+            outfile = outputdir+'FormFactors/'+icurr+'/'+FFcombName+'/'+ FFcombName+icurr+iset
+            MergeXmlOutput(outfile,outdata)
 
 def FunctOfDictsOld(a, b,Funct):
     for key in b:

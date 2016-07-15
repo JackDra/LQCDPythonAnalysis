@@ -74,6 +74,7 @@ def InputParams(inputparams):
     feedout['current'] = NoFFList.keys()
     feedout['mom'] = RunMomList
     feedout['comb'] = CombList
+    feedout['FFcomb'] = CombFFList
     feedout['DoCurr'] = True
     SkipDefWipe = False
     for isys in inputparams:
@@ -88,7 +89,8 @@ def InputParams(inputparams):
             print '-s= specifies set list to use, choose from:\n' + '\n'.join(DefSetList)+'\n'
             print '-m= specifies Method used, choose from:\n' + '\n'.join(MethodList)+'\n'
             print '-c= specifies Current to look at, choose from:\n' + '\n'.join(CurrentDSList)+'\n'
-            print '-DS= specifies how to combine DS, choose from:\n' + '\n'.join(CombList)+'\n'
+            print '-DS= specifies how to combine DS for TryCombine.py, choose from:\n' + '\n'.join(CombList)+'\n'
+            print '-FF= specifies how to combine Form Factors for TryFFCombine.py, choose from:\n' + '\n'.join(CombFFList)+'\n'
             print "-p= specifies the momentium list to use, form is 'q = X Y Z', X,Y,Z = -3,-2,-1,0,1,2,3"
             print "-np= specifies the maximum number of processors used for this job"
             print "-noprompt does not display any prompts (for long runs)"
@@ -159,6 +161,15 @@ def InputParams(inputparams):
             if len(feedout['comb']) == 0:
                 print 'Nothing found for comb list, using default list'
                 feedout['comb'] = CombList            
+        elif '-FF' in isys:
+            feedout['FFcomb'] = isys.replace('-DS=','').split(',')
+            for iDS in feedout['FFcomb']:
+                if iDS not in CombFFList:
+                    print 'Warning, ' + iDS + ' not found in comb list, skipping.'
+                    feedout['FFcomb'].remove(iDS)
+            if len(feedout['FFcomb']) == 0:
+                print 'Nothing found for comb list, using default list'
+                feedout['FFcomb'] = CombFFList            
     if not SkipDefWipe: DefWipeWarning()
     if Debug: feedout['anaproc'] = 1
     return feedout

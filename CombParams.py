@@ -23,8 +23,15 @@ def FFProton(val1,val2):
 def FFNeutron(val1,val2):
     return downCharge*val1 + upCharge*val2
 
+def F1overF2(F2,F1):
+    return F1/F2
+
+CombFFFunsDict = {'F1divF2':F1overF2}
+
 CombFunsDict = {'IsoVector':IsoVector,
                 'Vector':Vector,
                 'Proton':FFProton,
                 'Neutron':FFNeutron}
+
 CombList = CombFunsDict.keys()
+CombFFList = CombFFFunsDict.keys()

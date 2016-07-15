@@ -82,5 +82,5 @@ def CheckCurrentSets(thisCurrDict):
                 else:
                     outCurrDict[icurr.replace('sing','')] = currset
         else:
-            raise IOError('Depreciated file structure for current'+icurr+' , please check current list')
+            raise IOError('Depreciated file structure for current '+icurr+' , please check current list')
     return outCurrDict
