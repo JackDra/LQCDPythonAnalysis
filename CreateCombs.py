@@ -225,7 +225,7 @@ def ReadAndCombTheFFs(thisCurrDict,FunctList,FFcombList):
                 mkdir_p( outputdir+'FormFactors/'+icurr+'/'+iFFcomb+'/')
                 outfile = outputdir+'FormFactors/'+icurr+'/'+iFFcomb+'/'+ iFFcomb+icurr+iset
                 if Debug: print outfile
-                MergeXmlOutput(outfile,outdata)
+                MergeXmlOutput(outfile,iout)
 
 def FunctOfDictsOld(a, b,Funct):
     for key in b:
