@@ -121,10 +121,13 @@ def XmlBootToAvg(datadict,BootDict=None):
     return datadict
     
 
-def CombTwoFiles(file1,file2,funct,CombFF=True):
+def CombTwoFiles(file1,file2,funct):
     data1,dump = ReadXmlAndPickle(file1)
     data2,dump = ReadXmlAndPickle(file2)
-    return XmlBootToAvg(FunctOfDicts(data1,data2,funct))
+    output = []
+    for ifunc in funct:
+        output.append(XmlBootToAvg(FunctOfDicts(data1,data2,ifunc)))
+    return output
 
 def CombFFOneFile(thisfile,thisFun):
     datadict,dump = ReadXmlAndPickle(thisfile)
@@ -189,7 +192,7 @@ def ReadAndComb(inputargs,Funct,funname):
 
 
                         
-def ReadAndCombFF(thisCurrDict,Funct,funname):
+def ReadAndCombFF(thisCurrDict,FunctList,funnameList):
     newCurrDict = CheckCurrentSets(thisCurrDict)
     for icurr,isetlist in newCurrDict.iteritems():
         doubcurr = 'doub'+icurr
@@ -199,10 +202,11 @@ def ReadAndCombFF(thisCurrDict,Funct,funname):
             filesing = outputdir+'FormFactors/'+singcurr+'/' +singcurr+iset+'.xml'
             if Debug: print filedoub
             if Debug: print filesing                        
-            outdata = CombTwoFiles(filedoub,filesing,Funct)
-            mkdir_p( outputdir+'FormFactors/'+funname+icurr+'/')
-            outfile = outputdir+'FormFactors/'+funname+icurr+'/'+ funname+icurr+iset
-            MergeXmlOutput(outfile,outdata)
+            outdata = CombTwoFiles(filedoub,filesing,FunctList)
+            for funname,iout in zip(funnameList,output):
+                mkdir_p( outputdir+'FormFactors/'+funname+icurr+'/')
+                outfile = outputdir+'FormFactors/'+funname+icurr+'/'+ funname+icurr+iset
+                MergeXmlOutput(outfile,iout)
 
             
 def ReadAndCombTheFFs(thisCurrDict,Funct,FFcombName):

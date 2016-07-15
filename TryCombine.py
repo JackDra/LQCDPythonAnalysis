@@ -32,8 +32,11 @@ for iCombType in feedin['comb']:
     ReadAndComb(feedin,CombFunsDict[iCombType],iCombType)
     
 if feedin['DoCurr']:
+    FunList,comblist = [],[]
     for iCombType in feedin['comb']:
         print 'Creating ' , iCombType
-        ReadAndCombFF(GetCurrDict(thisCurrList),CombFunsDict[iCombType],iCombType)
+        FunList.append(CombFunsDict[iCombType])
+        comblist.append(iCombType)
+    ReadAndCombFF(GetCurrDict(thisCurrList),FunList,comblist)
 
 print 'Combining Complete'
