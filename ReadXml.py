@@ -255,7 +255,7 @@ def ReadFFCombFile(filename):
                 dataout[iq]['Avg'] = dataout[iq]['Boot'].Avg
                 dataout[iq]['Std'] = dataout[iq]['Boot'].Std
         else:
-            dataout = data['Values']                
+            dataout = data['Values']     
         return MakeFFCombLikeFF(dataout)
     return dataout
 ## dataout = { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
@@ -267,6 +267,7 @@ def MakeFFCombLikeFF(data):
     dataout['Chi'] = OrderedDict()
     for iq in data.iterkeys():
         dataout['FF1'][iq] = {}
+        print data[iq].keys()
         dataout['FF1'][iq]['Avg'] = data[iq]['Avg']
         dataout['FF1'][iq]['Std'] = data[iq]['Std']
         dataout['Chi'][iq] = data[iq]['Chi']
