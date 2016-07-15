@@ -235,6 +235,30 @@ def ReadFFFile(filename):
     return dataout
 
 
+## dataout = { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
+def ReadFFCombFile(filename):
+    dataout = {}
+    if '.txt' in filename: filename = filename.replace('.txt','.xml')
+    if os.path.isfile(filename):
+        data = ReadXmlAndPickle(filename)[0]
+        data = data[data.keys()[0]]
+        dataout = OrderedDict()
+        dataout['Info'] = data['Info']
+        dataout['Mass'] = data['Values']['Mass']
+        if 'Boots' in data.keys():
+            for iq,qdata in data['Boots'].iteritems():
+                dataout[iq] = OrderedDict()
+                dataout[iq]['Chi'] = data['Values'][iq]['Chi']
+                dataout[iq]['Boot'] = BootStrap1(nboot,0)
+                dataout[iq]['Boot'].values = np.array(dataout[iq]['Boot'])
+                dataout[iq]['Boot'].Stats()
+                dataout[iq]['Avg'] = dataout[iq]['Boot'].Avg
+                dataout[iq]['Std'] = dataout[iq]['Boot'].Std
+        else:
+            dataout = data['Values']                
+    return dataout
+
+
 ##outputdict = { thismom , fitpar , 2corfitr , 3corcutr , Avg / Std / Chi / Boot (bs) }
 ## put ## as parameter
 def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):

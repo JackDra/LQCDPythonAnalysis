@@ -86,7 +86,7 @@ def FunctOfDicts(a, b,Funct):
                 FunctOfDicts(a[key], b[key],Funct)
             elif hasattr(a[key],"__len__") and hasattr(b[key],"__len__"):
                 if len(a[key]) == nboot and len(b[key]) == nboot:
-                    a[key] = [Funct(ia,ib) for ia,ib in zip(a[key],b[key])]
+                    a[key] = np.array([Funct(ia,ib) for ia,ib in zip(a[key],b[key])])
             elif key == 'Chi':
                 a[key] = a[key] + b[key]
             else:
