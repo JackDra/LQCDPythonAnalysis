@@ -130,7 +130,7 @@ def CombFFOneFile(thisfile,thisFun):
     datadict,dump = ReadXmlAndPickle(thisfile)
     if 'Form_Factors' not in datadict.keys(): return {}
     dictout = {'Form_Factors':{'Info':datadict['Form_Factors']['Info'],'Boots':OrderedDict(),'Values':OrderedDict()}}
-    dictout['Form_Factors']['Mass'] = datadict['Form_Factors']['Values']['Mass']
+    dictout['Form_Factors']['Values']['Mass'] = datadict['Form_Factors']['Values']['Mass']
     for qsqrd,qdict in datadict['Form_Factors']['Boots'].iteritems():
         dictout['Form_Factors']['Values'][qsqrd] = OrderedDict()
         dictout['Form_Factors']['Boots'][qsqrd] = OrderedDict()
