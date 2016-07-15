@@ -220,6 +220,7 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
 def PlotSummarySet(iDS,igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
     dataval,dataerr,Xlables = [],[],[]
     keylist = SortMySet(data.keys())[0]
+    if Debug: print 'DEBUG1'
     for datakey in keylist:
         if iDS == False:
             idata = data
@@ -231,7 +232,9 @@ def PlotSummarySet(iDS,igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
             methcomp = thisMeth
             if 'Fits' in thisMeth: methcomp = 'Fits'
             if iSet in datakey.replace(methcomp,'') and methcomp in datakey: 
+                if Debug: print 'DEBUG2'
                 if iDS == False:
+                    if Debug: print 'DEBUG3'
                     if not CheckDict(idata,igamma,iq): continue
                     if not GraphCondit('',igamma,iq,methcomp,iSet): continue
                     Xlables.append(LabToXaxis(iSet,thisMeth))
