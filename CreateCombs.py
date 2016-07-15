@@ -203,7 +203,7 @@ def ReadAndCombFF(thisCurrDict,FunctList,funnameList):
             if Debug: print filedoub
             if Debug: print filesing                        
             outdata = CombTwoFiles(filedoub,filesing,FunctList)
-            for funname,iout in zip(funnameList,output):
+            for funname,iout in zip(funnameList,outdata):
                 mkdir_p( outputdir+'FormFactors/'+funname+icurr+'/')
                 outfile = outputdir+'FormFactors/'+funname+icurr+'/'+ funname+icurr+iset
                 MergeXmlOutput(outfile,iout)
