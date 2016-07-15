@@ -282,7 +282,7 @@ def PlotFFSummary(thisSL,DSCurr,currdata):
     thisDS,thisCurr = SplitDSCurr(DSCurr)
     for iFF in NoFFList[thisCurr]:
         for iqsqrd in QsqrdSet:
-            PlotSummaryMethods(currdata,thisMethodSetList,'',iFF,iqsqrd,outputdir,dirpref=thisCurr) 
+            PlotSummaryMethods(currdata,thisMethodSetList,False,iFF,iqsqrd,outputdir,dirpref=thisCurr) 
 
 # def PlotSummary(thisdata,thisopfile):
 #     pl.rcParams.update({'axes.labelsize' : 15})
