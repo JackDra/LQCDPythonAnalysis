@@ -119,7 +119,7 @@ def CombineVector(thisFF,thisMass):
                 FFout[iq]['Avg'].append(FFout[iq]['Boot'][-1].Avg)
                 FFout[iq]['Std'].append(FFout[iq]['Boot'][-1].Std)
 
-                FFout[iq]['Boot'].append(FFout[iq]['Boot'][0]/FFout[iq]['Boot'][1])
+                FFout[iq]['Boot'].append(FFout[iq]['Boot'][-2]/FFout[iq]['Boot'][-1])
                 FFout[iq]['Boot'][-1].Stats()
                 FFout[iq]['Avg'].append(FFout[iq]['Boot'][-1].Avg)
                 FFout[iq]['Std'].append(FFout[iq]['Boot'][-1].Std)
@@ -127,7 +127,7 @@ def CombineVector(thisFF,thisMass):
                 FFout[iq]['Avg'] = []
                 FFout[iq]['Avg'].append(qFF['Avg'][0] - (Qsqrd/(4*thisMass['Avg']**2))*qFF['Avg'][1])
                 FFout[iq]['Avg'].append(qFF['Avg'][0] + qFF['Avg'][1])
-                FFout[iq]['Avg'].append(FFout[iq]['Avg'][0]/FFout[iq]['Avg'][1])
+                FFout[iq]['Avg'].append(FFout[iq]['Avg'][-2]/FFout[iq]['Avg'][-1])
     return FFout
 
 ##Same as above, but only checks for 0:
