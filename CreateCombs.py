@@ -148,10 +148,8 @@ def CombFFOneFile(thisfile,thisFun):
         dictout['Form_Factors']['Boots'][qsqrd] = BootStrap1(nboot,5)
         dictout['Form_Factors']['Boots'][qsqrd].values = thisFun(*qdatalist)
         dictout['Form_Factors']['Boots'][qsqrd].Stats()
-        dictout['Form_Factors']['Values'][qsqrd]['Avg'] = dictout['Form_Factors']['Boots'][qsqrd].Avg
-        dictout['Form_Factors']['Values'][qsqrd]['Std'] = dictout['Form_Factors']['Boots'][qsqrd].Std
-        dictout['Form_Factors']['Values'][qsqrd]['Chi'] = datadict['Form_Factors']['Values'][qsqrd]['Chi']
-    return dictout
+        dictout['Form_Factors']['Values'][qsqrd] = BootAvgStdChiToFormat(dictout['Form_Factors']['Boots'][qsqrd],datadict['Form_Factors']['Values'][qsqrd]['Chi'])
+        return dictout
         
 def ReadAndComb(inputargs,Funct,funname):
     for igamma in inputargs['gamma']:
