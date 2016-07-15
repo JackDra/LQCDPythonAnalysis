@@ -128,6 +128,7 @@ def CombTwoFiles(file1,file2,funct,CombFF=True):
 
 def CombFFOneFile(thisfile,thisFun):
     datadict,dump = ReadXmlAndPickle(thisfile)
+    if 'Form_Factors' not in datadict.keys(): return {}
     dictout = {'Form_Factors':{'Info':datadict['Form_Factors']['Info'],'Boots':OrderedDict(),'Values':OrderedDict()}}
     dictout['Form_Factors']['Mass'] = datadict['Form_Factors']['Values']['Mass']
     for qsqrd,qdict in datadict['Form_Factors']['Boots'].iteritems():
@@ -212,7 +213,7 @@ def ReadAndCombTheFFs(thisCurrDict,Funct,FFcombName):
             filecurr = outputdir+'FormFactors/'+icurr+'/' +icurr+iset+'.xml'
             if Debug: print filecurr
             outdata = CombFFOneFile(filecurr,Funct)
-            if 'Form_Factors' not in outdata.keys(): continue
+            if 'Form_Factors' not in outdict.keys(): continue
             mkdir_p( outputdir+'FormFactors/'+icurr+'/'+FFcombName+'/')
             outfile = outputdir+'FormFactors/'+icurr+'/'+FFcombName+'/'+ FFcombName+icurr+iset
             if Debug: print outfile
