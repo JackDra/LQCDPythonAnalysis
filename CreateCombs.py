@@ -142,7 +142,7 @@ def CombFFOneFile(thisfile,thisFun):
         dictout['Form_Factors']['Values'][qsqrd]['Chi'] = datadict['Form_Factors']['Values'][qsqrd]['Chi']
         qdatalist = [0]*thisFun.func_code.co_argcount
         for iff,ffval in qdict.iteritems():
-            if 'FF' in iff: qdatalist[int(iFF.replace('FF',''))-1] = ffval
+            if 'FF' in iff: qdatalist[int(iff.replace('FF',''))-1] = ffval
         dictout['Form_Factors']['Boots'][qsqrd]['FF1'] = thisFun(*qdatalist)
         dictout['Form_Factors']['Boots'][qsqrd]['FF1'].Stats()
         dictout['Form_Factors']['Values'][qsqrd]['FF1']['Avg'] = dictout['Form_Factors']['Boots'][qsqrd]['FF1'].Avg
