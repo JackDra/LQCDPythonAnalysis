@@ -235,7 +235,7 @@ def ReadFFFile(filename):
     return dataout
 
 
-## dataout = { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
+## dataout = { Info:qsqrd#:nconf , Mass:Set/Avg/Std/Chi/Boot , qsqrd#:Avg/Std/Boot/Chi}
 def ReadFFCombFile(filename):
     dataout = {}
     if '.txt' in filename: filename = filename.replace('.txt','.xml')

@@ -41,7 +41,7 @@ def GetCurrDict(thisCurrTypes):
     thisSetList = None
     for iCurr in thisCurrTypes:
         print 'Reading ' , iCurr , ' Form Factors '
-        thisCurrDict[iCurr] = ReadAllDir(outputdir+'FormFactors/'+iCurr+'/',thisgamma=iCurr)
+        thisCurrDict[iCurr] = ReadAllDir(outputdir+'FormFactors/'+iCurr+'/',thisgamma=iCurr.replace('/',''))
         if thisSetList == None: 
             thisSetList = set(thisCurrDict[iCurr])
         else:
