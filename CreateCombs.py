@@ -139,7 +139,6 @@ def CombFFOneFile(thisfile,thisFun):
             print 'WARNING: file ', thisfile
             print qdict.keys(), ' FF found, Function requires' , thisFun.func_code.co_argcount, ' FFs '
             print 
-        dictout['Form_Factors']['Values'][qsqrd]['Chi'] = datadict['Form_Factors']['Values'][qsqrd]['Chi']
         qdatalist = [False]*thisFun.func_code.co_argcount
         for iff,ffval in qdict.iteritems():
             intff = int(iff.replace('FF',''))-1
@@ -150,6 +149,7 @@ def CombFFOneFile(thisfile,thisFun):
         dictout['Form_Factors']['Boots'][qsqrd].Stats()
         dictout['Form_Factors']['Values'][qsqrd]['Avg'] = dictout['Form_Factors']['Boots'][qsqrd].Avg
         dictout['Form_Factors']['Values'][qsqrd]['Std'] = dictout['Form_Factors']['Boots'][qsqrd].Std
+        dictout['Form_Factors']['Values'][qsqrd]['Chi'] = datadict['Form_Factors']['Values'][qsqrd]['Chi']
     return dictout
         
 def ReadAndComb(inputargs,Funct,funname):
