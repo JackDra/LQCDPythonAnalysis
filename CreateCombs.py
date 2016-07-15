@@ -134,13 +134,13 @@ def CombFFOneFile(thisfile,thisFun):
         dictout['Form_Factors']['Values'][qsqrd] = OrderedDict()
         dictout['Form_Factors']['Boots'][qsqrd] = OrderedDict()
         if 'qsqrd' not in qsqrd: continue
-        if 'FF'+str(inspect.getargspec(thisFun)) not in qdict.keys():
+        if 'FF'+str(thisFun.func_code.co_argcount) not in qdict.keys():
             print 
             print 'WARNING: file ', thisfile
-            print qdict.keys(), ' FF found, Function requires' , inspect.getargspec(thisFun), ' FFs '
+            print qdict.keys(), ' FF found, Function requires' , thisFun.func_code.co_argcount, ' FFs '
             print 
         dictout['Form_Factors']['Values'][qsqrd]['Chi'] = datadict['Form_Factors']['Values'][qsqrd]['Chi']
-        qdatalist = [0]*inspect.getargspec(thisFun)
+        qdatalist = [0]*thisFun.func_code.co_argcount
         for iff,ffval in qdict.iteritems():
             if 'FF' in iff: qdatalist[int(iFF.replace('FF',''))-1] = ffval
         dictout['Form_Factors']['Boots'][qsqrd]['FF1'] = thisFun(*qdatalist)
