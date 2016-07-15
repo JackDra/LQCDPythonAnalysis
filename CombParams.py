@@ -24,6 +24,8 @@ def FFNeutron(val1,val2):
     return downCharge*val1 + upCharge*val2
 
 def F1overF2(F1,F2):
+    print F1
+    print F2
     if F1 != False and F2 != False:
         return F1/F2
     else:
