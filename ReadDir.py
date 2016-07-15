@@ -8,6 +8,8 @@ def ReadSetDir(thisdir,thisgamma=''):
     thisSetList = [(iS.replace(thisdir,'')
                     .replace(thisgamma,'')
                     .replace('.xml','')) for iS in thisSetList]
+    for iS in thisSetList:
+        if '/' in iS: thisSetList.remove(iS)
     if OnlySelVar:
         SetOut = []
         for iSet in thisSetList:
@@ -41,7 +43,7 @@ def GetCurrDict(thisCurrTypes):
     thisSetList = None
     for iCurr in thisCurrTypes:
         print 'Reading ' , iCurr , ' Form Factors '
-        thisCurrDict[iCurr] = ReadAllDir(outputdir+'FormFactors/'+iCurr+'/',thisgamma=iCurr.replace('/',''))
+        thisCurrDict[iCurr] = ReadAllDir(outputdir+'FormFactors/'+iCurr+'/',thisgamma=iCurr)
         if thisSetList == None: 
             thisSetList = set(thisCurrDict[iCurr])
         else:
