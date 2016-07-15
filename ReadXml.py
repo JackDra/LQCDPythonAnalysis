@@ -266,8 +266,8 @@ def MakeFFCombLikeFF(data):
     dataout['FF1'] = OrderedDict()
     dataout['Chi'] = OrderedDict()
     for iq in data.iterkeys():
+        if 'qsqrd' not in iq: continue
         dataout['FF1'][iq] = {}
-        print data[iq].keys()
         dataout['FF1'][iq]['Avg'] = data[iq]['Avg']
         dataout['FF1'][iq]['Std'] = data[iq]['Std']
         dataout['Chi'][iq] = data[iq]['Chi']
