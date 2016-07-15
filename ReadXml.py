@@ -256,8 +256,8 @@ def ReadFFCombFile(filename):
                 dataout[iq]['Std'] = dataout[iq]['Boot'].Std
         else:
             dataout = data['Values']                
-    return MakeFFCombLikeFF(dataout)
-
+        return MakeFFCombLikeFF(dataout)
+    return dataout
 ## dataout = { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
 def MakeFFCombLikeFF(data):
     dataout = {}
