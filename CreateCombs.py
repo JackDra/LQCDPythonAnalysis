@@ -130,6 +130,8 @@ def CombFFOneFile(thisfile,thisFun):
     datadict,dump = ReadXmlAndPickle(thisfile)
     dictout = {'Form_Factors':{'Info':datadict['Form_Factors']['Info'],'Values':{'Mass':datadict['Form_Factors']['Values']['Mass']}}}
     for qsqrd,qdict in datadict['Form_Factors']['Boots'].iteritems():
+        dictout['Form_Factors']['Values'] = OrderedDict()
+        dictout['Form_Factors']['Boots'] = OrderedDict()
         if 'qsqrd' not in qsqrd: continue
         if 'FF'+str(inspect.getargspec(thisFun)) not in qdict.keys():
             print 
