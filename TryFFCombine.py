@@ -17,7 +17,7 @@ ShowMethodList(feedin['method'])
 
 thisCurrList = ElongateName(feedin['comb'],feedin['current'])
 
-funlist,comblist = [].[]
+funlist,comblist = [],[]
 for iFFcomb in feedin['FFcomb']:
     print 'Creating ' , iFFcomb
     funlist.append(CombFFFunsDict[iFFcomb])
