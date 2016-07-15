@@ -121,6 +121,7 @@ feedin = InputParams(sys.argv[1:]+['-noprompt'])
 DoList='Fits'
 thisCurrDict = []
 for icurr in ElongateName(ElongateName(feedin['comb'],feedin['current']),['/'+iCombFF for iCombFF in CombFFList]+['']):
+    print 'Looking in ', icurr
     thisCurrDict.append([GetCurrDict([icurr]),DoList])
 makeContextFunctions(ReadAndPlotFF)
 
