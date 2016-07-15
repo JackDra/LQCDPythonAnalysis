@@ -6,7 +6,7 @@ import glob,os
 def ReadSetDir(thisdir,thisgamma=''):
     thisSetList = glob.glob(thisdir+'/*.xml')
     thisSetList = [(iS.replace(thisdir,'')
-                    .replace(thisgamma,'')
+                    .replace(thisgamma,'').replace(thisgamma.replace('/',''),'')
                     .replace('.xml','')) for iS in thisSetList]
     if OnlySelVar:
         SetOut = []
