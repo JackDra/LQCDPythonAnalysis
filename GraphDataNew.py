@@ -87,11 +87,11 @@ def SiftAndSort(thisSetList,comp,nocm=True):
 
 
 def CreateFFFile(thisCol,thisCurr,thisFF):
-    thistitle = thisCol + ' ' + thisCurr + ' ' + thisFF
+    thistitle = thisCol + ' ' + thisCurr.replace('/',' ') + ' ' + thisFF
     pl.title(thistitle)
     thisdir = outputdir + 'graphs/FormFactors/'+thisCurr + '/'
     mkdir_p(thisdir)
-    thisfile = thisCol+thisCurr + thisFF
+    thisfile = thisCol+thisCurr.replace('/','') + thisFF
     return thisdir + thisfile
 
 def CreateFile(thisflag,thisGamma,thisMom,TitlePref):
