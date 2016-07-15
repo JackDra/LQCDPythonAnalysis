@@ -136,7 +136,7 @@ def CombFFOneFile(thisfile,thisFun):
             print 'WARNING: file ', thisfile
             print qdict.keys(), ' FF found, Function requires' , inspect.getargspec(thisFun), ' FFs '
             print 
-        dictout['Form_Factors']['Values'][qsqrd]['Chi'] = qdict['Chi']
+        dictout['Form_Factors']['Values'][qsqrd]['Chi'] = datadict['Form_Factors']['Values'][qsqrd]['Chi']
         qdatalist = [0]*inspect.getargspec(thisFun)
         for iff,ffval in qdict.iteritems():
             if 'FF' in iff: qdatalist[int(iFF.replace('FF',''))-1] = ffval
