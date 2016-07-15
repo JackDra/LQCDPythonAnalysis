@@ -220,8 +220,8 @@ def ReadAndCombTheFFs(thisCurrDict,FunctList,FFcombList):
             filecurr = outputdir+'FormFactors/'+icurr+'/' +icurr+iset+'.xml'
             if Debug: print filecurr
             outdata = CombFFOneList(filecurr,FunctList)
-            if 'Form_Factors' not in outdata.keys(): continue
             for iFFcomb,iout in zip(FFcombList,outdata):
+                if 'Form_Factors' not in outdata.keys(): continue
                 mkdir_p( outputdir+'FormFactors/'+icurr+'/'+FFcombName+'/')
                 outfile = outputdir+'FormFactors/'+icurr+'/'+FFcombName+'/'+ FFcombName+icurr+iset
                 if Debug: print outfile
