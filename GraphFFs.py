@@ -124,6 +124,7 @@ for icurr in ElongateName(ElongateName(feedin['comb'],feedin['current']),['/'+iC
     print 'Looking in ', icurr
     thisCurrDict.append([GetCurrDict([icurr]),DoList])
 makeContextFunctions(ReadAndPlotFF)
+makeContextFunctions(PlotFFqPick)
 
 if len(thisCurrDict) > 0:
     if DoMulticore and feedin['anaproc'] > 1 and len(thisCurrDict) > 1:
@@ -132,20 +133,25 @@ if len(thisCurrDict) > 0:
         output = thisPool.map(ReadAndPlotFF.mapper,thisCurrDict)
         thisPool.close()
         thisPool.join()
+        if kappa == 12090:
+            thisPool = Pool(min(len(output),feedin['anaproc']))
+            output = thisPool.map(PlotFFqPick.mapper,output)
+            thisPool.close()
+            thisPool.join()
     else:
         print 'Running Single core'
         output = []
         for icount,iin in enumerate(thisCurrDict):
             output.append(ReadAndPlotFF(*iin))
             print int((icount*100)/float(len(thisCurrDict))) , '% done' + ' '*50 + '\r',
+        if kappa == 12090:
+            for iout in output:
+                PlotFFqPick(*iout)
 else:
     print 'nothing to calculate'        
     output = []
 
 # datadict,currPSL = ReadAndPlotFF(thisCurrDict)
 # # datadict,currPSL = ReadAndPlotFF(thisCurrDict)
-if kappa == 12090:
-    for iout in output:
-        PlotFFqPick(*iout)
 
 print 'All Plotting Complete'
