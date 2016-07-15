@@ -15,7 +15,7 @@ ShowSetLists(feedin['set'])
 ShowCombList(feedin['comb'])
 ShowMethodList(feedin['method'])
 
-thisCurrList = ElongateName(feedin['comb'],feedin['current'])
+thisCurrList = ElongateName(DefDSList+feedin['comb'],feedin['current'])
 
 
 for iFFcomb in feedin['FFcomb']:
