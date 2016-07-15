@@ -17,6 +17,7 @@ from StringFix import *
 import itertools
 from FormFactors import NoFFPars
 from SetLists import SortMySet
+from CombParams import *
 
 colourset8 = [ '#000080','#B22222','#00B800','#8B008B', '#0000FF','#FF0000','#000000','#32CD32','#FF0066']
 markerset = ['o','s','^','v','d']
@@ -34,9 +35,14 @@ ylimDict = {'P4giDi':[-0.15,0.15],
             'VectorP4g4':[0,4.0],
             'IsoVectorP4g4':[0,1.1]}
 
+GmYlim = [0,0.5]
 ylimFFDict = {'Vector':[0,2],
-              'GeGmFF1':[0,1.2],
-              'GeGmFF2':[0,3.0]}
+              'GeGmFF2':GmYlim}
+for iComb in DefDSList+CombList:
+    ylimFFDict[iComb+'GeGmFF2'] = GmYlim
+    for iFFComb in CombFFList:
+        ylimFFDict[iComb+'GeGmFF2/'+iFFComb] = GmYlim
+        
 
 params = {'legend.fontsize': 10,
           'legend.numpoints': 1,
