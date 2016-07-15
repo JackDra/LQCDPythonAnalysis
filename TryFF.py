@@ -35,7 +35,7 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr):
     # mprint( 'Set:' + theset + ' MassSetPicked:'+thesetmass)
 ## FF { { momsqrd } { Boot/Avg/Chi } }
     thisstart = time.time()
-    thisDS,baseCurr = SplitDSCurr(thisCurr)
+    thisDS,baseCurr,dump = SplitDSCurr(thisCurr)
     if thisDS == '':
         thisCurrList = [thisCurr for ids in DefDSList]
         thisgflist = DefDSList
@@ -90,7 +90,7 @@ if 'GeGm' in feedin['current']: feedin['current'].remove('GeGm')
 for iDS in DefDSList:
     if iDS+'GeGm' in feedin['current']: feedin['current'].remove(iDS+'GeGm')
 for thisCurr in feedin['current']:
-    thisDS,baseCurr = SplitDSCurr(thisCurr)
+    thisDS,baseCurr,dump = SplitDSCurr(thisCurr)
     if thisDS == '':
         thisGammaList = CurrOpps[baseCurr] + [iC+'cmplx' for iC in CurrOpps[baseCurr]]
         thisGammaList = ['doub'+ig for ig in thisGammaList] + ['sing'+ig for ig in thisGammaList]+ ['twopt']

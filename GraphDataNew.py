@@ -373,7 +373,7 @@ def PlotMassSetTSF(data2pt,thisSetList,MassDt,thisSF):
 
 def PlotFFs(data,DSCurr,thisSetList,CollName):
     if len(thisSetList) == 0: return
-    thisDS,thisCurr = SplitDSCurr(DSCurr)
+    thisDS,thisCurr,thisFFComb = SplitDSCurr(DSCurr)
     for iFF in range(1,NoFFPars[thisCurr]+1):
         thisFF = 'FF'+str(iFF)
         PlotFFSet(data,thisFF,thisSetList)

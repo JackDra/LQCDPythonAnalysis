@@ -3,7 +3,7 @@
 from Params import *
 from FitParams import *
 from collections import OrderedDict
-from CombParams import CombList
+from CombParams import CombList,CombFFList
 from FFParams import NoFFList
 import re
 
@@ -319,10 +319,9 @@ def CreateOSFfitKey(smear):
 
 def SplitDSCurr(thisstr):
     for iDS in DefDSList+CombList:
-        if iDS in thisstr:
-            DSout = iDS
-            strout = thisstr.replace(iDS,'',1)
-            if strout in NoFFList.keys():
-                return DSout,strout
-    return '',thisstr
+        for iFFComb in CombFFList:
+            hold = thisstr.replace(iDS,'',1).replace('/'+iFFComb,'',1)
+            if iFFComb in thisstr and iDS in thisstr and hold in NoFFList.keys():
+                return iDS,hold,iFFComb
+    return '',thisstr,''
         
