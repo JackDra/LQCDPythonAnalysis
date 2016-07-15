@@ -210,7 +210,7 @@ def ReadAndCombTheFFs(thisCurrDict,Funct,FFcombName):
             outdata = CombFFOneFile(filecurr,Funct)
             mkdir_p( outputdir+'FormFactors/'+icurr+'/'+FFcombName+'/')
             outfile = outputdir+'FormFactors/'+icurr+'/'+FFcombName+'/'+ FFcombName+icurr+iset
-            print outputdata.keys()
+            print outdata.keys()
             MergeXmlOutput(outfile,outdata)
 
 def FunctOfDictsOld(a, b,Funct):
