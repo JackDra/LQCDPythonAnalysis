@@ -250,6 +250,7 @@ def ReadFFCombFile(filename):
                 dataout[iq] = OrderedDict()
                 dataout[iq]['Chi'] = data['Values'][iq]['Chi']
                 dataout[iq]['Boot'] = BootStrap1(nboot,0)
+                print qdata
                 dataout[iq]['Boot'].values = np.array(qdata)
                 dataout[iq]['Boot'].Stats()
                 dataout[iq]['Avg'] = dataout[iq]['Boot'].Avg
