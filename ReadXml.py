@@ -256,9 +256,22 @@ def ReadFFCombFile(filename):
                 dataout[iq]['Std'] = dataout[iq]['Boot'].Std
         else:
             dataout = data['Values']                
+    return MakeFFCombLikeFF(dataout)
+
+## dataout = { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
+def MakeFFCombLikeFF(data):
+    dataout = {}
+    dataout['Info'] = data['Info']
+    dataout['Mass'] = data['Mass']
+    dataout['FF1'] = OrderedDict()
+    dataout['Chi'] = OrderedDict()
+    for iq in data.iterkeys():
+        dataout['FF1'][iq] = {}
+        dataout['FF1'][iq]['Avg'] = data[iq]['Avg']
+        dataout['FF1'][iq]['Std'] = data[iq]['Std']
+        dataout['Chi'][iq] = data[iq]['Chi']
     return dataout
-
-
+        
 ##outputdict = { thismom , fitpar , 2corfitr , 3corcutr , Avg / Std / Chi / Boot (bs) }
 ## put ## as parameter
 def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
