@@ -99,7 +99,7 @@ def ReadAndPlotFF(thisCurrDict,DoList='All'):
         if 'Sum' in DoList or 'All' in DoList:
             print 'Plotting ' , thiscurr ,'3/6 Summation       '
             PlotSumMethSets(currdata,thiscurr,thisCurrDict[thiscurr])
-        if ('Fits' in DoList and 'Summary' not in DoList) or 'All' in DoList:
+        if 'Fits' in DoList or 'All' in DoList:
             print 'Plotting ' , thiscurr ,'4/6 Fits            '
             PlotFitMethSets(currdata,thiscurr,thisCurrDict[thiscurr])
         if 'Collect' in DoList or 'All' in DoList:

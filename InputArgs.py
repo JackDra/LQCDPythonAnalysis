@@ -76,6 +76,7 @@ def InputParams(inputparams):
     feedout['comb'] = DefDSList + CombList
     feedout['FFcomb'] = CombFFList
     feedout['DoCurr'] = True
+    feedout['ffgraph'] = 'All'
     SkipDefWipe = False
     for isys in inputparams:
         if isys[0] != '-':
@@ -91,6 +92,7 @@ def InputParams(inputparams):
             print '-c= specifies Current to look at, choose from:\n' + '\n'.join(CurrentDSList)+'\n'
             print '-DS= specifies how to combine DS for TryCombine.py, choose from:\n' + '\n'.join(DefDSList + CombList)+'\n'
             print '-FF= specifies how to combine Form Factors for TryFFCombine.py, choose from:\n' + '\n'.join(CombFFList)+'\n'
+            print '-DoList= specifies a particular FF to plot in GraphFFs.py, choose ONE from:\n' + '\n'.join(DefGraphDoList+['All'])+'\n'
             print "-p= specifies the momentium list to use, form is 'q = X Y Z', X,Y,Z = -3,-2,-1,0,1,2,3"
             print "-np= specifies the maximum number of processors used for this job"
             print "-noprompt does not display any prompts (for long runs)"
@@ -162,14 +164,19 @@ def InputParams(inputparams):
                 print 'Nothing found for comb list, using default list'
                 feedout['comb'] = DefDSList + CombList            
         elif '-FF' in isys:
-            feedout['FFcomb'] = isys.replace('-DS=','').split(',')
+            feedout['FFcomb'] = isys.replace('-FF=','').split(',')
             for iDS in feedout['FFcomb']:
                 if iDS not in CombFFList:
-                    print 'Warning, ' + iDS + ' not found in comb list, skipping.'
+                    print 'Warning, ' + iDS + ' not found in FFcomb list, skipping.'
                     feedout['FFcomb'].remove(iDS)
             if len(feedout['FFcomb']) == 0:
-                print 'Nothing found for comb list, using default list'
+                print 'Nothing found for FFcomb list, using default list'
                 feedout['FFcomb'] = CombFFList            
+        elif '-DoList' in isys:
+            feedout['ffgraph'] = isys.replace('-DoList=','')
+            if iDS not in DefGraphDoList:
+                print 'Warning, ' + iDS + ' not found in graphing list list, Doing all.'
+                feedout['ffgraph'] = 'All'
     if not SkipDefWipe: DefWipeWarning()
     if Debug: feedout['anaproc'] = 1
     return feedout

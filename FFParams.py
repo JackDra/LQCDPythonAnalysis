@@ -76,6 +76,8 @@ NoFFList = {'Scalar'   : ['FF1'],
 
 CurrentDSList = NoFFList.keys() + ['doub'+iFF for iFF in NoFFList.keys()] + ['sing'+iFF for iFF in NoFFList.keys()]
 
+DefGraphDoList = ['TSF','OSF','Sum','Fits','Collect','Few']
+
 
 def FindMomFromGamma(igamma,thisMomList=qvecSet):
     momout = []
