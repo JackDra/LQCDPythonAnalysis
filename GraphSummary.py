@@ -253,7 +253,11 @@ def PlotSummarySet(iDS,igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
                         dataerr.append(idata[iDS][igamma][iq]['Boot'].Std)
     if len(dataval) == 0: return xstart,[]
     xdata = range(xstart,xstart+len(dataval))
-    pl.errorbar(xdata,dataval,dataerr,color=col,fmt=sym)
+    if Debug:
+        print 'Graphing'
+        for ix,ival,ierr in zip(xdata,dataval,dataerr):
+            print ix,ival,ierr
+    pl.errorbar(xdata,dataval,dataerr ,color=col,fmt=sym)
     pl.axvline(xdata[-1]+1, color='k')
     return xstart+len(xdata),Xlables+['']
 

@@ -91,21 +91,23 @@ def ReadAndPlotFF(thisCurrDict,DoList='All'):
     currPSL = []
     for thiscurr,currdata in datadict.iteritems():
         if 'TSF' in DoList or 'All' in DoList:
-            print 'Plotting ' , thiscurr ,'1/5 TSF             '
+            print 'Plotting ' , thiscurr ,'1/6 TSF             '
             PlotTSFSets(currdata,thiscurr,thisCurrDict[thiscurr])
         if 'OSF' in DoList or 'All' in DoList:
-            print 'Plotting ' , thiscurr ,'2/5 OSF             '
+            print 'Plotting ' , thiscurr ,'2/6 OSF             '
             PlotOSFSets(currdata,thiscurr,thisCurrDict[thiscurr])
         if 'Sum' in DoList or 'All' in DoList:
-            print 'Plotting ' , thiscurr ,'3/5 Summation       '
+            print 'Plotting ' , thiscurr ,'3/6 Summation       '
             PlotSumMethSets(currdata,thiscurr,thisCurrDict[thiscurr])
-        if 'Fits' in DoList or 'All' in DoList:
-            print 'Plotting ' , thiscurr ,'4/5 Fits            '
+        if ('Fits' in DoList and 'Summary' not in DoList) or 'All' in DoList:
+            print 'Plotting ' , thiscurr ,'4/6 Fits            '
             PlotFitMethSets(currdata,thiscurr,thisCurrDict[thiscurr])
-        if 'Fits' in DoList or 'All' in DoList:
-            print 'Plotting ' , thiscurr ,'5/5 Fits Summary            '
+        if 'Collect' in DoList or 'All' in DoList:
+            print 'Collecting ' , thiscurr ,'5/6 for Summary            '
             currPSL.append(PickFFAllSets(currdata,thiscurr,thisCurrDict[thiscurr]))
-        PlotFFs(currdata,thiscurr,PickFFFewSets(currdata,thiscurr,thisCurrDict[thiscurr]),'Summary')
+        if 'Few' in DoList or 'All' in DoList:
+            print 'Plotting ' , thiscurr ,'6/6 Few            '
+            PlotFFs(currdata,thiscurr,PickFFFewSets(currdata,thiscurr,thisCurrDict[thiscurr]),'Summary')
         print 'Plotting ' , thiscurr ,'Complete, took: ', GetTimeStr(time.time()-start)
     return datadict,currPSL
     
@@ -118,7 +120,7 @@ def PlotFFqPick(datadict,thisPSL):
 
 feedin = InputParams(sys.argv[1:]+['-noprompt'])
 
-DoList='All'
+DoList='Collect'
 thisCurrDict = []
 for icurr in ElongateName(ElongateName(feedin['comb'],feedin['current']),['/'+iCombFF for iCombFF in CombFFList]+['']):
     print 'Looking in ', icurr
