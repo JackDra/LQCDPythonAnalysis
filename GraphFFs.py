@@ -118,7 +118,7 @@ def PlotFFqPick(datadict,thisPSL):
 
 feedin = InputParams(sys.argv[1:]+['-noprompt'])
 
-DoList='Fits'
+DoList='All'
 thisCurrDict = []
 for icurr in ElongateName(ElongateName(feedin['comb'],feedin['current']),['/'+iCombFF for iCombFF in CombFFList]+['']):
     print 'Looking in ', icurr
