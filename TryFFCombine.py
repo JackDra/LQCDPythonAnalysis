@@ -17,9 +17,12 @@ ShowMethodList(feedin['method'])
 
 thisCurrList = ElongateName(feedin['comb'],feedin['current'])
 
-
+funlist,comblist = [].[]
 for iFFcomb in feedin['FFcomb']:
     print 'Creating ' , iFFcomb
-    ReadAndCombTheFFs(GetCurrDict(thisCurrList),CombFFFunsDict[iFFcomb],iFFcomb)
+    funlist.append(CombFFFunsDict[iFFcomb])
+    comblist.append(iFFcomb)
+    
+ReadAndCombTheFFs(GetCurrDict(thisCurrList),funlist,comblist)
 
 print 'FF Combining Complete'

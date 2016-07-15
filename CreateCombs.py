@@ -129,6 +129,7 @@ def CombTwoFiles(file1,file2,funct):
         output.append(XmlBootToAvg(FunctOfDicts(data1,data2,ifunc)))
     return output
 
+
 def CombFFOneFile(thisfile,thisFun):
     datadict,dump = ReadXmlAndPickle(thisfile)
     if 'Form_Factors' not in datadict.keys(): return {}
@@ -154,6 +155,10 @@ def CombFFOneFile(thisfile,thisFun):
         dictout['Form_Factors']['Values'][qsqrd] = BootAvgStdChiToFormat(dictout['Form_Factors']['Boots'][qsqrd],float(datadict['Form_Factors']['Values'][qsqrd]['Chi']))
     return dictout
         
+def CombFFOneList(thisfile,FunList):
+    return [CombFFOneFile(thisfile,ifun for ifun in FunList]
+
+
 def ReadAndComb(inputargs,Funct,funname):
     for igamma in inputargs['gamma']:
         if 'doub' in igamma or 'sing' in igamma or 'twopt' in igamma: continue
@@ -209,17 +214,18 @@ def ReadAndCombFF(thisCurrDict,FunctList,funnameList):
                 MergeXmlOutput(outfile,iout)
 
             
-def ReadAndCombTheFFs(thisCurrDict,Funct,FFcombName):
+def ReadAndCombTheFFs(thisCurrDict,FunctList,FFcombList):
     for icurr,isetlist in thisCurrDict.iteritems():
         for iset in isetlist:
             filecurr = outputdir+'FormFactors/'+icurr+'/' +icurr+iset+'.xml'
             if Debug: print filecurr
-            outdata = CombFFOneFile(filecurr,Funct)
+            outdata = CombFFOneList(filecurr,FunctList)
             if 'Form_Factors' not in outdata.keys(): continue
-            mkdir_p( outputdir+'FormFactors/'+icurr+'/'+FFcombName+'/')
-            outfile = outputdir+'FormFactors/'+icurr+'/'+FFcombName+'/'+ FFcombName+icurr+iset
-            if Debug: print outfile
-            MergeXmlOutput(outfile,outdata)
+            for iFFcomb,iout in zip(FFcombList,outdata):
+                mkdir_p( outputdir+'FormFactors/'+icurr+'/'+FFcombName+'/')
+                outfile = outputdir+'FormFactors/'+icurr+'/'+FFcombName+'/'+ FFcombName+icurr+iset
+                if Debug: print outfile
+                MergeXmlOutput(outfile,outdata)
 
 def FunctOfDictsOld(a, b,Funct):
     for key in b:
