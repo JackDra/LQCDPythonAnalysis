@@ -221,7 +221,7 @@ def ReadAndCombTheFFs(thisCurrDict,FunctList,FFcombList):
             if Debug: print filecurr
             outdata = CombFFOneList(filecurr,FunctList)
             for iFFcomb,iout in zip(FFcombList,outdata):
-                if 'Form_Factors' not in outdata.keys(): continue
+                if 'Form_Factors' not in iout.keys(): continue
                 mkdir_p( outputdir+'FormFactors/'+icurr+'/'+FFcombName+'/')
                 outfile = outputdir+'FormFactors/'+icurr+'/'+FFcombName+'/'+ FFcombName+icurr+iset
                 if Debug: print outfile
