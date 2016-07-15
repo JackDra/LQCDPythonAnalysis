@@ -156,7 +156,7 @@ def CombFFOneFile(thisfile,thisFun):
     return dictout
         
 def CombFFOneList(thisfile,FunList):
-    return [CombFFOneFile(thisfile,ifun for ifun in FunList]
+    return [CombFFOneFile(thisfile,ifun) for ifun in FunList]
 
 
 def ReadAndComb(inputargs,Funct,funname):
