@@ -195,14 +195,14 @@ def ReadAndComb(inputargs,FunctList,fnamelist):
                         filesing = outputdir +'/'+ singgammadir + methoddir + '/'+momdir + '/' + iset+singgamma+ipref+momstr+'.xml'
                         if Debug: print filedoub
                         if Debug: print filesing                        
-                        for ifun,ifname in zip(FunctList,fnamelist):
+                        outdata = CombTwoFiles(filedoub,filesing,FunctList)
+                        for iout,ifname in zip(outdata,fnamelist):
                             gammadir = CreateOppDir(ifname+igamma)
-                            outdata = CombTwoFiles(filedoub,filesing,ifun)
                             mkdir_p( outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/')
                             outfile = outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/' + iset+ifname+igamma+ipref+momstr
                             if Debug: print outfile
                             # WriteXmlOutput(outfile,outdata)
-                            MergeXmlOutput(outfile,outdata)
+                            MergeXmlOutput(outfile,idata)
 
 
                         
