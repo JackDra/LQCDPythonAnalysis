@@ -202,17 +202,19 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
     pl.ylabel('Value')
     pl.xlim(-1,xvalues-1)
     pl.grid(False,axis='x')
-    if 'FF' in igamma:
+    if iDS == False:
         pl.title(TitleFix('SummaryPlot ' + igamma.replace('/',' ') + ' ' + iq))
         thisgammadir = dirpref + '/'
         thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/'+iq+'/'
         mkdir_p(thisdir)
+        mprint( 'outputting FF plot to :',thisdir+'SummaryPlot'+dirpref+CreateCurrCombFn(igamma)+iq+'.pdf'
         pl.savefig(thisdir+'SummaryPlot'+dirpref+CreateCurrCombFn(igamma)+iq+'.pdf')
     else:
         pl.title(TitleFix('SummaryPlot ' +iDS + ' ' + igamma + ' ' + iq))
         thisgammadir = CreateOppDir(iDS+igamma)
         thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/qsqrd'+str(qsqrdstr(iq))+'/'
         mkdir_p(thisdir)
+        mprint( 'outputting plot to :',thisdir+'SummaryPlot'+dirpref+iDS+igamma+qstrTOqcond(iq)+'.pdf'
         pl.savefig(thisdir+'SummaryPlot'+dirpref+iDS+igamma+qstrTOqcond(iq)+'.pdf')
     pl.clf()
 
