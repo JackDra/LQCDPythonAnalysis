@@ -212,7 +212,7 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
             titleStr = CreateCurrCombFn(dirpref,spacing=' ').replace('GeGm','')                
         else:
             titleStr = CreateCurrCombFn(dirpref,spacing=' ')
-        pl.title(TitleFix('SummaryPlot ' + titlestr + ' ' + iq))
+        pl.title(TitleFix('SummaryPlot ' + titleStr + ' ' + iq))
         thisgammadir = dirpref + '/'
         thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/'+iq+'/'
         mkdir_p(thisdir)
