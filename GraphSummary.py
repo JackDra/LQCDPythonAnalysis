@@ -203,14 +203,23 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
     pl.xlim(-1,xvalues-1)
     pl.grid(False,axis='x')
     if iDS == False:
-        pl.title(TitleFix('SummaryPlot ' + CreateCurrCombFn(dirpref,spacing=' ') + ' ' + iq))
+        if 'GeGm' in dirpref and '/' not in dirpref:
+            if 'FF1' in igamma:
+                titleStr = CreateCurrCombFn(dirpref,spacing=' ').replace('Gm','')
+            elif 'FF2' in igamma:
+                titleStr = CreateCurrCombFn(dirpref,spacing=' ').replace('Ge','')
+        elif 'GeGm' in dirpref:
+            titleStr = CreateCurrCombFn(dirpref,spacing=' ').replace('GeGm','')                
+        else:
+            titleStr = CreateCurrCombFn(dirpref,spacing=' ')
+        pl.title(TitleFix('SummaryPlot ' + titlestr + ' ' + iq))
         thisgammadir = dirpref + '/'
         thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/'+iq+'/'
         mkdir_p(thisdir)
         if '/' in dirpref: filegamma = ''
         else: filegamma = igamma
-        mprint( 'outputting FF plot to :',thisdir+'SummaryPlot'+CreateCurrCombFn(dirpref)+filegamma+iq+'.pdf')
-        pl.savefig(thisdir+'SummaryPlot'+CreateCurrCombFn(dirpref)+filegamma+iq+'.pdf')
+        mprint( 'outputting FF plot to :',thisdir+'SummaryPlot'+titleStr.replace(' ','')+filegamma+iq+'.pdf')
+        pl.savefig(thisdir+'SummaryPlot'+titleStr.replace(' ','')+filegamma+iq+'.pdf')
     else:
         pl.title(TitleFix('SummaryPlot ' +iDS + ' ' + igamma + ' ' + iq))
         thisgammadir = CreateOppDir(iDS+igamma)

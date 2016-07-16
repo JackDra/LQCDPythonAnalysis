@@ -120,6 +120,7 @@ def TitleFix(string):
             .replace('g4','\\gamma_{4}')
             .replace('g5','\\gamma_{5}')
             .replace('gA','g_{A}')
+            .replace('  ',' ')
             .replace(' ','\\ ')+'$')
 
 
