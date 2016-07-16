@@ -222,7 +222,7 @@ def PlotSummarySet(iDS,igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
     keylist = SortMySet(data.keys())[0]
     for datakey in keylist:
         if iDS == False:
-            idata = data
+            idata = data[datakey]
         elif iDS in DefDSList:
             idata = CreateDictOldCombs(data[datakey],[]) 
         else:
@@ -233,9 +233,8 @@ def PlotSummarySet(iDS,igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
             if iSet in datakey.replace(methcomp,'') and methcomp in datakey: 
                 if iDS == False:
                     if Debug:
-                        print idata.keys() , iSet
-                        print idata[iSet].keys() , igamma
-                        print idata[iSet][igamma].keys() , iq
+                        print idata.keys() , igamma
+                        print idata[igamma].keys() , iq
                         print GraphCondit('',igamma,iq,methcomp,iSet)
                     if not CheckDict(idata,igamma,iq): continue
                     if not GraphCondit('',iSet,igamma,iq,methcomp,iSet): continue
