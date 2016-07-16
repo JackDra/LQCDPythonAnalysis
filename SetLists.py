@@ -326,7 +326,7 @@ def SplitDSCurr(thisstr):
         for iFFComb in CombFFList:
             hold = thisstr.replace(iDS,'',1).replace(iFFComb,'',1)
             if iFFComb in thisstr and iDS in thisstr and hold in NoFFList.keys():
-                return iDS,hold,iFFComb
+                return iDS,hold,iFFComb.replace('/','')
     for iFFComb in CombFFList:
         hold = thisstr.replace(iFFComb,'',1)
         if iFFComb in thisstr and hold in NoFFList.keys():
