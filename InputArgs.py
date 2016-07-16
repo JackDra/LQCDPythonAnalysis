@@ -75,6 +75,7 @@ def InputParams(inputparams):
     feedout['mom'] = RunMomList
     feedout['comb'] = DefDSList + CombList
     feedout['FFcomb'] = CombFFList
+    feedout['FFcombNS'] = CombNSFFList
     feedout['DoCurr'] = True
     feedout['ffgraph'] = 'All'
     SkipDefWipe = False
@@ -164,14 +165,21 @@ def InputParams(inputparams):
                 print 'Nothing found for comb list, using default list'
                 feedout['comb'] = DefDSList + CombList            
         elif '-FF' in isys:
-            feedout['FFcomb'] = isys.replace('-FF=','').split(',')
-            for iDS in feedout['FFcomb']:
-                if iDS not in CombFFList:
-                    print 'Warning, ' + iDS + ' not found in FFcomb list, skipping.'
-                    feedout['FFcomb'].remove(iDS)
+            feedout['FFcombNS'] = isys.replace('-FF=','').split(',')
+            feedout['FFcomb'] = []
+            for ic,iFFc in enuemrate(feedout['FFcombNS']):
+                if len(iFFc) > 0:
+                    feedout['FFcomb'].append('/'+iFFc)
+                else:
+                    feedout['FFcomb'].append('')
+                if '/'+iFFc not in CombFFList or iFFc != '':
+                    print 'Warning, ' + iFFc + ' not found in FFcomb list, skipping.'
+                    feedout['FFcombNS'].remove(iFFc)
+                    feedout['FFcomb'].remove('/'+iFFc)
             if len(feedout['FFcomb']) == 0:
                 print 'Nothing found for FFcomb list, using default list'
-                feedout['FFcomb'] = CombFFList            
+                feedout['FFcomb'] = CombFFList         
+                feedout['FFcombNS'] = CombNSFFList         
         elif '-DoList' in isys:
             feedout['ffgraph'] = isys.replace('-DoList=','')
             if feedout['ffgraph'] not in DefGraphDoList:

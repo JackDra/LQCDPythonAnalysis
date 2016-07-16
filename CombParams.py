@@ -34,4 +34,5 @@ CombFunsDict = {'IsoVector':IsoVector,
                 'Neutron':FFNeutron}
 
 CombList = CombFunsDict.keys()
-CombFFList = CombFFFunsDict.keys()
+CombFFList = ['/' + iC for iC in CombFFFunsDict.keys()]+['']
+CombNSFFList = CombFFFunsDict.keys()+['']

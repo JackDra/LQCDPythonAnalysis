@@ -121,7 +121,7 @@ def PlotFFqPick(datadict,thisPSL):
 feedin = InputParams(sys.argv[1:]+['-noprompt'])
 
 thisCurrDict = []
-for icurr in ElongateName(ElongateName(feedin['comb'],feedin['current']),['']+['/'+iCombFF for iCombFF in CombFFList]):
+for icurr in ElongateName(ElongateName(feedin['comb'],feedin['current']),feedin['FFcomb']):
     print 'Looking in ', icurr
     thisCurrDict.append([GetCurrDict([icurr]),feedin['ffgraph']])
 makeContextFunctions(ReadAndPlotFF)

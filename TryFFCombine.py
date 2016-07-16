@@ -20,7 +20,7 @@ thisCurrList = ElongateName(feedin['comb'],feedin['current'])
 
 starttime = time.time()
 funlist,comblist = [],[]
-for iFFcomb in feedin['FFcomb']:
+for iFFcomb in feedin['FFcombNS']:
     print 'Creating ' , iFFcomb
     funlist.append(CombFFFunsDict[iFFcomb])
     comblist.append(iFFcomb)
