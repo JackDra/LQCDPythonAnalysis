@@ -58,7 +58,7 @@ def GetCurrDict(thisCurrTypes):
 
     thisSetList = list(thisSetList)
     thisSetList.sort()
-    print 'Sets Found:\n','\n'.join(thisSetList)
+    if Debug: print 'Sets Found:\n','\n'.join(thisSetList)
     return thisCurrDict
 
 def CheckCurrentSets(thisCurrDict):
