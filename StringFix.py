@@ -108,7 +108,7 @@ def TitleFix(string):
             .replace('P4I','g_{S}')
             .replace('Ge','G_{e}')
             .replace('Gm','G_{m}')
-            .replace('div','/')
+            .replace('F1divF2','G_{e}/G_{m}')
             # .replace('I','g_{S}')
             .replace('P3g3g5','g_{A}')
             .replace('g3g5','g_{A}')

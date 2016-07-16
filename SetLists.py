@@ -333,6 +333,6 @@ def SplitDSCurr(thisstr):
             return '',hold,iFFComb.replace('/','')
     return '',thisstr,''
         
-def CreateCurrCombFn(thisstr):
+def CreateCurrCombFn(thisstr,spacing=''):
     DS,Curr,FFComb = SplitDSCurr(thisstr)
-    return FFComb+DS+Curr
+    return spacing.join([FFComb,DS,Curr])
