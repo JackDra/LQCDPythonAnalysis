@@ -120,10 +120,23 @@ def PlotFFqPick(datadict,thisPSL):
 
 feedin = InputParams(sys.argv[1:]+['-noprompt'])
 
+thisFFcomb = []
+for icomb in feedin['comb']:
+    if icomb in CombListForFFComb:
+        thisFFcomb.append(icomb)
+
 thisCurrDict = []
-for icurr in ElongateName(ElongateName(feedin['comb'],feedin['current']),feedin['FFcomb']):
-    print 'Looking in ', icurr
-    thisCurrDict.append([GetCurrDict([icurr]),feedin['ffgraph']])
+for iFFcomb in feedin['FFcomb']:
+    if iFFcomb == '':
+        for icurr in ElongateName(feedin['comb'],feedin['current']):
+            print 'Looking in ', icurr
+            thisCurrDict.append([GetCurrDict([icurr]),feedin['ffgraph']])
+    else:
+        for icurr in ElongateName(thisFFcomb,feedin['current']):
+            print 'Looking in ', icurr+iFFcomb
+            thisCurrDict.append([GetCurrDict([icurr+iFFcomb]),feedin['ffgraph']])
+
+        
 makeContextFunctions(ReadAndPlotFF)
 makeContextFunctions(PlotFFqPick)
 
