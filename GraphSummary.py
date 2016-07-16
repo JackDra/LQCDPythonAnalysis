@@ -207,14 +207,14 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
         thisgammadir = dirpref + '/'
         thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/'+iq+'/'
         mkdir_p(thisdir)
-        mprint( 'outputting FF plot to :',thisdir+'SummaryPlot'+dirpref+CreateCurrCombFn(igamma)+iq+'.pdf'
+        mprint( 'outputting FF plot to :',thisdir+'SummaryPlot'+dirpref+CreateCurrCombFn(igamma)+iq+'.pdf')
         pl.savefig(thisdir+'SummaryPlot'+dirpref+CreateCurrCombFn(igamma)+iq+'.pdf')
     else:
         pl.title(TitleFix('SummaryPlot ' +iDS + ' ' + igamma + ' ' + iq))
         thisgammadir = CreateOppDir(iDS+igamma)
         thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/qsqrd'+str(qsqrdstr(iq))+'/'
         mkdir_p(thisdir)
-        mprint( 'outputting plot to :',thisdir+'SummaryPlot'+dirpref+iDS+igamma+qstrTOqcond(iq)+'.pdf'
+        mprint( 'outputting plot to :',thisdir+'SummaryPlot'+dirpref+iDS+igamma+qstrTOqcond(iq)+'.pdf')
         pl.savefig(thisdir+'SummaryPlot'+dirpref+iDS+igamma+qstrTOqcond(iq)+'.pdf')
     pl.clf()
 
