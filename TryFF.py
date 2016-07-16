@@ -121,4 +121,4 @@ else:
         print 'Total percent: ' ,GetPercent(ip,len(inputparams))
         print 'Time Left:' , GetTimeLeftStr(ip,len(inputparams),time.time()-tottime)
         DoFF(*iparam)
-print 'Form Factor Creation Complete'
+print 'Form Factor Creation Complete, time taken:', str(datetime.timedelta(seconds=time.time()-tottime)) , ' h:m:s '
