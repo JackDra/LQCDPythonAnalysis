@@ -136,9 +136,9 @@ def CombFFOneFile(thisfile,thisFun):
     dictout = {'Form_Factors':{'Info':datadict['Form_Factors']['Info'],'Boots':OrderedDict(),'Values':OrderedDict()}}
     dictout['Form_Factors']['Values']['Mass'] = datadict['Form_Factors']['Values']['Mass']
     for qsqrd,qdict in datadict['Form_Factors']['Boots'].iteritems():
+        if 'qsqrd' not in qsqrd: continue
         dictout['Form_Factors']['Values'][qsqrd] = OrderedDict()
         dictout['Form_Factors']['Boots'][qsqrd] = OrderedDict()
-        if 'qsqrd' not in qsqrd: continue
         if 'FF'+str(thisFun.func_code.co_argcount) not in qdict.keys():
             print 
             print 'WARNING: file ', thisfile
@@ -151,6 +151,13 @@ def CombFFOneFile(thisfile,thisFun):
             if 'FF' in iff: qdatalist[intff] = np.array(ffval)
         dictout['Form_Factors']['Boots'][qsqrd] = BootStrap1(nboot,5)
         dictout['Form_Factors']['Boots'][qsqrd].values = thisFun(*qdatalist)
+        if Debug:
+            print
+            print thisfile
+            for iq1,iq2,iqc in zip(qdatalist[0],qdatalist[1],dictout['Form_Factors']['Boots'][qsqrd].values):
+                print iq1,iq2,iqc
+            print 
+        
         dictout['Form_Factors']['Boots'][qsqrd].Stats()
         dictout['Form_Factors']['Values'][qsqrd] = BootAvgStdChiToFormat(dictout['Form_Factors']['Boots'][qsqrd],float(datadict['Form_Factors']['Values'][qsqrd]['Chi']))
     return dictout
