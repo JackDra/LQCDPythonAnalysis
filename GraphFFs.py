@@ -144,6 +144,7 @@ for iFFcomb in feedin['FFcomb']:
 makeContextFunctions(ReadAndPlotFF)
 makeContextFunctions(PlotFFqPick)
 
+starttime = time.time()
 if len(thisCurrDict) > 0:
     if DoMulticore and feedin['anaproc'] > 1 and len(thisCurrDict) > 1:
         print 'Running Multicore'
@@ -165,6 +166,8 @@ if len(thisCurrDict) > 0:
         if kappa == 12090:
             for iout in output:
                 PlotFFqPick(*iout)
+    print 'Graphing Complete, time taken:', str(datetime.timedelta(seconds=time.time()-starttime)) , ' h:m:s '
+                
 else:
     print 'nothing to calculate'        
     output = []
