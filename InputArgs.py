@@ -92,7 +92,7 @@ def InputParams(inputparams):
             print '-m= specifies Method used, choose from:\n' + '\n'.join(MethodList)+'\n'
             print '-c= specifies Current to look at, choose from:\n' + '\n'.join(CurrentDSList)+'\n'
             print '-DS= specifies how to combine DS for TryCombine.py, choose from:\n' + '\n'.join(DefDSList + CombList)+'\n'
-            print '-FF= specifies how to combine Form Factors for TryFFCombine.py, choose from:\n' + '\n'.join(CombFFList)+'\n'
+            print '-FF= specifies how to combine Form Factors for TryFFCombine.py, choose from:\n' + '\n'.join(CombNSFFList)+'\n'
             print '-DoList= specifies a particular FF to plot in GraphFFs.py, choose ONE from:\n' + '\n'.join(DefGraphDoList+['All'])+'\n'
             print "-p= specifies the momentium list to use, form is 'q = X Y Z', X,Y,Z = -3,-2,-1,0,1,2,3"
             print "-np= specifies the maximum number of processors used for this job"
