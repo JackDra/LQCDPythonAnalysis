@@ -203,9 +203,10 @@ def ReadSumFile(filedir,filename,thisMomList=RunMomList):
 
 ## dataout = { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
 def ReadFFFile(filename):
-    dataout = {}
+    dataout = False
     if '.txt' in filename: filename = filename.replace('.txt','.xml')
     if os.path.isfile(filename):
+        dataout = {}
         data = ReadXmlAndPickle(filename)[0]
         data = data[data.keys()[0]]
         dataout = OrderedDict()
@@ -237,9 +238,10 @@ def ReadFFFile(filename):
 
 ## dataout = { Info:qsqrd#:nconf , Mass:Set/Avg/Std/Chi/Boot , qsqrd#:Avg/Std/Boot/Chi}
 def ReadFFCombFile(filename):
-    dataout = {}
+    dataout = False
     if '.txt' in filename: filename = filename.replace('.txt','.xml')
     if os.path.isfile(filename):
+        dataout = {}
         data = ReadXmlAndPickle(filename)[0]
         data = data[data.keys()[0]]
         dataout = OrderedDict()

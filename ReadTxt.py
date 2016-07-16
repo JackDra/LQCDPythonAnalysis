@@ -255,7 +255,7 @@ def ReadFFDict(thisindir,thisFFDict,thisPrintRead=PrintRead):
             if '/' in thisFF:
                 DataDict[thisFF][thisset] = ReadFFCombFile(thisfile)            
             else:
-                DataDict[thisFF][thisset] = ReadFFFile(thisfile)            
+                DataDict[thisFF][thisset] = ReadFFFile(thisfile)                                
         if thisPrintRead: print 'Reading ',thisFF,'took : ' , str(datetime.timedelta(seconds=time.time()-startff)) , ' h:m:s                     '
     if thisPrintRead: print 'Reading all FFs took : ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
     return DataDict

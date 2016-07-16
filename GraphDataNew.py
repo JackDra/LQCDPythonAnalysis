@@ -394,6 +394,7 @@ def PlotFFSet(dataset,thisFF,thisSetFlag):
     for thisset in SortMySet(thisSetFlag)[0]:
         ##make legend formatting function
         if not CheckDict(dataset,thisset,thisFF): continue
+        if CheckDict[dataset][thisset][thisFF]) == False: continue        
         thiscol = thiscolcyc.next()
         collist.append(thiscol)
         PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshiftcyc.next(),LegLab(thisset))

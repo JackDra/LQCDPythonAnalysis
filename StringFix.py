@@ -106,6 +106,7 @@ def TitleFix(string):
     return (r'$'+string.replace('P4giDi','\\langle x \\rangle ')
             .replace('giDi','\\langle x \\rangle ')
             .replace('P4I','g_{S}')
+            .replace('F1divF2','\frac{G_{e}}{G_{m}}')
             # .replace('I','g_{S}')
             .replace('P3g3g5','g_{A}')
             .replace('g3g5','g_{A}')
@@ -116,7 +117,8 @@ def TitleFix(string):
             .replace('g3','\\gamma_{3}')
             .replace('g4','\\gamma_{4}')
             .replace('g5','\\gamma_{5}')
-            .replace('gA','g_{A}')+'$')
+            .replace('gA','g_{A}')
+            .replace(' ','\ ')+'$')
 
 
 def LabToXaxis(thestring,col):
