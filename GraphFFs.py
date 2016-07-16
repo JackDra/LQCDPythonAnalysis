@@ -124,6 +124,10 @@ thisFFcomb = []
 for icomb in feedin['comb']:
     if icomb in CombListForFFComb:
         thisFFcomb.append(icomb)
+thisCurrcomb = []
+for icomb in feedin['current']:
+    if icomb in CurrListForFFComb:
+        thisCurrcomb.append(icomb)
 
 thisCurrDict = []
 for iFFcomb in feedin['FFcomb']:
@@ -132,7 +136,7 @@ for iFFcomb in feedin['FFcomb']:
             print 'Looking in ', icurr
             thisCurrDict.append([GetCurrDict([icurr]),feedin['ffgraph']])
     else:
-        for icurr in ElongateName(thisFFcomb,feedin['current']):
+        for icurr in ElongateName(thisFFcomb,thisCurrcomb):
             print 'Looking in ', icurr+iFFcomb
             thisCurrDict.append([GetCurrDict([icurr+iFFcomb]),feedin['ffgraph']])
 
