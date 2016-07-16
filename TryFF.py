@@ -108,7 +108,7 @@ for thisCurr in feedin['current']:
                 print 'Adding to queue FF: ' , imeth , thisCurr , iSet
                 inputparams.append(([imeth],thisCurr,[iSet],thisGammaList,feedin['mom']))
             
-tottime = time.time()
+starttime = time.time()
 feedin['anaproc'] = min(feedin['anaproc'],len(inputparams))
 if DoMulticore and feedin['anaproc'] > 1:
     makeContextFunctions(DoFF)
@@ -121,4 +121,4 @@ else:
         print 'Total percent: ' ,GetPercent(ip,len(inputparams))
         print 'Time Left:' , GetTimeLeftStr(ip,len(inputparams),time.time()-tottime)
         DoFF(*iparam)
-print 'Form Factor Creation Complete, time taken:', str(datetime.timedelta(seconds=time.time()-tottime)) , ' h:m:s '
+print 'Form Factor Creation Complete, time taken:', str(datetime.timedelta(seconds=time.time()-starttime)) , ' h:m:s '

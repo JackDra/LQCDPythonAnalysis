@@ -6,6 +6,8 @@ from InputArgs import *
 from OppFuns import *
 from ReadDir import *
 from copy import deepcopy
+import time
+import datetime
 
 feedin = InputParams(sys.argv[1:])
 thisGammaList = CreateGammaList(feedin['gamma'])
@@ -27,6 +29,7 @@ for icurr in feedin['current']:
 for iDS in DefDSList:
     if iDS in feedin['comb']: feedin['comb'].remove(iDS)
         
+starttime = time.time()
 for iCombType in feedin['comb']:
     print 'Creating ' , iCombType
     ReadAndComb(feedin,CombFunsDict[iCombType],iCombType)
@@ -39,4 +42,5 @@ if feedin['DoCurr']:
         comblist.append(iCombType)
     ReadAndCombFF(GetCurrDict(thisCurrList),FunList,comblist)
 
-print 'Combining Complete'
+print 'Combining Complete, time taken:', str(datetime.timedelta(seconds=time.time()-startime)) , ' h:m:s '
+

@@ -7,6 +7,7 @@ from OppFuns import *
 from ReadDir import *
 from MiscFuns import *
 from copy import deepcopy
+import time,datetime
 
 feedin = InputParams(sys.argv[1:])
 thisGammaList = CreateGammaList(feedin['gamma'])
@@ -17,6 +18,7 @@ ShowMethodList(feedin['method'])
 
 thisCurrList = ElongateName(feedin['comb'],feedin['current'])
 
+starttime = time.time()
 funlist,comblist = [],[]
 for iFFcomb in feedin['FFcomb']:
     print 'Creating ' , iFFcomb
@@ -25,4 +27,4 @@ for iFFcomb in feedin['FFcomb']:
     
 ReadAndCombTheFFs(GetCurrDict(thisCurrList),funlist,comblist)
 
-print 'FF Combining Complete'
+print 'FF Combining Complete, time taken:', str(datetime.timedelta(seconds=time.time()-starttime)) , ' h:m:s '
