@@ -197,6 +197,7 @@ def ReadAndComb(inputargs,FunctList,fnamelist):
                         if Debug: print filesing                        
                         outdata = CombTwoFiles(filedoub,filesing,FunctList)
                         for iout,ifname in zip(outdata,fnamelist):
+                            if len(iout.keys()) != 1: continue
                             gammadir = CreateOppDir(ifname+igamma)
                             mkdir_p( outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/')
                             outfile = outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/' + iset+ifname+igamma+ipref+momstr
@@ -219,6 +220,7 @@ def ReadAndCombFF(thisCurrDict,FunctList,funnameList):
             if Debug: print filesing                        
             outdata = CombTwoFiles(filedoub,filesing,FunctList)
             for funname,iout in zip(funnameList,outdata):
+                if 'Form_Factors' not in iout.keys(): continue
                 mkdir_p( outputdir+'FormFactors/'+funname+icurr+'/')
                 outfile = outputdir+'FormFactors/'+funname+icurr+'/'+ funname+icurr+iset
                 MergeXmlOutput(outfile,iout)
