@@ -42,5 +42,5 @@ if feedin['DoCurr']:
         comblist.append(iCombType)
     ReadAndCombFF(GetCurrDict(thisCurrList),FunList,comblist)
 
-print 'Combining Complete, time taken:', str(datetime.timedelta(seconds=time.time()-startime)) , ' h:m:s '
+print 'Combining Complete, time taken:', str(datetime.timedelta(seconds=time.time()-starttime)) , ' h:m:s '
 
