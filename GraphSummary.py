@@ -203,7 +203,7 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
     pl.xlim(-1,xvalues-1)
     pl.grid(False,axis='x')
     if iDS == False:
-        pl.title(TitleFix('SummaryPlot ' + igamma.replace('/',' ') + ' ' + iq))
+        pl.title(TitleFix('SummaryPlot ' + CreateCurrCombFn(dirpref) + ' ' + iq))
         thisgammadir = dirpref + '/'
         thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/'+iq+'/'
         mkdir_p(thisdir)
