@@ -330,7 +330,7 @@ def SplitDSCurr(thisstr):
     for iFFComb in CombFFList:
         hold = thisstr.replace(iFFComb,'',1)
         if iFFComb in thisstr and hold in NoFFList.keys():
-            return '',hold,iFFComb
+            return '',hold,iFFComb.replace('/','')
     return '',thisstr,''
         
 def CreateCurrCombFn(thisstr):
