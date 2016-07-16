@@ -204,7 +204,7 @@ def ReadAndComb(inputargs,FunctList,fnamelist):
                             if Debug: print outfile
                             # WriteXmlOutput(outfile,outdata)
                             MergeXmlOutput(outfile,iout)
-    print ' '*40
+    print ' '*80 , ' \r',
                             
 
                         
@@ -225,7 +225,7 @@ def ReadAndCombFF(thisCurrDict,FunctList,funnameList):
                 mkdir_p( outputdir+'FormFactors/'+funname+icurr+'/')
                 outfile = outputdir+'FormFactors/'+funname+icurr+'/'+ funname+icurr+iset
                 MergeXmlOutput(outfile,iout)
-    print ' '*40
+    print ' '*80 , ' \r',
 
             
 def ReadAndCombTheFFs(thisCurrDict,FunctList,FFcombList):
@@ -241,7 +241,7 @@ def ReadAndCombTheFFs(thisCurrDict,FunctList,FFcombList):
                 outfile = outputdir+'FormFactors/'+icurr+'/'+iFFcomb+'/'+ iFFcomb+icurr+iset
                 if Debug: print outfile
                 MergeXmlOutput(outfile,iout)
-    print ' '*40
+    print ' '*80 , ' \r',
 
 def FunctOfDictsOld(a, b,Funct):
     for key in b:
