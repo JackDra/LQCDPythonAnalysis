@@ -166,7 +166,7 @@ def CombFFOneList(thisfile,FunList):
     return [CombFFOneFile(thisfile,ifun) for ifun in FunList]
 
 
-def ReadAndComb(inputargs,Funct,funname):
+def ReadAndComb(inputargs,FunctList,fnamelist):
     for igamma in inputargs['gamma']:
         if 'doub' in igamma or 'sing' in igamma or 'twopt' in igamma: continue
         doubgamma = 'doub'+igamma
@@ -175,6 +175,7 @@ def ReadAndComb(inputargs,Funct,funname):
         singgammadir = CreateOppDir(singgamma)
         gammadir = CreateOppDir(funname+igamma)
         for imethod in inputargs['method']:
+            print 'Combining ' , igamma , imethod
             if imethod == 'RF': methoddir = ''
             else: methoddir = '/'+imethod
             thisSetList = inputargs['set']
@@ -195,12 +196,13 @@ def ReadAndComb(inputargs,Funct,funname):
                         filesing = outputdir +'/'+ singgammadir + methoddir + '/'+momdir + '/' + iset+singgamma+ipref+momstr+'.xml'
                         if Debug: print filedoub
                         if Debug: print filesing                        
-                        outdata = CombTwoFiles(filedoub,filesing,Funct)
-                        mkdir_p( outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/')
-                        outfile = outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/' + iset+funname+igamma+ipref+momstr
-                        if Debug: print outfile
-                        # WriteXmlOutput(outfile,outdata)
-                        MergeXmlOutput(outfile,outdata)
+                        for ifun,ifname in zip(FunctList,fnamelist):
+                            outdata = CombTwoFiles(filedoub,filesing,ifun)
+                            mkdir_p( outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/')
+                            outfile = outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/' + iset+ifname+igamma+ipref+momstr
+                            if Debug: print outfile
+                            # WriteXmlOutput(outfile,outdata)
+                            MergeXmlOutput(outfile,outdata)
 
 
                         
@@ -210,6 +212,7 @@ def ReadAndCombFF(thisCurrDict,FunctList,funnameList):
         doubcurr = 'doub'+icurr
         singcurr = 'sing'+icurr
         for iset in isetlist:
+            print 'Combining ', icurr, iset
             filedoub = outputdir+'FormFactors/'+doubcurr+'/' +doubcurr+iset+'.xml'
             filesing = outputdir+'FormFactors/'+singcurr+'/' +singcurr+iset+'.xml'
             if Debug: print filedoub
@@ -224,6 +227,7 @@ def ReadAndCombFF(thisCurrDict,FunctList,funnameList):
 def ReadAndCombTheFFs(thisCurrDict,FunctList,FFcombList):
     for icurr,isetlist in thisCurrDict.iteritems():
         for iset in isetlist:
+            print 'Combining ', icurr, iset
             filecurr = outputdir+'FormFactors/'+icurr+'/' +icurr+iset+'.xml'
             if Debug: print filecurr
             outdata = CombFFOneList(filecurr,FunctList)

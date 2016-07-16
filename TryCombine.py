@@ -30,17 +30,10 @@ for iDS in DefDSList:
     if iDS in feedin['comb']: feedin['comb'].remove(iDS)
         
 starttime = time.time()
-for iCombType in feedin['comb']:
-    print 'Creating ' , iCombType
-    ReadAndComb(feedin,CombFunsDict[iCombType],iCombType)
+ReadAndComb(feedin,[CombFunsDict[iCombType] for iCombType in feedin['comb']],feedin['comb'])
     
 if feedin['DoCurr']:
-    FunList,comblist = [],[]
-    for iCombType in feedin['comb']:
-        print 'Creating ' , iCombType
-        FunList.append(CombFunsDict[iCombType])
-        comblist.append(iCombType)
-    ReadAndCombFF(GetCurrDict(thisCurrList),FunList,comblist)
+    ReadAndCombFF(GetCurrDict(thisCurrList),[CombFunsDict[iCombType] for iCombType in feedin['comb'],feedin['comb'])
 
 print 'Combining Complete, time taken:', str(datetime.timedelta(seconds=time.time()-starttime)) , ' h:m:s '
 
