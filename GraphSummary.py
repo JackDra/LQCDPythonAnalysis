@@ -207,7 +207,7 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
         thisgammadir = dirpref + '/'
         thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/'+iq+'/'
         mkdir_p(thisdir)
-        pl.savefig(thisdir+'SummaryPlot'+dirpref+iDS+igamma+iq+'.pdf')
+        pl.savefig(thisdir+'SummaryPlot'+dirpref+igamma+iq+'.pdf')
     else:
         thisgammadir = CreateOppDir(iDS+igamma)
         thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/qsqrd'+str(qsqrdstr(iq))+'/'
