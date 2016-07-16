@@ -172,7 +172,7 @@ def InputParams(inputparams):
                     feedout['FFcomb'].append('/'+iFFc)
                 else:
                     feedout['FFcomb'].append('')
-                if '/'+iFFc not in CombFFList or iFFc != '':
+                if '/'+iFFc not in CombFFList or iFFc == '':
                     print 'Warning, ' + iFFc + ' not found in FFcomb list, skipping.'
                     feedout['FFcombNS'].remove(iFFc)
                     feedout['FFcomb'].remove('/'+iFFc)
