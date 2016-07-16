@@ -202,7 +202,7 @@ def ReadAndComb(inputargs,FunctList,fnamelist):
                             outfile = outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/' + iset+ifname+igamma+ipref+momstr
                             if Debug: print outfile
                             # WriteXmlOutput(outfile,outdata)
-                            MergeXmlOutput(outfile,idata)
+                            MergeXmlOutput(outfile,iout)
 
 
                         
