@@ -33,7 +33,7 @@ starttime = time.time()
 ReadAndComb(feedin,[CombFunsDict[iCombType] for iCombType in feedin['comb']],feedin['comb'])
     
 if feedin['DoCurr']:
-    ReadAndCombFF(GetCurrDict(thisCurrList),[CombFunsDict[iCombType] for iCombType in feedin['comb'],feedin['comb'])
+    ReadAndCombFF(GetCurrDict(thisCurrList),[CombFunsDict[iCombType] for iCombType in feedin['comb']],feedin['comb'])
 
 print 'Combining Complete, time taken:', str(datetime.timedelta(seconds=time.time()-starttime)) , ' h:m:s '
 
