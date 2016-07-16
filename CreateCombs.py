@@ -173,7 +173,6 @@ def ReadAndComb(inputargs,FunctList,fnamelist):
         singgamma = 'sing'+igamma
         doubgammadir = CreateOppDir(doubgamma)
         singgammadir = CreateOppDir(singgamma)
-        gammadir = CreateOppDir(funname+igamma)
         for imethod in inputargs['method']:
             print 'Combining ' , igamma , imethod
             if imethod == 'RF': methoddir = ''
@@ -197,6 +196,7 @@ def ReadAndComb(inputargs,FunctList,fnamelist):
                         if Debug: print filedoub
                         if Debug: print filesing                        
                         for ifun,ifname in zip(FunctList,fnamelist):
+                            gammadir = CreateOppDir(ifname+igamma)
                             outdata = CombTwoFiles(filedoub,filesing,ifun)
                             mkdir_p( outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/')
                             outfile = outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/' + iset+ifname+igamma+ipref+momstr
