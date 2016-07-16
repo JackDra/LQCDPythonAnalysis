@@ -126,7 +126,7 @@ def CombTwoFiles(file1,file2,funct):
     data2,dump = ReadXmlAndPickle(file2)
     output = []
     for ifunc in funct:
-        output.append(XmlBootToAvg(FunctOfDicts(data1,data2,ifunc)))
+        output.append(XmlBootToAvg(FunctOfDicts(deepcopy(data1),data2,ifunc)))
     return output
 
 

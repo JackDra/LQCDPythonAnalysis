@@ -46,7 +46,7 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr):
         combCurr = igf+iCurr
         FF,infodict = CreateFF(setdict,thisMass['Avg'],iCurr,gammaflag=igf)
         PrintFFSet(FF,theset,thisMass,thesetmass,combCurr,infodict)
-        if 'Vector' in thisCurr and 'IsoVector' not in thisCurr:
+        if 'Vector' in thisCurr and 'IsoVector' not in thisCurr and 'PsVector' not in thisCurr:
             NewFF = CombineVector(FF,thisMass)
             PrintFFSet(NewFF,theset,thisMass,thesetmass,combCurr.replace('Vector','GeGm'),infodict)
 
