@@ -167,7 +167,7 @@ def InputParams(inputparams):
         elif '-FF' in isys:
             feedout['FFcombNS'] = isys.replace('-FF=','').split(',')
             feedout['FFcomb'] = []
-            for ic,iFFc in enuemrate(feedout['FFcombNS']):
+            for iFFc in feedout['FFcombNS']:
                 if len(iFFc) > 0:
                     feedout['FFcomb'].append('/'+iFFc)
                 else:
@@ -178,8 +178,8 @@ def InputParams(inputparams):
                     feedout['FFcomb'].remove('/'+iFFc)
             if len(feedout['FFcomb']) == 0:
                 print 'Nothing found for FFcomb list, using default list'
-                feedout['FFcomb'] = CombFFList         
                 feedout['FFcombNS'] = CombNSFFList         
+                feedout['FFcomb'] = CombFFList         
         elif '-DoList' in isys:
             feedout['ffgraph'] = isys.replace('-DoList=','')
             if feedout['ffgraph'] not in DefGraphDoList:
