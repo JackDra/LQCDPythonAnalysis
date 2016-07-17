@@ -130,7 +130,7 @@ if thisGammaList == ['twopt']:
     TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarList)]
     TvarPicked += ['tsink26'+str(istate) for istate in CreateMassSet([],['1'],PoFTvarList)]
     thisSmList = ['tsink29'+str(ism) for ism in CreateMassSet(DefSmearList,['1'],[])]
-    # TvarLists = []
+    TvarLists = []
     # TvarLists = [(['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt1)],'PoFDt1'),
     #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt2)],'PoFDt2'),
     #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt3)],'PoFDt3'),
