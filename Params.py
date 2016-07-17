@@ -96,9 +96,9 @@ OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the m
 DoNorm = False # normalises the 2 point function (see CMSTech.py)
 DoSym = True # symmetrises the 2 point function (see CMSTech.py)
 CfunConfigCheck = True # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
-VarMethodMethod = 'Regular' # for solving the Variational method, different ways of doing it/
+# VarMethodMethod = 'Regular' # for solving the Variational method, different ways of doing it/
 # VarMethodMethod = 'Symmetric'
-# VarMethodMethod = 'AxBxlSolve'
+VarMethodMethod = 'AxBxlSolve'
 
 ##DEBUG toggles (True/False):
 Debug = False # for debugging, toggles alot of print statements on
