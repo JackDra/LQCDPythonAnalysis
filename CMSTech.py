@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import numpy as np
-from scipy.linalg import eigh,eig,eigvals,inv,sqrtm
-# from numpy.linalg import eigh,eig,inv
+from scipy.linalg import eigvals,inv,sqrtm
+# from scipy.linalg import eigh,eig
+from numpy.linalg import eigh,eig
 from Params import *
 from copy import deepcopy
 import operator as opp
