@@ -130,7 +130,7 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
         elif VarMethodMethod == 'Regular':
             ThisMat = Simtodt[ci[:,None],ci].dot(inv(Simto[ci[:,None],ci]))
             thiseig,thisevec = eig(ThisMat)
-        elif VarMethodMethod == 'Regular':
+        elif VarMethodMethod == 'AxBxlSolve':
             thiseig,thisevec = eig(Simtodt[ci[:,None],ci],b=Simto[ci[:,None],ci])
         else:
             raise LookupError('VarMethodMethod not recognised (Params.py) : ' + VarMethodMethod)
