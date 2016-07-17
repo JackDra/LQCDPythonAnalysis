@@ -2,8 +2,8 @@
 
 import numpy as np
 from scipy.linalg import eigvals,inv,sqrtm
-# from scipy.linalg import eigh,eig
-from numpy.linalg import eigh,eig
+from scipy.linalg import eigh,eig
+# from numpy.linalg import eigh,eig
 from Params import *
 from copy import deepcopy
 import operator as opp
@@ -121,10 +121,11 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
         # if any(-np.log(abs(thiseig))/float(thisdt) < VarMassCutoff) or any(posdef < 0):
         ShalfInv = inv(sqrtm(Simto[ci[:,None],ci]))
         ThisMat = ShalfInv.dot(Simtodt[ci[:,None],ci].dot(ShalfInv))
+        
         ThisMat = SymmetrizeNoPAvg(ThisMat)
-        # for iindex in range(len(ThisMat)):
-        #     for jindex in range(len(ThisMat)):
-        #         print ThisMat[iindex][jindex], ThisMat[jindex][iindex]
+        for iindex in range(len(ThisMat)):
+            for jindex in range(len(ThisMat)):
+                print ThisMat[iindex][jindex], ThisMat[jindex][iindex]
         if Doeigh:
             thiseig,thisevec = eigh(ThisMat)
         else:
@@ -438,7 +439,6 @@ def SymmetrizeNoPAvg(data2pt):
     for ism,dataism in enumerate(data2pt):
         for jsm,datajsm in enumerate(dataism):
             dataout[ism][jsm] = (datajsm+data2pt[jsm][ism])/2.0
-    # GetBootStats(dataout)
     return dataout
 
 def PreptwoptCorr(data2pt):
