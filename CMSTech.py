@@ -120,10 +120,13 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
         # posdef = eigvals(Simto[ci[:,None],ci])
         # if any(-np.log(abs(thiseig))/float(thisdt) < VarMassCutoff) or any(posdef < 0):
         ShalfInv = inv(sqrtm(Simto[ci[:,None],ci]))
-        ThisMat = ShalfInv.dot(Simtodt[ci[:,None],ci].dot(ShalfInv))
         for iindex in range(len(ThisMat)):
             for jindex in range(len(ThisMat)):
-                print ThisMat[iindex][jindex], ThisMat[jindex][iindex]
+                print iindex, jindex, ShalfInv[iindex][jindex], ShalfInv[jindex][iindex]
+        ThisMat = ShalfInv.dot(Simtodt[ci[:,None],ci].dot(ShalfInv))
+        # for iindex in range(len(ThisMat)):
+        #     for jindex in range(len(ThisMat)):
+        #         print iindex, jindex, ThisMat[iindex][jindex], ThisMat[jindex][iindex]
         
         ThisMat = SymmetrizeNoPAvg(ThisMat)
         if Doeigh:
