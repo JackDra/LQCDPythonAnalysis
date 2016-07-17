@@ -71,13 +71,17 @@ def Wipe2pt(outputdir,statelist=[],todtlist=[],smlist=[],thisMomList=RunMomList)
         for ip in xmlMomList:
             thisdir = outputdir+iflag+MakeMomDir(ip)
             for itodt in thistodtlist:
-                ifile = thisdir+itodt+'LREM.xml'
+                ifile = thisdir+itodt+'LREM'+ip+'.xml'
                 if os.path.isfile(ifile): os.remove(ifile)
                 for istate in statelist:
                     ifile = thisdir+'state'+istate+itodt+iflag.replace('cfuns/','')+ip+'.xml'
                     if os.path.isfile(ifile): os.remove(ifile)
+                    ifile = thisdir+'boots/state'+istate+itodt+iflag.replace('cfuns/','')+ip+'.boot.p'
+                    if os.path.isfile(ifile): os.remove(ifile)
             for ism in smlist:
                 ifile = thisdir+'sm'+ism+iflag.replace('cfuns/','')+ip+'.xml'
+                if os.path.isfile(ifile): os.remove(ifile)
+                ifile = thisdir+'boots/sm'+ism+iflag.replace('cfuns/','')+ip+'.boot.p'
                 if os.path.isfile(ifile): os.remove(ifile)
     
 
@@ -88,6 +92,8 @@ def WipeSet(outputdir,thisGammaList,setlist,thisMomList=RunMomList,filepref=''):
         for iset in setlist:
             for ip in xmlMomList:
                 ifile = thisdir+MakeMomDir(ip)+filepref+iset+igamma+ip+'.xml'
+                if os.path.isfile(ifile): os.remove(ifile)
+                ifile = thisdir+MakeMomDir(ip)+'boots/'+filepref+iset+igamma+ip+'.boot.p'
                 if os.path.isfile(ifile): os.remove(ifile)
 
             
