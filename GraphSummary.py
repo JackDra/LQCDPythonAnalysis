@@ -30,7 +30,7 @@ incr = 0.01
 thisalpha = 0.3
 
 xlabshift = 0.05
-manylim = (0,2.5)
+manylim = (-1,2.5)
 lowlim = manylim[0]
 highlim = manylim[1]
 
