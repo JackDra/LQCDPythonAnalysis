@@ -161,7 +161,6 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
         Simtodt = np.array(Cfuntodt)[ci[:,None],ci]
         ShalfInv = inv(sqrtm(Simto))
         ThisMat = ShalfInv.dot(Simtodt.dot(ShalfInv))
-        # ThisMat = SymmetrizeNoPAvg(ThisMat)
         if Doeigh:
             [Evals,REvec] = eigh(ThisMat)
             REvec = ShalfInv.dot(REvec)
