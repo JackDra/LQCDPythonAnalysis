@@ -216,8 +216,10 @@ for Proj,GL in DefProjDerList.iteritems():
     DefNoDSGammaList += ['P'+Proj[3]+iGL for iGL in GL]
 DefCombGammaList = DefGammaList+DefNoDSGammaList
 
+DeftoList = [20,21,22,23]
 # DeftoList = [17,18,19,20,21,22,23]
-DeftoList = [16,17,18,19,20]
+# DeftoList = [16,17,18,19,20]
+# DefdtList = [1,2,3,4]
 DefdtList = [1,2,3,4]
 # DeftodtPicked = (18,2)
 DeftodtPicked = (18,2)
