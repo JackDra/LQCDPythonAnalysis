@@ -169,7 +169,7 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
         else:
             [Evals,LEvec,REvec] = eig(ThisMat,left=True)
             REvec = ShalfInv.dot(REvec)
-            LEvec = LEvec.dot(ShalfInv)
+            LEvec = np.swapaxies(np.swapaxies(LEvec,1).dot(ShalfInv),1)
         ## w = G^-1/2 u
         Evals,LEvec,REvec = AddNullState(Evals,LEvec,REvec,buffindex,thisdt=thisdt)
     return sortEvec(Evals,LEvec,REvec,thisdt)
