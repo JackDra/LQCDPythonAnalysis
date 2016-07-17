@@ -93,8 +93,8 @@ MultiCoreFitting = False # Multicore for Boot Fitting, not needed in current bui
 DoMulticore = True # Runs multicore wherever implemented
 DoContentsCheck = False # True makes sure the xml file has the correct momenta first field, turn off for more performance
 OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
-DoNorm = False # normalises the 2 point function (see CMSTech.py)
-DoSym = False # symmetrises the 2 point function (see CMSTech.py)
+DoNorm = True # normalises the 2 point function (see CMSTech.py)
+DoSym = True # symmetrises the 2 point function (see CMSTech.py)
 CfunConfigCheck = True # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
 
 ##DEBUG toggles (True/False):
