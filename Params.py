@@ -222,7 +222,7 @@ DeftoList = [20,21,22,23]
 # DefdtList = [1,2,3,4]
 DefdtList = [1,2,3,4]
 # DeftodtPicked = (18,2)
-DeftodtPicked = (18,2)
+DeftodtPicked = (20,2)
 DefTvarPicked = 'CMto'+str(DeftodtPicked[0])+'dt'+str(DeftodtPicked[1])
 
 DeftodtList = []
