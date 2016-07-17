@@ -95,7 +95,10 @@ DoContentsCheck = False # True makes sure the xml file has the correct momenta f
 OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
 DoNorm = False # normalises the 2 point function (see CMSTech.py)
 DoSym = True # symmetrises the 2 point function (see CMSTech.py)
-CfunConfigCheck = False # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
+CfunConfigCheck = True # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
+VarMethodMethod = 'Regular' # for solving the Variational method, different ways of doing it/
+# VarMethodMethod = 'Symmetric'
+# VarMethodMethod = 'AxBxlSolve'
 
 ##DEBUG toggles (True/False):
 Debug = False # for debugging, toggles alot of print statements on

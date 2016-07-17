@@ -157,18 +157,32 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
     if len(ci) < 2:
         Evals,LEvec,REvec = AddNullState(np.ones(1),np.array([[1]]),np.array([[1]]),buffindex,thisdt=thisdt)
     else:
-        Simto = np.array(Cfunto)[ci[:,None],ci]
-        Simtodt = np.array(Cfuntodt)[ci[:,None],ci]
-        ShalfInv = inv(sqrtm(Simto))
-        ThisMat = ShalfInv.dot(Simtodt.dot(ShalfInv))
-        if Doeigh:
-            [Evals,REvec] = eigh(ThisMat)
-            REvec = ShalfInv.dot(REvec)
-            LEvec = REvec
+        if VarMethodMethod == 'Symmetric':
+            Simto = np.array(Cfunto)[ci[:,None],ci]
+            Simtodt = np.array(Cfuntodt)[ci[:,None],ci]
+            ShalfInv = inv(sqrtm(Simto))
+            ThisMat = ShalfInv.dot(Simtodt.dot(ShalfInv))
+            if Doeigh:
+                [Evals,REvec] = eigh(ThisMat)
+                REvec = ShalfInv.dot(REvec)
+                LEvec = REvec
+            else:
+                [Evals,LEvec,REvec] = eig(ThisMat,left=True)
+                REvec = ShalfInv.dot(REvec)
+                LEvec = np.swapaxes(np.swapaxes(LEvec,0,1).dot(ShalfInv),0,1)
+        elif VarMethodMethod == 'Regular':
+            Simto = np.array(Cfunto)[ci[:,None],ci]
+            Simtodt = np.array(Cfuntodt)[ci[:,None],ci]
+            ThisMat = Simtodt.dot(inv(Simto))
+            [Evals,LEvec,dump] = eig(ThisMat,left=True)
+            ThisMat = inv(Simto).dot(Simtodt)
+            [Evals,dump] = eig(ThisMat)
+        elif VarMethodMethod == 'AxBxlSolve':
+            Simto = np.array(Cfunto)[ci[:,None],ci]
+            Simtodt = np.array(Cfuntodt)[ci[:,None],ci]
+            [Evals,LEvec,REvec] = eig(Simtodt,b=Simto,left=True)
         else:
-            [Evals,LEvec,REvec] = eig(ThisMat,left=True)
-            REvec = ShalfInv.dot(REvec)
-            LEvec = np.swapaxes(np.swapaxes(LEvec,0,1).dot(ShalfInv),0,1)
+            raise LookupError('VarMethodMethod not recognised (Params.py) : ' + VarMethodMethod)
         ## w = G^-1/2 u
         Evals,LEvec,REvec = AddNullState(Evals,LEvec,REvec,buffindex,thisdt=thisdt)
     return sortEvec(Evals,LEvec,REvec,thisdt)
