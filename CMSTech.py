@@ -115,24 +115,25 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
     ci = np.array([0])
     Ctolen = len(Cfunto)
     for cutindex in range(1,Ctolen):
-        ci = np.append(ci,cutindex)
-        # thiseig = eigvals(Simtodt[ci[:,None],ci],b=Simto[ci[:,None],ci])
-        # posdef = eigvals(Simto[ci[:,None],ci])
-        # if any(-np.log(abs(thiseig))/float(thisdt) < VarMassCutoff) or any(posdef < 0):
-        ShalfInv = inv(sqrtm(Simto[ci[:,None],ci]))
-        # for iindex in range(len(ShalfInv)):
-        #     for jindex in range(len(ShalfInv)):
-        #         print iindex, jindex, ShalfInv[iindex][jindex], ShalfInv[jindex][iindex]
-        ThisMat = ShalfInv.dot(Simtodt[ci[:,None],ci].dot(ShalfInv))
-        # for iindex in range(len(ThisMat)):
-        #     for jindex in range(len(ThisMat)):
-        #         print iindex, jindex, ThisMat[iindex][jindex], ThisMat[jindex][iindex]
         
-        # ThisMat = SymmetrizeNoPAvg(ThisMat)
-        if Doeigh:
-            thiseig,thisevec = eigh(ThisMat)
-        else:
+        ci = np.append(ci,cutindex)
+        if VarMethodMethod == 'Symmetric':
+            ShalfInv = inv(sqrtm(Simto[ci[:,None],ci]))
+            ThisMat = ShalfInv.dot(Simtodt[ci[:,None],ci].dot(ShalfInv))
+            # for iindex in range(len(ThisMat)):
+            #     for jindex in range(len(ThisMat)):
+            #         print iindex, jindex, ThisMat[iindex][jindex], ThisMat[jindex][iindex]
+            if Doeigh:
+                thiseig,thisevec = eigh(ThisMat)
+            else:
+                thiseig,thisevec = eig(ThisMat)
+        elif VarMethodMethod == 'Regular':
+            ThisMat = Simtodt[ci[:,None],ci].dot(inv(Simto[ci[:,None],ci]))
             thiseig,thisevec = eig(ThisMat)
+        elif VarMethodMethod == 'Regular':
+            thiseig,thisevec = eig(Simtodt[ci[:,None],ci],b=Simto[ci[:,None],ci])
+        else:
+            raise LookupError('VarMethodMethod not recognised (Params.py) : ' + VarMethodMethod)
         evecreal,evecimag = SplitCmplxReal(thisevec.flatten())
         eigreal,eigimag = SplitCmplxReal(thiseig)
         if any(-np.log(np.abs(eigreal))/float(thisdt) < VarMassCutoff) or any(np.array(eigreal) < 0) or any(np.abs(eigimag) > 0)  or any(np.abs(evecimag) > 0):
@@ -176,7 +177,7 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
             ThisMat = Simtodt.dot(inv(Simto))
             [Evals,LEvec,dump] = eig(ThisMat,left=True)
             ThisMat = inv(Simto).dot(Simtodt)
-            [Evals,dump] = eig(ThisMat)
+            [Evals,REvec] = eig(ThisMat)
         elif VarMethodMethod == 'AxBxlSolve':
             Simto = np.array(Cfunto)[ci[:,None],ci]
             Simtodt = np.array(Cfuntodt)[ci[:,None],ci]
