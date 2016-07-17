@@ -73,6 +73,8 @@ def Wipe2pt(outputdir,statelist=[],todtlist=[],smlist=[],thisMomList=RunMomList)
             for itodt in thistodtlist:
                 ifile = thisdir+itodt+'LREM'+ip+'.xml'
                 if os.path.isfile(ifile): os.remove(ifile)
+                ifile = thisdir+'boots/'+itodt+'LREM'+ip+'.boot.p'
+                if os.path.isfile(ifile): os.remove(ifile)
                 for istate in statelist:
                     ifile = thisdir+'state'+istate+itodt+iflag.replace('cfuns/','')+ip+'.xml'
                     if os.path.isfile(ifile): os.remove(ifile)
