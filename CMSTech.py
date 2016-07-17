@@ -445,9 +445,11 @@ def SymmetrizeNoPAvg(data2pt):
     return dataout
 
 def PreptwoptCorr(data2pt):
-    if DoNorm: return Symmetrize(Normalise(np.array(data2pt),tsource))
+    if DoNorm and DoSym: return Symmetrize(Normalise(np.array(data2pt),tsource))
+    elif DoNorm: Normalise(np.array(data2pt),tsource)
+    elif DoSym: Symmetrize(np.array(data2pt))
     # else: return data2pt
-    else: return Symmetrize(np.array(data2pt))
+    else: return np.array(data2pt)
     # else: return np.array(data2pt)
 
 
