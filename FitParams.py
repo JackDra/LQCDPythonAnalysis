@@ -121,7 +121,7 @@ def FitDefGuess(Fun,Len=1):
 
 
 ##GraphData.py
-FitMassPicked = {'sm32':(15,18),'sm64':(14,18),'sm128':(14,18),PickedStateStr+'to18dt2':(10,19)} ## GraphData.py
+FitMassPicked = {'sm32':(15,18),'sm64':(14,18),'sm128':(14,18),PickedStateStr+DefTvarPicked:(10,19)} ## GraphData.py
 
 PickedTwoMax = 29
 
