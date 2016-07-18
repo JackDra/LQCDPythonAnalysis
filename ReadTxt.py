@@ -125,18 +125,18 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
     return datadictout,datamassout
 
 
-def Get2ptSetMoms(outputdir,MomListIn,statelist=[],todtlist=[],smlist=[]):
+def Get2ptSetMoms(outputdir,MomListIn,tvarlist=[],smlist=[]):
     momlist = set([])
     xmlMomList = map(qstrTOqcond,MomListIn)
     for iflag in ['cfuns/twopt','Mass']:
         for ip in xmlMomList:
             thisdir = outputdir+iflag+MakeMomDir(ip)
-            for itodt in todtlist:
+            for itvar in tvarlist:
                 if iflag == 'Mass':
-                    ifile = thisdir+itodt+'LREM'+ip+'.xml'
+                    ifile = thisdir+itvar+'LREM'+ip+'.xml'
                     if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
-                for istate in statelist:
-                    ifile = thisdir+MakeMomDir(ip)+'state'+istate+itodt+iflag.replace('cfuns/','')+ip+'.xml'
+                for istate in GetStateSet(itvar):
+                    ifile = thisdir+MakeMomDir(ip)+'state'+istate+itvar+iflag.replace('cfuns/','')+ip+'.xml'
                     if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
             for ism in smlist:
                 ifile = thisdir+MakeMomDir(ip)+ism+iflag.replace('cfuns/','')+ip+'.xml'

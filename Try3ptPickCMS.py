@@ -81,7 +81,7 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
             print 'CMTech ' , iTvar , ' Time Taken: ' , str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s  '
         data3ptset = np.array(data3ptset)
         data2ptset = np.array(data2ptset)
-        SetList = CreateMassSet(thisSmearList,StateSet,AnaTvarList,flipord=True)
+        SetList = CreateMassSet(thisSmearList,CMStateSet,AnaTvarList,flipord=True)
         SetList = ['tsink'+str(thisTSinkList[0])+iS for iS in SetList]
         print 'CMTech Total Time Taken: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
     elif 'REvec' == RunType:
@@ -92,7 +92,7 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         if giDi: data3pt,thisGammaList = CreategiDi(data3pt,thisGammaList,thisDSList)
         print 'Creating REvec CM Tech ' , REvecTvarList[0]
         [data2ptset,data3ptset] = CreateREvecCfuns(data3pt,data2pt,DefREvecVarList,thisMomList)
-        SetList,dump = CreateREvecSet(thisTSinkList,StateSet,REvecTvarList)
+        SetList,dump = CreateREvecSet(thisTSinkList,[PickedState],REvecTvarList)
     elif 'PoF' == RunType:
 ## CMdata2pt [ istate , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 ## CMdata3pt  [ istate , igamma , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)

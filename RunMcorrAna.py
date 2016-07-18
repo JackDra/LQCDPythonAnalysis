@@ -63,7 +63,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         thisTvarList = AnaTvarList
         thisREvecTvarList = []
         thisPoFTvarList = []
-        thisStateSet = range(1,len(thisSmearList)+1)
+        thisStateSet = CMStateSet
     elif 'REvec' in RunType:
         thisTSinkList = RunTSinkList
         thisSmearList = DefSmearList
@@ -103,8 +103,8 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
     print '----------------------------------------------------------------------------------'
     if RunType == 'TwoPt':
         print 'Two Point Analysis'
-        Wipe2pt(outputdir,statelist=StateSet,todtlist=TwoPtDefTvarList,smlist=DefSmearList)
-        thisMomList = Get2ptSetMoms(outputdir,RunMomList,statelist=StateSet,todtlist=DefTvarList,smlist=DefSmearList)
+        Wipe2pt(outputdir,todtlist=TwoPtDefTvarList,smlist=DefSmearList)
+        thisMomList = Get2ptSetMoms(outputdir,RunMomList,todtlist=TwoTotDefTvarList,smlist=DefSmearList)
         CreateTwoPt(DragpZ([qstrTOip(iq) for iq in thisMomList]),DefSmearList,feedin=feedin)
         print 'Two Point Analysis Complete'
     else:

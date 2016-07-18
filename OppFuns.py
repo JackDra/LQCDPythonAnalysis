@@ -63,22 +63,22 @@ def SetOpps(AllList):
         if 'Run' in contents: iscmplx = 'cmplx'
     return sorted(Extra),sorted(thisOppList),sorted(thisDSList),sorted(thisProjList),'real, '+iscmplx
 
-def Wipe2pt(outputdir,statelist=[],todtlist=[],smlist=[],thisMomList=RunMomList):
-    thistodtlist = ['PoF'+str(PoFShifts)+itodt for itodt in todtlist]
-    thistodtlist += ['CM'+itodt for itodt in todtlist]
+def Wipe2pt(outputdir,tvarlist=[],smlist=[],thisMomList=RunMomList):
+    thistvarlist = ['PoF'+str(PoFShifts)+itvar for itvar in tvarlist]
+    thistvarlist += ['CM'+itvar for itvar in tvarlist]
     xmlMomList = map(qstrTOqcond,thisMomList)
     for iflag in ['cfuns/twopt','Mass']:
         for ip in xmlMomList:
             thisdir = outputdir+iflag+MakeMomDir(ip)
-            for itodt in thistodtlist:
-                ifile = thisdir+itodt+'LREM'+ip+'.xml'
+            for itvar in thistvarlist:
+                ifile = thisdir+itvar+'LREM'+ip+'.xml'
                 if os.path.isfile(ifile): os.remove(ifile)
-                ifile = thisdir+'boots/'+itodt+'LREM'+ip+'.boot.p'
+                ifile = thisdir+'boots/'+itvar+'LREM'+ip+'.boot.p'
                 if os.path.isfile(ifile): os.remove(ifile)
-                for istate in statelist:
-                    ifile = thisdir+'state'+istate+itodt+iflag.replace('cfuns/','')+ip+'.xml'
+                for istate in GetStateSet(itvar):
+                    ifile = thisdir+'state'+istate+itvar+iflag.replace('cfuns/','')+ip+'.xml'
                     if os.path.isfile(ifile): os.remove(ifile)
-                    ifile = thisdir+'boots/state'+istate+itodt+iflag.replace('cfuns/','')+ip+'.boot.p'
+                    ifile = thisdir+'boots/state'+istate+itvar+iflag.replace('cfuns/','')+ip+'.boot.p'
                     if os.path.isfile(ifile): os.remove(ifile)
             for ism in smlist:
                 ifile = thisdir+'sm'+ism+iflag.replace('cfuns/','')+ip+'.xml'

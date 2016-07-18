@@ -273,6 +273,10 @@ SingSmearList = ['32']
 # DefSmearList = ['32']
 # DefSmearList = ['8','16','32']
 StateSet = map(str,range(1,(PoFShifts+1)*len(DefSmearList)+1))
+CMStateSet = map(str,range(1,len(DefSmearList)+1))
+def GetStateList(keystring):
+    if 'PoF' in keystring: return StateSet
+    else: return CMStateSet
 PickedState = 1
 PickedStateStr = 'state'+str(PickedState)
 DefInterpList = ['nucleon']
