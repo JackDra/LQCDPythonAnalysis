@@ -127,6 +127,7 @@ def SetRFAxies(thisGamma):
 def SetFFAxies(thisCurr):
     pl.xlabel(FFxlab)
     pl.ylabel(FFylab)
+    print thisCurr , ylimFFDict.keys()
     if thisCurr not in ylimFFDict.keys():
         pl.ylim(max(pl.ylim()[0],-1),min(pl.ylim()[1],2))
     else:
