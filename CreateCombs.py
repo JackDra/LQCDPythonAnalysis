@@ -167,7 +167,6 @@ def CombFFOneList(thisfile,FunList):
 
 
 def ReadAndComb(inputargs,FunctList,fnamelist):
-    print inputargs['gamma']
     for igamma in inputargs['gamma']:
         if 'doub' in igamma or 'sing' in igamma or 'twopt' in igamma: continue
         doubgamma = 'doub'+igamma
