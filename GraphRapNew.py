@@ -126,7 +126,7 @@ thisGammaList = CreateGammaList(feedin['gamma'],twopt=True)
 
 if thisGammaList == ['twopt']:
     # feedin['method'] = ['RF','OSFCM','TSFCM']
-    TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],[DefTvarPicked])]
+    TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarPicked)]
     # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarList)]
     # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt1)]
     # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt2)]

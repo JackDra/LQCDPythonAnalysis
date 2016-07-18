@@ -77,7 +77,8 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
             if not CheckDict(readdata,igamma,zmom): continue
             for iMeth,Methdata in readdata[igamma][zmom].iteritems():
                 for ism,thismassdict in Methdata.iteritems():
-                    if DefTvarPicked in ism: ism = PickedStateStr+DefTvarPicked
+                    for itvar in DefTvarPicked:
+                        if itvar in ism: ism = PickedStateStr+itvar
                     if 'TSF' in iMeth:
                         if CheckDict(thismassdict,'m0',TSFfitr):
                             datamassout[ism+iMeth] = thismassdict['m0'][TSFfitr]
@@ -92,7 +93,8 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                     for iSet,thisdict in Methdata.iteritems():
                         itsink,ism = SplitTSinkString(iSet)
                         fitsm = CreateOSFfitKey(ism)[0]
-                        if DefTvarPicked in ism: ism = PickedStateStr+DefTvarPicked
+                        for itvar in DefTvarPicked:
+                            if itvar in ism: ism = PickedStateStr+itvar
                         if 'TSF' in iMeth:
                             for icut in TSFCutList:
                                 if CheckDict(thisdict,'B00',TSFfitr,icut):
@@ -218,7 +220,8 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
                                 if not all([iState in datadict['twopt'][imom][iSF][RemoveTSink(iset)].keys() for iState in StateParList['One']['C2']]): continue
                                 for ipar in StateParList['One']['C2']:
                                     fitrkey = RemoveTSink(iset)
-                                    if DefTvarPicked in fitrkey: fitrkey = PickedStateStr+DefTvarPicked
+                                    for itvar in DefTvarPicked:
+                                        if itvar in fitrkey: fitrkey = PickedStateStr+itvar
                                     pars2pt.append(datadict['twopt'][imom][iSF][RemoveTSink(iset)][ipar][OSFfitr[CreateOSFfitKey(fitrkey)[0]]]['Boot'])
                                 data2ptZ =  ff.C2OneStateFitFunNoExp(GetintTSink(iset)-tsource,pars2pt)
                             elif 'TSF' in iSF:

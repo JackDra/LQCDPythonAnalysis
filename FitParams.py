@@ -56,14 +56,17 @@ OneStateParList = {'C2':['Am','m0'] , 'C3':['B00']}
 #picked for plotting
 OSFCutList = ['cut4','cut5']
 OSFCutPicked = 'cut5'
-OSFfitvals = {'sm32': [26,31], 'sm64': [25,31] , 'sm128':[23,31], PickedStateStr+DefTvarPicked:[22,31],
+OSFfitvals = {'sm32': [26,31], 'sm64': [25,31] , 'sm128':[23,31],
               PickedStateStr+'REvec':[23,31],PickedStateStr+'PoF'+str(PoFShifts):[18,31]}
+    
 OSFfitr = {'sm32':str(OSFfitvals['sm32'][0])+'-'+str(OSFfitvals['sm32'][1]),
            'sm64':str(OSFfitvals['sm64'][0])+'-'+str(OSFfitvals['sm64'][1]),
            'sm128':str(OSFfitvals['sm128'][0])+'-'+str(OSFfitvals['sm128'][1]),
            PickedStateStr+'REvec':str(OSFfitvals[PickedStateStr+'REvec'][0])+'-'+str(OSFfitvals[PickedStateStr+'REvec'][1]),
-           PickedStateStr+'PoF'+str(PoFShifts):str(OSFfitvals[PickedStateStr+'PoF'+str(PoFShifts)][0])+'-'+str(OSFfitvals[PickedStateStr+'PoF'+str(PoFShifts)][1]),
-           PickedStateStr+DefTvarPicked:str(OSFfitvals[PickedStateStr+DefTvarPicked][0])+'-'+str(OSFfitvals[PickedStateStr+DefTvarPicked][1])}
+           PickedStateStr+'PoF'+str(PoFShifts):str(OSFfitvals[PickedStateStr+'PoF'+str(PoFShifts)][0])+'-'+str(OSFfitvals[PickedStateStr+'PoF'+str(PoFShifts)][1])}
+for itvar in DefTvarPicked:
+    OSFfitvals[PickedStateStr+itvar] = [22,31]
+    OSFfitr[PickedStateStr+itvar] = str(OSFfitvals[PickedStateStr+itvar][0])+'-'+str(OSFfitvals[PickedStateStr+itvar][1])
 
 TSF3ptCutMin,TSF3ptCutMax = 2,5
 TSF2ptMinStart,TSF2ptMinEnd,TSF2ptMaxStart,TSF2ptMaxEnd = 18,25,29,35
@@ -121,8 +124,9 @@ def FitDefGuess(Fun,Len=1):
 
 
 ##GraphData.py
-FitMassPicked = {'sm32':(15,18),'sm64':(14,18),'sm128':(14,18),PickedStateStr+DefTvarPicked:(10,19)} ## GraphData.py
-
+FitMassPicked = {'sm32':(15,18),'sm64':(14,18),'sm128':(14,18)} ## GraphData.py
+for itvar in DefTvarPicked:
+    FitMassPicked[PickedStateStr+itvar] = (10,19)
 PickedTwoMax = 29
 
 def WritePars(val,fileflag):

@@ -101,7 +101,7 @@ CfunConfigCheck = True # Checks all two and three point correlators before runni
 VarMethodMethod = 'AxBxlSolve'
 
 ##DEBUG toggles (True/False):
-Debug = True # for debugging, toggles alot of print statements on
+Debug = False # for debugging, toggles alot of print statements on
 ScaleByP4g4 = False ## scales out all operators by P4g4 instead of 2 point correlator at tsink for Ratio value (RF)
 ShowConfNum = Debug # debugging, show number of configs during read
 PrintRead = not DoMulticore # Screws up output if on and doing mulitcore reading
@@ -223,8 +223,8 @@ DeftoList = [19,20,21]
 # DefdtList = [1,2,3,4]
 DefdtList = [1,2,3,4]
 # DeftodtPicked = (18,2)
-DeftodtPicked = (20,2)
-DefTvarPicked = 'CMto'+str(DeftodtPicked[0])+'dt'+str(DeftodtPicked[1])
+DeftodtPicked = [(20,2),(18,2)]
+DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
 
 DeftodtList = []
 DefTvarList = []
@@ -259,8 +259,8 @@ for idt in DefdtList:
     DefTvarto20.append('CMto20dt'+str(idt))
             
 if OnlySelVar:
-    AnatodtList = [DeftodtPicked]
-    AnaTvarList = [DefTvarPicked]
+    AnatodtList = DeftodtPicked
+    AnaTvarList = DefTvarPicked
 else:
     AnatodtList = DeftodtList
     AnaTvarList = DefTvarList

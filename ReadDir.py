@@ -17,7 +17,7 @@ def ReadSetDir(thisdir,thisgamma=''):
     if OnlySelVar:
         SetOut = []
         for iSet in thisSetList:
-            if (any([ism in iSet for ism in DefSmList]) or (DefTvarPicked in iSet)
+            if (any([ism in iSet for ism in DefSmList]) or any([itvar in iSet for itvar in DefTvarPicked])
                 or any([iPoF in iSet for iPoF in PoFTvarList]) or any([iREvec in iSet for iREvec in REvecTvarList])):
                 SetOut.append(iSet)
     else:
