@@ -119,10 +119,10 @@ logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 momlistdir = datadir+'momdir/'
 pickledir = datadir+"pickledir/"
 REvecDir = scriptdir+'REvecSave/k'+str(kappa)+'/'
-RunMomList = qvecSet 
+# RunMomList = qvecSet 
 # For Debuggin, only use zero momenta
 # RunMomList = [qvecSet[iqTOip(0)],qvecSet[qvecTOip([0,0,1])]]
-# RunMomList = [qvecSet[iqTOip(0)]]
+RunMomList = [qvecSet[iqTOip(0)]]
 mkdir_p(outputdir)
 mkdir_p(pickledir)
 mkdir_p(logdir)
@@ -218,7 +218,7 @@ DefCombGammaList = DefGammaList+DefNoDSGammaList
 
 # DeftoList = [20,21,22,23]
 # DeftoList = [17,18,19,20,21,22,23]
-DeftoList = [19,20,21]
+DeftoList = [18,19,20,21]
 # DeftoList = [16,17,18,19,20]
 # DefdtList = [1,2,3,4]
 DefdtList = [1,2,3,4]

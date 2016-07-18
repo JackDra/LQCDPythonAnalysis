@@ -50,16 +50,16 @@ def SortMySet(SLin,massset=False):
         for itsink,itint in zip(map(str,range(20,40)),range(20,40)):
         # for itsink,itint in zip(AllTSinkStrList,AllTSinkList):
             # for ism in DefSmList + DefTvarList:
-            for ism in DefSmList+PoFTvarList+REvecTvarList:
+            for ism in DefSmList+DefTvarList+PoFTvarList+REvecTvarList:
                 for iSLin in SLin:
                     if 'tsink'+itsink in iSLin and ism in iSLin and iSLin not in SLout:
                         TSinkLout.append(itint)
                         SLout.append(iSLin)
-            for ism in DefTvarList:
-                for iSLin in SLin:
-                    if 'tsink'+itsink in iSLin and ism in iSLin and 'PoF' not in iSLin and 'REvec' not in iSLin and iSLin not in SLout:
-                        TSinkLout.append(itint)
-                        SLout.append(iSLin)
+            # for ism in DefTvarList:
+            #     for iSLin in SLin:
+            #         if 'tsink'+itsink in iSLin and ism in iSLin and 'PoF' not in iSLin and 'REvec' not in iSLin and iSLin not in SLout:
+            #             TSinkLout.append(itint)
+            #             SLout.append(iSLin)
         # for itsink,itint in zip(REvecTSinkStrList,REvecTSinkList):
         #     for ism in REvecTvarList:
         #         for iSLin in SLin:
