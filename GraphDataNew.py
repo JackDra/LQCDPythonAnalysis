@@ -37,14 +37,8 @@ ylimDict = {'IsoVectorP4giDi':[-0.15,0],
             'VectorP4g4':[0,4.0],
             'IsoVectorP4g4':[0,1.1]}
 
-GmYlim = [0,0.5]
-ylimFFDict = {'Vector':[0,2],
-              'GeGmFF2':GmYlim}
-for iComb in DefDSList+CombList:
-    ylimFFDict[iComb+'GeGmFF2'] = GmYlim
-    for iFFComb in CombFFList:
-        ylimFFDict[iComb+'GeGmFF1'+iFFComb] = [0.3,0.5]
-        
+ylimFFDict = {'ProtonGeGmFF2': [0,0.5],
+              'ProtonGeGmFF1/F1divF2' = [0.3,0.5]}
 
 params = {'legend.fontsize': 10,
           'legend.numpoints': 1,
