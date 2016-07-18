@@ -54,7 +54,7 @@ elif outfile == 'CM':
     ReadREvecTvarList = []
 elif outfile == 'JustCM':
     outfile = 'CM'
-    ReadSmearList = DefSmearList
+    ReadSmearList = []
     ReadTSinkList = [29]
     # CaptString = ['SMSET','CMSET','PoFSET','REvecSET']
     CaptString = ['CMSET']

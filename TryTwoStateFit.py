@@ -77,6 +77,16 @@ elif outfile == 'CM':
     ReadTvarList = []
     ReadREvecTSinkList = []
     ReadREvecTvarList = []
+elif outfile == 'JustCM':
+    print 'JustCM run'
+    outfile = 'CM'
+    ReadSmearList = DefSmearList
+    ReadTSinkList = [29]
+    CaptString = ['CMSET']
+    ReadStateList = []
+    ReadTvarList = []
+    ReadREvecTSinkList = []
+    ReadREvecTvarList = []
 elif outfile == 'REvec':
     print 'REvec run'
     CaptString = ['REvecSET']
