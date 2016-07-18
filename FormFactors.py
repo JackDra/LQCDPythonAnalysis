@@ -59,7 +59,7 @@ def CreateFF(data,mass,iCurr,gammaflag=''):
             if Debug:
                 print 'Printing Form Factors debug:'
                 for FF1,FF2,res in zip(FFcoeff[0],FFcoeff[1],datavals):
-                    print iq, '   ' , FF1,'FF1 + ',FF2,'FF2 = ',res.Avg
+                    print iqsqrd, '   ' , FF1,'FF1 + ',FF2,'FF2 = ',res.Avg
                 print ''
             if [0.0] not in FFcoeff and len(datavals) == 1: continue
             if FFcoeff[0] == [0.0]:
