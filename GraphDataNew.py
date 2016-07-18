@@ -39,7 +39,7 @@ ylimDict = {'IsoVectorP4giDi':[-0.15,-0.05],
             'IsoVectorP4g4':[0.8,1.1]}
 
 ylimFFDict = {'ProtonGeGmFF1/F1divF2':[0.3,0.5],
-              'NeutronGeGmFF1/F1divF2':[0.0,1.0]}
+              'NeutronGeGmFF1/F1divF2':[0.0,0.1]}
 
 params = {'legend.fontsize': 10,
           'legend.numpoints': 1,
@@ -382,7 +382,7 @@ def PlotFFs(data,DSCurr,thisSetList,CollName):
         if len(thisFFComb) > 1: thisFFComb = '/'+thisFFComb
         thisFF = 'FF'+str(iFF)
         PlotFFSet(data,thisFF,thisSetList)
-        SetFFAxies(thisDS+thisCurr+thisFF+'/'+thisFFComb)
+        SetFFAxies(thisDS+thisCurr+thisFF+thisFFComb)
         pl.savefig(CreateFFFile(CollName,DSCurr,thisFF)+'.pdf')
         pl.clf()
         
