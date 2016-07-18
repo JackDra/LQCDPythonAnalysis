@@ -119,6 +119,6 @@ if DoMulticore and feedin['anaproc'] > 1:
 else:
     for ip,iparam in enumerate(inputparams):
         print 'Total percent: ' ,GetPercent(ip,len(inputparams))
-        print 'Time Left:' , GetTimeLeftStr(ip,len(inputparams),time.time()-tottime)
+        print 'Time Left:' , GetTimeLeftStr(ip,len(inputparams),time.time()-starttime)
         DoFF(*iparam)
 print 'Form Factor Creation Complete, time taken:', str(datetime.timedelta(seconds=time.time()-starttime)) , ' h:m:s '
