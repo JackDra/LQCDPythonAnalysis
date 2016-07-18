@@ -69,8 +69,7 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCom
                 timeleft = GetTimeLeft(icg,len(thisGammaList),time.time()-start)
                 # if not CheckDict(datadict,igamma,imom): continue
                 # thisdatadict = datadict[igamma][imom]
-                # if not CheckDict(combdatadict,icomb,igamma,imom): continue
-                print combdatadict.keys() , imom
+                if not CheckDict(combdatadict,icomb,igamma,imom): continue
                 thisdatadict = combdatadict[icomb][igamma][imom]
                 if kappa == 12090:
                     progprint(0,time.time(),combgamma)
