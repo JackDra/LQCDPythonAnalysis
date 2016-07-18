@@ -32,13 +32,14 @@ MassTVals = 16,34
 Massyrange = 0.35,1.0
 # Massyrange = 0.45,0.55
 
-ylimDict = {'IsoVectorP4giDi':[-0.15,0],
-            'VectorP4giDi':[-0.4,0],
+ylimDict = {'IsoVectorP4giDi':[-0.15,-0.05],
+            'VectorP4giDi':[-0.4,-0.15],
             'VectorP4g4':[0,4.0],
             'ProtonP3g2cmplx':[0,0.5],
-            'IsoVectorP4g4':[0,1.1]}
+            'IsoVectorP4g4':[0.8,1.1]}
 
-ylimFFDict = {'ProtonGeGmFF1/F1divF2':[0.3,0.5]}
+ylimFFDict = {'ProtonGeGmFF1/F1divF2':[0.3,0.5],
+              'NeutronGeGmFF1/F1divF2':[0.0,1.0]}
 
 params = {'legend.fontsize': 10,
           'legend.numpoints': 1,
@@ -109,6 +110,7 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref):
 def SetRFAxies(thisGamma):
     pl.xlabel(RFxlab)
     pl.ylabel(RFylab)
+    if Debug: print 'Hardcoding yaxis limits',thisGamma, ylimDict.keys()
     if thisGamma not in ylimDict.keys():
         pl.ylim(max(pl.ylim()[0],-5),min(pl.ylim()[1],5))
     else:
