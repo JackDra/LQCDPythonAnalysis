@@ -232,39 +232,6 @@ def SplitOpp(All):
         contents.append('Run')
         Split.append('cmplx')
         
-    # for ichar,char in enumerate(All):
-    #     if char in ['d','s']:
-    #         Split.append(All[ichar:ichar+4])
-    #         contents.append('DS')
-    #     if char == 'c':            
-    #         Split.append(All[ichar:ichar+5])
-    #         contents.append('Run')
-    #     elif char == 'P':
-    #         Split.append(All[ichar:ichar+2])
-    #         contents.append('Proj')
-    #     elif char == 'D':
-    #         Split.append(All[ichar:ichar+2])
-    #         contents.append('Der')
-    #     elif char == 'g' and not gdone:
-    #         if All[ichar-1] == 'n': continue
-    #         contents.append('Gamma')
-    #         cutlen = 2
-    #         gdone = True
-    #         if len(All[ichar+2:]) > 1:
-    #             for char2 in All[ichar+2:]:
-    #                 if char2 == 'g':
-    #                     cutlen += 2
-    #                 else: 
-    #                     break
-    #         Split.append(All[ichar:ichar+cutlen])
-    #     elif char == 'I' and not gdone:
-    #         Split.append(All[ichar])
-    #         gdone == True
-    #         contents.append('Gamma')
-    # for ichar,(char,icont) in enumerate(zip(Split,contents)):
-    #     if char[0] in iflag:
-    #         OrdSplit.append(char)
-    #         break
     return Split,contents
 
 def PrintOpps(AllList):

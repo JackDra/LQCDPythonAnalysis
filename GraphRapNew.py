@@ -70,6 +70,7 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCom
                 # if not CheckDict(datadict,igamma,imom): continue
                 # thisdatadict = datadict[igamma][imom]
                 # if not CheckDict(combdatadict,icomb,igamma,imom): continue
+                print combdatadict.keys() , imom
                 thisdatadict = combdatadict[icomb][igamma][imom]
                 if kappa == 12090:
                     progprint(0,time.time(),combgamma)
