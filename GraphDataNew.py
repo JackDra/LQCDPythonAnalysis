@@ -379,7 +379,7 @@ def PlotFFs(data,DSCurr,thisSetList,CollName):
     if len(thisSetList) == 0: return
     thisDS,thisCurr,thisFFComb = SplitDSCurr(DSCurr)
     for iFF in range(1,NoFFPars[thisCurr]+1):
-        if len(thisFFcomb) > 1: thisFFComb = '/'+thisFFComb
+        if len(thisFFComb) > 1: thisFFComb = '/'+thisFFComb
         thisFF = 'FF'+str(iFF)
         PlotFFSet(data,thisFF,thisSetList)
         SetFFAxies(thisDS+thisCurr+thisFF+'/'+thisFFComb)
