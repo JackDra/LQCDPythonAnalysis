@@ -2,7 +2,7 @@
 
 import numpy as np
 from Params import *
-from GraphRap import SummaryFeed
+from GraphRapNew import SummaryFeed
 import sys
 
 thisSmearList = ['32','64','128']
