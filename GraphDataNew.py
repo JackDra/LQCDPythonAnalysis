@@ -37,8 +37,7 @@ ylimDict = {'IsoVectorP4giDi':[-0.15,0],
             'VectorP4g4':[0,4.0],
             'IsoVectorP4g4':[0,1.1]}
 
-ylimFFDict = {'ProtonGeGmFF2': [0,0.5],
-              'ProtonGeGmFF1/F1divF2' = [0.3,0.5]}
+ylimFFDict = {'ProtonGeGmFF1/F1divF2' = [0.3,0.5]}
 
 params = {'legend.fontsize': 10,
           'legend.numpoints': 1,
