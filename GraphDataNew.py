@@ -385,7 +385,7 @@ def PlotFFs(data,DSCurr,thisSetList,CollName):
     for iFF in range(1,NoFFPars[thisCurr]+1):
         thisFF = 'FF'+str(iFF)
         PlotFFSet(data,thisFF,thisSetList)
-        SetFFAxies(thisDS+thisCUrr+thisFF+'/'+thisFFComb)
+        SetFFAxies(thisDS+thisCurr+thisFF+'/'+thisFFComb)
         pl.savefig(CreateFFFile(CollName,DSCurr,thisFF)+'.pdf')
         pl.clf()
         
