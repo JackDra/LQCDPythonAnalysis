@@ -44,7 +44,6 @@ for iComb in DefDSList+CombList:
     ylimFFDict[iComb+'GeGmFF2'] = GmYlim
     for iFFComb in CombFFList:
         ylimFFDict[iComb+'GeGmFF1'+iFFComb] = [0.3,0.5]
-        ylimFFDict[iComb+'GeGm'+iFFComb] = [0.3,0.5]
         
 
 params = {'legend.fontsize': 10,
@@ -128,7 +127,6 @@ def SetRFAxies(thisGamma):
 def SetFFAxies(thisCurr):
     pl.xlabel(FFxlab)
     pl.ylabel(FFylab)
-    print thisCurr
     if thisCurr not in ylimFFDict.keys():
         pl.ylim(max(pl.ylim()[0],-1),min(pl.ylim()[1],2))
     else:
@@ -387,7 +385,7 @@ def PlotFFs(data,DSCurr,thisSetList,CollName):
     for iFF in range(1,NoFFPars[thisCurr]+1):
         thisFF = 'FF'+str(iFF)
         PlotFFSet(data,thisFF,thisSetList)
-        SetFFAxies(DSCurr)
+        SetFFAxies(thisDS+thisCUrr+thisFF+'/'+thisFFComb)
         pl.savefig(CreateFFFile(CollName,DSCurr,thisFF)+'.pdf')
         pl.clf()
         
