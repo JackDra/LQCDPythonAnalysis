@@ -43,6 +43,7 @@ for iComb in DefDSList+CombList:
     ylimFFDict[iComb+'GeGmFF2'] = GmYlim
     for iFFComb in CombFFList:
         ylimFFDict[iComb+'GeGmFF1'+iFFComb] = [0,0.5]
+        ylimFFDict[iComb+'GeGm'+iFFComb] = [0,0.5]
         
 
 params = {'legend.fontsize': 10,

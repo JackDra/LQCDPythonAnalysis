@@ -152,6 +152,7 @@ if len(thisCurrDict) > 0:
         output = thisPool.map(ReadAndPlotFF.mapper,thisCurrDict)
         thisPool.close()
         thisPool.join()
+        print 'FF Plots Complete'
         if kappa == 12090:
             thisPool = Pool(min(len(output),feedin['anaproc']))
             output = thisPool.map(PlotFFqPick.mapper,output)
@@ -163,6 +164,7 @@ if len(thisCurrDict) > 0:
         for icount,iin in enumerate(thisCurrDict):
             output.append(ReadAndPlotFF(*iin))
             print int((icount*100)/float(len(thisCurrDict))) , '% done' + ' '*50 + '\r',
+        print 'FF Plots Complete'
         if kappa == 12090:
             for iout in output:
                 PlotFFqPick(*iout)
