@@ -35,7 +35,7 @@ Massyrange = 0.35,1.0
 ylimDict = {'IsoVectorP4giDi':[-0.15,0],
             'VectorP4giDi':[-0.4,0],
             'VectorP4g4':[0,4.0],
-            'ProtonP3g2':[0,0.5],
+            'ProtonP3g2cmplx':[0,0.5],
             'IsoVectorP4g4':[0,1.1]}
 
 ylimFFDict = {'ProtonGeGmFF1/F1divF2':[0.3,0.5]}
