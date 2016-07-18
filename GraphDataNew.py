@@ -32,7 +32,8 @@ MassTVals = 16,34
 Massyrange = 0.35,1.0
 # Massyrange = 0.45,0.55
 
-ylimDict = {'P4giDi':[-0.15,0.15],
+ylimDict = {'IsoVectorP4giDi':[-0.15,0],
+            'VectorP4giDi':[-0.4,0],
             'VectorP4g4':[0,4.0],
             'IsoVectorP4g4':[0,1.1]}
 
@@ -42,8 +43,8 @@ ylimFFDict = {'Vector':[0,2],
 for iComb in DefDSList+CombList:
     ylimFFDict[iComb+'GeGmFF2'] = GmYlim
     for iFFComb in CombFFList:
-        ylimFFDict[iComb+'GeGmFF1'+iFFComb] = [0,0.5]
-        ylimFFDict[iComb+'GeGm'+iFFComb] = [0,0.5]
+        ylimFFDict[iComb+'GeGmFF1'+iFFComb] = [0.3,0.5]
+        ylimFFDict[iComb+'GeGm'+iFFComb] = [0.3,0.5]
         
 
 params = {'legend.fontsize': 10,
@@ -116,7 +117,7 @@ def SetRFAxies(thisGamma):
     pl.xlabel(RFxlab)
     pl.ylabel(RFylab)
     if thisGamma not in ylimDict.keys():
-        pl.ylim(max(pl.ylim()[0],-4),min(pl.ylim()[1],4))
+        pl.ylim(max(pl.ylim()[0],-5),min(pl.ylim()[1],5))
     else:
         # pl.ylim(max(ylimDict[thisGamma][0],pl.ylim()[0]),min(ylimDict[thisGamma][1],pl.ylim()[1]))
         pl.ylim(*ylimDict[thisGamma])
@@ -127,6 +128,7 @@ def SetRFAxies(thisGamma):
 def SetFFAxies(thisCurr):
     pl.xlabel(FFxlab)
     pl.ylabel(FFylab)
+    print thisCurr
     if thisCurr not in ylimFFDict.keys():
         pl.ylim(max(pl.ylim()[0],-1),min(pl.ylim()[1],2))
     else:
