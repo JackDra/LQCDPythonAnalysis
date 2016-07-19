@@ -413,10 +413,13 @@ def SignEvec(LEvec,REvec):
     REvecOut = REvec
     for ip,(pLE,pRE) in enumerate(zip(LEvec,REvec)):
         for istate,(stateLE,stateRE) in enumerate(zip(pLE,pRE)):
+            stateLEZ,stateREZ = LEvec[0][istate].tolist(),REvec[0][istate].tolist()
             LMaxI = stateLE.tolist().index(max(stateLE,key=abs))
             RMaxI = stateRE.tolist().index(max(stateRE,key=abs))
-            ZMLsign = np.sign(LEvec[0][istate][LMaxI]*stateLE[LMaxI])
-            ZMRsign = np.sign(REvec[0][istate][RMaxI]*stateRE[RMaxI])
+            LMaxIZ = stateLEZ.index(max(np.array(stateLEZ),key=abs))
+            RMaxIZ = stateREZ.index(max(np.array(stateREZ),key=abs))
+            ZMLsign = np.sign(stateREZ[LMaxIZ]*stateLE[LMaxI])
+            ZMRsign = np.sign(stateREZ[RMaxIZ]*stateRE[RMaxI])
             # normL,normR = np.sum(stateLE),np.sum(stateRE)
             for ival,(LEvecVal,REvecVal) in enumerate(zip(stateLE,stateRE)):
                 LEvecOut[ip][istate][ival] = ZMLsign*LEvecVal
