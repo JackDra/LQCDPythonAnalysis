@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 from array import array
-from os import walk
 import os
 import numpy as np
 import sys
