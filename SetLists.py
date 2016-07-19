@@ -21,7 +21,7 @@ def PickCM(thisSetList):
         thisCM = raw_input("please choose a CM out of: " + ','.join(DefTvarPicked)+'  \n')
     SetListOut = []
     for iSet in thisSetList:
-        if iSet in DefSmList or iSet == thisCM:
+        if any([ism in iSet for ism in DefSmList]) or thisCM in iSet:
             SetListOut.append(iSet)
     return SetListOut
         
