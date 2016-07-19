@@ -194,9 +194,12 @@ thisFitTSFR = CreateFitList(TSF2ptMinStart,TSF2ptMinEnd,TSF2ptMaxStart,TSF2ptMax
 
 print 'Creating SetList'
 [ReadSetList,SetTsink] = ExpandSetList(CaptString)
+if outfile == 'CM': ReadSetList = PickCM(ReadSetList)
 print ''
 print 'nboot = ' + str(nboot)
 print 'All Sets:\n' + '\n'.join(ReadSetList)+'\n'
+
+
 
     
 picklefile2pt = pickledir+'tempTSF'+outfile+'fittwopt.p'

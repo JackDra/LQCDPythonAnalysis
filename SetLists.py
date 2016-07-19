@@ -15,6 +15,16 @@ def CutDupSet(SetList):
 ##data = [ igamma , ip , iset , it ]
 #dataout = [ itsink , istate , igamma , ip , it]
 
+def PickCM(thisSetList):
+    thisCM = None
+    while thisCM not in DefTvarPicked:
+        thisCM = raw_input("please choose a CM out of: " + ','.join(DefTvarPicked)+'  \n')
+    SetListOut = []
+    for iSet in thisSetList:
+        if iSet in DefSmList or iSet == thisCM:
+            SetListOut.append(iSet)
+    return SetListOut
+        
 def SortSum(SLin):
     SLout = []
     SLpre = []
