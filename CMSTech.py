@@ -406,6 +406,7 @@ def CreateREPoFCfuns(Cfuns3pt,Cfuns3ptp1,Cfuns2pt,todtvals,thisMomList):
 def CreateCMCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
     CMCfun2pt,LEvec,REvec,Emass = CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=False,printout=False)
     CMCfun3pt = []
+    LEvec,REvec = SignEvec(LEvec,REvec)
     for igamma,gammaCfun in enumerate(np.rollaxis(np.array(Cfuns3pt),2)):
         CMCfun3pt.append([])
         for ip,pCfun in enumerate(np.rollaxis(gammaCfun,2)):
