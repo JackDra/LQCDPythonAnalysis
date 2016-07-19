@@ -96,13 +96,6 @@ def sortEvec(Evals,LEvec,REvec,thisdt):
     
     sortindex = Emass.argsort()
     Emass = Emass[sortindex]
-    headsortindex,tailsortindex= [],[]
-    for isort in sortindex:
-        if Emass[isort] == 0.0:
-            tailsortindex.append(isort)
-        else:
-            headsortindex.append(isort)
-    sortindex = np.array(headsortindex + tailsortindex)        
     LEvec = np.swapaxes(LEvec,0,1)[sortindex,:]
     REvec = np.swapaxes(REvec,0,1)[sortindex,:]
     return Emass,LEvec,REvec
