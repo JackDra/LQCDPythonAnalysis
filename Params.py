@@ -106,7 +106,7 @@ ScaleByP4g4 = False ## scales out all operators by P4g4 instead of 2 point corre
 ShowConfNum = Debug # debugging, show number of configs during read
 PrintRead = not DoMulticore # Screws up output if on and doing mulitcore reading
 DoCmplx = True # reads complex opperator values as well as real values, should be on
-DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
+DefWipe = True # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
 Doeigh = False # variational method, uses a symetrix matrix solver.
 
 if Debug: print 'nconfs saved is: ' , RunNconfs
@@ -223,6 +223,7 @@ DeftoList = [18,19,20,21]
 # DefdtList = [1,2,3,4]
 DefdtList = [1,2,3,4]
 # DeftodtPicked = (18,2)
+##MUST BE IN SORTING ORDER##
 DeftodtPicked = [(18,2),(20,2)]
 DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
 
