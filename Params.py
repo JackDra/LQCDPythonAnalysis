@@ -106,7 +106,7 @@ ScaleByP4g4 = False ## scales out all operators by P4g4 instead of 2 point corre
 ShowConfNum = Debug # debugging, show number of configs during read
 PrintRead = not DoMulticore # Screws up output if on and doing mulitcore reading
 DoCmplx = True # reads complex opperator values as well as real values, should be on
-DefWipe = True # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
+DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
 Doeigh = False # variational method, uses a symetrix matrix solver.
 
 if Debug: print 'nconfs saved is: ' , RunNconfs
