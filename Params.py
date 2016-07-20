@@ -332,11 +332,11 @@ PoFFlagList = [PickedStateStr+iPoF for iPoF in PoFTvarList]
 if kappa == 12090:
     TSFFileFlags = ['CM','Tsink','test32','Small']
     OSFFileFlags = ['CM','Tsink']
-    CfunCheck = ['PoFRead','REvecRead','cmRead','tsinkRead']
+    CfunCheckList = ['PoFRead','REvecRead','cmRead','tsinkRead']
 elif kappa == 12104:
     TSFFileFlags = ['REvec']
     OSFFileFlags = ['REvec']
-    CfunCheck = ['REvecRead']
+    CfunCheckList = ['REvecRead']
 MethodList = ['RF','Fits','SumMeth']+['TSF'+iTSF for iTSF in TSFFileFlags] + ['OSF'+iOSF for iOSF in OSFFileFlags]
 
 ##DEAULT TAKEN FROM OSF from: /raid/jdragos/data/results/ReadSetk12090/cfuns/twopt/OSFCM/state1sum22to23dt4twoptm0.txt
