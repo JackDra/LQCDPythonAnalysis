@@ -270,7 +270,10 @@ else:
 # DefSmearList = ['8','16','32','64','128','256']
 # DefSmearList = ['32','64','128']
 DefSmearList = ['32','64','128']
-SingSmearList = ['32']
+if kappa == 12090:
+    SingSmearList = ['32']
+if kappa == 12104:
+    SingSmearList = ['']
 # DefSmearList = ['32']
 # DefSmearList = ['8','16','32']
 StateSet = map(str,range(1,(PoFShifts+1)*len(DefSmearList)+1))
@@ -326,13 +329,14 @@ PoFFlagList = [PickedStateStr+iPoF for iPoF in PoFTvarList]
 # REvecPar26 = [[ 0.0004799, -0.0119381, 0.9999286 ],[0,0,0],[0,0,0]]
 # REvecPar32 = [[ 0.0007567612, -0.0182265391, 0.9998335964],[0,0,0],[0,0,0]]
 
-
 if kappa == 12090:
     TSFFileFlags = ['CM','Tsink','test32','Small']
     OSFFileFlags = ['CM','Tsink']
+    CfunCheck = ['PoFRead','REvecRead','cmRead','tsinkRead']
 elif kappa == 12104:
     TSFFileFlags = ['REvec']
     OSFFileFlags = ['REvec']
+    CfunCheck = ['REvecRead']
 MethodList = ['RF','Fits','SumMeth']+['TSF'+iTSF for iTSF in TSFFileFlags] + ['OSF'+iOSF for iOSF in OSFFileFlags]
 
 ##DEAULT TAKEN FROM OSF from: /raid/jdragos/data/results/ReadSetk12090/cfuns/twopt/OSFCM/state1sum22to23dt4twoptm0.txt
