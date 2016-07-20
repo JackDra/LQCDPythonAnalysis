@@ -368,11 +368,6 @@ TSinkDictList = {'REvec' : REvecTSinkList,
                  'Tsink' : AllTSinkList,
                  'tsinkRead' : AllTSinkListNoCM}
 
-if len(PoFTsinkList) > 0:
-    TSinkDictList['PoF'] = PoFTSinkList+range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)
-    TSinkDictList['PoFRead'] = PoFTSinkList+range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)
-    TSinkStrDictList['PoF'] = PoFTSinkStrList+['tsink'+str(its) for its in range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)]
-    TSinkStrDictList['PoFRead'] = PoFTSinkStrList+['tsink'+str(its) for its in range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)]
 
 TSinkStrDictList = {'REvec' : REvecTSinkStrList,
                     'REvecRead' : REvecTSinkStrList,
@@ -381,6 +376,11 @@ TSinkStrDictList = {'REvec' : REvecTSinkStrList,
                     'Tsink' : AllTSinkStrList,
                     'tsinkRead' : AllTSinkStrListNoCM}
 
+if len(PoFTSinkList) > 0:
+    TSinkDictList['PoF'] = PoFTSinkList+range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)
+    TSinkDictList['PoFRead'] = PoFTSinkList+range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)
+    TSinkStrDictList['PoF'] = PoFTSinkStrList+['tsink'+str(its) for its in range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)]
+    TSinkStrDictList['PoFRead'] = PoFTSinkStrList+['tsink'+str(its) for its in range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)]
 
 
 SmearDictList = {'PoF' : PoFFlagList,
