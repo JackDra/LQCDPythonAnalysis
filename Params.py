@@ -361,19 +361,20 @@ def mprint(*string):
         if not DoMulticore or Debug: print ' '.join(map(str,list(string)))
         
 
-TSinkDictList = {'PoF' : PoFTSinkList+range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts),
-                 'PoFRead' : PoFTSinkList+range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts),
-                 'REvec' : REvecTSinkList,
+TSinkDictList = {'REvec' : REvecTSinkList,
                  'REvecRead' : REvecTSinkList,
                  'CM' : CMTSinkList,
                  'cmRead' : CMTSinkList,
                  'Tsink' : AllTSinkList,
                  'tsinkRead' : AllTSinkListNoCM}
 
+if len(PoFTsinkList) > 0:
+    TSinkDictList['PoF'] = PoFTSinkList+range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)
+    TSinkDictList['PoFRead'] = PoFTSinkList+range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)
+    TSinkStrDictList['PoF'] = PoFTSinkStrList+['tsink'+str(its) for its in range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)]
+    TSinkStrDictList['PoFRead'] = PoFTSinkStrList+['tsink'+str(its) for its in range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)]
 
-TSinkStrDictList = {'PoF' : PoFTSinkStrList+['tsink'+str(its) for its in range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)],
-                    'PoFRead' : PoFTSinkStrList+['tsink'+str(its) for its in range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)],
-                    'REvec' : REvecTSinkStrList,
+TSinkStrDictList = {'REvec' : REvecTSinkStrList,
                     'REvecRead' : REvecTSinkStrList,
                     'CM' : CMTSinkStrList,
                     'cmRead' : CMTSinkStrList,
