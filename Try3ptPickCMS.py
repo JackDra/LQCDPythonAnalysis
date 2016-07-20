@@ -92,6 +92,9 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         print 'Creating REvec CM Tech ' , REvecTvarList[0]
         [data2ptset,data3ptset] = CreateREvecCfuns(data3pt,data2pt,DefREvecVarList,thisMomList)
         SetList,dump = CreateREvecSet(thisTSinkList,[PickedState],REvecTvarList)
+        MassSetList = CreateMassSet([],[PickedState],REvecTvarList,flipord=True)
+        PrintCfunToFile([data2ptset],MassSetList,thisMomList,['twopt'],AddDict=InfoDict)
+        PrintSetToFile([data2ptset],MassSetList,thisMomList,['Mass'],0,AddDict=InfoDict)
     elif 'PoF' == RunType:
 ## CMdata2pt [ istate , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 ## CMdata3pt  [ istate , igamma , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)

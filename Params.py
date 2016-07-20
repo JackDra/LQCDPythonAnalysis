@@ -101,7 +101,7 @@ CfunConfigCheck = True # Checks all two and three point correlators before runni
 VarMethodMethod = 'AxBxlSolve'
 
 ##DEBUG toggles (True/False):
-Debug = True # for debugging, toggles alot of print statements on
+Debug = False # for debugging, toggles alot of print statements on
 ScaleByP4g4 = False ## scales out all operators by P4g4 instead of 2 point correlator at tsink for Ratio value (RF)
 ShowConfNum = Debug # debugging, show number of configs during read
 PrintRead = not DoMulticore # Screws up output if on and doing mulitcore reading
@@ -245,6 +245,7 @@ for ito in DeftoList:
         DefTvarList.append('CMto'+str(ito)+'dt'+str(idt))
         TwoPtDefTvarList.append('to'+str(ito)+'dt'+str(idt))
         TwoTotDefTvarList.append('PoF'+str(PoFShifts)+'to'+str(ito)+'dt'+str(idt))
+        TwoTotDefTvarList.append('REvecto'+str(ito)+'dt'+str(idt))
 
 TwoTotDefTvarList += DefTvarList
 DefTvarto16 = []
