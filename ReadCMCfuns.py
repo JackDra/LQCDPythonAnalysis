@@ -97,7 +97,7 @@ def CheckAllSet(FilePrefix,directory,Interps):
             if Debug: print 'Checking ' ,testfile2pt
             if not os.path.isfile(testfile2pt): return False
     for iFlag in ['PoFRead','REvecRead','cmRead','tsinkRead']:
-        if iFlag not in SmearDictList: continue
+        if iFlag not in TSinkDictList: continue
         for iterp,ism in Elongate(Interps,SmearDictList[iFlag]):
             for itsink in TSinkDictList[iFlag]:
                 thisFlag = iFlag.replace('Read','')
