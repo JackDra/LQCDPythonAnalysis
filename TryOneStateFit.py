@@ -34,8 +34,11 @@ print 'Gamma Input (For re-running): -g=' , feedin['gamma']
 ReadGammaList = CreateGammaList(feedin['gamma'],twopt=True)
 
 # OSFColList = ['Tsink','CM','JustPoF','REvec']
-OSFColList = ['Tsink','CM','JustPoF']
-
+if kappa == 12090:
+    OSFColList = ['Tsink','CM','JustPoF']
+elif kappa == 12104:
+    OSFColList = ['REvec']
+    
 twoptoutfile = outfile
 if outfile == 'Tsink':
     ReadSmearList = ['32']
