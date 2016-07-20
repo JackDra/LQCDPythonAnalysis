@@ -120,7 +120,7 @@ def PrintLREvecMassToFile(thisLE,thisRE,thisEMass,thisMomList,thisTvar,AddDict={
         datadict,outputfile = SetUpPDict(ip,outputdir+'/Mass/',thisTvar+'LREM')
         datadict[ip]['Info'] = AddDict
         datadict[ip]['Values'] = OrderedDict()
-        for istate,iLE,iRE,iEM in zip(GetStateList(thisTvar),pLE,pRE,pEMass):
+        for istate,iLE,iRE,iEM in zip(GetStateSet(thisTvar),pLE,pRE,pEMass):
             datadict[ip]['Values']['State'+str(istate)] = LREVecToFormat(iLE,iRE,iEM,DoPoF)
         MergeXmlOutput(outputfile,datadict)
 
