@@ -262,8 +262,8 @@ def RemoveSet(string):
 
 def ReduceTooMassSet(thisSetList):
     notsinkList = ReduceTsink(thisSetList)
-    for ic,ism in enumerate(notsinkList):
-        if 'REvec' in ism: del notsinkList[ic]
+    # for ic,ism in enumerate(notsinkList):
+    #     if 'REvec' in ism: del notsinkList[ic]
     return notsinkList
 
 
