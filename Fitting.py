@@ -270,6 +270,7 @@ def OneStateSetFit(OSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,
             # thisiset = thisiset.replace('REvec','CM')
             sm = re.sub('tsink..','',thisiset)
             itsink = thisiset.replace(sm,'').replace('tsink','')
+            print thisSML
             ism = thisSML.index(sm)
             return ism,int(itsink)
 
