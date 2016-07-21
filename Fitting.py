@@ -241,7 +241,7 @@ def OneStateSet2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec):
         return Bootthis2pt,Avgthis2pt,Chithis2pt
 
     this2ptFitR,perdone = this2ptFitRvec
-    thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList,NoREvec=True)
+    thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
     Boot2pt,Avg2pt,Chi2pt = [],[],[]
     start = time.time()
     inputparams = [(C2pt[imom],thisSmList,this2ptFitR) for imom in range(len(thisGammaMomList['twopt']))]
@@ -270,7 +270,6 @@ def OneStateSetFit(OSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,
             # thisiset = thisiset.replace('REvec','CM')
             sm = re.sub('tsink..','',thisiset)
             itsink = thisiset.replace(sm,'').replace('tsink','')
-            print thisSML
             ism = thisSML.index(sm)
             return ism,int(itsink)
 
@@ -288,7 +287,7 @@ def OneStateSetFit(OSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,
 
     start = time.time()
     this2ptFitR,perdone = this2ptFitRvec
-    thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList,NoREvec=True)
+    thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
     Boot2pt,Avg2pt,Chi2pt = OSF2ptarray
     Boot3pt,Avg3pt,Chi3pt = [],[],[]
     Boot2ptZ = Boot2pt[0]
