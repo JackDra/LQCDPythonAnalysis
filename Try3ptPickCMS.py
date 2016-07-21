@@ -96,7 +96,7 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         print 
         print "DEBUG"
         print MassSetList
-        print dat2ptset.shape
+        print data2ptset.shape
         print 
         PrintCfunToFile([data2ptset],MassSetList,thisMomList,['twopt'],AddDict=InfoDict)
         PrintSetToFile([data2ptset],MassSetList,thisMomList,['Mass'],0,AddDict=InfoDict)
