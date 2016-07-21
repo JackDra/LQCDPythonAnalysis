@@ -129,6 +129,11 @@ class BootStrap1:
         tmp=(self.values-self.Avg)**2
         self.Std=sqrt(average(tmp))
         return
+    def JackStats(self):
+        self.Avg=average(self.values)
+        tmp=(self.values-self.Avg)**2
+        self.Std=sqrt(average(tmp)*((self.nboot-1)/(float(self.nboot))))
+        return
     def OldStats(self):
         tmp=sort(self.values,0)
         omit=(100-self.confidence)/2
