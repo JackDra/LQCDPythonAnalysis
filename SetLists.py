@@ -222,7 +222,7 @@ def PickSmSet(SetList,Sm):
             ListOut.append(Sm)
     return ListOut
 
-def ReduceTsink(listin,NoCM=False,NoREvec=True,NoPoF=False):
+def ReduceTsink(listin,NoCM=False,NoREvec=False,NoPoF=False):
     listout = []
     for ilist in listin:
         tsinkstr,smstr = SplitTSinkString(ilist)
