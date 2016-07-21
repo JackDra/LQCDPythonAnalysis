@@ -84,8 +84,8 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         SetList = ['tsink'+str(thisTSinkList[0])+iS for iS in SetList]
         print 'CMTech Total Time Taken: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
     elif 'REvec' == RunType:
-## CMdata2pt [ istate , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-## CMdata3pt  [ istate , igamma , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+## CMdata3pt  [ istate , ip , igamma , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
         data2pt = np.array(PreptwoptCorr(data2pt))
         data3pt = np.array(data3pt)[0,:,:,:,:,:]
         if giDi: data3pt,thisGammaList = CreategiDi(data3pt,thisGammaList,thisDSList)
@@ -101,8 +101,8 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         PrintCfunToFile([data2ptset],MassSetList,thisMomList,['twopt'],AddDict=InfoDict)
         PrintSetToFile([data2ptset],MassSetList,thisMomList,['Mass'],0,AddDict=InfoDict)
     elif 'PoF' == RunType:
-## CMdata2pt [ istate , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-## CMdata3pt  [ istate , igamma , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+## CMdata3pt  [ istate , ip , igamma , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
         if giDi:
             for idata,idata3pt in enumerate(data3pt):
                 dumpdata3pt,dumpGammaList = CreategiDi(idata3pt,thisGammaList,thisDSList)

@@ -31,6 +31,7 @@ def CombineSetInfo(listin):
     return {'nconfig':nconf}
 
 def WriteXml(thisfile,outputdict):
+    if Debug: print 'Writing to: ' , thisfile
     with open(thisfile+'.xml','w') as f:
         f.write( xmltodict.unparse(outputdict,pretty=True))
     
