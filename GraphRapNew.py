@@ -54,7 +54,7 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCom
     thisGammaList = datadict.keys()
     if not CheckDict(datadict,'twopt','q = 0 0 0'):
         # raise IOError('Mass data dict not found')
-        print 'WARNING: mass dictionary not found, is needed for OSF and TSF'
+        # print 'WARNING: mass dictionary not found, is needed for OSF and TSF'
     else:
         thisMassdict = datadict['twopt']['q = 0 0 0']
     start = time.time()
