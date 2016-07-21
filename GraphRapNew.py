@@ -111,7 +111,8 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCom
                         PlotCMTSFData(thisdatadict,thisMassdict,thisSetList,combgamma,imom)
                 elif kappa == 12104:
                     PlotCMData(thisdatadict,thisSetList,combgamma,imom)
-                    # PlotCMSFData(thisdatadict,thisMassdict,['tsink29state1to18dt2'],combgamma,imom,thisSF='SFREvec')
+                    if 'OSFCM' in thisMethodList:
+                        PlotCMOSFData(thisdatadict,thisMassdict,thisSetList,combgamma,imom,thisSF='OSFREvec')
                 print 'Graphing Operator: ' +icomb + igamma + imom + ' took: ' , str(datetime.timedelta(seconds=(time.time()-gammastart))) ,' h:m:s                      '
                     
 
