@@ -52,10 +52,9 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCom
     datadict = ReadSetFitRFDict(outputdir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
     combdatadict = CreateDictOldCombs(datadict,thisCombList)
     thisGammaList = datadict.keys()
-    if not CheckDict(datadict,'twopt','q = 0 0 0'):
+    if CheckDict(datadict,'twopt','q = 0 0 0'):
         # raise IOError('Mass data dict not found')
         # print 'WARNING: mass dictionary not found, is needed for OSF and TSF'
-    else:
         thisMassdict = datadict['twopt']['q = 0 0 0']
     start = time.time()
     for imom in thisMomList:
