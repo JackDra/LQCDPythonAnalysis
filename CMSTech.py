@@ -362,13 +362,12 @@ def CreateREvecCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
         CMCfun2pt = []
         for ip,thisp in enumerate(thisMomList):
             CMCfun2pt.append(ProjectCorrPoF2pt(LEvec[ip],Cfuns2pt[:,:,ip],REvec[ip],thisPoFShifts=0))
-        CMCfun2pt = np.rollaxis(np.array(CMCfun2pt),1)
     CMCfun3pt = []
     for igamma,gammaCfun in enumerate(np.rollaxis(np.array(Cfuns3pt),2)):
         CMCfun3pt.append([])
         for ip,pCfun in enumerate(np.rollaxis(gammaCfun,2)): 
             CMCfun3pt[igamma].append(ProjectREvecCorrPoF(pCfun,None,REvec[ip],thisPoFShifts=0))
-    return [np.array(CMCfun2pt),np.rollaxis(np.array(CMCfun3pt),2)]
+    return [np.rollaxis(np.array(CMCfun2pt),1),np.rollaxis(np.array(CMCfun3pt),2)]
 
 
 # #Cfuns3pt [ tsink , ism , 1 , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
