@@ -90,6 +90,8 @@ def FitDefGuess(Fun,Len=1):
         return [1,1]
     if Fun.__name__ == 'FormFactorO3':
         return [1,1,1]
+    if Fun.__name__ == 'FormFactorO':
+        return [1]*Len
     if Fun.__name__ == 'ConstantFitFun':
         return [1]
     elif Fun.__name__ == 'LinearFitFun':

@@ -33,7 +33,7 @@ def LSDerCreate(FunDer):
         return np.transpose(FunDer(xval,par)/errval)
     return LSDerFun
 
-def DerOfFun(Fun):
+def DerOfFun(Fun,Len=1):
     if Fun.__name__ == 'ConstantFitFun':
         return ConstFFDer
     elif Fun.__name__ == 'LinearFitFun':
@@ -52,6 +52,8 @@ def DerOfFun(Fun):
         return TestTwoVarFFDer
     elif Fun.__name__ == 'FormFactorO1':
         return FormFactorO1Der
+    elif Fun.__name__ == 'FormFactorO':
+        return CreateFFO(Len)[1]
     elif Fun.__name__ == 'FormFactorO2':
         return FormFactorO2Der
     elif Fun.__name__ == 'FormFactorO3':
@@ -62,7 +64,7 @@ def GetLSFuns(fitfun,derfun,iGuess,parlen):
        iGuess = FitDefGuess(fitfun,Len=parlen)
    LSfitfun = LSCreate(fitfun)
    if derfun == None:
-       LSDerfitfun = LSDerCreate(DerOfFun(fitfun))
+       LSDerfitfun = LSDerCreate(DerOfFun(fitfun,parlen))
    else:
        LSDerfitfun = LSDerCreate(derfun)
    # if 'C3TwoStateFitFun' not in fitfun.__name__ :
@@ -92,6 +94,7 @@ def LSFit(parlen,xdata,yerr,fitfun,ydata):
     derfun = None
     data = CreateArgs(xdata,ydata,yerr)
     LSfitfun,LSDerfitfun,iGuess = GetLSFuns(fitfun,derfun,iGuess,parlen)
+    # if isinstance(ydata[0],complex):iGuess = map(complex,iGuess)
     # print LSDerfitfun.__name__
     # print LSfitfun.__name__
     # print iGuess
@@ -108,8 +111,13 @@ def LSFit(parlen,xdata,yerr,fitfun,ydata):
     #   print x,covar
     return x,covar,chisqpdf
 
-def FitBoots(ydatain,xdatain,FitFun,DoW='T',MI=MaxIters,parlen=1,tBooted=False):
+def FitBoots(ydatain,xdatain,FitFun,DoW='T',MI=MaxIters,parlen=1,tBooted=False,thisnboot=nboot):
     GetBootStats(ydatain)
+    # print ydatain
+    # print Pullflag(ydatain,'Avg')
+    # for iyd in ydatain:
+    #     print len(iyd.values)
+    # print Pullflag(ydatain,'values')
     ydataAvg = Pullflag(ydatain,'Avg')
     ydatavals = np.rollaxis(Pullflag(ydatain,'values'),1)
     fitdata = []
@@ -132,8 +140,8 @@ def FitBoots(ydatain,xdatain,FitFun,DoW='T',MI=MaxIters,parlen=1,tBooted=False):
         fitdatavals = FitPool.map(LSFit.mapper,inputdata)
         FitPool.close()
         for iy in range(len(fitdatavals[0][0])):
-            fitdata.append(BootStrap1(nboot,0))
-            for iboot in range(nboot):
+            fitdata.append(BootStrap1(thisnboot,0))
+            for iboot in range(thisnboot):
                 fitdata[iy].values[iboot] = fitdatavals[iboot][0][iy]
     else:
         fitdatavals = []
@@ -146,8 +154,8 @@ def FitBoots(ydatain,xdatain,FitFun,DoW='T',MI=MaxIters,parlen=1,tBooted=False):
             for iy,iyd in enumerate(tempboot[0]):
                 fitdatavals[iboot].append(iyd)
         for iy in range(len(fitdatavals[0])):
-            fitdata.append(BootStrap1(nboot,0))
-            for iboot in range(nboot):
+            fitdata.append(BootStrap1(thisnboot,0))
+            for iboot in range(thisnboot):
                 fitdata[iy].values[iboot] = fitdatavals[iboot][iy]
     GetBootStats(fitdata)
     # fitdataChi = CalcChiSqrdPDF(FitFun,fitdataAvg,xdatain,ydataAvg,ydataStd)

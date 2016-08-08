@@ -34,6 +34,10 @@ def FormatToDictAvgStd(String):
 
 
 
+def MomToFormat(mom,frmtflag='f'):
+    thisfmt = ' '.join(['{'+str(imom)+':20.10'+frmtflag+'} ' for imom in range(len(mom))])
+    return (thisfmt).format(*mom)
+
 def AvgStdChiToFormat(Avg,Std,Chi,frmtflag='f'):
     return ('{0:20.10'+frmtflag+'} {1:20.10'+frmtflag+'} {2:20.10f}').format(Avg,Std,Chi)
 

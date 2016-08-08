@@ -17,6 +17,14 @@ def makexunit(xin):
     except:
         return 1.0
                 
+    
+
+def CreateFFO(thislen):
+    def FormFactorO(x,p):
+        return sum([ip*ix for ip,ix in zip(p[:thislen],x[:thislen])])
+    def FormFactorODer(x,p):
+        return np.array(x[:thislen]).tolist()
+    return FormFactorO, FormFactorODer
 
 def FormFactorO1(x,p):return p[0]*x[0]
 def FormFactorO1Der(x,p):return [x[0]]
@@ -27,6 +35,29 @@ def FormFactorO2Der(x,p): return [x[0],x[1]]
 def FormFactorO3(x,p):return p[0]*x[0]+p[1]*x[1]+p[2]*x[2]
 def FormFactorO3Der(x,p):return [x[0],x[1],x[2]]
 
+def FormFactorO4(x,p):return p[0]*x[0]+p[1]*x[1]+p[2]*x[2]+p[3]*x[3]
+def FormFactorO4Der(x,p):return [x[0],x[1],x[2],x[3]]
+
+def FormFactorO5(x,p):return p[0]*x[0]+p[1]*x[1]+p[2]*x[2]+p[3]*x[3]+p[4]*x[4]
+def FormFactorO5Der(x,p):return [x[0],x[1],x[2],x[3],x[4]]
+
+def FormFactorO6(x,p):return p[0]*x[0]+p[1]*x[1]+p[2]*x[2]+p[3]*x[3]+p[4]*x[4]+p[5]*x[5]
+def FormFactorO6Der(x,p):return [x[0],x[1],x[2],x[3],x[4],x[5]]
+
+def FormFactorO7(x,p):return p[0]*x[0]+p[1]*x[1]+p[2]*x[2]+p[3]*x[3]+p[4]*x[4]+p[5]*x[5]+p[6]*x[6]
+def FormFactorO7Der(x,p):return [x[0],x[1],x[2],x[3],x[4],x[5],x[6]]
+
+def FormFactorO8(x,p):return p[0]*x[0]+p[1]*x[1]+p[2]*x[2]+p[3]*x[3]+p[4]*x[4]+p[5]*x[5]+p[6]*x[6]+p[7]*x[7] 
+def FormFactorO8Der(x,p):return [x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7]]
+
+FormList = [FormFactorO8,
+            FormFactorO7,
+            FormFactorO6,
+            FormFactorO5,
+            FormFactorO4,
+            FormFactorO3,
+            FormFactorO2,
+            FormFactorO1]
 
 def ConstantFitFun(x,p):
     return p[0]*makexunit(x)

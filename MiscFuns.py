@@ -46,7 +46,8 @@ def merge_dicts(a, b, path=None):
          a[key] = b[key]
    return a
    
-   
+
+
 def DelDubs(listin):
    listout = []
    for il in listin:
@@ -123,9 +124,10 @@ def touch(fname):
     except:
         open(fname, 'a').close()
 
-def removekey(d, key):
+def removekey(d, *key):
     r = dict(d)
-    del r[key]
+    for ikey in key:
+       del r[ikey]
     return r
 
 def VecDelta(tvec,val):

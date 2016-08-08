@@ -2,18 +2,35 @@
 #from pylab import *
 # from Defs import *
 #from Functions import *
-from numpy import zeros, size, sort, exp,average,split,random,append,multiply,sum,sqrt,log
+from numpy import zeros, size, sort, exp,average,split,random,append,multiply,sum,sqrt,log,real,imag
 #from Numeric import zeros
 #from ROOT import TF1, TGraphErrors, TVirtualFitter
 #import random
 #from scipy import exp
 from numpy import array as narray
 from array import array
+import numpy as np
 
 startseed=1234
 
 # This could be useful
 # v = numpy.random.normal(mu,sigma,10000)
+
+def CmplxBootDecomp(cmplxBoot):
+    realb,cmplxb = BootStrap1(cmplxBoot.nboot,4),BootStrap1(cmplxBoot.nboot,4)
+    realb.values = real(cmplxBoot.values)
+    cmplxb.values = imag(cmplxBoot.values)
+    realb.Stats()
+    cmplxb.Stats()
+    return realb,cmplxb
+
+def CmplxBootCombine(realb,cmplxb):
+    if realb.nboot != cmplxb.nboot: raise IOError('nboots not equal for complex and real bootstraps')
+    CombBoot = BootStrap1(realb.nboot,4)
+    CombBoot.values = np.array(realb.values) + np.array(cmplxb.values) * 1j
+    CombBoot.Stats()
+    return CombBoot
+
 
 def UpdateAvgStd(data):
     data['FitBoot'].Stats()

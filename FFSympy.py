@@ -65,6 +65,8 @@ ZeroMat2 = ZeroMatrix(2,2)
 IMat4 = Identity(4)
 ZeroMat4 = ZeroMatrix(4,4)
 
+def GetRealCmplxMat(thisMat):
+    return (thisMat+ImutableMatrix(np.conj(thisMat)))/2.,(thisMat-ImutableMatrix(np.conj(thisMat)))/2.
 
 def CreateGamma(GammaBasis):
     global GB
@@ -226,3 +228,44 @@ def subsZeroMom(theobject):
 #solves FFunOpp and substitutes in zero source and sink momenta
 def ZeroMomFFunOpp(Opp):
     return subsZeroMom(FFunOpp(Opp))
+
+
+def Slashed(vec):
+    outvec = ZeroMat4
+    for ivec,igma in zip(vec,g_mu):
+        outvec += ivec*igma
+    return outvec
+
+def IndexToGamma(*Vals):
+    iout = []
+    for iVal in Vals:
+        if isinstance(iVal,int):
+            iout.append(g_mu[iVal])
+        else:
+            iout.append(Slashed(iVals))
+    return iout
+            
+def CapGamma(*Vals):
+    # outVals = IndexToGamma(Vals)
+    outVals = Vals
+    if len(Vals) == 0:
+        return IMat4
+    if len(Vals) == 1:
+        return outVals[0]
+    if len(Vals) == 2:
+        return simplify((outVals[0]*outVals[1] - outVals[1]*outVals[0])/(2.))
+    if len(Vals) == 3:
+        output = ZeroMat4
+        for ii in range(3):
+            for ij in range(3):
+                for ik in range(3):
+                    output += LeviCivita(ii,ij,ik)*outVals[ii]*outVals[ij]*outVals[ik]
+        return simplify(output/(3.*2.))
+    if len(Vals) == 4:
+        output = ZeroMat4
+        for ii in range(4):
+            for ij in range(4):
+                for ik in range(4):
+                    for il in range(4):
+                        output += LeviCivita(ii,ij,ik,il)*outVals[ii]*outVals[ij]*outVals[ik]*outVals[il]
+        return simplify(output/(4.*3.*2.))

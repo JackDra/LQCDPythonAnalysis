@@ -7,6 +7,7 @@ import cPickle as pickle
 
 gi = ['g'+str(i) for i in [1,2,3,4]]
 gig5 = ['g'+str(i)+'g5' for i in [1,2,3,4]]
+g5gi = ['g5g'+str(i) for i in [1,2,3,4]]
 Pi = ['P'+str(i) for i in [4,3]]
 GMAi = ['GMA'+str(i) for i in [4,3]]
 gigj = []
@@ -14,6 +15,11 @@ for i,gii in enumerate(gi):
     for j,gij in enumerate(gi):
          if j>i:
              gigj.append(gii+gij)
+gjgi = []
+for i,gii in enumerate(gi):
+    for j,gij in enumerate(gi):
+         if i>j:
+             gjgi.append(gii+gij)
 
 PiI    = ElongateName(Pi,['I'])
 Pig5   = ElongateName(Pi,['g5'])
@@ -46,7 +52,20 @@ CurrOpps = {'Scalar'   : PiI,
             'PsScalar' : Pig5,
             'PsVector' : Pigig5,
             'Tensor'   : Pigigj}
- 
+
+
+CurrOppsNoProj = {'Scalar'   : ['I'],
+                  'Vector'   : gi,
+                  'PsScalar' : ['g5'],
+                  'PsVector' : gig5,
+                  'Tensor'   : gigj}
+
+CurrOppsNoProjSigBack = {'Scalar'   : ['I'],
+                         'Vector'   : gi,
+                         'PsScalar' : ['g5'],
+                         'PsVector' : g5gi,
+                         'Tensor'   : gjgi}
+
 CurrFFs = {'Scalar'   : ScalarFF,
            'Vector'   : VectorFF,
            'PsScalar' : ScalarFF,

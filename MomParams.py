@@ -11,16 +11,16 @@ nxyz = 32
 qunit = (2.0*np.pi)/float(nxyz)
 
 
-def makeqlist():
+def makeqlist(thisMaxqsqrd):
     qlist = np.array([])
-    for iq1 in range(-Maxqsqrd,Maxqsqrd+1):
-        for iq2 in range(-Maxqsqrd,Maxqsqrd+1):
-            for iq3 in range(-Maxqsqrd,Maxqsqrd+1):
-                if iq1**2 + iq2**2 + iq3**2 > Maxqsqrd: continue
+    for iq1 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
+        for iq2 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
+            for iq3 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
+                if iq1**2 + iq2**2 + iq3**2 > thisMaxqsqrd: continue
                 qlist = np.append(qlist,'q = ' + str(iq1) + ' ' + str(iq2) + ' ' + str(iq3))
     return qlist
 
-qvecSet = makeqlist()
+qvecSet = makeqlist(Maxqsqrd)
 nmom = len(qvecSet)
 qhigh = nmom/2
 
@@ -193,3 +193,45 @@ def OutputSMOMPairs(filename):
             f.write('\n')
             for pxyzt in pbf:
                 f.write('( '+' '.join(map(strneg,pxyzt)) + ' ) \n')
+
+
+def makeq4list(thisMinqsqrd,thisMaxqsqrd):
+    qlist = []
+    for iq1 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
+        for iq2 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
+            for iq3 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
+                for iq4 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
+                    if iq1**2 + iq2**2 + iq3**2 +  iq4**2 > thisMaxqsqrd: continue
+                    if iq1**2 + iq2**2 + iq3**2 +  iq4**2 < thisMinqsqrd : continue
+                    qlist.append([iq1,iq2,iq3,iq4])
+    return np.array(qlist)
+
+
+
+
+def CreateSMOMNewPairs(thisMinqsqrd,thisMaxqsqrd):
+    def Myqsqrd(iq):
+        return sum(iq**2)
+    Plist = PPlist = makeq4list(thisMinqsqrd,thisMaxqsqrd)
+    outplist,outpplist,outqlist,outomegalist = [],[],[],[]
+    outp2list,outpp2list = [],[]
+    for ip in Plist:
+        for ipp in PPlist:
+            ip2 = Myqsqrd(ip)
+            ipp2 = Myqsqrd(ipp)
+            if ip2 != ipp2: continue
+            iq = ipp - ip
+            iq2 = Myqsqrd(iq)
+            w = iq2/ip2
+            if not (0 < w < 4): continue
+            if w in outomegalist and ip2 in outp2list: continue
+            outplist.append(ip)
+            outpplist.append(ipp)
+            outp2list.append(ip2)
+            outpp2list.append(ipp2)
+            outqlist.append(iq)
+            outomegalist.append(w)
+    return outplist,outpplist,outqlist,outomegalist
+            
+
+            
