@@ -44,7 +44,10 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr,Rfac):
         thisgflist = [thisDS]
     for iCurr,igf in zip(thisCurrList,thisgflist):
         combCurr = igf+iCurr
-        FF,infodict = CreateFF(setdict,thisMass['Avg'],iCurr,gammaflag=igf,Rfac=Rfac)
+        if NoSFRfacScale:
+            FF,infodict = CreateFF(setdict,thisMass['Avg'],iCurr,gammaflag=igf,Rfac=Rfac)
+        else:
+            FF,infodict = CreateFF(setdict,thisMass['Avg'],iCurr,gammaflag=igf,Rfac=True)            
         PrintFFSet(FF,theset,thisMass,thesetmass,combCurr,infodict)
         if 'Vector' in thisCurr and 'IsoVector' not in thisCurr and 'PsVector' not in thisCurr:
             NewFF = CombineVector(FF,thisMass)

@@ -99,6 +99,7 @@ CfunConfigCheck = True # Checks all two and three point correlators before runni
 # VarMethodMethod = 'Regular' # for solving the Variational method, different ways of doing it/
 # VarMethodMethod = 'Symmetric'
 VarMethodMethod = 'AxBxlSolve'
+NoSFRfacScale = False # Turn on to only scale the R function by sqrt((Epp+m)(Ep+m)/EppEp) for form factor creation
 
 ##DEBUG toggles (True/False):
 Debug = False # for debugging, toggles alot of print statements on
