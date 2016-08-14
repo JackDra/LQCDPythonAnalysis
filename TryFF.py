@@ -69,7 +69,6 @@ def DoFF(thisMethodList,thisCurr,thisSetList,thisGammaList,thisMomList):
     mprint( 'Creating Form Factors:' )
     inputparams = []
     for theset,setdict in data.iteritems():
-        print theset
         if 'SF' in theset:
             inputparams.append(PickMassSet(MassSet,theset)+(theset,setdict,thisCurr,False))
         else:
