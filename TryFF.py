@@ -73,7 +73,7 @@ def DoFF(thisMethodList,thisCurr,thisSetList,thisGammaList,thisMomList):
         if 'SF' in theset:
             inputparams.append(PickMassSet(MassSet,theset)+(theset,setdict,thisCurr,False))
         else:
-            inputparams.append(PickMassSet(MassSet,theset)+(theset,setdict,thisCurr,True) 
+            inputparams.append(PickMassSet(MassSet,theset)+(theset,setdict,thisCurr,True))
     start = time.time()
     for ipar in inputparams: CreateFFWrap(*ipar)        
     print 'Fit and Print for ' , ' '.join(thisMethodList) , thisCurr , ' '.join(thisSetList) ,' in total took: ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
