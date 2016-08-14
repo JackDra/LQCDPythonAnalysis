@@ -31,7 +31,7 @@ def PickMassSet(MassSet,theset):
     #     theMass = MassSet[thesetmass]['Boot'].Avg
     return theMass,thesetmass
 
-def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr):
+def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr,Rfac):
     # mprint( 'Set:' + theset + ' MassSetPicked:'+thesetmass)
 ## FF { { momsqrd } { Boot/Avg/Chi } }
     thisstart = time.time()
@@ -44,7 +44,7 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr):
         thisgflist = [thisDS]
     for iCurr,igf in zip(thisCurrList,thisgflist):
         combCurr = igf+iCurr
-        FF,infodict = CreateFF(setdict,thisMass['Avg'],iCurr,gammaflag=igf)
+        FF,infodict = CreateFF(setdict,thisMass['Avg'],iCurr,gammaflag=igf,Rfac=Rfac)
         PrintFFSet(FF,theset,thisMass,thesetmass,combCurr,infodict)
         if 'Vector' in thisCurr and 'IsoVector' not in thisCurr and 'PsVector' not in thisCurr:
             NewFF = CombineVector(FF,thisMass)
