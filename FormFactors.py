@@ -14,7 +14,7 @@ from LLSBoot import *
 ## data { { gamma } { mom } { Fit(Boot/Avg/Std/Chi) } }
 ## dataout { { momsqrd } { Boot/Avg/Chi }
 ##REMEBER deal with cmplx signals
-def CreateFF(data,mass,iCurr,gammaflag=''):
+def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True):
     thisdataout = {}
     baseCurr = iCurr.replace(gammaflag,'')
     Opps = CurrOpps[baseCurr]
@@ -37,7 +37,7 @@ def CreateFF(data,mass,iCurr,gammaflag=''):
                     if iq not in data[flagopp].keys(): continue 
                 if CmplxVal: 
                     if iq not in data[flagopp+'cmplx'].keys(): continue 
-                FFcoeffhold,rcheck,ccheck = CurrFFs[baseCurr](iopp,np.array(qstrTOqvec(iq))*qunit,[0,0,0],mass)
+                FFcoeffhold,rcheck,ccheck = CurrFFs[baseCurr](iopp,np.array(qstrTOqvec(iq))*qunit,[0,0,0],mass,Rfac=Rfac)
                 if CmplxVal and ccheck:
                     for iFF,iFFcof in enumerate(FFcoeffhold):
                         FFcoeff[iFF].append(iFFcof.imag)

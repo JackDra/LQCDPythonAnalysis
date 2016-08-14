@@ -38,54 +38,54 @@ def SubsMom(thisFFun,thisp,thispp,thismass):
     thisFFun = subsvector(Ep,px,py,pz,thisp[4]/(1j),thisp[1],thisp[2],thisp[3],thisFFun)
     return thisFFun.subs(m,thismass)
 
-def ScalarFF(opp,thisqvec,thisppvec,thismass):
+def ScalarFF(opp,thisqvec,thisppvec,thismass,Rfac=True):
     thisp,thisq,thispp = Create4Mom(thisqvec,thisppvec,thismass)
-    term1 = FFunCheck(opp,thisp,thispp,thismass)
+    term1 = FFunCheck(Rfac=Rfac,opp,thisp,thispp,thismass)
     rcheck,ccheck = abs(term1.real)<myeps,abs(term1.imag)<myeps    
     return [term1],not rcheck, not ccheck
 
-def VectorFF(opp,thisqvec,thisppvec,thismass):
+def VectorFF(opp,thisqvec,thisppvec,thismass,Rfac=True):
     thisp,thisq,thispp = Create4Mom(thisqvec,thisppvec,thismass)
-    term1 = FFunCheck(opp,thisp,thispp,thismass)
+    term1 = FFunCheck(Rfac=Rfac,opp,thisp,thispp,thismass)
     term2 = 0.0j
     for i in [1,2,3,4]:
         if i != int(opp[-1]) :
-            term2 += FFunCheck(opp+'g'+str(i),thisp,thispp,thismass)*thisq[i]
+            term2 += FFunCheck(Rfac=Rfac,opp+'g'+str(i),thisp,thispp,thismass)*thisq[i]
     term2 = term2/(2.0*thismass)
     rcheck,ccheck = abs(term1.real)<myeps and abs(term2.real)<myeps,abs(term1.imag)<myeps and abs(term2.imag)<myeps
     return [term1,term2],not rcheck, not ccheck
 
-def PsVectorFF(opp,thisqvec,thisppvec,thismass):
+def PsVectorFF(opp,thisqvec,thisppvec,thismass,Rfac=True):
     thisp,thisq,thispp = Create4Mom(thisqvec,thisppvec,thismass)
     index1 = opp[-1]
     if index1 == '5': index1 = opp[-3]
-    term1 = FFunCheck(opp,thisp,thispp,thismass)
-    term2 = (1.0j*FFunCheck(opp.replace('g'+index1,''),thisp,thispp,thismass)*thisq[int(index1)])/(2.0*thismass)
+    term1 = FFunCheck(Rfac=Rfac,opp,thisp,thispp,thismass)
+    term2 = (1.0j*FFunCheck(Rfac=Rfac,opp.replace('g'+index1,''),thisp,thispp,thismass)*thisq[int(index1)])/(2.0*thismass)
     rcheck,ccheck = abs(term1.real)<myeps and abs(term2.real)<myeps,abs(term1.imag)<myeps and abs(term2.imag)<myeps
     return [term1,term2],not rcheck, not ccheck
 
 
-def TensorFF(opp,thisqvec,thisppvec,thismass):
+def TensorFF(opp,thisqvec,thisppvec,thismass,Rfac=True):
     thisp,thisq,thispp = Create4Mom(thisqvec,thisppvec,thismass)
     ## P = pp + p = 2*pp -q
     thisP = [ip+ipp for ip,ipp in zip(thisp,thispp)]
     gammalist,Proj = re.findall('g.',opp),re.search('P.',opp).group()
     index1,index2 = int(gammalist[0][-1]),int(gammalist[1][-1])
-    term1 = 1.0j*FFunCheck(opp,thisp,thispp,thismass)
-    term2 = 1.0j*(FFunCheck(opp.replace(gammalist[1],''),thisp,thispp,thismass)*thisq[index2] - 
-             FFunCheck(opp.replace(gammalist[0],''),thisp,thispp,thismass)*thisq[index1] )/(2.0*thismass)
+    term1 = 1.0j*FFunCheck(Rfac=Rfac,opp,thisp,thispp,thismass)
+    term2 = 1.0j*(FFunCheck(Rfac=Rfac,opp.replace(gammalist[1],''),thisp,thispp,thismass)*thisq[index2] - 
+             FFunCheck(Rfac=Rfac,opp.replace(gammalist[0],''),thisp,thispp,thismass)*thisq[index1] )/(2.0*thismass)
     # print ''
     # print 'term2'
     # print Proj,gammalist
-    # print FFunCheck(opp.replace(gammalist[1],''),thisp,thispp,thismass) , thisq[index2]
-    # print FFunCheck(opp.replace(gammalist[1],''),thisp,thispp,thismass)*thisq[index2]
-    # print FFunCheck(opp.replace(gammalist[0],''),thisp,thispp,thismass) , thisq[index1]
-    # print FFunCheck(opp.replace(gammalist[0],''),thisp,thispp,thismass)*thisq[index1]
+    # print FFunCheck(Rfac=Rfac,opp.replace(gammalist[1],''),thisp,thispp,thismass) , thisq[index2]
+    # print FFunCheck(Rfac=Rfac,opp.replace(gammalist[1],''),thisp,thispp,thismass)*thisq[index2]
+    # print FFunCheck(Rfac=Rfac,opp.replace(gammalist[0],''),thisp,thispp,thismass) , thisq[index1]
+    # print FFunCheck(Rfac=Rfac,opp.replace(gammalist[0],''),thisp,thispp,thismass)*thisq[index1]
     # print ''
-    term3 = FFunCheck(Proj+'I',thisp,thispp,thismass)*(thisP[index1]*thisq[index2] -
+    term3 = FFunCheck(Rfac=Rfac,Proj+'I',thisp,thispp,thismass)*(thisP[index1]*thisq[index2] -
                                thisP[index2]*thisq[index1] )/(2.0*thismass**2)
     # print 'term3'
-    # print FFunCheck(Proj+'I',thisp,thispp,thismass)
+    # print FFunCheck(Rfac=Rfac,Proj+'I',thisp,thispp,thismass)
     # print thisP[index1]*thisq[index2]
     # print thisP[index2]*thisq[index1] 
     # print ''

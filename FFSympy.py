@@ -193,17 +193,20 @@ def FFun(Opp):
     return simplify(Trace(thisProj * FFunOpp(thisOpp)).doit())
 
 
-def FFunOppCheck(Opp,pmu,ppmu,mass):
+def FFunOppCheck(Opp,pmu,ppmu,mass,Rfac=True):
     p,pp = pmu,ppmu
     m = mass
     Ep, Epp = -1.0j*p[0],-1.0j*pp[0]
     pplusm = (g4 - (1j/Ep) * (p[1]*g1 + p[2]*g2 + p[3]*g3) + (m / Ep) * eye(4))
     pprimeplusm = (g4 - (1j/Epp) * (pp[1]*g1 + pp[2]*g2 + pp[3]*g3) + (m / Epp )* eye(4))
-    return (pplusm * Opp * pprimeplusm)*sqrt(Epp*Ep/((Epp+m)*(Ep+m))) * 1/4.
-
-def FFunCheck(Opp,pmu,ppmu,mass):
+    if Rfac:
+        return (pplusm * Opp * pprimeplusm)*sqrt(Epp*Ep/((Epp+m)*(Ep+m))) * 1/4.
+    else:
+        return (pplusm * Opp * pprimeplusm) * 1/4.
+        
+def FFunCheck(Opp,pmu,ppmu,mass,Rfac=True):
     thisOpp,thisProj = GetProjGamma(Opp)
-    return complex(Trace(thisProj * FFunOppCheck(thisOpp,pmu,ppmu,mass)).doit())
+    return complex(Trace(thisProj * FFunOppCheck(thisOpp,pmu,ppmu,mass,Rfac=Rfac)).doit())
                     
 
 # def FormFactor(Gproj,index):
