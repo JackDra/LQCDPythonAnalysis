@@ -7,7 +7,7 @@ from MiscFuns import *
 from FitParams import *
 from StringFix import *
 from GraphDataNew import *
-from SetLists import CutDupSet
+from SetLists import *
 from OppFuns import CreateGammaList
 import time,datetime
 from MultiWrap import *
@@ -150,6 +150,7 @@ if thisGammaList == ['twopt']:
     # #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto19)],'PoFto19'),
     # #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto20)],'PoFto20')]
     # thisAllSetList = thisSmList+TvarPicked
+    feedin['set'] = ReduceTooMassSet(feedin['set'])
     ShowSetLists(feedin['set'])
     ShowMethodList(feedin['method'])
     
