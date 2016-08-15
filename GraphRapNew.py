@@ -28,11 +28,11 @@ def progprint(numb,starttime,igamma):
     print 'Graphing Operator: ' + igamma , int(numb*100/float(9)) , '% time taken:' , str(datetime.timedelta(seconds=time.time()-starttime)) ,' h:m:s          '
 
 
-def ReadAndPlotMass(thisMomList,thisSmearList,thisSetList,thisSetPoFLists,thisMethodList):
-    thisAllSetList = thisSmearList+thisSetList
-    for isetlist,dump in thisSetPoFLists[:len(thisSetPoFLists)/2]:
-        thisAllSetList += isetlist
-    datadict = ReadSetFitRFDict(outputdir,thisAllSetList,['twopt'],thisMethodList,thisMomList=thisMomList)
+def ReadAndPlotMass(thisMomList,thisSetList,thisMethodList):
+    # thisAllSetList = thisSmearList+thisSetList
+    # for isetlist,dump in thisSetPoFLists[:len(thisSetPoFLists)/2]:
+    #     thisAllSetList += isetlist
+    datadict = ReadSetFitRFDict(outputdir,thisSetList,['twopt'],thisMethodList,thisMomList=thisMomList)
     thisMassdict = datadict['twopt']['q = 0 0 0']
     start = time.time()
     for imom in thisMomList[-1:]:
@@ -125,40 +125,41 @@ feedin = InputParams(sys.argv[1:] + ['-noprompt'])
 thisGammaList = CreateGammaList(feedin['gamma'],twopt=True)
 
 if thisGammaList == ['twopt']:
-    # feedin['method'] = ['RF','OSFCM','TSFCM']
-    TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarPicked)]
-    # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarList)]
-    # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt1)]
-    # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt2)]
-    # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt3)]
-    # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt4)]
-    # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto17)]
-    # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto18)]
-    # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto19)]
-    # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto20)]
-    TvarPicked += ['tsink26'+str(istate) for istate in CreateMassSet([],['1'],PoFTvarList)]
-    thisSmList = ['tsink29'+str(ism) for ism in CreateMassSet(DefSmearList,['1'],[])]
-    TvarLists = []
-    # TvarLists = [(['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt1)],'PoFDt1'),
-    #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt2)],'PoFDt2'),
-    #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt3)],'PoFDt3'),
-    #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt4)],'PoFDt4'),
-    #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto16)],'PoFto16'),
-    #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto17)],'PoFto17'),
-    #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto18)],'PoFto18'),
-    #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto19)],'PoFto19'),
-    #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto20)],'PoFto20')]
-    thisAllSetList = thisSmList+TvarPicked
-    print 'AllSetList:\n' + '\n'.join(thisAllSetList)
-    print ''
-    print 'MethodList:\n' + '\n'.join(feedin['method'])
+    # # feedin['method'] = ['RF','OSFCM','TSFCM']
+    
+    # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarPicked)]
+    # # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarList)]
+    # # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt1)]
+    # # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt2)]
+    # # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt3)]
+    # # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt4)]
+    # # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto17)]
+    # # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto18)]
+    # # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto19)]
+    # # TvarPicked = ['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto20)]
+    # TvarPicked += ['tsink26'+str(istate) for istate in CreateMassSet([],['1'],PoFTvarList)]
+    # thisSmList = ['tsink29'+str(ism) for ism in CreateMassSet(DefSmearList,['1'],[])]
+    # TvarLists = []
+    # # TvarLists = [(['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt1)],'PoFDt1'),
+    # #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt2)],'PoFDt2'),
+    # #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt3)],'PoFDt3'),
+    # #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarDt4)],'PoFDt4'),
+    # #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto16)],'PoFto16'),
+    # #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto17)],'PoFto17'),
+    # #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto18)],'PoFto18'),
+    # #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto19)],'PoFto19'),
+    # #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto20)],'PoFto20')]
+    # thisAllSetList = thisSmList+TvarPicked
+    ShowSetLists(feedin['set'])
+    ShowMethodLists(feedin['method'])
+    
     if DoMulticore and len(feedin['mom']) > 1:
         inputparams = []
         for imom in feedin['mom']:
             if imom == 'q = 0 0 0':
-                inputparams.append(([imom],thisSmList,TvarPicked,TvarLists,feedin['method']))
+                inputparams.append(([imom],feedin['set'],feedin['method']))
             else:
-                inputparams.append((['q = 0 0 0',imom],thisSmList,TvarPicked,TvarLists,feedin['method']))                
+                inputparams.append((['q = 0 0 0',imom],feedin['set'],feedin['method']))                
         makeContextFunctions(ReadAndPlotMass)
         thisPool = Pool(min(len(inputparams),feedin['anaproc']))
         output = thisPool.map(ReadAndPlotMass.mapper,inputparams)
