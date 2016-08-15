@@ -40,7 +40,7 @@ def ReadAndPlotMass(thisMomList,thisSetList,thisMethodList):
         mprint( 'Plotting ' , imom , 'Mass            \r',)
         thistwoptdict = datadict['twopt'][imom]
         PlotMassData(thistwoptdict,thisSetList,imom)
-        if any(['SF' in imeth for imeth in thisMethodList]):
+        if any(['SFCM' in imeth for imeth in thisMethodList]):
             mprint( 'Plotting ' , imom , 'State Fits      \r',)
             PlotMassSFData(thistwoptdict,thisSetList,imom)
         # for ipof,(itpl,thistf) in enumerate(thisSetPoFLists):
