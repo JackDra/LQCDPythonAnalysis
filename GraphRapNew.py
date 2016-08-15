@@ -151,7 +151,7 @@ if thisGammaList == ['twopt']:
     # #              (['tsink29'+str(istate) for istate in CreateMassSet([],['1'],DefTvarto20)],'PoFto20')]
     # thisAllSetList = thisSmList+TvarPicked
     ShowSetLists(feedin['set'])
-    ShowMethodLists(feedin['method'])
+    ShowMethodList(feedin['method'])
     
     if DoMulticore and len(feedin['mom']) > 1:
         inputparams = []
