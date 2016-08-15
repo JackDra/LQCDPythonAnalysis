@@ -225,7 +225,10 @@ DeftoList = [18,19,20,21]
 DefdtList = [1,2,3,4]
 # DeftodtPicked = (18,2)
 ##MUST BE IN SORTING ORDER##
-DeftodtPicked = [(18,2),(20,2)]
+# DeftodtPicked = [(18,2),(20,2)]
+# DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
+
+DeftodtPicked = Elongate(DeftoList,DefdtList)
 DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
 
 DeftodtList = []
