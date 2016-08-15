@@ -11,6 +11,8 @@ def CheckCut(thisset,thisdict):
             return True
     return False
 
+
+MassDtList = range(1,7)
 FitCutMin,FitCutMax = 3,9
 FitCutList = range(FitCutMin,FitCutMax+1)
 FitCutArgs = ['cut'+str(ic) for ic in FitCutList]

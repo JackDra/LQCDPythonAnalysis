@@ -170,7 +170,7 @@ def PlotCMData(data,thisSetList,thisGamma,thisMom,thistsink='tsink29'):
 
 
 def PlotMassData(data,thisSetList,thisMom,TitleFlag=''):
-    for thisDt in [2,4,6,8]:
+    for thisDt in MassDtList:
         PlotRFSet(data,thisSetList,MassDt=thisDt)
         SetMassAxies()        
         pl.savefig(CreateFile('Dt'+str(thisDt),'twopt',thisMom,TitleFlag+' Mass Comparison')+'.pdf')
@@ -181,7 +181,7 @@ def PlotMassData(data,thisSetList,thisMom,TitleFlag=''):
     pl.clf()
 
 def PlotMassSFData(data,thisSetList,thisMom,thisSF='SFCM'):
-    for thisDt in [2,4,6,8]:
+    for thisDt in MassDtList:
         PlotMassSetOSF(data,thisSetList,thisDt,thisSF)
         SetMassAxies()
         pl.savefig(CreateFile('Dt'+str(thisDt),'twopt',thisMom,'O'+thisSF+' Mass Comparison')+'.pdf')
