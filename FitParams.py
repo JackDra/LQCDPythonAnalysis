@@ -53,14 +53,14 @@ def CreateFitList(thisTwoMin,thisTwoMinMax,thisTwoMax,thisTwoMaxMax,this3ptCutMi
     return this2ptList
 
 OSF3ptCutMin,OSF3ptCutMax = 3,7
-OSF2ptMinStart,OSF2ptMinEnd,OSF2ptMaxStart,OSF2ptMaxEnd = 17,27,21,33
+OSF2ptMinStart,OSF2ptMinEnd,OSF2ptMaxStart,OSF2ptMaxEnd = 23,31,28,37
 OSF3ptCutList = range(OSF3ptCutMin,OSF3ptCutMax+1)
 OneStateParList = {'C2':['Am','m0'] , 'C3':['B00']}
 #picked for plotting
 OSFCutList = ['cut4','cut5']
 OSFCutPicked = 'cut5'
-OSFfitvals = {'sm32': [26,31], 'sm64': [25,31] , 'sm128':[23,31],
-              PickedStateStr+'REvec':[23,31],PickedStateStr+'PoF'+str(PoFShifts):[18,31]}
+OSFfitvals = {'sm32': [28,31], 'sm64': [27,31] , 'sm128':[26,31],
+              PickedStateStr+'REvec':[24,31],PickedStateStr+'PoF'+str(PoFShifts):[18,31]}
     
 OSFfitr = {'sm32':str(OSFfitvals['sm32'][0])+'-'+str(OSFfitvals['sm32'][1]),
            'sm64':str(OSFfitvals['sm64'][0])+'-'+str(OSFfitvals['sm64'][1]),
