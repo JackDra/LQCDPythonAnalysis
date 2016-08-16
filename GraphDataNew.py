@@ -444,10 +444,10 @@ def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
         thistsource = 0
     dataavg = Pullflag(data['Boot'],'Avg')
     dataerr = Pullflag(data['Boot'],'Std')
-    if Debug:
-        print lab
-        for it,val,valerr in zip(tvals,dataavg,dataerr):
-            print tvals,dataavg,dataerr
+    # if Debug:
+    #     print lab
+    #     for it,val,valerr in zip(tvals,dataavg,dataerr):
+    #         print tvals,dataavg,dataerr
     pl.errorbar(tvals[thistsource:]-thistsource,dataavg[thistsource:],dataerr[thistsource:],color=col,fmt=sym,label=lab)
         
 def PlotSumMeth(data,col,lab,thisTsinkR):
