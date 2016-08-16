@@ -565,10 +565,10 @@ def PlotTSFMassLine(data2pt,col,smear,thisdt):
     for ipar in StateParList['Two']['C2']:
         if not CheckDict(data2pt,ipar,TSFfitr,'Avg'): return
         pars2pt.append(data2pt[ipar][TSFfitr]['Avg'])
-    tdata = np.arange(TSFfitvals[0]-tsource+1,TSFfitvals[1]+incr-tsource+1,incr)
+    tdata = np.arange(TSFfitvals[0]-tsource+1,TSFfitvals[1]-thisdt+incr-tsource+1,incr)
     fit2pt = ff.C2TSFLineFun(tdata,pars2pt)
     fit2ptdt = ff.C2TSFLineFun(tdata+thisdt,pars2pt)
-    pl.plot(np.array(tdata)+thisdt,map(abs,np.log(fit2ptdt/fit2pt)/thisdt),color=col)
+    pl.plot(np.array(tdata),map(abs,np.log(fit2ptdt/fit2pt)/thisdt),color=col)
 
 
 def PlotOSFMassValue(data,col,smear,thisdt):
