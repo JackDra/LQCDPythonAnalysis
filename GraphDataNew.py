@@ -578,7 +578,7 @@ def PlotOSFMassValue(data,col,smear,thisdt):
     if Debug:
         print data.keys(), 'm0'
         print data['m0'].keys(), OSFfitr[smearindex]
-        print data['m0']OSFfitr[smearindex].keys(),'Boot','Avg','Std'
+        print data['m0'][OSFfitr[smearindex]].keys(),'Boot','Avg','Std'
     if CheckDict(data,'m0',OSFfitr[smearindex],'Boot'): 
         databoot = data['m0'][OSFfitr[smearindex]]['Boot']
         dataval = abs(databoot.Avg)
