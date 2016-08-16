@@ -565,7 +565,7 @@ def PlotTSFMassLine(data2pt,col,smear,thisdt):
     for ipar in StateParList['Two']['C2']:
         if not CheckDict(data2pt,ipar,TSFfitr,'Avg'): return
         pars2pt.append(data2pt[ipar][TSFfitr]['Avg'])
-    tdata = np.arange(TSFfitvals[0],TSFfitvals[1]-thisdt+incr,incr)
+    tdata = np.arange(TSFfitvals[0]-tsource,TSFfitvals[1]-thisdt+incr-tsource,incr)
     fit2pt = ff.C2TSFLineFun(tdata,pars2pt)
     fit2ptdt = ff.C2TSFLineFun(tdata+thisdt,pars2pt)
     pl.plot(np.array(tdata),map(abs,np.log(fit2ptdt/fit2pt)/thisdt),color=col)
@@ -588,11 +588,10 @@ def PlotOSFMassValue(data,col,smear,thisdt):
     pl.plot([OSFfitvals[smearindex][0]+deltashift-tsource,OSFfitvals[smearindex][1]+deltashift-thisdt],[dataval,dataval],color=col)
 
 def PlotTSFMassValue(data,thisdt):
-    thistsource = tsource +1
     databoot = data['m0'][TSFfitr]['Boot']
     dataval = abs(databoot.Avg)
     dataup,datadown = dataval+databoot.Std,dataval-databoot.Std
-    pl.fill_between([TSFfitvals[0] ,TSFfitvals[1]-thisdt],[datadown,datadown],[dataup,dataup],facecolor='k',edgecolor='none',alpha=thisalpha)
+    pl.fill_between([TSFfitvals[0]-tsource ,TSFfitvals[1]-thisdt-tsource],[datadown,datadown],[dataup,dataup],facecolor='k',edgecolor='none',alpha=thisalpha)
 
 
 def PlotOSFLog(data,col,smear,norm):
