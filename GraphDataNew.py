@@ -21,8 +21,8 @@ from CombParams import *
 
 ##FORCE TITLE PARAMETER, SET TO FALSE TO USE NORMAL TITLES#
 
-# ForceTitle = False
-ForceTitle = 'Mass Plot'
+ForceTitle = False
+# ForceTitle = 'Mass Plot'
 
 colourset8 = [ '#000080','#B22222','#00B800','#8B008B', '#0000FF','#FF0000','#000000','#32CD32','#FF0066']
 markerset = ['o','s','^','v','d']
