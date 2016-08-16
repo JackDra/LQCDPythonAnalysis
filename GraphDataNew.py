@@ -295,7 +295,7 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
         else:
             dataplot = deepcopy(data['RF'][iset])
             dataplot['Boot'] = MassFun(dataplot['Boot'],MassDt)
-            dataplot['tVals'] = np.array(dataplot['tVals'][:-MassDt]) - tsource
+            dataplot['tVals'] = dataplot['tVals'][:-MassDt] 
             PlotRF(dataplot,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset),MP=True)
 
 def PlotLogSet(data,thisSetList,legrem=''):
@@ -418,7 +418,8 @@ def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
         if 'PoF' in lab and not Log:
             tvals = np.array(data['tVals'])+1+(2*PoFShifts) + shift
         else:
-            tvals = np.array(data['tVals'])+1 + shift            
+            tvals = np.array(data['tVals'])+1 + shift
+        tvals = tvals - tsource
     else:
         tvals = np.array(data['tVals'])
         tvals = tvals-(tvals[-1]+tvals[0])/2.0 + shift
@@ -428,8 +429,11 @@ def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
         print lab
         for it,val,valerr in zip(tvals,dataavg,dataerr):
             print tvals,dataavg,dataerr
-    pl.errorbar(tvals,dataavg,dataerr,color=col,fmt=sym,label=lab)
-
+    if MP:
+        pl.errorbar(tvals,dataavg[tsource:],dataerr[tsource:],color=col,fmt=sym,label=lab)
+    else:
+        pl.errorbar(tvals,dataavg,dataerr,color=col,fmt=sym,label=lab)
+        
 def PlotSumMeth(data,col,lab,thisTsinkR):
     if not CheckDict(data,SumCutPar,thisTsinkR,'Avg'): return
     if not CheckDict(data,SumCutPar,thisTsinkR,'Std'): return
