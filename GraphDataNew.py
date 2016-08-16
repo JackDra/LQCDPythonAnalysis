@@ -140,7 +140,8 @@ def SetMassAxies():
     SetxTicks()
     pl.legend()
     pl.tight_layout()
-
+    pl.title('Mass Plot')
+    
 def SetLogAxies():
     pl.xlabel(r'$t$')
     pl.ylabel(r'log(G_{2})')
