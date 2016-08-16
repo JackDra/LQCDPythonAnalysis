@@ -569,7 +569,7 @@ def PlotTSFMassLine(data2pt,col,smear,thisdt):
     fit2pt = ff.C2TSFLineFun(tdata,pars2pt)
     fit2ptdt = ff.C2TSFLineFun(tdata+thisdt,pars2pt)
     tplotdata = tdata + thisdt
-    pl.plot(np.array(tdata),map(abs,np.log(fit2ptdt/fit2pt)/thisdt),color=col)
+    pl.plot(tplotdata,map(abs,np.log(fit2ptdt/fit2pt)/thisdt),color=col)
 
 
 def PlotOSFMassValue(data,col,smear,thisdt):
