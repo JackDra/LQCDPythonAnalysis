@@ -416,7 +416,7 @@ def PlotFF(data,col,sym,shift,lab):
 
 def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
     if MP:
-        thistsource = tsource
+        thistsource = tsource - 2
         if 'PoF' in lab and not Log:
             tvals = np.array(data['tVals'])+1+(2*PoFShifts) + shift
         else:
