@@ -606,7 +606,7 @@ def PlotOSFLog(data,col,smear,norm):
     for it in tdata:
         linedata.append(np.log((parAm*(parm0*(-it+tsource)).exp(1))/norm))
     GetBootStats(linedata)
-    dataAvg,dataErr = abs(np.array(Pullflag(linedata,'Avg'))),np.array(Pullflag(linedata,'Std'))
+    dataAvg,dataErr = np.array(Pullflag(linedata,'Avg')),np.array(Pullflag(linedata,'Std'))
     dataup = dataAvg+dataErr
     datadown = dataAvg-dataErr
     pl.fill_between(tdata,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
