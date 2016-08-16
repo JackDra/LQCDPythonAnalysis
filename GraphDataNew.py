@@ -28,7 +28,7 @@ for ish in np.arange(1,shiftmax+1): shiftset += [-ish*shiftper,ish*shiftper]
 incr = 0.01
 thisalpha = 0.3
 
-MassTVals = 16,40
+MassTVals = 16,33
 # Massyrange = 0.35,1.0
 Massyrange = 0.43,0.56
 
@@ -295,7 +295,7 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
         else:
             dataplot = deepcopy(data['RF'][iset])
             dataplot['Boot'] = MassFun(dataplot['Boot'],MassDt)
-            dataplot['tVals'] = dataplot['tVals'][:-MassDt]
+            dataplot['tVals'] = np.array(dataplot['tVals'][:-MassDt]) - tsource
             PlotRF(dataplot,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset),MP=True)
 
 def PlotLogSet(data,thisSetList,legrem=''):
