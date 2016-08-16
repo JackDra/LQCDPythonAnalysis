@@ -60,12 +60,13 @@ OneStateParList = {'C2':['Am','m0'] , 'C3':['B00']}
 OSFCutList = ['cut4','cut5']
 OSFCutPicked = 'cut5'
 OSFfitvals = {'sm32': [29,35], 'sm64': [28,35] , 'sm128':[27,35],
-              PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[18,35]}
+              PickedStateStr+'REvec':[25,35],PickedStateStr+'CM':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[18,35]}
     
 OSFfitr = {'sm32':str(OSFfitvals['sm32'][0])+'-'+str(OSFfitvals['sm32'][1]),
            'sm64':str(OSFfitvals['sm64'][0])+'-'+str(OSFfitvals['sm64'][1]),
            'sm128':str(OSFfitvals['sm128'][0])+'-'+str(OSFfitvals['sm128'][1]),
            PickedStateStr+'REvec':str(OSFfitvals[PickedStateStr+'REvec'][0])+'-'+str(OSFfitvals[PickedStateStr+'REvec'][1]),
+           PickedStateStr+'CM':str(OSFfitvals[PickedStateStr+'CM'][0])+'-'+str(OSFfitvals[PickedStateStr+'CM'][1]),
            PickedStateStr+'PoF'+str(PoFShifts):str(OSFfitvals[PickedStateStr+'PoF'+str(PoFShifts)][0])+'-'+str(OSFfitvals[PickedStateStr+'PoF'+str(PoFShifts)][1])}
 for itvar in DefTvarPicked:
     OSFfitvals[PickedStateStr+itvar] = [22,31]
