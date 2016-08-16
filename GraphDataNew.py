@@ -371,7 +371,7 @@ def PlotMassSetOSF(data2pt,thisSetList,MassDt,thisSF):
         dataplot = deepcopy(data2pt['RF'][iset])
         dataplot['Boot'] = MassFun(dataplot['Boot'],MassDt)
         dataplot['tVals'] = dataplot['tVals'][MassDt:]
-        PlotRF(dataplot,thiscol,thissym,thisshift,LegLab(iset),MP=True,)
+        PlotRF(dataplot,thiscol,thissym,thisshift,LegLab(iset),MP=True)
         if not CheckDict(data2pt,'O'+thisSF,iset): continue
         PlotOSFMassValue(data2pt['O'+thisSF][iset],thiscol,iset,MassDt)
 
