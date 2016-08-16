@@ -568,13 +568,12 @@ def PlotTSFMassLine(data2pt,col,smear,thisdt):
     tdata = np.arange(TSFfitvals[0]-tsource+1,TSFfitvals[1]-thisdt+incr-tsource+1,incr)
     fit2pt = ff.C2TSFLineFun(tdata,pars2pt)
     fit2ptdt = ff.C2TSFLineFun(tdata+thisdt,pars2pt)
-    tplotdata = tdata + thisdt
+    tplotdata = tdata + thisdt - 1
     pl.plot(tplotdata,map(abs,np.log(fit2ptdt/fit2pt)/thisdt),color=col)
 
 
 def PlotOSFMassValue(data,col,smear,thisdt):
     smearindex,deltashift = CreateOSFfitKey(smear)
-    deltashift += tsource +1
     if CheckDict(data,'m0',OSFfitr[smearindex],'Boot'): 
         databoot = data['m0'][OSFfitr[smearindex]]['Boot']
         dataval = abs(databoot.Avg)
@@ -584,15 +583,15 @@ def PlotOSFMassValue(data,col,smear,thisdt):
         dataup,datadown = dataval+data['m0'][OSFfitr[smearindex]]['Std'],dataval-data['m0'][OSFfitr[smearindex]]['Std']
     else:
         return
-    pl.fill_between([OSFfitvals[smearindex][0]+deltashift,OSFfitvals[smearindex][1]+deltashift-thisdt],
-                    [datadown,datadown],[dataup,dataup],facecolor=col,edgecolor='none',alpha=thisalpha)
-    pl.plot([OSFfitvals[smearindex][0]+deltashift-tsource,OSFfitvals[smearindex][1]+deltashift-thisdt],[dataval,dataval],color=col)
+    tdata = [OSFfitvals[smearindex][0]+thisdt+deltashift-tsource,OSFfitvals[smearindex][1]+deltashift-tsource]
+    pl.fill_between(tdata,[datadown,datadown],[dataup,dataup],facecolor=col,edgecolor='none',alpha=thisalpha)
+    pl.plot(tdata,OSFfitvals[smearindex][1]+deltashift-thisdt],[dataval,dataval],color=col)
 
 def PlotTSFMassValue(data,thisdt):
     databoot = data['m0'][TSFfitr]['Boot']
     dataval = abs(databoot.Avg)
     dataup,datadown = dataval+databoot.Std,dataval-databoot.Std
-    pl.fill_between([TSFfitvals[0]-tsource+thisdt ,TSFfitvals[1]-tsource],[datadown,datadown],[dataup,dataup],facecolor='k',edgecolor='none',alpha=thisalpha)
+    pl.fill_between([TSFfitvals[0]-tsource+thisdt-1 ,TSFfitvals[1]-tsource-1],[datadown,datadown],[dataup,dataup],facecolor='k',edgecolor='none',alpha=thisalpha)
 
 
 def PlotOSFLog(data,col,smear,norm):
