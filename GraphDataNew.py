@@ -601,7 +601,7 @@ def PlotOSFLog(data,col,smear,norm):
     if not CheckDict(data,'Am',OSFfitr[smearindex],'Boot'): return
     parm0 = data['m0'][OSFfitr[smearindex]]['Boot']
     parAm = data['Am'][OSFfitr[smearindex]]['Boot']
-    tdata = np.arange(OSFfitvals[smearindex][0],OSFfitvals[smearindex][1]+incr,incr)
+    tdata = np.arange(OSFfitvals[smearindex][0],OSFfitvals[smearindex][1]+incr,incr)-tsource
     linedata = []
     for it in tdata:
         linedata.append(np.log((parAm*(parm0*(-it+tsource)).exp(1))/norm))
@@ -622,7 +622,7 @@ def PlotTSFLog(data,col,smear,norm):
     parAm = data['Am'][TSFfitr]['Boot']
     parDm = data['Dm'][TSFfitr]['Boot']
     parAmp = data['Amp'][TSFfitr]['Boot']
-    tdata = np.arange(TSFfitvals[0],TSFfitvals[1]+incr,incr)
+    tdata = np.arange(TSFfitvals[0],TSFfitvals[1]+incr,incr)-tsource
     linedata = []
     for it in tdata:
         thisit = it-tsource
