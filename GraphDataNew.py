@@ -104,13 +104,17 @@ def CreateFFFile(thisCol,thisCurr,thisFF):
     return thisdir + thisfile
 
 def CreateFile(thisflag,thisGamma,thisMom,TitlePref):
-    thistitle = thisGamma+' '+TitlePref+' '+LegLab(thisflag)
+    if 'twopt' in thistitle and 'Dt' in thisflag:
+        thistitle = thisGamma+' '+TitlePref+' $' + thisflag.replace('Dt','\Delta t') + '$'
+        thistitle = thistitle.replace('twopt ','')
+    else:
+        thistitle = thisGamma+' '+TitlePref+' '+thisflag
     if 'q = 0 0 0' not in thisMom: thistitle += ' '+thisMom
     if ForceTitle == False:
         pl.title(thistitle)
     else:
-        pl.title(ForceTitle+'$' + thisflag.replace('Dt','\Delta t') + '$')
-        # pl.title(ForceTitle)
+        # pl.title(ForceTitle+'$' + thisflag.replace('Dt','\Delta t') + '$')
+        pl.title(ForceTitle)
     thisdir = outputdir + 'graphs/'+CreateOppDir(thisGamma)
     thisfile = TitlePref.replace(' ','')+thisflag
     thisdir += MakeMomDir(thisMom)
@@ -152,9 +156,9 @@ def SetMassAxies():
     
 def SetLogAxies():
     pl.xlabel(r'$t$')
-    pl.ylabel(r'log(G_{2})')
+    pl.ylabel(r'$log(G_{2})$')
     pl.xlim(15,40)
-    pl.ylim(0,20)
+    # pl.ylim(0,-20)
     SetxTicks()
     pl.legend()
     pl.tight_layout()
