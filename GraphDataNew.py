@@ -19,6 +19,11 @@ from FormFactors import NoFFPars
 from SetLists import SortMySet
 from CombParams import *
 
+##FORCE TITLE PARAMETER, SET TO FALSE TO USE NORMAL TITLES#
+
+# ForceTitle = False
+ForceTitle = 'Mass Plot'
+
 colourset8 = [ '#000080','#B22222','#00B800','#8B008B', '#0000FF','#FF0000','#000000','#32CD32','#FF0066']
 markerset = ['o','s','^','v','d']
 shiftmax = 3
@@ -101,7 +106,10 @@ def CreateFFFile(thisCol,thisCurr,thisFF):
 def CreateFile(thisflag,thisGamma,thisMom,TitlePref):
     thistitle = thisGamma+' '+TitlePref+' '+thisflag
     if 'q = 0 0 0' not in thisMom: thistitle += ' '+thisMom
-    pl.title(thistitle)
+    if ForceTitle == False:
+        pl.title(thistitle)
+    else:
+        pl.title(ForceTitle)
     thisdir = outputdir + 'graphs/'+CreateOppDir(thisGamma)
     thisfile = TitlePref.replace(' ','')+thisflag
     thisdir += MakeMomDir(thisMom)
@@ -140,7 +148,6 @@ def SetMassAxies():
     SetxTicks()
     pl.legend()
     pl.tight_layout()
-    pl.title('Mass Plot')
     
 def SetLogAxies():
     pl.xlabel(r'$t$')
