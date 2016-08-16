@@ -582,6 +582,7 @@ def PlotOSFMassValue(data,col,smear,thisdt):
         dataval = data['m0'][OSFfitr[smearindex]]['Avg']
         dataup,datadown = dataval+data['m0'][OSFfitr[smearindex]]['Std'],dataval-data['m0'][OSFfitr[smearindex]]['Std']
     else:
+        if DEBUG: print 'OSF',smear, not found
         return
     tdata = [OSFfitvals[smearindex][0]+thisdt+deltashift-tsource,OSFfitvals[smearindex][1]+deltashift-tsource]
     pl.fill_between(tdata,[datadown,datadown],[dataup,dataup],facecolor=col,edgecolor='none',alpha=thisalpha)
