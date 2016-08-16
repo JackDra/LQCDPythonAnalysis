@@ -363,6 +363,7 @@ def PlotLogSetTSF(data,thisSetList,thisSF,legrem=''):
 def PlotMassSetOSF(data2pt,thisSetList,MassDt,thisSF):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     iterSetList = SortMySet(ReduceTsink(thisSetList))[0]
+    
     for iset in iterSetList:
         if not CheckDict(data2pt,'RF',iset): continue
         thiscol = thiscolcyc.next()
@@ -574,6 +575,10 @@ def PlotTSFMassLine(data2pt,col,smear,thisdt):
 
 def PlotOSFMassValue(data,col,smear,thisdt):
     smearindex,deltashift = CreateOSFfitKey(smear)
+    if Debug:
+        print data.keys(), 'm0'
+        print data['m0'].keys(), OSFfitr[smearindex]
+        print data['m0']OSFfitr[smearindex].keys(),'Boot','Avg','Std'
     if CheckDict(data,'m0',OSFfitr[smearindex],'Boot'): 
         databoot = data['m0'][OSFfitr[smearindex]]['Boot']
         dataval = abs(databoot.Avg)
