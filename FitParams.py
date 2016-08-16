@@ -79,7 +79,7 @@ TwoStateParList = {'C2':['Am','Amp','m0','Dm'] , 'C3':['B00','B10','B01','B11']}
 TSFCutList = ['cut3','cut4','cut5']
 TSFCutPicked = 'cut4'
 ##maybe make set depenant like above
-TSFfitvals = [19,32]
+TSFfitvals = [18,36]
 TSFfitr = str(TSFfitvals[0])+'-'+str(TSFfitvals[1])
 
 
