@@ -96,6 +96,7 @@ def ProperAll(thestring):
         
 def LegLab(string,NoSm=False,NoTSink=False):
     thisstr = string
+    if len(string) == 0: return ''
     if NoSm:
         thisstr = NoSm(thisstr)
     if NoTSink:
