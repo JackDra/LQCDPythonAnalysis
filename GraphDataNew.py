@@ -610,7 +610,7 @@ def PlotOSFLog(data,col,smear,norm):
     dataup = dataAvg+dataErr
     datadown = dataAvg-dataErr
     pl.fill_between(tdata,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
-    pl.plot([OSFfitvals[smearindex][0]+deltashift,OSFfitvals[smearindex][1]],[dataAvg[0],dataAvg[-1]],color=col)
+    pl.plot([tdata[0],tdata[-1]],[dataAvg[0],dataAvg[-1]],color=col)
 
 
 def PlotTSFLog(data,col,smear,norm):
@@ -625,7 +625,8 @@ def PlotTSFLog(data,col,smear,norm):
     tdata = np.arange(TSFfitvals[0],TSFfitvals[1]+incr,incr)-tsource
     linedata = []
     for it in tdata:
-        thisit = it-tsource
+        thisit = it
+        # thisit = it-tsource
         linedata.append(np.log((parAm*(((parm0*(-thisit)).exp(1)) + parAmp*((parm0+parDm)*(-thisit)).exp(1)))/norm))
     GetBootStats(linedata)
     dataAvg,dataErr = np.array(Pullflag(linedata,'Avg')),np.array(Pullflag(linedata,'Std'))
