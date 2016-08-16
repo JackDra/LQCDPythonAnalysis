@@ -84,7 +84,7 @@ def ProperCM(thestring):
         toval = toval.group().replace('to','').replace('dt','')
     except:
         return thestring
-    if toval+'to'+toval in thestring:
+    if 'to'+toval in thestring:
         itosh = str(int(toval)-tsource)
         thestring = thestring.replace('to'+toval+'dt','to'+itosh+'dt')
     thestring = thestring.replace('dt',r'\Delta t')        
