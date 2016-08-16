@@ -104,9 +104,10 @@ def CreateFFFile(thisCol,thisCurr,thisFF):
     return thisdir + thisfile
 
 def CreateFile(thisflag,thisGamma,thisMom,TitlePref):
-    if 'twopt' in thisGamma and 'Dt' in thisflag:
-        thistitle = thisGamma+' '+TitlePref+' $' + thisflag.replace('Dt','\Delta t') + '$'
+    if 'twopt' in thisGamma:
         thistitle = thistitle.replace('twopt ','')
+        if 'Dt' in thisflag:
+            thistitle = thisGamma+' '+TitlePref+' $' + thisflag.replace('Dt','\Delta t=') + '$'
     else:
         thistitle = thisGamma+' '+TitlePref+' '+thisflag
     if 'q = 0 0 0' not in thisMom: thistitle += ' '+thisMom
