@@ -430,7 +430,7 @@ def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
         print lab
         for it,val,valerr in zip(tvals,dataavg,dataerr):
             print tvals,dataavg,dataerr
-    pl.errorbar(tvals[thistsource:],dataavg[thistsource:],dataerr[thistsource:],color=col,fmt=sym,label=lab)
+    pl.errorbar(tvals[thistsource:]-thistsource,dataavg[thistsource:],dataerr[thistsource:],color=col,fmt=sym,label=lab)
         
 def PlotSumMeth(data,col,lab,thisTsinkR):
     if not CheckDict(data,SumCutPar,thisTsinkR,'Avg'): return
