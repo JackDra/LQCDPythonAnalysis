@@ -585,7 +585,7 @@ def PlotOSFMassValue(data,col,smear,thisdt):
         return
     tdata = [OSFfitvals[smearindex][0]+thisdt+deltashift-tsource,OSFfitvals[smearindex][1]+deltashift-tsource]
     pl.fill_between(tdata,[datadown,datadown],[dataup,dataup],facecolor=col,edgecolor='none',alpha=thisalpha)
-    pl.plot(tdata,OSFfitvals[smearindex][1]+deltashift-thisdt],[dataval,dataval],color=col)
+    pl.plot(tdata,[dataval,dataval],color=col)
 
 def PlotTSFMassValue(data,thisdt):
     databoot = data['m0'][TSFfitr]['Boot']
