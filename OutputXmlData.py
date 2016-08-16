@@ -218,7 +218,8 @@ def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
                 mcutdata.Stats()
                 datadict[ip]['Values'][icutstr] = BootAvgStdChiToFormat(mcutdata,cutdataChi[ipc])
                 datadict[ip]['Boots'][icutstr] = mcutdata.values
-            MergeXmlOutput(outputfile,datadict)
+            WriteXmlOutput(outputfile,datadict)
+            # MergeXmlOutput(outputfile,datadict)
 
     for iA,theA in enumerate(TwoStateParList['C2'][:-2]):
         for ism,thesm in enumerate(thisSmList):
@@ -232,7 +233,8 @@ def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
                     mcutdata = cutdata[ipc][PickTF(ism,iA,len(thisSmList))]
                     datadict[ip]['Values'][icutstr] = BootAvgStdChiToFormat(mcutdata,cutdataChi[ipc],frmtflag='e')
                     datadict[ip]['Boots'][icutstr] = mcutdata.values
-                MergeXmlOutput(outputfile,datadict)
+                # MergeXmlOutput(outputfile,datadict)
+                WriteXmlOutput(outputfile,datadict)
             
 
 #data3pt       = [ ifit2pt , ip , igamma , istate , ifit3pt , params ] bs1
@@ -251,7 +253,8 @@ def PrintTSFToFile(filedir,filename,thisMomList,xml2ptFitList,xmlTSFList,data3pt
             for icutstr,cutdata,cutdataChi in zip(xmlTSFList,data3pt[ic2pt][igamma][ipc][ism],data3ptChi[ic2pt][igamma][ipc][ism]):
                 datadict[ip]['Values'][icut2ptstr][icutstr] = BootAvgStdChiToFormat(cutdata[ipar],cutdataChi)
                 datadict[ip]['Boots'][icut2ptstr][icutstr] = cutdata[ipar].values
-        MergeXmlOutput(outputfile,datadict)
+        # MergeXmlOutput(outputfile,datadict)
+        WriteXmlOutput(outputfile,datadict)
     
                 
                 
@@ -297,7 +300,8 @@ def PrintOSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,
                         thisformat = 'e'
                     datadict[ip]['Values'][icutstr] = BootAvgStdChiToFormat(mcutdata,cutdataChi[ipc][ism],frmtflag=thisformat)
                     datadict[ip]['Boots'][icutstr] = mcutdata.values
-                MergeXmlOutput(outputfile,datadict)
+                WriteXmlOutput(outputfile,datadict)
+                # MergeXmlOutput(outputfile,datadict)
 
 
 #OneFit3pt    = [ ifit2pt , igamma , ip , iset , ifit3pt , params ] bs1
@@ -315,7 +319,8 @@ def PrintOSFToFile(filedir,filename,thisMomList,xml2ptFitList,xmlOSFList,data3pt
             for icutstr,cutdata,cutdataChi in zip(xmlOSFList,data3pt[ic2pt][igamma][ipc][ism],data3ptChi[ic2pt][igamma][ipc][ism]):
                 datadict[ip]['Values'][icut2ptstr][icutstr] = BootAvgStdChiToFormat(cutdata[ipar],cutdataChi)
                 datadict[ip]['Boots'][icut2ptstr][icutstr] = cutdata[ipar].values
-        MergeXmlOutput(outputfile,datadict)
+        # MergeXmlOutput(outputfile,datadict)
+        WriteXmlOutput(outputfile,datadict)
         
 
 def PrintOSFSetToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2ptList,fileprefix,infoRF):
