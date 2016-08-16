@@ -604,7 +604,7 @@ def PlotOSFLog(data,col,smear,norm):
     tdata = np.arange(OSFfitvals[smearindex][0],OSFfitvals[smearindex][1]+incr,incr)-tsource
     linedata = []
     for it in tdata:
-        linedata.append(np.log((parAm*(parm0*(-it+tsource)).exp(1))/norm))
+        linedata.append(np.log((parAm*(parm0*(-it)).exp(1))/norm))
     GetBootStats(linedata)
     dataAvg,dataErr = np.array(Pullflag(linedata,'Avg')),np.array(Pullflag(linedata,'Std'))
     dataup = dataAvg+dataErr
