@@ -35,7 +35,6 @@ def WriteXml(thisfile,outputdict):
     with open(thisfile+'.xml','w') as f:
         f.write( xmltodict.unparse(outputdict,pretty=True))
     
-
 def WriteXmlOutput(thisfile,outputdict):
     firstkey = outputdict.keys()[0]
     Vals = {firstkey:{'Values':outputdict[firstkey]['Values']}}
@@ -97,7 +96,8 @@ def PrintFitMassToFile(data,dataChi,iset,filedir,filename,thisMomList,FitRanges,
         for ifit,fitdata,fitdataChi in zip(xmlFitRanges,qdata,qdataChi):
             datadict[ip]['Values'][icutstr] = BootAvgStdChiToFormat(fitdata[iset],fitdataChi[iset])
             datadict[ip]['Boots'][icutstr] = cutdata[iset].values
-        MergeXmlOutput(outputfile,datadict)
+        # MergeXmlOutput(outputfile,datadict)
+        WriteXmlOutput(outputfile,datadict)
         
 # data = [ ip , icut , iset ]
 def PrintFitToFile(data,dataChi,iset,filedir,filename,thisMomList,thisCutList,mominfoRF):
@@ -111,7 +111,8 @@ def PrintFitToFile(data,dataChi,iset,filedir,filename,thisMomList,thisCutList,mo
         for icutstr,cutdata,cutdataChi in zip(xmlCutList,pdata,pdataChi):
             datadict[ip]['Values'][icutstr] = BootAvgStdChiToFormat(cutdata[iset],cutdataChi[iset])
             datadict[ip]['Boots'][icutstr] = cutdata[iset].values
-        MergeXmlOutput(outputfile,datadict)
+        # MergeXmlOutput(outputfile,datadict)
+        WriteXmlOutput(outputfile,datadict)
 
 
 def PrintLREvecMassToFile(thisLE,thisRE,thisEMass,thisMomList,thisTvar,AddDict={},DoPoF=True):
@@ -123,7 +124,8 @@ def PrintLREvecMassToFile(thisLE,thisRE,thisEMass,thisMomList,thisTvar,AddDict={
         datadict[ip]['Values'] = OrderedDict()
         for istate,iLE,iRE,iEM in zip(GetStateSet(thisTvar),pLE,pRE,pEMass):
             datadict[ip]['Values']['State'+str(istate)] = LREVecToFormat(iLE,iRE,iEM,DoPoF)
-        MergeXmlOutput(outputfile,datadict)
+        # MergeXmlOutput(outputfile,datadict)
+        WriteXmlOutput(outputfile,datadict)
 
 
 
@@ -156,7 +158,8 @@ def PrintSumToFile(data,datafit,datafitchi,filedir,filename,thisFitList,thisMomL
             for ifit,fitdata,fitdatachi in zip(cutfitlist,cutdatafit,cutdatafitchi):
                 datadict[ip]['Values'][icut]['constant'][ifit] = BootAvgStdChiToFormat(fitdata[1],fitdatachi)
                 datadict[ip]['Boots'][icut]['constant'][ifit] = fitdata[1].values
-        MergeXmlOutput(outputfile,datadict)
+        WriteXmlOutput(outputfile,datadict)
+        # MergeXmlOutput(outputfile,datadict)
 
 
 def PrintFFSet(FFin,Set,Mass,SetMass,theCurr,infoFF):
@@ -184,7 +187,8 @@ def PrintFFSet(FFin,Set,Mass,SetMass,theCurr,infoFF):
             datadict['Form_Factors']['Boots'][iqsqrd] = OrderedDict()
             for ic,iFF in enumerate(qdata['Boot']):
                 datadict['Form_Factors']['Boots'][iqsqrd]['FF'+str(ic+1)] = iFF.values
-    MergeXmlOutput(thisfile,datadict,CheckMom=False)
+    # MergeXmlOutput(thisfile,datadict,CheckMom=False)
+    WriteXmlOutput(thisfile,datadict,CheckMom=False)
 
 
 
