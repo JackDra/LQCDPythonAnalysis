@@ -415,24 +415,22 @@ def PlotFF(data,col,sym,shift,lab):
 
 def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
     if MP:
+        thistsource = tsource
         if 'PoF' in lab and not Log:
             tvals = np.array(data['tVals'])+1+(2*PoFShifts) + shift
         else:
             tvals = np.array(data['tVals'])+1 + shift
-        tvals = tvals - tsource
     else:
         tvals = np.array(data['tVals'])
         tvals = tvals-(tvals[-1]+tvals[0])/2.0 + shift
+        thistsource = 0
     dataavg = Pullflag(data['Boot'],'Avg')
     dataerr = Pullflag(data['Boot'],'Std')
     if Debug:
         print lab
         for it,val,valerr in zip(tvals,dataavg,dataerr):
             print tvals,dataavg,dataerr
-    if MP:
-        pl.errorbar(tvals,dataavg[tsource:],dataerr[tsource:],color=col,fmt=sym,label=lab)
-    else:
-        pl.errorbar(tvals,dataavg,dataerr,color=col,fmt=sym,label=lab)
+    pl.errorbar(tvals[thistsource:],dataavg[thistsource:],dataerr[thistsource:],color=col,fmt=sym,label=lab)
         
 def PlotSumMeth(data,col,lab,thisTsinkR):
     if not CheckDict(data,SumCutPar,thisTsinkR,'Avg'): return
