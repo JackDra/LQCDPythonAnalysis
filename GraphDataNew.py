@@ -591,7 +591,7 @@ def PlotTSFMassValue(data,thisdt):
     databoot = data['m0'][TSFfitr]['Boot']
     dataval = abs(databoot.Avg)
     dataup,datadown = dataval+databoot.Std,dataval-databoot.Std
-    pl.fill_between([TSFfitvals[0]-tsource+thisdt-1 ,TSFfitvals[1]-tsource-1],[datadown,datadown],[dataup,dataup],facecolor='k',edgecolor='none',alpha=thisalpha)
+    pl.fill_between([TSFfitvals[0]-tsource+thisdt ,TSFfitvals[1]-tsource],[datadown,datadown],[dataup,dataup],facecolor='k',edgecolor='none',alpha=thisalpha)
 
 
 def PlotOSFLog(data,col,smear,norm):
