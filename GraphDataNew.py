@@ -297,7 +297,7 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
             dataplot = deepcopy(data['RF'][iset])
             dataplot['Boot'] = MassFun(dataplot['Boot'],MassDt)
             # dataplot['tVals'] = dataplot['tVals'][:-MassDt] 
-            dataplot['tVals'] = dataplot['tVals'][MassDt+1:] 
+            dataplot['tVals'] = dataplot['tVals'][MassDt:] 
             PlotRF(dataplot,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset),MP=True)
 
 def PlotLogSet(data,thisSetList,legrem=''):
@@ -417,7 +417,7 @@ def PlotFF(data,col,sym,shift,lab):
 
 def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
     if MP:
-        thistsource = tsource 
+        thistsource = tsource -1
         if 'PoF' in lab and not Log:
             tvals = np.array(data['tVals'])+1+(2*PoFShifts) + shift
         else:
