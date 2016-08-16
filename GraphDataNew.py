@@ -133,8 +133,8 @@ def SetFFAxies(thisCurr):
 
 
 def SetMassAxies():
-    pl.xlabel('time')
-    pl.ylabel('Mass')
+    pl.xlabel(r'$t$')
+    pl.ylabel(r'$aM_{N}$')
     pl.xlim(MassTVals)
     pl.ylim(Massyrange)
     SetxTicks()
@@ -142,8 +142,8 @@ def SetMassAxies():
     pl.tight_layout()
 
 def SetLogAxies():
-    pl.xlabel('time')
-    pl.ylabel('LogC2')
+    pl.xlabel(r'$t$')
+    pl.ylabel(r'log(G_{2})')
     pl.xlim(15,40)
     pl.ylim(0,20)
     SetxTicks()
