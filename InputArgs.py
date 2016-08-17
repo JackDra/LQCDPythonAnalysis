@@ -107,7 +107,7 @@ def InputParams(inputparams):
         elif '-s' in isys:
             feedout['set'] = ExpandSetList(isys.replace('-s=','').split(','))[0]
             for isl in feedout['set']:
-                if isl not in DefSetList:
+                if isl not in DefSetList+AllCMSetList:
                     print 'Warning, ' + isl + ' not found in set list, skipping.'
                     feedout['set'].remove(isl)
             if len(feedout['set']) == 0:

@@ -311,6 +311,8 @@ if kappa == 12090:
 elif kappa == 12104:
     DefSetCol = CreateSet(thisSmearL=[],thisTSinkL=[],thisTvarL=[])
     DefSetCol[1] = CreateSet(thisTSinkL=[29],thisTvarL=[])[1]
+
+AllCMSetList = CreateGenericSet(CMTSinkList,[],[PickedState],DefTvarList)
     
 DefSetList,DefMassSetList,DefTSinkSetList = DefSetCol
 
