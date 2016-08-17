@@ -22,7 +22,7 @@ from CombParams import *
 ##FORCE TITLE PARAMETER, SET TO FALSE TO USE NORMAL TITLES#
 
 # ForceTitle = False
-ForceTitle = 'Variational Method $\Delta_{v}t$ Varying Plot $\Delta t=3$'
+ForceTitle = '$g_{A}$ Variational Comparison'
 
 colourset8 = [ '#000080','#B22222','#00B800','#8B008B', '#0000FF','#FF0000','#000000','#32CD32','#FF0066']
 markerset = ['o','s','^','v','d']
@@ -42,6 +42,7 @@ ylimDict = {'IsoVectorP4giDi':[-0.15,-0.05],
             'VectorP4giDi':[-0.4,-0.15],
             'VectorP4g4':[0,4.0],
             'ProtonP3g2cmplx':[0,0.5],
+            'IsoVectorP3g3g5':[-1.02,-1.18],
             'IsoVectorP4g4':[0.8,1.1]}
 
 ylimFFDict = {'ProtonGeGmFF1/F1divF2':[0.3,0.5],
