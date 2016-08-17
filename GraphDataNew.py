@@ -22,7 +22,7 @@ from CombParams import *
 ##FORCE TITLE PARAMETER, SET TO FALSE TO USE NORMAL TITLES#
 
 # ForceTitle = False
-ForceTitle = 'Pencil of Function Mass Plot $\Delta t=4$'
+ForceTitle = 'One State Fit Plot $\Delta t=3$'
 
 colourset8 = [ '#000080','#B22222','#00B800','#8B008B', '#0000FF','#FF0000','#000000','#32CD32','#FF0066']
 markerset = ['o','s','^','v','d']
@@ -34,8 +34,8 @@ incr = 0.01
 thisalpha = 0.3
 
 # MassTVals = 16,33
-MassTVals = 5,20
-Massyrange = 0.4,0.55
+MassTVals = 3,25
+Massyrange = 0.4,0.6
 # Massyrange = 0.40,0.60
 
 ylimDict = {'IsoVectorP4giDi':[-0.15,-0.05],
