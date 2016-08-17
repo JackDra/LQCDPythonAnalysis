@@ -35,7 +35,7 @@ thisalpha = 0.3
 
 # MassTVals = 16,33
 MassTVals = 10.5,21.5
-Massyrange = 0.44,0.5
+Massyrange = 0.42,0.5
 # Massyrange = 0.40,0.60
 
 ylimDict = {'IsoVectorP4giDi':[-0.15,-0.05],
