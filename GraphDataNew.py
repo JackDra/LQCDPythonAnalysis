@@ -22,7 +22,7 @@ from CombParams import *
 ##FORCE TITLE PARAMETER, SET TO FALSE TO USE NORMAL TITLES#
 
 # ForceTitle = False
-ForceTitle = 'Variational Method $t_{0}$ Varying Plot $\Delta t=3$'
+ForceTitle = 'Variational Method $\Delta_{v}t$ Varying Plot $\Delta t=3$'
 
 colourset8 = [ '#000080','#B22222','#00B800','#8B008B', '#0000FF','#FF0000','#000000','#32CD32','#FF0066']
 markerset = ['o','s','^','v','d']
