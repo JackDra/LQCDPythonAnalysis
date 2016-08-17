@@ -34,7 +34,7 @@ incr = 0.01
 thisalpha = 0.3
 
 # MassTVals = 16,33
-MassTVals = 1,25
+MassTVals = 3,25
 Massyrange = 0.35,1.0
 # Massyrange = 0.40,0.60
 
