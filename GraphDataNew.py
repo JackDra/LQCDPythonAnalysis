@@ -533,9 +533,13 @@ def PlotSumMeth(data,col,lab,thisTsinkR):
     dataavg = data[SumCutPar][thisTsinkR]['Avg']
     dataerr = data[SumCutPar][thisTsinkR]['Std']
     dataup,datadown = dataavg+dataerr,dataavg-dataerr
-    pl.axhline(dataavg,color=col,label=lab)
-    pl.axhspan(datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
-
+    trange = AllTSinkListVar[-1] - SumCutPar
+    tvals = [-trange/2.,trange/2.
+    # pl.axhline(dataavg,color=col,label=lab)
+    # pl.axhspan(datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
+    pl.plot(tvals,dataavg,color=col,label=lab)
+    pl.fill_between(tvals,dataup,datadown,color=col,alpha=thisalpha,edgecolor='none')
+    
 def PlotSummedRF(data,thisfitr,thisfig):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     thisfitr = thisfitr.split()[-1]
