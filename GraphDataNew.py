@@ -310,8 +310,9 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
         if not CheckDict(data,'RF',iset): continue
         if MassDt == False:
             thiscol,thisshift = thiscolcyc.next(),thisshiftcyc.next()
+            thistsink = data['RF'][iset]['tVals'][-1]
             PlotRF(data['RF'][iset],thiscol,thissymcyc.next(),thisshift,LegLab(iset.replace(legrem,'')))
-            PlotFit(data['Fits'][iset],thiscol,thisshift,iset)
+            PlotFit(data['Fits'][iset],thiscol,thisshift,iset,thistsink)
         else:
             dataplot = deepcopy(data['RF'][iset])
             dataplot['Boot'] = MassFun(dataplot['Boot'],MassDt)
@@ -455,7 +456,7 @@ def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
     pl.errorbar(tvals[thistsource:]-thistsource,dataavg[thistsource:],dataerr[thistsource:],color=col,fmt=sym,label=lab)
 
 
-def PlotFit(data,col,shift,iset):
+def PlotFit(data,col,shift,iset,thistsink):
     thiscut = GetCut(iset,FitCutPicked)
     if thiscut == False:
         if Debug:
