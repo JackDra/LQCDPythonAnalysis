@@ -86,7 +86,7 @@ def ProperCM(thestring):
         return thestring
     if 'to'+toval in thestring:
         itosh = str(int(toval)-tsource)
-        thestring = thestring.replace('to'+toval+'dt','to'+itosh+'dt')
+        thestring = thestring.replace('to'+toval,'to'+itosh)
     thestring = thestring.replace('dt',r'\Delta t')        
     thestring = thestring.replace('to','SPACEt_{0}')    
     return thestring
