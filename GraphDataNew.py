@@ -463,7 +463,7 @@ def PlotFit(data,col,shift,iset):
             print FitCutPicked.keys()
     else:
         thiscutint = int(thiscut.replace('cut',''))
-        tvals = [-thiscutint+shift,thiscutint+shift]  
+        tvals = [-thiscutint/2.+shift,thiscutint/2.+shift]  
         # if Debug:
         #     print data.keys(), thiscut
         #     print data[thiscut].keys(), 'Boot'
@@ -472,7 +472,7 @@ def PlotFit(data,col,shift,iset):
         dataup,datadown = dataavg+dataerr,dataavg-dataerr
         if Debug:
             print iset, thiscut
-            print dataavg, dataerr
+            print tvals[0],tvals[1]dataavg, dataerr
         pl.plot(tvals,[dataavg,dataavg],color=col)
         pl.fill_between(tvals,dataup,datadown,color=col,alpha=thisalpha,edgecolor='none')
 
