@@ -141,7 +141,7 @@ def LabToXaxis(thestring,col):
     elif col in 'OSFCM':
         stringout = NoCM(NoSm(stringout))
     elif col in 'OSFTsink':
-        stringout = NoTSink(NoCM(NoSm(stringout)))
+        stringout = NoCM(NoSm(stringout))
     elif col in 'TSFCM':
         stringout = NoTSink(NoCM(NoSm(stringout)))
     elif col in 'TSFTsink':

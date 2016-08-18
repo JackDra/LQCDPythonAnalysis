@@ -125,12 +125,14 @@ def PlotXlabs(method,thissetlist,xminmax):
         line1 = '1SF'
         if 'CM' in method:
             line2 = tsinklist[0]
-            line3 = map(ReducedVar,smlist)
-            if any(['PoF' in il for il in line3]):
-                line3 = ['PoF']*(len(PoFTSinkList)-1) + line3
+            line3 = []
+            # line3 = map(ReducedVar,smlist)
+            # if any(['PoF' in il for il in line3]):
+            #     line3 = ['PoF']*(len(PoFTSinkList)-1) + line3
         elif 'Tsink' in method:
             line2 = smlist[0]
-            line3 = tsinklist
+            # line3 = tsinklist
+            line3 = []
         else:
             raise IOError('method not implemented' + method)
     # ysize = pl.ylim()[1]-pl.ylim()[0]
