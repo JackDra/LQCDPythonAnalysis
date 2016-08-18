@@ -310,7 +310,7 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
         if not CheckDict(data,'RF',iset): continue
         if MassDt == False:
             thiscol,thisshift = thiscolcyc.next(),thisshiftcyc.next()
-            PlotRF(data['RF'][iset],thiscol,thissym,thisshift,LegLab(iset.replace(legrem,'')))
+            PlotRF(data['RF'][iset],thiscol,thissymcyc.next(),thisshift,LegLab(iset.replace(legrem,'')))
             PlotFit(data['Fits'][iset],thiscol,thisshift,iset)
         else:
             dataplot = deepcopy(data['RF'][iset])
