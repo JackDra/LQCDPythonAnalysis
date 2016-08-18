@@ -139,7 +139,7 @@ def LabToXaxis(thestring,col):
         stringout = stringout.replace('fitr1-4','')
         stringout = stringout.replace('fitr2-4','')
     elif col in 'OSFCM':
-        stringout = NoTSink(re.sub('cut.','',stringout)))
+        stringout = NoTSink(re.sub('cut.','',stringout))
     elif col in 'OSFTsink':
         stringout = NoCM(NoSm(re.sub('cut.','',stringout)))
     elif col in 'TSFCM':
