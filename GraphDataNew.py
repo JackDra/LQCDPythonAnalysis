@@ -75,6 +75,16 @@ FFxlab = r'$ q^{2} $'
 def GetPlotIters():
     return itertools.cycle(markerset),itertools.cycle(colourset8),itertools.cycle(shiftset)
 
+def SetxTicks(thisfig=False):
+    xmin,xmax = pl.xlim()
+    thisinc = 1
+    if xmax-xmin > 15:
+        thisinc = 2
+    if thisfig == False:
+        pl.xticks(np.arange(int(xmin),int(xmax)+thisinc,thisinc))
+    else:
+        thisfig.xticks(np.arange(int(xmin),int(xmax)+thisinc,thisinc))
+        
 def SetxTicks():
     xmin,xmax = pl.xlim()
     thisinc = 1
@@ -108,7 +118,7 @@ def CreateFFFile(thisCol,thisCurr,thisFF):
     thisfile = thisCol+thisCurr.replace('/','') + thisFF
     return thisdir + thisfile
 
-def CreateFile(thisflag,thisGamma,thisMom,TitlePref,suptitle=False):
+def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False):
     if 'twopt' in thisGamma:
         if 'Dt' in thisflag:
             thistitle = thisGamma+' '+TitlePref+' $' + thisflag.replace('Dt','\Delta t=') + '$'
@@ -119,16 +129,16 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref,suptitle=False):
         thistitle = thisGamma+' '+TitlePref+' '+thisflag
     if 'q = 0 0 0' not in thisMom: thistitle += ' '+thisMom
     if ForceTitle == False:
-        if suptitle:
-            pl.suptitle(thistitle)
-        else:
+        if thisfig == False:
             pl.title(thistitle)
+        else:
+            thisfig.suptitle(thistitle)
     else:
         # pl.title(ForceTitle+'$' + thisflag.replace('Dt','\Delta t') + '$')
-        if suptitle:
-            pl.suptitle(ForceTitle)
-        else:
+        if thisfig == False:
             pl.title(ForceTitle)
+        else:
+            thisfig.suptitle(ForceTitle)
     thisdir = outputdir + 'graphs/'+CreateOppDir(thisGamma)
     thisfile = TitlePref.replace(' ','')+thisflag
     thisdir += MakeMomDir(thisMom)
@@ -189,13 +199,14 @@ def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
     for ifitr in SumFitRList:    
         PlotColSum(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisTsinkR=ifitr)
     
+    thisfig = pl.figure()
     for ic,ifitr in enumerate(SumFitRList):    
         pl.subplot(1,len(SumFitRList),ic+1)
-        PlotColSumFun(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisTsinkR=ifitr)
+        PlotColSumFun(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisfig,thisTsinkR=ifitr)
         SetSumFunAxies(ic==0)
-    pl.subplots_adjust(top=0.85)
-    pl.savefig(CreateFile(thissm,thisGamma,thisMom,'Sum TSink Comparison ',suptitle=True)+'Sfun.pdf')
-    pl.clf()
+    thisfig.subplots_adjust(top=0.85)
+    thisfig.savefig(CreateFile(thissm,thisGamma,thisMom,'Sum TSink Comparison ',thisfig=thisfig)+'Sfun.pdf')
+    thisfig.clf()
         
 def PlotTSinkSFData(data,data2pt,thisSetList,thisGamma,thisMom,thisSF='TSFTsink',thissm='sm32'):
     if 'TSF' in thisSF:
@@ -274,8 +285,8 @@ def PlotColSum(data,thisSetList,thissm,thisGamma,thisMom,TitlePref,thisTsinkR='f
     pl.savefig(CreateFile(thissm[0],thisGamma,thisMom,TitlePref+outTR)+'.pdf')
     pl.clf()
 
-def PlotColSumFun(data,thisSetList,thissm,thisGamma,thisMom,TitlePref,thisTsinkR='fit sl 0-4'):
-    if CheckDict(data,'SumMeth',thissm[0]): PlotSummedRF(data['SumMeth'][thissm[0]],thisTsinkR)
+def PlotColSumFun(data,thisSetList,thissm,thisGamma,thisMom,TitlePref,thisfig,thisTsinkR='fit sl 0-4'):
+    if CheckDict(data,'SumMeth',thissm[0]): PlotSummedRF(data['SumMeth'][thissm[0]],thisTsinkR,thisfig)
 
 def PlotRFSetTSF(data,data2pt,thisSetList,TSFcut,thisTSF,legrem=''):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
@@ -509,7 +520,7 @@ def PlotSumMeth(data,col,lab,thisTsinkR):
     pl.axhline(dataavg,color=col,label=lab)
     pl.axhspan(datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
 
-def PlotSummedRF(data,thisfitr):
+def PlotSummedRF(data,thisfitr,thisfig):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     thisfitr = thisfitr.split()[-1]
     thisfitmin,thisfitmax = thisfitr.split('-')
@@ -524,7 +535,7 @@ def PlotSummedRF(data,thisfitr):
                 dataplot.append(tsinkdata['Avg'])
                 dataploterr.append(tsinkdata['Std'])
         tdata,dataplot,dataploterr = zip(*sorted(zip(tdata,dataplot,dataploterr)))
-        pl.errorbar(tdata,dataplot,dataploterr,color=thiscol,fmt=thissym,label=icut)
+        thisfig.errorbar(tdata,dataplot,dataploterr,color=thiscol,fmt=thissym,label=icut)
         if not CheckDict(cutdata,'fit con '+thisfitr,'Boot'): continue
         if not CheckDict(cutdata,'fit sl '+thisfitr,'Boot'): continue        
         parcon,parsl = cutdata['fit con '+thisfitr]['Boot'],cutdata['fit sl '+thisfitr]['Boot']
@@ -540,16 +551,16 @@ def PlotSummedRF(data,thisfitr):
         else:
             plotdashedup = Pullflag(fitbootdashed,'Avg')+Pullflag(fitbootdashed,'Std')
             plotdasheddown = Pullflag(fitbootdashed,'Avg')-Pullflag(fitbootdashed,'Std')
-        pl.plot(fittdata,Pullflag(fitbootdata,'Avg'),
+        thisfig.plot(fittdata,Pullflag(fitbootdata,'Avg'),
                 label='slope='+MakeValAndErr(parsl.Avg,parsl.Std),color=thiscol)
-        pl.fill_between(fittdata,plotup,plotdown,color=thiscol,alpha=thisalpha,edgecolor='none')
-        pl.plot(fittdashed,plotdashedup,color=thiscol,ls='--')
-        pl.plot(fittdashed,plotdasheddown,color=thiscol,ls='--')
+        thisfig.fill_between(fittdata,plotup,plotdown,color=thiscol,alpha=thisalpha,edgecolor='none')
+        thisfig.plot(fittdashed,plotdashedup,color=thiscol,ls='--')
+        thisfig.plot(fittdashed,plotdasheddown,color=thiscol,ls='--')
     # if Pullflag(fitbootdata,'Avg')[0] > 0:
-    #     pl.legend(loc='upper left')
+    #     thisfig.legend(loc='upper left')
     # else:
-    #     pl.legend(loc='upper right')
-    SetxTicks()
+    #     thisfig.legend(loc='upper right')
+    SetxTicks(thisfig=thisfig)
 
 
 
