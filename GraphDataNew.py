@@ -53,7 +53,7 @@ params = {'legend.fontsize': 10,
           'legend.numpoints': 1,
           'axes.labelsize' : 20,
           'axes.titlesize' : 20,
-          # 'figure.autolayout': True,
+          'figure.autolayout': True,
           'axes.grid': True,
           'axes.xmargin':0.01,
           'axes.ymargin':0.01}
@@ -79,7 +79,7 @@ def GetPlotIters():
 def SetxTicks(thisfig=False):
     xmin,xmax = pl.xlim()
     thisinc = 1
-    if xmax-xmin > 15:
+    if xmax-xmin > 16:
         thisinc = 2
     if thisfig == False:
         pl.xticks(np.arange(int(xmin),int(xmax)+thisinc,thisinc))
@@ -195,7 +195,7 @@ def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
     for ifitr in SumFitRList:    
         PlotColSum(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisTsinkR=ifitr)
     
-    # pl.rcParams['figure.autolayout'] = False
+    pl.rcParams['figure.autolayout'] = False
     thisfig = pl.figure()
     for ic,ifitr in enumerate(SumFitRList):    
         pl.subplot(1,len(SumFitRList),ic+1)
@@ -204,7 +204,7 @@ def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
     # thisfig.subplots_adjust(top=0.95)
     thisfig.savefig(CreateFile(thissm,thisGamma,thisMom,'Sum TSink Comparison ',thisfig=thisfig)+'Sfun.pdf')
     thisfig.clf()
-    # pl.rcParams['figure.autolayout'] = True
+    pl.rcParams['figure.autolayout'] = True
         
 def PlotTSinkSFData(data,data2pt,thisSetList,thisGamma,thisMom,thisSF='TSFTsink',thissm='sm32'):
     if 'TSF' in thisSF:
