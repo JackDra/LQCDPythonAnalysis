@@ -133,6 +133,10 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref,suptitle=False):
     mkdir_p(thisdir)
     return thisdir+thisfile
 
+def SetSumFunAxies():
+    pl.ylable('$S(\pp,t;\q)$')
+    pl.xlable('$\frac{t}{a}$')
+
 def SetRFAxies(thisGamma):
     pl.xlabel(RFxlab)
     pl.ylabel(RFylab)
@@ -185,6 +189,7 @@ def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
     for ic,ifitr in enumerate(SumFitRList):    
         pl.subplot(1,len(SumFitRList),ic+1)
         PlotColSumFun(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisTsinkR=ifitr)
+    pl.SetSumFunAxies()
     pl.savefig(CreateFile(thissm,thisGamma,thisMom,'Sum TSink Comparison ',suptitle=True)+'Sfun.pdf')
     pl.clf()
         
