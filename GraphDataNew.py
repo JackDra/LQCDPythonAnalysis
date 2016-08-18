@@ -311,7 +311,7 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
         if MassDt == False:
             thiscol,thisshift = thiscolcyc.next(),thisshiftcyc.next()
             PlotRF(data['RF'][iset],thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset.replace(legrem,'')))
-            PlotFit(data['Fits'][iset],thiscol,thissymcyc.next(),thisshift,iset)
+            PlotFit(data['Fits'][iset],thiscol,thisshift,iset)
         else:
             dataplot = deepcopy(data['RF'][iset])
             dataplot['Boot'] = MassFun(dataplot['Boot'],MassDt)
@@ -455,7 +455,7 @@ def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
     pl.errorbar(tvals[thistsource:]-thistsource,dataavg[thistsource:],dataerr[thistsource:],color=col,fmt=sym,label=lab)
 
 
-def PlotFit(data,col,sym,shift,iset):
+def PlotFit(data,col,shift,iset):
     if iset in FitCutPicked.keys():
         thiscut = FitCutPicked[iset]
         thiscutint = int(thiscut.replace('cut',''))
@@ -475,7 +475,7 @@ def PlotFit(data,col,sym,shift,iset):
     #     for it,val,valerr in zip(tvals,dataavg,dataerr):
     #         print tvals,dataavg,dataerr
     pl.plot(tvals,[dataavg,dataavg],color=col)
-    pl.fill_between(tvals,dataup,datadown,color=thiscol,alpha=thisalpha,edgecolor='none')
+    pl.fill_between(tvals,dataup,datadown,color=col,alpha=thisalpha,edgecolor='none')
 
 def PlotSumMeth(data,col,lab,thisTsinkR):
     if not CheckDict(data,SumCutPar,thisTsinkR,'Avg'): return
