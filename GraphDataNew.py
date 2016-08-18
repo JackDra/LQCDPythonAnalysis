@@ -127,13 +127,13 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False):
         if thisfig == False:
             pl.title(thistitle)
         else:
-            thisfig.suptitle(thistitle, fontsize=24)
+            thisfig.suptitle(thistitle, fontsize=22)
     else:
         # pl.title(ForceTitle+'$' + thisflag.replace('Dt','\Delta t') + '$')
         if thisfig == False:
             pl.title(ForceTitle)
         else:
-            thisfig.suptitle(ForceTitle, fontsize=24)
+            thisfig.suptitle(ForceTitle, fontsize=22)
     thisdir = outputdir + 'graphs/'+CreateOppDir(thisGamma)
     thisfile = TitlePref.replace(' ','')+thisflag
     thisdir += MakeMomDir(thisMom)
