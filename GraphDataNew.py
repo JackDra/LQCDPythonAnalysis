@@ -74,7 +74,7 @@ def GetPlotIters():
 def SetxTicks():
     xmin,xmax = pl.xlim()
     thisinc = 1
-    if xmax-xmin > 16:
+    if xmax-xmin > 15:
         thisinc = 2
     pl.xticks(np.arange(int(xmin),int(xmax)+thisinc,thisinc))
 
