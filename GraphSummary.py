@@ -68,6 +68,9 @@ def RemoveStuff(smlist,method):
     for iset in smlist:
         if GraphCondit('','','',method,iset):
             outset.apend(iset)
+    for iset in outset:
+        if 'TSF' in method and 'state' in iset:
+            outset.remove(iset)
     return outset
         
 ##FIX STRINGS tsink and sm stuff##
