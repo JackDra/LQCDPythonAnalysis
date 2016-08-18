@@ -63,10 +63,10 @@ shiftcyc = itertools.cycle(shiftset)
 
 pl.rcParams.update(params)
 RFylab = r'$ R \left(\tau,t\right) $'
-RFxlab = r'$ \frac{\tau}{a} - \frac{t}{2a}$'
+RFxlab = r'$ \tau - t/2$'
 
 SUMylab = r'$ S(t)$'
-SUMxlab = r'$ \frac{t}{a}$'
+SUMxlab = r'$ t$'
 
 
 FFylab = r'$ FF $'
