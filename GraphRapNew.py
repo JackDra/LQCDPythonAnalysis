@@ -78,7 +78,7 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCom
                     PlotTSinkData(thisdatadict,thisSetList,combgamma,imom,feedin['ForceTitle'])
                     progprint(1,prevtime,combgamma)
                     prevtime = time.time()
-                    PlotTSinkData(thisdatadict,thisSetList,combgamma,imom,feedin['ForceTitle'],thissm='state1'+REvecTvarList[0])
+                    PlotTSinkData(thisdatadict,thisSetList,combgamma,imom,feedin['ForceTitle'],thissm='state1')
                     progprint(2,prevtime,combgamma)
                     prevtime = time.time()
                     PlotTSinkData(thisdatadict,thisSetList,combgamma,imom,feedin['ForceTitle'],thissm='state1'+PoFTvarList[0])
