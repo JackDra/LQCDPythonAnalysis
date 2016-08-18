@@ -83,7 +83,7 @@ def SetxTicks(thisfig=False):
     if thisfig == False:
         pl.xticks(np.arange(int(xmin),int(xmax)+thisinc,thisinc))
     else:
-        thisfig.xticks(np.arange(int(xmin),int(xmax)+thisinc,thisinc))
+        thisfig.axes[0].xticks(np.arange(int(xmin),int(xmax)+thisinc,thisinc))
         
 
 def getsmindex(thissm):return DefSmearList.index(thissm)
