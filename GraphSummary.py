@@ -129,7 +129,7 @@ def PlotXlabs(method,thissetlist,xminmax):
             if any(['PoF' in il for il in line3]):
                 line3 = ['PoF']*(len(PoFTSinkList)-1) + line3
         elif 'Tsink' in method:
-            line2 = 'All ' + smlist[0]
+            line2 = smlist[0]
             line3 = tsinklist
         else:
             raise IOError('method not implemented' + method)
