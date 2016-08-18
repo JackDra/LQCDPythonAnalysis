@@ -120,14 +120,12 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref,suptitle=False):
     if 'q = 0 0 0' not in thisMom: thistitle += ' '+thisMom
     if ForceTitle == False:
         if suptitle:
-            pl.subplots_adjust(top=0.85)
             pl.suptitle(thistitle)
         else:
             pl.suptitle(thistitle)
     else:
         # pl.title(ForceTitle+'$' + thisflag.replace('Dt','\Delta t') + '$')
         if suptitle:
-            pl.subplots_adjust(top=0.85)
             pl.suptitle(ForceTitle)
         else:
             pl.suptitle(ForceTitle)
@@ -190,10 +188,13 @@ def PlotTSinkData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
 def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
     for ifitr in SumFitRList:    
         PlotColSum(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisTsinkR=ifitr)
+    
     for ic,ifitr in enumerate(SumFitRList):    
         pl.subplot(1,len(SumFitRList),ic+1)
         PlotColSumFun(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisTsinkR=ifitr)
         SetSumFunAxies(ic==0)
+    pl.set_y(0.95)
+    pl.subplots_adjust(top=0.85)
     pl.savefig(CreateFile(thissm,thisGamma,thisMom,'Sum TSink Comparison ',suptitle=True)+'Sfun.pdf')
     pl.clf()
         
