@@ -108,7 +108,7 @@ def InputParams(inputparams):
         elif '-g' in isys:
             feedout['gamma'] = isys.replace('-g=','').split(',')
         elif '-FT' in isys:
-            feedout['ForceTitle'] = isys
+            feedout['ForceTitle'] = isys.replace('-FT=','')
         elif '-s' in isys:
             feedout['set'] = ExpandSetList(isys.replace('-s=','').split(','))[0]
             for isl in feedout['set']:
