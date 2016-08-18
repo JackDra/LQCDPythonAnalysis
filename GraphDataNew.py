@@ -83,6 +83,7 @@ def SetxTicks(thisfig=False):
     if thisfig == False:
         pl.xticks(np.arange(int(xmin),int(xmax)+thisinc,thisinc))
     else:
+        thisinc = 3
         thisfig.axes[-1].set_xticks(np.arange(int(xmin),int(xmax)+thisinc,thisinc))
         
 
@@ -126,13 +127,13 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False):
         if thisfig == False:
             pl.title(thistitle)
         else:
-            thisfig.suptitle(thistitle)
+            thisfig.suptitle(thistitle, fontsize=24)
     else:
         # pl.title(ForceTitle+'$' + thisflag.replace('Dt','\Delta t') + '$')
         if thisfig == False:
             pl.title(ForceTitle)
         else:
-            thisfig.suptitle(ForceTitle)
+            thisfig.suptitle(ForceTitle, fontsize=24)
     thisdir = outputdir + 'graphs/'+CreateOppDir(thisGamma)
     thisfile = TitlePref.replace(' ','')+thisflag
     thisdir += MakeMomDir(thisMom)
