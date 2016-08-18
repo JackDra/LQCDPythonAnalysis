@@ -212,7 +212,7 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
     for xmid,line3 in Xbox3:
         pl.text(xmid,ylow+(ysize*xlabshift),line3,horizontalalignment='center')
     pl.xlabel('Methods')
-    pl.ylabel('Value')
+    # pl.ylabel('Value')
     pl.xlim(-1,xvalues-1)
     pl.grid(False,axis='x')
     if iDS == False:
