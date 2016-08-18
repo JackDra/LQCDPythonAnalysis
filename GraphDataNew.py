@@ -295,8 +295,8 @@ def PlotRFSetSum(data,thisSetList,thisTsinkR,legrem=''):
         thistsink,thissm = SplitTSinkString(iset)
         if not CheckDict(data,'RF',iset): continue
         PlotRF(data['RF'][iset],thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset.replace(legrem,'')))
-        if CheckDict(data,'SumMeth',thissm):
-            PlotSumMeth(data['SumMeth'][thissm],thiscolcyc.next(),'Sum '+SumCutPar,thisTsinkR)
+    if CheckDict(data,'SumMeth',thissm):
+        PlotSumMeth(data['SumMeth'][thissm],thiscolcyc.next(),'Sum '+SumCutPar,thisTsinkR)
 
 
 
@@ -524,7 +524,10 @@ def PlotSummedRF(data,thisfitr):
         pl.fill_between(fittdata,plotup,plotdown,color=thiscol,alpha=thisalpha,edgecolor='none')
         pl.plot(fittdashed,plotdashedup,color=thiscol,ls='--')
         pl.plot(fittdashed,plotdasheddown,color=thiscol,ls='--')
-    pl.legend(loc='upper left')
+    if Pullflag(fitbootdata,'Avg') > 0:
+        pl.legend(loc='upper left')
+    else:
+        pl.legend(loc='upper right')
     SetxTicks()
 
 
