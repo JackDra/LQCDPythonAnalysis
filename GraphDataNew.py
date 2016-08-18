@@ -134,8 +134,8 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref,suptitle=False):
     return thisdir+thisfile
 
 def SetSumFunAxies():
-    pl.ylable('$S(\pp,t;\q)$')
-    pl.xlable('$\frac{t}{a}$')
+    pl.ylabel('$S(\pp,t;\q)$')
+    pl.xlabel('$\frac{t}{a}$')
 
 def SetRFAxies(thisGamma):
     pl.xlabel(RFxlab)
