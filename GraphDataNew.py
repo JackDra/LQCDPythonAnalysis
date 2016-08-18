@@ -475,7 +475,7 @@ def PlotFit(data,col,sym,shift,iset):
     #     for it,val,valerr in zip(tvals,dataavg,dataerr):
     #         print tvals,dataavg,dataerr
     pl.plot(tvals,[dataavg,dataavg],color=col)
-    pl.fill_between(tdata,dataup,datadown,color=thiscol,alpha=thisalpha,edgecolor='none')
+    pl.fill_between(tvals,dataup,datadown,color=thiscol,alpha=thisalpha,edgecolor='none')
 
 def PlotSumMeth(data,col,lab,thisTsinkR):
     if not CheckDict(data,SumCutPar,thisTsinkR,'Avg'): return
