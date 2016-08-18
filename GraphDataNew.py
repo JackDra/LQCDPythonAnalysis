@@ -85,12 +85,6 @@ def SetxTicks(thisfig=False):
     else:
         thisfig.xticks(np.arange(int(xmin),int(xmax)+thisinc,thisinc))
         
-def SetxTicks():
-    xmin,xmax = pl.xlim()
-    thisinc = 1
-    if xmax-xmin > 15:
-        thisinc = 2
-    pl.xticks(np.arange(int(xmin),int(xmax)+thisinc,thisinc))
 
 def getsmindex(thissm):return DefSmearList.index(thissm)
 
