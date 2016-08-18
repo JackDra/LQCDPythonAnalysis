@@ -460,9 +460,9 @@ def PlotFit(data,col,shift,iset):
         thiscut = FitCutPicked[iset]
         thiscutint = int(thiscut.replace('cut',''))
         tvals = [-thiscutint+shift,thiscutint+shift]  
-        if Debug:
-            print data.keys(), thiscut
-            print data[thiscut].keys(), 'Boot'
+        # if Debug:
+        #     print data.keys(), thiscut
+        #     print data[thiscut].keys(), 'Boot'
         dataavg = Pullflag(data[thiscut]['Boot'],'Avg')
         dataerr = Pullflag(data[thiscut]['Boot'],'Std')
         dataup,datadown = dataavg+dataerr,dataavg-dataerr
