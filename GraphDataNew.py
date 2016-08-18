@@ -343,7 +343,7 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
             thiscol,thisshift = thiscolcyc.next(),thisshiftcyc.next()
             thistsink = data['RF'][iset]['tVals'][-1]
             PlotRF(data['RF'][iset],thiscol,thissymcyc.next(),thisshift,LegLab(iset.replace(legrem,'')))
-            if 'Fits' in data.keys():
+            if CheckDict(data,'Fits',iset):
                 PlotFit(data['Fits'][iset],thiscol,thisshift,iset,thistsink)
         else:
             dataplot = deepcopy(data['RF'][iset])
