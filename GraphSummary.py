@@ -66,11 +66,8 @@ def GraphCondit(iDS,igamma,iq,thisMeth,iSet):
 def RemoveStuff(smlist,method):
     outset = []
     for iset in smlist:
-        if GraphCondit('','','',method,iset):
+        if GraphCondit('','','',method,iset) and not ('TSF' in method and 'state' in iset):
             outset.append(iset)
-    for iset in outset:
-        if 'TSF' in method and 'state' in iset:
-            outset.remove(iset)
     return outset
         
 ##FIX STRINGS tsink and sm stuff##
