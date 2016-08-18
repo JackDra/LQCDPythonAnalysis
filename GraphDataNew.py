@@ -277,7 +277,7 @@ def PlotCMTSFData(data,data2pt,thisSetList,thisGamma,thisMom,FT,thistsink='tsink
 
 
 def PlotCol(data,thisSetList,thisflag,thisGamma,thisMom,TitlePref):
-    if thisflag == 's':
+    if thisflag[0] == 's':
         thislegrem = 'state1'
     else:
         thislegrem = thisflag[0]
