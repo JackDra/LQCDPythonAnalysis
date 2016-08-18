@@ -189,10 +189,14 @@ def SetLogAxies():
     pl.tight_layout()
 
 
-def PlotTSinkData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
+def PlotTSinkData(data,thisSetList,thisGamma,thisMom,FT,thissm='sm32'):
+    global ForceTitle
+    ForceTitle = TF
     PlotCol(data,thisSetList,[thissm],thisGamma,thisMom,'TSink Comparison ')
 
-def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
+def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,FT,thissm='sm32'):
+    global ForceTitle
+    ForceTitle = TF
     for ifitr in SumFitRList:    
         PlotColSum(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisTsinkR=ifitr)
     
@@ -207,7 +211,9 @@ def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
     thisfig.clf()
     pl.rcParams['figure.autolayout'] = True
         
-def PlotTSinkSFData(data,data2pt,thisSetList,thisGamma,thisMom,thisSF='TSFTsink',thissm='sm32'):
+def PlotTSinkSFData(data,data2pt,thisSetList,thisGamma,thisMom,FT,thisSF='TSFTsink',thissm='sm32'):
+    global ForceTitle
+    ForceTitle = TF
     if 'TSF' in thisSF:
         for icut in TSFCutList:
             PlotColTSF(data,data2pt,thisSetList,[thissm],thisGamma,thisMom,thisSF+' Comparison ',icut,thisSF)
@@ -215,11 +221,15 @@ def PlotTSinkSFData(data,data2pt,thisSetList,thisGamma,thisMom,thisSF='TSFTsink'
         for icut in OSFCutList:
             PlotColOSF(data,data2pt,thisSetList,[thissm],thisGamma,thisMom,thisSF+' Comparison ',icut,thisSF)
         
-def PlotCMData(data,thisSetList,thisGamma,thisMom,thistsink='tsink29'):
+def PlotCMData(data,thisSetList,thisGamma,thisMom,FT,thistsink='tsink29'):
+    global ForceTitle
+    ForceTitle = TF
     PlotCol(data,thisSetList,[thistsink,'PoF'],thisGamma,thisMom,'Variational Comparison ')
 
 
-def PlotMassData(data,thisSetList,thisMom,TitleFlag=''):
+def PlotMassData(data,thisSetList,thisMom,FT,TitleFlag=''):
+    global ForceTitle
+    ForceTitle = TF
     for thisDt in MassDtList:
         PlotRFSet(data,thisSetList,MassDt=thisDt)
         SetMassAxies()        
@@ -230,7 +240,9 @@ def PlotMassData(data,thisSetList,thisMom,TitleFlag=''):
     pl.savefig(CreateFile('','twopt',thisMom,TitleFlag+' Log Comparison')+'.pdf')
     pl.clf()
 
-def PlotMassSFData(data,thisSetList,thisMom,thisSF='SFCM'):
+def PlotMassSFData(data,thisSetList,thisMom,FT,thisSF='SFCM'):
+    global ForceTitle
+    ForceTitle = TF
     for thisDt in MassDtList:
         PlotMassSetOSF(data,thisSetList,thisDt,thisSF)
         SetMassAxies()
@@ -249,11 +261,15 @@ def PlotMassSFData(data,thisSetList,thisMom,thisSF='SFCM'):
     pl.savefig(CreateFile('','twopt',thisMom,'T'+thisSF+' Log Comparison')+'.pdf')
     pl.clf()
 
-def PlotCMOSFData(data,data2pt,thisSetList,thisGamma,thisMom,thistsink='tsink29',thisSF='OSFCM'):
+def PlotCMOSFData(data,data2pt,thisSetList,thisGamma,thisMom,FT,thistsink='tsink29',thisSF='OSFCM'):
+    global ForceTitle
+    ForceTitle = TF
     for icut in OSFCutList:
         PlotColOSF(data,data2pt,thisSetList,[thistsink,'PoF','CM'],thisGamma,thisMom,thisSF+' Comparison ',icut,thisSF)
         
 def PlotCMTSFData(data,data2pt,thisSetList,thisGamma,thisMom,thistsink='tsink29',thisSF='TSFCM'):
+    global ForceTitle
+    ForceTitle = TF
     for icut in TSFCutList:
         PlotColTSF(data,data2pt,thisSetList,[thistsink],thisGamma,thisMom,thisSF+' Comparison ',icut,thisSF)
 

@@ -17,7 +17,8 @@ from CreateCombs import CreateDictOldCombs
 from CombParams import *
 
 DoDS = True
-
+feedin = InputParams(sys.argv[1:] + ['-noprompt'])
+    
 
 ##datadict = { gamma } { mom } { method } { set }
 ##thisdatadict = { method } { set }
@@ -39,10 +40,10 @@ def ReadAndPlotMass(thisMomList,thisSetList,thisMethodList):
         momstart = time.time()
         mprint( 'Plotting ' , imom , 'Mass            \r',)
         thistwoptdict = datadict['twopt'][imom]
-        PlotMassData(thistwoptdict,thisSetList,imom)
+        PlotMassData(thistwoptdict,thisSetList,imom,feedin['ForceTitle'])
         if any(['SFCM' in imeth for imeth in thisMethodList]):
             mprint( 'Plotting ' , imom , 'State Fits      \r',)
-            PlotMassSFData(thistwoptdict,thisSetList,imom)
+            PlotMassSFData(thistwoptdict,thisSetList,imom,feedin['ForceTitle'])
         # for ipof,(itpl,thistf) in enumerate(thisSetPoFLists):
         #     mprint( 'Plotting ' , imom , 'PoFSets ', str(int((ipof*100)/len(thisSetPoFLists))),'%        \r',)
         #     PlotMassData(thistwoptdict,thisSmearList+itpl,imom,TitleFlag=thistf)
@@ -74,46 +75,46 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCom
                 if kappa == 12090:
                     progprint(0,time.time(),combgamma)
                     prevtime = time.time()
-                    PlotTSinkData(thisdatadict,thisSetList,combgamma,imom)
+                    PlotTSinkData(thisdatadict,thisSetList,combgamma,imom,feedin['ForceTitle'])
                     progprint(1,prevtime,combgamma)
                     prevtime = time.time()
-                    PlotTSinkData(thisdatadict,thisSetList,combgamma,imom,thissm='state1'+REvecTvarList[0])
+                    PlotTSinkData(thisdatadict,thisSetList,combgamma,imom,feedin['ForceTitle'],thissm='state1'+REvecTvarList[0])
                     progprint(2,prevtime,combgamma)
                     prevtime = time.time()
-                    PlotTSinkData(thisdatadict,thisSetList,combgamma,imom,thissm='state1'+PoFTvarList[0])
+                    PlotTSinkData(thisdatadict,thisSetList,combgamma,imom,feedin['ForceTitle'],thissm='state1'+PoFTvarList[0])
                     progprint(2,prevtime,combgamma)
                     if 'SumMeth' in thisMethodList:
                         prevtime = time.time()
-                        PlotTSinkSumData(thisdatadict,thisSetList,combgamma,imom)
+                        PlotTSinkSumData(thisdatadict,thisSetList,combgamma,imom,feedin['ForceTitle'])
                         progprint(3,prevtime,combgamma)
                     if 'TSFTsink' in thisMethodList:
                         prevtime = time.time()
-                        PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,combgamma,imom,thisSF='TSFTsink')
+                        PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,combgamma,imom,feedin['ForceTitle'],thisSF='TSFTsink')
                         progprint(4,prevtime,combgamma)
                     if 'TSFtest32' in thisMethodList:
                         prevtime = time.time()
-                        PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,combgamma,imom,thisSF='TSFtest32')
+                        PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,combgamma,imom,feedin['ForceTitle'],thisSF='TSFtest32')
                         progprint(5,prevtime,combgamma)
                     if 'TSFSmall' in thisMethodList:
                         prevtime = time.time()
-                        PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,combgamma,imom,thisSF='TSFSmall')
+                        PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,combgamma,feedin['ForceTitle'],imom,thisSF='TSFSmall')
                         progprint(6,prevtime,combgamma)
                     if 'OSFTsink' in thisMethodList:
                         prevtime = time.time()
-                        PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,combgamma,imom,thisSF='OSFTsink')
+                        PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,combgamma,feedin['ForceTitle'],imom,thisSF='OSFTsink')
                         progprint(7,prevtime,combgamma)
 
                     prevtime = time.time()
                     PlotCMData(thisdatadict,thisSetList,combgamma,imom)
                     progprint(8,prevtime,combgamma)
                     if 'OSFCM' in thisMethodList:
-                        PlotCMOSFData(thisdatadict,thisMassdict,thisSetList,combgamma,imom)
+                        PlotCMOSFData(thisdatadict,thisMassdict,thisSetList,combgamma,imom,feedin['ForceTitle'])
                     if 'TSFCM' in thisMethodList:
-                        PlotCMTSFData(thisdatadict,thisMassdict,thisSetList,combgamma,imom)
+                        PlotCMTSFData(thisdatadict,thisMassdict,thisSetList,combgamma,imom,feedin['ForceTitle'])
                 elif kappa == 12104:
                     PlotCMData(thisdatadict,thisSetList,combgamma,imom)
                     if 'OSFREvec' in thisMethodList:
-                        PlotCMOSFData(thisdatadict,thisMassdict,thisSetList,combgamma,imom,thisSF='OSFREvec')
+                        PlotCMOSFData(thisdatadict,thisMassdict,thisSetList,combgamma,imom,feedin['ForceTitle'],thisSF='OSFREvec')
                 print 'Graphing Operator: ' +icomb + igamma + imom + ' took: ' , str(datetime.timedelta(seconds=(time.time()-gammastart))) ,' h:m:s                      '
                     
 
@@ -125,9 +126,6 @@ feedin = InputParams(sys.argv[1:] + ['-noprompt'])
     
 thisGammaList = CreateGammaList(feedin['gamma'],twopt=True)
 
-if feedin['ForceTitle'] != False:
-    global ForceTitle
-    ForceTitle = feedin['ForceTitle']
 
 if thisGammaList == ['twopt']:
     # # feedin['method'] = ['RF','OSFCM','TSFCM']
