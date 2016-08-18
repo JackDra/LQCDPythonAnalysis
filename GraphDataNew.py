@@ -65,6 +65,10 @@ pl.rcParams.update(params)
 RFylab = r'$ R \left(\tau,t\right) $'
 RFxlab = r'$ \frac{\tau}{a} - \frac{t}{2a}$'
 
+SUMylab = r'$ S(\pp,t;\q)$'
+SUMxlab = r'$ \frac{t}{a}$'
+
+
 FFylab = r'$ FF $'
 FFxlab = r'$ q^{2} $'
 
@@ -134,8 +138,8 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref,suptitle=False):
     return thisdir+thisfile
 
 def SetSumFunAxies():
-    pl.ylabel('$S(\pp,t;\q)$')
-    pl.xlabel('$\frac{t}{a}$')
+    pl.ylabel(SUMylab)
+    pl.xlabel(SUMxlab)
 
 def SetRFAxies(thisGamma):
     pl.xlabel(RFxlab)
