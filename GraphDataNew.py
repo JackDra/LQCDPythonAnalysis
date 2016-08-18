@@ -308,17 +308,16 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
         iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
     for iset in iterSetList:
         if not CheckDict(data,'RF',iset): continue
-        thiscol,thisshift = thiscolcyc.next(),thisshiftcyc.next()
         if MassDt == False:
-            PlotRF(data['RF'][iset],thiscol,thissymcyc.next(),thisshift,LegLab(iset.replace(legrem,'')))
-            if Debug: print data['Fits'][iset].keys()
-            PlotFit(data['Fits'][iset],thiscol,thissymcyc.next(),thisshift,LegLab(iset.replace(legrem,'')),MP=True)
+            thiscol,thisshift = thiscolcyc.next(),thisshiftcyc.next()
+            PlotRF(data['RF'][iset],thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset.replace(legrem,'')))
+            PlotFit(data['Fits'][iset],thiscol,thissymcyc.next(),thisshift,iset)
         else:
             dataplot = deepcopy(data['RF'][iset])
             dataplot['Boot'] = MassFun(dataplot['Boot'],MassDt)
             # dataplot['tVals'] = dataplot['tVals'][:-MassDt] 
             dataplot['tVals'] = dataplot['tVals'][MassDt:] 
-            PlotRF(dataplot,thiscol,thissymcyc.next(),thisshift,LegLab(iset),MP=True)
+            PlotRF(dataplot,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset),MP=True)
 
 def PlotLogSet(data,thisSetList,legrem=''):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
@@ -456,20 +455,29 @@ def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
     pl.errorbar(tvals[thistsource:]-thistsource,dataavg[thistsource:],dataerr[thistsource:],color=col,fmt=sym,label=lab)
 
 
-def PlotFit(data,col,sym,shift,lab,MP=False,Log=False):
-    if MP:
-        thistsource = tsource +1
-        if 'PoF' in lab and not Log:
-            tvals = np.array(data['tVals'])+1+(2*PoFShifts) + shift
-        else:
-            tvals = np.array(data['tVals'])+1 + shift
+def PlotFit(data,col,sym,shift,iset):
+    tvals = np.array(data['tVals'])
+    tvals = tvals-(tvals[-1]+tvals[0])/2.0 + shift
+    if iset in FitCutPicked.keys():
+        thiscut = FitCutPicked[iset]
+        thiscutint = int(thiscut.replace('cut',''))
+        tvals = [-thiscutint+shift,thiscutint+shift]  
+        if Debug:
+            print data.keys(), 'Boot'
+            print data['Boot']
+        dataavg = Pullflag(data['Boot'],'Avg')
+        dataerr = Pullflag(data['Boot'],'Std')
+                         dataup,datadown
     else:
-        tvals = np.array(data['tVals'])
-        tvals = tvals-(tvals[-1]+tvals[0])/2.0 + shift
-        thistsource = 0
-    dataavg = Pullflag(data['Boot'],'Avg')
-    dataerr = Pullflag(data['Boot'],'Std')
-    pl.errorbar(tvals[thistsource:]-thistsource,dataavg[thistsource:],dataerr[thistsource:],color=col,fmt=sym,label=lab)
+        if Debug:
+            print 'warning', iset, 'not in FitCutPicked'
+            print FitCutPicked.keys()
+    # if Debug:
+    #     print lab
+    #     for it,val,valerr in zip(tvals,dataavg,dataerr):
+    #         print tvals,dataavg,dataerr
+    pl.plot(tvals,dataavg,dataerr,color=col,fmt=sym)
+    pl.fillbetween(tvals,dataavg,dataerr,color=col,fmt=sym)
 
 def PlotSumMeth(data,col,lab,thisTsinkR):
     if not CheckDict(data,SumCutPar,thisTsinkR,'Avg'): return
