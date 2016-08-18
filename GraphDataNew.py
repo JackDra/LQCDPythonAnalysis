@@ -533,7 +533,7 @@ def PlotSumMeth(data,col,lab,thisTsinkR):
     dataavg = data[SumCutPar][thisTsinkR]['Avg']
     dataerr = data[SumCutPar][thisTsinkR]['Std']
     dataup,datadown = dataavg+dataerr,dataavg-dataerr
-    trange = AllTSinkListVar[-1] - int(SumCutPar.replace('cut',''))
+    trange = AllTSinkListVar[-1]-tsource - int(SumCutPar.replace('cut',''))
     tvals = [-trange/2.,trange/2.]
     # pl.axhline(dataavg,color=col,label=lab)
     # pl.axhspan(datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
