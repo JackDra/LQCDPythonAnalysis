@@ -43,7 +43,7 @@ FitCutPicked =  {'tsink26sm32':'cut6',
 SumMeth3ptCuts = range(4)
 ##picked for plotting
 SumCutList = ['cut'+str(isum) for isum in SumMeth3ptCuts]
-SumCutPar = 'cut2'
+SumCutPar = 'cut3'
 SumFitRList = ['fit sl 0-4','fit sl 1-4','fit sl 2-4']
 SumFitRPicked = 'fitr1-4'
 
