@@ -84,8 +84,8 @@ def PlotXlabs(method,thissetlist,xminmax):
         for isub in thissetlist:
             if '0-4' in isub and 'All' not in line3:
                 line3.append('All')
-            elif '1-4' in isub and 'fr1' not in line3:
-                line3.append('fr1')
+            # elif '1-4' in isub and 'fr1' not in line3:
+            #     line3.append('fr1')
             elif '2-4' in isub and 'fr2' not in line3:
                 line3.append('fr2')
     elif 'FitsTsink' in method:
