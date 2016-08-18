@@ -75,6 +75,7 @@ def PlotXlabs(method,thissetlist,xminmax):
     xmin,xmax = xminmax
     xmid = (xmax+xmin-2)/float(2)
     tsinklist,smlist = GetTsinkSmLists(thissetlist)
+    smlist = RemoveStuff(smlist,method)
     if 'SumMeth' in method:
         line1 = 'Summation'
         line2 = 'Method ' + smlist[0]
@@ -101,7 +102,6 @@ def PlotXlabs(method,thissetlist,xminmax):
         line2 = SplitToDt(smlist[0])[0]
         line3 = [SplitToDt(smlist[0])[1].replace('dt','\Delta t')]
     elif 'TSF' in method:
-        smlist = RemoveStuff(smlist,'TSF')
         line1 = '2SF'
         if 'CM' in method:
             if tsinklist[0] == None:
