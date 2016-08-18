@@ -472,7 +472,7 @@ def PlotFit(data,col,shift,iset):
         dataup,datadown = dataavg+dataerr,dataavg-dataerr
         if Debug:
             print iset, thiscut
-            print tvals[0],tvals[1]dataavg, dataerr
+            print tvals[0],tvals[1],dataavg, dataerr
         pl.plot(tvals,[dataavg,dataavg],color=col)
         pl.fill_between(tvals,dataup,datadown,color=col,alpha=thisalpha,edgecolor='none')
 
