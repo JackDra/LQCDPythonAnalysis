@@ -100,8 +100,10 @@ def PlotXlabs(method,thissetlist,xminmax):
         line3 = []
     elif 'FitsVar' in method:
         line1 = 'Var'
-        line2 = SplitToDt(smlist[0])[0]
-        line3 = [SplitToDt(smlist[0])[1].replace('dt','\Delta t')]
+        # line2 = SplitToDt(smlist[0])[0]
+        # line3 = [SplitToDt(smlist[0])[1].replace('dt','\Delta t')]
+        line2 = ''
+        line3 = []
     elif 'TSF' in method:
         line1 = '2SF'
         if 'CM' in method:
