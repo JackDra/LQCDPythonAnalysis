@@ -193,13 +193,13 @@ def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
     for ifitr in SumFitRList:    
         PlotColSum(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisTsinkR=ifitr)
     
+    pl.rcParams['figure.autolayout'] = False
     thisfig = pl.figure()
     for ic,ifitr in enumerate(SumFitRList):    
         pl.subplot(1,len(SumFitRList),ic+1)
         PlotColSumFun(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisfig,thisTsinkR=ifitr)
         SetSumFunAxies(ic==0)
-    pl.rcParams['figure.autolayout'] = False
-    thisfig.subplots_adjust(top=0.85)
+    # thisfig.subplots_adjust(top=0.95)
     thisfig.savefig(CreateFile(thissm,thisGamma,thisMom,'Sum TSink Comparison ',thisfig=thisfig)+'Sfun.pdf')
     thisfig.clf()
     pl.rcParams['figure.autolayout'] = True
