@@ -115,12 +115,18 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref,suptitle=False):
         thistitle = thisGamma+' '+TitlePref+' '+thisflag
     if 'q = 0 0 0' not in thisMom: thistitle += ' '+thisMom
     if ForceTitle == False:
-        if suptitle: pl.suptitle(thistitle)
-        else: pl.suptitle(thistitle)
+        if suptitle:
+            pl.subplots_adjust(top=0.85)
+            pl.suptitle(thistitle)
+        else:
+            pl.suptitle(thistitle)
     else:
         # pl.title(ForceTitle+'$' + thisflag.replace('Dt','\Delta t') + '$')
-        if suptitle: pl.suptitle(ForceTitle)
-        else: pl.suptitle(ForceTitle)
+        if suptitle:
+            pl.suptitle(ForceTitle)
+            pl.subplots_adjust(top=0.85)
+        else:
+            pl.suptitle(ForceTitle)
     thisdir = outputdir + 'graphs/'+CreateOppDir(thisGamma)
     thisfile = TitlePref.replace(' ','')+thisflag
     thisdir += MakeMomDir(thisMom)
