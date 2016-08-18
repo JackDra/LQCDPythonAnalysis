@@ -277,6 +277,7 @@ def PlotCMTSFData(data,data2pt,thisSetList,thisGamma,thisMom,FT,thistsink='tsink
 
 
 def PlotCol(data,thisSetList,thisflag,thisGamma,thisMom,TitlePref):
+    print SiftAndSort(thisSetList,thisflag,nocm=False)
     PlotRFSet(data,SiftAndSort(thisSetList,thisflag,nocm=False),legrem=thisflag[0])
     SetRFAxies(thisGamma)
     pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+'.pdf')
