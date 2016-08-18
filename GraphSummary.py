@@ -56,9 +56,9 @@ def GetPlotIters():
 ## Add special exclusions here: ##
 def GraphCondit(iDS,igamma,iq,thisMeth,iSet):
     graphthis = True
-    # if 'OSF' in thisMeth and 'tsink26sm32' in iSet: graphthis = False
-    if 'Fits' in thisMeth and 'tsink32' in iSet and 'to18dt2' in iSet: graphthis = False
-    if 'Fits' in thisMeth and 'tsink26' in iSet and 'to18dt2' in iSet: graphthis = False
+    if 'OSF' in thisMeth and 'tsink26sm32' in iSet: graphthis = False
+    # if 'Fits' in thisMeth and 'tsink32' in iSet and 'to18dt2' in iSet: graphthis = False
+    # if 'Fits' in thisMeth and 'tsink26' in iSet and 'to18dt2' in iSet: graphthis = False
     # if 'SumMeth' in thisMeth and 'fitr2-4' in iSet: graphthis = False
     return graphthis
 
