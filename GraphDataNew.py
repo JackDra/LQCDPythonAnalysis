@@ -104,7 +104,7 @@ def CreateFFFile(thisCol,thisCurr,thisFF):
     thisfile = thisCol+thisCurr.replace('/','') + thisFF
     return thisdir + thisfile
 
-def CreateFile(thisflag,thisGamma,thisMom,TitlePref,noTitle=False):
+def CreateFile(thisflag,thisGamma,thisMom,TitlePref,suptitle=False):
     if 'twopt' in thisGamma:
         if 'Dt' in thisflag:
             thistitle = thisGamma+' '+TitlePref+' $' + thisflag.replace('Dt','\Delta t=') + '$'
@@ -115,10 +115,12 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref,noTitle=False):
         thistitle = thisGamma+' '+TitlePref+' '+thisflag
     if 'q = 0 0 0' not in thisMom: thistitle += ' '+thisMom
     if ForceTitle == False:
-        pl.title(thistitle)
+        if suptitle: pl.suptitle(thistitle)
+        else: pl.suptitle(thistitle)
     else:
         # pl.title(ForceTitle+'$' + thisflag.replace('Dt','\Delta t') + '$')
-        pl.title(ForceTitle)
+        if suptitle: pl.suptitle(ForceTitle)
+        else: pl.suptitle(ForceTitle)
     thisdir = outputdir + 'graphs/'+CreateOppDir(thisGamma)
     thisfile = TitlePref.replace(' ','')+thisflag
     thisdir += MakeMomDir(thisMom)
@@ -175,10 +177,9 @@ def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
     for ifitr in SumFitRList:    
         PlotColSum(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisTsinkR=ifitr)
     for ic,ifitr in enumerate(SumFitRList):    
-        pl.subplot(1,len(SumFitRList),ic+1)
-        if ic == 0: CreateFile(thissm,thisGamma,thisMom,'Sum TSink Comparison ')
+        pl.subplot(len(SumFitRList),1,ic+1)
         PlotColSumFun(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisTsinkR=ifitr)
-    pl.savefig(CreateFile(thissm,thisGamma,thisMom,'Sum TSink Comparison ',noTitle=True)+'Sfun.pdf')
+    pl.savefig(CreateFile(thissm,thisGamma,thisMom,'Sum TSink Comparison ',suptitle=True)+'Sfun.pdf')
     pl.clf()
         
 def PlotTSinkSFData(data,data2pt,thisSetList,thisGamma,thisMom,thisSF='TSFTsink',thissm='sm32'):
