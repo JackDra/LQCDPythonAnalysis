@@ -152,16 +152,16 @@ def CreateMethodSetList(thisMethodList,setlist):
                         mslout[iMeth+'Sm'].append(iset.replace(iMeth,''))
                     if iMeth in iset and 'to' in iset:
                         mslout[iMeth+'Var'].append(iset.replace(iMeth,''))
-        # elif 'OSF' in iMeth:
-        #     mslout[iMeth] = []
-        #     for iset in setlist:
-        #         if OSFCutPicked in iset and iMeth in iset:
-        #             mslout[iMeth].append(iset.replace(iMeth,''))                    
-        # elif 'TSF' in iMeth:
-        #     mslout[iMeth] = []
-        #     for iset in setlist:
-        #         if TSFCutPicked in iset and iMeth in iset:
-        #             mslout[iMeth].append(iset.replace(iMeth,''))                    
+        elif 'OSF' in iMeth:
+            mslout[iMeth] = []
+            for iset in setlist:
+                if OSFCutPicked in iset and iMeth in iset:
+                    mslout[iMeth].append(iset.replace(iMeth,''))                    
+        elif 'TSF' in iMeth:
+            mslout[iMeth] = []
+            for iset in setlist:
+                if TSFCutPicked in iset and iMeth in iset:
+                    mslout[iMeth].append(iset.replace(iMeth,''))                    
         else:
             mslout[iMeth] = []
             for iset in setlist:
