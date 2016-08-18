@@ -189,7 +189,7 @@ def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
     for ic,ifitr in enumerate(SumFitRList):    
         pl.subplot(1,len(SumFitRList),ic+1)
         PlotColSumFun(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisTsinkR=ifitr)
-    pl.SetSumFunAxies()
+    SetSumFunAxies()
     pl.savefig(CreateFile(thissm,thisGamma,thisMom,'Sum TSink Comparison ',suptitle=True)+'Sfun.pdf')
     pl.clf()
         
