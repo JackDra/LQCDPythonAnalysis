@@ -61,7 +61,7 @@ def GraphCondit(iDS,igamma,iq,thisMeth,iSet):
     # if 'Fits' in thisMeth: graphthis = False
     # if 'Fits' in thisMeth and 'tsink32' in iSet and 'to18dt2' in iSet: graphthis = False
     # if 'Fits' in thisMeth and 'tsink26' in iSet and 'to18dt2' in iSet: graphthis = False
-    # if 'SumMeth' in thisMeth and 'fitr2-4' in iSet: graphthis = False
+    if 'SumMeth' in thisMeth and 'fitr1-4' in iSet: graphthis = False
     return graphthis
 
 def RemoveStuff(smlist,method):
