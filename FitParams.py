@@ -13,7 +13,7 @@ def CheckCut(thisset,thisdict):
 
 def GetCut(thisset,thisdict):
     for ikey,icut in thisdict.iteritems():
-        if ikey in thisset and icut in thisset:
+        if ikey in thisset:
             return icut
     return False
 

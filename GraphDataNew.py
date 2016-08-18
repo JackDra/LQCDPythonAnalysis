@@ -457,7 +457,11 @@ def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
 
 def PlotFit(data,col,shift,iset):
     thiscut = GetCut(iset,FitCutPicked)
-    if thiscut != False:
+    if thiscut == False:
+        if Debug:
+            print 'warning', iset, 'not in FitCutPicked'
+            print FitCutPicked.keys()
+    else:
         thiscutint = int(thiscut.replace('cut',''))
         tvals = [-thiscutint+shift,thiscutint+shift]  
         # if Debug:
@@ -471,10 +475,6 @@ def PlotFit(data,col,shift,iset):
             print dataavg, dataerr
         pl.plot(tvals,[dataavg,dataavg],color=col)
         pl.fill_between(tvals,dataup,datadown,color=col,alpha=thisalpha,edgecolor='none')
-    else:
-        if Debug:
-            print 'warning', iset, 'not in FitCutPicked'
-            print FitCutPicked.keys()
 
 def PlotSumMeth(data,col,lab,thisTsinkR):
     if not CheckDict(data,SumCutPar,thisTsinkR,'Avg'): return
