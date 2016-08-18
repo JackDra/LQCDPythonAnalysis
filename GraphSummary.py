@@ -63,6 +63,13 @@ def GraphCondit(iDS,igamma,iq,thisMeth,iSet):
     # if 'SumMeth' in thisMeth and 'fitr2-4' in iSet: graphthis = False
     return graphthis
 
+def RemoveStuff(smlist,method):
+    outset = []
+    for iset in smlist:
+        if GraphCondit('','','',method,iset):
+            outset.apend(iset)
+    return outset
+        
 ##FIX STRINGS tsink and sm stuff##
 def PlotXlabs(method,thissetlist,xminmax):
     xmin,xmax = xminmax
@@ -77,8 +84,8 @@ def PlotXlabs(method,thissetlist,xminmax):
                 line3.append('All')
             elif '1-4' in isub and 'fr1' not in line3:
                 line3.append('fr1')
-            # elif '2-4' in isub and 'fr2' not in line3:
-            #     line3.append('fr2')
+            elif '2-4' in isub and 'fr2' not in line3:
+                line3.append('fr2')
     elif 'FitsTsink' in method:
         line1 = 'Fits'
         line2  = smlist[0]
@@ -94,6 +101,7 @@ def PlotXlabs(method,thissetlist,xminmax):
         line2 = SplitToDt(smlist[0])[0]
         line3 = [SplitToDt(smlist[0])[1].replace('dt','\Delta t')]
     elif 'TSF' in method:
+        smlist = RemoveStuff(smlist,'TSF')
         line1 = '2SF'
         if 'CM' in method:
             if tsinklist[0] == None:
