@@ -67,7 +67,7 @@ def RemoveStuff(smlist,method):
     outset = []
     for iset in smlist:
         if GraphCondit('','','',method,iset):
-            outset.apend(iset)
+            outset.append(iset)
     for iset in outset:
         if 'TSF' in method and 'state' in iset:
             outset.remove(iset)
