@@ -11,6 +11,12 @@ def CheckCut(thisset,thisdict):
             return True
     return False
 
+def GetCut(thisset,thisdict):
+    for ikey,icut in thisdict.iteritems():
+        if ikey in thisset and icut in thisset:
+            return icut
+    return False
+
 
 MassDtList = range(1,7)
 # MassDtList = [2]

@@ -456,8 +456,8 @@ def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
 
 
 def PlotFit(data,col,shift,iset):
-    if CheckCut(iset,FitCutPicked):
-        thiscut = FitCutPicked[iset]
+    thiscut = GetCut(iset,FitCutPicked)
+    if thiscut != False:
         thiscutint = int(thiscut.replace('cut',''))
         tvals = [-thiscutint+shift,thiscutint+shift]  
         # if Debug:
