@@ -456,8 +456,6 @@ def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
 
 
 def PlotFit(data,col,sym,shift,iset):
-    tvals = np.array(data['tVals'])
-    tvals = tvals-(tvals[-1]+tvals[0])/2.0 + shift
     if iset in FitCutPicked.keys():
         thiscut = FitCutPicked[iset]
         thiscutint = int(thiscut.replace('cut',''))
