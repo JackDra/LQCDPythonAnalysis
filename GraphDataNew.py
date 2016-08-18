@@ -22,7 +22,7 @@ from CombParams import *
 ##FORCE TITLE PARAMETER, SET TO FALSE TO USE NORMAL TITLES#
 
 # ForceTitle = False
-ForceTitle = '$g_{A}$ Variational Comparison'
+ForceTitle = '$g_{A}$ Summation Comparison'
 
 colourset8 = [ '#000080','#B22222','#00B800','#8B008B', '#0000FF','#FF0000','#000000','#32CD32','#FF0066']
 markerset = ['o','s','^','v','d']
@@ -312,7 +312,8 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
             thiscol,thisshift = thiscolcyc.next(),thisshiftcyc.next()
             thistsink = data['RF'][iset]['tVals'][-1]
             PlotRF(data['RF'][iset],thiscol,thissymcyc.next(),thisshift,LegLab(iset.replace(legrem,'')))
-            PlotFit(data['Fits'][iset],thiscol,thisshift,iset,thistsink)
+            if 'Fits' in data.keys():
+                PlotFit(data['Fits'][iset],thiscol,thisshift,iset,thistsink)
         else:
             dataplot = deepcopy(data['RF'][iset])
             dataplot['Boot'] = MassFun(dataplot['Boot'],MassDt)
