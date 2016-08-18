@@ -463,7 +463,7 @@ def PlotFit(data,col,shift,iset):
             print FitCutPicked.keys()
     else:
         thiscutint = int(thiscut.replace('cut',''))
-        LRM = max((int(thistsink)-tsource)/2.-thiscutint),0)
+        LRM = max((int(thistsink)-tsource)/2.-thiscutint,0)
         tvals = np.array([-LRM+shift,LRM+shift])
         # if Debug:
         #     print data.keys(), thiscut
