@@ -105,7 +105,7 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCom
                         progprint(7,prevtime,combgamma)
 
                     prevtime = time.time()
-                    PlotCMData(thisdatadict,thisSetList,combgamma,imom)
+                    PlotCMData(thisdatadict,thisSetList,combgamma,imom,feedin['ForceTitle'])
                     progprint(8,prevtime,combgamma)
                     if 'OSFCM' in thisMethodList:
                         PlotCMOSFData(thisdatadict,thisMassdict,thisSetList,combgamma,imom,feedin['ForceTitle'])
