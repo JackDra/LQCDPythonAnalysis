@@ -132,7 +132,7 @@ def LabToXaxis(thestring,col):
     elif col in 'FitsTsink':
         stringout = NoCM(NoSm(re.sub('cut.','',stringout)))
     elif col in 'FitsVar':        
-        stringout = re.sub('Dt.','',re.sub('cut.','',stringout))
+        stringout = re.sub('dt.','',re.sub('cut.','',stringout))
     elif col in 'SumMeth':
         stringout = NoCM(NoSm(stringout))
         stringout = stringout.replace('fitr0-4','')
