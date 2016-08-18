@@ -65,7 +65,7 @@ pl.rcParams.update(params)
 RFylab = r'$ R \left(\tau,t\right) $'
 RFxlab = r'$ \frac{\tau}{a} - \frac{t}{2a}$'
 
-SUMylab = r'$ S(\pp,t;\q)$'
+SUMylab = r'$ S(t)$'
 SUMxlab = r'$ \frac{t}{a}$'
 
 
