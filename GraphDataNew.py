@@ -474,7 +474,7 @@ def PlotFit(data,col,sym,shift,iset):
     #     print lab
     #     for it,val,valerr in zip(tvals,dataavg,dataerr):
     #         print tvals,dataavg,dataerr
-    pl.plot(tvals,dataavg,color=col,fmt=sym)
+    pl.plot(tvals,[dataavg,dataavg],color=col,fmt=sym)
     pl.fill_between(tdata,dataup,datadown,color=thiscol,alpha=thisalpha,edgecolor='none')
 
 def PlotSumMeth(data,col,lab,thisTsinkR):
