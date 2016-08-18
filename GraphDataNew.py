@@ -524,7 +524,7 @@ def PlotSummedRF(data,thisfitr):
         pl.fill_between(fittdata,plotup,plotdown,color=thiscol,alpha=thisalpha,edgecolor='none')
         pl.plot(fittdashed,plotdashedup,color=thiscol,ls='--')
         pl.plot(fittdashed,plotdasheddown,color=thiscol,ls='--')
-    if Pullflag(fitbootdata,'Avg') > 0:
+    if Pullflag(fitbootdata,'Avg')[0] > 0:
         pl.legend(loc='upper left')
     else:
         pl.legend(loc='upper right')
