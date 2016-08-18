@@ -76,7 +76,7 @@ def PlotXlabs(method,thissetlist,xminmax):
     xmin,xmax = xminmax
     xmid = (xmax+xmin-2)/float(2)
     tsinklist,smlist = GetTsinkSmLists(thissetlist)
-    smlist = RemoveStuff(smlist,method)
+    smlist = RemoveStuff(thissetlist,method)
     if 'SumMeth' in method:
         line1 = 'Summation'
         line2 = 'Method ' + smlist[0]
