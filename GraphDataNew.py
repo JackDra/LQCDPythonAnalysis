@@ -52,7 +52,7 @@ params = {'legend.fontsize': 10,
           'legend.numpoints': 1,
           'axes.labelsize' : 20,
           'axes.titlesize' : 20,
-          'figure.autolayout': True,
+          # 'figure.autolayout': True,
           'axes.grid': True,
           'axes.xmargin':0.01,
           'axes.ymargin':0.01}
@@ -194,11 +194,11 @@ def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
         PlotColSum(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisTsinkR=ifitr)
     
     thisfig = pl.figure()
-    thisfig.subplots_adjust(top=0.85)
     for ic,ifitr in enumerate(SumFitRList):    
         pl.subplot(1,len(SumFitRList),ic+1)
         PlotColSumFun(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisfig,thisTsinkR=ifitr)
         SetSumFunAxies(ic==0)
+    thisfig.subplots_adjust(top=0.85)
     thisfig.savefig(CreateFile(thissm,thisGamma,thisMom,'Sum TSink Comparison ',thisfig=thisfig)+'Sfun.pdf')
     thisfig.clf()
         
