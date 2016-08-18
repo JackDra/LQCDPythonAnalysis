@@ -467,7 +467,7 @@ def PlotFit(data,col,sym,shift,iset):
             print data['Boot']
         dataavg = Pullflag(data['Boot'],'Avg')
         dataerr = Pullflag(data['Boot'],'Std')
-                         dataup,datadown
+        dataup,datadown = dataavg+dataerr,dataavg-dataerr
     else:
         if Debug:
             print 'warning', iset, 'not in FitCutPicked'
@@ -476,8 +476,8 @@ def PlotFit(data,col,sym,shift,iset):
     #     print lab
     #     for it,val,valerr in zip(tvals,dataavg,dataerr):
     #         print tvals,dataavg,dataerr
-    pl.plot(tvals,dataavg,dataerr,color=col,fmt=sym)
-    pl.fillbetween(tvals,dataavg,dataerr,color=col,fmt=sym)
+    pl.plot(tvals,dataavg,color=col,fmt=sym)
+    pl.fill_between(tdata,dataup,datadown,color=thiscol,alpha=thisalpha,edgecolor='none')
 
 def PlotSumMeth(data,col,lab,thisTsinkR):
     if not CheckDict(data,SumCutPar,thisTsinkR,'Avg'): return
