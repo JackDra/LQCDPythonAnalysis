@@ -172,8 +172,14 @@ def PlotTSinkData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
     PlotCol(data,thisSetList,[thissm],thisGamma,thisMom,'TSink Comparison ')
 
 def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,thissm='sm32'):
-    for ifitr in SumFitRList:
+    for ifitr in SumFitRList:    
         PlotColSum(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisTsinkR=ifitr)
+    for ic,ifitr in enumerate(SumFitRList):    
+        pl.subplot(len(SumFitRList),1,ic)
+        PlotColSumFun(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisTsinkR=ifitr)
+    outTR = ifitr.replace('-','_')
+    pl.savefig(CreateFile(thissm,thisGamma,thisMom,'Sum TSink Comparison '+outTR)+'Sfun.pdf')
+    pl.clf()
         
 def PlotTSinkSFData(data,data2pt,thisSetList,thisGamma,thisMom,thisSF='TSFTsink',thissm='sm32'):
     if 'TSF' in thisSF:
@@ -251,10 +257,9 @@ def PlotColSum(data,thisSetList,thissm,thisGamma,thisMom,TitlePref,thisTsinkR='f
     SetRFAxies(thisGamma)
     pl.savefig(CreateFile(thissm[0],thisGamma,thisMom,TitlePref+outTR)+'.pdf')
     pl.clf()
-    if CheckDict(data,'SumMeth',thissm[0]):
-        PlotSummedRF(data['SumMeth'][thissm[0]],thisTsinkR)
-        pl.savefig(CreateFile(thissm[0],thisGamma,thisMom,TitlePref+outTR)+'Sfun'+'.pdf')
-        pl.clf()
+
+def PlotColSumFun(data,thisSetList,thissm,thisGamma,thisMom,TitlePref,thisTsinkR='fit sl 0-4'):
+    if CheckDict(data,'SumMeth',thissm[0]): PlotSummedRF(data['SumMeth'][thissm[0]],thisTsinkR)
 
 def PlotRFSetTSF(data,data2pt,thisSetList,TSFcut,thisTSF,legrem=''):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
@@ -524,10 +529,10 @@ def PlotSummedRF(data,thisfitr):
         pl.fill_between(fittdata,plotup,plotdown,color=thiscol,alpha=thisalpha,edgecolor='none')
         pl.plot(fittdashed,plotdashedup,color=thiscol,ls='--')
         pl.plot(fittdashed,plotdasheddown,color=thiscol,ls='--')
-    if Pullflag(fitbootdata,'Avg')[0] > 0:
-        pl.legend(loc='upper left')
-    else:
-        pl.legend(loc='upper right')
+    # if Pullflag(fitbootdata,'Avg')[0] > 0:
+    #     pl.legend(loc='upper left')
+    # else:
+    #     pl.legend(loc='upper right')
     SetxTicks()
 
 
