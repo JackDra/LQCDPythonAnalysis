@@ -24,7 +24,7 @@ FitCutMin,FitCutMax = 3,9
 FitCutList = range(FitCutMin,FitCutMax+1)
 FitCutArgs = ['cut'+str(ic) for ic in FitCutList]
 ##TryFits.py
-FitCutPicked =  {'tsink26sm32':'cut4',
+FitCutPicked =  {'tsink26sm32':'cut6',
                  'tsink26'+PickedStateStr+'REvec':'cut4',
                  'tsink29sm32':'cut6',
                  'tsink29sm64':'cut5',
