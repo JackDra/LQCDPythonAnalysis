@@ -97,11 +97,11 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCom
                         progprint(5,prevtime,combgamma)
                     if 'TSFSmall' in thisMethodList:
                         prevtime = time.time()
-                        PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,combgamma,feedin['ForceTitle'],imom,thisSF='TSFSmall')
+                        PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,combgamma,imom,feedin['ForceTitle'],thisSF='TSFSmall')
                         progprint(6,prevtime,combgamma)
                     if 'OSFTsink' in thisMethodList:
                         prevtime = time.time()
-                        PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,combgamma,feedin['ForceTitle'],imom,thisSF='OSFTsink')
+                        PlotTSinkSFData(thisdatadict,thisMassdict,thisSetList,combgamma,imom,feedin['ForceTitle'],thisSF='OSFTsink')
                         progprint(7,prevtime,combgamma)
 
                     prevtime = time.time()
