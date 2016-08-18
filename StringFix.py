@@ -128,20 +128,20 @@ def TitleFix(string):
 def LabToXaxis(thestring,col):
     stringout = thestring
     if col in 'FitsSm':
-        stringout = NoTSink(stringout)
+        stringout = NoTSink(re.sub('cut.','',stringout))
     elif col in 'FitsTsink':
-        stringout = NoCM(NoSm(stringout))
+        stringout = NoCM(NoSm(re.sub('cut.','',stringout)))
     elif col in 'FitsVar':        
-        stringout = stringout
+        stringout = re.sub('cut.','',stringout)
     elif col in 'SumMeth':
         stringout = NoCM(NoSm(stringout))
         stringout = stringout.replace('fitr0-4','')
         stringout = stringout.replace('fitr1-4','')
         stringout = stringout.replace('fitr2-4','')
     elif col in 'OSFCM':
-        stringout = NoCM(NoSm(stringout))
+        stringout = NoCM(NoSm(re.sub('cut.','',stringout)))
     elif col in 'OSFTsink':
-        stringout = NoCM(NoSm(stringout))
+        stringout = NoCM(NoSm(re.sub('cut.','',stringout)))
     elif col in 'TSFCM':
         stringout = NoTSink(NoCM(NoSm(stringout)))
     elif col in 'TSFTsink':
