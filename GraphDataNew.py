@@ -123,8 +123,8 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref,suptitle=False):
     else:
         # pl.title(ForceTitle+'$' + thisflag.replace('Dt','\Delta t') + '$')
         if suptitle:
-            pl.suptitle(ForceTitle)
             pl.subplots_adjust(top=0.85)
+            pl.suptitle(ForceTitle)
         else:
             pl.suptitle(ForceTitle)
     thisdir = outputdir + 'graphs/'+CreateOppDir(thisGamma)
