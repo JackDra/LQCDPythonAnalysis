@@ -535,7 +535,7 @@ def PlotSummedRF(data,thisfitr,thisfig):
                 dataplot.append(tsinkdata['Avg'])
                 dataploterr.append(tsinkdata['Std'])
         tdata,dataplot,dataploterr = zip(*sorted(zip(tdata,dataplot,dataploterr)))
-        thisfig.errorbar(tdata,dataplot,dataploterr,color=thiscol,fmt=thissym,label=icut)
+        thisfig.axes[0].errorbar(tdata,dataplot,dataploterr,color=thiscol,fmt=thissym,label=icut)
         if not CheckDict(cutdata,'fit con '+thisfitr,'Boot'): continue
         if not CheckDict(cutdata,'fit sl '+thisfitr,'Boot'): continue        
         parcon,parsl = cutdata['fit con '+thisfitr]['Boot'],cutdata['fit sl '+thisfitr]['Boot']
@@ -551,11 +551,11 @@ def PlotSummedRF(data,thisfitr,thisfig):
         else:
             plotdashedup = Pullflag(fitbootdashed,'Avg')+Pullflag(fitbootdashed,'Std')
             plotdasheddown = Pullflag(fitbootdashed,'Avg')-Pullflag(fitbootdashed,'Std')
-        thisfig.plot(fittdata,Pullflag(fitbootdata,'Avg'),
+        thisfig.axes[0].plot(fittdata,Pullflag(fitbootdata,'Avg'),
                 label='slope='+MakeValAndErr(parsl.Avg,parsl.Std),color=thiscol)
-        thisfig.fill_between(fittdata,plotup,plotdown,color=thiscol,alpha=thisalpha,edgecolor='none')
-        thisfig.plot(fittdashed,plotdashedup,color=thiscol,ls='--')
-        thisfig.plot(fittdashed,plotdasheddown,color=thiscol,ls='--')
+        thisfig.axes[0].fill_between(fittdata,plotup,plotdown,color=thiscol,alpha=thisalpha,edgecolor='none')
+        thisfig.axes[0].plot(fittdashed,plotdashedup,color=thiscol,ls='--')
+        thisfig.axes[0].plot(fittdashed,plotdasheddown,color=thiscol,ls='--')
     # if Pullflag(fitbootdata,'Avg')[0] > 0:
     #     thisfig.legend(loc='upper left')
     # else:
