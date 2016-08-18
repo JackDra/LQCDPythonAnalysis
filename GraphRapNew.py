@@ -125,6 +125,10 @@ feedin = InputParams(sys.argv[1:] + ['-noprompt'])
     
 thisGammaList = CreateGammaList(feedin['gamma'],twopt=True)
 
+if feedin['ForceTitle'] != False:
+    global ForceTitle
+    ForceTitle = feedin['ForceTitle']
+
 if thisGammaList == ['twopt']:
     # # feedin['method'] = ['RF','OSFCM','TSFCM']
     

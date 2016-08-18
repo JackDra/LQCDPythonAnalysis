@@ -78,6 +78,7 @@ def InputParams(inputparams):
     feedout['FFcombNS'] = CombNSFFList
     feedout['DoCurr'] = True
     feedout['ffgraph'] = 'All'
+    feedout['ForceTitle'] = False
     SkipDefWipe = False
     for isys in inputparams:
         if isys[0] != '-':
@@ -96,14 +97,18 @@ def InputParams(inputparams):
             print '-DoList= specifies a particular FF to plot in GraphFFs.py, choose ONE from:\n' + '\n'.join(DefGraphDoList+['All'])+'\n'
             print "-p= specifies the momentium list to use, form is 'q = X Y Z', X,Y,Z = -3,-2,-1,0,1,2,3"
             print "-np= specifies the maximum number of processors used for this job"
+            print 
             print "-noprompt does not display any prompts (for long runs)"
             print "-NoCurr ignores all Current calculations (vector, isovector etc..)"
+            print "-FT= forces the title for all graphs"
             print 
             exit()
         elif '-NoCurr' in isys:
             feedout['DoCurr'] = False
         elif '-g' in isys:
             feedout['gamma'] = isys.replace('-g=','').split(',')
+        elif '-FT' in isys:
+            feedout['ForceTitle'] = isys
         elif '-s' in isys:
             feedout['set'] = ExpandSetList(isys.replace('-s=','').split(','))[0]
             for isl in feedout['set']:
