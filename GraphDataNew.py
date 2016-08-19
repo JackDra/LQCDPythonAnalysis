@@ -325,20 +325,23 @@ def PlotRFSetTSF(data,data2pt,thisSetList,TSFcut,thisTSF,legrem=''):
 def PlotRFSetOSF(data,data2pt,thisSetList,OSFcut,thisOSF,legrem=''):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     for iset in SortMySet(thisSetList)[0]:
+        thisOSFcut = OSFcut
+        if 'PoF' in iset: thisOSFcut = OSFcut-1
+        if 'sm32' in iset: thisOSFcut = OSFcut+1
         thistsink,thissm = SplitTSinkString(iset)
         thiscol = thiscolcyc.next()
         thissym = thissymcyc.next()
         thisshift = thisshiftcyc.next()
         if not CheckDict(data,'RF'+thisOSF,iset): continue
         PlotRF(data['RF'+thisOSF][iset],thiscol,thissym,thisshift,LegLab(iset.replace(legrem,'')))
-        # PlotOSFLine(data[thisOSF][thissm],data2pt[thisOSF][thissm],thistsink.replace('tsink',''),thiscol,OSFcut,thissm)
+        # PlotOSFLine(data[thisOSF][thissm],data2pt[thisOSF][thissm],thistsink.replace('tsink',''),thiscol,thisOSFcut,thissm)
         OSFset = iset
         if not CheckDict(data,thisOSF,OSFset):
             if not CheckDict(data,thisOSF,thissm):
                 continue
             else:
                 OSFset = thissm
-        PlotOSFValue(data[thisOSF][OSFset],thiscol,thisshift,OSFcut,thissm,thistsink.replace('tsink',''))
+        PlotOSFValue(data[thisOSF][OSFset],thiscol,thisshift,thisOSFcut,thissm,thistsink.replace('tsink',''))
 
 
 
