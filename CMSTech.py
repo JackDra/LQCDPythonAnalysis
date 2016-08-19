@@ -322,10 +322,10 @@ def CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=True):
     start = time.time()
     Cfuns2pt = np.array(Cfuns2pt)
     CMCfun2pt = []
-    Emass,LEvec,REvec = [],[],[]
     ##if ip**2 > pcutoff, make cfuns exclude sm128
     LEvec,REvec,Emass = ReadLREM(todtvals,thisMomList,'PoF'+str(PoFShifts))
     if (not DoPoF) or (not ReadPoF2pt) or (LEvec == None):
+        Emass,LEvec,REvec = [],[],[]
         for ip,thisp in enumerate(thisMomList):
             if DoPoF:
                 Emasshold,LEvechold,REvechold = GetTvarREvesPoF(Cfuns2pt[:,:,ip],todtvals,ipTOE(thisp,VarMassCutoff))
