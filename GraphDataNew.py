@@ -48,6 +48,7 @@ ylimDict = {'IsoVectorP4giDi':[-0.15,-0.05],
             # 'IsoVectorP3g3g5':[-0.9,-1.3],
             'IsoVectorP3g3g5':[-.95,-1.25],
             # 'IsoVectorP4I':[0.4,1.2],
+            'IsoVectorP4giDi':[-0.07,-0.12],
             'IsoVectorP4g4':[0.8,1.1]}
 
 ylimFFDict = {'ProtonGeGmFF1/F1divF2':[0.3,0.5],
