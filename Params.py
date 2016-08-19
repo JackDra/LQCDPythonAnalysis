@@ -96,8 +96,8 @@ OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the m
 DoNorm = False # normalises the 2 point function (see CMSTech.py)
 DoSym = True # symmetrises the 2 point function (see CMSTech.py)
 CfunConfigCheck = True # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
-# VarMethodMethod = 'Regular' # for solving the Variational method, different ways of doing it/
-VarMethodMethod = 'Symmetric'
+VarMethodMethod = 'Regular' # for solving the Variational method, different ways of doing it/
+# VarMethodMethod = 'Symmetric'
 # VarMethodMethod = 'AxBxlSolve'
 NoSFRfacScale = False # Turn on to only scale the R function by sqrt((Epp+m)(Ep+m)/EppEp) for form factor creation
 
