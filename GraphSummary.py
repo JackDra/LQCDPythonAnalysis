@@ -109,10 +109,10 @@ def PlotXlabs(method,thissetlist,xminmax):
         line1 = '2SF'
         if 'CM' in method:
             if tsinklist[0] == None:
-                line2 = 'tsink29'
+                line2 = 'tsink29 sm'
             else:
                 line2 = tsinklist[0]
-            line3 = smlist
+            line3 = [ism.replace('sm','') for ism in smlist]
         elif 'Tsink' in method:
             line2 = 'All'
             line3 = smlist
