@@ -218,8 +218,8 @@ for Proj,GL in DefProjDerList.iteritems():
 DefCombGammaList = DefGammaList+DefNoDSGammaList
 
 # DeftoList = [20,21,22,23]
-# DeftoList = [17,18,19,20,21,22,23]
-DeftoList = [18,19,20,21,22]
+DeftoList = [17,18,19,20,21,22,23]
+# DeftoList = [18,19,20,21,22]
 # DeftoList = [16,17,18,19,20]
 # DefdtList = [1,2,3,4]
 DefdtList = [1,2,3,4]
