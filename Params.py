@@ -102,7 +102,7 @@ VarMethodMethod = 'AxBxlSolve'
 NoSFRfacScale = False # Turn on to only scale the R function by sqrt((Epp+m)(Ep+m)/EppEp) for form factor creation
 
 ##DEBUG toggles (True/False):
-Debug = False # for debugging, toggles alot of print statements on
+Debug = True # for debugging, toggles alot of print statements on
 ScaleByP4g4 = False ## scales out all operators by P4g4 instead of 2 point correlator at tsink for Ratio value (RF)
 ShowConfNum = Debug # debugging, show number of configs during read
 PrintRead = not DoMulticore # Screws up output if on and doing mulitcore reading
@@ -120,10 +120,10 @@ logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 momlistdir = datadir+'momdir/'
 pickledir = datadir+"pickledir/"
 REvecDir = scriptdir+'REvecSave/k'+str(kappa)+'/'
-RunMomList = qvecSet 
+# RunMomList = qvecSet 
 # For Debuggin, only use zero momenta
 # RunMomList = [qvecSet[iqTOip(0)],qvecSet[qvecTOip([0,2,2])]]
-# RunMomList = [qvecSet[iqTOip(0)]]
+RunMomList = [qvecSet[iqTOip(0)]]
 mkdir_p(outputdir)
 mkdir_p(pickledir)
 mkdir_p(logdir)
