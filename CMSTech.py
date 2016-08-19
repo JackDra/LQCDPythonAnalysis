@@ -326,17 +326,17 @@ def CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=True):
     ##if ip**2 > pcutoff, make cfuns exclude sm128
     LEvec,REvec,Emass = ReadLREM(todtvals,thisMomList,'PoF'+str(PoFShifts))
     if (DoPoF and ReadPoF2pt) and not (LEvec==None):
-    for ip,thisp in enumerate(thisMomList):
-        if DoPoF:
-            Emasshold,LEvechold,REvechold = GetTvarREvesPoF(Cfuns2pt[:,:,ip],todtvals,ipTOE(thisp,VarMassCutoff))
-            # for istate in range(len(Emasshold)):
-            #     print ' '.join(map(str,LEvechold[istate])) , Emasshold[istate]
-        else:
-            Emasshold,LEvechold,REvechold = GetTvarREves(Cfuns2pt[:,:,ip],todtvals,ipTOE(thisp,VarMassCutoff))
-        Emass.append(Emasshold)
-        LEvec.append(LEvechold)
-        REvec.append(REvechold)
-    LEvec,REvec = SignEvec(np.array(LEvec),np.array(REvec))
+        for ip,thisp in enumerate(thisMomList):
+            if DoPoF:
+                Emasshold,LEvechold,REvechold = GetTvarREvesPoF(Cfuns2pt[:,:,ip],todtvals,ipTOE(thisp,VarMassCutoff))
+                # for istate in range(len(Emasshold)):
+                #     print ' '.join(map(str,LEvechold[istate])) , Emasshold[istate]
+            else:
+                Emasshold,LEvechold,REvechold = GetTvarREves(Cfuns2pt[:,:,ip],todtvals,ipTOE(thisp,VarMassCutoff))
+            Emass.append(Emasshold)
+            LEvec.append(LEvechold)
+            REvec.append(REvechold)
+        LEvec,REvec = SignEvec(np.array(LEvec),np.array(REvec))
     for ip,thisp in enumerate(thisMomList):
         if DoPoF:
             CMCfun2pt.append(ProjectCorrPoF2pt(LEvec[ip],Cfuns2pt[:,:,ip],REvec[ip]))
