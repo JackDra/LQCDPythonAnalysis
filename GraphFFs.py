@@ -17,6 +17,12 @@ from InputArgs import *
 from MultiWrap import *
 from multiprocessing import Pool
 
+feedin = InputParams(sys.argv[1:]+['-noprompt'])
+
+def PlotFFWrap(a,b,c,d):
+    PlotFFs(a,b,c,d,feedin['ForceTitle'])
+
+
 def FlagList(AllSetList,*flag):
     SLOut = []
     for iset in AllSetList:
@@ -28,35 +34,35 @@ def PlotTSFSets(currdata,thiscurr,thisSetList):
     for iTSF in TSFFileFlags:
         if iTSF == 'CM':
             for ism in DefSmList:
-                PlotFFs(currdata,thiscurr,FlagList(thisSetList,'TSF',iTSF,ism),'TSF'+iTSF+ism+'CutComp')
+                PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'TSF',iTSF,ism),'TSF'+iTSF+ism+'CutComp')
         else:
-            PlotFFs(currdata,thiscurr,FlagList(thisSetList,'TSF',iTSF),'TSF'+iTSF+'CutComp')
+            PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'TSF',iTSF),'TSF'+iTSF+'CutComp')
     for icut in TSFCutList:
-        PlotFFs(currdata,thiscurr,FlagList(thisSetList,'TSF',icut),'TSFAll'+icut+'MethComp')
+        PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'TSF',icut),'TSFAll'+icut+'MethComp')
 
 
 def PlotOSFSets(currdata,thiscurr,thisSetList):
     for iOSF in OSFFileFlags:
         for itsink in AllTSinkStrList:
-            PlotFFs(currdata,thiscurr,FlagList(thisSetList,'OSF',iOSF,itsink),'OSF'+iOSF+itsink+'CutComp')
+            PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'OSF',iOSF,itsink),'OSF'+iOSF+itsink+'CutComp')
         for icut in OSFCutList:
-            PlotFFs(currdata,thiscurr,FlagList(thisSetList,'OSF',iOSF,icut),'OSF'+iOSF+icut+'MethComp')
+            PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'OSF',iOSF,icut),'OSF'+iOSF+icut+'MethComp')
     for icut in OSFCutList:
-        PlotFFs(currdata,thiscurr,FlagList(thisSetList,'OSF',icut),'OSFAll'+icut+'MethComp')
+        PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'OSF',icut),'OSFAll'+icut+'MethComp')
         
 def PlotSumMethSets(currdata,thiscurr,thisSetList):
     for icut in SumCutList:
-        PlotFFs(currdata,thiscurr,FlagList(thisSetList,'SumMeth',icut),'SumMeth'+icut+'FitRComp')
+        PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'SumMeth',icut),'SumMeth'+icut+'FitRComp')
     for ifitr in SumFitRListFlags:
-        PlotFFs(currdata,thiscurr,FlagList(thisSetList,'SumMeth',ifitr),'SumMeth'+ifitr+'CutComp')
+        PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'SumMeth',ifitr),'SumMeth'+ifitr+'CutComp')
 
 def PlotFitMethSets(currdata,thiscurr,thisSetList):
-    PlotFFs(currdata,thiscurr,FlagList(thisSetList,'Fit','tsink29','cut6')+FlagList(thisSetList,'Fit','PoF','cut6'),'FitMytsink29')
-    PlotFFs(currdata,thiscurr,FlagList(thisSetList,'Fit','sm32','cut6'),'FitMysm32')
+    PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit','tsink29','cut6')+FlagList(thisSetList,'Fit','PoF','cut6'),'FitMytsink29')
+    PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit','sm32','cut6'),'FitMysm32')
     for iset in DefSetList:
-        PlotFFs(currdata,thiscurr,FlagList(thisSetList,'Fit',iset),'Fit'+iset+'CutComp')
+        PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit',iset),'Fit'+iset+'CutComp')
     for icut in FitCutArgs:
-        PlotFFs(currdata,thiscurr,FlagList(thisSetList,'Fit',icut),'Fit'+icut+'SetComp')
+        PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit',icut),'Fit'+icut+'SetComp')
         
 
 def PickFFAllSets(currdata,thiscurr,thisSetList):
@@ -107,18 +113,17 @@ def ReadAndPlotFF(thisCurrDict,DoList='All'):
             currPSL.append(PickFFAllSets(currdata,thiscurr,thisCurrDict[thiscurr]))
         if 'Few' in DoList or 'All' in DoList:
             print 'Plotting ' , thiscurr ,'6/6 Few            '
-            PlotFFs(currdata,thiscurr,PickFFFewSets(currdata,thiscurr,thisCurrDict[thiscurr]),'Summary')
+            PlotFFWrap(currdata,thiscurr,PickFFFewSets(currdata,thiscurr,thisCurrDict[thiscurr]),'Summary')
         print 'Plotting ' , thiscurr ,'Complete, took: ', GetTimeStr(time.time()-start)
     return datadict,currPSL
     
 def PlotFFqPick(datadict,thisPSL):
     start = time.time()
     for thisSL,(thiscurr,currdata) in zip(thisPSL,datadict.iteritems()):
-        PlotFFSummary(thisSL,thiscurr,currdata)
+        PlotFFSummary(thisSL,thiscurr,currdata,feedin['ForceTitle'])
         print 'Plotting Summary for qsqrd ' , thiscurr ,'Complete, took: ', GetTimeStr(time.time()-start)
 
 
-feedin = InputParams(sys.argv[1:]+['-noprompt'])
 
 thisFFcomb = []
 for icomb in feedin['comb']:

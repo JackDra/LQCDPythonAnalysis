@@ -28,16 +28,16 @@ if DoMulticore and feedin['anaproc'] > 1:
     inputparams = []
     for igamma in thisGammaList:
         if 'doub' not in igamma and 'sing' not in igamma:
-            inputparams.append((feedin['method'],['doub'+igamma,'sing'+igamma,'twopt'],feedin['set'],feedin['mom'],feedin['comb']))
+            inputparams.append((feedin['method'],['doub'+igamma,'sing'+igamma,'twopt'],feedin['set'],feedin['mom'],feedin['comb'],feedin['ForceTitle']))
         elif igamma.replace('doub','').replace('sing','') not in thisGammaList:
-            inputparams.append((feedin['method'],[igamma,'twopt'],feedin['set'],feedin['mom'],feedin['comb']))            
+            inputparams.append((feedin['method'],[igamma,'twopt'],feedin['set'],feedin['mom'],feedin['comb'],feedin['ForceTitle']))            
     makeContextFunctions(ReadAndPlotSummary)
     thisPool = Pool(min(len(inputparams),feedin['anaproc']))
     thisPool.map(ReadAndPlotSummary.mapper,inputparams)
     thisPool.close()
     thisPool.join()
 else:
-    ReadAndPlotSummary(feedin['method'],thisGammaList,feedin['set'],feedin['mom'],feedin['comb'])    
+    ReadAndPlotSummary(feedin['method'],thisGammaList,feedin['set'],feedin['mom'],feedin['comb'],feedin['ForceTitle'])    
     
 
 # for iin in inputparams: ReadAndPlotSummary(*iin)

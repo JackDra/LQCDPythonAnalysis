@@ -20,6 +20,8 @@ from SetLists import *
 from FFParams import *
 from CreateCombs import CreateDictOldCombs
 
+ForceTitle = False
+
 colourset8 = [ '#000080','#B22222','#00B800','#8B008B', '#0000FF','#FF0000','#000000','#32CD32','#FF0066']
 markerset = ['o','s','^','v','d']
 shiftmax = 3
@@ -215,7 +217,7 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
     # pl.ylabel('Value')
     pl.xlim(-1,xvalues-1)
     pl.grid(False,axis='x')
-    if iDS == False:
+    if iDS == False:            
         if 'GeGm' in dirpref and '/' not in dirpref:
             if 'FF1' in igamma:
                 titleStr = CreateCurrCombFn(dirpref,spacing=' ').replace('Gm','')
@@ -225,7 +227,10 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
             titleStr = CreateCurrCombFn(dirpref,spacing=' ').replace('GeGm','')                
         else:
             titleStr = CreateCurrCombFn(dirpref,spacing=' ')
-        pl.title(TitleFix('SummaryPlot ' + titleStr + ' ' + iq))
+        if ForceTitle == False:
+            pl.title(TitleFix('SummaryPlot ' + titleStr + ' ' + iq))
+        else:
+            pl.title(ForceTitle)
         thisgammadir = dirpref + '/'
         thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/'+iq+'/'
         mkdir_p(thisdir)
@@ -234,7 +239,10 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
         mprint( 'outputting FF plot to :',thisdir+'SummaryPlot'+titleStr.replace(' ','')+filegamma+iq+'.pdf')
         pl.savefig(thisdir+'SummaryPlot'+titleStr.replace(' ','')+filegamma+iq+'.pdf')
     else:
-        pl.title(TitleFix('SummaryPlot ' +iDS + ' ' + igamma + ' ' + iq))
+        if ForceTitle == False:
+            pl.title(TitleFix('SummaryPlot ' +iDS + ' ' + igamma + ' ' + iq))
+        else:
+            pl.title(ForceTitle)
         thisgammadir = CreateOppDir(iDS+igamma)
         thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/qsqrd'+str(qsqrdstr(iq))+'/'
         mkdir_p(thisdir)
@@ -289,7 +297,9 @@ def PlotSummarySet(iDS,igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
     return xstart+len(xdata),Xlables+['']
 
 
-def ReadAndPlotSummary(thisMethodList,thisGammaList,thisSetList,thisMomList,thisCombList):
+def ReadAndPlotSummary(thisMethodList,thisGammaList,thisSetList,thisMomList,thisCombList,FT=False):
+    global ForceTitle
+    ForceTitle = FT
     data,massdata = ExtractValues(outputdir,thisGammaList,thisSetList,thisMethodList,thisMomList=thisMomList)
     thisMethodSetList = CreateMethodSetList(thisMethodList,data.keys())
     for igamma in thisGammaList:
@@ -307,7 +317,9 @@ def ReadAndPlotSummary(thisMethodList,thisGammaList,thisSetList,thisMomList,this
                 PlotSummaryMethods(data,thisMethodSetList,iDS,gammastrip,imom,outputdir)
 
 
-def PlotFFSummary(thisSL,DSCurr,currdata):
+def PlotFFSummary(thisSL,DSCurr,currdata,FT=False):
+    global ForceTitle
+    ForceTitle = FT
     if 'RF' in MethodList: MethodList.remove('RF')
     thisMethodSetList = CreateMethodSetList(MethodList,thisSL)
     thisDS,thisCurr,thisFFComb = SplitDSCurr(DSCurr)

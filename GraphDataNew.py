@@ -111,7 +111,10 @@ def SiftAndSort(thisSetList,comp,nocm=True):
 
 def CreateFFFile(thisCol,thisCurr,thisFF):
     thistitle = thisCol + ' ' + thisCurr.replace('/',' ') + ' ' + thisFF
-    pl.title(thistitle)
+    if ForceTitle == False:
+        pl.title(thistitle)
+    else:
+        pl.title(ForceTitle)
     thisdir = outputdir + 'graphs/FormFactors/'+thisCurr + '/'
     mkdir_p(thisdir)
     thisfile = thisCol+thisCurr.replace('/','') + thisFF
@@ -456,7 +459,9 @@ def PlotMassSetTSF(data2pt,thisSetList,MassDt,thisSF):
     if CheckDict(data2pt,'T'+thisSF,iterSetList[0]):
         PlotTSFMassValue(data2pt['T'+thisSF][iterSetList[0]],MassDt)
 
-def PlotFFs(data,DSCurr,thisSetList,CollName):
+def PlotFFs(data,DSCurr,thisSetList,CollName,FT):
+    global ForceTitle
+    ForceTitle = FT
     if len(thisSetList) == 0: return
     thisDS,thisCurr,thisFFComb = SplitDSCurr(DSCurr)
     for iFF in range(1,NoFFPars[thisCurr]+1):
