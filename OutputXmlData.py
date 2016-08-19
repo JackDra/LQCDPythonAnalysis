@@ -188,7 +188,7 @@ def PrintFFSet(FFin,Set,Mass,SetMass,theCurr,infoFF):
             for ic,iFF in enumerate(qdata['Boot']):
                 datadict['Form_Factors']['Boots'][iqsqrd]['FF'+str(ic+1)] = iFF.values
     # MergeXmlOutput(thisfile,datadict,CheckMom=False)
-    WriteXmlOutput(thisfile,datadict,CheckMom=False)
+    WriteXmlOutput(thisfile,datadict)
 
 
 
