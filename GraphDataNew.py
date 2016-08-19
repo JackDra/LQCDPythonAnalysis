@@ -148,8 +148,8 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False):
     return thisdir+thisfile
 
 def SetSumFunAxies(DoY):
-    if DoY:pl.ylabel(SUMylab)
-    pl.xlabel(SUMxlab)
+    pl.ylabel(SUMylab)
+    if DoY:pl.xlabel(SUMxlab)
 
 def SetRFAxies(thisGamma):
     pl.xlabel(RFxlab)
