@@ -51,7 +51,9 @@ def ReadLREM(todtval,thisMomList,filepref):
                     elif 'R' in rdata[0] and 'L' in rdata[0]:
                         LEvec[-1].append(map(complex,rdata[1:-1]))
                         REvec[-1].append(map(complex,rdata[1:-1]))
-                        Emass[-1].append(complex(rdata[-1]))                        
+                        Emass[-1].append(complex(rdata[-1]))
+        if Debug:
+            print thisMomList, MomListOut
         return MomOrderLists(MomListOut,[ipTOqstr(ip) for ip in thisMomList],LEvec,REvec,Emass)
     else:
         print 'Warning',filename, 'not found'
