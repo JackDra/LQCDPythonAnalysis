@@ -209,6 +209,8 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
     ysize = yhigh-ylow
     pl.ylim(ylow-(3*ysize*xlabshift),yhigh)
     pl.ylim(max(lowlim,pl.ylim()[0]),min(highlim,pl.ylim()[1]))
+    if iDS+igamma in ylimSummaryDict.keys():
+        pl.ylim(*ylimSummaryDict[iDS+igamma])
     ylow,yhigh = pl.ylim()
     ysize = yhigh-ylow
     for xmid,line1 in Xbox1:
@@ -248,8 +250,6 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
         else:
             pl.title(ForceTitle)
 
-        if iDS+igamma in ylimSummaryDict.keys():
-            pl.ylim(*ylimSummaryDict[iDS+igamma])
         thisgammadir = CreateOppDir(iDS+igamma)
         thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/qsqrd'+str(qsqrdstr(iq))+'/'
         mkdir_p(thisdir)
