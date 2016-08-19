@@ -325,7 +325,7 @@ def CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=True):
     Emass,LEvec,REvec = [],[],[]
     ##if ip**2 > pcutoff, make cfuns exclude sm128
     LEvec,REvec,Emass = ReadLREM(todtvals,thisMomList,'PoF'+str(PoFShifts))
-    if (DoPoF and ReadPoF2pt) and not (LEvec==None):
+    if (DoPoF and ReadPoF2pt) or not (LEvec == None):
         for ip,thisp in enumerate(thisMomList):
             if DoPoF:
                 Emasshold,LEvechold,REvechold = GetTvarREvesPoF(Cfuns2pt[:,:,ip],todtvals,ipTOE(thisp,VarMassCutoff))
