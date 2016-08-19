@@ -246,7 +246,8 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
             pl.title(TitleFix('SummaryPlot ' +iDS + ' ' + igamma + ' ' + iq))
         else:
             pl.title(ForceTitle)
-        if igamma in ylimSummaryDict.keys():
+
+        if iDS+igamma in ylimSummaryDict.keys():
             pl.ylim(*ylimSummaryDict[iDS+igamma])
         thisgammadir = CreateOppDir(iDS+igamma)
         thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/qsqrd'+str(qsqrdstr(iq))+'/'
