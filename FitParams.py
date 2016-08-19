@@ -26,10 +26,10 @@ FitCutArgs = ['cut'+str(ic) for ic in FitCutList]
 ##TryFits.py
 FitCutPicked =  {'tsink26sm32':'cut6',
                  'tsink26'+PickedStateStr+'REvec':'cut4',
-                 'tsink29sm32':'cut5',
-                 'tsink29sm64':'cut5',
+                 'tsink29sm32':'cut6',
+                 'tsink29sm64':'cut6',
                  'tsink29sm128':'cut5',
-                 'tsink29'+PickedStateStr+'CM':'cut5',
+                 'tsink29'+PickedStateStr+'CM':'cut4',
                  'tsink32sm32':'cut6',
                  'tsink32'+PickedStateStr+'REvec':'cut6',
                  'tsink35sm32':'cut6',
