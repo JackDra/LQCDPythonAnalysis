@@ -636,6 +636,7 @@ def PlotTSFLine(data,data2pt,thistsink,col,thisshift,TSFcut,smear):
 
 def PlotOSFValue(data,col,thisshift,OSFcut,smear,thistsink):
     LRM = max((int(thistsink)-tsource)/2.-int(OSFcut.replace('cut','')),0)
+    if LRM == 0: return
     tvals = np.array([-LRM+thisshift,LRM+thisshift])
     osfsmear,dump = CreateOSFfitKey(smear)
     if not CheckDict(data,'B00',OSFfitr[osfsmear],OSFcut,'Avg'): return
