@@ -327,7 +327,7 @@ def PlotRFSetOSF(data,data2pt,thisSetList,OSFcut,thisOSF,legrem=''):
     for iset in SortMySet(thisSetList)[0]:
         thisOSFcut = OSFcut
         intcut = int(OSFcut.replace('cut',''))
-        if 'PoF' in iset: thisOSFcut = 'cut'+str(intcut-1)
+        if 'PoF' in iset: thisOSFcut = 'cut'+str(intcut-2)
         if 'sm32' in iset: thisOSFcut = 'cut'+str(intcut+1)
         thistsink,thissm = SplitTSinkString(iset)
         thiscol = thiscolcyc.next()
