@@ -56,7 +56,7 @@ def ReadLREM(todtval,thisMomList,filepref):
             print map(ipTOqstr,thisMomList), MomListOut
         return MomOrderLists(MomListOut,[ipTOqstr(ip) for ip in thisMomList],LEvec,REvec,Emass)
     else:
-        print 'Warning',filename, 'not found'
+        mprint('Warning',filename, 'not found')
         return None,None,None
 
 ## readdata { gamma } { mom } { method } { set }
