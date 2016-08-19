@@ -44,7 +44,8 @@ SumMeth3ptCuts = range(4)
 ##picked for plotting
 SumCutList = ['cut'+str(isum) for isum in SumMeth3ptCuts]
 SumCutPar = 'cut3'
-SumFitRList = ['fit sl 0-4','fit sl 1-4','fit sl 2-4']
+# SumFitRList = ['fit sl 0-4','fit sl 1-4','fit sl 2-4']
+SumFitRList = ['fit sl 0-4','fit sl 2-4']
 SumFitRPicked = 'fitr0-4'
 
 SumFitRListFlags = [ifitr.replace(' sl ','r') for ifitr in SumFitRList]
