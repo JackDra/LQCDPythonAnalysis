@@ -207,7 +207,8 @@ def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,FT,thissm='sm32'):
     pl.rcParams['figure.autolayout'] = False
     thisfig = pl.figure()
     for ic,ifitr in enumerate(SumFitRList):    
-        pl.subplot(1,len(SumFitRList),ic+1)
+        # pl.subplot(1,len(SumFitRList),ic+1)
+        pl.subplot(len(SumFitRList),1,ic+1)
         PlotColSumFun(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisfig,thisTsinkR=ifitr)
         SetSumFunAxies(ic==0)
     # thisfig.subplots_adjust(top=0.95)
