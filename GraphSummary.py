@@ -32,7 +32,8 @@ incr = 0.01
 thisalpha = 0.3
 
 ylimSummaryDict = {'IsoVectorP4I': [0.6,1.2],
-                   'IsoVectorP4giDi': [-0.12,-0.06]}
+                   'IsoVectorP4giDi': [-0.12,-0.06],
+                   'IsoVectorP3g3g5': [-0.9,-1.3]}
 
 xlabshift = 0.055
 manylim = (-1,2.5)
