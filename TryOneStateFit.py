@@ -69,9 +69,9 @@ elif outfile == 'JustPoF':
     ReadSmearList = []
     ReadTSinkList = [29]
     ReadTvarList = AnaTvarList
-    # CaptString = ['PoFSET']
+    CaptString = ['PoFSET']
     # CaptString = ['tsink26state1PoF1to17dt2']
-    CaptString = ['tsink27state1PoF1to17dt2']
+    # CaptString = ['tsink27state1PoF1to17dt2']
     ReadREvecTSinkList = []
     ReadREvecTvarList = []
 elif outfile == 'REvec':
