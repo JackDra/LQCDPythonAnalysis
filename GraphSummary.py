@@ -117,7 +117,7 @@ def PlotXlabs(method,thissetlist,xminmax):
             line2 = 'All'
             line3 = smlist
         elif 'test32' in method:
-            line2 = 'tst'
+            line2 = 'Lrg'
             line3 = smlist
         elif 'Small' in method:
             line2 = 'Sml'
