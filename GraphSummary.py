@@ -31,6 +31,8 @@ for ish in np.arange(1,shiftmax+1): shiftset += [-ish*shiftper,ish*shiftper]
 incr = 0.01
 thisalpha = 0.3
 
+ylimSummaryDict = {'IsoVectorP4I': [0.6,1.2]}
+
 xlabshift = 0.05
 manylim = (-1,2.5)
 lowlim = manylim[0]
@@ -244,6 +246,8 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
             pl.title(TitleFix('SummaryPlot ' +iDS + ' ' + igamma + ' ' + iq))
         else:
             pl.title(ForceTitle)
+        if igamma in ylimSummaryDict.keys():
+            pl.ylim(*ylimSummaryDict[iDS+igamma])
         thisgammadir = CreateOppDir(iDS+igamma)
         thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/qsqrd'+str(qsqrdstr(iq))+'/'
         mkdir_p(thisdir)
