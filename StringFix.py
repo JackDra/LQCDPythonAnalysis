@@ -46,7 +46,7 @@ def ReducedVar(thestring):
     for itvar in PoFTvarList:
         thestring = thestring.replace(itvar,'PoF')
     for itvar in REvecTvarList:
-        thestring = thestring.replace(itvar,'REvec')
+        thestring = thestring.replace(itvar,'CM')
     for itvar in DefTvarList:
         thestring = thestring.replace(itvar,'CM')
     return thestring
@@ -77,7 +77,7 @@ def SplitToDt(tvar):
 def ProperCM(thestring):
     thestring = thestring.replace('state1','')
     thestring = thestring.replace('CM','CMSPACE')
-    thestring = thestring.replace('REvec','REvecSPACE')
+    thestring = thestring.replace('REvec','CMSPACE')
     thestring = thestring.replace('PoF','PoFSPACE')
     toval = re.search('to..',thestring)
     try:
