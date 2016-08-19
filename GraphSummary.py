@@ -31,8 +31,8 @@ for ish in np.arange(1,shiftmax+1): shiftset += [-ish*shiftper,ish*shiftper]
 incr = 0.01
 thisalpha = 0.3
 
-ylimSummaryDict = {'IsoVectorP4I': [0.6,1.2],
-                   'IsoVectorP4giDi': [-0.13,-0.07]}
+ylimSummaryDict = {'IsoVectorP4I': [0.6,1.2]}
+                   # 'IsoVectorP4giDi': [-0.13,-0.07]}
 
 xlabshift = 0.05
 manylim = (-1,2.5)
