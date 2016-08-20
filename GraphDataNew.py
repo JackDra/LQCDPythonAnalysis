@@ -30,7 +30,7 @@ ForceTitle = False
 colourset8 = [ '#000080','#B22222','#00B800','#8B008B', '#0000FF','#FF0000','#000000','#32CD32','#FF0066']
 markerset = ['o','s','^','v','d']
 shiftmax = 3
-shiftper = 0.05
+shiftper = 0.025
 shiftset = [0]
 for ish in np.arange(1,shiftmax+1): shiftset += [-ish*shiftper,ish*shiftper]
 incr = 0.01
@@ -187,6 +187,7 @@ def SetFFAxies(thisCurr):
         pl.ylim(max(pl.ylim()[0],-1),min(pl.ylim()[1],2))
     else:
         pl.ylim(ylimFFDict[thisCurr])
+    pl.xlim(-5,115)
     pl.legend()
     pl.tight_layout()
 
