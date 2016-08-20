@@ -111,7 +111,7 @@ DoCmplx = True # reads complex opperator values as well as real values, should b
 DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
 Doeigh = False # variational method, uses a symetrix matrix solver.
 MakeGraphDat = True # Creates a .dat file of the values plotted for the corresponding graph (where implemented)
-PhysicalUnits = False # uses lattice momenta or physical momenta
+PhysicalUnits = True # uses lattice momenta or physical momenta
 
 if Debug: print 'nconfs saved is: ' , RunNconfs
 

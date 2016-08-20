@@ -518,6 +518,8 @@ def PlotFF(data,col,sym,shift,lab):
     qsqrdvals,dataavg,dataerr = [],[],[]
     for iqsqrd,(qsqrd,values) in enumerate(data.iteritems()):
         Qsqrd = GetQsqrd(float(qsqrd.replace('qsqrd','')),Phys=PhysicalUnits)
+        thisshift = shift
+        if PhysicalUnits: thisshift *= hbarcdivlat**2
         qsqrdvals.append(Qsqrd+shift)
         if 'Boot' in values.keys():
             dataavg.append(values['Boot'].Avg)
