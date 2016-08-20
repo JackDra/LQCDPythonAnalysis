@@ -83,8 +83,8 @@ SUMylab = r'$ S(t)$'
 SUMxlab = r'$ t$'
 
 
-FFylab = r'$ FF(q^{2}) $'
-FFxlab = r'$ q^{2} (GeV)$'
+FFylab = r'$ FF(Q^{2}) $'
+FFxlab = r'$ Q^{2} (GeV)$'
 
 DatFile = False
 
