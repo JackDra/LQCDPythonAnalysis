@@ -516,8 +516,10 @@ def PlotFF(data,col,sym,shift,lab):
             dataavg.append(values['Avg'])
             dataerr.append(values['Std'])
     if len(tvals) > 0:
-        AppendFFDat(tvals,map(abs,dataavg),dataerr)
-        pl.errorbar(tvals,map(abs,dataavg),dataerr,color=col,fmt=sym,label=lab)
+        if len(tvals) > Qcut:
+            tvals,dataavg,dataerr = tvals[:Qtcut],dataavg[:Qtcut],dataerr[:Qtcut]
+        AppendFFDat(tvals,dataavg,dataerr)
+        pl.errorbar(tvals,dataavg,dataerr,color=col,fmt=sym,label=lab)
 
 def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
     if MP:
