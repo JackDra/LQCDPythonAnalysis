@@ -105,12 +105,12 @@ def LegLab(string,NoSm=False,NoTSink=False):
 
 
 def LegLabFF(string,NoSm=False,NoTSink=False):
-    thisstr = re.sub('cut.','',string)
-    string = string.replace('OSFCM',' 1SF')
-    string = string.replace('TSFTsink',' 2SF')
-    string = string.replace('CM',' Var')
-    string = string.replace('Fits',' Fits')
     if len(string) == 0: return ''
+    thisstr = re.sub('cut.','',string)
+    thisstr = thisstr.replace('OSFCM',' 1SF')
+    thisstr = thisstr.replace('TSFTsink',' 2SF')
+    thisstr = thisstr.replace('CM',' Var')
+    thisstr = thisstr.replace('Fits',' Fits')
     if NoSm:
         thisstr = NoSm(thisstr)
     if NoTSink:
