@@ -519,9 +519,9 @@ def PlotFF(data,col,sym,shift,lab):
     for iqsqrd,(qsqrd,values) in enumerate(data.iteritems()):
         Qsqrd,QsqrdPhys = GetQsqrd(float(qsqrd.replace('qsqrd','')))
         if PhysicalUnits:
-            qsqrdvals.append(QsqrdPhys+shift*(qunitPhys**2))
+            qsqrdvals.append(QsqrdPhys+shift)
         else:
-            qsqrdvals.append(QsqrdPhys+shift*(qunit**2))
+            qsqrdvals.append(Qsqrd+shift)
         if 'Boot' in values.keys():
             dataavg.append(values['Boot'].Avg)
             dataerr.append(values['Boot'].Std)
