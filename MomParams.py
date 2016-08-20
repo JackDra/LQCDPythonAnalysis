@@ -22,7 +22,7 @@ def GetQsqrd(nqsqrd):
     qsqrd = nqsqrd*(qunit**2)
     Ep = np.sqrt(DefMass**2 + qsqrd)
     Qsqrd = qsqrd - (Ep-DefMass)**2
-    QsqrdPhys = Qsqrd*hbarcdivlat
+    QsqrdPhys = Qsqrd*(hbarcdivlat**2)
     return Qsqrd,QsqrdPhys
     
 
