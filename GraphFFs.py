@@ -67,11 +67,6 @@ def PlotFitMethSets(currdata,thiscurr,thisSetList):
 
 def PickFFAllSets(currdata,thiscurr,thisSetList):
     PickedSetList = []
-    PickedSetList += FlagList(thisSetList,'Fit','tsink29sm32',FitCutPicked['tsink29sm32'])
-    PickedSetList += FlagList(thisSetList,'Fit','tsink29state1CMto20dt2',FitCutPicked['tsink29state1CM'])
-    PickedSetList += FlagList(thisSetList,'OSFCM','tsink29sm32',OSFCutPicked)
-    PickedSetList += FlagList(thisSetList,'OSFCM','tsink29state1CMto20dt2',OSFCutPicked)
-    PickedSetList += FlagList(thisSetList,'TSFTsink','sm32',TSFCutPicked)
     # for Fitkey,FitCutVal in FitCutPicked.iteritems():
     #     PickedSetList += FlagList(thisSetList,'Fit',Fitkey,FitCutVal)
     # for ifitr in SumFitRListFlags:
@@ -87,9 +82,14 @@ def PickFFAllSets(currdata,thiscurr,thisSetList):
 
 def PickFFFewSets(currdata,thiscurr,thisSetList):
     PickedSetList = []
+    PickedSetList += FlagList(thisSetList,'Fit','tsink29sm32',FitCutPicked['tsink29sm32'])
+    PickedSetList += FlagList(thisSetList,'Fit','tsink29state1CMto20dt2',FitCutPicked['tsink29state1CM'])
+    PickedSetList += FlagList(thisSetList,'OSFCM','tsink29sm32',OSFCutPicked)
+    PickedSetList += FlagList(thisSetList,'OSFCM','tsink29state1CMto20dt2',OSFCutPicked)
+    PickedSetList += FlagList(thisSetList,'TSFTsink','sm32',TSFCutPicked)
     # for Fitkey,FitCutVal in FitCutPicked.iteritems():
-    PickedSetList += FlagList(thisSetList,'Fit','tsink29'+PickedStateStr+'CM',FitCutPicked['tsink29'+PickedStateStr+'CM'])
-    PickedSetList += FlagList(thisSetList,'Fit','tsink26'+PickedStateStr+'PoF',FitCutPicked['tsink26'+PickedStateStr+'PoF'+str(PoFShifts)])
+    # PickedSetList += FlagList(thisSetList,'Fit','tsink29'+PickedStateStr+'CM',FitCutPicked['tsink29'+PickedStateStr+'CM'])
+    # PickedSetList += FlagList(thisSetList,'Fit','tsink26'+PickedStateStr+'PoF',FitCutPicked['tsink26'+PickedStateStr+'PoF'+str(PoFShifts)])
     # PickedSetList += FlagList(thisSetList,'Fit','tsink35sm32',FitCutPicked['tsink35sm32'])
     # PickedSetList += FlagList(thisSetList,'SumMeth',SumFitRPicked,SumCutPar)
     # PickedSetList += FlagList(thisSetList,'OSF',OSFCutPicked)
