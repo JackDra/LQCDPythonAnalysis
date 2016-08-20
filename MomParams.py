@@ -16,15 +16,18 @@ hbarcdivlat = hbarc/latspace
 qunitPhys = qunit*hbarcdivlat
 
 DefMass = 0.4662535526 #Lat Units
+DefMassPhys = 0.4662535526*hbarcdivlat #Lat Units
 
 
-def GetQsqrd(nqsqrd):
-    qsqrd = nqsqrd*(qunit**2)
-    Ep = np.sqrt(DefMass**2 + qsqrd)
-    Qsqrd = qsqrd - (Ep-DefMass)**2
-    QsqrdPhys = Qsqrd*(hbarcdivlat**2)
-    return Qsqrd,QsqrdPhys
-    
+def GetQsqrd(nqsqrd,Phys=True):
+    if Phys:
+        qsqrd = nqsqrd*(qunitPhys**2)
+        Ep = np.sqrt(DefMassPhys**2 + qsqrd)
+        return qsqrd - (Ep-DefMassPhys)**2
+    else:
+        qsqrd = nqsqrd*(qunit**2)
+        Ep = np.sqrt(DefMass**2 + qsqrd)
+        return qsqrd - (Ep-DefMass)**2
 
 def makeqlist(thisMaxqsqrd):
     qlist = np.array([])
