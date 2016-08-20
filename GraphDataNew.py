@@ -30,9 +30,12 @@ ForceTitle = False
 colourset8 = [ '#000080','#B22222','#00B800','#8B008B', '#0000FF','#FF0000','#000000','#32CD32','#FF0066']
 markerset = ['o','s','^','v','d']
 shiftmax = 3
-shiftper = 0.025
+shiftper = 0.05 ##R function shift
+shiftperff = 0.025 ##Form Factor shift
 shiftset = [0]
 for ish in np.arange(1,shiftmax+1): shiftset += [-ish*shiftper,ish*shiftper]
+shiftsetff = [0]
+for ish in np.arange(1,shiftmax+1): shiftset += [-ish*shiftperff,ish*shiftperff]
 incr = 0.01
 thisalpha = 0.3
 
@@ -70,6 +73,7 @@ params = {'legend.fontsize': 10,
 symcyc = itertools.cycle(markerset)
 colcyc = itertools.cycle(colourset8)
 shiftcyc = itertools.cycle(shiftset)
+shiftcycff = itertools.cycle(shiftsetff)
 
 pl.rcParams.update(params)
 RFylab = r'$ R \left(\tau,t\right) $'
@@ -94,6 +98,9 @@ def AppendFFDat(xdata,ydata,yerr):
             
 def GetPlotIters():
     return itertools.cycle(markerset),itertools.cycle(colourset8),itertools.cycle(shiftset)
+
+def GetPlotItersff():
+    return itertools.cycle(markerset),itertools.cycle(colourset8),itertools.cycle(shiftsetff)
 
 def SetxTicks(thisfig=False):
     xmin,xmax = pl.xlim()
@@ -495,7 +502,7 @@ def PlotFFs(data,DSCurr,thisSetList,CollName,FT):
         
 
 def PlotFFSet(dataset,thisFF,thisSetFlag):
-    thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
+    thissymcyc,thiscolcyc,thisshiftcycff = GetPlotItersff()
     collist = []
     for thisset in SortMySet(thisSetFlag)[0]:
         ##make legend formatting function
@@ -503,7 +510,7 @@ def PlotFFSet(dataset,thisFF,thisSetFlag):
         if dataset[thisset][thisFF] == False: continue        
         thiscol = thiscolcyc.next()
         collist.append(thiscol)
-        PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshiftcyc.next(),LegLab(thisset))
+        PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshiftcycff.next(),LegLab(thisset))
     return collist
 
 def PlotFF(data,col,sym,shift,lab):
