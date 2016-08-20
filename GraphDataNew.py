@@ -81,6 +81,16 @@ SUMxlab = r'$ t$'
 FFylab = r'$ FF $'
 FFxlab = r'$ q^{2} $'
 
+DatFile = False
+
+def AppendFFDat(xdata,ydata,yerr):
+    global DatFile
+    if DatFile == False: raise IOError("DatFile not defined yet")
+    with open(DatFile,'a') as f:
+        for ix,iy,iyerr in zip(xdata,ydata,yerr):
+            f.write('{0:>3}  {1:10} \n'.format(ix,MakeValAndErr(iy,iyerr)))
+            # f.write(' {1:10} \n'.format(ix,MakeValAndErr(iy,iyerr)))
+            
 def GetPlotIters():
     return itertools.cycle(markerset),itertools.cycle(colourset8),itertools.cycle(shiftset)
 
@@ -467,15 +477,18 @@ def PlotMassSetTSF(data2pt,thisSetList,MassDt,thisSF):
 
 def PlotFFs(data,DSCurr,thisSetList,CollName,FT):
     global ForceTitle
+    global DatFile
     ForceTitle = FT
     if len(thisSetList) == 0: return
     thisDS,thisCurr,thisFFComb = SplitDSCurr(DSCurr)
     for iFF in range(1,NoFFPars[thisCurr]+1):
         if len(thisFFComb) > 1: thisFFComb = '/'+thisFFComb
+        DatFile = CreateFFFile(CollName,DSCurr,thisFF)+'.dat'
+        WipeFile(DatFile)
         thisFF = 'FF'+str(iFF)
         PlotFFSet(data,thisFF,thisSetList)
         SetFFAxies(thisDS+thisCurr+thisFF+thisFFComb)
-        pl.savefig(CreateFFFile(CollName,DSCurr,thisFF)+'.pdf')
+        pl.savefig(DatFile.replace('.dat','.pdf'))
         pl.clf()
         
 
@@ -503,6 +516,7 @@ def PlotFF(data,col,sym,shift,lab):
             dataavg.append(values['Avg'])
             dataerr.append(values['Std'])
     if len(tvals) > 0:
+        AppendFFDat(tvals,map(abs,dataavg),dataerr)
         pl.errorbar(tvals,map(abs,dataavg),dataerr,color=col,fmt=sym,label=lab)
 
 def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
