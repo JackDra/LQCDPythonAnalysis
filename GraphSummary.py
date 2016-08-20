@@ -247,8 +247,9 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
     ysize = yhigh-ylow
     pl.ylim(ylow-(3*ysize*xlabshift),yhigh)
     pl.ylim(max(lowlim,pl.ylim()[0]),min(highlim,pl.ylim()[1]))
-    if iDS+igamma in ylimSummaryDict.keys():
-        pl.ylim(*ylimSummaryDict[iDS+igamma])
+    if iDS != False:
+        if iDS+igamma in ylimSummaryDict.keys():
+            pl.ylim(*ylimSummaryDict[iDS+igamma])
     ylow,yhigh = pl.ylim()
     ysize = yhigh-ylow
     for xmid,line1 in Xbox1:
