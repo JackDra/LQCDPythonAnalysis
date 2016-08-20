@@ -55,6 +55,16 @@ colcyc = itertools.cycle(colourset8)
 shiftcyc = itertools.cycle(shiftset)
 
 pl.rcParams.update(params)
+DatFile = False
+
+
+
+def AppendSummaryDat(xdata,ydata,yerr):
+    global DatFile
+    if DatFile == False: raise IOError("DatFile not defined yet")
+    with open(DatFile,'a') as f:
+        for ix iy,iyerr in zip(xdata,ydata,yerr):
+            f.write('{0}    {1:10.5f} {2:10.5f} \n'.formatting(ix,iy,iyerr)
 
 def GetPlotIters():
     return itertools.cycle(markerset),itertools.cycle(colourset8),itertools.cycle(shiftset)
@@ -192,6 +202,25 @@ def CreateMethodSetList(thisMethodList,setlist):
     
 # data { collection , gamma , mom }
 def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''):
+    if iDS == False:            
+        if 'GeGm' in dirpref and '/' not in dirpref:
+            if 'FF1' in igamma:
+                titleStr = CreateCurrCombFn(dirpref,spacing=' ').replace('Gm','')
+            elif 'FF2' in igamma:
+                titleStr = CreateCurrCombFn(dirpref,spacing=' ').replace('Ge','')
+        elif 'GeGm' in dirpref:
+            titleStr = CreateCurrCombFn(dirpref,spacing=' ').replace('GeGm','')                
+        else:
+            titleStr = CreateCurrCombFn(dirpref,spacing=' ')
+        if '/' in dirpref: filegamma = ''
+        else: filegamma = igamma
+        thisfile = thisdir+'SummaryPlot'+titleStr.replace(' ','')+filegamma+iq
+    else:
+        thisfile = thisdir+'SummaryPlot'+dirpref+iDS+igamma+qstrTOqcond(iq)
+    global DatFile
+    DatFile = thisfile + '.dat'
+    WipeFile(DatFile)
+    
     xvalues,Xlabs,Xbox1,Xbox2,Xbox3 = 0,[],[],[],[]
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     for iMeth,thisSetList in thisMethodSetList.iteritems():
@@ -225,16 +254,8 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
     # pl.ylabel('Value')
     pl.xlim(-1,xvalues-1)
     pl.grid(False,axis='x')
+
     if iDS == False:            
-        if 'GeGm' in dirpref and '/' not in dirpref:
-            if 'FF1' in igamma:
-                titleStr = CreateCurrCombFn(dirpref,spacing=' ').replace('Gm','')
-            elif 'FF2' in igamma:
-                titleStr = CreateCurrCombFn(dirpref,spacing=' ').replace('Ge','')
-        elif 'GeGm' in dirpref:
-            titleStr = CreateCurrCombFn(dirpref,spacing=' ').replace('GeGm','')                
-        else:
-            titleStr = CreateCurrCombFn(dirpref,spacing=' ')
         if ForceTitle == False:
             pl.title(TitleFix('SummaryPlot ' + titleStr + ' ' + iq))
         else:
@@ -242,10 +263,8 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
         thisgammadir = dirpref + '/'
         thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/'+iq+'/'
         mkdir_p(thisdir)
-        if '/' in dirpref: filegamma = ''
-        else: filegamma = igamma
         mprint( 'outputting FF plot to :',thisdir+'SummaryPlot'+titleStr.replace(' ','')+filegamma+iq+'.pdf')
-        pl.savefig(thisdir+'SummaryPlot'+titleStr.replace(' ','')+filegamma+iq+'.pdf')
+        pl.savefig(thisfile+'.pdf')
     else:
         if ForceTitle == False:
             pl.title(TitleFix('SummaryPlot ' +iDS + ' ' + igamma + ' ' + iq))
@@ -256,7 +275,7 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
         thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/qsqrd'+str(qsqrdstr(iq))+'/'
         mkdir_p(thisdir)
         mprint( 'outputting plot to :',thisdir+'SummaryPlot'+dirpref+iDS+igamma+qstrTOqcond(iq)+'.pdf')
-        pl.savefig(thisdir+'SummaryPlot'+dirpref+iDS+igamma+qstrTOqcond(iq)+'.pdf')
+        pl.savefig(thisfile+'.pdf')
     pl.clf()
 
 
@@ -301,6 +320,8 @@ def PlotSummarySet(iDS,igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
         print 'Graphing'
         for ix,ival,ierr in zip(xdata,dataval,dataerr):
             print ix,ival,ierr
+    if MakeGraphDat:
+        AppendSummaryDat(xdata,dataval,dataerr)
     pl.errorbar(xdata,dataval,dataerr ,color=col,fmt=sym)
     pl.axvline(xdata[-1]+1, color='k')
     return xstart+len(xdata),Xlables+['']
