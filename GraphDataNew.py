@@ -79,7 +79,7 @@ SUMylab = r'$ S(t)$'
 SUMxlab = r'$ t$'
 
 
-FFylab = r'$ FF $'
+FFylab = r'$ FF(q^{2}) $'
 FFxlab = r'$ q^{2} $'
 
 DatFile = False
