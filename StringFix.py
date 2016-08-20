@@ -7,9 +7,9 @@ import os
 from Params import *
 import re
 
-def MakeValAndErr(Avg,Err):
+def MakeValAndErr(Avg,Err,Dec=2):
     try:
-        int(np.floor(np.log10(Err)))
+        int(np.floor(np.log10(Err)))-(Dec-1)
     except:
         return 'Err'
     ErrMag = int(np.floor(np.log10(Err)))
