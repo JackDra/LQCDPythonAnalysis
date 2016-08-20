@@ -43,6 +43,7 @@ thisalpha = 0.3
 MassTVals = 5,19
 Massyrange = 0.44,0.54
 # Massyrange = 0.40,0.60
+Qsqrdxlim = -0.5,1.5
 
 ylimDict = {'IsoVectorP4giDi':[-0.15,-0.05],
             'VectorP4giDi':[-0.4,-0.15],
@@ -194,7 +195,7 @@ def SetFFAxies(thisCurr):
         pl.ylim(max(pl.ylim()[0],-1),min(pl.ylim()[1],2))
     else:
         pl.ylim(ylimFFDict[thisCurr])
-    pl.xlim(-5,115)
+    # pl.xlim(*Qsqrdxlim)
     pl.legend()
     pl.tight_layout()
 
