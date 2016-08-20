@@ -64,7 +64,7 @@ def AppendSummaryDat(xdata,ydata,yerr):
     if DatFile == False: raise IOError("DatFile not defined yet")
     with open(DatFile,'a') as f:
         for ix,iy,iyerr in zip(xdata,ydata,yerr):
-            f.write('{0:>3}  {1:10}'.format(ix,MakeValAndErr(iy,iyerr)))
+            f.write('{0:>3}  {1:10} \n'.format(ix,MakeValAndErr(iy,iyerr)))
                     
 def GetPlotIters():
     return itertools.cycle(markerset),itertools.cycle(colourset8),itertools.cycle(shiftset)
