@@ -203,6 +203,8 @@ def CreateMethodSetList(thisMethodList,setlist):
 # data { collection , gamma , mom }
 def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''):
     if iDS == False:            
+        thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/'+iq+'/'
+        mkdir_p(thisdir)
         if 'GeGm' in dirpref and '/' not in dirpref:
             if 'FF1' in igamma:
                 titleStr = CreateCurrCombFn(dirpref,spacing=' ').replace('Gm','')
@@ -216,6 +218,8 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
         else: filegamma = igamma
         thisfile = thisdir+'SummaryPlot'+titleStr.replace(' ','')+filegamma+iq
     else:
+        thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/qsqrd'+str(qsqrdstr(iq))+'/'
+        mkdir_p(thisdir)
         thisfile = thisdir+'SummaryPlot'+dirpref+iDS+igamma+qstrTOqcond(iq)
     global DatFile
     DatFile = thisfile + '.dat'
@@ -261,8 +265,6 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
         else:
             pl.title(ForceTitle)
         thisgammadir = dirpref + '/'
-        thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/'+iq+'/'
-        mkdir_p(thisdir)
         mprint( 'outputting FF plot to :',thisdir+'SummaryPlot'+titleStr.replace(' ','')+filegamma+iq+'.pdf')
         pl.savefig(thisfile+'.pdf')
     else:
@@ -272,8 +274,6 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
             pl.title(ForceTitle)
 
         thisgammadir = CreateOppDir(iDS+igamma)
-        thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/qsqrd'+str(qsqrdstr(iq))+'/'
-        mkdir_p(thisdir)
         mprint( 'outputting plot to :',thisdir+'SummaryPlot'+dirpref+iDS+igamma+qstrTOqcond(iq)+'.pdf')
         pl.savefig(thisfile+'.pdf')
     pl.clf()
