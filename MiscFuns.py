@@ -119,7 +119,7 @@ def ParInputTwo(constargs,pararg,pararg2,pararg3):
    return [constargs+(ipar,ipar2,ipar3) for ipar,ipar2,ipar3 in zip(pararg,pararg2,pararg3)]
 
 def WipeFile(fname):
-   open(filename,'w').close()
+   open(fname,'w').close()
 
 def touch(fname):
     try:
