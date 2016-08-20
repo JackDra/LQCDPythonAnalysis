@@ -18,6 +18,7 @@ import itertools
 from FormFactors import NoFFPars
 from SetLists import SortMySet
 from CombParams import *
+from FFParams import Qtcut
 
 ##FORCE TITLE PARAMETER, SET TO FALSE TO USE NORMAL TITLES#
 
