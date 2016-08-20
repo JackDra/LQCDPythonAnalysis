@@ -103,6 +103,20 @@ def LegLab(string,NoSm=False,NoTSink=False):
         thisstr = NoTSink(thisstr)    
     return r'$'+ProperAll(thisstr).replace('SPACE','\ ')+'$'
 
+
+def LegLabFF(string,NoSm=False,NoTSink=False):
+    thisstr = re.subs('cut.','',string)
+    string = string.replace('OSFCM',' 1SF')
+    string = string.replace('TSFTsink',' 2SF')
+    string = string.replace('CM',' Var')
+    string = string.replace('Fits',' Fits')
+    if len(string) == 0: return ''
+    if NoSm:
+        thisstr = NoSm(thisstr)
+    if NoTSink:
+        thisstr = NoTSink(thisstr)    
+    return r'$'+ProperAll(thisstr).replace('SPACE','\ ')+'$'
+
 def TitleFix(string):
     return (r'$'+string.replace('P4giDi','\\langle x \\rangle ')
             .replace('giDi','\\langle x \\rangle ')

@@ -510,7 +510,7 @@ def PlotFFSet(dataset,thisFF,thisSetFlag):
         if dataset[thisset][thisFF] == False: continue        
         thiscol = thiscolcyc.next()
         collist.append(thiscol)
-        PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshiftcycff.next(),LegLab(thisset))
+        PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshiftcycff.next(),LegLabFF(thisset))
     return collist
 
 def PlotFF(data,col,sym,shift,lab):
