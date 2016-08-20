@@ -15,6 +15,17 @@ latspace = 0.0074 ## In fermi
 hbarcdivlat = hbarc/latspace
 qunitPhys = qunit*hbarcdivlat
 
+DefMass = 0.4662535526 #Lat Units
+
+
+def GetQsqrd(nqsqrd):
+    qsqrd = nqsqrd*(qunit**2)
+    Ep = np.sqrt(DefMass**2 + qsqrd)
+    Qsqrd = qsqrd - (Ep-DefMass)**2
+    QsqrdPhys = Qsqrd*hbarcdivlat
+    return Qsqrd,QsqrdPhys
+    
+
 def makeqlist(thisMaxqsqrd):
     qlist = np.array([])
     for iq1 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
@@ -144,6 +155,7 @@ def MomOrderLists(MLread,MLsort,*SortThese):
     for iST in SortThese:
         STout.append(np.array(iST)[IndexShuff])
     return STout
+
 
 def ipTOE(ip,mass):
     return np.sqrt((qsqrdstr(ipTOqstr(ip))*qunit)**2 + mass**2)
