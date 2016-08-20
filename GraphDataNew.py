@@ -506,21 +506,23 @@ def PlotFFSet(dataset,thisFF,thisSetFlag):
     return collist
 
 def PlotFF(data,col,sym,shift,lab):
-    tvals,dataavg,dataerr = [],[],[]
+    qsqrdvals,dataavg,dataerr = [],[],[]
     for iqsqrd,(qsqrd,values) in enumerate(data.iteritems()):
-        ##here is where we can put qsqrd to physical or lattice units##
-        tvals.append(int(qsqrd.replace('qsqrd',''))+shift)
+        if PhysicalUnits:
+            qsqrdvals.append((qunitPhys**2)*float(qsqrd.replace('qsqrd',''))+shift)
+        else:
+            qsqrdvals.append((qunit**2)*float(qsqrd.replace('qsqrd',''))+shift)
         if 'Boot' in values.keys():
             dataavg.append(values['Boot'].Avg)
             dataerr.append(values['Boot'].Std)
         else:
             dataavg.append(values['Avg'])
             dataerr.append(values['Std'])
-    if len(tvals) > 0:
-        if len(tvals) > Qtcut:
-            tvals,dataavg,dataerr = tvals[:Qtcut],dataavg[:Qtcut],dataerr[:Qtcut]
-        AppendFFDat(tvals,dataavg,dataerr)
-        pl.errorbar(tvals,dataavg,dataerr,color=col,fmt=sym,label=lab)
+    if len(qsqrdvals) > 0:
+        if len(qsqrdvals) > Qtcut:
+            qsqrdvals,dataavg,dataerr = qsqrdvals[:Qtcut],dataavg[:Qtcut],dataerr[:Qtcut]
+        AppendFFDat(qsqrdvals,dataavg,dataerr)
+        pl.errorbar(qsqrdvals,dataavg,dataerr,color=col,fmt=sym,label=lab)
 
 def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
     if MP:
