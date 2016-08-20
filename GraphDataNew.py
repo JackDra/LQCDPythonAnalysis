@@ -482,10 +482,10 @@ def PlotFFs(data,DSCurr,thisSetList,CollName,FT):
     if len(thisSetList) == 0: return
     thisDS,thisCurr,thisFFComb = SplitDSCurr(DSCurr)
     for iFF in range(1,NoFFPars[thisCurr]+1):
+        thisFF = 'FF'+str(iFF)
         if len(thisFFComb) > 1: thisFFComb = '/'+thisFFComb
         DatFile = CreateFFFile(CollName,DSCurr,thisFF)+'.dat'
         WipeFile(DatFile)
-        thisFF = 'FF'+str(iFF)
         PlotFFSet(data,thisFF,thisSetList)
         SetFFAxies(thisDS+thisCurr+thisFF+thisFFComb)
         pl.savefig(DatFile.replace('.dat','.pdf'))
