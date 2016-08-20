@@ -85,7 +85,7 @@ SUMxlab = r'$ t$'
 
 
 FFylab = r'$ FF(Q^{2}) $'
-FFxlab = r'$ Q^{2} (GeV)$'
+FFxlab = r'$ Q^{2} (GeV)^{2}$'
 
 DatFile = False
 
