@@ -12,7 +12,7 @@ def MakeValAndErr(Avg,Err,Dec=2):
         int(np.floor(np.log10(Err)))-(Dec-1)
     except:
         return 'Err'
-    ErrMag = int(np.floor(np.log10(Err)))
+    ErrMag = int(np.floor(np.log10(Err)))-(Dec-1)
     sigErr = round(Err, -ErrMag)
     strErr = int(sigErr*10**(-ErrMag))
     sigAvg = round(Avg,-ErrMag)
