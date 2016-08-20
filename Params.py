@@ -110,6 +110,7 @@ PrintRead = not DoMulticore # Screws up output if on and doing mulitcore reading
 DoCmplx = True # reads complex opperator values as well as real values, should be on
 DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
 Doeigh = False # variational method, uses a symetrix matrix solver.
+MakeGraphDat = True # Creates a .dat file of the values plotted for the corresponding graph (where implemented)
 
 if Debug: print 'nconfs saved is: ' , RunNconfs
 
