@@ -35,7 +35,7 @@ shiftperff = 0.025 ##Form Factor shift
 shiftset = [0]
 for ish in np.arange(1,shiftmax+1): shiftset += [-ish*shiftper,ish*shiftper]
 shiftsetff = [0]
-for ish in np.arange(1,shiftmax+1): shiftset += [-ish*shiftperff,ish*shiftperff]
+for ish in np.arange(1,shiftmax+1): shiftsetff += [-ish*shiftperff,ish*shiftperff]
 incr = 0.01
 thisalpha = 0.3
 
