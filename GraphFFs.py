@@ -67,17 +67,22 @@ def PlotFitMethSets(currdata,thiscurr,thisSetList):
 
 def PickFFAllSets(currdata,thiscurr,thisSetList):
     PickedSetList = []
-    for Fitkey,FitCutVal in FitCutPicked.iteritems():
-        PickedSetList += FlagList(thisSetList,'Fit',Fitkey,FitCutVal)
+    PickedSetList += FlagList(thisSetList,'Fit','tsink29sm32',FitCutPicked['tsink29sm32'])
+    PickedSetList += FlagList(thisSetList,'Fit','tsink29state1CMto20dt2',FitCutPicked['tsink29state1CM'])
+    PickedSetList += FlagList(thisSetList,'OSFCM','tsink29sm32',OSFCutPicked)
+    PickedSetList += FlagList(thisSetList,'OSFCM','tsink29state1CMto20dt2',OSFCutPicked)
+    PickedSetList += FlagList(thisSetList,'TSFTSink','sm32',TSFCutPicked)
+    # for Fitkey,FitCutVal in FitCutPicked.iteritems():
+    #     PickedSetList += FlagList(thisSetList,'Fit',Fitkey,FitCutVal)
     # for ifitr in SumFitRListFlags:
     #     for icut in SumCutList:
     #         PickedSetList += FlagList(thisSetList,'SumMeth',ifitr,icut)
-    for icut in OSFCutList:
-        PickedSetList += FlagList(thisSetList,'OSF',icut)
-    for icut in TSFCutList:
-        PickedSetList += FlagList(thisSetList,'TSFSmall',icut)
-    for icut in TSFCutList:
-        PickedSetList += FlagList(thisSetList,'TSFTsink',icut)
+    # for icut in OSFCutList:
+    #     PickedSetList += FlagList(thisSetList,'OSF',icut)
+    # for icut in TSFCutList:
+    #     PickedSetList += FlagList(thisSetList,'TSFSmall',icut)
+    # for icut in TSFCutList:
+    #     PickedSetList += FlagList(thisSetList,'TSFTsink',icut)
     return PickedSetList
 
 def PickFFFewSets(currdata,thiscurr,thisSetList):
