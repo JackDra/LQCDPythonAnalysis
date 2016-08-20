@@ -64,6 +64,7 @@ def AppendSummaryDat(xdata,ydata,yerr):
     if DatFile == False: raise IOError("DatFile not defined yet")
     with open(DatFile,'a') as f:
         for ix,iy,iyerr in zip(xdata,ydata,yerr):
+            print ix,iy,iyerr
             f.write('{0}    {1:10.5f} {2:10.5f} \n'.format(ix,iy,iyerr))
                     
 def GetPlotIters():
