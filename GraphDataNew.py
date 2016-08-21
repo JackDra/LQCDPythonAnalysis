@@ -198,7 +198,7 @@ def SetFFAxies(thisCurr):
     pl.xlabel(FFxlab)
     pl.ylabel(FFylab)
     if thisCurr not in ylimFFDict.keys():
-        pl.ylim(max(pl.ylim()[0],-2),min(pl.ylim()[1],2))
+        # pl.ylim(max(pl.ylim()[0],-2),min(pl.ylim()[1],2))
     else:
         pl.ylim(ylimFFDict[thisCurr])
     pl.xlim(*Qsqrdxlim)
