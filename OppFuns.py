@@ -5,6 +5,7 @@ from FitParams import StateParList
 from FFParams import *
 from Params import DefGammaList
 from SetLists import GetTsinkSmLists
+from CombParams import CombList
 from copy import copy
 
 def DoubSingList(listin):
@@ -220,9 +221,9 @@ def SplitOpp(All):
         contents.append('Der')
         for iDer in DerSet+['Di']:
             if iDer in All: Split.append(iDer)
-    if any([iDS in All for iDS in DefDSList]) or any([icomb in All for icomb in DefCombList]):
+    if any([iDS in All for iDS in DefDSList]) or any([icomb in All for icomb in CombList]):
         contents.append('DS')
-        for iDS in DefDSList+DefCombList:
+        for iDS in DefDSList+CombList:
             if iDS in All and 'Iso'+iDS not in All:
                 Split.append(iDS)
     if 'P4' in All or 'P3' in All:

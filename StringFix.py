@@ -5,6 +5,7 @@ import numpy as np
 import os
 # from MiscFuns import *
 from Params import *
+from CombParams import CombList
 import re
 
 def MakeValAndErr(Avg,Err,Dec=2):

@@ -198,7 +198,6 @@ ReadProjDerList = {'GMA4' :['g4D4','g1D1','g2D2','g3D3']}
 DefProjDerList = {'GMA4' :['giDi']}
 # DefDSList = ['doub']
 DefDSList = ['doub','sing']
-DefCombList = ['Proton','Neutron','IsoVector','Vector']
 DefGammaList = []
 for iDS in DefDSList:
     for Proj,GL in DefProjGammaList.iteritems():
