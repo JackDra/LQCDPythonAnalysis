@@ -43,7 +43,7 @@ thisalpha = 0.3
 MassTVals = 5,19
 Massyrange = 0.44,0.54
 # Massyrange = 0.40,0.60
-Qsqrdxlim = -0.025,1
+Qsqrdxlim = -0.03,1
 
 ylimDict = {'IsoVectorP4giDi':[-0.15,-0.05],
             'VectorP4giDi':[-0.4,-0.15],
