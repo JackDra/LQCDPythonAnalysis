@@ -64,6 +64,8 @@ ylimFFDict = {'ProtonGeGmFF1/F1divF2':[0.3,0.5],
               'NeutronVectorFF2':[-1.2,-0.4],
               'NeutronGeGmFF1/F1divF2':[0.0,0.1]}
 
+ylimFFDict = {'NeutronVectorFF2':'upper left'}
+
 params = {'legend.fontsize': 10,
           'legend.numpoints': 1,
           'axes.labelsize' : 20,
@@ -198,7 +200,10 @@ def SetFFAxies(thisCurr):
     else:
         pl.ylim(ylimFFDict[thisCurr])
     pl.xlim(*Qsqrdxlim)
-    pl.legend()
+    if thisCurr not in leglocFFDict.keys():
+        pl.legend()
+    else:
+        pl.legend(loc=leglocFFDict[thisCurr])
     pl.tight_layout()
 
 
