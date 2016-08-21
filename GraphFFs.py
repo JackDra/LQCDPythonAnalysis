@@ -118,7 +118,7 @@ def ReadAndPlotFF(thisCurrDict,DoList='All'):
             currPSL.append(PickFFAllSets(currdata,thiscurr,thisCurrDict[thiscurr]))
         if 'Few' in DoList or 'All' in DoList:
             print 'Plotting ' , thiscurr ,'6/6 Few            '
-            PlotFFWrap(currdata,thiscurr,PickFFFewSets(currdata,thiscurr,thisCurrDict[thiscurr]),'Summary')
+            PlotFFWrap(currdata,thiscurr,PickFFFewSets(currdata,thiscurr,thisCurrDict[thiscurr]),'')
         print 'Plotting ' , thiscurr ,'Complete, took: ', GetTimeStr(time.time()-start)
     return datadict,currPSL
     

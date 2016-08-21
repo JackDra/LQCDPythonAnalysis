@@ -141,7 +141,7 @@ def CreateFFFile(thisCol,thisCurr,thisFF):
         pl.title(ForceTitle)
     thisdir = outputdir + 'graphs/FormFactors/'+thisCurr + '/'
     mkdir_p(thisdir)
-    thisfile = thisCol+thisCurr.replace('/','') + thisFF
+    thisfile = thisCol+' '+thisCurr.replace('/','') + '$'+thisFF+'$'
     return thisdir + thisfile
 
 def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False):
