@@ -61,6 +61,7 @@ ylimDict = {'IsoVectorP4giDi':[-0.15,-0.05],
 
 ylimFFDict = {'ProtonGeGmFF1/F1divF2':[0.3,0.5],
               'ProtonVectorFF2':[0.4,1.2],
+              'NeutronVectorFF2':[-1.2,-0.4],
               'NeutronGeGmFF1/F1divF2':[0.0,0.1]}
 
 params = {'legend.fontsize': 10,
