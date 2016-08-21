@@ -142,7 +142,28 @@ def TitleFix(string):
 def TitleFixFF(string,FF):
     for iDS in DefDSList + CombList:
         string = string.replace(iDS,iDS+' ')
-    return string+ ' $'+FF.replace('FF','F_{')+'} $'
+    if GeGm in string:
+        string = string.replace(' GeGm','')
+        FF = FF.replace('FF1','G_{e}')
+        FF = FF.replace('FF2','G_{m}')
+        return string+ ' $'+FF +'$'
+    elif 'PsVector' in string:
+        FF = FF.replace('FF1','g_{A}')
+        FF = FF.replace('FF2','h_{A}')
+        return string+ ' $'+FF +'$'
+    elif 'PsScalar' in string:
+        FF = FF.replace('FF1','g_{P}')
+        return string+ ' $'+FF +'$'
+    elif 'Scalar' in string:
+        FF = FF.replace('FF1','g_{S}')
+        return string+ ' $'+FF +'$'
+    elif 'Tensor' in string:
+        FF = FF.replace('FF1','H_{T}')
+        FF = FF.replace('FF2','E_{T}')
+        FF = FF.replace('FF3','E_{1T}')
+        return string+ ' $'+FF +'$'
+    else:        
+        return string+ ' $'+FF.replace('FF','F_{')+'} $'
         
 
 
