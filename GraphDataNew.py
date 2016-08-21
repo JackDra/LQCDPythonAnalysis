@@ -71,6 +71,7 @@ leglocFFDict = {'NeutronVectorFF2':'upper left',
                 'NeutronGeGmFF2':'upper left',
                 'IsoVectorPsScalarFF1':'lower right',
                 'IsoVectorPsVectorFF2':'upper left',
+                'NeutronGeGmFF1/F1divF2':'lower left',
                 'IsoVectorPsVectorFF1':'upper left'}
 
 params = {'legend.fontsize': 10,
