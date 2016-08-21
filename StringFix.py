@@ -143,7 +143,7 @@ def TitleFixFF(string,FF):
     for iDS in DefDSList + CombList:
         string = string.replace(iDS,iDS+' ')
     if 'GeGm' in string:
-        string = string.replace(' GeGm','')
+        string = string.replace(' GeGm',' Vector')
         FF = FF.replace('FF1','G_{e}')
         FF = FF.replace('FF2','G_{m}')
         return string+ ' $'+FF +'$'
