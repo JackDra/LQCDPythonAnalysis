@@ -147,7 +147,7 @@ def TitleFixFF(string,FF):
     string = string.replace('PsScalar','Pseudo-scalar')
     string = string.replace('IsoScalar','Iso-scalar')
     if 'F1divF2' in string:
-        return string.replace('F1divF2','')+ ' $G_{e}/G_{m}$'        
+        return string.replace('F1divF2','').replace(' GeGm','')+ ' $G_{e}/G_{m}$'        
     elif 'GeGm' in string:
         string = string.replace(' GeGm',' Vector')
         FF = FF.replace('FF1','G_{e}')
