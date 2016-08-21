@@ -142,6 +142,8 @@ def TitleFix(string):
 def TitleFixFF(string,FF):
     for iDS in DefDSList + CombList:
         string = string.replace(iDS,iDS+' ')
+    string = string.replace('PsVector','Pseudo-vector')
+    string = string.replace('IsoVector','Iso-vector')
     if 'GeGm' in string:
         string = string.replace(' GeGm',' Vector')
         FF = FF.replace('FF1','G_{e}')
