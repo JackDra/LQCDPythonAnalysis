@@ -197,10 +197,10 @@ def SetRFAxies(thisGamma):
 def SetFFAxies(thisCurr):
     pl.xlabel(FFxlab)
     pl.ylabel(FFylab)
-    if thisCurr not in ylimFFDict.keys():
-        # pl.ylim(max(pl.ylim()[0],-2),min(pl.ylim()[1],2))
-    else:
+    if thisCurr in ylimFFDict.keys():
         pl.ylim(ylimFFDict[thisCurr])
+    # else:
+        # pl.ylim(max(pl.ylim()[0],-2),min(pl.ylim()[1],2))
     pl.xlim(*Qsqrdxlim)
     if thisCurr not in leglocFFDict.keys():
         pl.legend()
