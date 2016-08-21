@@ -154,14 +154,14 @@ def TitleFixFF(string,FF):
         FF = FF.replace('FF2','G_{m}')
         return string+ ' $'+FF +'$'
     elif 'Pseudo-vector' in string:
-        FF = FF.replace('FF1','g_{A}')
-        FF = FF.replace('FF2','h_{A}')
+        FF = FF.replace('FF1','G_{A}')
+        FF = FF.replace('FF2','H_{A}')
         return string+ ' $'+FF +'$'
     elif 'Pseudo-scalar' in string:
-        FF = FF.replace('FF1','g_{P}')
+        FF = FF.replace('FF1','G_{P}')
         return string+ ' $'+FF +'$'
     elif 'Scalar' in string:
-        FF = FF.replace('FF1','g_{S}')
+        FF = FF.replace('FF1','G_{S}')
         return string+ ' $'+FF +'$'
     elif 'Tensor' in string:
         FF = FF.replace('FF1','H_{T}')
