@@ -144,16 +144,18 @@ def TitleFixFF(string,FF):
         string = string.replace(iDS,iDS+' ')
     string = string.replace('PsVector','Pseudo-vector')
     string = string.replace('IsoVector','Iso-vector')
+    string = string.replace('PsScalar','Pseudo-scalar')
+    string = string.replace('IsoScalar','Iso-scalar')
     if 'GeGm' in string:
         string = string.replace(' GeGm',' Vector')
         FF = FF.replace('FF1','G_{e}')
         FF = FF.replace('FF2','G_{m}')
         return string+ ' $'+FF +'$'
-    elif 'PsVector' in string:
+    elif 'Pseudo-Vector' in string:
         FF = FF.replace('FF1','g_{A}')
         FF = FF.replace('FF2','h_{A}')
         return string+ ' $'+FF +'$'
-    elif 'PsScalar' in string:
+    elif 'Pseudo-Scalar' in string:
         FF = FF.replace('FF1','g_{P}')
         return string+ ' $'+FF +'$'
     elif 'Scalar' in string:
