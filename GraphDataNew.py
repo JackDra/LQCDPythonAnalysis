@@ -64,7 +64,7 @@ ylimFFDict = {'ProtonGeGmFF1/F1divF2':[0.3,0.5],
               'NeutronVectorFF2':[-1.2,-0.4],
               'NeutronGeGmFF1/F1divF2':[0.0,0.1]}
 
-ylimFFDict = {'NeutronVectorFF2':'upper left'}
+leglocFFDict = {'NeutronVectorFF2':'upper left'}
 
 params = {'legend.fontsize': 10,
           'legend.numpoints': 1,
