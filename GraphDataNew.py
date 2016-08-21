@@ -134,14 +134,14 @@ def SiftAndSort(thisSetList,comp,nocm=True):
 
 
 def CreateFFFile(thisCol,thisCurr,thisFF):
-    thistitle = thisCol + ' ' + thisCurr.replace('/',' ') + ' ' + thisFF
+    thistitle = thisCol + TitleFixFF(thisCurr.replace('/',' ')) + ' $' + thisFF + '$'
     if ForceTitle == False:
         pl.title(thistitle)
     else:
         pl.title(ForceTitle)
     thisdir = outputdir + 'graphs/FormFactors/'+thisCurr + '/'
     mkdir_p(thisdir)
-    thisfile = thisCol+' '+thisCurr.replace('/','') + '$'+thisFF+'$'
+    thisfile = thisCol+thisCurr.replace('/','') + thisFF
     return thisdir + thisfile
 
 def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False):

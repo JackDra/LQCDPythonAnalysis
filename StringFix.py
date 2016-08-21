@@ -138,6 +138,12 @@ def TitleFix(string):
             .replace('  ',' ')
             .replace(' ','\\ ')+'$')
 
+def TitleFixFF(string):
+    for iDS in DefDSList + CombList:
+        string = string.replace(iDS,iDS+' ')
+    return string
+        
+
 
 def LabToXaxis(thestring,col):
     stringout = thestring
