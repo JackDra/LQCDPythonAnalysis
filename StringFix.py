@@ -139,10 +139,10 @@ def TitleFix(string):
             .replace('  ',' ')
             .replace(' ','\\ ')+'$')
 
-def TitleFixFF(string):
+def TitleFixFF(string,FF):
     for iDS in DefDSList + CombList:
         string = string.replace(iDS,iDS+' ')
-    return string
+    return string+ ' $'+FF.replace('FF','F_{')+'} $'
         
 
 

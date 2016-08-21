@@ -135,7 +135,7 @@ def SiftAndSort(thisSetList,comp,nocm=True):
 
 
 def CreateFFFile(thisCol,thisCurr,thisFF):
-    thistitle = thisCol + TitleFixFF(thisCurr.replace('/',' ')) + ' $' + thisFF + '$'
+    thistitle = thisCol + TitleFixFF(thisCurr.replace('/',' '),thisFF)
     if ForceTitle == False:
         pl.title(thistitle)
     else:
