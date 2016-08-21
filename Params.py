@@ -103,7 +103,7 @@ NoSFRfacScale = False # Turn on to only scale the R function by sqrt((Epp+m)(Ep+
 ReadPoF2pt = True # Create PoF using already calculated eigenvectors. This is used if the statistics or solver method has changed.
 
 ##DEBUG toggles (True/False):
-Debug = False # for debugging, toggles alot of print statements on
+Debug = True # for debugging, toggles alot of print statements on
 ScaleByP4g4 = False ## scales out all operators by P4g4 instead of 2 point correlator at tsink for Ratio value (RF)
 ShowConfNum = Debug # debugging, show number of configs during read
 PrintRead = not DoMulticore # Screws up output if on and doing mulitcore reading
@@ -351,7 +351,7 @@ MethodList = ['RF','Fits','SumMeth']+['TSF'+iTSF for iTSF in TSFFileFlags] + ['O
 
 ##DEAULT TAKEN FROM OSF from: /raid/jdragos/data/results/ReadSetk12090/cfuns/twopt/OSFCM/state1sum22to23dt4twoptm0.txt
 ##date/time calculated: 00:29 12 Oct 2015
-DefMassVal = {'22-31' : {'Avg':0.4662535526,'Std': 0.0028592256 ,'Chi': 0.4851841332}}
+DefMassVal = {'22-31' : {'Avg':DefMass,'Std': 0.0028592256 ,'Chi': 0.4851841332}}
 
 def GetRenorm(thisstring):
     if re.search('g[1234]g5',thisstring):

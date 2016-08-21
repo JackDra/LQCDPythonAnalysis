@@ -51,6 +51,11 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True):
         if len(datavals) == 0: continue
         zboot,zvec = [BootStrap1(nboot,0)],[0.0]
         if 'Scalar' in baseCurr :
+            if Debug:
+                print 'Printing Form Factors debug:'
+                for FF1,res in zip(FFcoeff[0],datavals):
+                    print iqsqrd, '   ' , FF1,'FF1 = ',res.Avg
+                print ''
             FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff,FFFitFuns[baseCurr])
             thisdataout[iqs]['Boot'] = FFBoothold
             thisdataout[iqs]['Avg'] = FFAvghold
