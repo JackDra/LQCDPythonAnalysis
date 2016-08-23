@@ -49,7 +49,7 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr,Rfac):
         else:
             FF,infodict = CreateFF(setdict,thisMass['Avg'],iCurr,gammaflag=igf,Rfac=True)            
         if 'Vector' in thisCurr and 'IsoVector' not in thisCurr and 'PsVector' not in thisCurr:
-            if ForceVecNorm: FF = RenormFF(FF,Pullflag(FF['qsqrd0']['Boot'],'Avg'),thisDS)
+            if ForceVecNorm: FF = RenormFF(FF,FF['qsqrd0']['Boot'][0].Avg,thisDS)
             PrintFFSet(FF,theset,thisMass,thesetmass,combCurr,infodict)
             NewFF = CombineVector(FF,thisMass)
             PrintFFSet(NewFF,theset,thisMass,thesetmass,combCurr.replace('Vector','GeGm'),infodict)
