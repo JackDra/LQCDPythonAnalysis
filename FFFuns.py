@@ -135,7 +135,7 @@ def RenormFF(FF,Val,thisDS):
             elif 'Proton' in thisDS:
                 FF[Qsqrdkey]['Boot'][icFF] = iFF/Val            
             FF[Qsqrdkey]['Boot'][icFF].Stats()
-            FF[Qsqrdkey]['Avg'][icFF] = iFF.Avg
+            FF[Qsqrdkey]['Avg'][icFF] = FF[Qsqrdkey]['Boot'][icFF].Avg
     return FF
         
 
