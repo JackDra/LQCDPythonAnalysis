@@ -127,6 +127,7 @@ def CombineVector(thisFF,thisMass):
 
 def RenormFF(FF,Val,thisDS):
     for Qsqrdkey,FFqsqrd in FF.iteritems():
+        if Debug: print FF[Qsqrdkey]['Boot']
         if 'doub' in thisDS:
             FF[Qsqrdkey]['Boot'].values = 2*np.array(FFqsqrd['Boot'].values)/Val
         elif 'sing' in thisDS:
