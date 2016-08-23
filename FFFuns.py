@@ -125,17 +125,17 @@ def CombineVector(thisFF,thisMass):
                 FFout[iq]['Avg'].append(qFF['Avg'][0] + qFF['Avg'][1])
     return FFout
 
-def RenormFF(FF,Vals,thisDS):
+def RenormFF(FF,Val,thisDS):
     for Qsqrdkey,FFqsqrd in FF.iteritems():
         if 'Boot' in FFqsqrd.keys():
-            for icFF,(iFF,ival) in enumerate(zip(FFqsqrd['Boot'],Vals)):
+            for icFF,iFF in enumerate(FFqsqrd['Boot']):
                 if Debug: print Qsqrdkey, icFF, FF[Qsqrdkey]['Boot'][icFF]
                 if 'doub' in thisDS:
-                    FF[Qsqrdkey]['Boot'][icFF] = 2*iFF/ival
+                    FF[Qsqrdkey]['Boot'][icFF] = 2*iFF/Val
                 elif 'sing' in thisDS:
-                    FF[Qsqrdkey]['Boot'][icFF] = iFF/ival        
+                    FF[Qsqrdkey]['Boot'][icFF] = iFF/Val        
                 elif 'Proton' in thisDS:
-                    FF[Qsqrdkey]['Boot'][icFF] = iFF/ival          
+                    FF[Qsqrdkey]['Boot'][icFF] = iFF/Val          
                 FF[Qsqrdkey]['Boot'][icFF].Stats()
                 if 'Avg' in FFqsqrd.keys():
                     if len(FFqsqrd['Avg']) == len(FFqsqrd['Boot']):
