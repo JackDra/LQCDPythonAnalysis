@@ -129,7 +129,7 @@ def RenormFF(FF,Val,thisDS):
     for Qsqrdkey,FFqsqrd in FF.iteritems():
         if 'Boot' in FFqsqrd.keys():
             for icFF,iFF in enumerate(FFqsqrd['Boot']):
-                if Debug: print Qsqrdkey, icFF, FF[Qsqrdkey]['Boot'][icFF]
+                if Debug: print Qsqrdkey, icFF, thisDS, FF[Qsqrdkey]['Boot'][icFF]
                 if 'doub' in thisDS:
                     FF[Qsqrdkey]['Boot'][icFF] = 2*iFF/Val
                 elif 'sing' in thisDS:
