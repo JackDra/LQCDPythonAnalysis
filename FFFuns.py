@@ -133,7 +133,7 @@ def RenormFF(FF,Val,thisDS):
             FF[Qsqrdkey]['Boot'].values = np.array(FFqsqrd['Boot'].values)/Val            
         elif 'Proton' in thisDS:
             FF[Qsqrdkey]['Boot'].values = np.array(FFqsqrd['Boot'].values)/Val            
-        FF[Qsqrdkey]['Boot'].Stats
+        FF[Qsqrdkey]['Boot'].Stats()
         FF[Qsqrdkey]['Avg'] = FFqsqrd['Boot'].Avg
     return FF
         
