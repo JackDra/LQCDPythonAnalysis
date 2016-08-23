@@ -84,6 +84,7 @@ with open('./setup.cfg','r') as f:
 PoFC2C3Dis = '665.'
 
 myeps = np.finfo(0.0).eps
+ForceVecNorm = True
 ScalarNorm = 0.6822 # normalisation for Scalar current
 PsScalarNorm = 0.4948 # normalisation for Pseudo Scalar current
 VectorNorm = 0.8574 # normalisation for Vector Current

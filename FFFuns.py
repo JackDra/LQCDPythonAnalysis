@@ -125,4 +125,12 @@ def CombineVector(thisFF,thisMass):
                 FFout[iq]['Avg'].append(qFF['Avg'][0] + qFF['Avg'][1])
     return FFout
 
+def RenormFF(FF,Val):
+    for Qsqrdkey,FFqsqrd in FF.iteritems():
+        FF[Qsqrdkey]['Boot'].values = np.array(FFqsqrd['Boot'].values)/Val
+        FF[Qsqrdkey]['Boot'].Stats
+        FF[Qsqrdkey]['Avg'] = FFqsqrd['Boot'].Avg
+    return FF
+        
+
 ##Same as above, but only checks for 0:
