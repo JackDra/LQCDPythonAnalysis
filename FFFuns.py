@@ -127,15 +127,15 @@ def CombineVector(thisFF,thisMass):
 
 def RenormFF(FF,Val,thisDS):
     for Qsqrdkey,FFqsqrd in FF.iteritems():
-        if Debug: print FF[Qsqrdkey]['Boot']
-        if 'doub' in thisDS:
-            FF[Qsqrdkey]['Boot'] = 2*FFqsqrd['Boot']/Val
-        elif 'sing' in thisDS:
-            FF[Qsqrdkey]['Boot'] = FFqsqrd['Boot']/Val            
-        elif 'Proton' in thisDS:
-            FF[Qsqrdkey]['Boot'] = FFqsqrd['Boot']/Val            
-        FF[Qsqrdkey]['Boot'].Stats()
-        FF[Qsqrdkey]['Avg'] = FFqsqrd['Boot'].Avg
+        for icFF,iFF in enumerate(FFqsqrd['Boot']):
+            if 'doub' in thisDS:
+                FF[Qsqrdkey]['Boot'][icFF] = 2*iFF/Val
+            elif 'sing' in thisDS:
+                FF[Qsqrdkey]['Boot'][icFF] = iFF/Val            
+            elif 'Proton' in thisDS:
+                FF[Qsqrdkey]['Boot'][icFF] = iFF/Val            
+            FF[Qsqrdkey]['Boot'][icFF].Stats()
+            FF[Qsqrdkey]['Avg'][icFF] = iFF.Avg
     return FF
         
 
