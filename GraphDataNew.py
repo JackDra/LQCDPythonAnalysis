@@ -524,6 +524,12 @@ def PlotFFs(data,DSCurr,thisSetList,CollName,FT):
         pl.clf()
         
 
+def SkipZeroFF(thisFF,thisset):
+    if '2' in thisFF or '3' in thisFF:
+        # if any([icheck in thisset for icheck in CheckFFZeroList]):
+        return True
+    return False
+        
 def PlotFFSet(dataset,thisFF,thisSetFlag):
     thissymcyc,thiscolcyc,thisshiftcycff = GetPlotItersff()
     collist = []
@@ -533,12 +539,13 @@ def PlotFFSet(dataset,thisFF,thisSetFlag):
         if dataset[thisset][thisFF] == False: continue        
         thiscol = thiscolcyc.next()
         collist.append(thiscol)
-        PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshiftcycff.next(),LegLabFF(thisset))
+        PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshiftcycff.next(),LegLabFF(thisset),SkipZeroFF(thisFF,thisset))
     return collist
 
-def PlotFF(data,col,sym,shift,lab):
+def PlotFF(data,col,sym,shift,lab,SkipZero):
     qsqrdvals,dataavg,dataerr = [],[],[]
     for iqsqrd,(qsqrd,values) in enumerate(data.iteritems()):
+        if '0' in qsqrd and SkipZero: continue
         Qsqrd = GetQsqrd(float(qsqrd.replace('qsqrd','')),Phys=PhysicalUnits)
         thisshift = shift
         if PhysicalUnits: thisshift *= hbarcdivlat**2
