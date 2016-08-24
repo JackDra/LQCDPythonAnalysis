@@ -562,10 +562,10 @@ def PlotFF(data,col,sym,shift,lab,SkipZero):
             qsqrdvals,dataavg,dataerr = qsqrdvals[:Qtcut],dataavg[:Qtcut],dataerr[:Qtcut]
         AppendFFDat(qsqrdvals,dataavg,dataerr)
         if ForcePos: dataavg = np.abs(dataavg)
-        # if SkipZero:
-        #     pl.errorbar(qsqrdvals[1:],dataavg[1:],dataerr[1:],color=col,fmt=sym,label=lab)
-        # else:
-        pl.errorbar(qsqrdvals,dataavg,dataerr,color=col,fmt=sym,label=lab)
+        if SkipZero and len(qsqrdvals) > 1:
+            pl.errorbar(qsqrdvals[1:],dataavg[1:],dataerr[1:],color=col,fmt=sym,label=lab)
+        else:
+            pl.errorbar(qsqrdvals,dataavg,dataerr,color=col,fmt=sym,label=lab)
             
 def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
     if MP:
