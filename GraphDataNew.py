@@ -651,11 +651,18 @@ def PlotSummedRF(data,thisfitr,thisfig):
         else:
             plotdashedup = Pullflag(fitbootdashed,'Avg')+Pullflag(fitbootdashed,'Std')
             plotdasheddown = Pullflag(fitbootdashed,'Avg')-Pullflag(fitbootdashed,'Std')
-        thisfig.axes[-1].plot(fittdata,Pullflag(fitbootdata,'Avg'),
-                label='slope='+MakeValAndErr(parsl.Avg,parsl.Std),color=thiscol)
-        thisfig.axes[-1].fill_between(fittdata,plotup,plotdown,color=thiscol,alpha=thisalpha,edgecolor='none')
-        thisfig.axes[-1].plot(fittdashed,plotdashedup,color=thiscol,ls='--')
-        thisfig.axes[-1].plot(fittdashed,plotdasheddown,color=thiscol,ls='--')
+        if ForcePos:
+            thisfig.axes[-1].plot(fittdata,np.abs(Pullflag(fitbootdata,'Avg')),
+                                  label='slope='+MakeValAndErr(parsl.Avg,parsl.Std),color=thiscol)
+            thisfig.axes[-1].fill_between(fittdata,np.abs(plotup),np.abs(plotdown),color=thiscol,alpha=thisalpha,edgecolor='none')
+            thisfig.axes[-1].plot(fittdashed,np.abs(plotdashedup),color=thiscol,ls='--')
+            thisfig.axes[-1].plot(fittdashed,np.abs(plotdasheddown),color=thiscol,ls='--')
+        else:
+            thisfig.axes[-1].plot(fittdata,Pullflag(fitbootdata,'Avg'),
+                                  label='slope='+MakeValAndErr(parsl.Avg,parsl.Std),color=thiscol)
+            thisfig.axes[-1].fill_between(fittdata,plotup,plotdown,color=thiscol,alpha=thisalpha,edgecolor='none')
+            thisfig.axes[-1].plot(fittdashed,plotdashedup,color=thiscol,ls='--')
+            thisfig.axes[-1].plot(fittdashed,plotdasheddown,color=thiscol,ls='--')
     # if Pullflag(fitbootdata,'Avg')[0] > 0:
     #     thisfig.legend(loc='upper left')
     # else:
