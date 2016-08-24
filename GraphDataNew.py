@@ -566,9 +566,9 @@ def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign):
     if len(qsqrdvals) > 0:
         if len(qsqrdvals) > Qtcut:
             qsqrdvals,dataavg,dataerr = qsqrdvals[:Qtcut],dataavg[:Qtcut],dataerr[:Qtcut]
-        AppendFFDat(qsqrdvals,dataavg,dataerr)
-        if ForcePos: dataavg = np.abs(dataavg)
         if FlipSign: dataavg = -1*np.array(dataavg)
+        if ForcePos: dataavg = np.abs(dataavg)
+        AppendFFDat(qsqrdvals,dataavg,dataerr)
         if SkipZero and len(qsqrdvals) > 1:
             pl.errorbar(qsqrdvals[1:],dataavg[1:],dataerr[1:],color=col,fmt=sym,label=lab)
         else:
