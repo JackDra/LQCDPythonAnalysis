@@ -635,7 +635,10 @@ def PlotSummedRF(data,thisfitr,thisfig):
                 dataplot.append(tsinkdata['Avg'])
                 dataploterr.append(tsinkdata['Std'])
         tdata,dataplot,dataploterr = zip(*sorted(zip(tdata,dataplot,dataploterr)))
-        thisfig.axes[-1].errorbar(tdata,dataplot,dataploterr,color=thiscol,fmt=thissym,label=icut)
+        if ForcePos:
+            thisfig.axes[-1].errorbar(tdata,np.abs(dataplot),dataploterr,color=thiscol,fmt=thissym,label=icut)
+        else:
+            thisfig.axes[-1].errorbar(tdata,dataplot,dataploterr,color=thiscol,fmt=thissym,label=icut)
         if not CheckDict(cutdata,'fit con '+thisfitr,'Boot'): continue
         if not CheckDict(cutdata,'fit sl '+thisfitr,'Boot'): continue        
         parcon,parsl = cutdata['fit con '+thisfitr]['Boot'],cutdata['fit sl '+thisfitr]['Boot']
