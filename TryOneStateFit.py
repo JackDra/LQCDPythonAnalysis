@@ -35,7 +35,7 @@ ReadGammaList = CreateGammaList(feedin['gamma'],twopt=True)
 
 # OSFColList = ['Tsink','CM','JustPoF','REvec']
 if kappa == 12090:
-    OSFColList = ['Tsink','CM','JustPoF']
+    OSFColList = ['Tsink','CM']
 elif kappa == 12104:
     OSFColList = ['REvec']
     
