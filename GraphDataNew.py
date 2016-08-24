@@ -530,6 +530,8 @@ def SkipZeroFF(thisFF,thisset):
     if '2' in thisFF or '3' in thisFF:
         # if any([icheck in thisset for icheck in CheckFFZeroList]):
         return True
+    if 'GedivGm' in thisset+thisFF:
+        return True
     return False
         
 def PlotFFSet(dataset,thisFF,thisSetFlag):
