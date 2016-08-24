@@ -520,36 +520,34 @@ def PlotFFs(data,DSCurr,thisSetList,CollName,FT):
         if len(thisFFComb) > 1: thisFFComb = '/'+thisFFComb
         DatFile = CreateFFFile(CollName,DSCurr,thisFF)+'.dat'
         WipeFile(DatFile)
-        PlotFFSet(data,thisFF,thisSetList)
+        PlotFFSet(data,thisFF,thisSetList,CollName)
         SetFFAxies(thisDS+thisCurr+thisFF+thisFFComb)
         pl.savefig(DatFile.replace('.dat','.pdf'))
         pl.clf()
         
 
-def SkipZeroFF(thisFF,thisset):
+def SkipZeroFF(thisFF,thisset,CollName):
     skipzero = False
-    if Debug: print thisset , thisFF
     if '2' in thisFF or '3' in thisFF:
         # if any([icheck in thisset for icheck in CheckFFZeroList]):
         skipzero = True
     if 'GedivGm' in thisset+thisFF:
         skipzero = True
-    if 'PsVector' in thisset+thisFF or 'Tensor' in thisset+thisFF:
+    if 'PsVector' in thisset+thisFF+CollName or 'Tensor' in thisset+thisFF+CollName:
         return skipzero,True
     else:
         return skipzero,False
         
-def PlotFFSet(dataset,thisFF,thisSetFlag):
+def PlotFFSet(dataset,thisFF,thisSetFlag,CollName):
     thissymcyc,thiscolcyc,thisshiftcycff = GetPlotItersff()
     collist = []
-    print thisSetFlag
     for thisset in SortMySet(thisSetFlag)[0]:
         ##make legend formatting function
         if not CheckDict(dataset,thisset,thisFF): continue
         if dataset[thisset][thisFF] == False: continue        
         thiscol = thiscolcyc.next()
         collist.append(thiscol)
-        skipzero,flipsign = SkipZeroFF(thisFF,thisset)
+        skipzero,flipsign = SkipZeroFF(thisFF,thisset,CollName)
         PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshiftcycff.next(),LegLabFF(thisset),skipzero,flipsign)
     return collist
 
