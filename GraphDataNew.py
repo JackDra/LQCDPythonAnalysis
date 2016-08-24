@@ -534,7 +534,7 @@ def SkipZeroFF(thisFF,thisset):
         skipzero = True
     if 'GedivGm' in thisset+thisFF:
         skipzero = True
-    if 'PsVector' in thisset or 'Tensor' in thisset:
+    if 'PsVector' in thisset+thisFF or 'Tensor' in thisset+thisFF:
         return skipzero,True
     else:
         return skipzero,False
