@@ -527,12 +527,16 @@ def PlotFFs(data,DSCurr,thisSetList,CollName,FT):
         
 
 def SkipZeroFF(thisFF,thisset):
+    skipzero = False
     if '2' in thisFF or '3' in thisFF:
         # if any([icheck in thisset for icheck in CheckFFZeroList]):
-        return True
+        skipzero = True
     if 'GedivGm' in thisset+thisFF:
-        return True
-    return False
+        skipzero = True
+    if 'PsVector' in thisset or 'Tensor' in thisset:
+        return skipzero,True
+    else:
+        return skipzero,False
         
 def PlotFFSet(dataset,thisFF,thisSetFlag):
     thissymcyc,thiscolcyc,thisshiftcycff = GetPlotItersff()
@@ -543,10 +547,11 @@ def PlotFFSet(dataset,thisFF,thisSetFlag):
         if dataset[thisset][thisFF] == False: continue        
         thiscol = thiscolcyc.next()
         collist.append(thiscol)
-        PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshiftcycff.next(),LegLabFF(thisset),SkipZeroFF(thisFF,thisset))
+        skipzero,flipsign = SkipZeroFF(thisFF,thisset)
+        PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshiftcycff.next(),LegLabFF(thisset),skipzero,flipsign)
     return collist
 
-def PlotFF(data,col,sym,shift,lab,SkipZero):
+def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign):
     qsqrdvals,dataavg,dataerr = [],[],[]
     for iqsqrd,(qsqrd,values) in enumerate(data.iteritems()):
         Qsqrd = GetQsqrd(float(qsqrd.replace('qsqrd','')),Phys=PhysicalUnits)
@@ -564,6 +569,7 @@ def PlotFF(data,col,sym,shift,lab,SkipZero):
             qsqrdvals,dataavg,dataerr = qsqrdvals[:Qtcut],dataavg[:Qtcut],dataerr[:Qtcut]
         AppendFFDat(qsqrdvals,dataavg,dataerr)
         if ForcePos: dataavg = np.abs(dataavg)
+        if FlipSign: dataavg = -1*np.array(dataavg)
         if SkipZero and len(qsqrdvals) > 1:
             pl.errorbar(qsqrdvals[1:],dataavg[1:],dataerr[1:],color=col,fmt=sym,label=lab)
         else:
