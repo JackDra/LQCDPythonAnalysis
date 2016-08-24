@@ -55,7 +55,7 @@ ylimDict = {'VectorP4giDi':[-0.4,-0.15],
             'IsoVectorP4giDi':[0.32,0.18], ## Reg
             # 'IsoVectorP4giDi':[0.35,0.15], ## Tsink
             # 'IsoVectorP3g1g2':[1.2,1.04], ## Reg
-            'IsoVectorP3g1g2':[1.22,1.0], ## Tsink
+            'IsoVectorP3g1g2':[1.22,.98], ## Tsink
             'IsoVectorP4g4':[0.8,1.1]}
 
 ylimFFDict = {'ProtonGeGmFF1/F1divF2':[0.3,0.5],
