@@ -84,7 +84,7 @@ params = {'legend.fontsize': 10,
           'legend.numpoints': 1,
           'axes.labelsize' : 20,
           'axes.titlesize' : 20,
-          'figure.autolayout': True,
+          # 'figure.autolayout': True,
           'axes.grid': True,
           'axes.xmargin':0.01,
           'axes.ymargin':0.01}
@@ -250,7 +250,7 @@ def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,FT,thissm='sm32'):
     ForceTitle = FT
     for ifitr in SumFitRList:    
         PlotColSum(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisTsinkR=ifitr)    
-    # pl.rcParams['figure.autolayout'] = False
+    pl.rcParams['figure.autolayout'] = False
     thisfig = pl.figure()
     for ic,ifitr in enumerate(SumFitRList):    
         # pl.subplot(1,len(SumFitRList),ic+1)
@@ -260,7 +260,7 @@ def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,FT,thissm='sm32'):
     # thisfig.subplots_adjust(top=0.95)
     thisfig.savefig(CreateFile(thissm,thisGamma,thisMom,'Sum TSink Comparison ',thisfig=thisfig)+'Sfun.pdf')
     thisfig.clf()
-    # pl.rcParams['figure.autolayout'] = True
+    pl.rcParams['figure.autolayout'] = True
         
 def PlotTSinkSFData(data,data2pt,thisSetList,thisGamma,thisMom,FT,thisSF='TSFTsink',thissm='sm32'):
     global ForceTitle
