@@ -14,6 +14,9 @@ except:
 
 ##CHANGE StringFix.py FUNCTION##
 
+##DEAULT TAKEN FROM OSF from: /raid/jdragos/data/results/ReadSetk12090/cfuns/twopt/OSFCM/state1sum22to23dt4twoptm0.txt
+##date/time calculated: 00:29 12 Oct 2015
+DefMassVal = {'22-31' : {'Avg':DefMass,'Std': 0.0028592256 ,'Chi': 0.4851841332}}
 
 
 # THISMACHINE = socket.gethostname()
@@ -83,13 +86,16 @@ with open('./setup.cfg','r') as f:
                     
 PoFC2C3Dis = '665.'
 
-myeps = np.finfo(0.0).eps
-ForceVecNorm = True
 ScalarNorm = 0.6822 # normalisation for Scalar current
 PsScalarNorm = 0.4948 # normalisation for Pseudo Scalar current
 VectorNorm = 0.8574 # normalisation for Vector Current
 PsVectorNorm = 0.8728 # normalisation for Pseudo Vector current
 TensorNorm = 0.9945 # normalisation for Tensor Current
+MomFracNorm = -1.067/DefMass # normalisation for Momentum Fraction
+
+
+myeps = np.finfo(0.0).eps
+ForceVecNorm = True
 MultiCoreFitting = False # Multicore for Boot Fitting, not needed in current build
 DoMulticore = True # Runs multicore wherever implemented
 DoContentsCheck = False # True makes sure the xml file has the correct momenta first field, turn off for more performance
@@ -350,9 +356,6 @@ elif kappa == 12104:
     CfunCheckList = ['REvecRead']
 MethodList = ['RF','Fits','SumMeth']+['TSF'+iTSF for iTSF in TSFFileFlags] + ['OSF'+iOSF for iOSF in OSFFileFlags]
 
-##DEAULT TAKEN FROM OSF from: /raid/jdragos/data/results/ReadSetk12090/cfuns/twopt/OSFCM/state1sum22to23dt4twoptm0.txt
-##date/time calculated: 00:29 12 Oct 2015
-DefMassVal = {'22-31' : {'Avg':DefMass,'Std': 0.0028592256 ,'Chi': 0.4851841332}}
 
 def GetRenorm(thisstring):
     if re.search('g[1234]g5',thisstring):
