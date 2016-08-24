@@ -547,7 +547,6 @@ def PlotFFSet(dataset,thisFF,thisSetFlag):
 def PlotFF(data,col,sym,shift,lab,SkipZero):
     qsqrdvals,dataavg,dataerr = [],[],[]
     for iqsqrd,(qsqrd,values) in enumerate(data.iteritems()):
-        if '0' in qsqrd and SkipZero: continue
         Qsqrd = GetQsqrd(float(qsqrd.replace('qsqrd','')),Phys=PhysicalUnits)
         thisshift = shift
         if PhysicalUnits: thisshift *= hbarcdivlat**2
@@ -563,7 +562,10 @@ def PlotFF(data,col,sym,shift,lab,SkipZero):
             qsqrdvals,dataavg,dataerr = qsqrdvals[:Qtcut],dataavg[:Qtcut],dataerr[:Qtcut]
         AppendFFDat(qsqrdvals,dataavg,dataerr)
         if ForcePos: dataavg = np.abs(dataavg)
-        pl.errorbar(qsqrdvals,dataavg,dataerr,color=col,fmt=sym,label=lab)
+        if SkipZero:
+            pl.errorbar(qsqrdvals[1:],dataavg[1:],dataerr[1:],color=col,fmt=sym,label=lab)
+        else:
+            pl.errorbar(qsqrdvals,dataavg,dataerr,color=col,fmt=sym,label=lab)
 
 def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
     if MP:
