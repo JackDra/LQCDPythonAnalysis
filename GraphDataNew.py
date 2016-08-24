@@ -559,6 +559,7 @@ def PlotFF(data,col,sym,shift,lab,SkipZero):
         if len(qsqrdvals) > Qtcut:
             qsqrdvals,dataavg,dataerr = qsqrdvals[:Qtcut],dataavg[:Qtcut],dataerr[:Qtcut]
         AppendFFDat(qsqrdvals,dataavg,dataerr)
+        if ForcePos: dataavg = np.abs(dataavg)
         pl.errorbar(qsqrdvals,dataavg,dataerr,color=col,fmt=sym,label=lab)
 
 def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
@@ -578,6 +579,7 @@ def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
     #     print lab
     #     for it,val,valerr in zip(tvals,dataavg,dataerr):
     #         print tvals,dataavg,dataerr
+    if ForcePos: dataavg = np.abs(dataavg)
     pl.errorbar(tvals[thistsource:]-thistsource,dataavg[thistsource:],dataerr[thistsource:],color=col,fmt=sym,label=lab)
 
 
@@ -596,6 +598,7 @@ def PlotFit(data,col,shift,iset,thistsink):
         #     print data[thiscut].keys(), 'Boot'
         dataavg = Pullflag(data[thiscut]['Boot'],'Avg')
         dataerr = Pullflag(data[thiscut]['Boot'],'Std')
+        if ForcePos: dataavg = np.abs(dataavg)
         dataup,datadown = dataavg+dataerr,dataavg-dataerr
         if Debug:
             print iset, thiscut
@@ -608,6 +611,7 @@ def PlotSumMeth(data,col,lab,thisTsinkR):
     if not CheckDict(data,SumCutPar,thisTsinkR,'Std'): return
     dataavg = data[SumCutPar][thisTsinkR]['Avg']
     dataerr = data[SumCutPar][thisTsinkR]['Std']
+    if ForcePos: dataavg = np.abs(dataavg)
     dataup,datadown = dataavg+dataerr,dataavg-dataerr
     trange = AllTSinkListVar[-1]-tsource - 2*int(SumCutPar.replace('cut',''))
     tvals = [-trange/2.,trange/2.]
@@ -693,6 +697,7 @@ def PlotTSFLine(data,data2pt,thistsink,col,thisshift,TSFcut,smear):
     # tplotdata = np.arange(-LRM,LRM+incr,incr) 
     dataline = (np.array(ff.C3TSFLineFun(pars2pt+pars3pt,tdata,thistsink))/
                 ff.C2TSFLineFun(thistsink,pars2pt))
+    if ForcePos: dataline = np.abs(dataline)
     pl.plot(tplotdata,dataline,color=col)
 
 
@@ -705,6 +710,7 @@ def PlotOSFValue(data,col,thisshift,OSFcut,smear,thistsink):
     if not CheckDict(data,'B00',OSFfitr[osfsmear],OSFcut,'Std'): return
     dataval = data['B00'][OSFfitr[osfsmear]][OSFcut]['Avg']
     dataerr = data['B00'][OSFfitr[osfsmear]][OSFcut]['Std']
+    if ForcePos: dataval = np.abs(dataval)
     dataup,datadown = dataval+dataerr,dataval-dataerr
     pl.fill_between(tvals,[datadown,datadown],[dataup,dataup],facecolor=col,edgecolor='none',alpha=thisalpha)
     pl.plot(tvals,[dataval,dataval],color = col)
@@ -714,6 +720,7 @@ def PlotTSFValue(data,col,thisshift,TSFcut,smear,thistsink):
     tvals = np.array([-LRM+thisshift,LRM+thisshift])
     if not CheckDict(data,'B00',TSFfitr,TSFcut,'Avg'): return
     dataAvg,dataErr = data['B00'][TSFfitr][TSFcut]['Avg'],data['B00'][TSFfitr][TSFcut]['Std']
+    if ForcePos: dataAvg = np.abs(dataAvg)
     dataup,datadown = dataAvg-dataErr,dataAvg+dataErr
     pl.fill_between(tvals,[datadown,datadown],[dataup,dataup],facecolor=col,edgecolor='none',alpha=thisalpha)
 

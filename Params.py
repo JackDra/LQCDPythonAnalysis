@@ -96,6 +96,7 @@ MomFracNorm = -1.067/DefMass # normalisation for Momentum Fraction
 
 myeps = np.finfo(0.0).eps
 ForceVecNorm = True
+ForcePos = True
 MultiCoreFitting = False # Multicore for Boot Fitting, not needed in current build
 DoMulticore = True # Runs multicore wherever implemented
 DoContentsCheck = False # True makes sure the xml file has the correct momenta first field, turn off for more performance
