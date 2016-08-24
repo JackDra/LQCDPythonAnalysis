@@ -80,8 +80,7 @@ leglocFFDict = {'NeutronVectorFF2':'upper left',
                 'NeutronGeGmFF1/F1divF2':'lower left',
                 'ProtonTensorFF1':'upper left',
                 'ProtonTensorFF3':'upper left',
-                'NeutronTensorFF2':'upper left',
-                'IsoVectorPsVectorFF1':'upper left'}
+                'NeutronTensorFF2':'upper left'}
 
 params = {'legend.fontsize': 10,
           'legend.numpoints': 1,
@@ -528,7 +527,7 @@ def PlotFFs(data,DSCurr,thisSetList,CollName,FT):
 
 def SkipZeroFF(thisFF,thisset,thisCurr):
     skipzero = False
-    print thisset+thisFF+thisCurr
+    if Debug: print thisset+thisFF+thisCurr
     if '2' in thisFF or '3' in thisFF:
         # if any([icheck in thisset for icheck in CheckFFZeroList]):
         skipzero = True
