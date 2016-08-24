@@ -45,17 +45,16 @@ Massyrange = 0.44,0.54
 # Massyrange = 0.40,0.60
 Qsqrdxlim = -0.03,1
 
-ylimDict = {'IsoVectorP4giDi':[-0.15,-0.05],
-            'VectorP4giDi':[-0.4,-0.15],
+ylimDict = {'VectorP4giDi':[-0.4,-0.15],
             'VectorP4g4':[0,4.0],
             'ProtonP3g2cmplx':[0,0.5],
-            'IsoVectorP3g3g5':[-1.0,-1.2], ## Reg
-            # 'IsoVectorP3g3g5':[-0.9,-1.3], ## PoF
-            # 'IsoVectorP3g3g5':[-.95,-1.25], ## Tsink
+            'IsoVectorP3g3g5':[1.0,1.2], ## Reg
+            # 'IsoVectorP3g3g5':[0.9,1.3], ## PoF
+            # 'IsoVectorP3g3g5':[.95,1.25], ## Tsink
             # 'IsoVectorP4I':[0.4,1.2], ## Tsink?
             # 'IsoVectorP4giDi':[0.32,0.18], ## Reg
             'IsoVectorP4giDi':[0.35,0.15], ## Tsink
-            'IsoVectorP3g1g2':[-1.2,-1.04], ## Reg
+            'IsoVectorP3g1g2':[1.2,1.04], ## Reg
             'IsoVectorP4g4':[0.8,1.1]}
 
 ylimFFDict = {'ProtonGeGmFF1/F1divF2':[0.3,0.5],
@@ -84,7 +83,7 @@ params = {'legend.fontsize': 10,
           'legend.numpoints': 1,
           'axes.labelsize' : 20,
           'axes.titlesize' : 20,
-          # 'figure.autolayout': True,
+          'figure.autolayout': True,
           'axes.grid': True,
           'axes.xmargin':0.01,
           'axes.ymargin':0.01}
@@ -250,7 +249,7 @@ def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,FT,thissm='sm32'):
     ForceTitle = FT
     for ifitr in SumFitRList:    
         PlotColSum(data,thisSetList,[thissm],thisGamma,thisMom,'Sum TSink Comparison ',thisTsinkR=ifitr)    
-    pl.rcParams['figure.autolayout'] = False
+    # pl.rcParams['figure.autolayout'] = False
     thisfig = pl.figure()
     for ic,ifitr in enumerate(SumFitRList):    
         # pl.subplot(1,len(SumFitRList),ic+1)
@@ -260,7 +259,7 @@ def PlotTSinkSumData(data,thisSetList,thisGamma,thisMom,FT,thissm='sm32'):
     # thisfig.subplots_adjust(top=0.95)
     thisfig.savefig(CreateFile(thissm,thisGamma,thisMom,'Sum TSink Comparison ',thisfig=thisfig)+'Sfun.pdf')
     thisfig.clf()
-    pl.rcParams['figure.autolayout'] = True
+    # pl.rcParams['figure.autolayout'] = True
         
 def PlotTSinkSFData(data,data2pt,thisSetList,thisGamma,thisMom,FT,thisSF='TSFTsink',thissm='sm32'):
     global ForceTitle
