@@ -35,7 +35,7 @@ ReadGammaList = CreateGammaList(feedin['gamma'],twopt=True)
 
 # OSFColList = ['Tsink','CM','JustPoF','REvec']
 if kappa == 12090:
-    OSFColList = ['Tsink','CM']
+    OSFColList = ['Tsink','CM','JustPoF']
 elif kappa == 12104:
     OSFColList = ['REvec']
     
@@ -51,7 +51,8 @@ elif outfile == 'CM':
     ReadSmearList = DefSmearList
     ReadTSinkList = [29]
     # CaptString = ['SMSET','CMSET','PoFSET','REvecSET']
-    CaptString = ['SMSET','CMSET','PoFSET']
+    # CaptString = ['SMSET','CMSET','PoFSET']
+    CaptString = ['SMSET','CMSET']
     ReadTvarList = AnaTvarList
     ReadREvecTSinkList = []
     ReadREvecTvarList = []
