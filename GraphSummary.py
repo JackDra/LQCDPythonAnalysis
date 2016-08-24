@@ -33,8 +33,8 @@ thisalpha = 0.3
 
 ylimSummaryDict = {'IsoVectorP4I':     [ 0.6 , 1.2 ],
                    'IsoVectorP4giDi':  [0.27,0.13],
-                   'IsoVectorP3g1g2':  [-1.15,-0.95 ],
-                   'IsoVectorP3g3g5':  [-1.0,-1.25]}
+                   'IsoVectorP3g1g2':  [1.15,0.95 ],
+                   'IsoVectorP3g3g5':  [1.0,1.25]}
 
 xlabshift = 0.055
 manylim = (-1,2.5)
@@ -317,6 +317,7 @@ def PlotSummarySet(iDS,igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
                         dataerr.append(idata[iDS][igamma][iq]['Boot'].Std)
     if len(dataval) == 0: return xstart,[]
     xdata = range(xstart,xstart+len(dataval))
+    if ForcePos: dataval = np.abs(dataval)
     if Debug:
         print 'Graphing'
         for ix,ival,ierr in zip(xdata,dataval,dataerr):
