@@ -528,6 +528,7 @@ def PlotFFs(data,DSCurr,thisSetList,CollName,FT):
 
 def SkipZeroFF(thisFF,thisset):
     skipzero = False
+    print thisset
     if '2' in thisFF or '3' in thisFF:
         # if any([icheck in thisset for icheck in CheckFFZeroList]):
         skipzero = True
