@@ -68,8 +68,8 @@ ylimFFDict = {'ProtonGeGmFF1/F1divF2':[0.3,0.5],
               'IsoVectorPsVectorFF2':[10,2],
               'ProtonTensorFF2':[-0.5,-3],
               'ProtonTensorFF3':[0.9,0.15],
-              'NeutronTensorFF2':[-2.0,-0.45],
-              'NeutronTensorFF3':[0.2,1],
+              'NeutronTensorFF2':[2.0,0.45],
+              'NeutronTensorFF3':[-0.2,-1],
               'NeutronGeGmFF1/F1divF2':[-0.1,0.0]}
 
 leglocFFDict = {'NeutronVectorFF2':'upper left',
@@ -79,6 +79,7 @@ leglocFFDict = {'NeutronVectorFF2':'upper left',
                 'IsoVectorPsVectorFF2':'upper left',
                 'NeutronGeGmFF1/F1divF2':'lower left',
                 'ProtonTensorFF3':'upper left',
+                'NeutronTensorFF1':'upper left',
                 'NeutronTensorFF2':'upper left'}
 
 params = {'legend.fontsize': 10,
