@@ -32,7 +32,7 @@ incr = 0.01
 thisalpha = 0.3
 
 ylimSummaryDict = {'IsoVectorP4I':     [ 0.6 , 1.2 ],
-                   'IsoVectorP4giDi':  [0.3,0.13],
+                   'IsoVectorP4giDi':  [0.27,0.13],
                    'IsoVectorP3g1g2':  [-1.15,-0.95 ],
                    'IsoVectorP3g3g5':  [-1.0,-1.25]}
 
