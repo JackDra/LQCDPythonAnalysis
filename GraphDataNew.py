@@ -542,6 +542,7 @@ def SkipZeroFF(thisFF,thisset):
 def PlotFFSet(dataset,thisFF,thisSetFlag):
     thissymcyc,thiscolcyc,thisshiftcycff = GetPlotItersff()
     collist = []
+    print thisSetFlag
     for thisset in SortMySet(thisSetFlag)[0]:
         ##make legend formatting function
         if not CheckDict(dataset,thisset,thisFF): continue
