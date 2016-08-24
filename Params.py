@@ -358,7 +358,9 @@ MethodList = ['RF','Fits','SumMeth']+['TSF'+iTSF for iTSF in TSFFileFlags] + ['O
 
 
 def GetRenorm(thisstring):
-    if re.search('g[1234]g5',thisstring):
+    if 'giDi' in thisstring:
+        return MomFracNorm
+    elif re.search('g[1234]g5',thisstring):
         return PsVectorNorm
     elif re.search('g[1234]g[1234]',thisstring):
         return TensorNorm
