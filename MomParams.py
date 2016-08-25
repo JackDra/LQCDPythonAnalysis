@@ -19,6 +19,9 @@ DefMass = 0.4662535526 #Lat Units
 DefMassPhys = DefMass*hbarcdivlat #Lat Units
 
 
+DiagPList = [[1, 1, 1, 2], [2, 2, 2, 4], [3, 3, 3, 6], [4, 4, 4, 8], [5, 5, 5, 10], [6, 6, 6, 12], [7, 7, 7, 14], [8, 8, 8, 16]]
+DiagPListtdiv = [[1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3], [4, 4, 4, 4], [5, 5, 5, 5], [6, 6, 6, 6], [7, 7, 7, 7], [8, 8, 8, 8]]
+
 def GetQsqrd(nqsqrd,Phys=True):
     if Phys:
         qsqrd = nqsqrd*(qunitPhys**2)
@@ -203,8 +206,7 @@ def OutputSMOMPairs(filename):
         nspace = abs(intin)/10
         if intin < 0: nspace += 1
         return ' '*(2-nspace)+str(intin)
-    thisplist = [[1, 1, 1, 2], [2, 2, 2, 4], [3, 3, 3, 6], [4, 4, 4, 8], [5, 5, 5, 10], [6, 6, 6, 12], [7, 7, 7, 14], [8, 8, 8, 16]]
-    plistout = CreateSMOMPairs(thisplist)
+    plistout = CreateSMOMPairs(DiagPlist)
     plistout = np.rollaxis(np.rollaxis(np.array(plistout),3),3)
     plistout = [[iip.flatten() for iip in ip] for ip in plistout]
     with open(filename,'w') as f:
