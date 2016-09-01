@@ -70,7 +70,7 @@ ylimFFDict = {'ProtonGeGmFF1/F1divF2':[0.3,0.5],
               'ProtonTensorFF3':[0.9,0.15],
               'NeutronTensorFF2':[2.0,0.45],
               'NeutronTensorFF3':[-0.2,-1],
-              'NeutronGeGmFF1/F1divF2':[0.0,0.1]}
+              'NeutronGeGmFF1/F1divF2':[0.0,0.06]}
 
 leglocFFDict = {'NeutronVectorFF2':'upper left',
                 'NeutronGeGmFF1':'upper left',
