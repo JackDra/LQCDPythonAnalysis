@@ -77,7 +77,7 @@ leglocFFDict = {'NeutronVectorFF2':'upper left',
                 'NeutronGeGmFF2':'upper right',
                 'IsoVectorPsScalarFF1':'lower right',
                 'IsoVectorPsVectorFF2':'upper left',
-                'NeutronGeGmFF1/F1divF2':'lower left',
+                'NeutronGeGmFF1/F1divF2':'upper left',
                 'ProtonTensorFF3':'upper left',
                 'NeutronTensorFF1':'upper left',
                 'NeutronTensorFF2':'upper left'}
