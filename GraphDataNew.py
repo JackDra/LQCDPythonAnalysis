@@ -40,9 +40,11 @@ incr = 0.01
 thisalpha = 0.3
 
 # MassTVals = 16,33
-MassTVals = 3,25
+# MassTVals = 3,25
+MassTVals = 5,25
 # Massyrange = 0.44,0.54
-Massyrange = 0.40,0.60
+# Massyrange = 0.40,0.60
+Massyrange = 0.35,0.55
 Qsqrdxlim = -0.03,1
 
 ylimDict = {'VectorP4giDi':[-0.4,-0.15],
