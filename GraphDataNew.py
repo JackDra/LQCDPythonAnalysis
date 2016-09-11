@@ -52,7 +52,8 @@ ylimDict = {'VectorP4giDi':[-0.4,-0.15],
             'ProtonP3g2cmplx':[0,0.5],
             # 'IsoVectorP3g3g5':[1.0,1.2], ## Reg
             # 'IsoVectorP3g3g5':[0.9,1.3], ## PoF
-            'IsoVectorP3g3g5':[.95,1.25], ## Tsink
+            'IsoVectorP3g3g5':[1.0,1.1], ## ExStExample
+            # 'IsoVectorP3g3g5':[.95,1.25], ## Tsink
             # 'IsoVectorP4I':[0.4,1.2], ## Tsink?
             'IsoVectorP4giDi':[0.32,0.18], ## Reg
             # 'IsoVectorP4giDi':[0.35,0.15], ## Tsink
