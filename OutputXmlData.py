@@ -207,7 +207,7 @@ def PrintDPfit(iFF,outputdict,InfoDict):
         datadict['DP_Fits']['Boots'][iFF] = OrderedDict()
         datadict['DP_Fits']['Values'][iFF]['Fzero'] = OrderedDict()
         datadict['DP_Fits']['Values'][iFF]['mEM'] = OrderedDict()
-        datadict['DP_Fits']['Values'][iFF]['zero_slope'] = OrderedDict()
+        # datadict['DP_Fits']['Values'][iFF]['zero_slope'] = OrderedDict()
         datadict['DP_Fits']['Values'][iFF]['Radius'] = OrderedDict() 
         datadict['DP_Fits']['Values'][iFF]['Chi^2_pdf'] = OrderedDict() 
         for iSet,setdict in outputdict.iteritems():
