@@ -58,8 +58,10 @@ for iFFcomb in feedin['FFcomb']:
 
 ## datadict { Set } { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
     
+
 for iCurr,Currdata in datadict.iteritems():
     outputdict = OrderedDict()
+    CurrInfo = False
     if Debug: print 'iCurr' , icurr
     for iSet,Setdata in Currdata.iteritems():
         if Debug: print 'iSet', iSet
@@ -67,6 +69,9 @@ for iCurr,Currdata in datadict.iteritems():
         iFFloop = Setdata.keys()
         if 'Mass' in iFFloop: iFFloop.remove('Mass')
         if 'Chi' in iFFloop: iFFloop.remove('Chi')
+        if 'Info' in iFFloop:
+            CurrSetInfo = Setdata['Info']
+            iFFloop.remove('Info')
         if Debug: print iFFloop
         for nFF in iFFloop:
             if Debug: print 'nFF', nFF
