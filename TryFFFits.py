@@ -65,7 +65,10 @@ def CurrFFDPfit(iCurr,Currdata):
     outputdict = OrderedDict()
     CurrInfo = False
     if Debug: print 'iCurr' , icurr
-    for iSet,Setdata in Currdata.iteritems():
+    if 'tsink29sm32Fitscut5' in Currdata.keys():
+        iSet = 'tsink29sm32Fitscut5'
+        Setdata = Currdata[iSet]
+    # for iSet,Setdata in Currdata.iteritems():    
         if Debug: print 'iSet', iSet
         outputdict[iSet] = OrderedDict()
         iFFloop = Setdata.keys()

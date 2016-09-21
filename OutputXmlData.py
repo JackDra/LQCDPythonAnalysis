@@ -2,6 +2,7 @@
 
 from Params import *
 from FitParams import *
+from FitFunctions import DPfitfunDer,DPfitfun2Der
 from BootTest import BootStrap1
 from MiscFuns import *
 from SetLists import GetTsinkSmLists
