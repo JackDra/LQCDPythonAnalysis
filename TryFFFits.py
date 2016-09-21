@@ -61,8 +61,8 @@ for iFF,FFdata in datadict.iteritems():
     for iSet,Setdata in FFdata.iteritems():
         outputdict[iSet] = OrderedDict()
         iFFloop = Setdata.keys()
-        iFFloop.pop('Mass')
-        iFFloop.pop('Chi')
+        if 'Mass' in iFFloop: iFFloop.remove('Mass')
+        if 'Chi' in iFFloop: iFFloop.remove('Chi')
         if Debug: print iFFloop
         for nFF in iFFloop:
             outputdict[iSet][nFF] = OrderedDict()
