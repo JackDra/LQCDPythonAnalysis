@@ -5,7 +5,7 @@ from multiprocessing import Pool
 from MultiWrap import *
 import numpy as np
 from BootTest import BootStrap1
-from scipy.optimize import leastsq
+from scipy.optimize import leastsq,curve_fit
 from Params import *
 from FitParams import *
 from MiscFuns import *
