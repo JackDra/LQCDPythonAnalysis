@@ -58,6 +58,10 @@ def DerOfFun(Fun,Len=1):
         return FormFactorO2Der
     elif Fun.__name__ == 'FormFactorO3':
         return FormFactorO3Der
+    elif Fun.__name__ == 'DPfit':
+        return DPfitDer
+    elif Fun.__name__ == 'DPfit2':
+        return DPfit2Der
 
 def GetLSFuns(fitfun,derfun,iGuess,parlen):
    if iGuess == None:

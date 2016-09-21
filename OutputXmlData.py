@@ -189,8 +189,28 @@ def PrintFFSet(FFin,Set,Mass,SetMass,theCurr,infoFF):
                 datadict['Form_Factors']['Boots'][iqsqrd]['FF'+str(ic+1)] = iFF.values
     # MergeXmlOutput(thisfile,datadict,CheckMom=False)
     WriteXmlOutput(thisfile,datadict)
+    
 
 
+## outputdict : {iSet : nFF : Boot/Avg/Chi : F(0)/mEM }
+def PrintDPfit(iFF,outputdict):
+    FFdir = outputdir +'/FormFactors/DPfits/'+iFF+'/'
+    FFbootdir = FFdir + 'boots/'
+    mkdir_p(FFbootdir)
+    thisfile = FFdir +iFF
+    datadict = {'DP_Fits':{'Values':OrderedDict(),'Boots':OrderedDict()}}
+    for iFF in outputdict[outputdict.keys()[0]].iterkeys():
+        datadict['Values'][iFF] = OrderedDict()
+        datadict['Boots'][iFF] = OrderedDict()
+        for iSet,setdict in outputdict.iterkeys():
+            datadict['Values'][iFF][iSet] = OrderedDict()
+            datadict['Values'][iFF][iSet]['Fzero'] = outputdict[iSet][iFF]['Avg'][0]
+            datadict['Values'][iFF][iSet]['mEM'] = outputdict[iSet][iFF]['Avg'][1]
+            datadict['Values'][iFF][iSet]['zero_slope'] = DPfitDer(np.array([0.],outputdict[iSet][iFF]['Avg'])
+            datadict['Values'][iFF][iSet]['Radius'] = datadict['Values'][iFF][iSet]['zero_slope'] * 6.
+            datadict['Values'][iFF][iSet]['Chi^2_pdf'] = datadict['Values'][iFF][iSet]['Chi'][0]
+    # MergeXmlOutput(thisfile,datadict,CheckMom=False)
+    WriteXmlOutput(thisfile,datadict)
 
 
 
