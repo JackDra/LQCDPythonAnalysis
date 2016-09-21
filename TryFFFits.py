@@ -88,6 +88,10 @@ for iCurr,Currdata in datadict.iteritems():
                     xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits))
                 else:
                     print 'Warning, Boot not found in', iCurr, iSet, nFF, iQs 
+            if Debug:
+                print 'Solving System:'
+                for ix,iy in zip(xdatain, ydatain):
+                    print ix, iy
             DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfit)
             outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = DPfit,DPfitAvg,DPfitChi
     PrintDPfit(iCurr,outputdict)
