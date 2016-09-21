@@ -200,7 +200,7 @@ def PrintDPfit(iFF,outputdict,InfoDict):
     mkdir_p(FFbootdir)
     thisfile = FFdir +iFF
     # datadict = {'DP_Fits':{'Values':OrderedDict(),'Boots':OrderedDict()}}
-    datadict = {'DP_Fits':{'Values':OrderedDict()}}
+    datadict = {'DP_Fits':{'Values':OrderedDict(),'Boots':OrderedDict()}}
     datadict['DP_Fits']['Info'] = InfoDict
     for iFF in outputdict[outputdict.keys()[0]].iterkeys():
         datadict['DP_Fits']['Values'][iFF] = OrderedDict()
