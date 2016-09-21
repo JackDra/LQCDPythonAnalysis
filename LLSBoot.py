@@ -35,7 +35,7 @@ def LSDerCreate(FunDer):
             xval = xval[0]
         yval = val[-2]
         errval = val[-1]
-        return np.swapaxes(np.array(FunDer(xval,par))/errval,0,1)
+        return np.transpose(FunDer(xval,par))/errval
         # return np.transpose(FunDer(xval,par)/errval)
     return LSDerFun
 
