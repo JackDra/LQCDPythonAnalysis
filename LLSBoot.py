@@ -104,7 +104,10 @@ def LSFit(parlen,xdata,yerr,fitfun,ydata):
         print LSfitfun.__name__
         print iGuess
         print data
-    x,covar, infodict, mesg, ier=leastsq(LSfitfun,iGuess,args=data, Dfun=LSDerfitfun, maxfev=MI, full_output=1)
+    if ForceNoDer:
+        x,covar, infodict, mesg, ier=leastsq(LSfitfun,iGuess,args=data, maxfev=MI, full_output=1)
+    else:
+        x,covar, infodict, mesg, ier=leastsq(LSfitfun,iGuess,args=data, Dfun=LSDerfitfun, maxfev=MI, full_output=1)
     if float(len(ydata)-len(x)) == 0:
         chisqpdf = float('NaN')
     else:

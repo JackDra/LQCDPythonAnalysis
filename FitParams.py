@@ -92,10 +92,10 @@ TSFfitr = str(TSFfitvals[0])+'-'+str(TSFfitvals[1])
 
 StateParList = {'Two':TwoStateParList,'One':OneStateParList}
 
-MaxIters = 10000
+MaxIters = 100000
 def FitDefGuess(Fun,Len=1):
     if Fun.__name__ == 'DPfitfun':
-        return [1,1000000]
+        return [1,100]
     if Fun.__name__ == 'DPfitfun2':
         return [1,.5]
     if Fun.__name__ == 'FormFactorO1':
