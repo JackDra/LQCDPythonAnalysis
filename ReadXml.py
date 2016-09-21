@@ -214,7 +214,6 @@ def ReadFFFile(filename):
         dataout['Mass'] = data['Values']['Mass']
         dataout['Chi'] = OrderedDict()
         if 'Boots' in data.keys():
-            print 'Found Boot'
             for iq,qdata in data['Boots'].iteritems():
                 dataout['Chi'][iq] = data['Values'][iq]['Chi']
                 for iff,ffdata in qdata.iteritems():

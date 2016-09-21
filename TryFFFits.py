@@ -82,7 +82,7 @@ for iCurr,Currdata in datadict.iteritems():
                 if Debug: print 'Qs' , iQs
                 if Debug: print 'Qsdatakeys' , Qsdata.keys()
                 ydatain.append(Qsdata['Boot'])
-                xdatain.append(GetQsqrd(float(qsqrd.replace('qsqrd','')),Phys=PhysicalUnits))
+                xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits))
             DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfit)
             outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = DPfit,DPfitAvg,DPfitChi
     PrintDPfit(iCurr,outputdict)
