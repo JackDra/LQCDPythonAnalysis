@@ -53,7 +53,7 @@ for iFFcomb in feedin['FFcomb']:
             thisCurrDict.append([GetCurrDict([icurr+iFFcomb]),feedin['ffgraph']])
 
 ## datadict { FormFactor } { Set } { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
-datadict = ReadFFDict(outputdir,thisCurrDict)
+if len(thisCurrDict) > 0: datadict = ReadFFDict(outputdir,thisCurrDict)
 
 for iFF,FFdata in datadict.iteritems():
     outputdict = OrderedDict()
