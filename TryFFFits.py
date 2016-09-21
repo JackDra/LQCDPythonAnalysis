@@ -91,7 +91,7 @@ for iCurr,Currdata in datadict.iteritems():
             if Debug:
                 print 'Solving System:'
                 for ix,iy in zip(xdatain, ydatain):
-                    print ix, iy
+                    print ix, iy.Avg
             DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfit)
             outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = DPfit,DPfitAvg,DPfitChi
     PrintDPfit(iCurr,outputdict)
