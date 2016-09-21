@@ -83,7 +83,7 @@ for iCurr,Currdata in datadict.iteritems():
             for iQs,Qsdata in nFFdata.iteritems():
                 if Debug: print 'Qs' , iQs
                 # if Debug: print 'Qsdatakeys' , Qsdata.keys()
-                if 'Boot' not in Qsdata:
+                if 'Boot' in Qsdata:
                     ydatain.append(Qsdata['Boot'])
                     xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits))
                 else:
