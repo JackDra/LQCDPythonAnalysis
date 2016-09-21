@@ -41,20 +41,21 @@ for icomb in feedin['current']:
     if icomb in CurrListForFFComb:
         thisCurrcomb.append(icomb)
 
-thisCurrDict = []
+datadict = OrderedDict()
 for iFFcomb in feedin['FFcomb']:
     if iFFcomb == '':
         for icurr in ElongateName(feedin['comb'],feedin['current']):
             print 'Looking in ', icurr
-            thisCurrDict.append([GetCurrDict([icurr]),feedin['ffgraph']])
+            datadict[icurr] = ReadFFDict(outputdir,GetCurrDict([icurr]))
     else:
         for icurr in ElongateName(thisFFcomb,thisCurrcomb):
             print 'Looking in ', icurr+iFFcomb
-            thisCurrDict.append([GetCurrDict([icurr+iFFcomb]),feedin['ffgraph']])
+            datadict[icurr+iFFcomb.replace('/','')] = ReadFFDict(outputdir,GetCurrDict([icurr+iFFcomb]))
+
+if Debug: print datadict[datadict.keys()[0]].keys()
 
 ## datadict { FormFactor } { Set } { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
-if len(thisCurrDict) > 0: datadict = ReadFFDict(outputdir,thisCurrDict)
-
+    
 for iFF,FFdata in datadict.iteritems():
     outputdict = OrderedDict()
     for iSet,Setdata in FFdata.iteritems():
