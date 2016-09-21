@@ -20,10 +20,10 @@ def LSCreate(Fun):
             xval = xval[0]
         yval = val[-2]
         errval = val[-1]
-        # print xval, par
-        # print Fun(xval,par)
-        # print yval
-        # print 
+        print xval, par
+        print Fun(xval,par)
+        print yval
+        print 
         return (Fun(xval,par)-yval)/errval
     return LSFun
 
