@@ -72,7 +72,7 @@ for iCurr,Currdata in datadict.iteritems():
         if 'Info' in iFFloop:
             CurrSetInfo = Setdata['Info']
             iFFloop.remove('Info')
-        if Debug: print iFFloop
+        # if Debug: print iFFloop
         for nFF in iFFloop:
             if Debug: print 'nFF', nFF
             outputdict[iSet][nFF] = OrderedDict()

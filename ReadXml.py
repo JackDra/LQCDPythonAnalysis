@@ -213,6 +213,7 @@ def ReadFFFile(filename):
         dataout['Info'] = data['Info']
         dataout['Mass'] = data['Values']['Mass']
         dataout['Chi'] = OrderedDict()
+        print data.keys()
         if 'Boots' in data.keys():
             for iq,qdata in data['Boots'].iteritems():
                 dataout['Chi'][iq] = data['Values'][iq]['Chi']
