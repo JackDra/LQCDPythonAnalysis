@@ -60,8 +60,8 @@ for iFFcomb in feedin['FFcomb']:
 
 ## datadict { Set } { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
     
-
-for iCurr,Currdata in datadict.iteritems():
+  
+def CurrFFDPfit(iCurr,Currdata):
     outputdict = OrderedDict()
     CurrInfo = False
     if Debug: print 'iCurr' , icurr
@@ -94,6 +94,31 @@ for iCurr,Currdata in datadict.iteritems():
             #     for ix,iy in zip(xdatain, ydatain):
             #         print ix, iy.Avg
             # DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,np.swapaxes(xdatain,0,1),DPfitfun)
-            DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfitfun)
-            outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = DPfit,DPfitAvg,DPfitChi
+            if len(ydata) < 2:
+                print "too short ydata, skipping",iCurr, iSet, nFF, iQs 
+            else:
+                DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfitfun)
+                outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = DPfit,DPfitAvg,DPfitChi
     PrintDPfit(iCurr,outputdict)
+
+
+inputparams = []
+for iCurr,Currdata in datadict.iteritems():
+    inputparams.append([iCurr,Currdata])
+
+
+starttime = time.time()
+feedin['anaproc'] = min(feedin['anaproc'],len(inputparams))
+if DoMulticore and feedin['anaproc'] > 1:
+    makeContextFunctions(CurrFFDPfit)
+    thisPool = Pool(feedin['anaproc'])
+    thisPool.map(CurrFFDPfit.mapper,inputparams)
+    thisPool.close()
+    thisPool.join()
+else:
+    for ip,iparam in enumerate(inputparams):
+        print 'Total percent: ' ,GetPercent(ip,len(inputparams))
+        print 'Time Left:' , GetTimeLeftStr(ip,len(inputparams),time.time()-starttime)
+        CurrFFDPfit(*iparam)
+        print 'Form Factor Creation Complete, time taken:', str(datetime.timedelta(seconds=time.time()-starttime)) , ' h:m:s '
+                                        
