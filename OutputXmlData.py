@@ -201,16 +201,16 @@ def PrintDPfit(iFF,outputdict,InfoDict):
     datadict = {'DP_Fits':{'Values':OrderedDict(),'Boots':OrderedDict()}}
     datadict['DP_Fits']['Info'] = InfoDict
     for iFF in outputdict[outputdict.keys()[0]].iterkeys():
-        datadict['Values'][iFF] = OrderedDict()
-        datadict['Boots'][iFF] = OrderedDict()
+        datadict['DP_Fits']['Values'][iFF] = OrderedDict()
+        datadict['DP_Fits']['Boots'][iFF] = OrderedDict()
         for iSet,setdict in outputdict.iterkeys():
-            datadict['Values'][iFF][iSet] = OrderedDict()
-            datadict['Values'][iFF][iSet]['Fzero'] = outputdict[iSet][iFF]['Avg'][0]
-            datadict['Values'][iFF][iSet]['mEM'] = outputdict[iSet][iFF]['Avg'][1]
-            # datadict['Values'][iFF][iSet]['zero_slope'] = DPfit2Der(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
-            datadict['Values'][iFF][iSet]['zero_slope'] = DPfitDer(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
-            datadict['Values'][iFF][iSet]['Radius'] = datadict['Values'][iFF][iSet]['zero_slope'] * 6.
-            datadict['Values'][iFF][iSet]['Chi^2_pdf'] = datadict['Values'][iFF][iSet]['Chi'][0]
+            datadict['DP_Fits']['Values'][iFF][iSet] = OrderedDict()
+            datadict['DP_Fits']['Values'][iFF][iSet]['Fzero'] = outputdict[iSet][iFF]['Avg'][0]
+            datadict['DP_Fits']['Values'][iFF][iSet]['mEM'] = outputdict[iSet][iFF]['Avg'][1]
+            # datadict['DP_Fits']['Values'][iFF][iSet]['zero_slope'] = DPfit2Der(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
+            datadict['DP_Fits']['Values'][iFF][iSet]['zero_slope'] = DPfitDer(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
+            datadict['DP_Fits']['Values'][iFF][iSet]['Radius'] = datadict['DP_Fits']['Values'][iFF][iSet]['zero_slope'] * 6.
+            datadict['DP_Fits']['Values'][iFF][iSet]['Chi^2_pdf'] = datadict['DP_Fits']['Values'][iFF][iSet]['Chi'][0]
     # MergeXmlOutput(thisfile,datadict,CheckMom=False)
     WriteXmlOutput(thisfile,datadict)
 
