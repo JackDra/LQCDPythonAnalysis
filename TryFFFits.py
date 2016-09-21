@@ -94,7 +94,7 @@ def CurrFFDPfit(iCurr,Currdata):
             #     for ix,iy in zip(xdatain, ydatain):
             #         print ix, iy.Avg
             # DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,np.swapaxes(xdatain,0,1),DPfitfun)
-            if len(ydata) < 2:
+            if len(ydatain) < 2:
                 print "too short ydata, skipping",iCurr, iSet, nFF, iQs 
             else:
                 DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfitfun)
