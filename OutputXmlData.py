@@ -199,11 +199,12 @@ def PrintDPfit(iFF,outputdict,InfoDict):
     FFbootdir = FFdir + 'boots/'
     mkdir_p(FFbootdir)
     thisfile = FFdir +iFF
-    datadict = {'DP_Fits':{'Values':OrderedDict(),'Boots':OrderedDict()}}
+    # datadict = {'DP_Fits':{'Values':OrderedDict(),'Boots':OrderedDict()}}
+    datadict = {'DP_Fits':{'Values':OrderedDict()}}
     datadict['DP_Fits']['Info'] = InfoDict
     for iFF in outputdict[outputdict.keys()[0]].iterkeys():
         datadict['DP_Fits']['Values'][iFF] = OrderedDict()
-        datadict['DP_Fits']['Boots'][iFF] = OrderedDict()
+        # datadict['DP_Fits']['Boots'][iFF] = OrderedDict()
         datadict['DP_Fits']['Values'][iFF]['Fzero'] = OrderedDict()
         datadict['DP_Fits']['Values'][iFF]['mEM'] = OrderedDict()
         datadict['DP_Fits']['Values'][iFF]['zero_slope'] = OrderedDict()
@@ -211,11 +212,13 @@ def PrintDPfit(iFF,outputdict,InfoDict):
         datadict['DP_Fits']['Values'][iFF]['Chi^2_pdf'] = OrderedDict() 
         for iSet,setdict in outputdict.iteritems():
             if not CheckDict(outputdict,iSet,iFF,'Avg'): continue
-            datadict['DP_Fits']['Values'][iFF]['Fzero'][iSet] = outputdict[iSet][iFF]['Avg'][0]
-            datadict['DP_Fits']['Values'][iFF]['mEM'][iSet] = outputdict[iSet][iFF]['Avg'][1]
+            datadict['DP_Fits']['Values'][iFF]['Fzero'][iSet] = AvgStdToFormat(outputdict[iSet][iFF]['Avg'][0],outputdict[iSet][iFF]['Std'][0])
+            datadict['DP_Fits']['Values'][iFF]['mEM'][iSet] = AvgStdToFormat(outputdict[iSet][iFF]['Avg'][1],outputdict[iSet][iFF]['Std'][1])
             # datadict['DP_Fits']['Values'][iFF]['zero_slope'][iSet] = DPfitfun2Der(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
-            datadict['DP_Fits']['Values'][iFF]['zero_slope'][iSet] = DPfitfunDer(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
-            datadict['DP_Fits']['Values'][iFF]['Radius'][iSet] = datadict['DP_Fits']['Values'][iFF]['zero_slope'][iSet] * 6.
+            # datadict['DP_Fits']['Values'][iFF]['zero_slope'][iSet] = DPfitfunDer(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
+            thisrad = -12 *outputdict[iSet][iFF]['Boot'][0]/(latspace*outputdict[iSet][iFF]['Boot'][1])
+            thisrad.Stats()
+            datadict['DP_Fits']['Values'][iFF]['Radius'][iSet] = BootAvgStdToFormat(thisrad)
             if not CheckDict(outputdict,iSet,iFF,'Chi'): continue
             datadict['DP_Fits']['Values'][iFF]['Chi^2_pdf'][iSet] = outputdict[iSet][iFF]['Chi'][0]
     # MergeXmlOutput(thisfile,datadict,CheckMom=False)
