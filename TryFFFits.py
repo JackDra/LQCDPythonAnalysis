@@ -87,15 +87,14 @@ def CurrFFDPfit(iCurr,Currdata):
                     xdatain.append([GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits)])
                 else:
                     print 'Warning, Boot not found in', iCurr, iSet, nFF, iQs 
-            # if Debug:
-            #     print 'Fitting to points:'
-            #     for ix,iy in zip(xdatain, ydatain):
-            #         print ix, iy.Avg
+            if Debug:
+                print 'Fitting to points:'
+                for ix,iy in zip(xdatain, ydatain):
+                    print ix[0], iy.Avg
             if len(ydatain) < 2:
                 print "too short ydata, skipping",iCurr, iSet, nFF, iQs 
             else:
                 DPfit,DPfitAvg,DPfitChi = FitBoots(np.array(ydatain),np.array(xdatain),DPfitfun)
-                print DPfitAvg
                 outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = DPfit,DPfitAvg,DPfitChi
     PrintDPfit(iCurr,outputdict,CurrSetInfo)
 

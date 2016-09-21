@@ -99,11 +99,11 @@ def LSFit(parlen,xdata,yerr,fitfun,ydata):
     data = CreateArgs(xdata,ydata,yerr)
     LSfitfun,LSDerfitfun,iGuess = GetLSFuns(fitfun,derfun,iGuess,parlen)
     # if isinstance(ydata[0],complex):iGuess = map(complex,iGuess)
-    if Debug:
-        print LSDerfitfun.__name__
-        print LSfitfun.__name__
-        print iGuess
-        print data
+    # if Debug:
+    #     print LSDerfitfun.__name__
+    #     print LSfitfun.__name__
+    #     print iGuess
+    #     print data
     if ForceNoDer:
         x,covar, infodict, mesg, ier=leastsq(LSfitfun,iGuess,args=data, maxfev=MI, full_output=1)
     else:
