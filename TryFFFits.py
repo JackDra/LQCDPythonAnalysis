@@ -54,11 +54,11 @@ for iFFcomb in feedin['FFcomb']:
 
 if Debug: print datadict[datadict.keys()[0]].keys()
 
-## datadict { FormFactor } { Set } { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
+## datadict { Set } { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
     
-for iFF,FFdata in datadict.iteritems():
+for iCurr,Currdata in datadict.iteritems():
     outputdict = OrderedDict()
-    for iSet,Setdata in FFdata.iteritems():
+    for iSet,Setdata in Currdata.iteritems():
         outputdict[iSet] = OrderedDict()
         iFFloop = Setdata.keys()
         if 'Mass' in iFFloop: iFFloop.remove('Mass')
@@ -69,9 +69,9 @@ for iFF,FFdata in datadict.iteritems():
             nFFdata = Setdata[nFF]
             ydatain,xdatain = [],[]
             for iQs,Qsdata in nFFdata.iteritems():
-                if Debug: print Qsdata.keys()
+                if Debug: print 'Qsdatakeys' , Qsdata.keys()
                 ydatain.append(Qsdata['Boot'])
                 xdatain.append(GetQsqrd(float(qsqrd.replace('qsqrd','')),Phys=PhysicalUnits))
             DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfit)
             outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = DPfit,DPfitAvg,DPfitChi
-    PrintDPfit(iFF,outputdict)
+    PrintDPfit(iCurr,outputdict)
