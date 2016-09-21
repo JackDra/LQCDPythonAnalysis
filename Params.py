@@ -120,7 +120,7 @@ DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, i
 Doeigh = False # variational method, uses a symetrix matrix solver.
 MakeGraphDat = True # Creates a .dat file of the values plotted for the corresponding graph (where implemented)
 PhysicalUnits = True # uses lattice momenta or physical momenta
-ForceNoDer = False # Forces the fitting LLSBoot to use manual derivaive calculation
+ForceNoDer = True # Forces the fitting LLSBoot to use manual derivaive calculation
 
 if Debug: print 'nconfs saved is: ' , RunNconfs
 
