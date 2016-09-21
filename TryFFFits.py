@@ -8,7 +8,7 @@ from ReadDir import GetCurrDict
 from ReadTxt import ReadFFDict
 from SetLists import *
 from FormFactors import CreateFF
-from OutputData import PrintFFSet
+from OutputXmlData import PrintDPfit
 from OppFuns import PrintOpps
 from FFParams import *
 import sys
