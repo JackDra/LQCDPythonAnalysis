@@ -52,6 +52,7 @@ for iFFcomb in feedin['FFcomb']:
             print 'Looking in ', icurr+iFFcomb
             datadict[icurr+iFFcomb.replace('/','')] = ReadFFDict(outputdir,GetCurrDict([icurr+iFFcomb]))
 
+if Debug: print datadict.keys()
 if Debug: print datadict[datadict.keys()[0]].keys()
 
 ## datadict { Set } { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
