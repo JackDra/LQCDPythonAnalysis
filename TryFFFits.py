@@ -66,7 +66,7 @@ for iFF,FFdata in datadict.iteritems():
         if Debug: print iFFloop
         for nFF in iFFloop:
             outputdict[iSet][nFF] = OrderedDict()
-            nFFdata = Setdata[nFFdata]
+            nFFdata = Setdata[nFF]
             ydatain,xdatain = []
             for iQs,Qsdata in nFFdata.iteritems():
                 ydatain.append(Qsdata['Boot'])
