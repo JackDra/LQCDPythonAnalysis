@@ -204,14 +204,18 @@ def PrintDPfit(iFF,outputdict,InfoDict):
     for iFF in outputdict[outputdict.keys()[0]].iterkeys():
         datadict['DP_Fits']['Values'][iFF] = OrderedDict()
         datadict['DP_Fits']['Boots'][iFF] = OrderedDict()
+        datadict['DP_Fits']['Values'][iFF]['Fzero'] = OrderedDict()
+        datadict['DP_Fits']['Values'][iFF]['mEM'] = OrderedDict()
+        datadict['DP_Fits']['Values'][iFF]['zero_slope'] = OrderedDict()
+        datadict['DP_Fits']['Values'][iFF]['Radius'] = OrderedDict() 
+        datadict['DP_Fits']['Values'][iFF]['Chi^2_pdf'] = OrderedDict() 
         for iSet,setdict in outputdict.iteritems():
-            datadict['DP_Fits']['Values'][iFF][iSet] = OrderedDict()
-            datadict['DP_Fits']['Values'][iFF][iSet]['Fzero'] = outputdict[iSet][iFF]['Avg'][0]
-            datadict['DP_Fits']['Values'][iFF][iSet]['mEM'] = outputdict[iSet][iFF]['Avg'][1]
-            # datadict['DP_Fits']['Values'][iFF][iSet]['zero_slope'] = DPfitfun2Der(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
-            datadict['DP_Fits']['Values'][iFF][iSet]['zero_slope'] = DPfitfunDer(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
-            datadict['DP_Fits']['Values'][iFF][iSet]['Radius'] = datadict['DP_Fits']['Values'][iFF][iSet]['zero_slope'] * 6.
-            datadict['DP_Fits']['Values'][iFF][iSet]['Chi^2_pdf'] = outputdict[iSet][iFF]['Chi'][0]
+            datadict['DP_Fits']['Values'][iFF]['Fzero'][iSet] = outputdict[iSet][iFF]['Avg'][0]
+            datadict['DP_Fits']['Values'][iFF]['mEM'][iSet] = outputdict[iSet][iFF]['Avg'][1]
+            # datadict['DP_Fits']['Values'][iFF]['zero_slope'][iSet] = DPfitfun2Der(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
+            datadict['DP_Fits']['Values'][iFF]['zero_slope'][iSet] = DPfitfunDer(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
+            datadict['DP_Fits']['Values'][iFF]['Radius'][iSet] = datadict['DP_Fits']['Values'][iFF]['zero_slope'][iSet] * 6.
+            datadict['DP_Fits']['Values'][iFF]['Chi^2_pdf'][iSet] = outputdict[iSet][iFF]['Chi'][0]
     # MergeXmlOutput(thisfile,datadict,CheckMom=False)
     WriteXmlOutput(thisfile,datadict)
 
