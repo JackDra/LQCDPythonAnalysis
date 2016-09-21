@@ -53,24 +53,28 @@ for iFFcomb in feedin['FFcomb']:
             print 'Looking in ', icurr+iFFcomb
             datadict[icurr+iFFcomb.replace('/','')] = ReadFFDict(outputdir,GetCurrDict([icurr+iFFcomb]))
             datadict[icurr+iFFcomb.replace('/','')] = datadict[icurr+iFFcomb.replace('/','')][datadict[icurr+iFFcomb.replace('/','')].keys()[0]]
-if Debug: print datadict.keys()
-if Debug: print datadict[datadict.keys()[0]].keys()
+# if Debug: print datadict.keys()
+# if Debug: print datadict[datadict.keys()[0]].keys()
 
 ## datadict { Set } { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
     
 for iCurr,Currdata in datadict.iteritems():
     outputdict = OrderedDict()
+    if Debug: print 'iCurr' , icurr
     for iSet,Setdata in Currdata.iteritems():
+        if Debug: print 'iSet', iSet
         outputdict[iSet] = OrderedDict()
         iFFloop = Setdata.keys()
         if 'Mass' in iFFloop: iFFloop.remove('Mass')
         if 'Chi' in iFFloop: iFFloop.remove('Chi')
         if Debug: print iFFloop
         for nFF in iFFloop:
+            if Debug: print 'nFF', nFF
             outputdict[iSet][nFF] = OrderedDict()
             nFFdata = Setdata[nFF]
             ydatain,xdatain = [],[]
             for iQs,Qsdata in nFFdata.iteritems():
+                if Debug: print 'Qs' , iQs
                 if Debug: print 'Qsdatakeys' , Qsdata.keys()
                 ydatain.append(Qsdata['Boot'])
                 xdatain.append(GetQsqrd(float(qsqrd.replace('qsqrd','')),Phys=PhysicalUnits))
