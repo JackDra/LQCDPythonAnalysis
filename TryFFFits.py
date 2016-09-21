@@ -67,7 +67,7 @@ for iFF,FFdata in datadict.iteritems():
         for nFF in iFFloop:
             outputdict[iSet][nFF] = OrderedDict()
             nFFdata = Setdata[nFF]
-            ydatain,xdatain = []
+            ydatain,xdatain = [],[]
             for iQs,Qsdata in nFFdata.iteritems():
                 ydatain.append(Qsdata['Boot'])
                 xdatain.append(GetQsqrd(float(qsqrd.replace('qsqrd','')),Phys=PhysicalUnits))
