@@ -99,7 +99,7 @@ def CurrFFDPfit(iCurr,Currdata):
             else:
                 DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfitfun)
                 outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = DPfit,DPfitAvg,DPfitChi
-    PrintDPfit(iCurr,outputdict)
+    PrintDPfit(iCurr,outputdict,CurrSetInfo)
 
 
 inputparams = []

@@ -193,12 +193,13 @@ def PrintFFSet(FFin,Set,Mass,SetMass,theCurr,infoFF):
 
 
 ## outputdict : {iSet : nFF : Boot/Avg/Chi : F(0)/mEM }
-def PrintDPfit(iFF,outputdict):
+def PrintDPfit(iFF,outputdict,InfoDict):
     FFdir = outputdir +'/FormFactors/DPfits/'+iFF+'/'
     FFbootdir = FFdir + 'boots/'
     mkdir_p(FFbootdir)
     thisfile = FFdir +iFF
     datadict = {'DP_Fits':{'Values':OrderedDict(),'Boots':OrderedDict()}}
+    datadict['DP_Fits']['Info'] = InfoDict
     for iFF in outputdict[outputdict.keys()[0]].iterkeys():
         datadict['Values'][iFF] = OrderedDict()
         datadict['Boots'][iFF] = OrderedDict()
