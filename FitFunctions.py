@@ -27,10 +27,6 @@ def CreateFFO(thislen):
     return FormFactorO, FormFactorODer
 
 def DPfitfun(x,p):
-    print 
-    print p[0], p[1], x[0]
-    print p[0]/((1-(x[0]/p[1]))**2)
-    print
     return p[0]/((1-(x[0]/p[1]))**2)
 
 def DPfitfunDer(x,p):
