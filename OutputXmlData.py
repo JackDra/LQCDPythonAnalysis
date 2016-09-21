@@ -203,7 +203,7 @@ def PrintDPfit(iFF,outputdict,InfoDict):
     for iFF in outputdict[outputdict.keys()[0]].iterkeys():
         datadict['DP_Fits']['Values'][iFF] = OrderedDict()
         datadict['DP_Fits']['Boots'][iFF] = OrderedDict()
-        for iSet,setdict in outputdict.iterkeys():
+        for iSet,setdict in outputdict.iteritems():
             datadict['DP_Fits']['Values'][iFF][iSet] = OrderedDict()
             datadict['DP_Fits']['Values'][iFF][iSet]['Fzero'] = outputdict[iSet][iFF]['Avg'][0]
             datadict['DP_Fits']['Values'][iFF][iSet]['mEM'] = outputdict[iSet][iFF]['Avg'][1]

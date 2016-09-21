@@ -74,26 +74,20 @@ def CurrFFDPfit(iCurr,Currdata):
         if 'Info' in iFFloop:
             CurrSetInfo = Setdata['Info']
             iFFloop.remove('Info')
-        # if Debug: print iFFloop
         for nFF in iFFloop:
-            if Debug: print 'nFF', nFF
             outputdict[iSet][nFF] = OrderedDict()
             nFFdata = Setdata[nFF]
             ydatain,xdatain = [],[]
             for iQs,Qsdata in nFFdata.iteritems():
-                # if Debug: print 'Qs' , iQs
-                # if Debug: print 'Qsdatakeys' , Qsdata.keys()
                 if 'Boot' in Qsdata:
                     ydatain.append(Qsdata['Boot'])
                     xdatain.append([GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits)])
-                    # xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits))
                 else:
                     print 'Warning, Boot not found in', iCurr, iSet, nFF, iQs 
             # if Debug:
             #     print 'Fitting to points:'
             #     for ix,iy in zip(xdatain, ydatain):
             #         print ix, iy.Avg
-            # DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,np.swapaxes(xdatain,0,1),DPfitfun)
             if len(ydatain) < 2:
                 print "too short ydata, skipping",iCurr, iSet, nFF, iQs 
             else:
