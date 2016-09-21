@@ -26,16 +26,16 @@ def CreateFFO(thislen):
         return np.array(x[:thislen]).tolist()
     return FormFactorO, FormFactorODer
 
+# def DPfitfun(x,p):
+#     return p[0]/(1-(x[0]/p[1]))**2
+
+# def DPfitfunDer(x,p):
+#     return 1/(1-(x[0]/p[1]))**2,2*p[0]/(p[1]*(1-(x[0]/p[1]))**3)
+
 def DPfitfun(x,p):
-    return p[0]/(1-(x[0]/p[1]))**2
-
-def DPfitfunDer(x,p):
-    return 1/(1-(x[0]/p[1]))**2,2*p[0]/(p[1]*(1-(x[0]/p[1]))**3)
-
-def DPfitfun2(x,p):
     return p[0]/(1+(x[0]/p[1])**2)**2
 
-def DPfitfun2Der(x,p):
+def DPfitfunDer(x,p):
     return 1/(1+(x[0]/p[1])**2)**2,-4*p[0]*x[0]/(p[1]**2*(1+(x[0]/p[1]))**3)
 
 def FormFactorO1(x,p):return p[0]*x[0]
