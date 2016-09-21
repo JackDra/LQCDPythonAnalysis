@@ -212,12 +212,12 @@ def PrintDPfit(iFF,outputdict,InfoDict):
         datadict['DP_Fits']['Values'][iFF]['Chi^2_pdf'] = OrderedDict() 
         for iSet,setdict in outputdict.iteritems():
             # if not CheckDict(outputdict,iSet,iFF,'Avg'): continue
-            if not CheckDict(outputdict,iSet,iFF,'Boots'): continue
-            datadict['DP_Fits']['Values'][iFF]['Fzero'][iSet] = BootAvgStdToFormat(outputdict[iSet][iFF]['Boots'][0])
-            datadict['DP_Fits']['Values'][iFF]['mEM'][iSet] = BootAvgStdToFormat(outputdict[iSet][iFF]['Boots'][1])
+            if not CheckDict(outputdict,iSet,iFF,'Boot'): continue
+            datadict['DP_Fits']['Values'][iFF]['Fzero'][iSet] = BootAvgStdToFormat(outputdict[iSet][iFF]['Boot'][0])
+            datadict['DP_Fits']['Values'][iFF]['mEM'][iSet] = BootAvgStdToFormat(outputdict[iSet][iFF]['Boot'][1])
             # datadict['DP_Fits']['Values'][iFF]['zero_slope'][iSet] = DPfitfun2Der(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
             # datadict['DP_Fits']['Values'][iFF]['zero_slope'][iSet] = DPfitfunDer(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
-            thisrad = -12 *outputdict[iSet][iFF]['Boot'][0]/(latspace*outputdict[iSet][iFF]['Boots'][1])
+            thisrad = -12 *outputdict[iSet][iFF]['Boot'][0]/(latspace*outputdict[iSet][iFF]['Boot'][1])
             thisrad.Stats()
             datadict['DP_Fits']['Values'][iFF]['Radius'][iSet] = BootAvgStdToFormat(thisrad)
             if not CheckDict(outputdict,iSet,iFF,'Chi'): continue
