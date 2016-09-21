@@ -216,6 +216,8 @@ def PrintDPfit(iFF,outputdict,InfoDict):
             datadict['DP_Fits']['Values'][iFF]['mEM'][iSet] = AvgStdToFormat(outputdict[iSet][iFF]['Avg'][1],outputdict[iSet][iFF]['Std'][1])
             # datadict['DP_Fits']['Values'][iFF]['zero_slope'][iSet] = DPfitfun2Der(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
             # datadict['DP_Fits']['Values'][iFF]['zero_slope'][iSet] = DPfitfunDer(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
+
+            if not CheckDict(outputdict,iSet,iFF,'Boot'): continue
             thisrad = -12 *outputdict[iSet][iFF]['Boot'][0]/(latspace*outputdict[iSet][iFF]['Boot'][1])
             thisrad.Stats()
             datadict['DP_Fits']['Values'][iFF]['Radius'][iSet] = BootAvgStdToFormat(thisrad)
