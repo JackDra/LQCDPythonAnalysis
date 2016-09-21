@@ -4,6 +4,7 @@ import numpy as np
 from Params import *
 from MiscFuns import *
 from ReadTxt import ExtractValues
+from ReadDir import GetCurrDict
 from SetLists import *
 from FormFactors import CreateFF
 from OutputData import PrintFFSet
