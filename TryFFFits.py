@@ -30,6 +30,15 @@ print 'MethodList:\n' , '\n'.join(feedin['method'])
 print ''
 
 
+thisFFcomb = []
+for icomb in feedin['comb']:
+    if icomb in CombListForFFComb:
+        thisFFcomb.append(icomb)
+thisCurrcomb = []
+for icomb in feedin['current']:
+    if icomb in CurrListForFFComb:
+        thisCurrcomb.append(icomb)
+
 thisCurrDict = []
 for iFFcomb in feedin['FFcomb']:
     if iFFcomb == '':
