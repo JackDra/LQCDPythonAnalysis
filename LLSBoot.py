@@ -23,6 +23,7 @@ def LSCreate(Fun):
         print xval, par
         print Fun(xval,par)
         print yval
+        print 
         return (Fun(xval,par)-yval)/errval
     return LSFun
 
