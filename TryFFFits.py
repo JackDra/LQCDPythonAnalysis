@@ -3,7 +3,7 @@
 import numpy as np
 from Params import *
 from MiscFuns import *
-from FitFunctions import DPfit,DPfitDer
+from FitFunctions import DPfitfun,DPfitfunDer
 from LLSBoot import *
 from ReadTxt import ExtractValues
 from ReadDir import GetCurrDict
@@ -89,11 +89,11 @@ for iCurr,Currdata in datadict.iteritems():
                     # xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits))
                 else:
                     print 'Warning, Boot not found in', iCurr, iSet, nFF, iQs 
-            if Debug:
-                print 'Fitting to points:'
-                for ix,iy in zip(xdatain, ydatain):
-                    print ix, iy.Avg
-            # DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,np.swapaxes(xdatain,0,1),DPfit)
-            DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfit)
+            # if Debug:
+            #     print 'Fitting to points:'
+            #     for ix,iy in zip(xdatain, ydatain):
+            #         print ix, iy.Avg
+            # DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,np.swapaxes(xdatain,0,1),DPfitfun)
+            DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfitfun)
             outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = DPfit,DPfitAvg,DPfitChi
     PrintDPfit(iCurr,outputdict)
