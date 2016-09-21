@@ -99,10 +99,10 @@ def LSFit(parlen,xdata,yerr,fitfun,ydata):
     data = CreateArgs(xdata,ydata,yerr)
     LSfitfun,LSDerfitfun,iGuess = GetLSFuns(fitfun,derfun,iGuess,parlen)
     # if isinstance(ydata[0],complex):iGuess = map(complex,iGuess)
-    # print LSDerfitfun.__name__
-    # print LSfitfun.__name__
-    # print iGuess
-    # print data
+    print LSDerfitfun.__name__
+    print LSfitfun.__name__
+    print iGuess
+    print data
     x,covar, infodict, mesg, ier=leastsq(LSfitfun,iGuess,args=data, Dfun=LSDerfitfun, maxfev=MI, full_output=1)
     if float(len(ydata)-len(x)) == 0:
         chisqpdf = float('NaN')

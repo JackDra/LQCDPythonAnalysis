@@ -81,7 +81,7 @@ for iCurr,Currdata in datadict.iteritems():
             nFFdata = Setdata[nFF]
             ydatain,xdatain = [],[]
             for iQs,Qsdata in nFFdata.iteritems():
-                if Debug: print 'Qs' , iQs
+                # if Debug: print 'Qs' , iQs
                 # if Debug: print 'Qsdatakeys' , Qsdata.keys()
                 if 'Boot' in Qsdata:
                     ydatain.append(Qsdata['Boot'])
@@ -89,7 +89,7 @@ for iCurr,Currdata in datadict.iteritems():
                 else:
                     print 'Warning, Boot not found in', iCurr, iSet, nFF, iQs 
             if Debug:
-                print 'Solving System:'
+                print 'Fitting to points:'
                 for ix,iy in zip(xdatain, ydatain):
                     print ix, iy.Avg
             DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfit)
