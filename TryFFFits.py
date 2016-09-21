@@ -95,8 +95,8 @@ def CurrFFDPfit(iCurr,Currdata):
                 print "too short ydata, skipping",iCurr, iSet, nFF, iQs 
             else:
                 DPfit,DPfitAvg,DPfitChi = FitBoots(np.array(ydatain),np.array(xdatain),DPfitfun)
+                print DPfitAvg
                 outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = DPfit,DPfitAvg,DPfitChi
-                print outputdict[iSet][nFF]['Boot'][1].Avg,outputdict[iSet][nFF]['Boot'][1].Std
     PrintDPfit(iCurr,outputdict,CurrSetInfo)
 
 
