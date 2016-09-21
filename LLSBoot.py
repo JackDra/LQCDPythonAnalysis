@@ -20,11 +20,10 @@ def LSCreate(Fun):
             xval = xval[0]
         yval = val[-2]
         errval = val[-1]
-        print xval, par
-        print Fun(xval,par)
-        print yval
-        print 
-        return (Fun(xval,par)-yval)/errval
+        funout = []
+        for ixval in xval:
+            funout.append(Fun(ixval,par))
+        return (np.array(funout)-yval)/errval
     return LSFun
 
 def LSDerCreate(FunDer):
@@ -34,11 +33,10 @@ def LSDerCreate(FunDer):
             xval = xval[0]
         yval = val[-2]
         errval = val[-1]
-        thisFunDer = FunDer(xval,par)
-        matout = []
-        for ifd in thisFunDer:
-            matout.append(ifd/errval)
-        return np.swapaxes(matout,0,1)
+        thisFunDir = []
+        for ixval in xval:
+            thisFunDer.append(FunDer(xval,par))
+        return np.swapaxes(thisFunDer/errval,0,1)
         # return np.transpose(FunDer(xval,par)/errval)
     return LSDerFun
 
