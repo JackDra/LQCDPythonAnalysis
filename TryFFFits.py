@@ -93,7 +93,7 @@ for iCurr,Currdata in datadict.iteritems():
                 print 'Fitting to points:'
                 for ix,iy in zip(xdatain, ydatain):
                     print ix, iy.Avg
-            DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,np.swapaxes(xdatain,0,1),DPfit)
-            # DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfit)
+            # DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,np.swapaxes(xdatain,0,1),DPfit)
+            DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfit)
             outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = DPfit,DPfitAvg,DPfitChi
     PrintDPfit(iCurr,outputdict)
