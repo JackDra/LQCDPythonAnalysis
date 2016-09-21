@@ -210,11 +210,13 @@ def PrintDPfit(iFF,outputdict,InfoDict):
         datadict['DP_Fits']['Values'][iFF]['Radius'] = OrderedDict() 
         datadict['DP_Fits']['Values'][iFF]['Chi^2_pdf'] = OrderedDict() 
         for iSet,setdict in outputdict.iteritems():
+            if not CheckDict(outputdict,iSet,iFF,'Avg'): continue
             datadict['DP_Fits']['Values'][iFF]['Fzero'][iSet] = outputdict[iSet][iFF]['Avg'][0]
             datadict['DP_Fits']['Values'][iFF]['mEM'][iSet] = outputdict[iSet][iFF]['Avg'][1]
             # datadict['DP_Fits']['Values'][iFF]['zero_slope'][iSet] = DPfitfun2Der(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
             datadict['DP_Fits']['Values'][iFF]['zero_slope'][iSet] = DPfitfunDer(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
             datadict['DP_Fits']['Values'][iFF]['Radius'][iSet] = datadict['DP_Fits']['Values'][iFF]['zero_slope'][iSet] * 6.
+            if not CheckDict(outputdict,iSet,iFF,'Chi'): continue
             datadict['DP_Fits']['Values'][iFF]['Chi^2_pdf'][iSet] = outputdict[iSet][iFF]['Chi'][0]
     # MergeXmlOutput(thisfile,datadict,CheckMom=False)
     WriteXmlOutput(thisfile,datadict)
