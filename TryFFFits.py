@@ -69,6 +69,7 @@ for iFF,FFdata in datadict.iteritems():
             nFFdata = Setdata[nFF]
             ydatain,xdatain = [],[]
             for iQs,Qsdata in nFFdata.iteritems():
+                if Debug: print Qsdata.keys()
                 ydatain.append(Qsdata['Boot'])
                 xdatain.append(GetQsqrd(float(qsqrd.replace('qsqrd','')),Phys=PhysicalUnits))
             DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfit)
