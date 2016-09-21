@@ -130,6 +130,10 @@ def LSFit(parlen,xdata,yerr,fitfun,ydata):
     #   print x,covar
     return x,covar,chisqpdf
 
+
+##Note, xdatain must be in the form
+## xdata [ [x1values] , [x2values] , ..... [xnvalues] ]
+## for fitting functions over variables F( x1, x2, ... xn )
 def FitBoots(ydatain,xdatain,FitFun,DoW='T',MI=MaxIters,parlen=1,tBooted=False,thisnboot=nboot):
     GetBootStats(ydatain)
     # print ydatain
