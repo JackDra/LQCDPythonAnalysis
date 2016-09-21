@@ -90,7 +90,7 @@ def CurrFFDPfit(iCurr,Currdata):
             if Debug:
                 print 'Fitting to points:'
                 for ix,iy in zip(xdatain, ydatain):
-                    print ix[0], iy.Avg
+                    print ix, iy.Avg
             if len(ydatain) < 2:
                 print "too short ydata, skipping",iCurr, iSet, nFF, iQs 
             else:
