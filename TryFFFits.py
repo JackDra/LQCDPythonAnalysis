@@ -82,9 +82,12 @@ for iCurr,Currdata in datadict.iteritems():
             ydatain,xdatain = [],[]
             for iQs,Qsdata in nFFdata.iteritems():
                 if Debug: print 'Qs' , iQs
-                if Debug: print 'Qsdatakeys' , Qsdata.keys()
-                ydatain.append(Qsdata['Boot'])
-                xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits))
+                # if Debug: print 'Qsdatakeys' , Qsdata.keys()
+                if 'Boot' not in Qsdata:
+                    ydatain.append(Qsdata['Boot'])
+                    xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits))
+                else:
+                    print 'Warning, Boot not found in', iCurr, iSet, nFF, iQs 
             DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfit)
             outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = DPfit,DPfitAvg,DPfitChi
     PrintDPfit(iCurr,outputdict)
