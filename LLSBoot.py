@@ -34,9 +34,9 @@ def LSDerCreate(FunDer):
             xval = xval[0]
         yval = val[-2]
         errval = val[-1]
-        # thisFunDer = FunDer(xval,par)
-        # return np.transpose(thisFunDer/np.array([errval]*len(thisFunDer)))
-        return np.transpose(FunDer(xval,par)/errval)
+        thisFunDer = FunDer(xval,par)
+        return np.transpose(thisFunDer/np.array([errval]*len(thisFunDer)))
+        # return np.transpose(FunDer(xval,par)/errval)
     return LSDerFun
 
 def DerOfFun(Fun,Len=1):
