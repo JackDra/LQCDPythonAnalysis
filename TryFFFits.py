@@ -84,7 +84,7 @@ def CurrFFDPfit(iCurr,Currdata):
             for iQs,Qsdata in nFFdata.iteritems():
                 if 'Boot' in Qsdata:
                     ydatain.append(Qsdata['Boot'])
-                    xdatain.append([GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits)])
+                    xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits))
                 else:
                     print 'Warning, Boot not found in', iCurr, iSet, nFF, iQs 
             if Debug:
