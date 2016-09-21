@@ -208,8 +208,8 @@ def PrintDPfit(iFF,outputdict,InfoDict):
             datadict['DP_Fits']['Values'][iFF][iSet] = OrderedDict()
             datadict['DP_Fits']['Values'][iFF][iSet]['Fzero'] = outputdict[iSet][iFF]['Avg'][0]
             datadict['DP_Fits']['Values'][iFF][iSet]['mEM'] = outputdict[iSet][iFF]['Avg'][1]
-            # datadict['DP_Fits']['Values'][iFF][iSet]['zero_slope'] = DPfit2Der(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
-            datadict['DP_Fits']['Values'][iFF][iSet]['zero_slope'] = DPfitDer(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
+            # datadict['DP_Fits']['Values'][iFF][iSet]['zero_slope'] = DPfitfun2Der(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
+            datadict['DP_Fits']['Values'][iFF][iSet]['zero_slope'] = DPfitfunDer(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
             datadict['DP_Fits']['Values'][iFF][iSet]['Radius'] = datadict['DP_Fits']['Values'][iFF][iSet]['zero_slope'] * 6.
             datadict['DP_Fits']['Values'][iFF][iSet]['Chi^2_pdf'] = datadict['DP_Fits']['Values'][iFF][iSet]['Chi'][0]
     # MergeXmlOutput(thisfile,datadict,CheckMom=False)
