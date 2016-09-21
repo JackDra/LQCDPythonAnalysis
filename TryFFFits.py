@@ -3,6 +3,7 @@
 import numpy as np
 from Params import *
 from MiscFuns import *
+from FitFunctions import DPfit,DPfitDer
 from ReadTxt import ExtractValues
 from ReadDir import GetCurrDict
 from ReadTxt import ReadFFDict
