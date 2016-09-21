@@ -195,7 +195,7 @@ def PrintFFSet(FFin,Set,Mass,SetMass,theCurr,infoFF):
 
 ## outputdict : {iSet : nFF : Boot/Avg/Chi : F(0)/mEM }
 def PrintDPfit(iFF,outputdict,InfoDict):
-    FFdir = outputdir +'/FormFactors/DPfits/'+iFF+'/'
+    FFdir = outputdir +'/FormFactors/DPfits/'
     FFbootdir = FFdir + 'boots/'
     mkdir_p(FFbootdir)
     thisfile = FFdir +iFF
