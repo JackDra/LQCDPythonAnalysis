@@ -90,6 +90,7 @@ def CheckMomFile(filein,nconftest = False):
 def GetDPFitValue(SearchSet,iFF,thisCurr):
     FFdir = outputdir +'/FormFactors/DPfits/'
     filename = FFdir +iFF
+    if Debug: print filename
     data = ReadXmlDict(filename)[0]
     thisDPpAvg = []
     thisDPpStd = []
