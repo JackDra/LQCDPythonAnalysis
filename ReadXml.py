@@ -26,7 +26,7 @@ def ReadXmlDict(filein):
             xmldata = RecFTDAS(xmltodict.parse(f.read()))
         bootfile = xmldata[xmldata.keys()[0]]['Boots']
     except:
-        # print 'Reading xml file fail: ' + filein
+        if Debug: print 'Reading xml file fail: ' + filein
         xmldata = {}
         bootfile = 'NoBootDir'
     return xmldata,bootfile
