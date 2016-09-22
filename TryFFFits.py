@@ -118,17 +118,23 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
                     xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits))
                 else:
                     print 'Warning, Boot not found in', iCurr, iSet, nFF, iQs 
-            if Debug:
-                print 'Fitting to points:'
-                for ix,iy in zip(xdatain, ydatain):
-                    print ix, iy.Avg, iy.Std
             if len(ydatain) < 2:
                 print "too short ydata, skipping",iCurr, iSet, nFF, iQs 
             else:
                 if yZero == False:
+                    if Debug:
+                        print 'Fitting to points using two parameter fit:'
+                        for ix,iy in zip(xdatain, ydatain):
+                            print ix, iy.Avg, iy.Std
                     DPfit,DPfitAvg,DPfitChi = FitBoots(np.array(ydatain),np.array(xdatain),DPfitfun)
-                    outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = [abs(DPfit[0]),DPfit[1]],[abs(DPfitAvg[0]),DPfitAvg[1]],DPfitChi
+                    DPfit[0].values = np.abs(DPfit[0].values)
+                    DPfit[0].Stats()
+                    outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = [DPfit[0],DPfit[1]],[abs(DPfitAvg[0]),DPfitAvg[1]],DPfitChi
                 else:
+                    if Debug:
+                        print 'Fitting to points using one parameter fit:'
+                        for ix,iy in zip(xdatain, ydatain):
+                            print ix, iy.Avg, iy.Std
                     DPfit,DPfitAvg,DPfitChi = FitBoots(np.array(ydatain),np.array(xdatain),DPfitfunOnePar)
                     outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = [yZero,DPfit[0]],[yZero.Avg,DPfitAvg[0]],DPfitChi*2 
     PrintDPfit(iCurr,outputdict,CurrSetInfo)
