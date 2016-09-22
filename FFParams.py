@@ -141,5 +141,5 @@ def GetMomFromGamma(igamma,thisMomList=qvecSet):
     return combmomlist
 
 def GetCharRad(msqVal):
-    # return -12/msqVal
-    return msqVal
+    return 12/msqVal
+    # return msqVal
