@@ -92,10 +92,9 @@ def GetDPFitValue(SearchSet,iFF,thisCurr):
     filename = FFdir +thisCurr
     if Debug: print filename
     if os.path.isfile(filename):
-        data = ReadXmlDict(filename+'.xml')[0]
-    else:
         print 'Warrning, file not found' , filename+'.xml'
         return [],[]
+    data = ReadXmlDict(filename+'.xml')[0]
     if Debug: print data
     thisDPpAvg = []
     thisDPpStd = []
