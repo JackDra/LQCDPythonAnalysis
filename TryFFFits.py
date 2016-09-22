@@ -4,6 +4,7 @@ import numpy as np
 from Params import *
 from MiscFuns import *
 from FitFunctions import DPfitfun,DPfitfunDer
+from FitFunctions import DPfitfunOnePar,DPfitfunOneParDer
 from LLSBoot import *
 from ReadTxt import ExtractValues
 from ReadDir import GetCurrDict
@@ -95,20 +96,17 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
             ydatain,xdatain = [],[]
             for iQs,Qsdata in nFFdata.iteritems():
                 if iQs == 'qsqrd0':
-                    continue
-                    # if '1' not in nFF:
-                    #     continue
-                    # else:
-                    #     if ('Ge' in iCurr or ('Vector' in iCurr and 'PsVector' not in iCurr.replace('IsoVector',''))):
-                    #         if 'IsoVector' in iCurr or 'Proton' in iCurr or 'sing' in iCurr:
-                    #             ydatain.append(OneBoot)
-                    #             xdatain.append(0.0)
-                    #         elif 'Neutron' in iCurr:
-                    #             ydatain.append(ZeroBoot)
-                    #             xdatain.append(0.0)                        
-                    #         elif 'doub' in iCurr:
-                    #             ydatain.append(TwoBoot)
-                    #             xdatain.append(0.0)                        
+                    # continue
+                    if '1' not in nFF:
+                        yZero = False
+                    else:
+                        if ('Ge' in iCurr or ('Vector' in iCurr and 'PsVector' not in iCurr.replace('IsoVector',''))):
+                            if 'IsoVector' in iCurr or 'Proton' in iCurr or 'sing' in iCurr:
+                                yZero = OneBoot
+                            elif 'Neutron' in iCurr:
+                                yZero = ZeroBoot
+                            elif 'doub' in iCurr:
+                                yZero = TwoBoot
                 elif 'Boot' in Qsdata:
                     ydatain.append(Qsdata['Boot'])
                     xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits))
@@ -121,8 +119,12 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
             if len(ydatain) < 2:
                 print "too short ydata, skipping",iCurr, iSet, nFF, iQs 
             else:
-                DPfit,DPfitAvg,DPfitChi = FitBoots(np.array(ydatain),np.array(xdatain),DPfitfun)
-                outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = DPfit,DPfitAvg,DPfitChi
+                if yZero == False:
+                    DPfit,DPfitAvg,DPfitChi = FitBoots(np.array(ydatain),np.array(xdatain),DPfitfun)
+                    outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = DPfit,DPfitAvg,DPfitChi
+                else:
+                    DPfit,DPfitAvg,DPfitChi = FitBoots(np.array(ydatain),np.array(xdatain),DPfitfunOnePar)
+                    outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = [yZero,DPfit],[yZero.Avg,DPfitAvg],[0.0,DPfitChi] 
     PrintDPfit(iCurr,outputdict,CurrSetInfo)
 
 
