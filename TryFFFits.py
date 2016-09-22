@@ -95,19 +95,20 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
             ydatain,xdatain = [],[]
             for iQs,Qsdata in nFFdata.iteritems():
                 if iQs == 'qsqrd0':
-                    if '1' not in nFF:
-                        continue
-                    else:
-                        if ('Ge' in iCurr or ('Vector' in iCurr and 'PsVector' not in iCurr.replace('IsoVector',''))):
-                            if 'IsoVector' in iCurr or 'Proton' in iCurr or 'sing' in iCurr:
-                                ydatain.append(OneBoot)
-                                xdatain.append(0.0)
-                            elif 'Neutron' in iCurr:
-                                ydatain.append(ZeroBoot)
-                                xdatain.append(0.0)                        
-                            elif 'doub' in iCurr:
-                                ydatain.append(TwoBoot)
-                                xdatain.append(0.0)                        
+                    continue
+                    # if '1' not in nFF:
+                    #     continue
+                    # else:
+                    #     if ('Ge' in iCurr or ('Vector' in iCurr and 'PsVector' not in iCurr.replace('IsoVector',''))):
+                    #         if 'IsoVector' in iCurr or 'Proton' in iCurr or 'sing' in iCurr:
+                    #             ydatain.append(OneBoot)
+                    #             xdatain.append(0.0)
+                    #         elif 'Neutron' in iCurr:
+                    #             ydatain.append(ZeroBoot)
+                    #             xdatain.append(0.0)                        
+                    #         elif 'doub' in iCurr:
+                    #             ydatain.append(TwoBoot)
+                    #             xdatain.append(0.0)                        
                 elif 'Boot' in Qsdata:
                     ydatain.append(Qsdata['Boot'])
                     xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits))
@@ -116,7 +117,7 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
             if Debug:
                 print 'Fitting to points:'
                 for ix,iy in zip(xdatain, ydatain):
-                    print ix, iy.Avg
+                    print ix, iy.Avg, iy.Std
             if len(ydatain) < 2:
                 print "too short ydata, skipping",iCurr, iSet, nFF, iQs 
             else:
