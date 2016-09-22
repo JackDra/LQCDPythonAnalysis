@@ -94,17 +94,21 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
             nFFdata = Setdata[nFF]
             ydatain,xdatain = [],[]
             for iQs,Qsdata in nFFdata.iteritems():
-                if (iQs == 'qsqrd0') and ('1' not in nFF): continue
-                if iQs == 'qsqrd0' and '1' in nFF and ('Ge' in iCurr or ('Vector' in iCurr and 'PsVector' not in iCurr.replace('IsoVector',''))):
-                    if 'IsoVector' in iCurr or 'Proton' in iCurr or 'sing' in iCurr:
-                        ydatain.append(OneBoot)
-                        xdatain.append(0.0)
-                    elif 'Neutron' in iCurr:
-                        ydatain.append(ZeroBoot)
-                        xdatain.append(0.0)                        
-                    elif 'doub' in iCurr:
-                        ydatain.append(TwoBoot)
-                        xdatain.append(0.0)                        
+                if iQs == 'qsqrd0':
+                    if '1' not in nFF:
+                        continue
+                    else:
+                        print iCurr
+                        if ('Ge' in iCurr or ('Vector' in iCurr and 'PsVector' not in iCurr.replace('IsoVector',''))):
+                            if 'IsoVector' in iCurr or 'Proton' in iCurr or 'sing' in iCurr:
+                                ydatain.append(OneBoot)
+                                xdatain.append(0.0)
+                            elif 'Neutron' in iCurr:
+                                ydatain.append(ZeroBoot)
+                                xdatain.append(0.0)                        
+                            elif 'doub' in iCurr:
+                                ydatain.append(TwoBoot)
+                                xdatain.append(0.0)                        
                 elif 'Boot' in Qsdata:
                     ydatain.append(Qsdata['Boot'])
                     xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits))
