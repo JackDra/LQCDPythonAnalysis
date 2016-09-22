@@ -562,14 +562,15 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
         if not CheckDict(dataset,thisset,thisFF): continue
         if dataset[thisset][thisFF] == False: continue        
         thiscol = thiscolcyc.next()
-        # thisshift = thisshiftcycff.next()
-        thisshift = 0.0
         collist.append(thiscol)
         skipzero,flipsign = SkipZeroFF(thisFF,thisset,thisCurr)
-        qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
-        if 'IsoVectorPsVector' in thisDSCurr and 'FF2' in thisFF: continue 
-        if 'NeutronGeGm' in thisDSCurr and 'FF1' in thisFF: continue 
-        PlotDPFit(thisset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign)
+        if ('IsoVectorPsVector' in thisDSCurr and 'FF2' in thisFF) or ('NeutronGeGm' in thisDSCurr and 'FF1' in thisFF):
+            thisshift = thisshiftcycff.next()
+            qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
+            PlotDPFit(thisset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign)
+        else:
+            qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
+            thisshift = 0.0
     return collist
 
 def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign):
