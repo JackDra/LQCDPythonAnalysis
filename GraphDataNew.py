@@ -546,6 +546,17 @@ def SkipZeroFF(thisFF,thisset,thisCurr):
 def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
     thissymcyc,thiscolcyc,thisshiftcycff = GetPlotItersff()
     collist = []
+    if 'Vector' in thisDSCurr and 'PsVector' not in thisDSCurr.replace('IsoVector',''):
+        if 'IsoVector' in thisDSCurr or 'Proton' in thisDSCurr or 'sing' in thisDSCurr:
+            FixZ= 1
+        elif 'Neutron' in thisDSCurr:
+            FixZ= 0
+        elif 'doub' in thisDSCurr:
+            FixZ= 2
+        else:
+            FixZ=False
+    else:
+        FixZ=False    
     for thisset in SortMySet(thisSetFlag)[0]:
         ##make legend formatting function
         if not CheckDict(dataset,thisset,thisFF): continue
@@ -555,7 +566,7 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
         thisshift = 0.0
         collist.append(thiscol)
         skipzero,flipsign = SkipZeroFF(thisFF,thisset,thisCurr)
-        qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign)
+        qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
         PlotDPFit(thisset,thisFF,thisDSCurr,thiscol,qrange,thisshift)
     return collist
 
@@ -584,7 +595,7 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift):
     
 
     
-def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign):
+def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
     qsqrdvals,dataavg,dataerr = [],[],[]
     for iqsqrd,(qsqrd,values) in enumerate(data.iteritems()):
         Qsqrd = GetQsqrd(float(qsqrd.replace('qsqrd','')),Phys=PhysicalUnits)
@@ -605,6 +616,9 @@ def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign):
         AppendFFDat(qsqrdvals,dataavg,dataerr)
         if SkipZero and len(qsqrdvals) > 1:
             pl.errorbar(qsqrdvals[1:],dataavg[1:],dataerr[1:],color=col,fmt=sym,label=lab)
+        elif FixZ != False:
+            pl.plot([0],[FixZ],color=col,fmt=sym)            
+            pl.errorbar(qsqrdvals[1:],dataavg[1:],dataerr[1:],color=col,fmt=sym,label=lab)            
         else:
             pl.errorbar(qsqrdvals,dataavg,dataerr,color=col,fmt=sym,label=lab)
     return qsqrdvals
