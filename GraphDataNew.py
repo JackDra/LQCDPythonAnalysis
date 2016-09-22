@@ -118,7 +118,11 @@ def AppendFFDat(xdata,ydata,yerr):
     if DatFile == False: raise IOError("DatFile not defined yet")
     with open(DatFile,'a') as f:
         for ix,iy,iyerr in zip(xdata,ydata,yerr):
-            f.write('{0:>3}  {1:10} \n'.format(ix,MakeValAndErr(iy,iyerr)))
+            if iy > 100 or iyerr > 100:
+                valanderr = 0.0(0.0)
+            else:
+                valanderr = MakeValAndErr(iy,iyerr)
+            f.write('{0:>3}  {1:10} \n'.format(ix,valanderr))
             # f.write(' {1:10} \n'.format(ix,MakeValAndErr(iy,iyerr)))
             
 def GetPlotIters():
@@ -550,7 +554,8 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
         if not CheckDict(dataset,thisset,thisFF): continue
         if dataset[thisset][thisFF] == False: continue        
         thiscol = thiscolcyc.next()
-        thisshift = thisshiftcycff.next()
+        # thisshift = thisshiftcycff.next()
+        thisshift = 0.0
         collist.append(thiscol)
         skipzero,flipsign = SkipZeroFF(thisFF,thisset,thisCurr)
         qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign)
