@@ -94,6 +94,7 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
             outputdict[iSet][nFF] = OrderedDict()
             nFFdata = Setdata[nFF]
             ydatain,xdatain = [],[]
+            yZero = False
             for iQs,Qsdata in nFFdata.iteritems():
                 if iQs == 'qsqrd0':
                     # continue
