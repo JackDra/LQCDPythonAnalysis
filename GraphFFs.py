@@ -23,13 +23,6 @@ def PlotFFWrap(a,b,c,d):
     PlotFFs(a,b,c,d,feedin['ForceTitle'])
 
 
-def FlagList(AllSetList,*flag):
-    SLOut = []
-    for iset in AllSetList:
-        if all([str(iflag) in iset for iflag in flag]):
-            SLOut.append(iset)
-    return SLOut
-
 def PlotTSFSets(currdata,thiscurr,thisSetList):
     for iTSF in TSFFileFlags:
         if iTSF == 'CM':

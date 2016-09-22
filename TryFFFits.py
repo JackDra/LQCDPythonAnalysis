@@ -61,7 +61,7 @@ for iFFcomb in feedin['FFcomb']:
 ## datadict { Set } { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
     
   
-def CurrFFDPfit(iCurr,Currdata):
+def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
     outputdict = OrderedDict()
     CurrInfo = False
     if Debug: print 'iCurr' , icurr
@@ -69,6 +69,13 @@ def CurrFFDPfit(iCurr,Currdata):
     #     iSet = 'tsink29sm32Fitscut5'
     #     Setdata = Currdata[iSet]
     for iSet,Setdata in Currdata.iteritems():    
+        if not any([imethod in iSet for imethod in thisMethodList]): continue 
+        if 'TSF' in iSet or 'SumMeth' in iSet:
+            if not any([RemoveTSink(iset) in iSet for iset in thisSetList]): continue 
+        else:
+            if not any([iset in iSet for iset in thisSetList]): continue 
+            
+                
         if Debug: print 'iSet', iSet
         outputdict[iSet] = OrderedDict()
         iFFloop = Setdata.keys()

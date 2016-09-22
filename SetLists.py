@@ -15,6 +15,13 @@ def CutDupSet(SetList):
 ##data = [ igamma , ip , iset , it ]
 #dataout = [ itsink , istate , igamma , ip , it]
 
+def FlagList(AllSetList,*flag):
+    SLOut = []
+    for iset in AllSetList:
+        if all([str(iflag) in iset for iflag in flag]):
+            SLOut.append(iset)
+    return SLOut
+
 def PickCM(thisSetList):
     thisCM = None
     while thisCM not in DefTvarPicked:
