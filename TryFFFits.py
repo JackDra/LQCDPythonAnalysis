@@ -68,11 +68,11 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
     # if 'tsink29sm32Fitscut5' in Currdata.keys():
     #     iSet = 'tsink29sm32Fitscut5'
     #     Setdata = Currdata[iSet]
-    ZeroBoot = BootStrap(nboot,1)
-    OneBoot = BootStrap(nboot,1)
+    ZeroBoot = BootStrap1(nboot,1)
+    OneBoot = BootStrap1(nboot,1)
     OneBoot.values = np.array([1.0]*nboot)
     OneBoot.Stats()
-    TwoBoot = BootStrap(nboot,1)
+    TwoBoot = BootStrap1(nboot,1)
     TwoBoot.values = np.array([2.0]*nboot)
     TwoBoot.Stats()
     for iSet,Setdata in Currdata.iteritems():    
