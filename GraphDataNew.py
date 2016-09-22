@@ -550,18 +550,19 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
         if not CheckDict(dataset,thisset,thisFF): continue
         if dataset[thisset][thisFF] == False: continue        
         thiscol = thiscolcyc.next()
+        thisshift = thisshiftcycff.next()
         collist.append(thiscol)
         skipzero,flipsign = SkipZeroFF(thisFF,thisset,thisCurr)
-        qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshiftcycff.next(),LegLabFF(thisset),skipzero,flipsign)
-        PlotDPFit(thisset,thisFF,thisDSCurr,thiscol,qrange)
+        qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thsishift,LegLabFF(thisset),skipzero,flipsign)
+        PlotDPFit(thisset,thisFF,thisDSCurr,thiscol,qrange,thisshift)
     return collist
 
-def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange):
+def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift):
     if Debug: print thisset,thisFF
     Avg,Err = GetDPFitValue(thisset,thisFF,thisCurr)
     if len(Avg) == 0: return
     Avg,Err = np.array(Avg),np.array(Err)
-    fitqdata = np.arange(qrange[0],qrange[-1]+incr,incr)
+    fitqdata = np.arange(qrange[0]+thisshift,qrange[-1]+incr+thisshift,incr)
     fitydataAvg = DPfitfun([fitqdata],Avg)
     fitydataup = np.array([max(iy1,iy2) for iy1,iy2 in zip(DPfitfun([fitqdata],Avg+Err),DPfitfun([fitqdata],np.array([Avg[0]-Err[0],Avg[1]+Err[1]])))])
     Avg,Err = np.array(Avg),np.array(Err)
@@ -570,7 +571,7 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange):
     if Debug: print Avg[1], Err[1]
     if Avg[1] > 10: return
     pl.plot(fitqdata,fitydataAvg,label='mPar='+MakeValAndErr(Avg[1],Err[1]),color=thiscol)
-    pl.fill_between(fitqdata,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
+    pl.fill_between(fitqdata-thisshift,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
     
 
     
