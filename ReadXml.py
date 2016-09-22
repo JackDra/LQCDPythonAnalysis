@@ -95,11 +95,11 @@ def GetDPFitValue(SearchSet,iFF,thisCurr):
         print 'Warrning, file not found' , filename+'.xml'
         return [],[]
     data = ReadXmlDict(filename+'.xml')[0]
-    if Debug: print data
     thisDPpAvg = []
     thisDPpStd = []
     if Debug: print data.keys(),'DP_Fits'
     if Debug: print data[data.keys()[0]].keys(),'Values'
+    if Debug: print SearchSet
     if iFF in data['DP_Fits']['Values'].keys():
         # if any([SearchSet in iset  for iset in data['DP_Fits']['Values'][iFF]['Fzero'].keys()]):
         if SearchSet in data['DP_Fits']['Values'][iFF]['Fzero'].keys() and SearchSet in data['DP_Fits']['Values'][iFF]['mEM'].keys() :
