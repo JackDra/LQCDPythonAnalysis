@@ -118,11 +118,7 @@ def AppendFFDat(xdata,ydata,yerr):
     if DatFile == False: raise IOError("DatFile not defined yet")
     with open(DatFile,'a') as f:
         for ix,iy,iyerr in zip(xdata,ydata,yerr):
-            if iy > 100 or iyerr > 100:
-                valanderr = 0.0(0.0)
-            else:
-                valanderr = MakeValAndErr(iy,iyerr)
-            f.write('{0:>3}  {1:10} \n'.format(ix,valanderr))
+            f.write('{0:>3}  {1:10} \n'.format(ix,MakeValAndErr(iy,iyerr)))
             # f.write(' {1:10} \n'.format(ix,MakeValAndErr(iy,iyerr)))
             
 def GetPlotIters():
@@ -574,7 +570,7 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift):
     fitydatadown = np.array([min(iy1,iy2) for iy1,iy2 in zip(DPfitfun([fitqdata],Avg-Err),DPfitfun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])))])
     # fitydatadown = np.array([np.min(iy1,iy2) for iy1,iy2 in zip(DPfitfun([fitqdata],Avg-Err),DPfitfun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])))])
     if Debug: print Avg[1], Err[1]
-    if GetCharRad(Avg[1]) > 10 or Err[1]> 10: return
+    # if GetCharRad(Avg[1]) > 10 or Err[1]> 10: return
     ## Displays charge radius for FF1, and magnetic moment for FF2
     if 'FF1' in thisFF:
         LegVal = '$\\langle r^2 \\rangle='+MakeValAndErr(GetCharRad(Avg[1]),Err[1])+'$'        
