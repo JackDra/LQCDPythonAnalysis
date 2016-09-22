@@ -585,7 +585,7 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift):
     # if GetCharRad(Avg[1]) > 10 or Err[1]> 10: return
     ## Displays charge radius for FF1, and magnetic moment for FF2
     if 'FF1' in thisFF:
-        LegVal = '$\\langle r^2 \\rangle='+MakeValAndErr(GetCharRad(Avg[1]),Err[1])+'$'        
+        LegVal = '$\\langle r^2 \\rangle='+MakeValAndErr(GetCharRad(Avg[1]),Err[1])+'\ fm$'        
     elif 'FF2' in thisFF:
         LegVal = '$\\mu='+MakeValAndErr(Avg[0],Err[0])+'$'        
     else:
