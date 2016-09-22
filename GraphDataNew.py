@@ -4,6 +4,7 @@ import matplotlib
 matplotlib.use('PDF') # Must be before importing matplotlib.pyplot or pylab!
 import matplotlib.pyplot as pl
 from Params import *
+from FitFunctions import DPfitfun,DPfitfun2
 import numpy as np
 from BootTest import BootStrap1
 # import pylab as pl
