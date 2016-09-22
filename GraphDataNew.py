@@ -569,8 +569,16 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift):
     fitydatadown = np.array([min(iy1,iy2) for iy1,iy2 in zip(DPfitfun([fitqdata],Avg-Err),DPfitfun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])))])
     # fitydatadown = np.array([np.min(iy1,iy2) for iy1,iy2 in zip(DPfitfun([fitqdata],Avg-Err),DPfitfun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])))])
     if Debug: print Avg[1], Err[1]
-    if Avg[1] > 10: return
-    pl.plot(fitqdata+thisshift,fitydataAvg,label='$\\langle r^2 \\rangle='+MakeValAndErr(GetCharRad(Avg[1]),Err[1])+'$',color=thiscol)
+    if GetCharRad(Avg[1]) > 10 or Err[1]> 10: return
+    ## Displays charge radius for FF1, and magnetic moment for FF2
+    print thisFF
+    if 'FF1' in thisFF:
+        LegVal = '$\\langle r^2 \\rangle='+MakeValAndErr(GetCharRad(Avg[1]),Err[1])+'$'        
+    elif 'FF2' in thisFF:
+        LegVal = '$\\mu='+MakeValAndErr(Avg[0],Err[0])+'$'        
+    else:
+        LegVal = 'nothing'        
+    pl.plot(fitqdata+thisshift,fitydataAvg,label=LegVal,color=thiscol)
     pl.fill_between(fitqdata+thisshift,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
     
 
