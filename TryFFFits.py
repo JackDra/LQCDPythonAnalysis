@@ -124,7 +124,7 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
                     outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = DPfit,DPfitAvg,DPfitChi
                 else:
                     DPfit,DPfitAvg,DPfitChi = FitBoots(np.array(ydatain),np.array(xdatain),DPfitfunOnePar)
-                    outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = [yZero,DPfit],[yZero.Avg,DPfitAvg],[0.0,DPfitChi] 
+                    outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = [yZero,DPfit[0]],[yZero.Avg,DPfitAvg[0]],[0.0,DPfitChi[0]] 
     PrintDPfit(iCurr,outputdict,CurrSetInfo)
 
 
