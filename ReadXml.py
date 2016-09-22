@@ -90,7 +90,7 @@ def CheckMomFile(filein,nconftest = False):
 def GetDPFitValue(SearchSet,iFF,thisCurr):
     FFdir = outputdir +'/FormFactors/DPfits/'
     filename = FFdir +thisCurr
-    if Debug: print filename
+    if Debug: print filename+'.xml'
     if not os.path.isfile(filename+'.xml'):
         print 'Warrning, file not found' , filename+'.xml'
         return [],[]
