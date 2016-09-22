@@ -567,10 +567,10 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
         collist.append(thiscol)
         skipzero,flipsign = SkipZeroFF(thisFF,thisset,thisCurr)
         qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
-        PlotDPFit(thisset,thisFF,thisDSCurr,thiscol,qrange,thisshift)
+        PlotDPFit(thisset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign)
     return collist
 
-def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift):
+def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign):
     if Debug: print thisset,thisFF
     Avg,Err = GetDPFitValue(thisset,thisFF,thisCurr)
     if len(Avg) == 0: return
@@ -590,9 +590,12 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift):
         LegVal = '$\\mu='+MakeValAndErr(Avg[0],Err[0])+'$'        
     else:
         LegVal = 'nothing'        
-    pl.plot(fitqdata+thisshift,fitydataAvg,label=LegVal,color=thiscol)
-    pl.fill_between(fitqdata+thisshift,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
-    
+    if flipsign:
+        pl.plot(fitqdata+thisshift,-np.array(fitydataAvg),label=LegVal,color=thiscol)
+        pl.fill_between(fitqdata+thisshift,-np.array(fitydataup),-np.array(fitydatadown),color=thiscol,alpha=thisalpha,edgecolor='none')
+    else:
+        pl.plot(fitqdata+thisshift,fitydataAvg,label=LegVal,color=thiscol)
+        pl.fill_between(fitqdata+thisshift,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
 
     
 def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
@@ -622,6 +625,7 @@ def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
         else:
             pl.errorbar(qsqrdvals,dataavg,dataerr,color=col,fmt=sym,label=lab)
     return qsqrdvals
+
 def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
     if MP:
         thistsource = tsource +1
