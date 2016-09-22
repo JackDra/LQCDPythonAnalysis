@@ -553,7 +553,7 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
         thisshift = thisshiftcycff.next()
         collist.append(thiscol)
         skipzero,flipsign = SkipZeroFF(thisFF,thisset,thisCurr)
-        qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thsishift,LegLabFF(thisset),skipzero,flipsign)
+        qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign)
         PlotDPFit(thisset,thisFF,thisDSCurr,thiscol,qrange,thisshift)
     return collist
 
