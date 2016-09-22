@@ -571,7 +571,8 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
         else:
             thisshift = 0.0
             qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
-            PlotDPFit(thisset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign)
+            if 'OSFCM' in thisSet or 'TSF' in thisSet:
+                PlotDPFit(thisset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign)
     return collist
 
 def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign):
