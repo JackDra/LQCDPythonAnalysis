@@ -92,6 +92,7 @@ def GetDPFitValue(SearchSet,iFF,thisCurr):
     filename = FFdir +thisCurr
     if Debug: print filename
     data = ReadXmlDict(filename)[0]
+    if Debug: print data
     thisDPpAvg = []
     thisDPpStd = []
     if Debug: print data.keys(),'DP_Fits'
