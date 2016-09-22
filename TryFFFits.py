@@ -98,7 +98,6 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
                     if '1' not in nFF:
                         continue
                     else:
-                        print iCurr
                         if ('Ge' in iCurr or ('Vector' in iCurr and 'PsVector' not in iCurr.replace('IsoVector',''))):
                             if 'IsoVector' in iCurr or 'Proton' in iCurr or 'sing' in iCurr:
                                 ydatain.append(OneBoot)
