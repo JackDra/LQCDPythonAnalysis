@@ -108,6 +108,12 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
                                 yZero = ZeroBoot
                             elif 'doub' in iCurr:
                                 yZero = TwoBoot
+                            elif 'Boot' in Qsdata:
+                                ydatain.append(Qsdata['Boot'])
+                                xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits))
+                        elif 'Boot' in Qsdata:
+                            ydatain.append(Qsdata['Boot'])
+                            xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits))
                 elif 'Boot' in Qsdata:
                     ydatain.append(Qsdata['Boot'])
                     xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits))
