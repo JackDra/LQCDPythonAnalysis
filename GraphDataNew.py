@@ -546,7 +546,7 @@ def SkipZeroFF(thisFF,thisset,thisCurr):
 def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
     thissymcyc,thiscolcyc,thisshiftcycff = GetPlotItersff()
     collist = []
-    if 'Vector' in thisDSCurr and 'PsVector' not in thisDSCurr.replace('IsoVector',''):
+    if 'Ge' in thisDSCurr or ('Vector' in thisDSCurr and ('PsVector' not in thisDSCurr.replace('IsoVector',''))):
         if 'IsoVector' in thisDSCurr or 'Proton' in thisDSCurr or 'sing' in thisDSCurr:
             FixZ= 1
         elif 'Neutron' in thisDSCurr:
