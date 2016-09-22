@@ -567,10 +567,10 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
         if ('IsoVectorPsVector' in thisDSCurr and 'FF2' in thisFF) or ('NeutronGeGm' in thisDSCurr and 'FF1' in thisFF):
             thisshift = thisshiftcycff.next()
             qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
-            PlotDPFit(thisset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign)
         else:
             thisshift = 0.0
             qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
+            PlotDPFit(thisset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign)
     return collist
 
 def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign):
