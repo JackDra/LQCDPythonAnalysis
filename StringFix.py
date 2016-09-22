@@ -161,8 +161,10 @@ def TitleFixFF(string,FF):
         FF = FF.replace('FF1','G_{E}')
         FF = FF.replace('FF2','G_{M}')
         return string+ ' $'+FF +'$'
-    elif 'Pseudo-vector' in string:
+    elif 'Axial' in string:
         FF = FF.replace('FF1','G_{A}')
+        return string+ ' $'+FF +'$'
+    elif 'Induced Pseudoscalar' in string:
         FF = FF.replace('FF2','G_{P}')
         return string+ ' $'+FF +'$'
     elif 'Pseudo-scalar' in string:
