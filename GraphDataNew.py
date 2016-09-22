@@ -562,7 +562,7 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift):
     Avg,Err = GetDPFitValue(thisset,thisFF,thisCurr)
     if len(Avg) == 0: return
     Avg,Err = np.array(Avg),np.array(Err)
-    fitqdata = np.arange(qrange[0]+thisshift,qrange[-1]+incr+thisshift,incr)
+    fitqdata = np.arange(qrange[0]-thisshift,qrange[-1]+incr-thisshift,incr)
     fitydataAvg = DPfitfun([fitqdata],Avg)
     fitydataup = np.array([max(iy1,iy2) for iy1,iy2 in zip(DPfitfun([fitqdata],Avg+Err),DPfitfun([fitqdata],np.array([Avg[0]-Err[0],Avg[1]+Err[1]])))])
     Avg,Err = np.array(Avg),np.array(Err)
@@ -570,8 +570,8 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift):
     # fitydatadown = np.array([np.min(iy1,iy2) for iy1,iy2 in zip(DPfitfun([fitqdata],Avg-Err),DPfitfun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])))])
     if Debug: print Avg[1], Err[1]
     if Avg[1] > 10: return
-    pl.plot(fitqdata-thisshift,fitydataAvg,label='mPar='+MakeValAndErr(Avg[1],Err[1]),color=thiscol)
-    pl.fill_between(fitqdata-thisshift,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
+    pl.plot(fitqdata,fitydataAvg,label='mPar='+MakeValAndErr(Avg[1],Err[1]),color=thiscol)
+    pl.fill_between(fitqdata,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
     
 
     
