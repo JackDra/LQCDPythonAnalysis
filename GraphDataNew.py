@@ -590,13 +590,13 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign):
         LegVal = '$\\mu='+MakeValAndErr(Avg[0],Err[0])+'$'        
     else:
         LegVal = 'nothing'        
-    print 'DPFit flip sign', flipsign
-    if flipsign:
-        pl.plot(fitqdata+thisshift,-np.array(fitydataAvg),label=LegVal,color=thiscol)
-        pl.fill_between(fitqdata+thisshift,-np.array(fitydataup),-np.array(fitydatadown),color=thiscol,alpha=thisalpha,edgecolor='none')
-    else:
-        pl.plot(fitqdata+thisshift,fitydataAvg,label=LegVal,color=thiscol)
-        pl.fill_between(fitqdata+thisshift,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
+    # print 'DPFit flip sign', flipsign
+    # if flipsign:
+    #     pl.plot(fitqdata+thisshift,-np.array(fitydataAvg),label=LegVal,color=thiscol)
+    #     pl.fill_between(fitqdata+thisshift,-np.array(fitydataup),-np.array(fitydatadown),color=thiscol,alpha=thisalpha,edgecolor='none')
+    # else:
+    pl.plot(fitqdata+thisshift,fitydataAvg,label=LegVal,color=thiscol)
+    pl.fill_between(fitqdata+thisshift,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
 
     
 def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
@@ -615,7 +615,7 @@ def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
     if len(qsqrdvals) > 0:
         if len(qsqrdvals) > Qtcut:
             qsqrdvals,dataavg,dataerr = qsqrdvals[:Qtcut],dataavg[:Qtcut],dataerr[:Qtcut]
-        print 'FFvals flip sign', FlipSign
+        # print 'FFvals flip sign', FlipSign
         if FlipSign: dataavg = -1*np.array(dataavg)
         if ForcePos: dataavg = np.abs(dataavg)
         AppendFFDat(qsqrdvals,dataavg,dataerr)
