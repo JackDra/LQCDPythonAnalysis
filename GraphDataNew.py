@@ -564,8 +564,8 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
         thiscol = thiscolcyc.next()
         collist.append(thiscol)
         skipzero,flipsign = SkipZeroFF(thisFF,thisset,thisCurr)
-        # if ('IsoVectorPsVector' in thisDSCurr and 'FF2' in thisFF) or ('NeutronGeGm' in thisDSCurr and 'FF1' in thisFF):
-        if ('IsoVectorPsVector' in thisDSCurr) or ('NeutronGeGm' in thisDSCurr and 'FF1' in thisFF):
+        if ('IsoVectorPsVector' in thisDSCurr and 'FF2' in thisFF) or ('NeutronGeGm' in thisDSCurr and 'FF1' in thisFF):
+        # if ('IsoVectorPsVector' in thisDSCurr) or ('NeutronGeGm' in thisDSCurr and 'FF1' in thisFF):
             thisshift = thisshiftcycff.next()
             qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
         else:
