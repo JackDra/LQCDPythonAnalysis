@@ -557,6 +557,17 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
             FixZ=False
     else:
         FixZ=False    
+    # DatDPFile = './'+thisFF+thisDSCurr+'.dat'
+    datf = open(DatFile.replace('.dat','Params.dat'),'w')
+    if 'FF1' in thisFF:
+        if 'PsVector' in thisCurr:
+            datf.write('\(\langle r_{A}^2 \rangle\) \(fm^{2}\) \n')
+        else:
+            datf.write('\(\langle r^2 \rangle\) \(fm^{2}\) \n')
+    elif 'FF2' in thisFF:
+        datf.write('\(\mu\)  \n')
+    else:
+        datf.write('nothing \n')
     for thisset in SortMySet(thisSetFlag)[0]:
         ##make legend formatting function
         if not CheckDict(dataset,thisset,thisFF): continue
@@ -572,10 +583,11 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
             thisshift = 0.0
             qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
             if 'sm32' in thisset or 'CM' in thisset or 'TSF' in thisset:
-                PlotDPFit(thisset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign)
+                PlotDPFit(thisset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign,datf)
+    datf.close()
     return collist
 
-def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign):
+def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf):
     if Debug: print thisset,thisFF
     Avg,Err = GetDPFitValue(thisset,thisFF,thisCurr)
     if len(Avg) == 0: return
@@ -590,12 +602,14 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign):
     # if GetCharRad(Avg[1]) > 10 or Err[1]> 10: return
     ## Displays charge radius for FF1, and magnetic moment for FF2
     if 'FF1' in thisFF:
+        datf.write(MakeValAndErr(GetCharRad(Avg[1]),Err[1])+' \n')
         if 'PsVector' in thisCurr:
             LegVal = '$\\langle r_{A}^2 \\rangle='+MakeValAndErr(GetCharRad(Avg[1]),Err[1])+'\ fm^{2}$'        
         else:
             LegVal = '$\\langle r^2 \\rangle='+MakeValAndErr(GetCharRad(Avg[1]),Err[1])+'\ fm^{2}$'        
     elif 'FF2' in thisFF:
         LegVal = '$\\mu='+MakeValAndErr(Avg[0],Err[0])+'$'        
+        datf.write(MakeValAndErr(Avg[0],Err[0])+' \n')
     else:
         LegVal = 'nothing'        
     # print 'DPFit flip sign', flipsign

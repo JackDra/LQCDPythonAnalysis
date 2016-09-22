@@ -80,16 +80,16 @@ FormList = [FormFactorO8,
             FormFactorO1]
 
 def ConstantFitFun(x,p):
-    return p[0]*makexunit(x)
+    return p[0]*makexunit(x[0])
 
 def ConstFFDer(x,p):
-    return makexunit(x)
+    return makexunit(x[0])
 
 def LinearFitFun(x,p):
-    return p[0]*np.array(x)+p[1]
+    return p[0]*np.array(x[0])+p[1]
 
 def LinFFDer(x,p):
-    return [x,makexunit(x)]
+    return [x,makexunit(x[0])]
 
 def TestTwoVarFitFun(x,p):
     return p[0]*x[0]+ p[1]*x[1]**2
