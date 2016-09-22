@@ -568,6 +568,7 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange):
     fitydatadown = np.array([min(iy1,iy2) for iy1,iy2 in zip(DPfitfun([fitqdata],Avg-Err),DPfitfun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])))])
     # fitydatadown = np.array([np.min(iy1,iy2) for iy1,iy2 in zip(DPfitfun([fitqdata],Avg-Err),DPfitfun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])))])
     if Debug: print Avg[1], Err[1]
+    if Avg[1] > 10: return
     pl.plot(fitqdata,fitydataAvg,label='mPar='+MakeValAndErr(Avg[1],Err[1]),color=thiscol)
     pl.fill_between(fitqdata,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
     
