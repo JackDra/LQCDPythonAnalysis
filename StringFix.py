@@ -149,8 +149,10 @@ def TitleFixFF(string,FF):
         string = string.replace(iDS,iDS+' ')
     if 'FF1' in FF:
         string = string.replace('PsVector','Axial')
+        return string+ ' $G_{A}$'
     elif 'FF2' in FF:    
         string = string.replace('PsVector','Induced Pseudoscalar')
+        return string+ ' $G_{P}$'
     string = string.replace('IsoVector','Iso-vector')
     string = string.replace('PsScalar','Pseudo-scalar')
     string = string.replace('IsoScalar','Iso-scalar')
@@ -160,12 +162,6 @@ def TitleFixFF(string,FF):
         string = string.replace(' GeGm',' Vector')
         FF = FF.replace('FF1','G_{E}')
         FF = FF.replace('FF2','G_{M}')
-        return string+ ' $'+FF +'$'
-    elif 'Axial' in string:
-        FF = FF.replace('FF1','G_{A}')
-        return string+ ' $'+FF +'$'
-    elif 'Induced Pseudoscalar' in string:
-        FF = FF.replace('FF2','G_{P}')
         return string+ ' $'+FF +'$'
     elif 'Pseudo-scalar' in string:
         FF = FF.replace('FF1','G_{P}')
