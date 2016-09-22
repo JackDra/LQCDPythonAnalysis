@@ -147,12 +147,13 @@ def TitleFix(string):
 def TitleFixFF(string,FF):
     for iDS in DefDSList + CombList:
         string = string.replace(iDS,iDS+' ')
-    if 'FF1' in FF:
-        string = string.replace('PsVector','Axial')
-        return string+ ' $G_{A}$'
-    elif 'FF2' in FF:    
-        string = string.replace('PsVector','Induced Pseudoscalar')
-        return string+ ' $G_{P}$'
+    if 'PsVector' in string:
+        if 'FF1' in FF and 'PsVector' in string:
+            string = string.replace('PsVector','Axial')
+            return string+ ' $G_{A}$'
+        elif 'FF2' in FF:    
+            string = string.replace('PsVector','Induced Pseudoscalar')
+            return string+ ' $G_{P}$'
     string = string.replace('IsoVector','Iso-vector')
     string = string.replace('PsScalar','Pseudo-scalar')
     string = string.replace('IsoScalar','Iso-scalar')
