@@ -87,6 +87,7 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
             nFFdata = Setdata[nFF]
             ydatain,xdatain = [],[]
             for iQs,Qsdata in nFFdata.iteritems():
+                if iQs == 'qsqrd0' and nFF != 'FF1': continue
                 if 'Boot' in Qsdata:
                     ydatain.append(Qsdata['Boot'])
                     xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits))
