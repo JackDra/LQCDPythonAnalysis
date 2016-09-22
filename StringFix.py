@@ -15,9 +15,14 @@ def MakeValAndErr(Avg,Err,Dec=2):
         return 'Err'
     ErrMag = int(np.floor(np.log10(Err)))-(Dec-1)
     sigErr = round(Err, -ErrMag)
-    strErr = int(sigErr*10**(-ErrMag))
-    sigAvg = round(Avg,-ErrMag)
-    return ('{0:.'+str(-ErrMag)+'f}({1})').format(sigAvg,strErr)
+    if ErrMag > 0:
+        sigAvg = round(Avg,-ErrMag)        
+        return ('{0:.'+str(ErrMag)+'f}({1})').format(sigAvg,sigErr)
+    else:
+        sigErr = round(Err, -ErrMag)
+        strErr = int(sigErr*10**(-ErrMag))
+        sigAvg = round(Avg,-ErrMag)
+        return ('{0:.'+str(-ErrMag)+'f}({1})').format(sigAvg,strErr)
 
         
 # def NoSm(thestring): return thestring
