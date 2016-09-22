@@ -87,7 +87,20 @@ def CheckMomFile(filein,nconftest = False):
 
 
                     
-
+def GetDPFitValue(SearchSet,iFF,thisCurr):
+    FFdir = outputdir +'/FormFactors/DPfits/'
+    filename = FFdir +iFF
+    data = ReadXmlDict(filename)
+    thisDPpAvg = []
+    thisDPpStd = []
+    if iFF in data['DP_Fits']['Values'].keys():
+        # if any([SearchSet in iset  for iset in data['DP_Fits']['Values'][iFF]['Fzero'].keys()]):
+        if SearchSet in data['DP_Fits']['Values'][iFF]['Fzero'].keys() and SearchSet in data['DP_Fits']['Values'][iFF]['mEM'].keys() :
+            thisDPAvg.append(data['DP_Fits']['Values']['Fzero'][SearchSet]['Avg'])
+            thisDPAvg.append(data['DP_Fits']['Values']['mEM'][SearchSet]['Avg'])
+            thisDPStd.append(data['DP_Fits']['Values']['Fzero'][SearchSet]['Std'])
+            thisDPStd.append(data['DP_Fits']['Values']['mEM'][SearchSet]['Std'])
+    return thisDPAvg,thisDPStd
 ##Also works for cfuns##
 ##xmlinput = { Ratio_Factor , Boots/Values , thismomlist , tlist } 
 ##outputdict = { thismom , [tVals] / [Vals] / [Valserr] / [Boot] bs }

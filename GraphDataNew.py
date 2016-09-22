@@ -551,9 +551,23 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr):
         thiscol = thiscolcyc.next()
         collist.append(thiscol)
         skipzero,flipsign = SkipZeroFF(thisFF,thisset,thisCurr)
-        PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshiftcycff.next(),LegLabFF(thisset),skipzero,flipsign)
+        qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshiftcycff.next(),LegLabFF(thisset),skipzero,flipsign)
+        PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange)
     return collist
 
+def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange):
+    if Debug: print thisset,thisFF
+    Avg,Err = GetDPFitValue(thisset,thisFF,thisCurr)
+    Avg,Err = np.array(Avg),np.array(Err)
+    fitqdata = np.arange(qrange[0],qrange[-1]+incr,incr)
+    fitydataAvg = DPfitfun([fitqdata],Avg)
+    fitydataup = np.max(DPfitfun([fitqdata],Avg+Err),DPfitfun([fitqdata],np.array([Avg[0]-Err[0],Avg[1]+Err[1]])))
+    fitydatadown = np.min(DPfitfun([fitqdata],Avg-Err),DPfitfun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])))
+    pl.plot(fitqdata,fitydataAvg,label='mPar='+MakeValAndErr(Avg[1],Err[1]),color=thiscol)
+    pl.fill_between(fitqdata,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
+    
+
+    
 def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign):
     qsqrdvals,dataavg,dataerr = [],[],[]
     for iqsqrd,(qsqrd,values) in enumerate(data.iteritems()):
@@ -577,7 +591,7 @@ def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign):
             pl.errorbar(qsqrdvals[1:],dataavg[1:],dataerr[1:],color=col,fmt=sym,label=lab)
         else:
             pl.errorbar(qsqrdvals,dataavg,dataerr,color=col,fmt=sym,label=lab)
-            
+    return qsqrdvals
 def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
     if MP:
         thistsource = tsource +1
