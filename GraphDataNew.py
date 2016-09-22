@@ -522,7 +522,7 @@ def PlotFFs(data,DSCurr,thisSetList,CollName,FT):
         if len(thisFFComb) > 1: thisFFComb = '/'+thisFFComb
         DatFile = CreateFFFile(CollName,DSCurr,thisFF)+'.dat'
         WipeFile(DatFile)
-        PlotFFSet(data,thisFF,thisSetList,thisCurr)
+        PlotFFSet(data,thisFF,thisSetList,thisCurr,DSCurr.replace('/',''))
         SetFFAxies(thisDS+thisCurr+thisFF+thisFFComb)
         pl.savefig(DatFile.replace('.dat','.pdf'))
         pl.clf()
@@ -541,7 +541,7 @@ def SkipZeroFF(thisFF,thisset,thisCurr):
     else:
         return skipzero,False
         
-def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr):
+def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
     thissymcyc,thiscolcyc,thisshiftcycff = GetPlotItersff()
     collist = []
     for thisset in SortMySet(thisSetFlag)[0]:
@@ -552,7 +552,7 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr):
         collist.append(thiscol)
         skipzero,flipsign = SkipZeroFF(thisFF,thisset,thisCurr)
         qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshiftcycff.next(),LegLabFF(thisset),skipzero,flipsign)
-        PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange)
+        PlotDPFit(thisset,thisFF,thisDSCurr,thiscol,qrange)
     return collist
 
 def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange):
