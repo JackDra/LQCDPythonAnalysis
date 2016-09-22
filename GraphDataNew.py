@@ -561,9 +561,9 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
     datf = open(DatFile.replace('.dat','Params.dat'),'w')
     if 'FF1' in thisFF:
         if 'PsVector' in thisCurr:
-            datf.write('\(\langle r_{A}^2 \rangle\) \(fm^{2}\) \n')
+            datf.write('\(\langle r_{A}^2 \\rangle\) \(fm^{2}\) \n')
         else:
-            datf.write('\(\langle r^2 \rangle\) \(fm^{2}\) \n')
+            datf.write('\(\langle r^2 \\rangle\) \(fm^{2}\) \n')
     elif 'FF2' in thisFF:
         datf.write('\(\mu\)  \n')
     else:
