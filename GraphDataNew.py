@@ -558,6 +558,7 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr):
 def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange):
     if Debug: print thisset,thisFF
     Avg,Err = GetDPFitValue(thisset,thisFF,thisCurr)
+    if len(Avg) == 0: continue
     Avg,Err = np.array(Avg),np.array(Err)
     fitqdata = np.arange(qrange[0],qrange[-1]+incr,incr)
     fitydataAvg = DPfitfun([fitqdata],Avg)
