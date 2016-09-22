@@ -564,6 +564,7 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange):
     fitqdata = np.arange(qrange[0],qrange[-1]+incr,incr)
     fitydataAvg = DPfitfun([fitqdata],Avg)
     fitydataup = np.array([np.max(iy1,iy2) for iy1,iy2 in zip(DPfitfun([fitqdata],Avg+Err),DPfitfun([fitqdata],np.array([Avg[0]-Err[0],Avg[1]+Err[1]])))])
+    if Debug: print DPfitfun([fitqdata],Avg-Err),DPfitfun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])
     fitydatadown = np.array([np.min(iy1,iy2) for iy1,iy2 in zip(DPfitfun([fitqdata],Avg-Err),DPfitfun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])))])
     pl.plot(fitqdata,fitydataAvg,label='mPar='+MakeValAndErr(Avg[1],Err[1]),color=thiscol)
     pl.fill_between(fitqdata,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
