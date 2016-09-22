@@ -590,7 +590,7 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign):
         LegVal = '$\\mu='+MakeValAndErr(Avg[0],Err[0])+'$'        
     else:
         LegVal = 'nothing'        
-    print 'DPFit flip sign', FlipSign
+    print 'DPFit flip sign', flipsign
     if flipsign:
         pl.plot(fitqdata+thisshift,-np.array(fitydataAvg),label=LegVal,color=thiscol)
         pl.fill_between(fitqdata+thisshift,-np.array(fitydataup),-np.array(fitydatadown),color=thiscol,alpha=thisalpha,edgecolor='none')
