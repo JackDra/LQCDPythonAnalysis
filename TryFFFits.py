@@ -21,7 +21,7 @@ import datetime
 # from guppy import hpy; h=hpy()
 import resource
 from InputArgs import *
-
+from BootTest import BootStrap1
 
 
 feedin = InputParams(sys.argv[1:])
@@ -68,6 +68,13 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
     # if 'tsink29sm32Fitscut5' in Currdata.keys():
     #     iSet = 'tsink29sm32Fitscut5'
     #     Setdata = Currdata[iSet]
+    ZeroBoot = BootStrap(nboot,1)
+    OneBoot = BootStrap(nboot,1)
+    OneBoot.values = np.array([1.0]*nboot)
+    OneBoot.Stats()
+    TwoBoot = BootStrap(nboot,1)
+    TwoBoot.values = np.array([2.0]*nboot)
+    TwoBoot.Stats()
     for iSet,Setdata in Currdata.iteritems():    
         if not any([imethod in iSet for imethod in thisMethodList]): continue 
         if 'TSF' in iSet or 'SumMeth' in iSet:
@@ -88,7 +95,17 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
             ydatain,xdatain = [],[]
             for iQs,Qsdata in nFFdata.iteritems():
                 if (iQs == 'qsqrd0') and ('1' not in nFF): continue
-                if 'Boot' in Qsdata:
+                if iQs == 'qsqrd0' and '1' in nFF and ('Ge' in iCurr or ('Vector' in iCurr and 'PsVector' not in iCurr.replace('IsoVector',''))):
+                    if 'IsoVector' in iCurr or 'Proton' in iCurr or 'sing' in iCurr:
+                        ydatain.append(OneBoot)
+                        xdatain.append(0.0)
+                    elif 'Neutron' in iCurr:
+                        ydatain.append(ZeroBoot)
+                        xdatain.append(0.0)                        
+                    elif 'doub' in iCurr:
+                        ydatain.append(TwoBoot)
+                        xdatain.append(0.0)                        
+                elif 'Boot' in Qsdata:
                     ydatain.append(Qsdata['Boot'])
                     xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits))
                 else:
