@@ -73,9 +73,7 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
         if 'TSF' in iSet or 'SumMeth' in iSet:
             if not any([RemoveTSink(iset) in iSet for iset in thisSetList]): continue 
         else:
-            if not any([iset in iSet for iset in thisSetList]): continue 
-            
-                
+            if not any([iset in iSet for iset in thisSetList]): continue                 
         if Debug: print 'iSet', iSet
         outputdict[iSet] = OrderedDict()
         iFFloop = Setdata.keys()
@@ -108,7 +106,7 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
 
 inputparams = []
 for iCurr,Currdata in datadict.iteritems():
-    inputparams.append([iCurr,Currdata])
+    inputparams.append([iCurr,Currdata,inputparams['set'],inputparams['method']])
 
 
 starttime = time.time()
