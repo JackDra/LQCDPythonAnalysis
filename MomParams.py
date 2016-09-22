@@ -257,6 +257,6 @@ def CreateSMOMNewPairs(thisMinqsqrd,thisMaxqsqrd):
 
 
 def GetCharRad(msqVal):
-    return 12/msqVal * hbarc**2
+    return 12/msqVal * hbarc
 # return msqVal
 
