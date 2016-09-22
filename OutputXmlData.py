@@ -209,7 +209,7 @@ def PrintDPfit(iFF,outputdict,InfoDict):
         datadict['DP_Fits']['Values'][iFF]['mEM'] = OrderedDict()
         # datadict['DP_Fits']['Values'][iFF]['zero_slope'] = OrderedDict()
         datadict['DP_Fits']['Values'][iFF]['Radius'] = OrderedDict() 
-        datadict['DP_Fits']['Values'][iFF]['Chi^2_pdf'] = OrderedDict() 
+        datadict['DP_Fits']['Values'][iFF]['Chi2_pdf'] = OrderedDict() 
         for iSet,setdict in outputdict.iteritems():
             # if not CheckDict(outputdict,iSet,iFF,'Avg'): continue
             if not CheckDict(outputdict,iSet,iFF,'Boot'): continue
@@ -222,7 +222,7 @@ def PrintDPfit(iFF,outputdict,InfoDict):
             thisrad.Stats()
             datadict['DP_Fits']['Values'][iFF]['Radius'][iSet] = BootAvgStdToFormat(thisrad)
             if not CheckDict(outputdict,iSet,iFF,'Chi'): continue
-            datadict['DP_Fits']['Values'][iFF]['Chi^2_pdf'][iSet] = outputdict[iSet][iFF]['Chi'][0]
+            datadict['DP_Fits']['Values'][iFF]['Chi2_pdf'][iSet] = outputdict[iSet][iFF]['Chi'][0]
     # MergeXmlOutput(thisfile,datadict,CheckMom=False)
     WriteXmlOutput(thisfile,datadict)
 
