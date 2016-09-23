@@ -217,7 +217,7 @@ def PrintDPfit(iFF,outputdict,InfoDict):
             datadict['DP_Fits']['Values'][iFF]['mEM'][iSet] = BootAvgStdToFormat(outputdict[iSet][iFF]['Boot'][1])
             # datadict['DP_Fits']['Values'][iFF]['zero_slope'][iSet] = DPfitfun2Der(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
             # datadict['DP_Fits']['Values'][iFF]['zero_slope'][iSet] = DPfitfunDer(np.array([0.]),outputdict[iSet][iFF]['Avg'])[1]
-            thisrad = 12 *outputdict[iSet][iFF]['Boot'][0]/(latspace**2*outputdict[iSet][iFF]['Boot'][1])
+            thisrad = 12*hbarc**2 *outputdict[iSet][iFF]['Boot'][0]/(outputdict[iSet][iFF]['Boot'][1])
             # thisrad = -12 *outputdict[iSet][iFF]['Boot'][0]/outputdict[iSet][iFF]['Boot'][1]
             thisrad.Stats()
             datadict['DP_Fits']['Values'][iFF]['Radius'][iSet] = BootAvgStdToFormat(thisrad)
