@@ -602,7 +602,7 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf):
     # if GetCharRad(Avg[1]) > 10 or Err[1]> 10: return
     ## Displays charge radius for FF1, and magnetic moment for FF2
     if 'FF1' in thisFF:
-        datf.write(MakeValAndErr(GetCharRad(Avg[1]),Err[1])+' \n')
+        datf.write(MakeValAndErr(Avg[2],Err[1])+' \n')
         if 'PsVector' in thisCurr:
             LegVal = '$\\langle r_{A}^2 \\rangle='+MakeValAndErr(Avg[2],Err[1])+'\ fm^{2}$'        
         else:
