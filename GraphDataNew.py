@@ -604,7 +604,7 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf):
     if 'FF1' in thisFF:
         datf.write(MakeValAndErr(GetCharRad(Avg[1]),Err[1])+' \n')
         if 'PsVector' in thisCurr:
-            LegVal = '$\\langle r_{A}^2 \\rangle='+MakeValAndErr(GetCharRad(Avg[1]),Err[1])+'\ fm^{2}$'        
+            LegVal = '$\\langle r_{A}^2 \\rangle='+MakeValAndErr(GetCharRad(Avg[1],Avg[0]),Err[1])+'\ fm^{2}$'        
         else:
             LegVal = '$\\langle r^2 \\rangle='+MakeValAndErr(GetCharRad(Avg[1]),Err[1])+'\ fm^{2}$'        
     elif 'FF2' in thisFF:
