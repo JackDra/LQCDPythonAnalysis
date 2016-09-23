@@ -105,8 +105,10 @@ def GetDPFitValue(SearchSet,iFF,thisCurr):
         if SearchSet in data['DP_Fits']['Values'][iFF]['Fzero'].keys() and SearchSet in data['DP_Fits']['Values'][iFF]['mEM'].keys() :
             thisDPpAvg.append(data['DP_Fits']['Values'][iFF]['Fzero'][SearchSet]['Avg'])
             thisDPpAvg.append(data['DP_Fits']['Values'][iFF]['mEM'][SearchSet]['Avg'])
+            thisDPpAvg.append(data['DP_Fits']['Values'][iFF]['Radius'][SearchSet]['Avg'])
             thisDPpStd.append(data['DP_Fits']['Values'][iFF]['Fzero'][SearchSet]['Std'])
             thisDPpStd.append(data['DP_Fits']['Values'][iFF]['mEM'][SearchSet]['Std'])
+            thisDPpStd.append(data['DP_Fits']['Values'][iFF]['Radius'][SearchSet]['Std'])
     return thisDPpAvg,thisDPpStd
 ##Also works for cfuns##
 ##xmlinput = { Ratio_Factor , Boots/Values , thismomlist , tlist } 
