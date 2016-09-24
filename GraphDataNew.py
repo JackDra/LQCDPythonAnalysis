@@ -583,7 +583,8 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
             thisshift = 0.0
             qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
             if 'sm32' in thisset or 'CM' in thisset or 'TSF' in thisset:
-                PlotDPFit(thisset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign,datf)
+                if 'F1divF2' not in thisDSCurr:
+                    PlotDPFit(thisset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign,datf)
     datf.close()
     return collist
 
