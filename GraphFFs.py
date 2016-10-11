@@ -81,7 +81,7 @@ def PickFFFewSets(currdata,thiscurr,thisSetList):
         PickedSetList += FlagList(thisSetList,'Fit','tsink29sm128',FitCutPicked['tsink29sm128'])
         PickedSetList += FlagList(thisSetList,'Fit','tsink29state1CMto20dt2',FitCutPicked['tsink29state1CM'])
         PickedSetList += FlagList(thisSetList,'TSFTsink','sm32',TSFCutPicked)
-    elif kappa = 12104:
+    elif kappa == 12104:
         PickedSetList += FlagList(thisSetList,'Fit','tsink29state1REvec',FitCutPicked['tsink29state1REvec'])
         PickedSetList += FlagList(thisSetList,'OSFCM','tsink29state1REvec',OSFCutPicked)
         
