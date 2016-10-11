@@ -75,12 +75,16 @@ def PickFFAllSets(currdata,thiscurr,thisSetList):
 
 def PickFFFewSets(currdata,thiscurr,thisSetList):
     PickedSetList = []
-    PickedSetList += FlagList(thisSetList,'Fit','tsink29sm32',FitCutPicked['tsink29sm32'])
-    PickedSetList += FlagList(thisSetList,'Fit','tsink29sm64',FitCutPicked['tsink29sm64'])
-    PickedSetList += FlagList(thisSetList,'Fit','tsink29sm128',FitCutPicked['tsink29sm128'])
-    PickedSetList += FlagList(thisSetList,'Fit','tsink29state1CMto20dt2',FitCutPicked['tsink29state1CM'])
-    PickedSetList += FlagList(thisSetList,'TSFTsink','sm32',TSFCutPicked)
-
+    if kappa == 12090:
+        PickedSetList += FlagList(thisSetList,'Fit','tsink29sm32',FitCutPicked['tsink29sm32'])
+        PickedSetList += FlagList(thisSetList,'Fit','tsink29sm64',FitCutPicked['tsink29sm64'])
+        PickedSetList += FlagList(thisSetList,'Fit','tsink29sm128',FitCutPicked['tsink29sm128'])
+        PickedSetList += FlagList(thisSetList,'Fit','tsink29state1CMto20dt2',FitCutPicked['tsink29state1CM'])
+        PickedSetList += FlagList(thisSetList,'TSFTsink','sm32',TSFCutPicked)
+    elif kappa = 12104:
+        PickedSetList += FlagList(thisSetList,'Fit','tsink29state1REvec',FitCutPicked['tsink29state1REvec'])
+        PickedSetList += FlagList(thisSetList,'OSFCM','tsink29state1REvec',OSFCutPicked)
+        
     # PickedSetList += FlagList(thisSetList,'OSFCM','tsink29sm32',OSFCutPicked)
     # PickedSetList += FlagList(thisSetList,'OSFCM','tsink29state1CMto20dt2',OSFCutPicked)
     # for Fitkey,FitCutVal in FitCutPicked.iteritems():
@@ -159,11 +163,11 @@ if len(thisCurrDict) > 0:
         thisPool.close()
         thisPool.join()
         print 'FF Plots Complete'
-        if kappa == 12090:
-            thisPool = Pool(min(len(output),feedin['anaproc']))
-            output = thisPool.map(PlotFFqPick.mapper,output)
-            thisPool.close()
-            thisPool.join()
+        # if kappa == 12090:
+        thisPool = Pool(min(len(output),feedin['anaproc']))
+        output = thisPool.map(PlotFFqPick.mapper,output)
+        thisPool.close()
+        thisPool.join()
     else:
         print 'Running Single core'
         output = []
@@ -171,9 +175,9 @@ if len(thisCurrDict) > 0:
             output.append(ReadAndPlotFF(*iin))
             print int((icount*100)/float(len(thisCurrDict))) , '% done' + ' '*50 + '\r',
         print 'FF Plots Complete'
-        if kappa == 12090:
-            for iout in output:
-                PlotFFqPick(*iout)
+        # if kappa == 12090:
+        for iout in output:
+            PlotFFqPick(*iout)
     print 'Graphing Complete, time taken:', str(datetime.timedelta(seconds=time.time()-starttime)) , ' h:m:s '
                 
 else:
