@@ -169,6 +169,18 @@ def CreateFFFile(thisCol,thisCurr,thisFF):
     thisfile = thisCol+thisCurr.replace('/','') + thisFF
     return thisdir + thisfile
 
+
+def CreateMKFFFile(thisCol,thisCurr,thisFF):
+    thistitle = thisCol + TitleFixFF(thisCurr.replace('/',' '),thisFF)
+    if ForceTitle == False:
+        pl.title(thistitle)
+    else:
+        pl.title(ForceTitle)
+    thisdir = outputdir.replace(str(kappa),'Comb') + 'graphs/FormFactors/'+thisCurr + '/'
+    mkdir_p(thisdir)
+    thisfile = thisCol+thisCurr.replace('/','') + thisFF
+    return thisdir + thisfile
+
 def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False):
     if 'twopt' in thisGamma:
         if 'Dt' in thisflag:
@@ -538,7 +550,7 @@ def PlotMKFFs(kdata,DSCurr,thisSetList,CollName,FT):
     if len(thisFFComb) > 1: thisFFComb = '/'+thisFFComb
     for iFF in range(1,NoFFPars[thisCurr]+1):
         thisFF = 'FF'+str(iFF)
-        DatFile = CreateFFFile(CollName,DSCurr,thisFF)+'.dat'
+        DatFile = CreateMKFFFile(CollName,DSCurr,thisFF)+'.dat'
         WipeFile(DatFile)
         for ikappa,data in kdata:
             thiskSetList = []
