@@ -552,7 +552,7 @@ def PlotMKFFs(kdata,DSCurr,thisSetList,CollName,FT):
         thisFF = 'FF'+str(iFF)
         DatFile = CreateMKFFFile(CollName,DSCurr,thisFF)+'.dat'
         WipeFile(DatFile)
-        for ikappa,data in kdata:
+        for ikappa,data in kdata.iteritems():
             thiskSetList = []
             for iset in thisSetList:
                 if ikappa in iset:
