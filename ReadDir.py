@@ -50,7 +50,7 @@ def GetCurrDict(thisCurrTypes,klist=[kappa]):
         for iCurr in thisCurrTypes:
             print 'Reading ' , iCurr , ' Form Factors '
             # thisCurrDict[iCurr] = ReadAllDir(outputdir+'FormFactors/'+iCurr+'/',thisgamma=iCurr)
-            print outputdir.replace(kappa,ikappa)
+            print outputdir,kappa,ikappa
             thisCurrDict[ikappa][iCurr] = ReadSetDir(outputdir.replace(kappa,ikappa)+'FormFactors/'+iCurr+'/',thisgamma=iCurr)
             if thisSetList == None: 
                 thisSetList = set(thisCurrDict[ikappa][iCurr])
