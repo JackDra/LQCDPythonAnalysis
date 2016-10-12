@@ -47,6 +47,7 @@ def PickMKFFFewSets(currdata,thiscurr,thisSetList):
     # PickedSetList += FlagList(thisSetList,'SumMeth',SumFitRPicked,SumCutPar)
     # PickedSetList += FlagList(thisSetList,'OSF',OSFCutPicked)
     # PickedSetList += FlagList(thisSetList,'TSFTsink',TSFCutPicked)
+    print PickedSetList
     return PickedSetList
 
 def ReadAndPlotMKFF(thisCurrDict,DoList='All'):
@@ -56,7 +57,6 @@ def ReadAndPlotMKFF(thisCurrDict,DoList='All'):
     for thiscurr,currdata in datadict.iteritems():
         if 'Few' in DoList or 'All' in DoList:
             print 'Plotting ' , thiscurr ,'6/6 Few            '
-            print thisCurrDict[thiscurr]
             PlotMKFFWrap(currdata,thiscurr,PickMKFFFewSets(currdata,thiscurr,thisCurrDict[thiscurr]),'')
         print 'Plotting ' , thiscurr ,'Complete, took: ', GetTimeStr(time.time()-start)
     
