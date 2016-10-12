@@ -176,7 +176,6 @@ def CreateMKFFFile(thisCol,thisCurr,thisFF):
         pl.title(thistitle)
     else:
         pl.title(ForceTitle)
-    print thisdir
     thisdir = outputdir.replace(str(kappa),'Comb') + 'graphs/FormFactors/'+thisCurr + '/'
     mkdir_p(thisdir)
     thisfile = thisCol+thisCurr.replace('/','') + thisFF
@@ -546,6 +545,7 @@ def PlotMKFFs(kdata,DSCurr,thisSetList,CollName,FT):
     global ForceTitle
     global DatFile
     ForceTitle = FT
+    print thisSetList
     if len(thisSetList) == 0: return
     thisDS,thisCurr,thisFFComb = SplitDSCurr(DSCurr)
     if len(thisFFComb) > 1: thisFFComb = '/'+thisFFComb
