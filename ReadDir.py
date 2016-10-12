@@ -44,18 +44,18 @@ def ReadAllDir(thisdir,thisgamma=''):
 ## thisCurrDict = [ iCurr : iSets ]
 def GetCurrDict(thisCurrTypes,klist=[kappa]):
     thisCurrDict = OrderedDict()
-    for ikappa in klist:
-        thisCurrDict[ikappa] = {}
+    for iCurr in thisCurrTypes:
+        thisCurrDict[iCurr] = {}
         thisSetList = None
-        for iCurr in thisCurrTypes:
+        for ikappa in klist:
             print 'Reading ' , iCurr , ' Form Factors '
             # thisCurrDict[iCurr] = ReadAllDir(outputdir+'FormFactors/'+iCurr+'/',thisgamma=iCurr)
-            thisCurrDict[ikappa][iCurr] = ReadSetDir(outputdir.replace(str(kappa),ikappa)+'FormFactors/'+iCurr+'/',thisgamma=iCurr)
+            thisCurrDict[iCurr][ikappa] = ReadSetDir(outputdir.replace(str(kappa),ikappa)+'FormFactors/'+iCurr+'/',thisgamma=iCurr)
             if thisSetList == None: 
-                thisSetList = set(thisCurrDict[ikappa][iCurr])
+                thisSetList = set(thisCurrDict[iCurr][ikappa])
             else:
-                thisSetList = thisSetList.intersection(thisCurrDict[ikappa][iCurr])
-            # print 'Sets Found:\n','\n'.join(thisCurrDict[ikappa][iCurr])
+                thisSetList = thisSetList.intersection(thisCurrDict[iCurr][ikappa])
+            # print 'Sets Found:\n','\n'.join(thisCurrDict[iCurr][ikappa])
             # print ''
 
         thisSetList = list(thisSetList)
