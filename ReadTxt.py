@@ -281,7 +281,7 @@ def ReadMKFFDict(thisindir,thisFFDict,thisPrintRead=PrintRead):
             DataDict[thisFF][ikappa] = OrderedDict()
             for iset,thisset in enumerate(FFSetList):
                 if thisPrintRead: print 'Reading ',thisFF,'at : ' ,int((iset*100)/float(len(FFSetList))),'%     \r',
-                thisdir = thisindir.replace(kappa,ikappa)+'FormFactors/'+thisFF+'/'
+                thisdir = thisindir.replace(str(kappa),ikappa)+'FormFactors/'+thisFF+'/'
                 thisfile = thisdir+CreateCurrCombFn(thisFF)+thisset+'.xml'
                 mprint('FFread: ' ,thisfile)
                 if '/' in thisFF:
