@@ -536,7 +536,8 @@ def PlotFFs(data,DSCurr,thisSetList,CollName,FT):
         if len(thisFFComb) > 1: thisFFComb = '/'+thisFFComb
         DatFile = CreateFFFile(CollName,DSCurr,thisFF)+'.dat'
         WipeFile(DatFile)
-        PlotFFSet(data,thisFF,thisSetList,thisCurr,DSCurr.replace('/',''))
+        graphparams = GetPlotItersff()
+        PlotFFSet(data,thisFF,thisSetList,thisCurr,DSCurr.replace('/',''),graphparams)
         SetFFAxies(thisDS+thisCurr+thisFF+thisFFComb)
         pl.savefig(DatFile.replace('.dat','.pdf'))
         pl.clf()
@@ -552,12 +553,13 @@ def PlotMKFFs(kdata,DSCurr,thisSetList,CollName,FT):
         thisFF = 'FF'+str(iFF)
         DatFile = CreateMKFFFile(CollName,DSCurr,thisFF)+'.dat'
         WipeFile(DatFile)
+        graphparams = GetPlotItersff()
         for ikappa,data in kdata.iteritems():
             thiskSetList = []
             for iset in thisSetList:
                 if ikappa in iset:
                     thiskSetList.append(iset)
-            PlotFFSet(data,thisFF,thiskSetList,thisCurr,DSCurr.replace('/',''))
+            PlotFFSet(data,thisFF,thiskSetList,thisCurr,DSCurr.replace('/',''),graphparams)
         SetFFAxies(thisDS+thisCurr+thisFF+thisFFComb)
         pl.savefig(DatFile.replace('.dat','.pdf'))
         pl.clf()
@@ -576,8 +578,8 @@ def SkipZeroFF(thisFF,thisset,thisCurr):
     else:
         return skipzero,False
         
-def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
-    thissymcyc,thiscolcyc,thisshiftcycff = GetPlotItersff()
+def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
+    thiscolcyc,thissymcyc,thisshiftcyc = graphparams
     collist = []
     if 'Ge' in thisDSCurr or ('Vector' in thisDSCurr and ('PsVector' not in thisDSCurr.replace('IsoVector',''))):
         if 'IsoVector' in thisDSCurr or 'Proton' in thisDSCurr or 'sing' in thisDSCurr:
