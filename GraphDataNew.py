@@ -602,7 +602,9 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
     else:
         datf.write('nothing \n')
     # for thisset in SortMySet(thisSetFlag)[0]:
+    print thisSetFlag
     for thisset in thisSetFlag:
+        print thisset
         ##make legend formatting function
         if not CheckDict(dataset,thisset,thisFF): continue
         if dataset[thisset][thisFF] == False: continue        
