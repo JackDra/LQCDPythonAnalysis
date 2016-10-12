@@ -604,22 +604,21 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
     # for thisset in SortMySet(thisSetFlag)[0]:
     for thisset in thisSetFlag:
         ##make legend formatting function
-        print dataset.keys(), thisset
-        print dataset[thisset].keys(), thisFF
-        if not CheckDict(dataset,thisset,thisFF): continue
-        if dataset[thisset][thisFF] == False: continue        
+        thiskappa,keyset = SplitKappa(thisset)
+        if not CheckDict(dataset,keyset,thisFF): continue
+        if dataset[keyset][thisFF] == False: continue        
         thiscol = thiscolcyc.next()
         collist.append(thiscol)
-        skipzero,flipsign = SkipZeroFF(thisFF,thisset,thisCurr)
+        skipzero,flipsign = SkipZeroFF(thisFF,keyset,thisCurr)
         if ('IsoVectorPsVector' in thisDSCurr and 'FF2' in thisFF) or ('NeutronGeGm' in thisDSCurr and 'FF1' in thisFF) or 'F1divF2' in thisDSCurr:
         # if ('IsoVectorPsVector' in thisDSCurr) or ('NeutronGeGm' in thisDSCurr and 'FF1' in thisFF):
             thisshift = thisshiftcycff.next()
-            qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
+            qrange = PlotFF(dataset[keyset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
         else:
             thisshift = 0.0
-            qrange = PlotFF(dataset[thisset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
+            qrange = PlotFF(dataset[keyset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
             if 'sm32' in thisset or 'CM' in thisset or 'TSF' in thisset or kappa == 12104:
-                PlotDPFit(thisset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign,datf)
+                PlotDPFit(keyset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign,datf)
     datf.close()
     return collist
 

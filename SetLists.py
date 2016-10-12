@@ -357,3 +357,8 @@ def SplitDSCurr(thisstr):
 def CreateCurrCombFn(thisstr,spacing=''):
     DS,Curr,FFComb = SplitDSCurr(thisstr)
     return spacing.join([FFComb,DS,Curr])
+
+def SplitKappa(thisstr):
+    thiskappa = re.search('k.....',thisstr)
+    if thiskappa != None: thiskappa = thiskappa.group()
+    return thiskappa,thisstr.replace(thiskappa,'')
