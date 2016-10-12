@@ -144,11 +144,11 @@ for iFFcomb in feedin['FFcomb']:
     if iFFcomb == '':
         for icurr in ElongateName(feedin['comb'],feedin['current']):
             print 'Looking in ', icurr
-            thisCurrDict.append([GetCurrDict([icurr])[kappa],feedin['ffgraph']])
+            thisCurrDict.append([GetCurrDict([icurr]),feedin['ffgraph']])
     else:
         for icurr in ElongateName(thisFFcomb,thisCurrcomb):
             print 'Looking in ', icurr+iFFcomb
-            thisCurrDict.append([GetCurrDict([icurr+iFFcomb])[kappa],feedin['ffgraph']])
+            thisCurrDict.append([GetCurrDict([icurr+iFFcomb]),feedin['ffgraph']])
 
         
 makeContextFunctions(ReadAndPlotFF)

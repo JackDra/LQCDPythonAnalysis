@@ -26,6 +26,6 @@ for iFFcomb in feedin['FFcombNS']:
     funlist.append(CombFFFunsDict[iFFcomb])
     comblist.append(iFFcomb)
     
-ReadAndCombTheFFs(GetCurrDict(thisCurrList)[kappa],funlist,comblist)
+ReadAndCombTheFFs(GetCurrDict(thisCurrList),funlist,comblist)
 
 print 'FF Combining Complete, time taken:', str(datetime.timedelta(seconds=time.time()-starttime)) , ' h:m:s '
