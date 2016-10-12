@@ -579,7 +579,7 @@ def SkipZeroFF(thisFF,thisset,thisCurr):
         return skipzero,False
         
 def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
-    thissymcyc,thiscolcyc,thisshiftcyc = graphparams
+    thissymcyc,thiscolcyc,thisshiftcycff = graphparams
     collist = []
     if 'Ge' in thisDSCurr or ('Vector' in thisDSCurr and ('PsVector' not in thisDSCurr.replace('IsoVector',''))):
         if 'IsoVector' in thisDSCurr or 'Proton' in thisDSCurr or 'sing' in thisDSCurr:
