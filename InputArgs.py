@@ -76,6 +76,7 @@ def InputParams(inputparams):
     feedout['comb'] = DefDSList + CombList
     feedout['FFcomb'] = CombFFList
     feedout['FFcombNS'] = CombNSFFList
+    feedout['klist'] = kappalist
     feedout['DoCurr'] = True
     feedout['ffgraph'] = 'All'
     feedout['ForceTitle'] = False
@@ -98,6 +99,8 @@ def InputParams(inputparams):
             print "-p= specifies the momentium list to use, form is 'q = X Y Z', X,Y,Z = -3,-2,-1,0,1,2,3"
             print "-np= specifies the maximum number of processors used for this job"
             print 
+            print '-k= specifies kappas to compare when running GraphMKFFs.py from:\n' + '\n'.join(kappalist)+'\n'
+            print 
             print "-noprompt does not display any prompts (for long runs)"
             print "-NoCurr ignores all Current calculations (vector, isovector etc..)"
             print "-FT= forces the title for all graphs"
@@ -107,6 +110,8 @@ def InputParams(inputparams):
             feedout['DoCurr'] = False
         elif '-g' in isys:
             feedout['gamma'] = isys.replace('-g=','').split(',')
+        elif '-k' in isys:
+            feedout['klist'] = isys.replace('-k=','').split(',')
         elif '-FT' in isys:
             feedout['ForceTitle'] = isys.replace('-FT=','')
         elif '-s' in isys:

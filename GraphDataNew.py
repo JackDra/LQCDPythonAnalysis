@@ -528,7 +528,28 @@ def PlotFFs(data,DSCurr,thisSetList,CollName,FT):
         SetFFAxies(thisDS+thisCurr+thisFF+thisFFComb)
         pl.savefig(DatFile.replace('.dat','.pdf'))
         pl.clf()
-        
+
+def PlotMKFFs(kdata,DSCurr,thisSetList,CollName,FT):
+    global ForceTitle
+    global DatFile
+    ForceTitle = FT
+    if len(thisSetList) == 0: return
+    thisDS,thisCurr,thisFFComb = SplitDSCurr(DSCurr)
+    if len(thisFFComb) > 1: thisFFComb = '/'+thisFFComb
+    for iFF in range(1,NoFFPars[thisCurr]+1):
+        thisFF = 'FF'+str(iFF)
+        DatFile = CreateFFFile(CollName,DSCurr,thisFF)+'.dat'
+        WipeFile(DatFile)
+        for ikappa,data in kdata:
+            thiskSetList = []
+            for iset in thisSetList:
+                if ikappa in iset:
+                    thiskSetList.append(iset)
+            PlotFFSet(data,thisFF,thiskSetList,thisCurr,DSCurr.replace('/',''))
+        SetFFAxies(thisDS+thisCurr+thisFF+thisFFComb)
+        pl.savefig(DatFile.replace('.dat','.pdf'))
+        pl.clf()
+
 
 def SkipZeroFF(thisFF,thisset,thisCurr):
     skipzero = False

@@ -265,6 +265,33 @@ def ReadFFDict(thisindir,thisFFDict,thisPrintRead=PrintRead):
     if thisPrintRead: print 'Reading all FFs took : ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
     return DataDict
 
+
+## DataDict {kappa} { FormFactor } { Set } { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
+## N.B. Set under Mass is different to Set, it is the set sellected for the mass extraction.
+## thisFFDict = { keys=(scalar,vector etc) } {kappa } {values=(setlist for current) / Mass:Set/Avg/Std/Chi/Boot / FF#:qsqrd:Avg/Std/Boot / Chi:qsqrd}
+
+def ReadMKFFDict(thisindir,thisFFDict,thisPrintRead=PrintRead):
+    DataDict = OrderedDict()
+    if thisPrintRead: print ''
+    start = time.time()
+    for iFF,(thisFF,FFKappaList) in enumerate(thisFFDict.iteritems()):
+        DataDict[thisFF] = OrderedDict()
+        for ikappa,FFSetList in FFKappaList.iteritems():
+            startff = time.time()
+            DataDict[thisFF][ikappa] = OrderedDict()
+            for iset,thisset in enumerate(FFSetList):
+                if thisPrintRead: print 'Reading ',thisFF,'at : ' ,int((iset*100)/float(len(FFSetList))),'%     \r',
+                thisdir = thisindir.replace(kappa,ikappa)+'FormFactors/'+thisFF+'/'
+                thisfile = thisdir+CreateCurrCombFn(thisFF)+thisset+'.xml'
+                mprint('FFread: ' ,thisfile)
+                if '/' in thisFF:
+                    DataDict[thisFF][ikappa][thisset] = ReadFFCombFile(thisfile)            
+                else:
+                    DataDict[thisFF][ikappa][thisset] = ReadFFFile(thisfile)                                
+            if thisPrintRead: print 'Reading ',thisFF,'took : ' , str(datetime.timedelta(seconds=time.time()-startff)) , ' h:m:s                     '
+    if thisPrintRead: print 'Reading all MKFFs took : ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
+    return DataDict
+
 ## DataDict { gamma } { mom } { method } { set }
 def ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=RunMomList,thisPrintRead=PrintRead):
     DataDict = OrderedDict()
