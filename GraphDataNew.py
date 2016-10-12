@@ -555,6 +555,7 @@ def PlotMKFFs(kdata,DSCurr,thisSetList,CollName,FT):
         for ikappa,data in kdata.iteritems():
             thiskSetList = []
             for iset in thisSetList:
+                print iset, ikappa
                 if ikappa in iset:
                     thiskSetList.append(iset)
             PlotFFSet(data,thisFF,thiskSetList,thisCurr,DSCurr.replace('/',''))
