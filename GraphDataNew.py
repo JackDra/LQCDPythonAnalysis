@@ -176,6 +176,7 @@ def CreateMKFFFile(thisCol,thisCurr,thisFF):
         pl.title(thistitle)
     else:
         pl.title(ForceTitle)
+    print thisdir
     thisdir = outputdir.replace(str(kappa),'Comb') + 'graphs/FormFactors/'+thisCurr + '/'
     mkdir_p(thisdir)
     thisfile = thisCol+thisCurr.replace('/','') + thisFF
