@@ -620,13 +620,13 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
             thisshift = 0.0
             qrange = PlotFF(dataset[keyset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
             if 'sm32' in thisset or 'CM' in thisset or 'TSF' in thisset or kappa == 12104:
-                PlotDPFit(keyset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign,datf)
+                PlotDPFit(keyset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign,datf,thiskappa)
     datf.close()
     return collist
 
-def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf):
+def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thiskappa=kappa):
     if Debug: print thisset,thisFF
-    Avg,Err = GetDPFitValue(thisset,thisFF,thisCurr)
+    Avg,Err = GetDPFitValue(thisset,thisFF,thisCurr,thiskappa=thiskappa)
     if len(Avg) == 0: return
     Avg,Err = np.array(Avg),np.array(Err)
     fitqdata = np.arange(qrange[0]-thisshift,qrange[-1]+incr-thisshift,incr)

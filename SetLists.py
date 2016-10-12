@@ -360,5 +360,8 @@ def CreateCurrCombFn(thisstr,spacing=''):
 
 def SplitKappa(thisstr):
     thiskappa = re.search('k.....',thisstr)
-    if thiskappa != None: thiskappa = thiskappa.group()
-    return thiskappa,thisstr.replace(thiskappa,'')
+    if thiskappa != None:
+        return thisstr
+    else:
+        thiskappa = thiskappa.group()
+        return thiskappa,thisstr.replace(thiskappa,'')

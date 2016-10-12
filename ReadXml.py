@@ -87,8 +87,9 @@ def CheckMomFile(filein,nconftest = False):
 
 
                     
-def GetDPFitValue(SearchSet,iFF,thisCurr):
-    FFdir = outputdir +'/FormFactors/DPfits/'
+def GetDPFitValue(SearchSet,iFF,thisCurr,thiskappa=str(kappa)):
+    if thiskappa == None: thiskappa = kappa 
+    FFdir = outputdir.replace(str(kappa),thiskappa) +'/FormFactors/DPfits/'
     filename = FFdir +thisCurr
     if Debug: print filename+'.xml'
     if not os.path.isfile(filename+'.xml'):
