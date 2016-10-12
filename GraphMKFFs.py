@@ -56,6 +56,7 @@ def ReadAndPlotMKFF(thisCurrDict,DoList='All'):
     for thiscurr,currdata in datadict.iteritems():
         if 'Few' in DoList or 'All' in DoList:
             print 'Plotting ' , thiscurr ,'6/6 Few            '
+            print thisCurrDict[thiscurr]
             PlotMKFFWrap(currdata,thiscurr,PickMKFFFewSets(currdata,thiscurr,thisCurrDict[thiscurr]),'')
         print 'Plotting ' , thiscurr ,'Complete, took: ', GetTimeStr(time.time()-start)
     
