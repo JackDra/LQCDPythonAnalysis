@@ -555,7 +555,6 @@ def PlotMKFFs(kdata,DSCurr,thisSetList,CollName,FT):
         for ikappa,data in kdata.iteritems():
             thiskSetList = []
             for iset in thisSetList:
-                print iset, ikappa
                 if ikappa in iset:
                     thiskSetList.append(iset)
             PlotFFSet(data,thisFF,thiskSetList,thisCurr,DSCurr.replace('/',''))
@@ -602,7 +601,8 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr):
         datf.write('\(\mu\)  \n')
     else:
         datf.write('nothing \n')
-    for thisset in SortMySet(thisSetFlag)[0]:
+    # for thisset in SortMySet(thisSetFlag)[0]:
+    for thisset in thisSetFlag:
         ##make legend formatting function
         if not CheckDict(dataset,thisset,thisFF): continue
         if dataset[thisset][thisFF] == False: continue        
