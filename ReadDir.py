@@ -42,9 +42,9 @@ def ReadAllDir(thisdir,thisgamma=''):
 
 
 ## thisCurrDict = [ iCurr : iSets ]
-def GetCurrDict(thisCurrTypes,kappalist=[kappa]):
+def GetCurrDict(thisCurrTypes,klist=[kappa]):
     thisCurrDict = OrderedDict()
-    for ikappa in kappalist:
+    for ikappa in klist:
         thisCurrDict[ikappa] = {}
         thisSetList = None
         for iCurr in thisCurrTypes:
