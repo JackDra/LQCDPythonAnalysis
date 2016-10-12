@@ -28,15 +28,15 @@ def PickMKFFFewSets(currdata,thiscurr,thisSetList):
     PickedSetList = []
     # if kappa == 12090:
     if '12090' in currdata.keys():
-        PickedSetList += ['k12090'+FlagList(thisSetList,'Fit','tsink29sm32',FitCutPicked['tsink29sm32'])]
-        # PickedSetList += ['k12090'+FlagList(thisSetList,'Fit','tsink29sm64',FitCutPicked['tsink29sm64'])]
-        # PickedSetList += ['k12090'+FlagList(thisSetList,'Fit','tsink29sm128',FitCutPicked['tsink29sm128'])]
-        PickedSetList += ['k12090'+FlagList(thisSetList,'Fit','tsink29state1CMto20dt2',FitCutPicked['tsink29state1CM'])]
-        PickedSetList += ['k12090'+FlagList(thisSetList,'TSFTsink','sm32',TSFCutPicked)]
+        PickedSetList += ['k12090'+ifl for ifl in FlagList(thisSetList,'Fit','tsink29sm32',FitCutPicked['tsink29sm32'])]
+        # PickedSetList += ['k12090'+ifl for ifl in FlagList(thisSetList,'Fit','tsink29sm64',FitCutPicked['tsink29sm64'])]
+        # PickedSetList += ['k12090'+ifl for ifl in FlagList(thisSetList,'Fit','tsink29sm128',FitCutPicked['tsink29sm128'])]
+        PickedSetList += ['k12090'+ifl for ifl in FlagList(thisSetList,'Fit','tsink29state1CMto20dt2',FitCutPicked['tsink29state1CM'])]
+        PickedSetList += ['k12090'+ifl for ifl in FlagList(thisSetList,'TSFTsink','sm32',TSFCutPicked)]
         # elif kappa == 12104:
     if '12104' in currdata.keys():
-        PickedSetList += ['k12104'+FlagList(thisSetList,'Fit','tsink29state1REvec',FitCutPicked['tsink29state1REvec'])]
-        # PickedSetList += ['k12104'+FlagList(thisSetList,'OSFCM','tsink29state1REvec',OSFCutPicked)]
+        PickedSetList += ['k12104'+ifl for ifl in FlagList(thisSetList,'Fit','tsink29state1REvec',FitCutPicked['tsink29state1REvec'])]
+        # PickedSetList += ['k12104'+ifl for ifl in FlagList(thisSetList,'OSFCM','tsink29state1REvec',OSFCutPicked)]
         
     # PickedSetList += FlagList(thisSetList,'OSFCM','tsink29sm32',OSFCutPicked)
     # PickedSetList += FlagList(thisSetList,'OSFCM','tsink29state1CMto20dt2',OSFCutPicked)
