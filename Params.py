@@ -322,9 +322,9 @@ AllTSinkStrListVar = ['tsink'+str(its) for its in AllTSinkListVar]
 CMTSinkStrList = ['tsink'+str(its) for its in CMTSinkList]
 AllTSinkStrListNoCM = ['tsink'+str(its) for its in AllTSinkListNoCM]
 
-AllREvecTSinkList = {'12104':[29],'12090':[32]}
+# AllREvecTSinkList = {'12104':[29],'12090':[32]}
 # AllREvecTSinkList = {'12104':[29],'12090':[26,32]}
-# AllREvecTSinkList = {'12104':[29],'12090':[]}
+AllREvecTSinkList = {'12104':[29],'12090':[]}
 REvecTSinkList = AllREvecTSinkList[str(kappa)]
 REvecTSinkStrList = ['tsink'+str(its) for its in REvecTSinkList]
 DefREvecVarList = [18,2]
