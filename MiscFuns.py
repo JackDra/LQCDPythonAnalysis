@@ -311,9 +311,9 @@ def UDIndex(gammalist):
    return newgammalist,pairindex
 
 def DeCorrBoot(thisBoot):
-   npdata = np.array(data)
+   npdata = np.array(thisBoot)
    dataout = np.array([])
-   if len(npdata.flatten()) == 0: return data
+   if len(npdata.flatten()) == 0: return thisBoot
    for idata in npdata.flatten():
       flagdim = np.array(getattr(idata,'values')).shape
       dataout = np.append(dataout,reversed(getattr(idata,'values')))
