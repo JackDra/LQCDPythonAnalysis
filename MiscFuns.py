@@ -317,6 +317,8 @@ def DeCorrBoot(thisBoot):
    for idata in npdata.flatten():
       flagdim = np.array(getattr(idata,'values')).shape
       dataout = np.append(dataout,reversed(getattr(idata,'values')))
+      print getattr(idata,'values')
+      print reversed(getattr(idata,'values'))
    return np.reshape(dataout,npdata.shape + flagdim)
    
  
