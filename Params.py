@@ -180,7 +180,8 @@ elif kappa == 12090:
     ##CHECK THIS DEBUG##
     # FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."
     if ListOrSet == 'ReadList':
-        FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."+PoFC2C3Dis
+        FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."
+        # FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."+PoFC2C3Dis
     elif ListOrSet == 'ReadSet':
         FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."    
     filelist = dirread+"/source1/@/"+FileStruct+"*"
