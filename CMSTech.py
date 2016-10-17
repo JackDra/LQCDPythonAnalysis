@@ -112,7 +112,7 @@ def CreatePoFMatrixDECORRELATION(thisCfun,thisPoFShifts=PoFShifts):
             bottomCfunShift = DeCorrBoot(thisCfunShift)
             bottomCfunShift2 = DeCorrBoot(np.roll(thisCfunShift,-1,axis=2))
             thisCfunExt = np.concatenate((np.concatenate((thisCfun,thisCfunShift),1),
-                                          np.concatenate((thisCfunShift,thisCfunShift2),1)))
+                                          np.concatenate((bottomCfunShift,bottomCfunShift2),1)))
         elif thisPoFShifts==2:
             thisCfunShift3 = np.roll(thisCfunShift2,-1,axis=2)
             thisCfunShift4 = np.roll(thisCfunShift3,-1,axis=2)
