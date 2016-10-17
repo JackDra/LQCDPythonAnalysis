@@ -314,11 +314,12 @@ def DeCorrBoot(thisBoot):
    npdata = np.array(thisBoot)
    dataout = np.array([])
    if len(npdata.flatten()) == 0: return thisBoot
-   for idata in npdata.flatten():
-      flagdim = np.array(getattr(idata,'values')).shape
-      dataout = np.append(dataout,reversed(getattr(idata,'values')))
-      print getattr(idata,'values')
-      print reversed(getattr(idata,'values'))
+   for ic,idata in enumerate(npdata.flatten()):
+      vals = idata.values
+      flagdim = vals.shape
+      dataout.append(BootStrap1(len(vals),5))
+      dataout[-1].values = np.array(list(reversed(vals)))
+      dataout[-1].Stats()
    return np.reshape(dataout,npdata.shape + flagdim)
    
  
