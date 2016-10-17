@@ -317,10 +317,10 @@ def DeCorrBoot(thisBoot):
    for ic,idata in enumerate(npdata.flatten()):
       vals = idata.values
       flagdim = vals.shape
-      dataout.append(BootStrap1(len(vals),5))
+      dataout = np.append(dataout,BootStrap1(len(vals),5))
       dataout[-1].values = np.array(list(reversed(vals)))
       dataout[-1].Stats()
-   return np.reshape(dataout,npdata.shape + flagdim)
+   return np.reshape(dataout,npdata.shape)
    
  
 ## USED FOR OLD OPPERATOR DIRECTORIES##
