@@ -110,6 +110,8 @@ VarMethodMethod = 'Regular' # for solving the Variational method, different ways
 # VarMethodMethod = 'AxBxlSolve'
 NoSFRfacScale = False # Turn on to only scale the R function by sqrt((Epp+m)(Ep+m)/EppEp) for form factor creation
 ReadPoF2pt = True # Create PoF using already calculated eigenvectors. This is used if the statistics or solver method has changed.
+DeCorrPoF = True ## used for debugging the pencil of function method (decorrelation problem)
+
 
 ##DEBUG toggles (True/False):
 Debug = False # for debugging, toggles alot of print statements on

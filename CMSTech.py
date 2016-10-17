@@ -65,6 +65,78 @@ import time
 #     return Emass,LEvec,REvec
 
 
+def CreatePoFMatrixtodt(Cfunto,Cfuntodt,thisPoFShifts=PoFShifts):
+    if thisPoFShifts==0:
+        Cfuntoout = Cfunto[0]
+        Cfuntodtout = Cfuntodt[0]
+    else:
+        if thisPoFShifts==1:
+            Cfuntoout = np.concatenate((np.concatenate((Cfunto[0],Cfunto[1]),1),
+                                        np.concatenate((Cfunto[1],Cfunto[2]),1)))
+            Cfuntodtout = np.concatenate((np.concatenate((Cfuntodt[0],Cfuntodt[1]),1),
+                                          np.concatenate((Cfuntodt[1],Cfuntodt[2]),1)))
+        elif thisPoFShifts==2:
+            Cfuntoout = np.concatenate((np.concatenate((Cfunto[0],Cfunto[1],Cfunto[2]),1),
+                                        np.concatenate((Cfunto[1],Cfunto[2],Cfunto[3]),1),
+                                        np.concatenate((Cfunto[2],Cfunto[3],Cfunto[4]),1)))
+            Cfuntodtout = np.concatenate((np.concatenate((Cfuntodt[0],Cfuntodt[1],Cfuntodt[2]),1),
+                                          np.concatenate((Cfuntodt[1],Cfuntodt[2],Cfuntodt[3]),1),
+                                          np.concatenate((Cfuntodt[2],Cfuntodt[3],Cfuntodt[4]),1)))
+    return Cfuntoout,Cfuntodtout
+
+
+def CreatePoFMatrix(thisCfun,thisPoFShifts=PoFShifts):
+    if thisPoFShifts==0:
+        thisCfunExt = thisCfun
+    else:
+        thisCfunShift = np.roll(thisCfun,-1,axis=2)
+        thisCfunShift2 = np.roll(thisCfunShift,-1,axis=2)
+        if thisPoFShifts==1:
+            thisCfunExt = np.concatenate((np.concatenate((thisCfun,thisCfunShift),1),
+                                          np.concatenate((thisCfunShift,thisCfunShift2),1)))
+        elif thisPoFShifts==2:
+            thisCfunShift3 = np.roll(thisCfunShift2,-1,axis=2)
+            thisCfunShift4 = np.roll(thisCfunShift3,-1,axis=2)
+            thisCfunExt = np.concatenate((np.concatenate((thisCfun,thisCfunShift,thisCfunShift2),1),
+                                          np.concatenate((thisCfunShift,thisCfunShift2,thisCfunShift3),1),
+                                          np.concatenate((thisCfunShift2,thisCfunShift3,thisCfunShift4),1)))
+    return thisCfunExt
+
+##DEBUGGING POF DECORRELATION
+def CreatePoFMatrixDECORRELATION(thisCfun,thisPoFShifts=PoFShifts):
+    if thisPoFShifts==0:
+        thisCfunExt = thisCfun
+    else:
+        if thisPoFShifts==1:
+            thisCfunShift = np.roll(thisCfun,-1,axis=2)
+            bottomCfunShift = DeCorrBoot(thisCfunShift)
+            bottomCfunShift2 = DeCorrBoot(np.roll(thisCfunShift,-1,axis=2))
+            thisCfunExt = np.concatenate((np.concatenate((thisCfun,thisCfunShift),1),
+                                          np.concatenate((thisCfunShift,thisCfunShift2),1)))
+        elif thisPoFShifts==2:
+            thisCfunShift3 = np.roll(thisCfunShift2,-1,axis=2)
+            thisCfunShift4 = np.roll(thisCfunShift3,-1,axis=2)
+            thisCfunExt = np.concatenate((np.concatenate((thisCfun,thisCfunShift,thisCfunShift2),1),
+                                          np.concatenate((thisCfunShift,thisCfunShift2,thisCfunShift3),1),
+                                          np.concatenate((thisCfunShift2,thisCfunShift3,thisCfunShift4),1)))
+    return thisCfunExt
+
+
+
+def CreateREvecProjPoFMatrix(thisCfun,thisCfunShift,thisPoFShifts=PoFShifts):
+    thisCfunjsm = np.array(thisCfun)[:,0,:]
+    if thisPoFShifts==0:
+        thisCfunExt = thisCfunjsm
+    else:
+        thisCfunjsmShift = np.array(thisCfunShift)[:,0,:]
+        thisCfunjsmShift = np.roll(thisCfunjsmShift,-1,axis=1)
+        if thisPoFShifts==1:
+            thisCfunExt = np.concatenate((thisCfunjsm,thisCfunjsmShift))
+        elif thisPoFShifts==2:
+            thisCfunjsmShift2 = np.roll(thisCfunjsmShift,-1,axis=1)
+            thisCfunExt = np.concatenate((thisCfunjsm,thisCfunjsmShift,thisCfunjsmShift2))
+    return thisCfunExt
+
 ## Emass = 101 is invalid eigenvalue out
 ## Emass = 202 is b matrix not positive definite, removing higher smearings.
 
@@ -209,18 +281,22 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
 ## Cfun[ism,jsm,tcurr]
 def ProjectCorrPoF2pt(LEvec,Cfun,REvec,thisPoFShifts=PoFShifts):
     CMCfun = []
-    CfunShift = np.roll(Cfun,-1,axis=2)
-    CfunShift2 = np.roll(CfunShift,-1,axis=2)
-    if thisPoFShifts==0:
-        CfunExt = Cfun
-    elif thisPoFShifts==1:
-        CfunExt = np.concatenate((np.concatenate((Cfun,CfunShift),1),np.concatenate((CfunShift,CfunShift2),1)))
-    elif thisPoFShifts==2:
-        CfunShift3 = np.roll(CfunShift2,-1,axis=2)
-        CfunShift4 = np.roll(CfunShift3,-1,axis=2)
-        CfunExt = np.concatenate((np.concatenate((Cfun,CfunShift,CfunShift2),1),
-                                  np.concatenate((CfunShift,CfunShift2,CfunShift3),1),
-                                  np.concatenate((CfunShift2,CfunShift3,CfunShift4),1)))
+    if DeCorrPoF:
+        CfunExt = CreatePoFMatrixDECORRELATION(Cfun,thisPoFShifts=thisPoFShifts)
+    else:
+        CfunExt = CreatePoFMatrix(Cfun,thisPoFShifts=thisPoFShifts)
+    # CfunShift = np.roll(Cfun,-1,axis=2)
+    # CfunShift2 = np.roll(CfunShift,-1,axis=2)
+    # if thisPoFShifts==0:
+    #     CfunExt = Cfun
+    # elif thisPoFShifts==1:
+    #     CfunExt = np.concatenate((np.concatenate((Cfun,CfunShift),1),np.concatenate((CfunShift,CfunShift2),1)))
+    # elif thisPoFShifts==2:
+    #     CfunShift3 = np.roll(CfunShift2,-1,axis=2)
+    #     CfunShift4 = np.roll(CfunShift3,-1,axis=2)
+    #     CfunExt = np.concatenate((np.concatenate((Cfun,CfunShift,CfunShift2),1),
+    #                               np.concatenate((CfunShift,CfunShift2,CfunShift3),1),
+    #                               np.concatenate((CfunShift2,CfunShift3,CfunShift4),1)))
 
     ##DEBUG##
     if Debug:
@@ -250,17 +326,18 @@ def ProjectCorrPoF2pt(LEvec,Cfun,REvec,thisPoFShifts=PoFShifts):
 ## Cfun[ism,1,tcurr]
 def ProjectREvecCorrPoF(Cfun,CfunShift,REvec,thisPoFShifts=PoFShifts):
     CMCfun = []
-    Cfunjsm = np.array(Cfun)[:,0,:]
-    if thisPoFShifts==0:
-        CfunExt = Cfunjsm
-    else:
-        CfunjsmShift = np.array(CfunShift)[:,0,:]
-        CfunjsmShift = np.roll(CfunjsmShift,-1,axis=1)
-        if thisPoFShifts==1:
-            CfunExt = np.concatenate((Cfunjsm,CfunjsmShift))
-        elif thisPoFShifts==2:
-            CfunjsmShift2 = np.roll(CfunjsmShift,-1,axis=1)
-            CfunExt = np.concatenate((Cfunjsm,CfunjsmShift,CfunjsmShift2))
+    CfunExt = CreateREvecProjPoFMatrix(Cfun,CfunShift,thisPoFShifts=thisPoFShifts)
+    # Cfunjsm = np.array(Cfun)[:,0,:]
+    # if thisPoFShifts==0:
+    #     CfunExt = Cfunjsm
+    # else:
+    #     CfunjsmShift = np.array(CfunShift)[:,0,:]
+    #     CfunjsmShift = np.roll(CfunjsmShift,-1,axis=1)
+    #     if thisPoFShifts==1:
+    #         CfunExt = np.concatenate((Cfunjsm,CfunjsmShift))
+    #     elif thisPoFShifts==2:
+    #         CfunjsmShift2 = np.roll(CfunjsmShift,-1,axis=1)
+    #         CfunExt = np.concatenate((Cfunjsm,CfunjsmShift,CfunjsmShift2))
     ##DEBUG##
     if Debug:
         print 'ThreePoint Run:'
@@ -287,29 +364,20 @@ def GetTvarREves(Cfunin,thistodtvals,masscut):
 def GetTvarREvesPoF(Cfunin,thistodtvals,masscut,thisPoFShifts=PoFShifts):
     thisto,thisdt = thistodtvals
     Cfun = np.array(Cfunin)
-    Cfunto = Pullflag(Cfun[:,:,thisto-1],'Avg')
-    Cfuntop1 = Pullflag(Cfun[:,:,thisto],'Avg')
-    Cfuntop2 = Pullflag(Cfun[:,:,thisto+1],'Avg')
-    Cfuntodt = Pullflag(Cfun[:,:,thisto-1+thisdt],'Avg')
-    Cfuntodtp1 = Pullflag(Cfun[:,:,thisto+thisdt],'Avg')
-    Cfuntodtp2 = Pullflag(Cfun[:,:,thisto+1+thisdt],'Avg')
-    if thisPoFShifts==0:
-        Cfuntoout = Cfunto
-        Cfuntodtout = Cfuntodt
-    elif thisPoFShifts==1:
-        Cfuntoout = np.concatenate((np.concatenate((Cfunto,Cfuntop1),1),np.concatenate((Cfuntop1,Cfuntop2),1)))
-        Cfuntodtout = np.concatenate((np.concatenate((Cfuntodt,Cfuntodtp1),1),np.concatenate((Cfuntodtp1,Cfuntodtp2),1)))
-    elif thisPoFShifts==2:
-        Cfuntop3 = Pullflag(Cfun[:,:,thisto+2],'Avg')
-        Cfuntop4 = Pullflag(Cfun[:,:,thisto+3],'Avg')
-        Cfuntodtp3 = Pullflag(Cfun[:,:,thisto+2+thisdt],'Avg')
-        Cfuntodtp4 = Pullflag(Cfun[:,:,thisto+3+thisdt],'Avg')
-        Cfuntoout = np.concatenate((np.concatenate((Cfunto,Cfuntop1,Cfuntop2),1),
-                                    np.concatenate((Cfuntop1,Cfuntop2,Cfuntop3),1),
-                                    np.concatenate((Cfuntop2,Cfuntop3,Cfuntop4),1)))
-        Cfuntodtout = np.concatenate((np.concatenate((Cfuntodt,Cfuntodtp1,Cfuntodtp2),1),
-                                      np.concatenate((Cfuntodtp1,Cfuntodtp2,Cfuntodtp3),1),
-                                      np.concatenate((Cfuntodtp2,Cfuntodtp3,Cfuntodtp4),1)))
+    Cfuntolist,Cfuntodtlist = [],[]
+    Cfuntolist.append(Pullflag(Cfun[:,:,thisto-1],'Avg'))
+    Cfuntodtlist.append(Pullflag(Cfun[:,:,thisto-1+thisdt],'Avg'))
+    if thisPoFShifts > 0:
+        Cfuntolist.append(Pullflag(Cfun[:,:,thisto],'Avg'))
+        Cfuntolist.append(Pullflag(Cfun[:,:,thisto+1],'Avg'))
+        Cfuntodtlist.append(Pullflag(Cfun[:,:,thisto+thisdt],'Avg'))
+        Cfuntodtlist.append(Pullflag(Cfun[:,:,thisto+1+thisdt],'Avg'))
+        if thisPoFShifts > 1:
+            Cfuntolist.append(Pullflag(Cfun[:,:,thisto+2],'Avg'))
+            Cfuntolist.append(Pullflag(Cfun[:,:,thisto+3],'Avg'))
+            Cfuntodtlist.append(Pullflag(Cfun[:,:,thisto+2+thisdt],'Avg'))
+            Cfuntodtlist.append(Pullflag(Cfun[:,:,thisto+3+thisdt],'Avg'))
+    Cfuntoout,Cfuntodtout = CreatePoFMatrixtodt(thisCfuntolist,thisCfuntodtlist,thisPoFShifts=PoFShifts)
     [Emass,LEvec,REvec] = CreateLREves(Cfuntoout,Cfuntodtout,thisdt,masscut)
     return Emass,LEvec,REvec
 

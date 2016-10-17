@@ -34,8 +34,17 @@ def CombineSetInfo(listin):
 def WriteXml(thisfile,outputdict):
     if Debug: print 'Writing to: ' , thisfile
     with open(thisfile+'.xml','w') as f:
-        f.write( xmltodict.unparse(outputdict,pretty=True))
-    
+        f.write( xmltodict.unparse(outputdict,pretty=True).replace('\t','    '))
+
+def WriteChromaXml(thisfile,outputdict):
+    if Debug: print 'Writing to: ' , thisfile
+    with open(thisfile+'.xml','w') as f:
+        output = xmltodict.unparse(outputdict,pretty=True).replace('\t','    ')
+        output = re.sub('elem.>','elem>',output)
+        output = re.sub('elem..>','elem>',output)
+        f.write(output )
+
+        
 def WriteXmlOutput(thisfile,outputdict):
     firstkey = outputdict.keys()[0]
     Vals = {firstkey:{'Values':outputdict[firstkey]['Values']}}

@@ -301,15 +301,25 @@ def mkdir_p(path):
 def SplitList(thelist):
     return [ilist[0] for ilist in thelist],[itlist[1] for ilist in thelist]
 def UDIndex(gammalist):
-    pairindex,newgammalist = [],deepcopy(gammalist)
-    for dindex,dgamma in enumerate(gammalist):
-        if 'doub' in dgamma:
-            for uindex,ugamma in enumerate(gammalist):
-                if dgamma.replace('doub','sing') == ugamma:
-                    pairindex.append([dindex,uindex])
-                    newgammalist.append(dgamma.replace('doub',''))
-    return newgammalist,pairindex
+   pairindex,newgammalist = [],deepcopy(gammalist)
+   for dindex,dgamma in enumerate(gammalist):
+      if 'doub' in dgamma:
+         for uindex,ugamma in enumerate(gammalist):
+            if dgamma.replace('doub','sing') == ugamma:
+               pairindex.append([dindex,uindex])
+               newgammalist.append(dgamma.replace('doub',''))
+   return newgammalist,pairindex
 
+def DeCorrBoot(thisBoot):
+   npdata = np.array(data)
+   dataout = np.array([])
+   if len(npdata.flatten()) == 0: return data
+   for idata in npdata.flatten():
+      flagdim = np.array(getattr(idata,'values')).shape
+      dataout = np.append(dataout,reversed(getattr(idata,'values')))
+   return np.reshape(dataout,npdata.shape + flagdim)
+   
+ 
 ## USED FOR OLD OPPERATOR DIRECTORIES##
 # if kappa == 12090:
 #     def CreateOppDir(Opp):
