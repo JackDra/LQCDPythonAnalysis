@@ -151,7 +151,7 @@ latspace = 0.074 ## in fm
 ns = 4
 
 
-if ListOrSet == 'ReadList':
+if 'ReadList' in ListOrSet:
     nboot = 2
 elif ListOrSet == 'ReadSet':
     nboot = 200
