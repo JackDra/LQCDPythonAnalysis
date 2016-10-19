@@ -165,7 +165,7 @@ def CreateSet(thisSmearL=DefSmearList,thisSingSmearL=SingSmearList,
 
 
 
-def CreateMassSet(thisSmearL,thisStateList,thisTvarList,flipord=False):
+def CreateMassSet(thisSmearL,thisStateList,thisTvarList,flipord=False,tsrc=False):
     SetGraph = []
     for ismear in thisSmearL:
         SetGraph.append('sm'+ismear)

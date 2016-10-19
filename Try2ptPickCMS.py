@@ -37,9 +37,10 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     InfoDict = {'nconfig':ncon}
     print 'ncon = ' + str(ncon)
     # print 'nboot = ' + str(nboot)
-## data2pt = [ t_src, ism , jsm , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+    ## data2pt = [ t_src, ism , jsm , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     C2out = DiagSmear(data2pt).tolist()
-
+    ## data2pt = [ t_src*ism*ism , ip , it ] 
+    
     start = time.time()
     CMinputparams,PoFinputparams = [],[]
     makeContextFunctions(CreatePoF2ptCfuns)
@@ -65,7 +66,7 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     thisCMTvarList = ['CM'+iTvar for iTvar in TwoPtDefTvarList]
     for iout,iTvar in zip(outputPoF,thisPoFTvarList):
         [CMdata2pt,LEvec,REvec,Emass] = iout
-## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+        ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
         C2out += CMdata2pt.tolist()
         PrintLREvecMassToFile(LEvec,REvec,Emass,thisMomList,iTvar,AddDict=InfoDict,DoPoF=True)
 
@@ -78,7 +79,10 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     print 'CMTech Total Time Taken: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
     start = time.time()
     print 'Printing to file \r',
-    SetList = CreateMassSet(thisSmearList,StateSet,thisPoFTvarList,flipord=True)
+
+    SetList = []
+    for tsrc in PoFtsourceList:
+        SetList += ['tsrc'+iPoF +iset for iset in CreateMassSet(thisSmearList,StateSet,thisPoFTvarList,flipord=True)]
     SetList += CreateMassSet([],CMStateSet,thisCMTvarList,flipord=True)
     PrintCfunToFile([C2out],SetList,thisMomList,['twopt'],AddDict=InfoDict)
     PrintSetToFile([C2out],SetList,thisMomList,['Mass'],0,AddDict=InfoDict)
