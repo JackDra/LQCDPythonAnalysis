@@ -404,8 +404,6 @@ def GetTvarREvesPoF(Cfunin,thistodtvals,masscut,thisPoFShifts=PoFShifts):
             Cfuntodtmat[2].append(Pullflag(Cfun[-3,:,:,thisto+thisdt],'Avg'))
             Cfuntodtmat[2].append(Pullflag(Cfun[-3,:,:,thisto+1+thisdt],'Avg'))
     Cfuntoout,Cfuntodtout = CreatePoFMatrixtodt(Cfuntomat,Cfuntodtmat,thisPoFShifts=PoFShifts)
-    print Cfuntoout
-    print Cfuntodtout
     [Emass,LEvec,REvec] = CreateLREves(Cfuntoout,Cfuntodtout,thisdt,masscut)
     return Emass,LEvec,REvec
 
