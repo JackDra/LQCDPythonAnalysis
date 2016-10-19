@@ -5,11 +5,14 @@ from Params import *
 
 SeekIncSize = 8
 
+
+
+
 ## Der[igamma , ip , it]
 class ReadFSDerCfunPick:
-    def __init__(self,file,thisMomList,thisDGList):
+    def __init__(self,thisfile,thisMomList,thisDGList):
         self.data = []
-        f = open(file,'rb')
+        f = open(thisfile,'rb')
         for igd,thisgamma in enumerate(thisDGList):
             cmplxflag = False
             if 'cmplx' in thisgamma: 
@@ -33,9 +36,9 @@ class ReadFSDerCfunPick:
 
 ## noDer[igamma , ip , it]
 class ReadFSCfunPick:
-    def __init__(self,file,thisMomList,thisGammaList):
+    def __init__(self,thisfile,thisMomList,thisGammaList):
         self.data = []
-        f = open(file,'rb')
+        f = open(thisfile,'rb')
         for igamma,thisgamma in enumerate(thisGammaList):
             cmplxflag = False
             if 'cmplx' in thisgamma: 
@@ -61,9 +64,9 @@ class ReadFSCfunPick:
 
 
 class Read2ptCfunPick:
-    def __init__(self,file,thisMomList):
+    def __init__(self,thisfile,thisMomList):
         self.data = []
-        f = open(file,'rb')
+        f = open(thisfile,'rb')
         for ip,iploc in enumerate(thisMomList):
             self.data.append([])
             for it in range(nt):
@@ -87,7 +90,18 @@ class Read2ptCfunPick:
             if self.data[ip][tsource-1] < 0.0:
                 self.data[ip] = np.negative(self.data[ip])
         f.close()
- 
+
+
+class Read2ptCfunChroma:
+    def __init__(self,thisfile,thisMomList):
+        self.data = []
+        for ip,iploc in enumerate(thisMomList):
+            self.data.append(np.memmap(thisfile,dtype=np.complex128,mode='r',shape=(26,123,64)).byteswap())
+        f.close()
+
+
+        
+        
 class NaNCfunError(Exception):
     def __init__(self, value):
         self.value = value
