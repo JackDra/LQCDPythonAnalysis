@@ -84,6 +84,7 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     for tsrc in PoFtsourceList:
         SetList += ['tsrc'+tsrc+iPoF +iset for iset in CreateMassSet(thisSmearList,StateSet,thisPoFTvarList,flipord=True)]
     SetList += CreateMassSet([],CMStateSet,thisCMTvarList,flipord=True)
+    print len(SetList), len(C2out)
     PrintCfunToFile([C2out],SetList,thisMomList,['twopt'],AddDict=InfoDict)
     PrintSetToFile([C2out],SetList,thisMomList,['Mass'],0,AddDict=InfoDict)
     print 'Printing took ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
