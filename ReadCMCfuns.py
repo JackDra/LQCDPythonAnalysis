@@ -175,8 +175,9 @@ def Read2ptSet(readfilelist,thisSmearList,thisMomList,Interps,tsourceList=[tsour
     icount = -1
     randlist = []
     for thists in tsourceList:
+        thisdata2pt.append([])
         for icsm,(iterp,ism) in enumerate(Elongate(Interps,thisSmearList)):
-            thisdata2pt.append([])
+            thisdata2pt[-1].append([])
             for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,thisSmearList)):
                 icount += 1
                 timeleft = GetTimeLeft(icount,len(tsourceList)*len(Elongate(Interps,thisSmearList))**2,time.time()-start)
@@ -184,7 +185,7 @@ def Read2ptSet(readfilelist,thisSmearList,thisMomList,Interps,tsourceList=[tsour
                 thisstart = time.time()
                 thisfilelist = [ifile.replace('@',CreateDir2pt(ism,jsm))+CreateEnd2pt(ism,jsm,thists,iterp,jterp) for ifile in readfilelist]
                 dataout,randlist = ReadAndBoot2pt(thisfilelist,thisMomList,nboot) 
-                thisdata2pt[icsm].append(dataout)
+                thisdata2pt[-1][icsm].append(dataout)
                 print 'Read 2pt: sm' + ism + 'Xsm'+jsm + ' t_src'+thists+' took: ' +str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s        '
     print 'Read 2pt total time: ' + str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
     return thisdata2pt,randlist
