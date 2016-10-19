@@ -179,7 +179,7 @@ def Read2ptSet(readfilelist,thisSmearList,thisMomList,Interps,tsourceList=[tsour
             thisdata2pt.append([])
             for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,thisSmearList)):
                 icount += 1
-                timeleft = GetTimeLeft(icount,len(Elongate(Interps,thisSmearList))**2,time.time()-start)
+                timeleft = GetTimeLeft(icount,len(tsourceList)*len(Elongate(Interps,thisSmearList))**2,time.time()-start)
                 print 'Read 2pt: sm' + ism + 'Xsm'+jsm+' Time Left: ' +str(datetime.timedelta(seconds=timeleft)) , ' h:m:s \r',
                 thisstart = time.time()
                 thisfilelist = [ifile.replace('@',CreateDir2pt(ism,jsm))+CreateEnd2pt(ism,jsm,thists,iterp,jterp) for ifile in readfilelist]
@@ -213,7 +213,7 @@ def Read3ptSet(readfilelist,thisSmearList,thisMomList,thisProjGammaList,thisProj
                 thisdata3pt[-1][icsm].append([])
                 thisstart = time.time()
                 icount += 1
-                timeleft = GetTimeLeft(icount,len(thisSmearList)*len(Jsmlist),time.time()-start)
+                timeleft = GetTimeLeft(icount,len(tsourceList)*len(thisSmearList)*len(Jsmlist),time.time()-start)
                 print 'Read 3pt: sm' + ism + jsm + ' ts'+str(tsink)+' Time Remaining: '+ str(datetime.timedelta(seconds=timeleft)) , ' h:m:s \r',
                 for iDS in thisDSList:
                     for iProj,thisGammaList in thisProjGammaList.iteritems():
