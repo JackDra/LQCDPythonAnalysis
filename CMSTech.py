@@ -85,6 +85,8 @@ def CreatePoFMatrixtodt(Cfunto,Cfuntodt,thisPoFShifts=PoFShifts):
     return Cfuntoout,Cfuntodtout
 
 
+## Cfun[tsource,ism,jsm,tcurr]
+
 def CreatePoFMatrix(thisCfun,thisPoFShifts=PoFShifts):
     if thisPoFShifts==0:
         thisCfunExt = thisCfun[0]
@@ -280,7 +282,7 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
 #             CMCfun[istate][it].Stats()
 #     return CMCfun
 
-## Cfun[ism,jsm,tcurr]
+## Cfun[tsource,ism,jsm,tcurr]
 def ProjectCorrPoF2pt(LEvec,Cfun,REvec,thisPoFShifts=PoFShifts):
     CMCfun = []
     if DeCorrPoF:
@@ -301,6 +303,7 @@ def ProjectCorrPoF2pt(LEvec,Cfun,REvec,thisPoFShifts=PoFShifts):
     #                               np.concatenate((CfunShift2,CfunShift3,CfunShift4),1)))
 
     ##DEBUG##
+    print CfunExt.shape
     if Debug:
         print 'TwoPoint Run:'
         for ic,(iRE,iCfun) in enumerate(zip(REvec[0],np.dot(LEvec[0],CfunExt))):
