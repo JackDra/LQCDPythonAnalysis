@@ -303,7 +303,6 @@ def ProjectCorrPoF2pt(LEvec,Cfun,REvec,thisPoFShifts=PoFShifts):
     #                               np.concatenate((CfunShift2,CfunShift3,CfunShift4),1)))
 
     ##DEBUG##
-    print CfunExt.shape
     if Debug:
         print 'TwoPoint Run:'
         for ic,(iRE,iCfun) in enumerate(zip(REvec[0],np.dot(LEvec[0],CfunExt))):
