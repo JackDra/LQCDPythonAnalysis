@@ -95,6 +95,7 @@ class Read2ptCfunPick:
 
 class Read2ptCfunChroma:
     def __init__(self,thisfile,thisMomList):
+        ##CURRENT: LIME_UNPACK THE FILE AND READ THE BINARY INSIDE##
         self.data = []
         barnum = 0
         # barnum = 25
