@@ -82,7 +82,7 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
 
     SetList = []
     for tsrc in PoFtsourceList:
-        SetList += ['tsrc'+iPoF +iset for iset in CreateMassSet(thisSmearList,StateSet,thisPoFTvarList,flipord=True)]
+        SetList += ['tsrc'+tsrc+iPoF +iset for iset in CreateMassSet(thisSmearList,StateSet,thisPoFTvarList,flipord=True)]
     SetList += CreateMassSet([],CMStateSet,thisCMTvarList,flipord=True)
     PrintCfunToFile([C2out],SetList,thisMomList,['twopt'],AddDict=InfoDict)
     PrintSetToFile([C2out],SetList,thisMomList,['Mass'],0,AddDict=InfoDict)
