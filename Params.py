@@ -86,7 +86,6 @@ with open('./setup.cfg','r') as f:
                     
 PoFC2C3Dis = '665.'
 
-CHROMA = False
 
 kappalist = ['12090','12104']
 ScalarNorm = 0.6822 # normalisation for Scalar current
