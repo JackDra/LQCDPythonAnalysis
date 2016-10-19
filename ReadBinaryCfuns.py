@@ -99,7 +99,7 @@ class Read2ptCfunChroma:
         barnum = 0
         # barnum = 25
         for ip,iploc in enumerate(thisMomList):
-            self.data.append(np.memmap(thisfile,dtype=np.complex128,mode='r',offset=nt*ChromaSIS*ip).byteswap())
+            self.data.append(np.memmap(thisfile,dtype=np.complex128,mode='r',offset=nt*ChromaSIS*ip,shape=(nt,)).byteswap())
 
 
         
