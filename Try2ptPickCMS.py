@@ -27,25 +27,26 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
 
     if ListOrSet == 'ReadList':
         [data2pt,data3pt,filelist] = ReadList(thisSmearList,thisMomList,{},{},[],[],
-                                              conflist,[],Interps=DefInterpList)
+                                              conflist,[],Interps=DefInterpList,thistsourceList=PoFtsourceList)
     elif ListOrSet == 'ReadSet':
         [data2pt,data3pt,filelist] = ReadSet(thisSmearList,thisMomList,{},{},[],[],
-                                             dirread,[],Interps=DefInterpList)
+                                             dirread,[],Interps=DefInterpList,thistsourceList=PoFtsourceList)
 
     data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
     ncon = np.size(filelist)
     InfoDict = {'nconfig':ncon}
     print 'ncon = ' + str(ncon)
     # print 'nboot = ' + str(nboot)
-## data2pt = [ ism , jsm , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+## data2pt = [ t_src, ism , jsm , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     C2out = DiagSmear(data2pt).tolist()
 
     start = time.time()
-    inputparams = []
+    CMinputparams,PoFinputparams = [],[]
     makeContextFunctions(CreatePoF2ptCfuns)
     makeContextFunctions(CreateCM2ptCfuns)
     for icount,itodt in enumerate(DeftodtList):
-        inputparams.append((data2pt,itodt,thisMomList))
+        CMinputparams.append((data2pt[0],itodt,thisMomList))
+        PoFinputparams.append((data2pt,itodt,thisMomList))
 
 
     if DoMulticore and feedin['anaproc'] > 1:

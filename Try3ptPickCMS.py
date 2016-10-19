@@ -49,23 +49,31 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         raise IOError('Not supporting multiple tsinks, handle externally')
     
     if ListOrSet == 'ReadList':
-        [data2pt,data3pt,filelist] = ReadList(thisSmearList,thisMomList,thisPGList,thisPDList,
-                                              thisDSList,thisTSinkList,conflist,thisPrefList)
+        if 'PoF' in RunType:
+            [data2pt,data3pt,filelist] = ReadList(thisSmearList,thisMomList,thisPGList,thisPDList,
+                                                  thisDSList,thisTSinkList,conflist,thisPrefList,thistsinkList=PoFtsourceList)
+        else:
+            [data2pt,data3pt,filelist] = ReadList(thisSmearList,thisMomList,thisPGList,thisPDList,
+                                                  thisDSList,thisTSinkList,conflist,thisPrefList)
     elif ListOrSet == 'ReadSet':
-        [data2pt,data3pt,filelist] = ReadSet(thisSmearList,thisMomList,thisPGList,thisPDList,
-                                             thisDSList,thisTSinkList,dirread,thisPrefList)
+        if 'PoF' in RunType:
+            [data2pt,data3pt,filelist] = ReadSet(thisSmearList,thisMomList,thisPGList,thisPDList,
+                                                 thisDSList,thisTSinkList,dirread,thisPrefList,thistsinkList=PoFtsourceList)
+        else:
+            [data2pt,data3pt,filelist] = ReadSet(thisSmearList,thisMomList,thisPGList,thisPDList,
+                                                 thisDSList,thisTSinkList,dirread,thisPrefList)
     print 'Read Complete'
     print 'ncon=',len(filelist)
     InfoDict = {'nconfig':len(filelist)}
-    ## data2pt = [ ism , jsm , ip ,  it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-    ##data3pt = [ ism , jsm , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+    ## data2pt = [ tsource, ism , jsm , ip ,  it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+    ##data3pt = [ tsink, tsource, ism , jsm , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 
 
     if 'CM' == RunType:
 ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 ## CMdata3pt  [ istate , igamma , ip , it] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-        data2pt = np.array(PreptwoptCorr(data2pt))
-        data3pt = np.array(data3pt)[0,:,:,:,:,:]
+        data2pt = np.array(PreptwoptCorr(data2pt[0]))
+        data3pt = np.array(data3pt)[0,0,:,:,:,:,:]
         if giDi: data3pt,thisGammaList = CreategiDi(data3pt,thisGammaList,thisDSList)
         data2ptset = DiagSmear(data2pt).tolist()
         data3ptset = DiagSmear(data3pt).tolist()
@@ -86,8 +94,8 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
     elif 'REvec' == RunType:
 ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 ## CMdata3pt  [ istate , ip , igamma , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-        data2pt = np.array(PreptwoptCorr(data2pt))
-        data3pt = np.array(data3pt)[0,:,:,:,:,:]
+        data2pt = np.array(PreptwoptCorr(data2pt[0]))
+        data3pt = np.array(data3pt)[0,0,:,:,:,:,:]
         if giDi: data3pt,thisGammaList = CreategiDi(data3pt,thisGammaList,thisDSList)
         print 'Creating REvec CM Tech ' , REvecTvarList[0]
         [data2ptset,data3ptset] = CreateREvecCfuns(data3pt,data2pt,DefREvecVarList,thisMomList)
@@ -106,14 +114,15 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         if len(data3pt) < 2: raise IOError("PoF needs atleast two tsinks")
         data2pt = np.array(PreptwoptCorr(data2pt))
         print 'Creating PoF CM Tech ' , PoFTvarList[0]
-        [data2ptset,data3ptset] = CreateREPoFCfuns(np.array(data3pt[0]),np.array(data3pt[1]),data2pt,DefPoFVarList,thisMomList)
+        ### FIX THIS DEBUG WARNING LOLOLOLOL
+        [data2ptset,data3ptset] = CreateREPoFCfuns(np.array(data3pt),data2pt,DefPoFVarList,thisMomList)
         SetList,dump = CreateREvecSet(thisTSinkList,StateSet,PoFTvarList)
         # for it in range(15,30):
         #     print it, data3ptset[0][0][0][it].Avg, data2ptset[0][0][it].Avg
             
     elif 'TSink' == RunType:
-        data2pt = np.array(PreptwoptCorr(data2pt))
-        data3pt = np.array(data3pt)[0,:,:,:,:,:]
+        data2pt = np.array(PreptwoptCorr(data2pt[0]))
+        data3pt = np.array(data3pt)[0,0,:,:,:,:,:]
         if giDi: data3pt,thisGammaList = CreategiDi(data3pt,thisGammaList,thisDSList)
         data2ptset,data3ptset = DiagSmear(data2pt),DiagSmear(data3pt)
         SetList = ['tsink'+str(thisTSinkList[0])+'sm'+ism for ism in thisSmearList]
