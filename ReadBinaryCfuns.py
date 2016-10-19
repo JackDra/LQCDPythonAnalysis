@@ -4,6 +4,7 @@ import numpy as np
 from Params import *
 
 SeekIncSize = 8
+ChromaSIS = 16
 
 
 
@@ -95,9 +96,10 @@ class Read2ptCfunPick:
 class Read2ptCfunChroma:
     def __init__(self,thisfile,thisMomList):
         self.data = []
+        barnum = 0
+        # barnum = 25
         for ip,iploc in enumerate(thisMomList):
-            self.data.append(np.memmap(thisfile,dtype=np.complex128,mode='r',shape=(26,123,64)).byteswap())
-        f.close()
+            self.data.append(np.memmap(thisfile,dtype=np.complex128,mode='r',offset=nt*ChromaSIS*ip).byteswap())
 
 
         

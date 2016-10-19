@@ -41,7 +41,20 @@ def makeqlist(thisMaxqsqrd):
                 qlist = np.append(qlist,'q = ' + str(iq1) + ' ' + str(iq2) + ' ' + str(iq3))
     return qlist
 
-qvecSet = makeqlist(Maxqsqrd)
+def Chromaqlist(thisMaxqsqrd):
+    qlist = np.array([])
+    for iq1 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
+        for iq2 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
+            for iq3 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
+                if iq1**2 + iq2**2 + iq3**2 > thisMaxqsqrd: continue
+                qlist = np.append(qlist,'q = ' + str(iq3) + ' ' + str(iq2) + ' ' + str(iq1))
+    return qlist
+
+if CHROMA:
+    qvecSet = Chromaqlist(Maxqsqrd)
+else:
+    qvecSet = makeqlist(Maxqsqrd)
+
 nmom = len(qvecSet)
 qhigh = nmom/2
 
