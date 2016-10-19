@@ -512,39 +512,43 @@ def SignEvec(LEvec,REvec):
 
 def Normalise(data2pt,tval):
     dataout = deepcopy(data2pt)
-    for ism,dataism in enumerate(data2pt):
-        for jsm,datajsm in enumerate(dataism):
-            for ip,datap in enumerate(datajsm):
-                norm = np.sqrt(data2pt[ism][ism][ip][tval].Avg*data2pt[jsm][jsm][ip][tval].Avg)
-                for it,datat in enumerate(datap):
-                    dataout[ism][jsm][ip][it] = datat/norm
-                    dataout[ism][jsm][ip][it].Stats()
+    for itsrc,datatsrc in enumerate(data2pt):
+        for ism,dataism in enumerate(datatsrc):
+            for jsm,datajsm in enumerate(dataism):
+                for ip,datap in enumerate(datajsm):
+                    norm = np.sqrt(data2pt[itsrc][ism][ism][ip][tval].Avg*data2pt[itsrc][jsm][jsm][ip][tval].Avg)
+                    for it,datat in enumerate(datap):
+                        dataout[itsrc][ism][jsm][ip][it] = datat/norm
+                        dataout[itsrc][ism][jsm][ip][it].Stats()
     return dataout
 
 def NormaliseNoP(data2pt,tval):
     dataout = deepcopy(data2pt)
-    for ism,dataism in enumerate(data2pt):
-        for jsm,datajsm in enumerate(dataism):
-            norm = np.sqrt(data2pt[ism][ism][tval].Avg*data2pt[jsm][jsm][tval].Avg)
-            for it,datat in enumerate(datajsm):
-                dataout[ism][jsm][it] = datat/norm
-                dataout[ism][jsm][it].Stats()
+    for itsrc,datatsrc in enumerate(data2pt):
+        for ism,dataism in enumerate(datatsrc):
+            for jsm,datajsm in enumerate(dataism):
+                norm = np.sqrt(data2pt[itsrc][ism][ism][tval].Avg*data2pt[itsrc][jsm][jsm][tval].Avg)
+                for it,datat in enumerate(datajsm):
+                    dataout[itsrc][ism][jsm][it] = datat/norm
+                    dataout[itsrc][ism][jsm][it].Stats()
     return dataout
 
 def Symmetrize(data2pt):
     dataout = deepcopy(data2pt)
-    for ism,dataism in enumerate(data2pt):
-        for jsm,datajsm in enumerate(dataism):
-            for ip,datap in enumerate(datajsm):
-                dataout[ism][jsm][ip] = (datap+data2pt[jsm][ism][ip])/2.0
+    for itsrc,datatsrc in enumerate(data2pt):
+        for ism,dataism in enumerate(datatsrc):
+            for jsm,datajsm in enumerate(dataism):
+                for ip,datap in enumerate(datajsm):
+                    dataout[itsrc][ism][jsm][ip] = (datap+datatsrc[jsm][ism][ip])/2.0
     GetBootStats(dataout)
     return dataout
 
 def SymmetrizeNoPAvg(data2pt):
     dataout = deepcopy(data2pt)
-    for ism,dataism in enumerate(data2pt):
-        for jsm,datajsm in enumerate(dataism):
-            dataout[ism][jsm] = (datajsm+data2pt[jsm][ism])/2.0
+    for itsrc,datatsrc in enumerate(data2pt):
+        for ism,dataism in enumerate(datatsrc):
+            for jsm,datajsm in enumerate(dataism):
+                dataout[itsrc][ism][jsm] = (datajsm+datatsrc[jsm][ism])/2.0
     return dataout
 
 def PreptwoptCorr(data2pt):
