@@ -20,7 +20,7 @@ def PrintCfunToFile(C3set,thisSetList,thisMomList, thisGammaList,AddDict={}):
         gammadir = cfundir+CreateOppDir(thegamma)+'/'
         for iset,setdata in zip(thisSetList,gammadata):
             print 'Printing : ' , thegamma , iset , '                \r',
-            PrintToFile(np.array(setdata),gammadir,iset+thegamma,range(64),thisMomList,AddDict=AddDict,frmtflag='e')
+            PrintToFile(np.array(setdata),gammadir,iset+thegamma,range(nt),thisMomList,AddDict=AddDict,frmtflag='e')
 
 ##dataset [ igamma , iset , ip , it ] bs1
 
@@ -32,7 +32,7 @@ def PrintSetToFile(dataset,thisSetList,thisMomList, thisGammaList,tsink,AddDict=
             if thegamma == 'Mass':
                 calcflag = 'Mass'
                 setdata = cfunTOmass(setdata)
-                tlist = range(64)
+                tlist = range(nt)
             else:
                 calcflag = 'Ratio_Factor'
                 tlist = range(tsource,int(tsink)+1)

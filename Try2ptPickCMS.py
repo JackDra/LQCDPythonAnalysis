@@ -38,7 +38,7 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     print 'ncon = ' + str(ncon)
     # print 'nboot = ' + str(nboot)
     ## data2pt = [ t_src, ism , jsm , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-    C2out = DiagSmear(data2pt).tolist()
+    C2out = DiagSmearWithTsrc(data2pt).tolist()
     ## data2pt = [ t_src*ism*ism , ip , it ] 
     
     start = time.time()
@@ -72,7 +72,7 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
 
     for iout,iTvar in zip(outputCM,thisCMTvarList):
         [CMdata2pt,LEvec,REvec,Emass] = iout
-## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+        ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
         C2out += CMdata2pt.tolist()
         PrintLREvecMassToFile(LEvec,REvec,Emass,thisMomList,iTvar,AddDict=InfoDict,DoPoF=False)
 
@@ -82,8 +82,9 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
 
     SetList = []
     for tsrc in PoFtsourceList:
-        SetList += ['tsrc'+tsrc+iPoF +iset for iset in CreateMassSet(thisSmearList,StateSet,thisPoFTvarList,flipord=True)]
+        SetList += ['tsrc'+tsrc +iset for iset in CreateMassSet(thisSmearList,StateSet,thisPoFTvarList,flipord=True)]
     SetList += CreateMassSet([],CMStateSet,thisCMTvarList,flipord=True)
+    print SetList
     print len(SetList), len(C2out)
     PrintCfunToFile([C2out],SetList,thisMomList,['twopt'],AddDict=InfoDict)
     PrintSetToFile([C2out],SetList,thisMomList,['Mass'],0,AddDict=InfoDict)
