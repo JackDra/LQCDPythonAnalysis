@@ -50,9 +50,9 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
 
 
     if DoMulticore and feedin['anaproc'] > 1:
-        thisPool = Pool(min(len(inputparams),feedin['anaproc']))
-        outputPoF = thisPool.map(CreatePoF2ptCfuns.mapper,inputparams)
-        outputCM = thisPool.map(CreateCM2ptCfuns.mapper,inputparams)
+        thisPool = Pool(min(len(CMinputparams),feedin['anaproc']))
+        outputPoF = thisPool.map(CreatePoF2ptCfuns.mapper,PoFinputparams)
+        outputCM = thisPool.map(CreateCM2ptCfuns.mapper,CMinputparams)
         thisPool.close()
         thisPool.join()
     else:
