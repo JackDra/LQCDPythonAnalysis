@@ -411,7 +411,7 @@ def CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=True):
         for ip,thisp in enumerate(thisMomList):
             if DoPoF:
                 # Emasshold,LEvechold,REvechold = GetTvarREvesPoF(Cfuns2pt[:,:,ip],todtvals,ipTOE(thisp,VarMassCutoff))
-                Emasshold,LEvechold,REvechold = GetTvarREvesPoF(Cfuns2pt[:,:,ip],todtvals,ipTOE(thisp,VarMassCutoff))
+                Emasshold,LEvechold,REvechold = GetTvarREvesPoF(Cfuns2pt[:,:,:,ip],todtvals,ipTOE(thisp,VarMassCutoff))
                 # for istate in range(len(Emasshold)):
                 #     print ' '.join(map(str,LEvechold[istate])) , Emasshold[istate]
             else:
