@@ -57,8 +57,8 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
         thisPool.join()
     else:
         outputPoF,outputCM = [],[]
-        for iin in inputparams: outputPoF.append(CreatePoF2ptCfuns.mapper(iin))
-        for iin in inputparams: outputCM.append(CreateCM2ptCfuns.mapper(iin))
+        for iin in PoFinputparams: outputPoF.append(CreatePoF2ptCfuns.mapper(iin))
+        for iin in CMinputparams: outputCM.append(CreateCM2ptCfuns.mapper(iin))
     
     
     thisPoFTvarList = ['PoF'+str(PoFShifts)+iTvar for iTvar in TwoPtDefTvarList]
