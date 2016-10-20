@@ -112,7 +112,7 @@ VarMethodMethod = 'Regular' # for solving the Variational method, different ways
 NoSFRfacScale = False # Turn on to only scale the R function by sqrt((Epp+m)(Ep+m)/EppEp) for form factor creation
 ReadPoF2pt = False # Create PoF using already calculated eigenvectors. This is used if the statistics or solver method has changed.
 DeCorrPoF = False ## used for debugging the pencil of function method (decorrelation problem) !!!!!DEPRECIATED, LEAVE FALSE!!!!!
-TimeInv = False ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
+TimeInv = True ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
 
 ##DEBUG toggles (True/False):
 Debug = False # for debugging, toggles alot of print statements on
@@ -295,11 +295,11 @@ else:
     AnatodtList = DeftodtList
     AnaTvarList = DefTvarList
     
-# DefSmearList = ['32','64','128']
+DefSmearList = ['32','64','128']
 # DefSmearList = ['8','16','32','64','128','256']
 # DefSmearList = ['32','64','128']
 # DefSmearList = ['32','64','128']
-DefSmearList = ['32']
+# DefSmearList = ['32']
 if kappa == 12090:
     SingSmearList = ['32']
 if kappa == 12104:
