@@ -277,7 +277,7 @@ def ReduceTooMassSet(thisSetList):
     setout = []
     for iset in notsinkList:
         if 'sm' in iset and 'state' not in iset:
-            setout.append('tsrc'+tsource+iset)
+            setout.append('tsrc'+str(tsource)+iset)
         else:
             setout.append(iset)
             # for ic,ism in enumerate(notsinkList):
