@@ -306,6 +306,7 @@ def ProjectCorrPoF2pt(LEvec,Cfun,REvec,thisPoFShifts=PoFShifts):
     ##DEBUG##
     if Debug:
         print 'TwoPoint Run:'
+        print 'Shape ' , CfunExt.shape
         for ic,(iRE,iCfun) in enumerate(zip(REvec[0],np.dot(LEvec[0],CfunExt))):
             iCfun[26].Stats()
             print '27',ic,iRE,iCfun[26].Avg
