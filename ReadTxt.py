@@ -304,6 +304,13 @@ def ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=R
         if thisPrintRead: print 'Reading at: ' ,int((ig*100)/float(len(thisGammaList))),'%     \r',
         if thisgamma == 'twopt':
             gammadirin = thisindir+'cfuns/twopt/'
+            massSetList = []
+            for iSet in thisSetList:
+                if 'sm' in iSet and 'state' not in iSet:
+                    massSetList.append('tsrc'+str(tsource)+iSet)
+                else:
+                    massSetList.append(iSet)
+                
             DataDict[thisgamma] = MakeMethodsDict(gammadirin,'twopt.xml',
                                                   massMethodList,thisSetList,thisMomList=thisMomList,
                                                   thisPrintRead=thisPrintRead)

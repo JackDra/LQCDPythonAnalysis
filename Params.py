@@ -111,8 +111,8 @@ VarMethodMethod = 'Regular' # for solving the Variational method, different ways
 # VarMethodMethod = 'AxBxlSolve'
 NoSFRfacScale = False # Turn on to only scale the R function by sqrt((Epp+m)(Ep+m)/EppEp) for form factor creation
 ReadPoF2pt = True # Create PoF using already calculated eigenvectors. This is used if the statistics or solver method has changed.
-DeCorrPoF = False ## used for debugging the pencil of function method (decorrelation problem)
-
+DeCorrPoF = False ## used for debugging the pencil of function method (decorrelation problem) !!!!!DEPRECIATED, LEAVE FALSE!!!!!
+TimeInvar = True ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
 
 ##DEBUG toggles (True/False):
 Debug = False # for debugging, toggles alot of print statements on
@@ -154,11 +154,13 @@ ns = 4
 
 if 'ReadList' in ListOrSet:
     nboot = 2
-elif ListOrSet == 'ReadSet':
+elif 'ReadSet' in ListOrSet:
     nboot = 200
 tsource = 16
-# PoFtsourceList = map(str,range(tsource-PoFShifts,tsource+1))
-PoFtsourceList = map(str,[tsource,tsource])
+if TimeInv:
+    PoFtsourceList = map(str,[tsource]*(PoFShifts+1))
+else:
+    PoFtsourceList = map(str,range(tsource-PoFShifts,tsource+1))
 
 # note: dim of StateSet < dim of SmearSet
 GammaSet = ['I','g1','g2','g3','g4','g1g2','g1g3','g1g4','g2g3','g2g4','g3g4','g1g5','g2g5','g3g5','g4g5','g5']

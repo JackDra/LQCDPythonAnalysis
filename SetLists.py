@@ -50,7 +50,12 @@ def SortMySet(SLin,massset=False):
     SLout = []
     TSinkLout = []
     if massset:
-        for ism in DefSmList+TwoTotDefTvarList:
+        for ism in DefSmList:
+            for itsrc in PoFtsourceList:
+                for iSLin in SLin:
+                    if (itsrc in iSLin and ism in iSLin) and iSLin not in SLout:
+                        SLout.append(iSLin)
+        for ism in TwoTotDefTvarList:
             for iSLin in SLin:
                 if ism in iSLin and iSLin not in SLout:
                     SLout.append(iSLin)
@@ -269,9 +274,15 @@ def RemoveSet(string):
 
 def ReduceTooMassSet(thisSetList):
     notsinkList = ReduceTsink(thisSetList)
-    # for ic,ism in enumerate(notsinkList):
+    setout = []
+    for iset in notsinkList:
+        if 'sm' in iset and 'state' not in iset:
+            setout.append('tsrc'+tsource+iset)
+        else:
+            setout.append(iset)
+            # for ic,ism in enumerate(notsinkList):
     #     if 'REvec' in ism: del notsinkList[ic]
-    return notsinkList
+    return setout
 
 
 def PickSetForMethod(thismethod,thisSetList):
