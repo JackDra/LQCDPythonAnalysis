@@ -263,7 +263,6 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
         else:
             raise LookupError('VarMethodMethod not recognised (Params.py) : ' + VarMethodMethod)
         ## w = G^-1/2 u
-        print ThisMat.shape
         Evals,LEvec,REvec = AddNullState(Evals,LEvec,REvec,buffindex,thisdt=thisdt)
     return sortEvec(Evals,LEvec,REvec,thisdt)
 
