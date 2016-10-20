@@ -263,6 +263,7 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
         else:
             raise LookupError('VarMethodMethod not recognised (Params.py) : ' + VarMethodMethod)
         ## w = G^-1/2 u
+        print ThisMat.shape
         Evals,LEvec,REvec = AddNullState(Evals,LEvec,REvec,buffindex,thisdt=thisdt)
     return sortEvec(Evals,LEvec,REvec,thisdt)
 
@@ -434,9 +435,9 @@ def CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=True):
     if (not DoPoF) or (not ReadPoF2pt) or (LEvec == None):
         Emass,LEvec,REvec = [],[],[]
         for ip,thisp in enumerate(thisMomList):
+            print Cfuns2pt.shape
             if DoPoF:
                 # Emasshold,LEvechold,REvechold = GetTvarREvesPoF(Cfuns2pt[:,:,ip],todtvals,ipTOE(thisp,VarMassCutoff))
-                print Cfuns2pt.shape
                 Emasshold,LEvechold,REvechold = GetTvarREvesPoF(Cfuns2pt[:,:,:,ip],todtvals,ipTOE(thisp,VarMassCutoff))
                 # for istate in range(len(Emasshold)):
                 #     print ' '.join(map(str,LEvechold[istate])) , Emasshold[istate]
