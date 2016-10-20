@@ -341,7 +341,7 @@ REvecTvarList = ['REvecto'+str(DefREvecVarList[0])+'dt'+str(DefREvecVarList[1])]
 REvecFlagList = [PickedStateStr+iREvec for iREvec in REvecTvarList]
 
 # REvecTvarList = []
-# DefPoFVarList = [17,3]
+DefPoFVarList = [17,3]
 # DefPoFVarList = [18,3]
 DefPoFVarList = [19,1]
 AllPoFTSinkList = {'12104':[],'12090':[26,27]}
