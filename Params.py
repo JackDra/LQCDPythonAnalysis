@@ -107,12 +107,12 @@ DoNorm = False # normalises the 2 point function (see CMSTech.py)
 DoSym = False # symmetrises the 2 point function (see CMSTech.py)
 CfunConfigCheck = False # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
 # VarMethodMethod = 'Regular' # for solving the Variational method, different ways of doing it/
-VarMethodMethod = 'Symmetric'
-# VarMethodMethod = 'AxBxlSolve'
+# VarMethodMethod = 'Symmetric'
+VarMethodMethod = 'AxBxlSolve'
 NoSFRfacScale = False # Turn on to only scale the R function by sqrt((Epp+m)(Ep+m)/EppEp) for form factor creation
 ReadPoF2pt = False # Create PoF using already calculated eigenvectors. This is used if the statistics or solver method has changed.
 DeCorrPoF = False ## used for debugging the pencil of function method (decorrelation problem) !!!!!DEPRECIATED, LEAVE FALSE!!!!!
-TimeInv = True ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
+TimeInv = False ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
 
 ##DEBUG toggles (True/False):
 Debug = False # for debugging, toggles alot of print statements on
