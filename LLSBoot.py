@@ -20,11 +20,11 @@ def LSCreate(Fun):
         #     xval = xval[0]
         yval = val[-2]
         errval = val[-1]
-        # print xval
-        # print par
-        # print Fun(xval,par)
-        # print yval
-        # print 
+        print xval
+        print par
+        print Fun(xval,par)
+        print yval
+        print 
         return (np.array(Fun(xval,par))-yval)/errval
     return LSFun
 
@@ -115,8 +115,8 @@ def LSFit(parlen,xdata,yerr,fitfun,ydata):
     if Debug:
         print LSDerfitfun.__name__
         print LSfitfun.__name__
-        print iGuess
-        print data
+        print np.array(iGuess)
+        print np.array(data)
     if ForceNoDer:
         x,covar, infodict, mesg, ier=leastsq(LSfitfun,np.array(iGuess),args=np.array(data), maxfev=MI, full_output=1)
     else:
