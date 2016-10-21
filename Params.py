@@ -114,7 +114,7 @@ VarMethodMethod = 'AxBxlSolve' ## solve Ax = Bxc system directly (generalised ei
 NoSFRfacScale = False # Turn on to only scale the R function by sqrt((Epp+m)(Ep+m)/EppEp) for form factor creation
 ReadPoF2pt = False # Create PoF using already calculated eigenvectors. This is used if the statistics or solver method has changed.
 DeCorrPoF = False ## used for debugging the pencil of function method (decorrelation problem) !!!!!DEPRECIATED, LEAVE FALSE!!!!!
-TimeInv = True ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
+TimeInv = False ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
 
 ##DEBUG toggles (True/False):
 Debug = False # for debugging, toggles alot of print statements on
@@ -137,10 +137,10 @@ logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 momlistdir = datadir+'momdir/'
 pickledir = datadir+"pickledir/"
 REvecDir = scriptdir+'REvecSave/k'+str(kappa)+'/'
-RunMomList = qvecSet 
+# RunMomList = qvecSet 
 # For Debuggin, only use zero momenta
 # RunMomList = [qvecSet[iqTOip(0)],qvecSet[iqTOip(3)]]
-# RunMomList = [qvecSet[iqTOip(0)]]
+RunMomList = [qvecSet[iqTOip(0)]]
 mkdir_p(outputdir)
 mkdir_p(pickledir)
 mkdir_p(logdir)
