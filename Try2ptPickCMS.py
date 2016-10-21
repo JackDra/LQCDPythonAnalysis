@@ -39,7 +39,7 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     # print 'nboot = ' + str(nboot)
     ## data2pt = [ t_src, ism , jsm , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     C2out = DiagSmearWithTsrc(data2pt).tolist()
-    ## data2pt = [ t_src*ism*ism , ip , it ] 
+    ## C2out = [ t_src*ism*ism , ip , it ] 
     
     start = time.time()
     CMinputparams,PoFinputparams = [],[]
@@ -89,8 +89,8 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     SetList = []
     for tsrc in PoFtsourceList:
         SetList += ['tsrc'+tsrc +iset for iset in CreateMassSet(thisSmearList,StateSet,[],flipord=True)]
-    SetList += CreateMassSet([],StateSet,thisPoFTvarList,flipord=True)
     if len(DefSmearList) > 1: SetList += CreateMassSet([],CMStateSet,thisCMTvarList,flipord=True)
+    SetList += CreateMassSet([],StateSet,thisPoFTvarList,flipord=True)
     PrintCfunToFile([C2out],SetList,thisMomList,['twopt'],AddDict=InfoDict)
     PrintSetToFile([C2out],SetList,thisMomList,['Mass'],0,AddDict=InfoDict)
     print 'Printing took ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
