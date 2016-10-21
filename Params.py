@@ -351,7 +351,10 @@ REvecTvarList = ['REvecto'+str(DefREvecVarList[0])+'dt'+str(DefREvecVarList[1])]
 REvecFlagList = [PickedStateStr+iREvec for iREvec in REvecTvarList]
 
 # REvecTvarList = []
-DefPoFVarList = [17,2]
+if TimeInv:
+    DefPoFVarList = [17,2]
+else:
+    DefPoFVarList = [20,2]
 # DefPoFVarList = [18,2]
 # DefPoFVarList = [19,2]
 # DefPoFVarList = [20,2]
