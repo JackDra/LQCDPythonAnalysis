@@ -106,7 +106,6 @@ DoContentsCheck = False # True makes sure the xml file has the correct momenta f
 OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
 DoNorm = False # normalises the 2 point function (see CMSTech.py)
 DoSym = True # symmetrises the 2 point function (see CMSTech.py)
-CfunConfigCheck = True # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
 # VarMethodMethod = 'Regular' # for solving the Variational method, different ways of doing it/
 # VarMethodMethod = 'Symmetriceigh' ## Symmetic matrix construction WITH symmetric solver
 # VarMethodMethod = 'Symmetric' ## Symmetic matrix construction WITHOUT symmetric solver
@@ -116,8 +115,14 @@ ReadPoF2pt = False # Create PoF using already calculated eigenvectors. This is u
 DeCorrPoF = False ## used for debugging the pencil of function method (decorrelation problem) !!!!!DEPRECIATED, LEAVE FALSE!!!!!
 TimeInv = False ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
 
+## Currenlty, not using Time Invariance in the Pencil of Function Analysis is only properly implemented and tested for 2-point correlation analysis
+if TimeInv:
+    CfunConfigCheck = True # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
+else:
+    CfunConfigCheck = False # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
+
 ##DEBUG toggles (True/False):
-Debug = True # for debugging, toggles alot of print statements on
+Debug = False # for debugging, toggles alot of print statements on
 ScaleByP4g4 = False ## scales out all operators by P4g4 instead of 2 point correlator at tsink for Ratio value (RF)
 ShowConfNum = Debug # debugging, show number of configs during read
 PrintRead = not DoMulticore # Screws up output if on and doing mulitcore reading
