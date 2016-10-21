@@ -496,6 +496,7 @@ def PlotMassSetOSF(data2pt,thisSetList,MassDt,thisSF):
     iterSetList = SortMySet(ReduceTsink(thisSetList))[0]
     
     for iset in iterSetList:
+        print iset
         if not CheckDict(data2pt,'RF',iset): continue
         thiscol = thiscolcyc.next()
         thissym = thissymcyc.next()
