@@ -195,13 +195,13 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
     for cutindex in range(1,Ctolen):
         
         ci = np.append(ci,cutindex)
-        if VarMethodMethod == 'Symmetric':
+        if 'Symmetric' in VarMethodMethod:
             ShalfInv = inv(sqrtm(Simto[ci[:,None],ci]))
             ThisMat = ShalfInv.dot(Simtodt[ci[:,None],ci].dot(ShalfInv))
             # for iindex in range(len(ThisMat)):
             #     for jindex in range(len(ThisMat)):
             #         print iindex, jindex, ThisMat[iindex][jindex], ThisMat[jindex][iindex]
-            if Doeigh:
+            if 'eigh' in VarMethodMethod:
                 thiseig,thisevec = eigh(ThisMat)
             else:
                 thiseig,thisevec = eig(ThisMat)
@@ -236,12 +236,12 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
     if len(ci) < 2:
         Evals,LEvec,REvec = AddNullState(np.ones(1),np.array([[1]]),np.array([[1]]),buffindex,thisdt=thisdt)
     else:
-        if VarMethodMethod == 'Symmetric':
+        if 'Symmetric' in VarMethodMethod:
             Simto = np.array(Cfunto)[ci[:,None],ci]
             Simtodt = np.array(Cfuntodt)[ci[:,None],ci]
             ShalfInv = inv(sqrtm(Simto))
             ThisMat = ShalfInv.dot(Simtodt.dot(ShalfInv))
-            if Doeigh:
+            if 'eigh' in VarMethodMethod:
                 [Evals,REvec] = eigh(ThisMat)
                 REvec = ShalfInv.dot(REvec)
                 LEvec = REvec
