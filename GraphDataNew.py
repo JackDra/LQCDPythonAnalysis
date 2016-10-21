@@ -498,6 +498,7 @@ def PlotMassSetOSF(data2pt,thisSetList,MassDt,thisSF):
     for iset in iterSetList:
         print iset
         if not CheckDict(data2pt,'RF',iset): continue
+        print 'present ' ,iset
         thiscol = thiscolcyc.next()
         thissym = thissymcyc.next()
         thisshift = thisshiftcyc.next()
