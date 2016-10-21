@@ -116,7 +116,7 @@ DeCorrPoF = False ## used for debugging the pencil of function method (decorrela
 TimeInv = True ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
 
 ##DEBUG toggles (True/False):
-Debug = False # for debugging, toggles alot of print statements on
+Debug = True # for debugging, toggles alot of print statements on
 ScaleByP4g4 = False ## scales out all operators by P4g4 instead of 2 point correlator at tsink for Ratio value (RF)
 ShowConfNum = Debug # debugging, show number of configs during read
 PrintRead = not DoMulticore # Screws up output if on and doing mulitcore reading
