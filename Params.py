@@ -101,7 +101,7 @@ myeps = np.finfo(0.0).eps
 ForceVecNorm = True ## Forces the vector current to be normalised to 2 for doublet and 1 for singlet at zero momentum transfer
 ForcePos = True ## Forces all non-form factor graphs to be positive
 MultiCoreFitting = False # Multicore for Boot Fitting, not needed in current build
-DoMulticore = False # Runs multicore wherever implemented
+DoMulticore = True # Runs multicore wherever implemented
 DoContentsCheck = False # True makes sure the xml file has the correct momenta first field, turn off for more performance
 OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
 DoNorm = False # normalises the 2 point function (see CMSTech.py)
@@ -122,7 +122,7 @@ else:
     CfunConfigCheck = False # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
 
 ##DEBUG toggles (True/False):
-Debug = True # for debugging, toggles alot of print statements on
+Debug = False # for debugging, toggles alot of print statements on
 ScaleByP4g4 = False ## scales out all operators by P4g4 instead of 2 point correlator at tsink for Ratio value (RF)
 ShowConfNum = Debug # debugging, show number of configs during read
 PrintRead = not DoMulticore # Screws up output if on and doing mulitcore reading
