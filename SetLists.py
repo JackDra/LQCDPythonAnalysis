@@ -202,6 +202,13 @@ def CreateDataTsinkSet(dataCM,data,thisSmearList,thisStateList,thisTvarList,tsin
     data = np.array(data)
     return [np.array(data.tolist()+dataCMflat.tolist()),['tsink'+str(tsink)+iS for iS in thisSetList]]
 
+def SplitTsrcSm(string):
+    tsrcstring = re.search('tsrc..',string)
+    if tsrcstring != None: tsrcstring = tsrcstring.group()
+    return tsrcstring,string.replace(tsrcstring,'')
+
+def RemoveTsrc(string):
+    return SplitTsrcSm(string)[1]
 
 def SplitTSinkString(string): 
     tsinkstring = re.search('tsink..',string)
@@ -353,7 +360,7 @@ def CreateOSFfitKey(smear):
             if itvar in smear:
                 deltashift = 0
                 smearindex = PickedStateStr+itvar
-    return smearindex,deltashift
+    return RemoveTsrc(smearindex),deltashift
 
 
 def SplitDSCurr(thisstr):
