@@ -87,7 +87,7 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     print 'Printing to file \r',
 
     SetList = []
-    SetList += CreateMassSet(thisSmearList,StateSet,tsrclist=PoFtsourceList,flipord=True)
+    SetList += CreateMassSet(thisSmearList,StateSet,[],tsrclist=PoFtsourceList,flipord=True)
     if len(DefSmearList) > 1: SetList += CreateMassSet([],CMStateSet,thisCMTvarList,flipord=True)
     SetList += CreateMassSet([],StateSet,thisPoFTvarList,flipord=True)
     print SetList
