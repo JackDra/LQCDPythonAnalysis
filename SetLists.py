@@ -170,7 +170,7 @@ def CreateSet(thisSmearL=DefSmearList,thisSingSmearL=SingSmearList,
 
 
 
-def CreateMassSet(thisSmearL,thisStateList,thisTvarList,tsrclist = PoFtsourceListflipord=False,tsrc=False):
+def CreateMassSet(thisSmearL,thisStateList,thisTvarList,tsrclist = PoFtsourceList,flipord=False,tsrc=False):
     SetGraph = []
     for its in tsrclist:
         for ismear in thisSmearL:        
