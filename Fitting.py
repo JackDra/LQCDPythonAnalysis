@@ -232,6 +232,11 @@ def TwoStateFitMom3pt(fitBoot2pt,C3pt,this3ptCutList,thisTSinkList):
 def OneStateSet2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec):
     def sm2ptwrap(C2ptmom,thisSmList,this2ptFitR):
         Bootthis2pt,Avgthis2pt,Chithis2pt = [],[],[]
+        if len(thisSmList) != len(C2ptmom):
+            print 'Error: thisSmList not equal in size to C2ptmom'
+            print thisSmList
+            print 'len(C2ptmom)' , len(C2ptmom)
+            raise IOError('SM list error')
         for ism,thissm in enumerate(thisSmList):
             isC2 = C2ptmom[ism]
             thisod2 = OneStateFit2pt(isC2,this2ptFitR)
