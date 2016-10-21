@@ -496,9 +496,9 @@ def PlotMassSetOSF(data2pt,thisSetList,MassDt,thisSF):
     iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
     
     for iset in iterSetList:
-        print iset
+        if Debug: print iset
         if not CheckDict(data2pt,'RF',iset): continue
-        print 'present ' ,iset
+        if Debug: print 'present ' ,iset
         thiscol = thiscolcyc.next()
         thissym = thissymcyc.next()
         thisshift = thisshiftcyc.next()
@@ -881,6 +881,7 @@ def PlotOSFMassValue(data,col,smear,thisdt):
     smearindex,deltashift = CreateOSFfitKey(smear)
     if Debug:
         print data.keys(), 'm0'
+        print OSFfitr.keys(), smearindex
         print data['m0'].keys(), OSFfitr[smearindex]
         print data['m0'][OSFfitr[smearindex]].keys(),'Boot','Avg','Std'
     if CheckDict(data,'m0',OSFfitr[smearindex],'Boot'): 
