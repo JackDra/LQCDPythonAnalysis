@@ -190,8 +190,8 @@ elif kappa == 12090:
         FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."
         # FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."+PoFC2C3Dis
     elif 'ReadSet' in ListOrSet:
-        # FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."    
-        FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."+PoFC2C3Dis
+        FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."    
+        # FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."+PoFC2C3Dis
     filelist = dirread+"/source1/@/"+FileStruct+"*"
 conflist = ['00105',
             '00115',
