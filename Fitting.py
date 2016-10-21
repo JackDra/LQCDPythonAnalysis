@@ -341,7 +341,7 @@ def OneStateSetFit(OSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,
 def OneStateFit2pt(data2pt,fitr):
     tdata2pt = np.arange(fitr[0]-tsource,fitr[1]-tsource+1)
     fitdata2pt = np.array(data2pt)[tdata2pt+tsource-1]
-    if DEBUG:
+    if Debug:
         for it,idata in zip(fitdata2pt,tdata2pt):
             print it,idata
     fitBoot2pt,fitAvg2pt,fitAvg2ptChi = FitBoots(fitdata2pt,tdata2pt,C2OneStateFitFun)
