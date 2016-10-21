@@ -199,7 +199,7 @@ else:
     with open( picklefile2pt, "wb" ) as pfile:
         pickle.dump( [OSF2ptarray,twoptGammaMomList], pfile )
     print 'Printing 2 point correlators to file'
-    PrintOSFMassToFile(OneFit2pt,OneFit2ptChi,ReadSetList,thisFitOSFR,twoptoutfile,twoptGammaMomList['twopt'],infolist2pt)
+    PrintOSFMassToFile(OneFit2pt,OneFit2ptChi,ReadSetList,thisFitOSFR,outfile,twoptGammaMomList['twopt'],infolist2pt)
 
 
 inputparams = []
