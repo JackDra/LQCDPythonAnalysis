@@ -343,7 +343,7 @@ def OneStateFit2pt(data2pt,fitr):
     fitdata2pt = np.array(data2pt)[tdata2pt+tsource-1]
     if Debug:
         for idata,it in zip(fitdata2pt,tdata2pt):
-            print it,idata.avg
+            print it,idata.Avg
     fitBoot2pt,fitAvg2pt,fitAvg2ptChi = FitBoots(fitdata2pt,tdata2pt,C2OneStateFitFun)
     return [fitBoot2pt,fitAvg2pt,fitAvg2ptChi[0]]
 
