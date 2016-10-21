@@ -25,13 +25,13 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     sys.stderr = open(errfile,'a',0)
     # print 'Running ' + ipTOqstr(thisMomList[0]) + ' ' +  str(int((thisMomList[0]*100)/float(len(qvecSet))))+'%' 
 
-    if ListOrSet == 'ReadList':
+    if 'ReadList' in ListOrSet:
         [data2pt,data3pt,filelist] = ReadList(thisSmearList,thisMomList,{},{},[],[],
                                               conflist,[],Interps=DefInterpList,thistsourceList=PoFtsourceList)
-    elif ListOrSet == 'ReadSet':
+    elif 'ReadSet' in ListOrSet:
         [data2pt,data3pt,filelist] = ReadSet(thisSmearList,thisMomList,{},{},[],[],
                                              dirread,[],Interps=DefInterpList,thistsourceList=PoFtsourceList)
-
+        
     data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
     ncon = np.size(filelist)
     InfoDict = {'nconfig':ncon}

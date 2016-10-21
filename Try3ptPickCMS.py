@@ -48,14 +48,14 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
     if len(thisTSinkList) > 1 and RunType != 'PoF':
         raise IOError('Not supporting multiple tsinks, handle externally')
     
-    if ListOrSet == 'ReadList':
+    if 'ReadList' in ListOrSet:
         if 'PoF' in RunType:
             [data2pt,data3pt,filelist] = ReadList(thisSmearList,thisMomList,thisPGList,thisPDList,
                                                   thisDSList,thisTSinkList,conflist,thisPrefList,thistsinkList=PoFtsourceList)
         else:
             [data2pt,data3pt,filelist] = ReadList(thisSmearList,thisMomList,thisPGList,thisPDList,
                                                   thisDSList,thisTSinkList,conflist,thisPrefList)
-    elif ListOrSet == 'ReadSet':
+    elif 'ReadSet' in ListOrSet:
         if 'PoF' in RunType:
             [data2pt,data3pt,filelist] = ReadSet(thisSmearList,thisMomList,thisPGList,thisPDList,
                                                  thisDSList,thisTSinkList,dirread,thisPrefList,thistsinkList=PoFtsourceList)
