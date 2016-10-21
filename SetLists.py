@@ -204,7 +204,10 @@ def CreateDataTsinkSet(dataCM,data,thisSmearList,thisStateList,thisTvarList,tsin
 
 def SplitTsrcSm(string):
     tsrcstring = re.search('tsrc..',string)
-    if tsrcstring != None: tsrcstring = tsrcstring.group()
+    if tsrcstring != None:
+        tsrcstring = tsrcstring.group()
+    else:
+        tsrcstring = ''
     return tsrcstring,string.replace(tsrcstring,'')
 
 def RemoveTsrc(string):
