@@ -42,16 +42,27 @@ print ''
 print "Please Specify number of processors for multiprocessing:"
 thisAnaProc = int(raw_input("(note, don't kill your machine)\n"))
 
-print ''
-thisListOrSet = raw_input("Read All Correlators in directorys? (y/n):\n")
+# print ''
+# thisListOrSet = raw_input("Read All Correlators in directorys? (y/n):\n")
 
-if thisListOrSet == 'y':
-    thisListOrSet = 'ReadSet'
-elif thisListOrSet == 'n':
-    thisListOrSet = 'ReadList'
+# if thisListOrSet == 'y':
+#     thisListOrSet = 'ReadSet'
+# elif thisListOrSet == 'n':
+#     thisListOrSet = 'ReadList'
+# else:
+#     raise IOError('Input y or n')
+
+print ''
+thisListOrSet = raw_input("ReadList or ReadSet (add previx/suffix for different runs if you like)\n")
+
+if 'ReadList' in thisListOrSet:
+    print 'Using ReadList'
+elif 'ReadSet' in thisListOrSet:
+    print 'Using ReadSet'
 else:
-    raise IOError('Input y or n')
-    
+    raise IOError('Input string that contains ReadList or ReadSet')
+
+
 print ''
 thiskappa = int(raw_input("Kappa Value: (0.XXXXX)\n"))
 
