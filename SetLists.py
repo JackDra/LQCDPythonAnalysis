@@ -208,8 +208,9 @@ def SplitTSinkString(string):
     if tsinkstring != None: tsinkstring = tsinkstring.group()
     smstring = None
     for ism in DefSmList:
-        if ism in string:
-            smstring = ism
+        for itsrc in PoFtsourceList:
+            if ism in string and str(itsrc) in string :
+                smstring = 'tsrc'+str(itsrc)+ism
     if smstring == None:
         if 'state' in string:
             for istate in map(str,StateSet):
