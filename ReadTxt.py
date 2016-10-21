@@ -145,7 +145,7 @@ def Get2ptSetMoms(outputdir,MomListIn,tvarlist=[],smlist=[],tsrclist=[]):
                     ts,sm = str(its),str(ism)
                     if 'tsrc' not in ts: ts = 'tsrc'+ts
                     if 'sm' not in sm: sm = 'sm'+sm
-                    ifile = thisdir+MakeMomDir(ip)+'tsrc'+its+ism+iflag.replace('cfuns/','')+ip+'.xml'
+                    ifile = thisdir+MakeMomDir(ip)+ts+sm+iflag.replace('cfuns/','')+ip+'.xml'
                     if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
     return OrderMomList(momlist)
 
