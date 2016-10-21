@@ -204,12 +204,7 @@ else:
 
 inputparams = []
 for igamma in ReadGammaList:
-    if 'twopt' in igamma:
-        if len(ReadGammaList) == 1:
-            for imom in qvecSet:
-                inputparams.append((ReadSetList,[],OSF2ptarray,twoptGammaMomList,[imom]))
-        else:
-            continue
+    if 'twopt' in igamma: continue
     if 'doub' not in igamma and 'sing' not in igamma:
         if DefWipe:
             QueMomList = GetMomFromGamma(igamma,thisMomList=feedin['mom'])
