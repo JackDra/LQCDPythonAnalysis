@@ -209,7 +209,7 @@ def SplitTSinkString(string):
     smstring = None
     for ism in DefSmList:
         if ism in string:
-                smstring = ism
+            smstring = ism
     for ism in DefSmList:
         for itsrc in PoFtsourceList:
             if ism in string and str(itsrc) in string :
