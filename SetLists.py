@@ -208,9 +208,13 @@ def SplitTSinkString(string):
     if tsinkstring != None: tsinkstring = tsinkstring.group()
     smstring = None
     for ism in DefSmList:
+        if ism in string:
+                smstring = ism
+    for ism in DefSmList:
         for itsrc in PoFtsourceList:
             if ism in string and str(itsrc) in string :
                 smstring = 'tsrc'+str(itsrc)+ism
+                
     if smstring == None:
         if 'state' in string:
             for istate in map(str,StateSet):
@@ -277,7 +281,6 @@ def RemoveSet(string):
 def ReduceTooMassSet(thisSetList):
     notsinkList = ReduceTsink(thisSetList)
     setout = []
-    print notsinkList
     for iset in notsinkList:
         if 'sm' in iset and 'state' not in iset:
             setout.append('tsrc'+str(tsource)+iset)
