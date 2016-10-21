@@ -85,6 +85,7 @@ with open('./setup.cfg','r') as f:
                         RunNconfs = int(thisline)
                     
 PoFC2C3Dis = '665.'
+NewFileFlag = PoFC2C3Dis
 
 
 kappalist = ['12090','12104']

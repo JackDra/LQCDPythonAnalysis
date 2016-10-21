@@ -127,7 +127,7 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
     return datadictout,datamassout
 
 
-def Get2ptSetMoms(outputdir,MomListIn,tvarlist=[],smlist=[]):
+def Get2ptSetMoms(outputdir,MomListIn,tvarlist=[],smlist=[],tsrclist=[]):
     momlist = set([])
     xmlMomList = map(qstrTOqcond,MomListIn)
     for iflag in ['cfuns/twopt','Mass']:
@@ -140,9 +140,13 @@ def Get2ptSetMoms(outputdir,MomListIn,tvarlist=[],smlist=[]):
                 for istate in GetStateSet(itvar):
                     ifile = thisdir+MakeMomDir(ip)+'state'+istate+itvar+iflag.replace('cfuns/','')+ip+'.xml'
                     if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
-            for ism in smlist:
-                ifile = thisdir+MakeMomDir(ip)+ism+iflag.replace('cfuns/','')+ip+'.xml'
-                if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
+            for its in tsrclist:
+                for ism in smlist:
+                    ts,sm = str(its),str(ism)
+                    if 'tsrc' not in ts: ts = 'tsrc'+ts
+                    if 'sm' not in sm: sm = 'sm'+sm
+                    ifile = thisdir+MakeMomDir(ip)+'tsrc'+its+ism+iflag.replace('cfuns/','')+ip+'.xml'
+                    if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
     return OrderMomList(momlist)
 
 
