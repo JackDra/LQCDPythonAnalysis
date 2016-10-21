@@ -118,11 +118,7 @@ def CheckAllSet(FilePrefix,directory,Interps,tsourceList=[tsource]):
                                 testfile3pt = (directory.replace(CreateDir2pt(DefSmearList[0],DefSmearList[0]),
                                                                  CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
                                                +FilePrefix+CreateEnd3pt(ism,jsm3pt,thists,itsink,iDS,iProj,''))
-                                if Debug:
-                                    print C2C3Dis
-                                    print iFlag
-                                    print FileStruct
-                                    print 'Checking ' ,  testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
+                                if Debug: print 'Checking ' ,  testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
                                 if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
                             for iProj in DefProjDerList:
                                 testfile3pt = (directory.replace(CreateDir2pt(DefSmearList[0],DefSmearList[0]),
