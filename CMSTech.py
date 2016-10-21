@@ -434,7 +434,6 @@ def CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=True):
     if (not DoPoF) or (not ReadPoF2pt) or (LEvec == None):
         Emass,LEvec,REvec = [],[],[]
         for ip,thisp in enumerate(thisMomList):
-            print Cfuns2pt.shape
             if DoPoF:
                 # Emasshold,LEvechold,REvechold = GetTvarREvesPoF(Cfuns2pt[:,:,ip],todtvals,ipTOE(thisp,VarMassCutoff))
                 Emasshold,LEvechold,REvechold = GetTvarREvesPoF(Cfuns2pt[:,:,:,ip],todtvals,ipTOE(thisp,VarMassCutoff))
