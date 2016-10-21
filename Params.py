@@ -345,7 +345,8 @@ REvecFlagList = [PickedStateStr+iREvec for iREvec in REvecTvarList]
 # DefPoFVarList = [17,2]
 # DefPoFVarList = [18,2]
 DefPoFVarList = [22,2]
-AllPoFTSinkList = {'12104':[],'12090':[26,27]}
+# AllPoFTSinkList = {'12104':[],'12090':[26,27]}
+AllPoFTSinkList = {'12104':[],'12090':[26]}
 PoFTSinkList = AllPoFTSinkList[str(kappa)]
 PoFTSinkStrList = ['tsink'+str(its) for its in PoFTSinkList]
 ##DEBUG##
