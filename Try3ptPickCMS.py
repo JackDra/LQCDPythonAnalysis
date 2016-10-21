@@ -115,7 +115,7 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         data2pt = np.array(PreptwoptCorr(data2pt))
         print 'Creating PoF CM Tech ' , PoFTvarList[0]
         ### FIX THIS DEBUG WARNING LOLOLOLOL
-        [data2ptset,data3ptset] = CreateREPoFCfuns(np.array(data3pt),data2pt,DefPoFVarList,thisMomList)
+        [data2ptset,data3ptset] = CreateREPoFCfuns(np.array(data3pt),data2pt,DefPoFVarList[0],thisMomList)
         SetList,dump = CreateREvecSet(thisTSinkList,StateSet,PoFTvarList)
         # for it in range(15,30):
         #     print it, data3ptset[0][0][0][it].Avg, data2ptset[0][0][it].Avg
