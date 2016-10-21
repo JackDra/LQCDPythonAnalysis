@@ -351,10 +351,17 @@ REvecTvarList = ['REvecto'+str(DefREvecVarList[0])+'dt'+str(DefREvecVarList[1])]
 REvecFlagList = [PickedStateStr+iREvec for iREvec in REvecTvarList]
 
 # REvecTvarList = []
-if TimeInv:
-    DefPoFVarList = [17,2]
+
+if OnlySelVar:
+    if TimeInv:
+        DefPoFVarList = [17,2]
+    else:
+        DefPoFVarList = [20,2]
+    PoFTvarList = ['PoF'+str(PoFShifts)+'to'+str(DefPoFVarList[0])+'dt'+str(DefPoFVarList[1])]
 else:
-    DefPoFVarList = [20,2]
+    DefPoFVarList = DeftodtList
+    PoFTvarList = [itvar.replace('CM','PoF'+str(PoFShifts)) for itvar in DefTvarList]
+
 # DefPoFVarList = [18,2]
 # DefPoFVarList = [19,2]
 # DefPoFVarList = [20,2]
@@ -367,7 +374,6 @@ PoFTSinkStrList = ['tsink'+str(its) for its in PoFTSinkList]
 # PoFReadTvarList = ['PoFTestnD'+str(PoFShifts)]
 # ##uncomment below to restore##
 ## warning, below has been hard coded to fix the to16 is to17 problem i had
-PoFTvarList = ['PoF'+str(PoFShifts)+'to'+str(DefPoFVarList[0])+'dt'+str(DefPoFVarList[1])]
 PoFDirTvarList = ['PoFto'+str(DefPoFVarList[0]-1)+'dt'+str(DefPoFVarList[1])]
 PoFReadTvarList = ['PoFto'+str(DefPoFVarList[0]-1)+'dt'+str(DefPoFVarList[1])+'nD'+str(PoFShifts)]
 
