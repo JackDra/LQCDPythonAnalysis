@@ -15,22 +15,22 @@ from MiscFuns import *
 
 def LSCreate(Fun):
     def LSFun(par,val):
-        xval = val[:-2]
+        xval = np.array(val[:-2])
         # if len(xval) == 1:
         #     xval = xval[0]
         yval = val[-2]
         errval = val[-1]
-        print xval
-        print par
-        print Fun(xval,par)
-        print yval
-        print 
+        # print xval
+        # print par
+        # print Fun(xval,par)
+        # print yval
+        # print 
         return (np.array(Fun(xval,par))-yval)/errval
     return LSFun
 
 def LSDerCreate(FunDer):
     def LSDerFun(par,val):
-        xval = val[:-2]
+        xval = np.array(val[:-2])
         # if len(xval) == 1:
         #     xval = xval[0]
         yval = val[-2]
