@@ -277,6 +277,7 @@ def RemoveSet(string):
 def ReduceTooMassSet(thisSetList):
     notsinkList = ReduceTsink(thisSetList)
     setout = []
+    print notsinkList
     for iset in notsinkList:
         if 'sm' in iset and 'state' not in iset:
             setout.append('tsrc'+str(tsource)+iset)
