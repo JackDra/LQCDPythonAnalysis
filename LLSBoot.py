@@ -16,10 +16,10 @@ from MiscFuns import *
 def LSCreate(Fun):
     def LSFun(par,val):
         xval = np.array(val[:-2])
-        # if len(xval) == 1:
-        #     xval = xval[0]
-        yval = val[-2]
-        errval = val[-1]
+        if len(xval) == 1:
+            xval = xval[0]
+        yval = np.array(val[-2])
+        errval = np.array(val[-1])
         print 'LS values'
         print xval
         print par
@@ -32,8 +32,8 @@ def LSCreate(Fun):
 def LSDerCreate(FunDer):
     def LSDerFun(par,val):
         xval = np.array(val[:-2])
-        # if len(xval) == 1:
-        #     xval = xval[0]
+        if len(xval) == 1:
+            xval = xval[0]
         yval = val[-2]
         errval = val[-1]
         print 'LSDer values'
