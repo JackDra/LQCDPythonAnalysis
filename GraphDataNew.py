@@ -493,7 +493,7 @@ def PlotLogSetTSF(data,thisSetList,thisSF,legrem=''):
 
 def PlotMassSetOSF(data2pt,thisSetList,MassDt,thisSF):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
-    iterSetList = SortMySet(ReduceTsink(thisSetList))[0]
+    iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
     
     for iset in iterSetList:
         print iset
@@ -512,7 +512,7 @@ def PlotMassSetOSF(data2pt,thisSetList,MassDt,thisSF):
 
 def PlotMassSetTSF(data2pt,thisSetList,MassDt,thisSF):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
-    iterSetList = SortMySet(ReduceTsink(thisSetList))[0]
+    iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
     for iset in iterSetList:
         if not CheckDict(data2pt,'RF',iset): continue
         thiscol = thiscolcyc.next()
