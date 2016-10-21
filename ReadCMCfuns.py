@@ -186,7 +186,7 @@ def Read2ptSet(readfilelist,thisSmearList,thisMomList,Interps,tsourceList=[tsour
                 thisfilelist = [ifile.replace('@',CreateDir2pt(ism,jsm))+CreateEnd2pt(ism,jsm,thists,iterp,jterp) for ifile in readfilelist]
                 dataout,randlist = ReadAndBoot2pt(thisfilelist,thisMomList,nboot) 
                 thisdata2pt[-1][icsm].append(dataout)
-                print 'Read 2pt: sm' + ism + 'Xsm'+jsm + ' t_src'+thists+' took: ' +str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s        '
+                print 'Read 2pt: sm' + ism + 'Xsm'+jsm + ' t_src'+str(thists)+' took: ' +str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s        '
     print 'Read 2pt total time: ' + str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
     return thisdata2pt,randlist
 
