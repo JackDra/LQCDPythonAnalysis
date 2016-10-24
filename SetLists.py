@@ -50,8 +50,8 @@ def SortMySet(SLin,massset=False):
     SLout = []
     TSinkLout = []
     if massset:
-        for ism in DefSmList:
-            for itsrc in PoFtsourceList:
+        for itsrc in PoFtsourceList:
+            for ism in DefSmList:
                 for iSLin in SLin:
                     if (itsrc in iSLin and ism in iSLin) and iSLin not in SLout:
                         SLout.append(iSLin)
@@ -220,8 +220,8 @@ def SplitTSinkString(string):
     for ism in DefSmList:
         if ism in string:
             smstring = ism
-    for ism in DefSmList:
-        for itsrc in PoFtsourceList:
+    for itsrc in PoFtsourceList:
+        for ism in DefSmList:
             if ism in string and str(itsrc) in string :
                 smstring = 'tsrc'+str(itsrc)+ism
                 
