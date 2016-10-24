@@ -253,7 +253,7 @@ DefCombGammaList = DefGammaList+DefNoDSGammaList
 DeftoList = [17,18,19,20,21,22,23]
 # DeftoList = [18,19,20,21,22]
 # DeftoList = [16,17,18,19,20]
-DefdtList = [1,2,3,4]
+DefdtList = [1,2,3,4,5,6]
 # DeftodtPicked = (18,2)
 ##MUST BE IN SORTING ORDER##
 # DeftodtPicked = [(18,2),(20,2)]
