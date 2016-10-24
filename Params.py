@@ -116,10 +116,10 @@ DeCorrPoF = False ## used for debugging the pencil of function method (decorrela
 TimeInv = True ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
 
 ## Currenlty, not using Time Invariance in the Pencil of Function Analysis is only properly implemented and tested for 2-point correlation analysis
-if TimeInv:
-    CfunConfigCheck = True # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
-else:
-    CfunConfigCheck = False # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
+# if TimeInv:
+#     CfunConfigCheck = True # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
+# else:
+CfunConfigCheck = False # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
 
 ##DEBUG toggles (True/False):
 Debug = True # for debugging, toggles alot of print statements on
