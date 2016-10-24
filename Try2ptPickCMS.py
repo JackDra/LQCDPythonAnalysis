@@ -53,19 +53,19 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     if DoMulticore and feedin['anaproc'] > 1:
         thisPool = Pool(min(len(CMinputparams),feedin['anaproc']))
         outputPoF = thisPool.map(CreatePoF2ptCfuns.mapper,PoFinputparams)
-        if len(DefSmearList) > 1:
+        if len(DefSmearList) > 1 and DoCM:
             outputCM = thisPool.map(CreateCM2ptCfuns.mapper,CMinputparams)
         thisPool.close()
         thisPool.join()
     else:
         outputPoF,outputCM = [],[]
         for iin in PoFinputparams: outputPoF.append(CreatePoF2ptCfuns.mapper(iin))
-        if len(DefSmearList) > 1:
+        if len(DefSmearList) > 1 and DoCM:
             for iin in CMinputparams: outputCM.append(CreateCM2ptCfuns.mapper(iin))
     
     
     thisPoFTvarList = ['PoF'+str(PoFShifts)+iTvar for iTvar in TwoPtDefTvarList]
-    if len(DefSmearList) > 1:
+    if len(DefSmearList) > 1 and DoCM:
         thisCMTvarList = ['CM'+iTvar for iTvar in TwoPtDefTvarList]
         for iout,iTvar in zip(outputCM,thisCMTvarList):
             [CMdata2pt,LEvec,REvec,Emass] = iout
@@ -88,7 +88,7 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
 
     SetList = []
     SetList += CreateMassSet(thisSmearList,StateSet,[],tsrclist=PoFtsourceList,flipord=True)
-    if len(DefSmearList) > 1: SetList += CreateMassSet([],CMStateSet,thisCMTvarList,flipord=True)
+    if len(DefSmearList) > 1 and DoCM: SetList += CreateMassSet([],CMStateSet,thisCMTvarList,flipord=True)
     SetList += CreateMassSet([],StateSet,thisPoFTvarList,flipord=True)
     PrintCfunToFile([C2out],SetList,thisMomList,['twopt'],AddDict=InfoDict)
     PrintSetToFile([C2out],SetList,thisMomList,['Mass'],0,AddDict=InfoDict)
