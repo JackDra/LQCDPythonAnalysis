@@ -309,7 +309,8 @@ else:
 # DefSmearList = ['8','16','32','64','128','256']
 # DefSmearList = ['32','64','128']
 # DefSmearList = ['32','64','128']
-DefSmearList = ['32']
+# DefSmearList = ['32']
+DefSmearList = ['64']
 # DefSmearList = ['128']
 if kappa == 12090:
     SingSmearList = ['32']
