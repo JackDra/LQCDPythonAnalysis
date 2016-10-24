@@ -105,7 +105,7 @@ DoMulticore = True # Runs multicore wherever implemented
 DoContentsCheck = False # True makes sure the xml file has the correct momenta first field, turn off for more performance
 OnlySelVar = False # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
 DoNorm = False # normalises the 2 point function (see CMSTech.py)
-DoSym = True # symmetrises the 2 point function (see CMSTech.py)
+DoSym = False # symmetrises the 2 point function (see CMSTech.py)
 # VarMethodMethod = 'Regular' # for solving the Variational method, different ways of doing it/
 # VarMethodMethod = 'Symmetriceigh' ## Symmetic matrix construction WITH symmetric solver
 # VarMethodMethod = 'Symmetric' ## Symmetic matrix construction WITHOUT symmetric solver
@@ -306,14 +306,14 @@ else:
     AnatodtList = DeftodtList
     AnaTvarList = DefTvarList
     
-DefSmearList = ['32','64','128']
+# DefSmearList = ['32','64','128']
 # DefSmearList = ['8','16','32','64','128','256']
 # DefSmearList = ['64','128']
 # DefSmearList = ['32','64']
 # DefSmearList = ['32','128']
 # DefSmearList = ['32']
 # DefSmearList = ['64']
-# DefSmearList = ['128']
+DefSmearList = ['128']
 if kappa == 12090:
     SingSmearList = ['32']
 if kappa == 12104:
