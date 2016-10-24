@@ -107,9 +107,9 @@ OnlySelVar = False # Selects "ThePickedSumVar" (see below) variable for all the 
 DoNorm = True # normalises the 2 point function (see CMSTech.py)
 DoSym = True # symmetrises the 2 point function (see CMSTech.py)
 # VarMethodMethod = 'Regular' # for solving the Variational method, different ways of doing it/
-VarMethodMethod = 'Symmetriceigh' ## Symmetic matrix construction WITH symmetric solver
+# VarMethodMethod = 'Symmetriceigh' ## Symmetic matrix construction WITH symmetric solver
 # VarMethodMethod = 'Symmetric' ## Symmetic matrix construction WITHOUT symmetric solver
-# VarMethodMethod = 'AxBxlSolve' ## solve Ax = Bxc system directly (generalised eigenvalue problem).
+VarMethodMethod = 'AxBxlSolve' ## solve Ax = Bxc system directly (generalised eigenvalue problem).
 NoSFRfacScale = False # Turn on to only scale the R function by sqrt((Epp+m)(Ep+m)/EppEp) for form factor creation
 ReadPoF2pt = False # Create PoF using already calculated eigenvectors. This is used if the statistics or solver method has changed.
 DeCorrPoF = False ## used for debugging the pencil of function method (decorrelation problem) !!!!!DEPRECIATED, LEAVE FALSE!!!!!
