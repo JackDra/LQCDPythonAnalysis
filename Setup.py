@@ -6,9 +6,28 @@ import sys
 
 thisscriptdir = os.getcwd()
 
+
 if 'LQCDPythonAnalysis' not in thisscriptdir:
     raise EnvironmentError('Please run from the script directory .../LQCDPythonAnalysis ')
 
+
+
+def MakeDebug(TF):
+    with open(thisscriptdir+'/setup.cfg','r+') as f:
+        for line in f:
+            if 'Debug' in line:
+                print 'Debug' , line
+                f.write('\n' +TF+'      \n')
+
+if any(['-Debug' in iarg for iarg in sys.argv]):
+    if any(['-Debug=True' in iarg for iarg in sys.argv]):
+        MakeDebug('True')
+        print 'Debug set to True'
+    else:
+        MakeDebug('False')
+        print 'Debug set to False'
+    exit()
+        
 print 'setting scriptdir to ',thisscriptdir
 
 if 'default' in sys.argv[-1]:
