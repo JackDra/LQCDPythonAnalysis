@@ -361,7 +361,7 @@ if OnlySelVar:
         DefPoFVarList = [[17,2]]
     else:
         DefPoFVarList = [[20,2]]
-    PoFTvarList = ['PoF'+str(PoFShifts)+'to'+str(DefPoFVarList[0])+'dt'+str(DefPoFVarList[1])]
+    PoFTvarList = ['PoF'+str(PoFShifts)+'to'+str(DefPoFVarList[0][0])+'dt'+str(DefPoFVarList[0][1])]
 else:
     DefPoFVarList = DeftodtList
     PoFTvarList = [itvar.replace('CM','PoF'+str(PoFShifts)) for itvar in DefTvarList]
