@@ -232,9 +232,9 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
                                     pars2pt.append(datadict['twopt'][imom][iSF][twoptiset][ipar][OSFfitr[CreateOSFfitKey(fitrkey)[0]]]['Boot'])
                                 data2ptZ =  ff.C2OneStateFitFunNoExp(GetintTSink(iset)-tsource,pars2pt)
                             elif 'TSF' in iSF:
-                                if not all([iState in datadict['twopt'][imom][iSF][twoptiset].keys() for iState in StateParList['Two']['C2']]): continue
+                                if not all([iState in datadict['twopt'][imom][iSF][iset].keys() for iState in StateParList['Two']['C2']]): continue
                                 for ipar in StateParList['Two']['C2']:
-                                    pars2pt.append(datadict['twopt'][imom][iSF][twoptiset][ipar][TSFfitr]['Boot'])
+                                    pars2pt.append(datadict['twopt'][imom][iSF][iset][ipar][TSFfitr]['Boot'])
                                 data2ptZ =  ff.C2TSFLineFun(GetintTSink(iset)-tsource,pars2pt)
                             if 'RF'+iSF not in datadict[igamma][imom].keys(): datadict[igamma][imom]['RF'+iSF] = OrderedDict()
                             if iset not in datadict[igamma][imom]['RF'+iSF].keys(): datadict[igamma][imom]['RF'+iSF][iset] = OrderedDict()
