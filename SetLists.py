@@ -124,7 +124,7 @@ def RemoveToDt(thisstring):
 def CreateStateSet(smL,stateL,tvarL):
     Lout = ['sm'+str(ism) for ism in smL]
     for istate in stateL:
-        Lout += ['state'+str(istate)+itvar for itvar in tvarL]
+        Lout += ['state'+str(istate)+str(itvar) for itvar in tvarL]
     return Lout
 
 def CreateTSinkStateSet(thisTsink,smL,stateL,tvarL):
