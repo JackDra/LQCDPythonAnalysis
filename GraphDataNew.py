@@ -384,12 +384,8 @@ def PlotRFSetTSF(data,data2pt,thisSetList,TSFcut,thisTSF,legrem=''):
         thiscol = thiscolcyc.next()
         thissym = thissymcyc.next()
         thisshift = thisshiftcyc.next()
-        if Debug: print data.keys() , thisTSF
-        if Debug: print iset
         if not CheckDict(data,'RF'+thisTSF,iset): continue
         PlotRF(data['RF'+thisTSF][iset],thiscol,thissym,thisshift,LegLab(iset.replace(legrem,'')))
-        if Debug: print 'twopt', data2pt.keys() , thisTSF
-        if Debug: print thissm
         if not CheckDict(data2pt,thisTSF,thissm): continue
         PlotTSFLine(data[thisTSF][thissm],data2pt[thisTSF][thissm],thistsink.replace('tsink',''),thiscol,thisshift,TSFcut,thissm)
         if 'CM' in thisTSF: PlotTSFValue(data[thisTSF][thissm],thiscol,thisshift,TSFcut,thissm,thistsink.replace('tsink','') )
