@@ -323,6 +323,7 @@ def ReadSFFile(filedir,filename,OneOrTwo='Two',thisMomList=RunMomList):
         for thismom in thisMomList:
             ip = qstrTOqcond(thismom)
             readfile = filedir+MakeMomDir(ip)+thisfilename.replace('.xml',ip+'.xml')
+            if 'Two' in OneOrTwo: readfile = readfile.replace('tsrc'+str(tsource),'')
             # if os.path.isfile(readfile):
             data = ReadXmlAndPickle(readfile)[0]
             if len(data.keys()) > 0:
