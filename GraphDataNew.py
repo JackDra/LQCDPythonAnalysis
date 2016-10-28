@@ -389,7 +389,9 @@ def PlotRFSetTSF(data,data2pt,thisSetList,TSFcut,thisTSF,legrem=''):
         if not CheckDict(data,thisTSF,thissm) or not CheckDict(data2pt,thisTSF,thissm): continue
         PlotTSFLine(data[thisTSF][thissm],data2pt[thisTSF][thissm],thistsink.replace('tsink',''),thiscol,thisshift,TSFcut,thissm)
         if 'CM' in thisTSF: PlotTSFValue(data[thisTSF][thissm],thiscol,thisshift,TSFcut,thissm,thistsink.replace('tsink','') )
-    if 'CM' not in thisTSF: PlotTSFValue(data[thisTSF][thissm],thiscol,thisshift,TSFcut,thissm,thistsink.replace('tsink','') )
+    if 'CM' not in thisTSF:
+        if CheckDict(data,thisTSF,thissm) and CheckDict(data2pt,thisTSF,thissm):
+            PlotTSFValue(data[thisTSF][thissm],thiscol,thisshift,TSFcut,thissm,thistsink.replace('tsink','') )
 
 def PlotRFSetOSF(data,data2pt,thisSetList,OSFcut,thisOSF,legrem=''):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
