@@ -215,7 +215,7 @@ def SetSumFunAxies(DoY):
 def SetRFAxies(thisGamma):
     pl.xlabel(RFxlab)
     pl.ylabel(RFylab)
-    if Debug: print 'Hardcoding yaxis limits',thisGamma, ylimDict.keys()
+    # if Debug: print 'Hardcoding yaxis limits',thisGamma, ylimDict.keys()
     if thisGamma not in ylimDict.keys():
         pl.ylim(max(pl.ylim()[0],-5),min(pl.ylim()[1],5))
     else:
