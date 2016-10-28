@@ -223,7 +223,7 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
                     if Debug: print 'FOUR ', datadict['twopt'][imom].keys(), iSF 
                     if iSF in datadict['twopt'][imom].keys():
                         if Debug: print 'FIVE ', datadict['twopt'][imom][iSF].keys(), RemoveTSinkTsrc(iset)
-                        if RemoveTSinkTsrc(iset) in datadict['twopt'][imom][iSF].keys():
+                        if twoptiset in datadict['twopt'][imom][iSF].keys():
                             pars2pt = []
                             if 'OSF' in iSF:
                                 if not all([iState in datadict['twopt'][imom][iSF][twoptiset].keys() for iState in StateParList['One']['C2']]): continue
