@@ -381,13 +381,14 @@ def PlotRFSetTSF(data,data2pt,thisSetList,TSFcut,thisTSF,legrem=''):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     for iset in SortMySet(thisSetList)[0]:
         thistsink,thissm = SplitTSinkString(iset)
+        thissm = 'tsrc'+str(tsource)+thissm
         thiscol = thiscolcyc.next()
         thissym = thissymcyc.next()
         thisshift = thisshiftcyc.next()
         if not CheckDict(data,'RF'+thisTSF,iset): continue
         PlotRF(data['RF'+thisTSF][iset],thiscol,thissym,thisshift,LegLab(iset.replace(legrem,'')))
-        if Debug: print data2pt.keys(), thisTSF
-        if  CheckDict(data2pt,thisTSF) and Debug: print data2pt[thisTSF].keys(), thissm
+        # if Debug: print data2pt.keys(), thisTSF
+        # if  CheckDict(data2pt,thisTSF) and Debug: print data2pt[thisTSF].keys(), thissm
         if not CheckDict(data2pt,thisTSF,thissm): continue
         PlotTSFLine(data[thisTSF][thissm],data2pt[thisTSF][thissm],thistsink.replace('tsink',''),thiscol,thisshift,TSFcut,thissm)
         if 'CM' in thisTSF: PlotTSFValue(data[thisTSF][thissm],thiscol,thisshift,TSFcut,thissm,thistsink.replace('tsink','') )
