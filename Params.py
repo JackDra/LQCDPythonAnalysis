@@ -300,8 +300,8 @@ for idt in DefdtList:
     DefTvarto20.append('CMto20dt'+str(idt))
             
 if OnlySelVar:
-    AnatodtList = DeftodtPicked
-    AnaTvarList = DefTvarPicked
+    AnatodtList = [DeftodtPicked]
+    AnaTvarList = [DefTvarPicked]
 else:
     AnatodtList = DeftodtList
     AnaTvarList = DefTvarList
