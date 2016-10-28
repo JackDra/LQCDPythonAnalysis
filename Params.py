@@ -379,7 +379,7 @@ PoFTSinkStrList = ['tsink'+str(its) for its in PoFTSinkList]
 # ##uncomment below to restore##
 ## warning, below has been hard coded to fix the to16 is to17 problem i had
 PoFDirTvarList = ['PoFto'+str(DefPoFVarList[0][0]-1)+'dt'+str(DefPoFVarList[0][1])]
-PoFReadTvarList = ['PoFto'+str(DefPoFVarList[0][0]-1)+'dt'+str(DefPoFVarList[1][0])+'nD'+str(PoFShifts)]
+PoFReadTvarList = ['PoFto'+str(DefPoFVarList[0][0]-1)+'dt'+str(DefPoFVarList[0][1])+'nD'+str(PoFShifts)]
 
 PoFFlagList = [PickedStateStr+iPoF for iPoF in PoFTvarList]
 
