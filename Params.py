@@ -261,7 +261,7 @@ DefdtList = [1,2,3,4,5,6]
 # DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
 DeftodtPicked = [(20,2)]
 # DeftodtPicked = [(18,2)]
-DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
+DefTvarPicked = [['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]]
 
 # DeftodtPicked = Elongate(DeftoList,DefdtList)
 # DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
@@ -300,8 +300,8 @@ for idt in DefdtList:
     DefTvarto20.append('CMto20dt'+str(idt))
             
 if OnlySelVar:
-    AnatodtList = [DeftodtPicked]
-    AnaTvarList = [DefTvarPicked]
+    AnatodtList = DeftodtPicked
+    AnaTvarList = DefTvarPicked
 else:
     AnatodtList = DeftodtList
     AnaTvarList = DefTvarList
