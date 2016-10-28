@@ -214,7 +214,7 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
         for imom in datadict[igamma].iterkeys():
         # if zmomstr not in datadict[igamma].keys(): continue
             for iset in datadict[igamma][imom]['RF'].keys():
-                twoptiset = 'tsrc'+str(tsource)+twoptiset
+                twoptiset = 'tsrc'+str(tsource)+RemoveTSink(iset)
                 if 'RF' not in datadict['twopt'][imom].keys(): continue
                 if twoptiset not in datadict['twopt'][imom]['RF'].keys(): continue
                     # if thisPrintRead: print RemoveTSinkTsrc(iset)+' not in two point set list, not constructing RF'
