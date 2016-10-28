@@ -459,7 +459,7 @@ def MakeMethodsDict(readdir,readfile,thisMethodList,thisSetList,thisMomList=RunM
                 filename = readdir+iSet+readfile
                 thisDict[iSet] = ReadRFFile(readdir,iSet+readfile,thisMomList=thisMomList)
         elif 'TSF' in iMeth:
-            for iSet in ReduceTooMassSet(loopSetList):
+            for iSet in ReduceTsink(loopSetList):
                 thisDict[iSet] = ReadTSFFile(readdir+iMeth+'/',iSet+readfile.replace('.xml','##.xml'),thisMomList=thisMomList)
         elif 'OSF' in iMeth:
             for iSet in loopSetList:
