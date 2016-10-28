@@ -282,6 +282,9 @@ def GetTsinkSmLists(listin,NoREvec=False,Reduced=True):
 def RemoveTSink(string):
     return SplitTSinkString(string)[1]
 
+def RemoveTSinkTsrc(string):
+    return RemoveTsrc(SplitTSinkString(string)[1])
+
 def GetintTSink(string):
     return int(SplitTSinkString(string)[0].replace('tsink',''))
 
