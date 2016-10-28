@@ -178,11 +178,11 @@ def CreateMassSet(thisSmearL,thisStateList,thisTvarList,tsrclist = PoFtsourceLis
     if flipord:
         for itvar in thisTvarList:
             for istate in thisStateList:
-                SetGraph.append('state'+str(istate)+itvar)
+                SetGraph.append('state'+str(istate)+str(itvar))
     else:
         for istate in thisStateList:
             for itvar in thisTvarList:
-                SetGraph.append('state'+str(istate)+itvar)
+                SetGraph.append('state'+str(istate)+str(itvar))
     return SortMySet(SetGraph,massset=True)[0]
 
 
