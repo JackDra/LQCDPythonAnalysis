@@ -30,6 +30,8 @@ if 'default' in sys.argv[-1]:
         f.write(str(thiskappa)+'\n')
         f.write('\nPoFShifts:\n')
         f.write(str(thisNShifts)+'\n')
+        f.write('\nDebug:\n')
+        f.write('False\n')
     sys.exit()
     
 print ''
