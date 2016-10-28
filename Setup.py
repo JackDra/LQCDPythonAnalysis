@@ -24,8 +24,6 @@ def MakeDebug(TF):
         f.write(str(kappa)+'\n')
         f.write('\nPoFShifts:\n')
         f.write(str(PoFShifts)+'\n')
-        f.write('\nPoFShifts:\n')
-        f.write(str(PoFShifts)+'\n')
         f.write('\nNconfs:\n')
         f.write(str(RunNconfs)+'\n')
         f.write('\nDebug:\n')
