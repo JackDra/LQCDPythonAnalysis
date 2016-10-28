@@ -217,27 +217,28 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
                 if Debug: print 'ONE ',datadict['twopt'][imom].keys() , 'RF'
                 if Debug: print 'TWO ', iset, RemoveTSinkTsrc(iset)
                 if 'RF' not in datadict['twopt'][imom].keys(): continue
-                if RemoveTSinkTsrc(iset) not in datadict['twopt'][imom]['RF'].keys(): continue
+                if Debug: print 'THREE ', datadict['twopt'][imom]['RF'].keys(), RemoveTSink(iset)
+                if RemoveTSink(iset) not in datadict['twopt'][imom]['RF'].keys(): continue
                     # if thisPrintRead: print RemoveTSinkTsrc(iset)+' not in two point set list, not constructing RF'
                 data3pt = data3ptdict[igamma][imom]['RF'][iset]['Boot']
                 for iSF in ['OSF'+iOSF for iOSF in OSFFileFlags]+['TSF'+iTSF for iTSF in TSFFileFlags]:
-                    if Debug: print 'THREE ', datadict['twopt'][imom].keys(), iSF 
+                    if Debug: print 'FOUR ', datadict['twopt'][imom].keys(), iSF 
                     if iSF in datadict['twopt'][imom].keys():
-                        if Debug: print 'FOUR ', datadict['twopt'][imom][iSF].keys(), RemoveTSinkTsrc(iset)
+                        if Debug: print 'FIVE ', datadict['twopt'][imom][iSF].keys(), RemoveTSinkTsrc(iset)
                         if RemoveTSinkTsrc(iset) in datadict['twopt'][imom][iSF].keys():
                             pars2pt = []
                             if 'OSF' in iSF:
-                                if not all([iState in datadict['twopt'][imom][iSF][RemoveTSinkTsrc(iset)].keys() for iState in StateParList['One']['C2']]): continue
+                                if not all([iState in datadict['twopt'][imom][iSF][RemoveTSink(iset)].keys() for iState in StateParList['One']['C2']]): continue
                                 for ipar in StateParList['One']['C2']:
                                     fitrkey = RemoveTSinkTsrc(iset)
                                     for itvar in DefTvarPicked:
                                         if itvar in fitrkey: fitrkey = PickedStateStr+itvar
-                                    pars2pt.append(datadict['twopt'][imom][iSF][RemoveTSinkTsrc(iset)][ipar][OSFfitr[CreateOSFfitKey(fitrkey)[0]]]['Boot'])
+                                    pars2pt.append(datadict['twopt'][imom][iSF][RemoveTSink(iset)][ipar][OSFfitr[CreateOSFfitKey(fitrkey)[0]]]['Boot'])
                                 data2ptZ =  ff.C2OneStateFitFunNoExp(GetintTSink(iset)-tsource,pars2pt)
                             elif 'TSF' in iSF:
-                                if not all([iState in datadict['twopt'][imom][iSF][RemoveTSinkTsrc(iset)].keys() for iState in StateParList['Two']['C2']]): continue
+                                if not all([iState in datadict['twopt'][imom][iSF][RemoveTSink(iset)].keys() for iState in StateParList['Two']['C2']]): continue
                                 for ipar in StateParList['Two']['C2']:
-                                    pars2pt.append(datadict['twopt'][imom][iSF][RemoveTSinkTsrc(iset)][ipar][TSFfitr]['Boot'])
+                                    pars2pt.append(datadict['twopt'][imom][iSF][RemoveTSink(iset)][ipar][TSFfitr]['Boot'])
                                 data2ptZ =  ff.C2TSFLineFun(GetintTSink(iset)-tsource,pars2pt)
                             if 'RF'+iSF not in datadict[igamma][imom].keys(): datadict[igamma][imom]['RF'+iSF] = OrderedDict()
                             if iset not in datadict[igamma][imom]['RF'+iSF].keys(): datadict[igamma][imom]['RF'+iSF][iset] = OrderedDict()
