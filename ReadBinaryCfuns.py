@@ -98,7 +98,7 @@ class Read2ptCfunChroma:
         ##CURRENT: LIME_UNPACK THE FILE AND READ THE BINARY INSIDE##
         self.data = []
         barnum = 0
-        # barnum = 25
+        # barnum = 21
         for ip,iploc in enumerate(thisMomList):
             self.data.append(np.memmap(thisfile,dtype=np.complex128,mode='r',offset=nt*ChromaSIS*ip,shape=(nt,)).byteswap())
 
