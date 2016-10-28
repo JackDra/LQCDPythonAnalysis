@@ -53,3 +53,5 @@ with open(scriptdir+'/setup.cfg','w') as f:
     f.write(str(PoFShifts)+'\n')
     f.write('\nNconfs:\n')
     f.write(str(TotNconf)+'\n')
+    f.write('\nDebug:\n')
+    f.write(str(Debug)+'\n')
