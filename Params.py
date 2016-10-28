@@ -84,7 +84,7 @@ with open('./setup.cfg','r') as f:
                     else:
                         RunNconfs = int(thisline)
                 elif 'Debug' in thisread:
-                    Debug = 'True' in thisread or 'true' in thisread
+                    Debug = 'True' in thisline or 'true' in thisline
                         
 PoFC2C3Dis = '665.'
 NewFileFlag = PoFC2C3Dis
