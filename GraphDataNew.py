@@ -404,7 +404,10 @@ def PlotRFSetOSF(data,data2pt,thisSetList,OSFcut,thisOSF,legrem=''):
         thiscol = thiscolcyc.next()
         thissym = thissymcyc.next()
         thisshift = thisshiftcyc.next()
-        if not CheckDict(data,'RF'+thisOSF,iset): continue
+        if not CheckDict(data,'RF'+thisOSF,iset):
+            if Debug: print data.keys(), 'RF'+thisOSF
+            if Debug: print iset
+            continue
         PlotRF(data['RF'+thisOSF][iset],thiscol,thissym,thisshift,LegLab(iset.replace(legrem,'')))
         # PlotOSFLine(data[thisOSF][thissm],data2pt[thisOSF][thissm],thistsink.replace('tsink',''),thiscol,thisOSFcut,thissm)
         OSFset = iset
