@@ -381,7 +381,7 @@ def PlotRFSetTSF(data,data2pt,thisSetList,TSFcut,thisTSF,legrem=''):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     for iset in SortMySet(thisSetList)[0]:
         thistsink,thissm = SplitTSinkString(iset)
-        thissm = 'tsrc'+str(tsource)+thissm
+        twoptsm = 'tsrc'+str(tsource)+thissm
         thiscol = thiscolcyc.next()
         thissym = thissymcyc.next()
         thisshift = thisshiftcyc.next()
@@ -389,11 +389,11 @@ def PlotRFSetTSF(data,data2pt,thisSetList,TSFcut,thisTSF,legrem=''):
         PlotRF(data['RF'+thisTSF][iset],thiscol,thissym,thisshift,LegLab(iset.replace(legrem,'')))
         # if Debug: print data2pt.keys(), thisTSF
         # if  CheckDict(data2pt,thisTSF) and Debug: print data2pt[thisTSF].keys(), thissm
-        if not CheckDict(data2pt,thisTSF,thissm): continue
-        PlotTSFLine(data[thisTSF][thissm],data2pt[thisTSF][thissm],thistsink.replace('tsink',''),thiscol,thisshift,TSFcut,thissm)
-        if 'CM' in thisTSF: PlotTSFValue(data[thisTSF][thissm],thiscol,thisshift,TSFcut,thissm,thistsink.replace('tsink','') )
+        if not CheckDict(data2pt,thisTSF,twoptsm): continue
+        PlotTSFLine(data[thisTSF][thissm],data2pt[thisTSF][twoptsm],thistsink.replace('tsink',''),thiscol,thisshift,TSFcut,thissm)
+        if 'CM' in thisTSF: PlotTSFValue(data[thisTSF][thissm],thiscol,thisshift,TSFcut,twoptsm,thistsink.replace('tsink','') )
     if 'CM' not in thisTSF:
-        if CheckDict(data,thisTSF,thissm) and CheckDict(data2pt,thisTSF,thissm):
+        if CheckDict(data,thisTSF,thissm) and CheckDict(data2pt,thisTSF,twoptsm):
             PlotTSFValue(data[thisTSF][thissm],thiscol,thisshift,TSFcut,thissm,thistsink.replace('tsink','') )
 
 def PlotRFSetOSF(data,data2pt,thisSetList,OSFcut,thisOSF,legrem=''):
