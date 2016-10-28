@@ -242,6 +242,9 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
                             GetBootStats(datadict[igamma][imom]['RF'+iSF][iset]['Boot'])
                             datadict[igamma][imom]['RF'+iSF][iset]['Vals'] = Pullflag(datadict[igamma][imom]['RF'+iSF][iset]['Boot'],'Avg')
                             datadict[igamma][imom]['RF'+iSF][iset]['Valserr'] = Pullflag(datadict[igamma][imom]['RF'+iSF][iset]['Boot'],'Std')
+                        else:
+                            if Debug:
+                                print iset, RemoveTSink(iset), datadict['twopt'][imom][iSF].keys()
     if thisPrintRead: print 'Constructing Fitted RF Values took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s '
     return datadict
 
