@@ -117,7 +117,7 @@ PoFDelta = 2 ## sets the PoF detla time shift parameter.
 ReadPoF2pt = False # Create PoF using already calculated eigenvectors. This is used if the statistics or solver method has changed.
 DeCorrPoF = False ## used for debugging the pencil of function method (decorrelation problem) !!!!!DEPRECIATED, LEAVE FALSE!!!!!
 TimeInv = True ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
-DoCM = False
+DoCM = False ## does correlation matrix result ( no PoF) 
 
 ## Currenlty, not using Time Invariance in the Pencil of Function Analysis is only properly implemented and tested for 2-point correlation analysis
 if TimeInv:
