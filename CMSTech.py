@@ -91,17 +91,17 @@ def CreatePoFMatrix(thisCfun,thisPoFShifts=PoFShifts):
     if thisPoFShifts==0:
         thisCfunExt = thisCfun[0]
     else:
-        thisCfunShift = np.roll(thisCfun,-1,axis=3)
+        thisCfunShift = np.roll(thisCfun,-PoFDelta,axis=3)
         if thisPoFShifts==1:
             if TimeInv:
-                thisCfunShift2 = np.roll(thisCfunShift,-1,axis=3)
+                thisCfunShift2 = np.roll(thisCfunShift,-PoFDelta,axis=3)
                 thisCfunExt = np.concatenate((np.concatenate((thisCfun[0],thisCfunShift[0]),1),
                                               np.concatenate((thisCfunShift[0],thisCfunShift2[0]),1)))
             else:
                 thisCfunExt = np.concatenate((np.concatenate((thisCfun[0],thisCfunShift[0]),1),
                                               np.concatenate((thisCfun[1],thisCfunShift[1]),1)))
         elif thisPoFShifts==2:
-            thisCfunShift2 = np.roll(thisCfunShift,-1,axis=3)
+            thisCfunShift2 = np.roll(thisCfunShift,-PoFDelta,axis=3)
             thisCfunExt = np.concatenate((np.concatenate((thisCfun[0],thisCfunShift[0],thisCfunShift2[0]),1),
                                           np.concatenate((thisCfun[1],thisCfunShift[1],thisCfunShift2[1]),1),
                                           np.concatenate((thisCfun[2],thisCfunShift[2],thisCfunShift2[2]),1)))
@@ -375,43 +375,44 @@ def GetTvarREves(Cfunin,thistodtvals,masscut):
 #Cfun [ t_src, t , ism , jsm ]
 def GetTvarREvesPoF(Cfunin,thistodtvals,masscut,thisPoFShifts=PoFShifts):
     thisto,thisdt = thistodtvals
+    thisto = thisto-1 #python arrays start from 0, not 1
     Cfun = np.array(Cfunin)
     Cfuntomat,Cfuntodtmat = [[]],[[]]
     
-    Cfuntomat[0].append(Pullflag(Cfun[-1,:,:,thisto-1],'Avg'))
-    Cfuntodtmat[0].append(Pullflag(Cfun[-1,:,:,thisto-1+thisdt],'Avg'))
+    Cfuntomat[0].append(Pullflag(Cfun[-1,:,:,thisto],'Avg'))
+    Cfuntodtmat[0].append(Pullflag(Cfun[-1,:,:,thisto+thisdt],'Avg'))
     if thisPoFShifts > 0:
         if TimeInv:
-            Cfuntomat[0].append(Pullflag(Cfun[-1,:,:,thisto],'Avg'))
+            Cfuntomat[0].append(Pullflag(Cfun[-1,:,:,thisto+PoFDelta],'Avg'))
             Cfuntomat.append([])
-            Cfuntomat[1].append(Pullflag(Cfun[-1,:,:,thisto],'Avg'))
-            Cfuntomat[1].append(Pullflag(Cfun[-1,:,:,thisto+1],'Avg'))
-            Cfuntodtmat[0].append(Pullflag(Cfun[-1,:,:,thisto+thisdt],'Avg'))
+            Cfuntomat[1].append(Pullflag(Cfun[-1,:,:,thisto+PoFDelta],'Avg'))
+            Cfuntomat[1].append(Pullflag(Cfun[-1,:,:,thisto+(2*PoFDelta)],'Avg'))
+            Cfuntodtmat[0].append(Pullflag(Cfun[-1,:,:,thisto+thisdt+PoFDelta],'Avg'))
             Cfuntodtmat.append([])
-            Cfuntodtmat[1].append(Pullflag(Cfun[-1,:,:,thisto+thisdt],'Avg'))
-            Cfuntodtmat[1].append(Pullflag(Cfun[-1,:,:,thisto+1+thisdt],'Avg'))
+            Cfuntodtmat[1].append(Pullflag(Cfun[-1,:,:,thisto+thisdt+PoFDelta],'Avg'))
+            Cfuntodtmat[1].append(Pullflag(Cfun[-1,:,:,thisto+thisdt+(2*PoFDelta)],'Avg'))
         else:
-            Cfuntomat[0].append(Pullflag(Cfun[-1,:,:,thisto],'Avg'))
+            Cfuntomat[0].append(Pullflag(Cfun[-1,:,:,thisto+PoFDelta],'Avg'))
             Cfuntomat.append([])
-            Cfuntomat[1].append(Pullflag(Cfun[-2,:,:,thisto-1],'Avg'))
             Cfuntomat[1].append(Pullflag(Cfun[-2,:,:,thisto],'Avg'))
-            Cfuntodtmat[0].append(Pullflag(Cfun[-1,:,:,thisto+thisdt],'Avg'))
+            Cfuntomat[1].append(Pullflag(Cfun[-2,:,:,thisto+PoFDelta],'Avg'))
+            Cfuntodtmat[0].append(Pullflag(Cfun[-1,:,:,thisto+thisdt+PoFDelta],'Avg'))
             Cfuntodtmat.append([])
-            Cfuntodtmat[1].append(Pullflag(Cfun[-2,:,:,thisto-1+thisdt],'Avg'))
             Cfuntodtmat[1].append(Pullflag(Cfun[-2,:,:,thisto+thisdt],'Avg'))
+            Cfuntodtmat[1].append(Pullflag(Cfun[-2,:,:,thisto+thisdt+PoFDelta],'Avg'))
         if thisPoFShifts > 1:
-            Cfuntomat[0].append(Pullflag(Cfun[-1,:,:,thisto+1],'Avg'))
-            Cfuntomat[1].append(Pullflag(Cfun[-2,:,:,thisto+1],'Avg'))
+            Cfuntomat[0].append(Pullflag(Cfun[-1,:,:,thisto+(2*PoFDelta)],'Avg'))
+            Cfuntomat[1].append(Pullflag(Cfun[-2,:,:,thisto+(2*PoFDelta)],'Avg'))
             Cfuntomat.append([])
-            Cfuntomat[2].append(Pullflag(Cfun[-3,:,:,thisto-1],'Avg'))
             Cfuntomat[2].append(Pullflag(Cfun[-3,:,:,thisto],'Avg'))
-            Cfuntomat[2].append(Pullflag(Cfun[-3,:,:,thisto+1],'Avg'))
-            Cfuntodtmat[0].append(Pullflag(Cfun[-1,:,:,thisto+1+thisdt],'Avg'))
-            Cfuntodtmat[1].append(Pullflag(Cfun[-2,:,:,thisto+1+thisdt],'Avg'))
+            Cfuntomat[2].append(Pullflag(Cfun[-3,:,:,thisto+PoFDelta],'Avg'))
+            Cfuntomat[2].append(Pullflag(Cfun[-3,:,:,thisto+(2*PoFDelta)],'Avg'))
+            Cfuntodtmat[0].append(Pullflag(Cfun[-1,:,:,thisto+thisdt+(2*PoFDelta)],'Avg'))
+            Cfuntodtmat[1].append(Pullflag(Cfun[-2,:,:,thisto+thisdt+(2*PoFDelta)],'Avg'))
             Cfuntodtmat.append([])
-            Cfuntodtmat[2].append(Pullflag(Cfun[-3,:,:,thisto-1+thisdt],'Avg'))
             Cfuntodtmat[2].append(Pullflag(Cfun[-3,:,:,thisto+thisdt],'Avg'))
-            Cfuntodtmat[2].append(Pullflag(Cfun[-3,:,:,thisto+1+thisdt],'Avg'))
+            Cfuntodtmat[2].append(Pullflag(Cfun[-3,:,:,thisto+thisdt+PoFDelta],'Avg'))
+            Cfuntodtmat[2].append(Pullflag(Cfun[-3,:,:,thisto+thisdt+(2*PoFDelta)],'Avg'))
     Cfuntoout,Cfuntodtout = CreatePoFMatrixtodt(Cfuntomat,Cfuntodtmat,thisPoFShifts=PoFShifts)
     [Emass,LEvec,REvec] = CreateLREves(Cfuntoout,Cfuntodtout,thisdt,masscut)
     return Emass,LEvec,REvec
