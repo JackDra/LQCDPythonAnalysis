@@ -92,6 +92,7 @@ def CreatePoFMatrix(thisCfun,thisPoFShifts=PoFShifts):
         thisCfunExt = thisCfun[0]
     else:
         thisCfunShift = np.roll(thisCfun,-PoFDelta,axis=3)
+        if DEBUGPoF: thisCfunShift = np.roll(thisCfun,-PoFDelta/2,axis=3)
         if thisPoFShifts==1:
             if TimeInv:
                 thisCfunShift2 = np.roll(thisCfunShift,-PoFDelta,axis=3)
