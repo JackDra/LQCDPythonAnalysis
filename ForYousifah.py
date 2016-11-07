@@ -40,7 +40,7 @@ srclist = ['1','2','3','7','8','9']
 
 cfundir = '/raid/jdragos/data/cfuns/k12090/source@/twoptsm32si32/'
 
-cfundirlist = [cfundir.replace('@',isrc) for isrc in cfundir]
+cfundirlist = [cfundir.replace('@',isrc) for isrc in srclist]
 cfundirout = '/raid/jdragos/data/cfuns/Yousifah/'
 
 totfilelist = []
