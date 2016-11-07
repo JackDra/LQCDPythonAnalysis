@@ -63,7 +63,7 @@ for idir in cfundirlist:
 
 print 'files IO:'
 
-for outfile,ifile in zip(totfilelist,outfilelist):
+for ifile,outfile in zip(totfilelist,outfilelist):
     print ifile
     print outfile
     print ''
