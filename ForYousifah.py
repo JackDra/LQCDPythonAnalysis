@@ -16,18 +16,21 @@ def ReadCfun(thisfile):
     ip,iploc = 0,qstrTOip('q = 0 0 0')
     for it in range(nt):
         ##11 + 22 projected spin component ns = 4 works
-        loc = SeekIncSize*2*(ns**2)*(it + iploc*nt)
-        f.seek(loc)
-        tmpdata = array('d')
-        tmpdata.read(f,1)
-        tmpdata.byteswap()
-        val = tmpdata[0]
-        f.seek(loc+10*SeekIncSize)
-        tmpdata = array('d')
-        tmpdata.read(f,1)
-        tmpdata.byteswap()
-        val += tmpdata[0]
-        data.append(val)
+        try:
+            loc = SeekIncSize*2*(ns**2)*(it + iploc*nt)
+            f.seek(loc)
+            tmpdata = array('d')
+            tmpdata.read(f,1)
+            tmpdata.byteswap()
+            val = tmpdata[0]
+            f.seek(loc+10*SeekIncSize)
+            tmpdata = array('d')
+            tmpdata.read(f,1)
+            tmpdata.byteswap()
+            val += tmpdata[0]
+            data.append(val)
+        except:
+            return False
         if np.isnan(data[it]):
             raise NaNCfunError('NaN Values: ' +qvecSet[iploc] + ' it='+str(it+1) )
         # if 'cmplx' in RI:
@@ -69,6 +72,7 @@ for ifile,outfile in zip(totfilelist,outfilelist):
     print ''
     if not os.path.isfile(ifile): continue
     idata = ReadCfun(ifile)
-    # WriteCfun(outfile,idata)
+
+    # if idata != False: WriteCfun(outfile,idata)
     
         
