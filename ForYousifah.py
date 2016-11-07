@@ -43,7 +43,9 @@ def WriteCfun(thisfile,data):
     #     for tdata in data:
     #         f.write(tdata)
 
-srclist = ['1','2','3','7','8','9']
+# srclist = ['1','2','3','7','8','9']
+srclist = ['1','3','7','8','9']
+
 
 cfundir = '/raid/jdragos/data/cfuns/k12090/source@/twoptsm32si32/'
 
