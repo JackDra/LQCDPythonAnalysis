@@ -7,7 +7,7 @@ import glob,os
 
 def ReadCfun(thisfile):
     data = []
-    while open(thisfile,'rb') as f:
+    with open(thisfile,'rb') as f:
         ip,iploc = 0,qstrTOip('q = 0 0 0')
         for it in range(nt):
             ##11 + 22 projected spin component ns = 4 works
@@ -32,7 +32,7 @@ def ReadCfun(thisfile):
     return data
 
 def WriteCfun(thisfile,data):
-    while open(thisfile,'wb') as f:
+    with open(thisfile,'wb') as f:
         for tdata in data:
             f.write(bin(tdata))
 
