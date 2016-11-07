@@ -72,7 +72,6 @@ for ifile,outfile in zip(totfilelist,outfilelist):
     print ''
     if not os.path.isfile(ifile): continue
     idata = ReadCfun(ifile)
-
-    # if idata != False: WriteCfun(outfile,idata)
+    if idata != False: WriteCfun(outfile,idata)
     
         
