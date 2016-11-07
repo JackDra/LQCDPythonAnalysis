@@ -68,10 +68,11 @@ print 'files IO:'
 
 for ifile,outfile in zip(totfilelist,outfilelist):
     print ifile
-    print outfile
-    print ''
     if not os.path.isfile(ifile): continue
     idata = ReadCfun(ifile)
-    if idata != False: WriteCfun(outfile,idata)
+    if idata != False:
+        print outfile
+        print ''
+        WriteCfun(outfile,idata)
     
         
