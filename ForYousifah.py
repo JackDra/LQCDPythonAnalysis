@@ -3,6 +3,7 @@
 from Params import *
 import glob,os
 from array import array
+import numpy as np
 
 SeekIncSize = 8
 
