@@ -2,6 +2,8 @@
 
 from Params import *
 import glob,os
+from array import array
+
 SeekIncSize = 8
 
 # data [it]
