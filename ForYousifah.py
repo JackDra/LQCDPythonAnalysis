@@ -57,12 +57,11 @@ for idir in cfundirlist:
     totfilelist += glob.glob(idir+'*.665.*t16*.2cf')
     outfilelist += [ifile.replace(idir,cfundirout) for ifile in totfilelist]
 
-print 'files found:'
-for ifile in totfilelist:
-    print ifile
+print 'files IO:'
 
 for outfile,ifile in zip(totfilelist,outfilelist):
     if not os.path.isfile(ifile): continue
+    print ifile
     idata = ReadCfun(ifile)
     WriteCfun(outfile,idata)
     
