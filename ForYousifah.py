@@ -64,10 +64,10 @@ for idir in cfundirlist:
 print 'files IO:'
 
 for outfile,ifile in zip(totfilelist,outfilelist):
-    if not os.path.isfile(ifile): continue
     print ifile
     print outfile
     print ''
+    if not os.path.isfile(ifile): continue
     idata = ReadCfun(ifile)
     # WriteCfun(outfile,idata)
     
