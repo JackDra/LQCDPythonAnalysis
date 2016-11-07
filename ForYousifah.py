@@ -47,8 +47,8 @@ totfilelist = []
 outfilelist = []
 for idir in cfundirlist:
     print 'Reading: ', idir
-    filelist = glob.glob(idir+'*.665.*t16*.2cf')
-    outfilelist += [ifile.replace(idir,cfundirout) for ifile in filelist]
+    totfilelist += glob.glob(idir+'*.665.*t16*.2cf')
+    outfilelist += [ifile.replace(idir,cfundirout) for ifile in totfilelist]
 
 print 'files found:'
 for ifile in totfilelist:
