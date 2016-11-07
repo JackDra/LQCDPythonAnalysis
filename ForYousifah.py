@@ -36,9 +36,10 @@ def ReadCfun(thisfile):
     return data
 
 def WriteCfun(thisfile,data):
-    with open(thisfile,'wb') as f:
-        for tdata in data:
-            f.write(tdata)
+    data.tofile(thisfile)
+    # with open(thisfile,'wb') as f:
+    #     for tdata in data:
+    #         f.write(tdata)
 
 srclist = ['1','2','3','7','8','9']
 
