@@ -252,8 +252,8 @@ def SetMassAxies():
 def SetLogAxies():
     pl.xlabel(r'$t$')
     pl.ylabel(r'$log(G_{2})$')
-    pl.xlim(0,20)
-    pl.ylim(-10,0)
+    pl.xlim(0,30)
+    pl.ylim(-20,0)
     SetxTicks()
     pl.legend()
     pl.tight_layout()
