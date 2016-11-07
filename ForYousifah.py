@@ -56,7 +56,8 @@ totfilelist = []
 outfilelist = []
 for idir in cfundirlist:
     print 'Reading: ', idir
-    totfilelist += glob.glob(idir+'*.665.*t16*.2cf')
+    # totfilelist += glob.glob(idir+'*.665.*t16*.2cf')
+    totfilelist += glob.glob(idir+'*kp120900.0*t16*.2cf')
     outfilelist += [ifile.replace(idir,cfundirout) for ifile in totfilelist]
 
 print 'files IO:'
