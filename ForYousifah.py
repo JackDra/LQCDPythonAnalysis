@@ -36,7 +36,7 @@ def ReadCfun(thisfile):
     return data
 
 def WriteCfun(thisfile,data):
-    data.tofile(thisfile)
+    np.array(data).tofile(thisfile)
     # with open(thisfile,'wb') as f:
     #     for tdata in data:
     #         f.write(tdata)
