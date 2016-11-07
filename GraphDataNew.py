@@ -253,7 +253,7 @@ def SetLogAxies():
     pl.xlabel(r'$t$')
     pl.ylabel(r'$log(G_{2})$')
     pl.xlim(0,20)
-    pl.ylim(0,-10)
+    pl.ylim(-10,0)
     SetxTicks()
     pl.legend()
     pl.tight_layout()
