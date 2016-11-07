@@ -928,6 +928,8 @@ def PlotOSFLog(data,col,smear,norm):
     dataAvg,dataErr = np.array(Pullflag(linedata,'Avg')),np.array(Pullflag(linedata,'Std'))
     dataup = dataAvg+dataErr
     datadown = dataAvg-dataErr
+    print dataAvg
+    print tdata
     pl.fill_between(tdata-1,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
     pl.plot([tdata[0]-1,tdata[-1]-1],[dataAvg[0],dataAvg[-1]],color=col)
 
