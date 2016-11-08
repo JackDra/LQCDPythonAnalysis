@@ -30,11 +30,23 @@ Pigi   = ElongateName(Pi,gi)
 Pigig5 = ElongateName(Pi,gig5)
 Pigigj = ElongateName(Pi,gigj)
 
-DictGMAiI = {iPi:['I'] for iPi in GMAi}
-DictGMAig5 = {iPi:['g5'] for iPi in GMAi}
-DictGMAigi = {iPi:gi for iPi in GMAi}
-DictGMAigig5 = {iPi:gig5 for iPi in GMAi}
-DictGMAigigj = {iPi:gigj for iPi in GMAi}
+# DictGMAiI = {iPi:['I'] for iPi in GMAi}
+# DictGMAig5 = {iPi:['g5'] for iPi in GMAi}
+# DictGMAigi = {iPi:gi for iPi in GMAi}
+# DictGMAigig5 = {iPi:gig5 for iPi in GMAi}
+# DictGMAigigj = {iPi:gigj for iPi in GMAi}
+DictGMAiI = {}
+DictGMAig5 = {}
+DictGMAigi = {}
+DictGMAigig5 = {}
+DictGMAigigj = {}
+for iPi in GMAi:
+    DictGMAiI[iPi] = ['I']
+    DictGMAig5[iPi] = ['g5']
+    DictGMAigi[iPi] = gi
+    DictGMAigig5[iPi] = gig5
+    DictGMAigigj[iPi] = gigj
+
 DictGMA4giDi = ReadProjDerList
 
 CurrTypes = ['Scalar','Vector','PsScalar','PsVector','Tensor']
