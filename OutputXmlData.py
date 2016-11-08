@@ -6,7 +6,7 @@ from FitFunctions import DPfitfunDer,DPfitfun2Der
 from BootTest import BootStrap1
 from MiscFuns import *
 from SetLists import GetTsinkSmLists
-# from OppFuns import *
+from OppFuns import CreateOppDir
 import xmltodict
 from collections import OrderedDict
 from XmlFuns import *
