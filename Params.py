@@ -459,9 +459,3 @@ SmearDictList = {'PoF' : PoFFlagList,
                  'Tsink' : SingSmList,
                  'tsinkRead' : SingSmearList}
 
-NoFFPars = {'Scalar'   : 1,
-            'Vector'   : 2,
-            'GeGm'   : 2,
-            'PsScalar' : 1,
-            'PsVector' : 2,
-            'Tensor'   : 3}
