@@ -127,7 +127,7 @@ else:
 
 ##DEBUG toggles (True/False):
 # Debug = True # for debugging, toggles alot of print statements on
-DEBUGPoF = True ## Temp debug parameter to test PoF (REMOVE ONCE DONE)
+# DEBUGPoF = True ## Temp debug parameter to test PoF (REMOVE ONCE DONE)
 ScaleByP4g4 = False ## scales out all operators by P4g4 instead of 2 point correlator at tsink for Ratio value (RF)
 ShowConfNum = Debug # debugging, show number of configs during read
 PrintRead = not DoMulticore # Screws up output if on and doing mulitcore reading
