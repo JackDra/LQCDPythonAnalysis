@@ -2,7 +2,8 @@
 from MiscFuns import *
 # from FFFuns import *
 from FitFunctions import *
-from Params import DefProjDerList
+from MomParams import *
+from Params import DefProjDerList,ReadProjDerList
 import cPickle as pickle
 
 Qtcut = 5
@@ -81,18 +82,18 @@ CurrOppsNoProjSigBack = {'Scalar'   : ['I'],
                          'PsVector' : g5gi,
                          'Tensor'   : gjgi}
 
-CurrFFs = {'Scalar'   : ScalarFF,
-           'Vector'   : VectorFF,
-           'PsScalar' : ScalarFF,
-           'PsVector' : PsVectorFF,
-           'Tensor'   : TensorFF}
+# CurrFFs = {'Scalar'   : ScalarFF,
+#            'Vector'   : VectorFF,
+#            'PsScalar' : ScalarFF,
+#            'PsVector' : PsVectorFF,
+#            'Tensor'   : TensorFF}
 
 
-# FFFitFuns = {'Scalar'   : FormFactorO1,
-#              'Vector'   : FormFactorO2,
-#              'PsScalar' : FormFactorO1,
-#              'PsVector' : FormFactorO2,
-#              'Tensor'   : FormFactorO3}
+FFFitFuns = {'Scalar'   : FormFactorO1,
+             'Vector'   : FormFactorO2,
+             'PsScalar' : FormFactorO1,
+             'PsVector' : FormFactorO2,
+             'Tensor'   : FormFactorO3}
 
 NoFFPars = {'Scalar'   : 1,
             'Vector'   : 2,

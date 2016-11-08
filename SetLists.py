@@ -4,7 +4,7 @@ from Params import *
 from FitParams import *
 from collections import OrderedDict
 from CombParams import CombList,CombFFList
-# from FFParams import NoFFList
+from FFParams import NoFFList
 import re
 
 def CutDupSet(SetList):

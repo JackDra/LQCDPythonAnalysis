@@ -13,6 +13,7 @@ from OppFuns import Wipe2pt,WipeSet
 from MiscFuns import *
 from MomParams import *
 from FFParams import *
+from FFFuns import *
 from ReadTxt import Get3ptSetMoms,Get2ptSetMoms
 from InputArgs import InputParams
 import copy

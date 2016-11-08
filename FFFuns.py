@@ -144,8 +144,9 @@ def RenormFF(FF,Val,thisDS):
         
 
 ##Same as above, but only checks for 0:
-FFFitFuns = {'Scalar'   : FormFactorO1,
-             'Vector'   : FormFactorO2,
-             'PsScalar' : FormFactorO1,
-             'PsVector' : FormFactorO2,
-             'Tensor'   : FormFactorO3}
+
+CurrFFs = {'Scalar'   : ScalarFF,
+           'Vector'   : VectorFF,
+           'PsScalar' : ScalarFF,
+           'PsVector' : PsVectorFF,
+           'Tensor'   : TensorFF}
