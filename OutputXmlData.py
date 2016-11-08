@@ -7,9 +7,7 @@ from BootTest import BootStrap1
 from MiscFuns import *
 from SetLists import GetTsinkSmLists
 # from OppFuns import *
-from FormFactors import NoFFPars
 import xmltodict
-import cPickle as pickle
 from collections import OrderedDict
 from XmlFuns import *
 from XmlFormatting import *
