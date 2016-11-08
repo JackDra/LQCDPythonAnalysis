@@ -43,14 +43,14 @@ if any(['-Debug' in iarg for iarg in sys.argv]):
 print 'setting scriptdir to ',thisscriptdir
 
 if 'default' in sys.argv[-1]:
-    thisdatadir = thisscriptdir
+    thisdatadir = thisscriptdir+'/'
     thisAnaProc = 1
     thisListOrSet = 'ReadSet'
     thiskappa = 12090
     thisNShifts = 1
     with open(thisscriptdir+'/setup.cfg','w') as f:
         f.write('\nscriptdir:\n')
-        f.write(thisscriptdir+'/\n')
+        f.write(thisscriptdir+'\n')
         f.write('\ndatadir:\n')
         f.write(thisdatadir+'\n')
         f.write('\nAnaProc:\n')
