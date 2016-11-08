@@ -94,12 +94,12 @@ FFFitFuns = {'Scalar'   : FormFactorO1,
              'PsVector' : FormFactorO2,
              'Tensor'   : FormFactorO3}
 
-NoFFPars = {'Scalar'   : 1,
-            'Vector'   : 2,
-            'GeGm'   : 2,
-            'PsScalar' : 1,
-            'PsVector' : 2,
-            'Tensor'   : 3}
+# NoFFPars = {'Scalar'   : 1,
+#             'Vector'   : 2,
+#             'GeGm'   : 2,
+#             'PsScalar' : 1,
+#             'PsVector' : 2,
+#             'Tensor'   : 3}
 
 NoFFList = {'Scalar'   : ['FF1'],
             'Vector'   : ['FF1','FF2'],
