@@ -619,10 +619,10 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
     for thisset in thisSetFlag:
         ##make legend formatting function
         thiskappa,keyset = SplitKappa(thisset)
-        if Debug:
-            print dataset.keys(), keyset
-            if keyset in dataset.keys(): dataset[keyset],thisFF
-            print
+        # if Debug:
+        #     print dataset.keys(), keyset
+        #     if keyset in dataset.keys(): dataset[keyset],thisFF
+        #     print
             
         if not CheckDict(dataset,keyset,thisFF): continue
         if dataset[keyset][thisFF] == False: continue        
