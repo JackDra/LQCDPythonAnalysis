@@ -390,10 +390,11 @@ def CreateCurrCombFn(thisstr,spacing=''):
     DS,Curr,FFComb = SplitDSCurr(thisstr)
     return spacing.join([FFComb,DS,Curr])
 
+
+##only finds non-overlapping occurances of k.....##
 def SplitKappa(thisstr):
-    thiskappa = re.search('k.....',thisstr)
-    if thiskappa == None:
-        return None,thisstr
-    else:
-        thiskappa = thiskappa.group()
-        return thiskappa,thisstr.replace(thiskappa,'')
+    for ikappa in re.findall('k.....',thisstr):
+        if ikappa[1:].isdigit():
+            return ikappa,thisstr.replace(ikappa,'')
+    return None,thisstr
+        
