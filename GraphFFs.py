@@ -94,6 +94,7 @@ def PickFFFewSets(currdata,thiscurr,thisSetList):
     # PickedSetList += FlagList(thisSetList,'SumMeth',SumFitRPicked,SumCutPar)
     # PickedSetList += FlagList(thisSetList,'OSF',OSFCutPicked)
     # PickedSetList += FlagList(thisSetList,'TSFTsink',TSFCutPicked)
+    if DEBUG: print PickedSetList
     return PickedSetList
 
 def ReadAndPlotFF(thisCurrDict,DoList='All'):
