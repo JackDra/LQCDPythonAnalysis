@@ -241,7 +241,7 @@ def PrintOpps(AllList):
     print 'All Opperators: \n'+'\n'.join(thisGS)
     print ''
     print 'Projectors: '+', '.join(thisProjS)
-    print 'DS: '+', '.join(thisDSS)
+    # print 'DS: '+', '.join(thisDSS)
     print 'Run: ' +RunRS
     print 'Extras: ' + ', '.join(Extra)
     print ''
