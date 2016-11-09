@@ -363,7 +363,7 @@ def CreateOSFfitKey(smear):
         smearindex = PickedStateStr+'REvec'
     elif 'CM' in smear:
         deltashift = 0
-        smearindex = PickedStateStr+'PoF'
+        smearindex = PickedStateStr+'CM'
         # for itvar in DefTvarPicked:
         #     if itvar in smear:
         #         deltashift = 0
