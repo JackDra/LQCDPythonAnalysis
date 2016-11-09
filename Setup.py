@@ -24,6 +24,8 @@ def MakeDebug(TF):
         f.write(str(kappa)+'\n')
         f.write('\nPoFShifts:\n')
         f.write(str(PoFShifts)+'\n')
+        f.write('\nPoF:\n')
+        f.write(str(PoFDelta)+'\n')
         f.write('\nNconfs:\n')
         f.write(str(RunNconfs)+'\n')
         f.write('\nDebug:\n')
@@ -48,6 +50,7 @@ if 'default' in sys.argv[-1]:
     thisListOrSet = 'ReadSet'
     thiskappa = 12090
     thisNShifts = 1
+    thisDelta = 1
     with open(thisscriptdir+'/setup.cfg','w') as f:
         f.write('\nscriptdir:\n')
         f.write(thisscriptdir+'\n')
@@ -61,6 +64,8 @@ if 'default' in sys.argv[-1]:
         f.write(str(thiskappa)+'\n')
         f.write('\nPoFShifts:\n')
         f.write(str(thisNShifts)+'\n')
+        f.write('\nPoFDelta:\n')
+        f.write(str(thisDelta)+'\n')
         f.write('\nDebug:\n')
         f.write('False\n')
     sys.exit()
@@ -100,7 +105,11 @@ print ''
 thiskappa = int(raw_input("Kappa Value: (0.XXXXX)\n"))
 
 print ''
-thisNShifts = int(raw_input("How Many Shifts?\n"))
+thisNShifts = int(raw_input("How Many Pencil of Function Shifts (set to 0 for none)?\n"))
+
+print ''
+thisDelta = int(raw_input("delta parameter in Pencil of Function (set to 0 for none)?\n"))
+
 
 with open(thisscriptdir+'/setup.cfg','w') as f:
     f.write('\nscriptdir:\n')
@@ -115,6 +124,8 @@ with open(thisscriptdir+'/setup.cfg','w') as f:
     f.write(str(thiskappa)+'\n')
     f.write('\nPoFShifts:\n')
     f.write(str(thisNShifts)+'\n')
+    f.write('\nPoFDelta:\n')
+    f.write(str(thisDelta)+'\n')
 
 
 from FFParams import DumpAllMomLists

@@ -76,6 +76,8 @@ with open('./setup.cfg','r') as f:
                     ListOrSet = thisline
                 elif 'PoFShifts' in thisread:
                     PoFShifts = int(thisline)
+                elif 'PoFDelta' in thisread:
+                    PoFDelta = int(thisline)
                 elif 'kappa' in thisread:
                     kappa = int(thisline)
                 elif 'Nconfs' in thisread:
@@ -105,7 +107,7 @@ ForcePos = False ## Forces all non-form factor graphs to be positive
 MultiCoreFitting = False # Multicore for Boot Fitting, not needed in current build
 DoMulticore = True # Runs multicore wherever implemented
 DoContentsCheck = False # True makes sure the xml file has the correct momenta first field, turn off for more performance
-OnlySelVar = False # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
+OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
 DoNorm = False # normalises the 2 point function (see CMSTech.py)
 DoSym = True # symmetrises the 2 point function (see CMSTech.py)
 # VarMethodMethod = 'Regular' # for solving the Variational method, different ways of doing it/
@@ -113,7 +115,6 @@ DoSym = True # symmetrises the 2 point function (see CMSTech.py)
 # VarMethodMethod = 'Symmetric' ## Symmetic matrix construction WITHOUT symmetric solver
 VarMethodMethod = 'AxBxlSolve' ## solve Ax = Bxc system directly (generalised eigenvalue problem).
 NoSFRfacScale = False # Turn on to only scale the R function by sqrt((Epp+m)(Ep+m)/EppEp) for form factor creation
-PoFDelta = 1 ## sets the PoF detla time shift parameter.
 ReadPoF2pt = False # Create PoF using already calculated eigenvectors. This is used if the statistics or solver method has changed.
 DeCorrPoF = False ## used for debugging the pencil of function method (decorrelation problem) !!!!!DEPRECIATED, LEAVE FALSE!!!!!
 TimeInv = False ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
