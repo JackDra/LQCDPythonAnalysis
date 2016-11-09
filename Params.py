@@ -168,8 +168,8 @@ if 'ReadList' in ListOrSet:
     nboot = 2
 elif 'ReadSet' in ListOrSet:
     nboot = 200
-tsource = 17
-# tsource = 16
+# tsource = 17
+tsource = 16
 if TimeInv:
     # PoFtsourceList = map(str,[tsource]*(PoFShifts+1))
     PoFtsourceList = [str(tsource)]
