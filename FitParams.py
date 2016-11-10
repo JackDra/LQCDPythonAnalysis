@@ -67,8 +67,8 @@ OneStateParList = {'C2':['Am','m0'] , 'C3':['B00']}
 #picked for plotting
 OSFCutList = ['cut4','cut5','cut6']
 OSFCutPicked = 'cut5'
-OSFfitvals = {'sm32': [28,35], 'sm64': [28,35] , 'sm128':[28,35],
-              PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[22,32],PickedStateStr+'CM':[22,32]}
+OSFfitvals = {'sm32': [29,35], 'sm64': [28,35] , 'sm128':[28,35],
+              PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[23,32],PickedStateStr+'CM':[25,32]}
     
 OSFfitr = {'sm32':str(OSFfitvals['sm32'][0])+'-'+str(OSFfitvals['sm32'][1]),
            'sm64':str(OSFfitvals['sm64'][0])+'-'+str(OSFfitvals['sm64'][1]),
