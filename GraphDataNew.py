@@ -459,16 +459,16 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
             dataplot['tVals'] = dataplot['tVals'][MassDt:] 
             PlotRF(dataplot,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset),MP=True)
 
+
+    
 def PlotLogSet(data,thisSetList,legrem=''):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
     for iset in iterSetList:
         if not CheckDict(data,'RF',iset): continue
         dataplot = deepcopy(data['RF'][iset])
-        norm,count = dataplot['Boot'][tsource-1],0
-        while norm < 0.:
-            norm = dataplot['Boot'][tsource+count]
-        dataplot['Boot'] = np.log([tboot/norm for tboot in dataplot['Boot']])
+        norm,count = GetBootNorm(dataplot['Boot'])
+        dataplot['Boot'] = np.log([tboot/norm for tboot in np.roll(dataplot['Boot'],-count,0)])
         dataplot['Boot'] = GetBootStats(dataplot['Boot'])
         PlotRF(dataplot,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset.replace(legrem,'')),MP=True,Log=True)
 
@@ -481,8 +481,10 @@ def PlotLogSetOSF(data,thisSetList,thisSF,legrem=''):
         thissym = thissymcyc.next()
         thisshift = thisshiftcyc.next()
         dataplot = deepcopy(data['RF'][iset])
-        norm = dataplot['Boot'][tsource-1]
-        dataplot['Boot'] = np.log([tboot/norm for tboot in dataplot['Boot']])
+        norm,count = GetBootNorm(dataplot['Boot'])
+        dataplot['Boot'] = np.log([tboot/norm for tboot in np.roll(dataplot['Boot'],-count,0)])
+        # norm = dataplot['Boot'][tsource-1]
+        # dataplot['Boot'] = np.log([tboot/norm for tboot in dataplot['Boot']])
         dataplot['Boot'] = GetBootStats(dataplot['Boot'])
         PlotRF(dataplot,thiscol,thissym,thisshift,LegLab(iset.replace(legrem,'')),MP=True,Log=True)
         if not CheckDict(data,'O'+thisSF,iset): continue
@@ -499,8 +501,10 @@ def PlotLogSetTSF(data,thisSetList,thisSF,legrem=''):
         thissym = thissymcyc.next()
         thisshift = thisshiftcyc.next()
         dataplot = deepcopy(data['RF'][iset])
-        norm = dataplot['Boot'][tsource-1]
-        dataplot['Boot'] = np.log([tboot/norm for tboot in dataplot['Boot']])
+        norm,count = GetBootNorm(dataplot['Boot'])
+        dataplot['Boot'] = np.log([tboot/norm for tboot in np.roll(dataplot['Boot'],-count,0)])
+        # norm = dataplot['Boot'][tsource-1]
+        # dataplot['Boot'] = np.log([tboot/norm for tboot in dataplot['Boot']])
         dataplot['Boot'] = GetBootStats(dataplot['Boot'])
         PlotRF(dataplot,thiscol,thissym,thisshift,LegLab(iset.replace(legrem,'')),MP=True,Log=True)
         if not CheckDict(data,'T'+thisSF,iset): continue
