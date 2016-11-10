@@ -934,7 +934,7 @@ def PlotOSFLog(data,col,smear,norm,DoPoFS):
     if not CheckDict(data,'Am',OSFfitr[smearindex],'Boot'): return
     parm0 = data['m0'][OSFfitr[smearindex]]['Boot']
     parAm = data['Am'][OSFfitr[smearindex]]['Boot']
-    tdata = np.arange(OSFfitvals[smearindex][0]+1,OSFfitvals[smearindex][1]+1+incr,incr)-tsource
+    tdata = np.arange(OSFfitvals[smearindex][0],OSFfitvals[smearindex][1]+incr,incr)-tsource
     linedata = []
     for it in tdata:
         linedata.append(np.log((parAm*(parm0*(-it)).exp(1))/norm))
