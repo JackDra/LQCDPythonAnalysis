@@ -215,11 +215,13 @@ def GetBootStats(data):
 
 
 def MassFun(cfun,Dt=1):
-    mass = []
-    for it,tcfun in enumerate(cfun):
-       # if it+Dt < len(cfun):
-       mass.append(np.abs(np.log(np.abs(cfun[it+Dt]/tcfun)))/Dt)          
-    return GetBootStats(mass)
+   mass = []
+   for it,tcfun in enumerate(cfun):
+      if it+Dt < len(cfun):
+         mass.append(np.abs(np.log(np.abs(cfun[it+Dt]/tcfun)))/Dt)          
+      else:
+         mass.append(0.0)                   
+   return GetBootStats(mass)
 
 def cfunTOmass(cfun):
    if len(np.array(cfun).shape) > 1:
