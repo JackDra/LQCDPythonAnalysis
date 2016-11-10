@@ -715,7 +715,6 @@ def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
 
 def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
     if MP:
-        thistsource = tsource +1
         if 'PoF' in lab and not Log:
             tvals = np.array(data['tVals'])+1+(2*PoFShifts*PoFDelta) + shift
         else:
@@ -723,7 +722,6 @@ def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
     else:
         tvals = np.array(data['tVals'])
         tvals = tvals-(tvals[-1]+tvals[0])/2.0 + shift
-        thistsource = 0
     dataavg = Pullflag(data['Boot'],'Avg')
     dataerr = Pullflag(data['Boot'],'Std')
     if Debug and Log:
@@ -731,7 +729,7 @@ def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
         for it,val,valerr in zip(tvals,dataavg,dataerr):
             print it,val,valerr
     if ForcePos: dataavg = np.abs(dataavg)
-    pl.errorbar(tvals[thistsource:]-thistsource,dataavg[thistsource:],dataerr[thistsource:],color=col,fmt=sym,label=lab)
+    pl.errorbar(tvals[tsource:]-thistsource,dataavg[tsource:],dataerr[tsource:],color=col,fmt=sym,label=lab)
 
 
 def PlotFit(data,col,shift,iset,thistsink):
