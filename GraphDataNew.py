@@ -523,7 +523,7 @@ def PlotMassSetOSF(data2pt,thisSetList,MassDt,thisSF):
         thisshift = thisshiftcyc.next()
         dataplot = deepcopy(data2pt['RF'][iset])
         dataplot['Boot'] = MassFun(dataplot['Boot'],MassDt)
-        dataplot['tVals'] = dataplot['tVals'][MassDt:]
+        # dataplot['tVals'] = dataplot['tVals'][MassDt:]
         PlotRF(dataplot,thiscol,thissym,thisshift,LegLab(iset),MP=True)
         if not CheckDict(data2pt,'O'+thisSF,iset): continue
         PlotOSFMassValue(data2pt['O'+thisSF][iset],thiscol,iset,MassDt)
@@ -539,7 +539,7 @@ def PlotMassSetTSF(data2pt,thisSetList,MassDt,thisSF):
         thisshift = thisshiftcyc.next()
         dataplot = deepcopy(data2pt['RF'][iset])
         dataplot['Boot'] = MassFun(dataplot['Boot'],MassDt)
-        dataplot['tVals'] = dataplot['tVals'][MassDt:]
+        # dataplot['tVals'] = dataplot['tVals'][MassDt:]
         PlotRF(dataplot,thiscol,thissym,thisshift,LegLab(iset),MP=True)
         if 'state1' not in iset and CheckDict(data2pt,'T'+thisSF,iset):
             PlotTSFMassLine(data2pt['T'+thisSF][iset],thiscol,iset,MassDt)
