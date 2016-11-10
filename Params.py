@@ -368,7 +368,7 @@ if OnlySelVar:
         # DefPoFVarList = [[17,2]]
         DefPoFVarList = [[17,3]]
     else:
-        DefPoFVarList = [[20,2]]
+        DefPoFVarList = [[22,2]]
     PoFTvarList = ['PoF'+str(PoFShifts)+'to'+str(DefPoFVarList[0][0])+'dt'+str(DefPoFVarList[0][1])]
 else:
     DefPoFVarList = DeftodtList
