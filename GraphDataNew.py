@@ -468,7 +468,7 @@ def PlotLogSet(data,thisSetList,legrem=''):
         if not CheckDict(data,'RF',iset): continue
         dataplot = deepcopy(data['RF'][iset])
         norm,count = GetBootNorm(dataplot['Boot'],tsource)
-        dataplot['Boot'] = np.log([tboot/norm for tboot in dataplot['Boot']])
+        dataplot['Boot'] = np.log([tboot/norm for tboot in np.roll(dataplot['Boot'],-count,0)])
         dataplot['Boot'] = GetBootStats(dataplot['Boot'])
         PlotRF(dataplot,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset.replace(legrem,'')),MP=True,Log=True)
 
@@ -716,7 +716,7 @@ def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
 def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
     if MP:
         thistsource = tsource +1
-        if 'PoF' in lab:
+        if 'PoF' in lab and not Log:
             tvals = np.array(data['tVals'])+1+(2*PoFShifts*PoFDelta) + shift
         else:
             tvals = np.array(data['tVals'])+1 + shift
