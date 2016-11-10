@@ -488,7 +488,7 @@ def PlotLogSetOSF(data,thisSetList,thisSF,legrem=''):
         dataplot['Boot'] = GetBootStats(dataplot['Boot'])
         PlotRF(dataplot,thiscol,thissym,thisshift,LegLab(iset.replace(legrem,'')),MP=True,Log=True)
         if not CheckDict(data,'O'+thisSF,iset): continue
-        PlotOSFLog(data['O'+thisSF][iset],thiscol,iset,norm)
+        PlotOSFLog(data['O'+thisSF][iset],thiscol,iset,norm,count)
 
 
 
@@ -929,7 +929,7 @@ def PlotTSFMassValue(data,thisdt):
     pl.fill_between([TSFfitvals[0]-tsource+thisdt ,TSFfitvals[1]-tsource],[datadown,datadown],[dataup,dataup],facecolor='k',edgecolor='none',alpha=thisalpha)
 
 
-def PlotOSFLog(data,col,smear,norm):
+def PlotOSFLog(data,col,smear,norm,count):
     smearindex,deltashift = CreateOSFfitKey(smear)
     if 'sum' in smear: smearindex = PickedStateStr+'sum'    
     if not CheckDict(data,'m0',OSFfitr[smearindex],'Boot'): return
@@ -938,7 +938,7 @@ def PlotOSFLog(data,col,smear,norm):
     parAm = data['Am'][OSFfitr[smearindex]]['Boot']
     tdata = np.arange(OSFfitvals[smearindex][0]+1,OSFfitvals[smearindex][1]+1+incr,incr)-tsource
     linedata = []
-    for it in tdata:
+    for it in np.roll(tdata,-count,0):
         linedata.append(np.log((parAm*(parm0*(-it)).exp(1))/norm))
     GetBootStats(linedata)
     dataAvg,dataErr = np.array(Pullflag(linedata,'Avg')),np.array(Pullflag(linedata,'Std'))
@@ -948,7 +948,7 @@ def PlotOSFLog(data,col,smear,norm):
     pl.plot([tdata[0]-1,tdata[-1]-1],[dataAvg[0],dataAvg[-1]],color=col)
 
 
-def PlotTSFLog(data,col,smear,norm):
+def PlotTSFLog(data,col,smear,norm,count):
     if not CheckDict(data,'m0',TSFfitr,'Boot'): return
     if not CheckDict(data,'Am',TSFfitr,'Boot'): return
     if not CheckDict(data,'Dm',TSFfitr,'Boot'): return
@@ -959,7 +959,7 @@ def PlotTSFLog(data,col,smear,norm):
     parAmp = data['Amp'][TSFfitr]['Boot']
     tdata = np.arange(TSFfitvals[0]+1,TSFfitvals[1]+1+incr,incr)-tsource
     linedata = []
-    for it in tdata:
+    for it in np.roll(tdata,-count,0):
         thisit = it
         # thisit = it-tsource
         linedata.append(np.log((parAm*(((parm0*(-thisit)).exp(1)) + parAmp*((parm0+parDm)*(-thisit)).exp(1)))/norm))
