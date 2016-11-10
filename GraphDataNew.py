@@ -488,7 +488,7 @@ def PlotLogSetOSF(data,thisSetList,thisSF,legrem=''):
         dataplot['Boot'] = GetBootStats(dataplot['Boot'])
         PlotRF(dataplot,thiscol,thissym,thisshift,LegLab(iset.replace(legrem,'')),MP=True,Log=True)
         if not CheckDict(data,'O'+thisSF,iset): continue
-        PlotOSFLog(data['O'+thisSF][iset],thiscol,iset,norm,count)
+        PlotOSFLog(data['O'+thisSF][iset],thiscol,iset,norm,DoPoFS)
 
 
 
@@ -508,7 +508,7 @@ def PlotLogSetTSF(data,thisSetList,thisSF,legrem=''):
         dataplot['Boot'] = GetBootStats(dataplot['Boot'])
         PlotRF(dataplot,thiscol,thissym,thisshift,LegLab(iset.replace(legrem,'')),MP=True,Log=True)
         if not CheckDict(data,'T'+thisSF,iset): continue
-        PlotTSFLog(data['T'+thisSF][iset],thiscol,iset,norm,count)
+        PlotTSFLog(data['T'+thisSF][iset],thiscol,iset,norm,DoPoFS)
 
 def PlotMassSetOSF(data2pt,thisSetList,MassDt,thisSF):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
@@ -927,14 +927,14 @@ def PlotTSFMassValue(data,thisdt):
     pl.fill_between([TSFfitvals[0]-tsource+thisdt ,TSFfitvals[1]-tsource],[datadown,datadown],[dataup,dataup],facecolor='k',edgecolor='none',alpha=thisalpha)
 
 
-def PlotOSFLog(data,col,smear,norm,count):
+def PlotOSFLog(data,col,smear,norm,DoPoFS):
     smearindex,deltashift = CreateOSFfitKey(smear)
     if 'sum' in smear: smearindex = PickedStateStr+'sum'    
     if not CheckDict(data,'m0',OSFfitr[smearindex],'Boot'): return
     if not CheckDict(data,'Am',OSFfitr[smearindex],'Boot'): return
     parm0 = data['m0'][OSFfitr[smearindex]]['Boot']
     parAm = data['Am'][OSFfitr[smearindex]]['Boot']
-    tdata = np.arange(OSFfitvals[smearindex][0]+1,OSFfitvals[smearindex][1]+1+incr,incr)-tsource-count
+    tdata = np.arange(OSFfitvals[smearindex][0]+1,OSFfitvals[smearindex][1]+1+incr,incr)-tsource-DoPoFS
     linedata = []
     for it in tdata:
         linedata.append(np.log((parAm*(parm0*(-it)).exp(1))/norm))
@@ -946,7 +946,7 @@ def PlotOSFLog(data,col,smear,norm,count):
     pl.plot([tdata[0]-1,tdata[-1]-1],[dataAvg[0],dataAvg[-1]],color=col)
 
 
-def PlotTSFLog(data,col,smear,norm,count):
+def PlotTSFLog(data,col,smear,norm,DoPoFS):
     if not CheckDict(data,'m0',TSFfitr,'Boot'): return
     if not CheckDict(data,'Am',TSFfitr,'Boot'): return
     if not CheckDict(data,'Dm',TSFfitr,'Boot'): return
@@ -955,7 +955,7 @@ def PlotTSFLog(data,col,smear,norm,count):
     parAm = data['Am'][TSFfitr]['Boot']
     parDm = data['Dm'][TSFfitr]['Boot']
     parAmp = data['Amp'][TSFfitr]['Boot']
-    tdata = np.arange(TSFfitvals[0]+1,TSFfitvals[1]+1+incr,incr)-tsource-count
+    tdata = np.arange(TSFfitvals[0]+1,TSFfitvals[1]+1+incr,incr)-tsource-DoPoFS
     linedata = []
     for it in tdata:
         thisit = it
