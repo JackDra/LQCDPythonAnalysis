@@ -220,7 +220,7 @@ def MassFun(cfun,Dt=1):
       if it+Dt < len(cfun):
          mass.append(np.abs(np.log(np.abs(cfun[it+Dt]/tcfun)))/Dt)          
       else:
-         mass.append(0.0)                   
+         mass.append(tcfun/tcfun)
    return GetBootStats(mass)
 
 def cfunTOmass(cfun):
