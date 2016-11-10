@@ -936,9 +936,9 @@ def PlotOSFLog(data,col,smear,norm,count):
     if not CheckDict(data,'Am',OSFfitr[smearindex],'Boot'): return
     parm0 = data['m0'][OSFfitr[smearindex]]['Boot']
     parAm = data['Am'][OSFfitr[smearindex]]['Boot']
-    tdata = np.arange(OSFfitvals[smearindex][0]+1,OSFfitvals[smearindex][1]+1+incr,incr)-tsource
+    tdata = np.arange(OSFfitvals[smearindex][0]+1,OSFfitvals[smearindex][1]+1+incr,incr)-tsource-count
     linedata = []
-    for it in np.roll(tdata,-count,0):
+    for it in tdata:
         linedata.append(np.log((parAm*(parm0*(-it)).exp(1))/norm))
     GetBootStats(linedata)
     dataAvg,dataErr = np.array(Pullflag(linedata,'Avg')),np.array(Pullflag(linedata,'Std'))
@@ -957,9 +957,9 @@ def PlotTSFLog(data,col,smear,norm,count):
     parAm = data['Am'][TSFfitr]['Boot']
     parDm = data['Dm'][TSFfitr]['Boot']
     parAmp = data['Amp'][TSFfitr]['Boot']
-    tdata = np.arange(TSFfitvals[0]+1,TSFfitvals[1]+1+incr,incr)-tsource
+    tdata = np.arange(TSFfitvals[0]+1,TSFfitvals[1]+1+incr,incr)-tsource-count
     linedata = []
-    for it in np.roll(tdata,-count,0):
+    for it in tdata:
         thisit = it
         # thisit = it-tsource
         linedata.append(np.log((parAm*(((parm0*(-thisit)).exp(1)) + parAmp*((parm0+parDm)*(-thisit)).exp(1)))/norm))
