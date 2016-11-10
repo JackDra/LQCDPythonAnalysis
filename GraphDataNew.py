@@ -719,10 +719,10 @@ def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
         thistsource = 0
     dataavg = Pullflag(data['Boot'],'Avg')
     dataerr = Pullflag(data['Boot'],'Std')
-    if Debug:
+    if Debug and Log:
         print lab
         for it,val,valerr in zip(tvals,dataavg,dataerr):
-            print tvals,dataavg,dataerr
+            print it,val,valerr
     if ForcePos: dataavg = np.abs(dataavg)
     pl.errorbar(tvals[thistsource:]-thistsource,dataavg[thistsource:],dataerr[thistsource:],color=col,fmt=sym,label=lab)
 
