@@ -3,7 +3,7 @@ from MiscFuns import *
 # from FFFuns import *
 from FitFunctions import *
 from MomParams import *
-from Params import DefProjDerList,ReadProjDerList
+from Params import DefProjDerList,ReadProjDerList,momlistdir
 import cPickle as pickle
 
 Qtcut = 5
