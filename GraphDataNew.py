@@ -508,7 +508,7 @@ def PlotLogSetTSF(data,thisSetList,thisSF,legrem=''):
         dataplot['Boot'] = GetBootStats(dataplot['Boot'])
         PlotRF(dataplot,thiscol,thissym,thisshift,LegLab(iset.replace(legrem,'')),MP=True,Log=True)
         if not CheckDict(data,'T'+thisSF,iset): continue
-        PlotTSFLog(data['T'+thisSF][iset],thiscol,iset,norm)
+        PlotTSFLog(data['T'+thisSF][iset],thiscol,iset,norm,count)
 
 def PlotMassSetOSF(data2pt,thisSetList,MassDt,thisSF):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
