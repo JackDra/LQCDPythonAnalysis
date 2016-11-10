@@ -955,16 +955,14 @@ def PlotTSFLog(data,col,smear,norm,DoPoFS):
     parAm = data['Am'][TSFfitr]['Boot']
     parDm = data['Dm'][TSFfitr]['Boot']
     parAmp = data['Amp'][TSFfitr]['Boot']
-    tdata = np.arange(TSFfitvals[0]+1,TSFfitvals[1]+1+incr,incr)-tsource-DoPoFS
+    tdata = np.arange(TSFfitvals[0],TSFfitvals[1]+incr,incr)-tsource
     linedata = []
     for it in tdata:
-        thisit = it
-        # thisit = it-tsource
-        linedata.append(np.log((parAm*(((parm0*(-thisit)).exp(1)) + parAmp*((parm0+parDm)*(-thisit)).exp(1)))/norm))
+        linedata.append(np.log((parAm*(((parm0*(-it)).exp(1)) + parAmp*((parm0+parDm)*(-it)).exp(1)))/norm))
     GetBootStats(linedata)
     dataAvg,dataErr = np.array(Pullflag(linedata,'Avg')),np.array(Pullflag(linedata,'Std'))
     dataup = dataAvg+dataErr
     datadown = dataAvg-dataErr
-    pl.fill_between(tdata-1,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
-    pl.plot(tdata-1,dataAvg,color=col)
+    pl.fill_between(tdata-DoPoFS,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
+    pl.plot(tdata-DoPoFS,dataAvg,color=col)
 
