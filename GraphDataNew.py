@@ -915,7 +915,7 @@ def PlotOSFMassValue(data,col,smear,thisdt):
     else:
         if Debug: print 'OSF',smear, 'not found'
         return
-    tdata = [OSFfitvals[smearindex][0]+deltashift-tsource,OSFfitvals[smearindex][1]+deltashift-tsource]
+    tdata = [OSFfitvals[smearindex][0]-tsource,OSFfitvals[smearindex][1]-tsource]
     pl.fill_between(tdata,[datadown,datadown],[dataup,dataup],facecolor=col,edgecolor='none',alpha=thisalpha)
     pl.plot(tdata,[dataval,dataval],color=col)
 
