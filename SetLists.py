@@ -356,7 +356,7 @@ DefSetList,DefMassSetList,DefTSinkSetList = DefSetCol
 def CreateOSFfitKey(smear):
     smearindex,deltashift = RemoveToDt(smear),0
     if 'PoF' in smear:
-        deltashift = PoFShifts*DeltaShift
+        deltashift = PoFShifts*PoFDelta
         smearindex = PickedStateStr+'PoF'+str(PoFShifts)
     elif 'REvec' in smear:
         deltashift = 0
