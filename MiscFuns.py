@@ -221,7 +221,7 @@ def GetBootNorm(data,tsource):
    while norm.Avg < 0.:
       norm = data[tsource+count]
       count += 1
-   return norm,count+1
+   return norm,count-1
 
 def MassFun(cfun,Dt=1):
     mass = []
