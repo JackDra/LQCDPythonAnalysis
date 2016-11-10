@@ -213,14 +213,12 @@ def GetBootStats(data):
    map(lambda x : x.Stats() ,flatdata)
    return np.reshape(flatdata,np.array(data).shape)
 
-## gives the normalisation value for the 2 point correlation funtion for log plotting
-## for pencil of function, needs to find a positive normalisation value, which occurs after the shift parameters PoFShift*PoFDelta
 
 def MassFun(cfun,Dt=1):
     mass = []
     for it,tcfun in enumerate(cfun):
-       if it+Dt < len(cfun):
-          mass.append(np.abs(np.log(np.abs(cfun[it+Dt]/tcfun)))/Dt)          
+       # if it+Dt < len(cfun):
+       mass.append(np.abs(np.log(np.abs(cfun[it+Dt]/tcfun)))/Dt)          
     return GetBootStats(mass)
 
 def cfunTOmass(cfun):

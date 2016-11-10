@@ -404,3 +404,5 @@ def GetNorm(data,tsource,thisset):
     else:
         return data[tsource-1],0
         
+## gives the normalisation value for the 2 point correlation funtion for log plotting
+## for pencil of function, needs to find a positive normalisation value, which occurs after the shift parameters PoFShift*PoFDelta
