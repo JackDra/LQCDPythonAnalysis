@@ -43,7 +43,7 @@ thisalpha = 0.3
 
 # MassTVals = 16,33
 # MassTVals = 3,25
-MassTVals = 1,15
+MassTVals = 1,20
 Massyrange = 0.44,0.70
 # Massyrange = 0.40,0.60
 # Massyrange = 0.40,0.61
