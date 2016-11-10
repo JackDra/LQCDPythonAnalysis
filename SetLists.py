@@ -398,3 +398,9 @@ def SplitKappa(thisstr):
             return ikappa,thisstr.replace(ikappa,'')
     return None,thisstr
         
+def GetNorm(data,tsource,thisset):   
+    if 'PoF' in thisset:
+        return data[tsource-1+(PoFShifts*PoFDelta)],PoFShifts*PoFDelta
+    else:
+        return data[tsource-1],0
+        

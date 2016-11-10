@@ -467,9 +467,8 @@ def PlotLogSet(data,thisSetList,legrem=''):
     for iset in iterSetList:
         if not CheckDict(data,'RF',iset): continue
         dataplot = deepcopy(data['RF'][iset])
-        norm,count = GetBootNorm(dataplot['Boot'],tsource)
-        if Debug: print 'NORM: ',norm.Avg, '  Count:' , count
-        dataplot['Boot'] = np.log([tboot/norm for tboot in np.roll(dataplot['Boot'],-count,0)])
+        norm,DoPoFS = GetNorm(dataplot['Boot'],tsource,iset)
+        dataplot['Boot'] = np.log([tboot/norm for tboot in np.roll(dataplot['Boot'],-DoPoFS,0)])
         dataplot['Boot'] = GetBootStats(dataplot['Boot'])
         PlotRF(dataplot,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset.replace(legrem,'')),MP=True,Log=True)
 
@@ -482,8 +481,8 @@ def PlotLogSetOSF(data,thisSetList,thisSF,legrem=''):
         thissym = thissymcyc.next()
         thisshift = thisshiftcyc.next()
         dataplot = deepcopy(data['RF'][iset])
-        norm,count = GetBootNorm(dataplot['Boot'],tsource)
-        dataplot['Boot'] = np.log([tboot/norm for tboot in np.roll(dataplot['Boot'],-count,0)])
+        norm,DoPoFS = GetNorm(dataplot['Boot'],tsource,iset)
+        dataplot['Boot'] = np.log([tboot/norm for tboot in np.roll(dataplot['Boot'],-DoPoFS,0)])
         # norm = dataplot['Boot'][tsource-1]
         # dataplot['Boot'] = np.log([tboot/norm for tboot in dataplot['Boot']])
         dataplot['Boot'] = GetBootStats(dataplot['Boot'])
@@ -502,8 +501,8 @@ def PlotLogSetTSF(data,thisSetList,thisSF,legrem=''):
         thissym = thissymcyc.next()
         thisshift = thisshiftcyc.next()
         dataplot = deepcopy(data['RF'][iset])
-        norm,count = GetBootNorm(dataplot['Boot'],tsource)
-        dataplot['Boot'] = np.log([tboot/norm for tboot in np.roll(dataplot['Boot'],-count,0)])
+        norm,DoPoFS = GetNorm(dataplot['Boot'],tsource,iset)
+        dataplot['Boot'] = np.log([tboot/norm for tboot in np.roll(dataplot['Boot'],-DoPoFS,0)])
         # norm = dataplot['Boot'][tsource-1]
         # dataplot['Boot'] = np.log([tboot/norm for tboot in dataplot['Boot']])
         dataplot['Boot'] = GetBootStats(dataplot['Boot'])
