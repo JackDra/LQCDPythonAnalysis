@@ -934,7 +934,7 @@ def PlotOSFLog(data,col,smear,norm,DoPoFS):
     if not CheckDict(data,'Am',OSFfitr[smearindex],'Boot'): return
     parm0 = data['m0'][OSFfitr[smearindex]]['Boot']
     parAm = data['Am'][OSFfitr[smearindex]]['Boot']
-    tdata = np.arange(OSFfitvals[smearindex][0]+1,OSFfitvals[smearindex][1]+1+incr,incr)-tsource-DoPoFS
+    tdata = np.arange(OSFfitvals[smearindex][0]+1,OSFfitvals[smearindex][1]+1+incr,incr)-tsource
     linedata = []
     for it in tdata:
         linedata.append(np.log((parAm*(parm0*(-it)).exp(1))/norm))
@@ -942,8 +942,8 @@ def PlotOSFLog(data,col,smear,norm,DoPoFS):
     dataAvg,dataErr = np.array(Pullflag(linedata,'Avg')),np.array(Pullflag(linedata,'Std'))
     dataup = dataAvg+dataErr
     datadown = dataAvg-dataErr
-    pl.fill_between(tdata-1,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
-    pl.plot([tdata[0]-1,tdata[-1]-1],[dataAvg[0],dataAvg[-1]],color=col)
+    pl.fill_between(tdata-1-DoPoFS,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
+    pl.plot([tdata[0]-1-DoPoFS,tdata[-1]-1-DoPoFS],[dataAvg[0],dataAvg[-1]],color=col)
 
 
 def PlotTSFLog(data,col,smear,norm,DoPoFS):
