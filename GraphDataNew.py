@@ -465,7 +465,10 @@ def PlotLogSet(data,thisSetList,legrem=''):
     for iset in iterSetList:
         if not CheckDict(data,'RF',iset): continue
         dataplot = deepcopy(data['RF'][iset])
-        dataplot['Boot'] = np.log([tboot/dataplot['Boot'][tsource-1] for tboot in dataplot['Boot']])
+        norm,count = dataplot['Boot'][tsource-1],0
+        while norm < 0.:
+            norm = dataplot['Boot'][tsource+count]
+        dataplot['Boot'] = np.log([tboot/norm for tboot in dataplot['Boot']])
         dataplot['Boot'] = GetBootStats(dataplot['Boot'])
         PlotRF(dataplot,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset.replace(legrem,'')),MP=True,Log=True)
 
