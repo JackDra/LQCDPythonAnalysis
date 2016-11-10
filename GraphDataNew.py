@@ -716,7 +716,7 @@ def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
 def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
     if MP:
         if 'PoF' in lab and not Log:
-            tvals = np.array(data['tVals'])+1+(2*PoFShifts*PoFDelta) + shift
+            tvals = np.array(data['tVals'])+1+(PoFShifts*PoFDelta) + shift
         else:
             tvals = np.array(data['tVals'])+1 + shift
     else:
