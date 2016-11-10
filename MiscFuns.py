@@ -215,7 +215,7 @@ def GetBootStats(data):
 
 ## gives the normalisation value for the 2 point correlation funtion for log plotting
 ## for pencil of function, needs to find a positive normalisation value, which occurs after the shift parameters PoFShift*PoFDelta
-def GetBootNorm(data):
+def GetBootNorm(data,tsource):
    norm,count = data[tsource-1],0
    while norm.Avg < 0.:
       norm = data[tsource+count]
