@@ -729,7 +729,7 @@ def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
         for it,val,valerr in zip(tvals,dataavg,dataerr):
             print it,val,valerr
     if ForcePos: dataavg = np.abs(dataavg)
-    pl.errorbar(tvals[tsource:]-thistsource,dataavg[tsource:],dataerr[tsource:],color=col,fmt=sym,label=lab)
+    pl.errorbar(tvals[tsource:]-tsource,dataavg[tsource:],dataerr[tsource:],color=col,fmt=sym,label=lab)
 
 
 def PlotFit(data,col,shift,iset,thistsink):
