@@ -2,6 +2,7 @@
 
 import os
 import sys
+from MiscFuns import mkdir_p
 
 
 thisscriptdir = os.getcwd()
@@ -45,7 +46,8 @@ if any(['-Debug' in iarg for iarg in sys.argv]):
 print 'setting scriptdir to ',thisscriptdir
 
 if 'default' in sys.argv[-1]:
-    thisdatadir = thisscriptdir+'/'
+    thisdatadir = thisscriptdir+'/NotUsed/'
+    mkdir_p(thisdatadir)
     thisAnaProc = 1
     thisListOrSet = 'ReadSet'
     thiskappa = 12090
