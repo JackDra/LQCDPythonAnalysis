@@ -53,7 +53,7 @@ if 'default' in sys.argv[-1]:
     thisDelta = 1
     with open(thisscriptdir+'/setup.cfg','w') as f:
         f.write('\nscriptdir:\n')
-        f.write(thisscriptdir+'\n')
+        f.write(thisscriptdir+'/\n')
         f.write('\ndatadir:\n')
         f.write(thisdatadir+'\n')
         f.write('\nAnaProc:\n')
