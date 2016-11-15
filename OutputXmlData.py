@@ -40,6 +40,7 @@ def WriteChromaXml(thisfile,outputdict):
         output = xmltodict.unparse(outputdict,pretty=True).replace('\t','    ')
         output = re.sub('elem.>','elem>',output)
         output = re.sub('elem..>','elem>',output)
+        output = re.sub('elem...>','elem>',output)
         f.write(output )
 
         
