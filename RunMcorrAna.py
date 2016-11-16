@@ -123,7 +123,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
             if 'giDi' in Curr:
                 if WipeThisSet:
                     WipeSet(outputdir,['doubP4giDi','singP4giDi'],thisSetList)
-                    WipeSet(outputdir+'cfuns/',['doubP4giDi','singP4giDi'],thisSetList)
+                    WipeSet(outputdir+'cfun/',['doubP4giDi','singP4giDi'],thisSetList)
                 if thisPool == False:
                     CRFDWrap(RunType,itsinkList,thisSmearList,iPrefList,DictCurrOpps[Curr])
                 else:
@@ -138,7 +138,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
                         if WipeThisSet:
                             wipegammalist = gammalist + gammalistcmplx
                             WipeSet(outputdir,wipegammalist,thisSetList)
-                            WipeSet(outputdir+'cfuns/',wipegammalist,thisSetList)
+                            WipeSet(outputdir+'cfun/',wipegammalist,thisSetList)
                         MomDone = Get3ptSetMoms(outputdir,gammalist,RunMomList,thisSetList) 
                         MomDoneCmplx = Get3ptSetMoms(outputdir,gammalistcmplx,RunMomList,thisSetList) 
                         runmomlist,runmomlistcmplx = [],[]

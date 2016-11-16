@@ -79,14 +79,15 @@ def CreateEnd3pt(ism,jsm,thists,Tsink,DS,Proj,Der):
     return '.t'+str(thists)+'sm'+ism+jsm+Proj+'t'+str(Tsink)+'p000.'+DS+Der+'k'+str(kappa)+'.ifms.3cf'
 
 def CreateEnd2pt(ism,jsm,thists,iterp,jterp):
-    if iterp == jterp: return '.t'+str(thists)+'sm'+ism+'k'+str(kappa)+'.ifmssi'+jsm+'.'+iterp+'.u.2cf'
-    else: return '.t'+str(thists)+'sm'+ism+'k'+str(kappa)+'.ifmssi'+jsm+'.'+iterp+'_'+jterp+'.u.2cf'
+    # if iterp == jterp: return '.t'+str(thists)+'sm'+ism+'k'+str(kappa)+'.ifmssi'+jsm+'.'+iterp+'.u.2cf'
+    # else: return '.t'+str(thists)+'sm'+ism+'k'+str(kappa)+'.ifmssi'+jsm+'.'+iterp+'_'+jterp+'.u.2cf'
+    return '_k'+str(kappa)'_tsrc0sm'+ism+'si'+jsm+'_'+iterp+'.2cf.xml'
 
 def CreateDir3pt(ism,jsm,Tsink,DS,Proj,Flag):    
     return Flag+'sm'+ism+jsm+Proj+'t'+str(Tsink)+'p000.'+DS
 
 def CreateDir2pt(ism,jsm):
-    return 'twoptsm'+ism+'si'+jsm
+    return 'twopt/twoptsm'+ism+'si'+jsm
 
 def CheckAllSet(FilePrefix,directory,Interps,tsourceList=[tsource]):
     for iterp,ism in Elongate(Interps,DefSmearList):

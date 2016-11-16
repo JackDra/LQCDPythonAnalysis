@@ -74,7 +74,7 @@ if 'default' in sys.argv[-1]:
     
 print ''
 print 'Please Specify data directory:'
-print 'This should include correlators in .../cfuns/k######/source#/.../....3cf'
+print 'This should include correlators in .../cfun/k######/source#/.../....3cf'
 print '(see README.md for more information)'
 thisdatadir = raw_input("")
 

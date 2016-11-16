@@ -15,7 +15,7 @@ from OutputXmlData import *
 ##C3set [ igamma , iset , it ] bs1
 
 def PrintCfunToFile(C3set,thisSetList,thisMomList, thisGammaList,AddDict={}):
-    cfundir = outputdir + 'cfuns/'
+    cfundir = outputdir + 'cfun/'
     for thegamma,gammadata in zip(thisGammaList,C3set):
         gammadir = cfundir+CreateOppDir(thegamma)+'/'
         for iset,setdata in zip(thisSetList,gammadata):

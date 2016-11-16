@@ -130,7 +130,7 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
 def Get2ptSetMoms(outputdir,MomListIn,tvarlist=[],smlist=[],tsrclist=[]):
     momlist = set([])
     xmlMomList = map(qstrTOqcond,MomListIn)
-    for iflag in ['cfuns/twopt','Mass']:
+    for iflag in ['cfun/twopt','Mass']:
         for ip in xmlMomList:
             thisdir = outputdir+iflag+MakeMomDir(ip)
             for itvar in tvarlist:
@@ -138,14 +138,14 @@ def Get2ptSetMoms(outputdir,MomListIn,tvarlist=[],smlist=[],tsrclist=[]):
                     ifile = thisdir+itvar+'LREM'+ip+'.xml'
                     if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
                 for istate in GetStateSet(itvar):
-                    ifile = thisdir+MakeMomDir(ip)+'state'+istate+itvar+iflag.replace('cfuns/','')+ip+'.xml'
+                    ifile = thisdir+MakeMomDir(ip)+'state'+istate+itvar+iflag.replace('cfun/','')+ip+'.xml'
                     if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
             for its in tsrclist:
                 for ism in smlist:
                     ts,sm = str(its),str(ism)
                     if 'tsrc' not in ts: ts = 'tsrc'+ts
                     if 'sm' not in sm: sm = 'sm'+sm
-                    ifile = thisdir+MakeMomDir(ip)+ts+sm+iflag.replace('cfuns/','')+ip+'.xml'
+                    ifile = thisdir+MakeMomDir(ip)+ts+sm+iflag.replace('cfun/','')+ip+'.xml'
                     if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
     return OrderMomList(momlist)
 
@@ -164,7 +164,7 @@ def Get3SM(outputdir,thisGammaList,MomListIn,setlist):
 
 def Get3ptSetMoms(outputdir,thisGammaList,MomListIn,setlist):
     return OrderMomList(set(Get3SM(outputdir,thisGammaList,MomListIn,setlist)) |
-                        set(Get3SM(outputdir+'cfuns/',thisGammaList,MomListIn,setlist)))
+                        set(Get3SM(outputdir+'cfun/',thisGammaList,MomListIn,setlist)))
 
 
 ##NEW FUNCTIONS##
@@ -308,7 +308,7 @@ def ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=R
     for ig,thisgamma in enumerate(thisGammaList):
         if thisPrintRead: print 'Reading at: ' ,int((ig*100)/float(len(thisGammaList))),'%     \r',
         if thisgamma == 'twopt':
-            gammadirin = thisindir+'cfuns/twopt/'
+            gammadirin = thisindir+'cfun/twopt/'
             massSetList = []
             for iSet in thisSetList:
                 if 'sm' in iSet and 'state' not in iSet:
@@ -335,12 +335,12 @@ def ReadCfunsDict(thisindir,thisSetList,thisGammaList,thisMomList=RunMomList,thi
     for ig,thisgamma in enumerate(thisGammaList):
         if thisPrintRead: print 'Reading Cfuns at: ' ,int((ig*100)/float(len(thisGammaList))),'%     \r',
         if thisgamma == 'twopt':
-            gammadirin = thisindir+'cfuns/twopt/'
+            gammadirin = thisindir+'cfun/twopt/'
             DataDict[thisgamma] = MakeMethodsDict(gammadirin,'twopt.xml',
                                                         ['RF'],thisSetList,thisMomList=thisMomList,
                                                   thisPrintRead=thisPrintRead)
         else:
-            gammadirin = thisindir+'cfuns/'+CreateOppDir(thisgamma)+'/'
+            gammadirin = thisindir+'cfun/'+CreateOppDir(thisgamma)+'/'
             DataDict[thisgamma] = MakeMethodsDict(gammadirin,thisgamma+'.xml',
                                                   ['RF'],thisSetList,thisMomList=thisMomList,
                                                   thisPrintRead=thisPrintRead)

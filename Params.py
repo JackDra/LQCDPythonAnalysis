@@ -151,7 +151,7 @@ if Debug: print 'nconfs saved is: ' , RunNconfs
 
 VarMassCutoff = 0.4 # used in correlation matrix for cutting artifacts out of eigenmass sorting.
 
-dirread = datadir+'/cfuns/Kud0'+str(kappa)+'Ks0'+str(kappa)
+dirread = datadir+'/cfun/Kud0'+str(kappa)+'Ks0'+str(kappa)
 outputdir = datadir+'results/'+ListOrSet+'k'+str(kappa)+'/'
 logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 momlistdir = datadir+'momdir/'

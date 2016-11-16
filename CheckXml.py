@@ -24,7 +24,7 @@ def CheckNconfMass(CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=True
         thisSetList = ReduceTsink(CheckSetList)
         if 'RF' == CheckType: CheckType = ''
         if len(CheckType) > 0: CheckType += '/'
-        if cfuns: thisdir = outputdir + 'cfuns/'
+        if cfuns: thisdir = outputdir + 'cfun/'
         SFList = ['']
         if 'OSF' in CheckType:
             SFList = OneStateParList['C2']
@@ -113,7 +113,7 @@ def CheckNconf(inputGammaList,CheckSetList,thisMomList=RunMomList,CheckList=['']
         if len(CheckType) > 0:
             CheckType += '/'
             if any([itype in CheckType for itype in ['SumMeth','TSF']]): thisSetList = ReduceTsink(CheckSetList)
-        if cfuns: thisdir = outputdir + 'cfuns/'
+        if cfuns: thisdir = outputdir + 'cfun/'
         SFList = ['']
         if 'OSF' in CheckType:
             SFList = OneStateParList['C3']
@@ -223,7 +223,7 @@ def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',
     if len(CheckType) > 0:
         CheckType += '/'
         if any([itype in CheckType for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(thisSetList)
-    if cfuns: thisdir = outputdir + 'cfuns/'
+    if cfuns: thisdir = outputdir + 'cfun/'
     SFList = ['']
     if 'OSF' in CheckType:
         SFList = OneStateParList['C3']

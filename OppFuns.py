@@ -68,7 +68,7 @@ def Wipe2pt(outputdir,tvarlist=[],smlist=[],thisMomList=RunMomList):
     thistvarlist = ['PoF'+str(PoFShifts)+itvar for itvar in tvarlist]
     thistvarlist += ['CM'+itvar for itvar in tvarlist]
     xmlMomList = map(qstrTOqcond,thisMomList)
-    for iflag in ['cfuns/twopt','Mass']:
+    for iflag in ['cfun/twopt','Mass']:
         for ip in xmlMomList:
             thisdir = outputdir+iflag+MakeMomDir(ip)
             for itvar in thistvarlist:
@@ -78,14 +78,14 @@ def Wipe2pt(outputdir,tvarlist=[],smlist=[],thisMomList=RunMomList):
                 if os.path.isfile(ifile): os.remove(ifile)
                 # for istate in GetStateSet(itvar):
                 for istate in StateSet:
-                    ifile = thisdir+'state'+istate+itvar+iflag.replace('cfuns/','')+ip+'.xml'
+                    ifile = thisdir+'state'+istate+itvar+iflag.replace('cfun/','')+ip+'.xml'
                     if os.path.isfile(ifile): os.remove(ifile)
-                    ifile = thisdir+'boots/state'+istate+itvar+iflag.replace('cfuns/','')+ip+'.boot.p'
+                    ifile = thisdir+'boots/state'+istate+itvar+iflag.replace('cfun/','')+ip+'.boot.p'
                     if os.path.isfile(ifile): os.remove(ifile)
             for ism in smlist:
-                ifile = thisdir+'sm'+ism+iflag.replace('cfuns/','')+ip+'.xml'
+                ifile = thisdir+'sm'+ism+iflag.replace('cfun/','')+ip+'.xml'
                 if os.path.isfile(ifile): os.remove(ifile)
-                ifile = thisdir+'boots/sm'+ism+iflag.replace('cfuns/','')+ip+'.boot.p'
+                ifile = thisdir+'boots/sm'+ism+iflag.replace('cfun/','')+ip+'.boot.p'
                 if os.path.isfile(ifile): os.remove(ifile)
     
 
@@ -157,7 +157,7 @@ def WipeSet(outputdir,thisGammaList,setlist,thisMomList=RunMomList,filepref=''):
 def WipeSF(outputdir,thisGammaList,RunName,OoT,statelist=[],todtlist=[],smlist=[],tsinklist=['']):
     for igamma in thisGammaList:
         if igamma == 'twopt':
-            thisdir = outputdir+'cfuns/'+CreateOppDir(igamma)+RunName+'/'
+            thisdir = outputdir+'cfun/'+CreateOppDir(igamma)+RunName+'/'
             thisParList = StateParList[OoT]['C2']
             thistsinklist = ['']
         else:
@@ -186,7 +186,7 @@ def WipeSF(outputdir,thisGammaList,RunName,OoT,statelist=[],todtlist=[],smlist=[
 def WipeSFSet(outputdir,thisGammaList,RunName,OoT,setlist=[]):
     for igamma in thisGammaList:
         if igamma == 'twopt':
-            thisdir = outputdir+'cfuns/'+CreateOppDir(igamma)+RunName+'/'
+            thisdir = outputdir+'cfun/'+CreateOppDir(igamma)+RunName+'/'
             thisParList = StateParList[OoT]['C2']
             thissetlist = GetTsinkSmLists(setlist)[1]
         else:
