@@ -88,17 +88,24 @@ with open('./setup.cfg','r') as f:
                 elif 'Debug' in thisread:
                     Debug = 'True' in thisline or 'true' in thisline
                         
-PoFC2C3Dis = '665.'
+PoFC2C3Dis = ''
 NewFileFlag = PoFC2C3Dis
 
 
-kappalist = ['12090','12104']
-ScalarNorm = 0.6822 # normalisation for Scalar current
-PsScalarNorm = 0.4948 # normalisation for Pseudo Scalar current
-VectorNorm = 0.8574 # normalisation for Vector Current
-PsVectorNorm = 0.8728 # normalisation for Pseudo Vector current
-TensorNorm = 0.9945 # normalisation for Tensor Current
-MomFracNorm = -1.067/DefMass # normalisation for Momentum Fraction
+kappalist = ['']
+ScalarNorm = 1 # normalisation for Scalar current
+PsScalarNorm = 1 # normalisation for Pseudo Scalar current
+VectorNorm = 1 # normalisation for Vector Current
+PsVectorNorm = 1 # normalisation for Pseudo Vector current
+TensorNorm = 1 # normalisation for Tensor Current
+MomFracNorm = 1 # normalisation for Momentum Fraction
+
+# ScalarNorm = 0.6822 # normalisation for Scalar current
+# PsScalarNorm = 0.4948 # normalisation for Pseudo Scalar current
+# VectorNorm = 0.8574 # normalisation for Vector Current
+# PsVectorNorm = 0.8728 # normalisation for Pseudo Vector current
+# TensorNorm = 0.9945 # normalisation for Tensor Current
+# MomFracNorm = -1.067/DefMass # normalisation for Momentum Fraction
 
 
 myeps = np.finfo(0.0).eps
@@ -107,7 +114,7 @@ ForcePos = False ## Forces all non-form factor graphs to be positive
 MultiCoreFitting = False # Multicore for Boot Fitting, not needed in current build
 DoMulticore = True # Runs multicore wherever implemented
 DoContentsCheck = False # True makes sure the xml file has the correct momenta first field, turn off for more performance
-OnlySelVar = False # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
+OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
 DoNorm = False # normalises the 2 point function (see CMSTech.py)
 DoSym = True # symmetrises the 2 point function (see CMSTech.py)
 # VarMethodMethod = 'Regular' # for solving the Variational method, different ways of doing it/
@@ -118,13 +125,8 @@ NoSFRfacScale = False # Turn on to only scale the R function by sqrt((Epp+m)(Ep+
 ReadPoF2pt = False # Create PoF using already calculated eigenvectors. This is used if the statistics or solver method has changed.
 DeCorrPoF = False ## used for debugging the pencil of function method (decorrelation problem) !!!!!DEPRECIATED, LEAVE FALSE!!!!!
 TimeInv = False ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
-DoCM = True ## does correlation matrix result ( no PoF) 
+DoCM = False ## does correlation matrix result ( no PoF) 
 
-## Currenlty, not using Time Invariance in the Pencil of Function Analysis is only properly implemented and tested for 2-point correlation analysis
-if TimeInv:
-    CfunConfigCheck = True # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
-else:
-    CfunConfigCheck = False # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
 
 ##DEBUG toggles (True/False):
 # Debug = True # for debugging, toggles alot of print statements on
@@ -138,11 +140,18 @@ MakeGraphDat = True # Creates a .dat file of the values plotted for the correspo
 PhysicalUnits = True # uses lattice momenta or physical momenta
 ForceNoDer = False # Forces the fitting LLSBoot to use manual derivaive calculation
 
+## Currenlty, not using Time Invariance in the Pencil of Function Analysis is only properly implemented and tested for 2-point correlation analysis
+if TimeInv:
+    CfunConfigCheck = True # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
+else:
+    CfunConfigCheck = False # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
+
+
 if Debug: print 'nconfs saved is: ' , RunNconfs
 
 VarMassCutoff = 0.4 # used in correlation matrix for cutting artifacts out of eigenmass sorting.
 
-dirread = datadir+'/cfuns/k'+str(kappa)
+dirread = datadir+'/cfuns/Kud0'+str(kappa)+'Ks0'+str(kappa)
 outputdir = datadir+'results/'+ListOrSet+'k'+str(kappa)+'/'
 logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 momlistdir = datadir+'momdir/'
@@ -157,8 +166,8 @@ mkdir_p(pickledir)
 mkdir_p(logdir)
 mkdir_p(REvecDir)
 mkdir_p(momlistdir)
-nt = 64
-nx = 32
+nt = 8
+nx = 4
 ndim = [nx,nx,nx,nt]
 latspace = 0.074 ## in fm
 ns = 4
@@ -167,9 +176,9 @@ ns = 4
 if 'ReadList' in ListOrSet:
     nboot = 2
 elif 'ReadSet' in ListOrSet:
-    nboot = 200
+    nboot = 20
 # tsource = 17
-tsource = 16
+tsource = 0
 if TimeInv:
     # PoFtsourceList = map(str,[tsource]*(PoFShifts+1))
     PoFtsourceList = [str(tsource)]
@@ -192,21 +201,9 @@ for ider in DerSet:
         DGSet.append(igamma+ider)
 
 #this part is for ReadList (used for analying only specific configurations#
-if kappa == 12104:
-    FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+".687."
-    filelist = dirread+"/source1/@/"+FileStruct+"*"
-elif kappa == 12090:
-    ##CHECK THIS DEBUG##
-    # FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."
-    if 'ReadList' in ListOrSet:
-        FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."
-        # FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."+PoFC2C3Dis
-    elif 'ReadSet' in ListOrSet:
-        if TimeInv:
-            FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."    
-        else:
-            FileStruct = "b5p50kp"+str(kappa)+"0kp"+str(kappa)+"0."+PoFC2C3Dis
-    filelist = dirread+"/source1/@/"+FileStruct+"*"
+if kappa == 12:
+    FileStruct = "Testing"
+    filelist = dirread+"/@/"+FileStruct+"*"
 conflist = ['00105',
             '00115',
             '00125',
@@ -215,16 +212,7 @@ conflist = ['00105',
             '00285']
             
 
-SourceList = ['source10',
-              'source1',
-              'source2',
-              'source3',
-              'source4',
-              'source5',
-              'source6',
-              'source7',
-              'source8',
-              'source9']
+SourceList = ['']
 
 
 
@@ -313,18 +301,16 @@ else:
     AnatodtList = DeftodtList
     AnaTvarList = DefTvarList
     
-DefSmearList = ['32','64','128']
+# DefSmearList = ['32','64','128']
 # DefSmearList = ['8','16','32','64','128','256']
 # DefSmearList = ['64','128']
 # DefSmearList = ['32','64']
 # DefSmearList = ['32','128']
 # DefSmearList = ['32']
-# DefSmearList = ['64']
+DefSmearList = ['64']
 # DefSmearList = ['128']
-if kappa == 12090:
+if kappa == 12:
     SingSmearList = ['32']
-if kappa == 12104:
-    SingSmearList = ['']
 # DefSmearList = ['32']
 # DefSmearList = ['8','16','32']
 StateSet = map(str,range(1,(PoFShifts+1)*len(DefSmearList)+1))
@@ -354,7 +340,7 @@ AllTSinkStrListNoCM = ['tsink'+str(its) for its in AllTSinkListNoCM]
 
 # AllREvecTSinkList = {'12104':[29],'12090':[32]}
 # AllREvecTSinkList = {'12104':[29],'12090':[26,32]}
-AllREvecTSinkList = {'12104':[29],'12090':[]}
+AllREvecTSinkList = {'12':[]}
 REvecTSinkList = AllREvecTSinkList[str(kappa)]
 REvecTSinkStrList = ['tsink'+str(its) for its in REvecTSinkList]
 DefREvecVarList = [18,2]
@@ -378,7 +364,7 @@ else:
 # DefPoFVarList = [19,2]
 # DefPoFVarList = [20,2]
 # DefPoFVarList = [22,2]
-AllPoFTSinkList = {'12104':[],'12090':[26,27]}
+AllPoFTSinkList = {'12':[]}
 PoFTSinkList = AllPoFTSinkList[str(kappa)]
 PoFTSinkStrList = ['tsink'+str(its) for its in PoFTSinkList]
 ##DEBUG##
@@ -395,14 +381,11 @@ PoFFlagList = [PickedStateStr+iPoF for iPoF in PoFTvarList]
 # REvecPar26 = [[ 0.0004799, -0.0119381, 0.9999286 ],[0,0,0],[0,0,0]]
 # REvecPar32 = [[ 0.0007567612, -0.0182265391, 0.9998335964],[0,0,0],[0,0,0]]
 
-if kappa == 12090:
-    TSFFileFlags = ['CM','Tsink','test32','Small']
-    OSFFileFlags = ['CM','Tsink']
-    CfunCheckList = ['PoFRead','REvecRead','cmRead','tsinkRead']
-elif kappa == 12104:
-    TSFFileFlags = ['REvec']
-    OSFFileFlags = ['REvec']
-    CfunCheckList = ['REvecRead']
+if kappa == 12:
+    TSFFileFlags = []
+    OSFFileFlags = []
+    CfunCheckList = []
+
 MethodList = ['RF','Fits','SumMeth']+['TSF'+iTSF for iTSF in TSFFileFlags] + ['OSF'+iOSF for iOSF in OSFFileFlags]
 
 
