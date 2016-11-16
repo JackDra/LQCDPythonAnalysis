@@ -2,6 +2,7 @@
 from MiscFuns import *
 # from FFFuns import *
 from FitFunctions import *
+from FFFuns import CurrFFs
 from MomParams import *
 from Params import DefProjDerList,ReadProjDerList,momlistdir
 import cPickle as pickle
