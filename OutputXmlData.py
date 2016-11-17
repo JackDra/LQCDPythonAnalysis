@@ -41,6 +41,9 @@ def WriteChromaXml(thisfile,outputdict):
         output = re.sub('elem.>','elem>',output)
         output = re.sub('elem..>','elem>',output)
         output = re.sub('elem...>','elem>',output)
+        output = re.sub('elem....>','elem>',output)
+        output = re.sub('elem.....>','elem>',output)
+        output = re.sub('elem......>','elem>',output)
         f.write(output )
 
         
