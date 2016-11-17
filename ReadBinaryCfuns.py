@@ -123,6 +123,8 @@ class Read2ptCfunChromaXML:
                             ReadMom = False
                     elif '<re>' in strline and ReadMom:
                         self.data[-1].append(float(strline.replace('<re>','').replace('</re>','')))
+                        if np.isnan(self.data[-1][-1]):
+                            raise NaNCfunError('NaN Values: '+thisfile+'  ' +qvecSet[int(self.OutMomList[-1])]  )
                 if strline == '</momenta>':
                     if len(self.data) > 0: break
         indicies =  np.searchsorted(self.OutMomList,thisMomList)

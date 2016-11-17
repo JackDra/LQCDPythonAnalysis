@@ -85,7 +85,7 @@ def ProperCM(thestring):
     thestring = thestring.replace('CM','CMSPACE')
     thestring = thestring.replace('REvec','CMSPACE')
     thestring = thestring.replace('PoF','PoFSPACE')
-    toval = re.search('to..',thestring)
+    toval = re.search('to.',thestring)
     try:
         toval = toval.group().replace('to','').replace('dt','')
     except:

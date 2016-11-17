@@ -175,7 +175,7 @@ ns = 4
 if 'ReadList' in ListOrSet:
     nboot = 2
 elif 'ReadSet' in ListOrSet:
-    nboot = 20
+    nboot = 200
 # tsource = 17
 tsource = 0
 if TimeInv:
@@ -254,7 +254,7 @@ DefdtList = [1,2]
 ##MUST BE IN SORTING ORDER##
 # DeftodtPicked = [(18,2),(20,2)]
 # DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
-DeftodtPicked = [(20,2)]
+DeftodtPicked = [(1,1)]
 # DeftodtPicked = [(18,2)]
 DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
 
@@ -351,10 +351,10 @@ REvecFlagList = [PickedStateStr+iREvec for iREvec in REvecTvarList]
 
 if OnlySelVar:
     if TimeInv:
-        # DefPoFVarList = [[17,2]]
-        DefPoFVarList = [[17,3]]
+        # DefPoFVarList = [[1,1]]
+        DefPoFVarList = [[1,1]]
     else:
-        DefPoFVarList = [[22,2]]
+        DefPoFVarList = [[1,1]]
     PoFTvarList = ['PoF'+str(PoFShifts)+'to'+str(DefPoFVarList[0][0])+'dt'+str(DefPoFVarList[0][1])]
 else:
     DefPoFVarList = DeftodtList
