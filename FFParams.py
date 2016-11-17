@@ -2,8 +2,9 @@
 from MiscFuns import *
 # from FFFuns import *
 from FitFunctions import *
+from FFFuns import CurrFFs
 from MomParams import *
-from Params import DefProjDerList,ReadProjDerList,momlistdir
+from Params import DefProjDerList,ReadProjDerList,momlistdir,AllGammaSet
 import cPickle as pickle
 
 Qtcut = 5

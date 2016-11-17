@@ -112,6 +112,8 @@ thisNShifts = int(raw_input("How Many Pencil of Function Shifts (set to 0 for no
 print ''
 thisDelta = int(raw_input("delta parameter in Pencil of Function (set to 0 for none)?\n"))
 
+print 'If you want to debug, setup.cfg has a debug flag'
+
 
 with open(thisscriptdir+'/setup.cfg','w') as f:
     f.write('\nscriptdir:\n')
@@ -128,7 +130,9 @@ with open(thisscriptdir+'/setup.cfg','w') as f:
     f.write(str(thisNShifts)+'\n')
     f.write('\nPoFDelta:\n')
     f.write(str(thisDelta)+'\n')
-
+    f.write('\nDebug:\n')
+    f.write('False\n')
+    
 
 from FFParams import DumpAllMomLists
 DumpAllMomLists()

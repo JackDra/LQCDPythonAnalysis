@@ -4,7 +4,7 @@ import numpy as np
 import os, errno
 
 
-CHROMA = False ## For using chroma output
+CHROMA = True ## For using chroma output
 MomSqrdSet = [ '0','1','2','3','4','5','6','7','8','9' ]
 QsqrdSet = ['qsqrd'+iq for iq in MomSqrdSet]
 Maxqsqrd = np.max(np.array(MomSqrdSet).astype(int))

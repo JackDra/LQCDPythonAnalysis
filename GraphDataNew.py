@@ -43,8 +43,8 @@ thisalpha = 0.3
 
 # MassTVals = 16,33
 # MassTVals = 3,25
-MassTVals = 1,20
-Massyrange = 0.4,0.70
+MassTVals = 1,8
+Massyrange = 0.0,4.0
 # Massyrange = 0.40,0.60
 # Massyrange = 0.40,0.61
 Qsqrdxlim = -0.03,1

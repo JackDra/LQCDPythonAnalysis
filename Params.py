@@ -91,7 +91,6 @@ with open('./setup.cfg','r') as f:
 PoFC2C3Dis = ''
 NewFileFlag = PoFC2C3Dis
 
-
 kappalist = ['']
 ScalarNorm = 1 # normalisation for Scalar current
 PsScalarNorm = 1 # normalisation for Pseudo Scalar current
@@ -125,7 +124,7 @@ NoSFRfacScale = False # Turn on to only scale the R function by sqrt((Epp+m)(Ep+
 ReadPoF2pt = False # Create PoF using already calculated eigenvectors. This is used if the statistics or solver method has changed.
 DeCorrPoF = False ## used for debugging the pencil of function method (decorrelation problem) !!!!!DEPRECIATED, LEAVE FALSE!!!!!
 TimeInv = False ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
-DoCM = False ## does correlation matrix result ( no PoF) 
+DoCM = True ## does correlation matrix result ( no PoF) 
 
 
 ##DEBUG toggles (True/False):
@@ -243,13 +242,14 @@ for Proj,GL in DefProjDerList.iteritems():
 DefCombGammaList = DefGammaList+DefNoDSGammaList
 
 # DeftoList = [18]
-# DefdtList = [2]
+DeftoList = [1]
 # DeftoList = [20,21,22,23]
 # DeftoList = [17,18,19,20,21,22,23]
-DeftoList = [17,18,19,20,21,22,23,24,25,26,27]
+# DeftoList = [17,18,19,20,21,22,23,24,25,26,27]
 # DeftoList = [18,19,20,21,22]
 # DeftoList = [16,17,18,19,20]
-DefdtList = [1,2,3,4,5,6]
+# DefdtList = [1,2,3,4,5,6]
+DefdtList = [1,2]
 # DeftodtPicked = (18,2)
 ##MUST BE IN SORTING ORDER##
 # DeftodtPicked = [(18,2),(20,2)]
@@ -301,13 +301,13 @@ else:
     AnatodtList = DeftodtList
     AnaTvarList = DefTvarList
     
-# DefSmearList = ['32','64','128']
+DefSmearList = ['32','64','128']
 # DefSmearList = ['8','16','32','64','128','256']
 # DefSmearList = ['64','128']
 # DefSmearList = ['32','64']
 # DefSmearList = ['32','128']
 # DefSmearList = ['32']
-DefSmearList = ['64']
+# DefSmearList = ['64']
 # DefSmearList = ['128']
 if kappa == 12:
     SingSmearList = ['32']

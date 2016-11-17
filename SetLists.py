@@ -343,11 +343,7 @@ def PickSetForMethod(thismethod,thisSetList):
 
 
 
-if kappa == 12090:
-    DefSetCol = CreateSet()
-elif kappa == 12104:
-    DefSetCol = CreateSet(thisSmearL=[],thisTSinkL=[],thisTvarL=[])
-    DefSetCol[1] = CreateSet(thisTSinkL=[29],thisTvarL=[])[1]
+DefSetCol = CreateSet()
 
 AllCMSetList = CreateGenericSet(CMTSinkList,[],[PickedState],DefTvarList)
     

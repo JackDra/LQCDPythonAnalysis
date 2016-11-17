@@ -102,8 +102,34 @@ class Read2ptCfunChroma:
         for ip,iploc in enumerate(thisMomList):
             self.data.append(np.memmap(thisfile,dtype=np.complex128,mode='r',offset=nt*ChromaSIS*ip,shape=(nt,)).byteswap())
 
-
-        
+class Read2ptCfunChromaXML:
+    def __init__(self,thisfile,thisMomList):
+        BarPart,ReadMom = False,False
+        self.data = []
+        self.OutMomList = []
+        with open(thisfile,'r') as f:
+            for line in f:
+                strline = line.strip()
+                if strline == '<Shell_Shell_Wilson_Baryons>':
+                    BarPart = True
+                elif BarPart:
+                    if '<sink_mom_num>' in strline:
+                        thismom = int(strline.replace('<sink_mom_num>','').replace('</sink_mom_num>',''))
+                        if thismom in thisMomList:
+                            self.data.append([])
+                            self.OutMomList.append(thismom)
+                            ReadMom = True
+                        else:
+                            ReadMom = False
+                    elif '<re>' in strline and ReadMom:
+                        self.data[-1].append(float(strline.replace('<re>','').replace('</re>','')))
+                if strline == '</momenta>':
+                    if len(self.data) > 0: break
+        indicies =  np.searchsorted(self.OutMomList,thisMomList)
+        self.data = np.array(self.data)[indicies].tolist()
+                    
+                    
+                
         
 class NaNCfunError(Exception):
     def __init__(self, value):
