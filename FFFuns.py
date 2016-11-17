@@ -7,7 +7,7 @@ from FFSympy import *
 import re
 from collections import OrderedDict
 
-CreateGamma('sakurai')
+if not NoLoad: CreateGamma('sakurai')
 
 ##REMEBER to remove 'cmplx' from opperators
 
