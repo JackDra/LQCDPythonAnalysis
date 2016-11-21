@@ -61,18 +61,18 @@ def CreateFitList(thisTwoMin,thisTwoMinMax,thisTwoMax,thisTwoMaxMax,this3ptCutMi
     return this2ptList
 
 OSF3ptCutMin,OSF3ptCutMax = 3,7
-OSF2ptMinStart,OSF2ptMinEnd,OSF2ptMaxStart,OSF2ptMaxEnd = 19,29,32,35
+OSF2ptMinStart,OSF2ptMinEnd,OSF2ptMaxStart,OSF2ptMaxEnd = 5,11,11,15
 OSF3ptCutList = range(OSF3ptCutMin,OSF3ptCutMax+1)
 OneStateParList = {'C2':['Am','m0'] , 'C3':['B00']}
 #picked for plotting
 OSFCutList = ['cut4','cut5','cut6']
 OSFCutPicked = 'cut5'
-OSFfitvals = {'sm32': [29,35], 'sm64': [28,35] , 'sm128':[28,35],
-              PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[19,35],PickedStateStr+'CM':[25,32]}
+OSFfitvals = {'sm16': [9,14],'sm32': [9,14], 'sm64': [9,15] , 'sm128':[28,35],
+              PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[19,35],PickedStateStr+'CM':[8,13]}
     
 OSFfitr = {'sm32':str(OSFfitvals['sm32'][0])+'-'+str(OSFfitvals['sm32'][1]),
            'sm64':str(OSFfitvals['sm64'][0])+'-'+str(OSFfitvals['sm64'][1]),
-           'sm128':str(OSFfitvals['sm128'][0])+'-'+str(OSFfitvals['sm128'][1]),
+           'sm16':str(OSFfitvals['sm16'][0])+'-'+str(OSFfitvals['sm16'][1]),
            PickedStateStr+'REvec':str(OSFfitvals[PickedStateStr+'REvec'][0])+'-'+str(OSFfitvals[PickedStateStr+'REvec'][1]),
            PickedStateStr+'CM':str(OSFfitvals[PickedStateStr+'CM'][0])+'-'+str(OSFfitvals[PickedStateStr+'CM'][1]),
            PickedStateStr+'PoF'+str(PoFShifts):str(OSFfitvals[PickedStateStr+'PoF'+str(PoFShifts)][0])+'-'+str(OSFfitvals[PickedStateStr+'PoF'+str(PoFShifts)][1])}
@@ -82,14 +82,14 @@ OSFfitr = {'sm32':str(OSFfitvals['sm32'][0])+'-'+str(OSFfitvals['sm32'][1]),
 #     OSFfitr[PickedStateStr+itvar] = str(OSFfitvals[PickedStateStr+itvar][0])+'-'+str(OSFfitvals[PickedStateStr+itvar][1])
 
 TSF3ptCutMin,TSF3ptCutMax = 2,5
-TSF2ptMinStart,TSF2ptMinEnd,TSF2ptMaxStart,TSF2ptMaxEnd = 18,25,29,35
+TSF2ptMinStart,TSF2ptMinEnd,TSF2ptMaxStart,TSF2ptMaxEnd = 0,5,7,15
 TSF3ptCutList = range(TSF3ptCutMin,TSF3ptCutMax+1)
 TwoStateParList = {'C2':['Am','Amp','m0','Dm'] , 'C3':['B00','B10','B01','B11']}
 ## picked for plotting
 TSFCutList = ['cut3','cut4','cut5']
 TSFCutPicked = 'cut4'
 ##maybe make set depenant like above
-TSFfitvals = [21,34]
+TSFfitvals = [4,12]
 TSFfitr = str(TSFfitvals[0])+'-'+str(TSFfitvals[1])
 
 

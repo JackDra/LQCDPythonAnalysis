@@ -49,7 +49,7 @@ if outfile == 'Tsink':
     ReadREvecTvarList = []
 elif outfile == 'CM':
     ReadSmearList = DefSmearList
-    ReadTSinkList = [29]
+    ReadTSinkList = CMTSinkList
     # CaptString = ['SMSET','CMSET','PoFSET','REvecSET']
     # CaptString = ['SMSET','CMSET','PoFSET']
     CaptString = ['SMSET','CMSET']
@@ -59,7 +59,7 @@ elif outfile == 'CM':
 elif outfile == 'JustCM':
     outfile = 'CM'
     ReadSmearList = []
-    ReadTSinkList = [29]
+    ReadTSinkList = CMTSinkList
     # CaptString = ['SMSET','CMSET','PoFSET','REvecSET']
     CaptString = ['CMSET']
     ReadTvarList = AnaTvarList
@@ -68,7 +68,7 @@ elif outfile == 'JustCM':
 elif outfile == 'JustSM':
     outfile = 'CM'
     ReadSmearList = []
-    ReadTSinkList = [29]
+    ReadTSinkList = CMTSinkList
     # CaptString = ['SMSET','CMSET','PoFSET','REvecSET']
     CaptString = ['SMSET']
     ReadTvarList = AnaTvarList
@@ -77,7 +77,7 @@ elif outfile == 'JustSM':
 elif outfile == 'JustPoF':
     outfile = 'CM'
     ReadSmearList = []
-    ReadTSinkList = [29]
+    ReadTSinkList = CMTSinkList
     ReadTvarList = AnaTvarList
     CaptString = ['PoFSET']
     # CaptString = ['tsink26state1PoF1to17dt2']
@@ -187,7 +187,7 @@ if os.path.isfile(picklefile2pt):
     print '2 point picked file read in'        
 else:
     print 'Reading and fitting 2 point correlator data'
-    [dump,data2pt,twoptGammaMomList,dump3,dump4,infolist2pt] = ReadCfunsnp(['twopt'],ReadSetList,thisMomList=feedin['mom'])
+    [dump,data2pt,twoptGammaMomList,dump3,dump4,infolist2pt] = ReadCfunsnp(['twopt'],ReadSetList,thisMomList=GetAvgMomList(feedin['mom']))
     ## data2pt = [ ip , iset2pt , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     OSF2ptarray = []
     OneFit2pt = []

@@ -47,6 +47,7 @@ def SortSum(SLin):
 
 def SortMySet(SLin,massset=False):
     # SLin.sort()
+    ntliststr,ntlist = map(str,range(nt)),range(nt)
     SLout = []
     TSinkLout = []
     if massset:
@@ -69,7 +70,7 @@ def SortMySet(SLin,massset=False):
                 if itsink in iSLin and 'sm' not in iSLin and 'to' not in iSLin and iSLin not in SLout:
                     SLout.append(iSLin)
                     TSinkLout.append(itint)
-        for itsink,itint in zip(map(str,range(20,40)),range(20,40)):
+        for itsink,itint in zip(ntliststr,ntlist):
         # for itsink,itint in zip(AllTSinkStrList,AllTSinkList):
             # for ism in DefSmList + DefTvarList:
             for ism in DefSmList+DefTvarList+PoFTvarList+REvecTvarList:
@@ -203,7 +204,7 @@ def CreateDataTsinkSet(dataCM,data,thisSmearList,thisStateList,thisTvarList,tsin
     return [np.array(data.tolist()+dataCMflat.tolist()),['tsink'+str(tsink)+iS for iS in thisSetList]]
 
 def SplitTsrcSm(string):
-    tsrcstring = re.search('tsrc..',string)
+    tsrcstring = re.search('tsrc.',string)
     if tsrcstring != None:
         tsrcstring = tsrcstring.group()
     else:

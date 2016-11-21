@@ -123,7 +123,7 @@ VarMethodMethod = 'AxBxlSolve' ## solve Ax = Bxc system directly (generalised ei
 NoSFRfacScale = False # Turn on to only scale the R function by sqrt((Epp+m)(Ep+m)/EppEp) for form factor creation
 ReadPoF2pt = False # Create PoF using already calculated eigenvectors. This is used if the statistics or solver method has changed.
 DeCorrPoF = False ## used for debugging the pencil of function method (decorrelation problem) !!!!!DEPRECIATED, LEAVE FALSE!!!!!
-TimeInv = False ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
+TimeInv = True ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
 DoCM = True ## does correlation matrix result ( no PoF) 
 
 
@@ -149,8 +149,9 @@ else:
 if Debug: print 'nconfs saved is: ' , RunNconfs
 
 VarMassCutoff = 0.4 # used in correlation matrix for cutting artifacts out of eigenmass sorting.
+kappas = 1364000
 
-dirread = datadir+'/cfun/Kud0'+str(kappa)+'Ks0'+str(kappa)
+dirread = datadir+'/cfun/Kud0'+str(kappa)+'Ks0'+str(kappas)
 outputdir = datadir+'results/'+ListOrSet+'k'+str(kappa)+'/'
 logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 momlistdir = datadir+'momdir/'
@@ -160,13 +161,14 @@ REvecDir = scriptdir+'REvecSave/k'+str(kappa)+'/'
 # For Debuggin, only use zero momenta
 # RunMomList = [qvecSet[iqTOip(0)],qvecSet[iqTOip(3)]]
 RunMomList = [qvecSet[iqTOip(0)]]
+RunAvgMomList = [qvecAvgSet[0]]
 mkdir_p(outputdir)
 mkdir_p(pickledir)
 mkdir_p(logdir)
 mkdir_p(REvecDir)
 mkdir_p(momlistdir)
-nt = 8
-nx = 4
+nt = 64
+nx = 32
 ndim = [nx,nx,nx,nt]
 latspace = 0.074 ## in fm
 ns = 4
@@ -200,15 +202,15 @@ for ider in DerSet:
         DGSet.append(igamma+ider)
 
 #this part is for ReadList (used for analying only specific configurations#
-if kappa == 12:
-    FileStruct = "Testing"
-    filelist = dirread+"/@/"+FileStruct+"*"
-conflist = ['00105',
-            '00115',
-            '00125',
-            '00265',
-            '00275',
-            '00285']
+# if kappa == 12:
+FileStruct = "RC32x64_B1900Kud01375400Ks01364000C1715"
+filelist = dirread+"/@/"+FileStruct+"*"
+conflist = ['-a-004400_xsrc3',
+            '-a-004410_xsrc3',
+            '-a-004420_xsrc3',
+            '-a-004430_xsrc3',
+            '-a-004440_xsrc3',
+            '-a-004450_xsrc3']
             
 
 SourceList = ['']
@@ -242,19 +244,19 @@ for Proj,GL in DefProjDerList.iteritems():
 DefCombGammaList = DefGammaList+DefNoDSGammaList
 
 # DeftoList = [18]
-DeftoList = [1]
+DeftoList = range(15)
 # DeftoList = [20,21,22,23]
 # DeftoList = [17,18,19,20,21,22,23]
 # DeftoList = [17,18,19,20,21,22,23,24,25,26,27]
 # DeftoList = [18,19,20,21,22]
 # DeftoList = [16,17,18,19,20]
 # DefdtList = [1,2,3,4,5,6]
-DefdtList = [1,2]
+DefdtList = [1,2,3]
 # DeftodtPicked = (18,2)
 ##MUST BE IN SORTING ORDER##
 # DeftodtPicked = [(18,2),(20,2)]
 # DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
-DeftodtPicked = [(1,1)]
+DeftodtPicked = [(7,3)]
 # DeftodtPicked = [(18,2)]
 DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
 
@@ -301,7 +303,7 @@ else:
     AnatodtList = DeftodtList
     AnaTvarList = DefTvarList
     
-DefSmearList = ['32','64','128']
+DefSmearList = ['16','32','64']
 # DefSmearList = ['8','16','32','64','128','256']
 # DefSmearList = ['64','128']
 # DefSmearList = ['32','64']
@@ -309,8 +311,8 @@ DefSmearList = ['32','64','128']
 # DefSmearList = ['32']
 # DefSmearList = ['64']
 # DefSmearList = ['128']
-if kappa == 12:
-    SingSmearList = ['32']
+# if kappa == 12:
+SingSmearList = ['32']
 # DefSmearList = ['32']
 # DefSmearList = ['8','16','32']
 StateSet = map(str,range(1,(PoFShifts+1)*len(DefSmearList)+1))
@@ -325,13 +327,13 @@ DefInterpList = ['nucleon']
 DefSmList = ['sm'+ism for ism in DefSmearList]
 SingSmList = ['sm'+ism for ism in SingSmearList]
 DefInterpSmearList = ElongateName(DefInterpList,DefSmList)
-CMTSinkList = [29]
-AllTSinkList = [26,29,32,35,38]
+CMTSinkList = [14]
+AllTSinkList = [11,14,17,20,23]
 AllTSinkListNoCM = []
 for its in AllTSinkList:
     if its not in CMTSinkList:
         AllTSinkListNoCM.append(its)
-AllTSinkListVar = [26,27,29,32,35,38]
+AllTSinkListVar = [11,12,14,17,20,23]
 AllTSinkShift = [it-tsource for it in AllTSinkList]
 AllTSinkStrList = ['tsink'+str(its) for its in AllTSinkList]
 AllTSinkStrListVar = ['tsink'+str(its) for its in AllTSinkListVar]
@@ -340,7 +342,7 @@ AllTSinkStrListNoCM = ['tsink'+str(its) for its in AllTSinkListNoCM]
 
 # AllREvecTSinkList = {'12104':[29],'12090':[32]}
 # AllREvecTSinkList = {'12104':[29],'12090':[26,32]}
-AllREvecTSinkList = {'12':[]}
+AllREvecTSinkList = {str(kappa):[]}
 REvecTSinkList = AllREvecTSinkList[str(kappa)]
 REvecTSinkStrList = ['tsink'+str(its) for its in REvecTSinkList]
 DefREvecVarList = [18,2]
@@ -352,7 +354,7 @@ REvecFlagList = [PickedStateStr+iREvec for iREvec in REvecTvarList]
 if OnlySelVar:
     if TimeInv:
         # DefPoFVarList = [[1,1]]
-        DefPoFVarList = [[1,1]]
+        DefPoFVarList = [[2,3]]
     else:
         DefPoFVarList = [[1,1]]
     PoFTvarList = ['PoF'+str(PoFShifts)+'to'+str(DefPoFVarList[0][0])+'dt'+str(DefPoFVarList[0][1])]
@@ -364,7 +366,7 @@ else:
 # DefPoFVarList = [19,2]
 # DefPoFVarList = [20,2]
 # DefPoFVarList = [22,2]
-AllPoFTSinkList = {'12':[]}
+AllPoFTSinkList = {str(kappa):[14]}
 PoFTSinkList = AllPoFTSinkList[str(kappa)]
 PoFTSinkStrList = ['tsink'+str(its) for its in PoFTSinkList]
 ##DEBUG##
@@ -381,10 +383,10 @@ PoFFlagList = [PickedStateStr+iPoF for iPoF in PoFTvarList]
 # REvecPar26 = [[ 0.0004799, -0.0119381, 0.9999286 ],[0,0,0],[0,0,0]]
 # REvecPar32 = [[ 0.0007567612, -0.0182265391, 0.9998335964],[0,0,0],[0,0,0]]
 
-if kappa == 12:
-    TSFFileFlags = []
-    OSFFileFlags = []
-    CfunCheckList = []
+# if kappa == 12:
+TSFFileFlags = ['CM','Tsink','test32','Small']
+OSFFileFlags = ['CM','Tsink']
+CfunCheckList = []
 
 MethodList = ['RF','Fits','SumMeth']+['TSF'+iTSF for iTSF in TSFFileFlags] + ['OSF'+iOSF for iOSF in OSFFileFlags]
 

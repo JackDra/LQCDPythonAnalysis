@@ -83,9 +83,10 @@ def SetUpPDict(ip,filedir,filename):
     
 
 def PrintToFile(thisdata,filedir,filename,thisTList,thisMomList,AddDict={},frmtflag='f'):
-    xmlMomList = map(ipTOqcond,thisMomList)
+    Is2pt = False
+    if 'Mass' in filedir or 'twopt' in filedir: Is2pt = True
+    xmlMomList = [ipTOqcond(imom,Avg=Is2pt) for imom in thisMomList]
     tkeyList = map(tstr,thisTList)
-    outputfilelist = []
     for ip,pdata in zip(xmlMomList,thisdata):
         datadict,outputfile = SetUpPDict(ip,filedir,filename)
         datadict[ip]['Info'] = AddDict
@@ -128,7 +129,7 @@ def PrintFitToFile(data,dataChi,iset,filedir,filename,thisMomList,thisCutList,mo
 
 
 def PrintLREvecMassToFile(thisLE,thisRE,thisEMass,thisMomList,thisTvar,AddDict={},DoPoF=True):
-    xmlMomList = map(ipTOqcond,thisMomList)
+    xmlMomList = [ipTOqcond(imom,Avg=True) for imom in thisMomList]
     for ip,pLE,pRE,pEMass in zip(xmlMomList,thisLE,thisRE,thisEMass):
         mkdir_p(outputdir+'/Mass/')
         datadict,outputfile = SetUpPDict(ip,outputdir+'/Mass/',thisTvar+'LREM')
@@ -248,7 +249,7 @@ def PickTF(iset,iA,setsize):
 
 def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,thisMomList,info2pt):
     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
-    masspardir = outputdir + 'cfuns/twopt/TSF'+fileprefix+'/'
+    masspardir = outputdir + 'cfun/twopt/TSF'+fileprefix+'/'
     xmlMomList = map(qstrTOqcond,thisMomList)
     xml2ptFitList = map(xmlfitr,thisFit2ptList)
     for im in [-2,-1]: #TwoStateParList m0 and dm
@@ -324,7 +325,7 @@ def PrintTSFSetToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2pt
 #OneFit2ptChi    = [ ifit2pt , ip , ism ]
 def PrintOSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,thisMomList,info2pt):
     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
-    masspardir = outputdir + 'cfuns/twopt/OSF'+fileprefix+'/'
+    masspardir = outputdir + 'cfun/twopt/OSF'+fileprefix+'/'
     for im in [1,0]:
         for ism,thesm in enumerate(thisSmList):
             filename = thesm+'twopt'+OneStateParList['C2'][im]

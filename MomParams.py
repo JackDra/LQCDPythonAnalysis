@@ -5,7 +5,9 @@ import os, errno
 
 
 CHROMA = True ## For using chroma output
-MomSqrdSet = [ '0','1','2','3','4','5','6','7','8','9' ]
+
+# MomSqrdSet = [ '0','1','2','3','4','5','6','7','8','9' ]
+MomSqrdSet = [ '0','1','2','3','4']
 QsqrdSet = ['qsqrd'+iq for iq in MomSqrdSet]
 Maxqsqrd = np.max(np.array(MomSqrdSet).astype(int))
 nxyz = 32
@@ -42,6 +44,19 @@ def makeqlist(thisMaxqsqrd):
                 qlist = np.append(qlist,'q = ' + str(iq1) + ' ' + str(iq2) + ' ' + str(iq3))
     return qlist
 
+def Avgqlist(thisMaxqsqrd):
+    qlist = np.array([])
+    qsqrdlist = []
+    for iq1 in range(thisMaxqsqrd+1):
+        for iq2 in range(thisMaxqsqrd+1):
+            for iq3 in range(thisMaxqsqrd+1):
+                if iq1**2 + iq2**2 + iq3**2 > thisMaxqsqrd: continue
+                if iq1**2 + iq2**2 + iq3**2 in qsqrdlist: continue
+                qsqrdlist.append(iq1**2 + iq2**2 + iq3**2)
+                qlist = np.append(qlist,'q = ' + str(iq3) + ' ' + str(iq2) + ' ' + str(iq1))
+    return qlist
+    
+
 def Chromaqlist(thisMaxqsqrd):
     qlist = np.array([])
     for iq1 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
@@ -53,9 +68,12 @@ def Chromaqlist(thisMaxqsqrd):
 
 if CHROMA:
     qvecSet = Chromaqlist(Maxqsqrd)
+    qvecAvgSet = Avgqlist(Maxqsqrd)
 else:
     qvecSet = makeqlist(Maxqsqrd)
+    qvecAvgSet = makeqlist(Maxqsqrd)
 
+    
 nmom = len(qvecSet)
 qhigh = nmom/2
 
@@ -67,13 +85,13 @@ def OrderMomList(momset):
     return qout
 
 ## momlist in p indexing
-def DragpZ(momlist):
+def DragpZ(momlist,Avg=False):
     if iqTOip(0) in momlist:
         momlist.insert(0, momlist.pop(momlist.index(iqTOip(0))))
     return momlist
 
 ## momlist in str indexing
-def DragpZstr(momlist):
+def DragpZstr(momlist,Avg=False):
     if 'q = 0 0 0' in momlist:
         momlist.insert(0, momlist.pop(momlist.index('q = 0 0 0')))
     return momlist
@@ -97,12 +115,16 @@ def PrintZMomI(val):
 #ip from 0 -> nmom, iq from -qhigh -> qhigh
 def ipTOiq(ip):
     return ip - qhigh
+
 def iqTOip(iq):
     return iq + qhigh
 
 
-def ipTOqstr(ip):
-    return qvecSet[int(ip)]
+def ipTOqstr(ip,Avg=False):
+    if Avg:
+        return qvecAvgSet[int(ip)]
+    else:
+        return qvecSet[int(ip)]
 
 
 def qcondTOqstr(iq):
@@ -111,8 +133,8 @@ def qcondTOqstr(iq):
 def qstrTOqcond(iq):
     return ' '.join(iq).replace('=','').replace(' ','')
 
-def ipTOqcond(ip):
-    return qstrTOqcond(ipTOqstr(ip))
+def ipTOqcond(ip,Avg=False):
+    return qstrTOqcond(ipTOqstr(ip,Avg=Avg))
 
 def iqTOqstr(iq):
     return qvecSet[iqTOip(iq)]
@@ -120,16 +142,16 @@ def iqTOqstr(iq):
 def ipZshiftTOqstr(ip):
     return qvecSetZfirst[ip]
     
-def qvecTOqstr(qvec):
-    return qvecSet[qvecTOip(qvec)]
+def qvecTOqstr(qvec,Avg=False):
+    return qvecSet[qvecTOip(qvec,Avg=Avg)]
 
 def qstrTOqvec(qstr):
     sqvec = qstr.split()
     return [int(sqvec[2]),int(sqvec[3]),int(sqvec[4])]
 
 
-def qstrTOip(qstr):
-    return qvecTOip(qstrTOqvec(qstr))
+def qstrTOip(qstr,Avg=False):
+    return qvecTOip(qstrTOqvec(qstr),Avg=Avg)
 
 def qstrTOiq(qstr):
     return qvecTOiq(qstrTOqvec(qstr))
@@ -138,15 +160,18 @@ def ipTOqvec(ip):
     sqvec = qvecSet[ip].split()
     return [int(sqvec[2]),int(sqvec[3]),int(sqvec[4])]
 
-def qvecTOip(qvec):
+def qvecTOip(qvec,Avg=False):
     strqvec = 'q = ' + str(qvec[0]) + ' ' + str(qvec[1]) + ' ' + str(qvec[2])
-    return np.where(qvecSet==strqvec)[0][0]
+    if Avg:
+        return np.where(qvecAvgSet==strqvec)[0][0]
+    else:        
+        return np.where(qvecSet==strqvec)[0][0]
 
 def iqTOqvec(iq):
     return ipTOqvec(iqTOip(iq))
 
-def qvecTOiq(qvec):
-    return ipTOiq(qvecTOip(qvec))
+def qvecTOiq(qvec,Avg=False):
+    return ipTOiq(qvecTOip(qvec,Avg=Avg))
 
 def qsqrdstr(thisqvec):
     sqvec = thisqvec.split()
@@ -159,7 +184,7 @@ def qvecINqsqrd(thisqsqrd):
             qvecout.append(iq)
     return qvecout
 
-DefMomList = [iqTOip(0),iqTOip(1),qvecTOip([-1,0,0])]
+DefMomList = [iqTOip(0),iqTOip(1),qvecTOip([-1,0,0],Avg=False)]
 
 def SmallestMomList(data):
     dataout = []
@@ -177,8 +202,8 @@ def MomOrderLists(MLread,MLsort,*SortThese):
     return STout
 
 
-def ipTOE(ip,mass):
-    return np.sqrt((qsqrdstr(ipTOqstr(ip))*qunit)**2 + mass**2)
+def ipTOE(ip,mass,Avg=False):
+    return np.sqrt((qsqrdstr(ipTOqstr(ip,Avg=Avg))*qunit)**2 + mass**2)
 
 
 def qstrTOE(ip,mass):
@@ -242,6 +267,20 @@ def makeq4list(thisMinqsqrd,thisMaxqsqrd):
     return np.array(qlist)
 
 
+
+def GetAvgMom(qstr):
+    for ip in qvecAvgSet:
+        if qsqrdstr(ip) == qsqrdstr(qstr):
+            return ip
+    raise IOError('Mom Not Found in AvgList')
+
+def GetAvgMomList(qlist):
+    outlist = []
+    for iq in qlist:
+        iqavg = GetAvgMom(iq)
+        if iqavg not in outlist:
+            outlist.append(iqavg)
+    return outlist
 
 
 def CreateSMOMNewPairs(thisMinqsqrd,thisMaxqsqrd):

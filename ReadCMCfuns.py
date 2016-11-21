@@ -39,20 +39,24 @@ def ReadSet(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList, thisDSL
     #     TestMomList(thisMomList)
     thisfilelist = []
     f = open('./cfglistset.txt','w')
+    
     for isource in SourceList:
+        print 'reading directory: ' , directory+'/'+isource
         for (dirname,dirs,files) in walk(directory+'/'+isource):
-            for file in files:
+            for ifile in files:
                 if CfunConfigCheck:
                     fileend2pt = CreateEnd2pt(DefSmearList[0],DefSmearList[0],thistsourceList[0],Interps[0],Interps[0])
-                    if fileend2pt not in file or ".metadata" in file: continue
-                    fileprefix = file.replace(fileend2pt,'')
+                    if Debug: print ' comparing to: ',fileend2pt
+                    if fileend2pt not in ifile or ".metadata" in ifile: continue
+                    fileprefix = ifile.replace(fileend2pt,'')
                     if CheckAllSet(fileprefix,dirname+'/',Interps,tsourceList=thistsourceList):
                         f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
                         thisfilelist.append(directory+'/'+isource+'/@/'+fileprefix)                    
                 else:
                     fileend2pt = CreateEnd2pt(thisSmearList[0],thisSmearList[0],thistsourceList[0],Interps[0],Interps[0])
-                    if fileend2pt not in file or ".metadata" in file: continue
-                    fileprefix = file.replace(fileend2pt,'')
+                    if Debug: print ' comparing to: ',fileend2pt
+                    if fileend2pt not in ifile or ".metadata" in ifile: continue
+                    fileprefix = ifile.replace(fileend2pt,'')
                     if CheckSet(fileprefix,dirname+'/',thisSmearList,thisProjGammaList,
                                 thisProjDerList,thisDSList,thisTSinkList,Flag,Interps,tsourceList=thistsourceList):
                         f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')

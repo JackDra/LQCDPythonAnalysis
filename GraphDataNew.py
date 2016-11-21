@@ -43,8 +43,8 @@ thisalpha = 0.3
 
 # MassTVals = 16,33
 # MassTVals = 3,25
-MassTVals = 1,8
-Massyrange = 0.0,4.0
+MassTVals = 1,20
+Massyrange = 0.5,1.0
 # Massyrange = 0.40,0.60
 # Massyrange = 0.40,0.61
 Qsqrdxlim = -0.03,1
@@ -902,7 +902,7 @@ def PlotOSFMassValue(data,col,smear,thisdt):
     smearindex,deltashift = CreateOSFfitKey(smear)
     if Debug:
         print data.keys(), 'm0'
-        print OSFfitr.keys(), smearindex
+        print OSFfitr.keys(), smearindex, smear
         print data['m0'].keys(), OSFfitr[smearindex]
         print data['m0'][OSFfitr[smearindex]].keys(),'Boot','Avg','Std'
     if CheckDict(data,'m0',OSFfitr[smearindex],'Boot'): 

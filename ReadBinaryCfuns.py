@@ -128,6 +128,12 @@ class Read2ptCfunChromaXML:
                 if strline == '</momenta>':
                     if len(self.data) > 0: break
         indicies =  np.searchsorted(self.OutMomList,thisMomList)
+        if Debug:
+            print 
+            print thisMomList
+            print thisfile
+            print indicies
+            print self.data
         self.data = np.array(self.data)[indicies].tolist()
                     
                     
