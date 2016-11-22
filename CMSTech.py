@@ -380,8 +380,12 @@ def GetTvarREvesPoF(Cfunin,thistodtvals,masscut,thisPoFShifts=PoFShifts):
     Cfun = np.array(Cfunin)
     Cfuntomat,Cfuntodtmat = [[]],[[]]
     
-    Cfuntomat[0].append(Pullflag(Cfun[-1,:,:,thisto],'Avg'))
-    Cfuntodtmat[0].append(Pullflag(Cfun[-1,:,:,thisto+thisdt],'Avg'))
+    if CHROMA:
+        Cfuntomat[0].append(Pullflag(Cfun[-1,:,:,thisto-PoFDelta],'Avg'))
+        Cfuntodtmat[0].append(Pullflag(Cfun[-1,:,:,thisto+thisdt-PoFDelta],'Avg'))
+    else:
+        Cfuntomat[0].append(Pullflag(Cfun[-1,:,:,thisto],'Avg'))
+        Cfuntodtmat[0].append(Pullflag(Cfun[-1,:,:,thisto+thisdt],'Avg'))
     if thisPoFShifts > 0:
         if TimeInv:
             Cfuntomat[0].append(Pullflag(Cfun[-1,:,:,thisto+PoFDelta],'Avg'))
@@ -403,14 +407,25 @@ def GetTvarREvesPoF(Cfunin,thistodtvals,masscut,thisPoFShifts=PoFShifts):
             #     Cfuntodtmat[1].append(Pullflag(Cfun[-2,:,:,thisto+thisdt+PoFDelta/2],'Avg'))
             #     Cfuntodtmat[1].append(Pullflag(Cfun[-2,:,:,thisto+thisdt+(3*PoFDelta)/2],'Avg'))
             # else:
-            Cfuntomat[0].append(Pullflag(Cfun[-1,:,:,thisto+PoFDelta],'Avg'))
-            Cfuntomat.append([])
-            Cfuntomat[1].append(Pullflag(Cfun[-2,:,:,thisto],'Avg'))
-            Cfuntomat[1].append(Pullflag(Cfun[-2,:,:,thisto+PoFDelta],'Avg'))
-            Cfuntodtmat[0].append(Pullflag(Cfun[-1,:,:,thisto+thisdt+PoFDelta],'Avg'))
-            Cfuntodtmat.append([])
-            Cfuntodtmat[1].append(Pullflag(Cfun[-2,:,:,thisto+thisdt],'Avg'))
-            Cfuntodtmat[1].append(Pullflag(Cfun[-2,:,:,thisto+thisdt+PoFDelta],'Avg'))
+            if CHROMA:
+                Cfuntomat[0].append(Pullflag(Cfun[-1,:,:,thisto],'Avg'))
+                Cfuntomat.append([])
+                Cfuntomat[1].append(Pullflag(Cfun[-2,:,:,thisto],'Avg'))
+                Cfuntomat[1].append(Pullflag(Cfun[-2,:,:,thisto+PoFDelta],'Avg'))
+                Cfuntodtmat[0].append(Pullflag(Cfun[-1,:,:,thisto+thisdt],'Avg'))
+                Cfuntodtmat.append([])
+                Cfuntodtmat[1].append(Pullflag(Cfun[-2,:,:,thisto+thisdt],'Avg'))
+                Cfuntodtmat[1].append(Pullflag(Cfun[-2,:,:,thisto+thisdt+PoFDelta],'Avg'))
+            else:
+                Cfuntomat[0].append(Pullflag(Cfun[-1,:,:,thisto+PoFDelta],'Avg'))
+                Cfuntomat.append([])
+                Cfuntomat[1].append(Pullflag(Cfun[-2,:,:,thisto],'Avg'))
+                Cfuntomat[1].append(Pullflag(Cfun[-2,:,:,thisto+PoFDelta],'Avg'))
+                Cfuntodtmat[0].append(Pullflag(Cfun[-1,:,:,thisto+thisdt+PoFDelta],'Avg'))
+                Cfuntodtmat.append([])
+                Cfuntodtmat[1].append(Pullflag(Cfun[-2,:,:,thisto+thisdt],'Avg'))
+                Cfuntodtmat[1].append(Pullflag(Cfun[-2,:,:,thisto+thisdt+PoFDelta],'Avg'))
+        
         if thisPoFShifts > 1:
             Cfuntomat[0].append(Pullflag(Cfun[-1,:,:,thisto+(2*PoFDelta)],'Avg'))
             Cfuntomat[1].append(Pullflag(Cfun[-2,:,:,thisto+(2*PoFDelta)],'Avg'))

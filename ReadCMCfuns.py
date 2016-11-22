@@ -85,7 +85,7 @@ def CreateEnd3pt(ism,jsm,thists,Tsink,DS,Proj,Der):
 def CreateEnd2pt(ism,jsm,thists,iterp,jterp):
     # if iterp == jterp: return '.t'+str(thists)+'sm'+ism+'k'+str(kappa)+'.ifmssi'+jsm+'.'+iterp+'.u.2cf'
     # else: return '.t'+str(thists)+'sm'+ism+'k'+str(kappa)+'.ifmssi'+jsm+'.'+iterp+'_'+jterp+'.u.2cf'
-    return '_k'+str(kappa)+'_tsrc0sm'+ism+'si'+jsm+'_'+iterp+'.2cf.xml'
+    return '_k'+str(kappa)+'_tsrc'+str(thists)+'sm'+ism+'si'+jsm+'_'+iterp+'.2cf.xml'
 
 def CreateDir3pt(ism,jsm,Tsink,DS,Proj,Flag):    
     return Flag+'sm'+ism+jsm+Proj+'t'+str(Tsink)+'p000.'+DS

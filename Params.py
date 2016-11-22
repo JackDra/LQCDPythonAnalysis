@@ -113,7 +113,7 @@ ForcePos = False ## Forces all non-form factor graphs to be positive
 MultiCoreFitting = False # Multicore for Boot Fitting, not needed in current build
 DoMulticore = True # Runs multicore wherever implemented
 DoContentsCheck = False # True makes sure the xml file has the correct momenta first field, turn off for more performance
-OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
+OnlySelVar = False # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
 DoNorm = False # normalises the 2 point function (see CMSTech.py)
 DoSym = True # symmetrises the 2 point function (see CMSTech.py)
 # VarMethodMethod = 'Regular' # for solving the Variational method, different ways of doing it/
@@ -123,8 +123,8 @@ VarMethodMethod = 'AxBxlSolve' ## solve Ax = Bxc system directly (generalised ei
 NoSFRfacScale = False # Turn on to only scale the R function by sqrt((Epp+m)(Ep+m)/EppEp) for form factor creation
 ReadPoF2pt = False # Create PoF using already calculated eigenvectors. This is used if the statistics or solver method has changed.
 DeCorrPoF = False ## used for debugging the pencil of function method (decorrelation problem) !!!!!DEPRECIATED, LEAVE FALSE!!!!!
-TimeInv = True ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
-DoCM = True ## does correlation matrix result ( no PoF) 
+TimeInv = False ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
+DoCM = False ## does correlation matrix result ( no PoF) 
 
 
 ##DEBUG toggles (True/False):
@@ -184,7 +184,8 @@ if TimeInv:
     # PoFtsourceList = map(str,[tsource]*(PoFShifts+1))
     PoFtsourceList = [str(tsource)]
 else:
-    PoFtsourceList = map(str,range(tsource-(PoFShifts*PoFDelta),tsource+1,PoFDelta))
+    # PoFtsourceList = map(str,range(tsource-(PoFShifts*PoFDelta),tsource+1,PoFDelta))
+    PoFtsourceList = map(str,range(tsource,tsource+1+(PoFShifts*PoFDelta),PoFDelta))
 
 # note: dim of StateSet < dim of SmearSet
 GammaSet = ['I','g1','g2','g3','g4','g1g2','g1g3','g1g4','g2g3','g2g4','g3g4','g1g5','g2g5','g3g5','g4g5','g5']
@@ -244,19 +245,19 @@ for Proj,GL in DefProjDerList.iteritems():
 DefCombGammaList = DefGammaList+DefNoDSGammaList
 
 # DeftoList = [18]
-DeftoList = range(15)
+DeftoList = range(3,10)
 # DeftoList = [20,21,22,23]
 # DeftoList = [17,18,19,20,21,22,23]
 # DeftoList = [17,18,19,20,21,22,23,24,25,26,27]
 # DeftoList = [18,19,20,21,22]
 # DeftoList = [16,17,18,19,20]
 # DefdtList = [1,2,3,4,5,6]
-DefdtList = [1,2,3]
+DefdtList = range(1,7)
 # DeftodtPicked = (18,2)
 ##MUST BE IN SORTING ORDER##
 # DeftodtPicked = [(18,2),(20,2)]
 # DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
-DeftodtPicked = [(7,3)]
+DeftodtPicked = [(2,1)]
 # DeftodtPicked = [(18,2)]
 DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
 
@@ -303,7 +304,9 @@ else:
     AnatodtList = DeftodtList
     AnaTvarList = DefTvarList
     
-DefSmearList = ['16','32','64']
+# DefSmearList = ['16','32','64']
+DefSmearList = ['16']
+# DefSmearList = ['64']
 # DefSmearList = ['8','16','32','64','128','256']
 # DefSmearList = ['64','128']
 # DefSmearList = ['32','64']
@@ -354,9 +357,9 @@ REvecFlagList = [PickedStateStr+iREvec for iREvec in REvecTvarList]
 if OnlySelVar:
     if TimeInv:
         # DefPoFVarList = [[1,1]]
-        DefPoFVarList = [[2,3]]
+        DefPoFVarList = [[2,1]]
     else:
-        DefPoFVarList = [[1,1]]
+        DefPoFVarList = [[4,4]]
     PoFTvarList = ['PoF'+str(PoFShifts)+'to'+str(DefPoFVarList[0][0])+'dt'+str(DefPoFVarList[0][1])]
 else:
     DefPoFVarList = DeftodtList

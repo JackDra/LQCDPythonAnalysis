@@ -18,7 +18,7 @@ def GetCut(thisset,thisdict):
     return False
 
 
-MassDtList = range(1,7)
+MassDtList = range(1,12)
 # MassDtList = [2]
 FitCutMin,FitCutMax = 3,9
 FitCutList = range(FitCutMin,FitCutMax+1)
@@ -61,14 +61,14 @@ def CreateFitList(thisTwoMin,thisTwoMinMax,thisTwoMax,thisTwoMaxMax,this3ptCutMi
     return this2ptList
 
 OSF3ptCutMin,OSF3ptCutMax = 3,7
-OSF2ptMinStart,OSF2ptMinEnd,OSF2ptMaxStart,OSF2ptMaxEnd = 5,11,11,15
+OSF2ptMinStart,OSF2ptMinEnd,OSF2ptMaxStart,OSF2ptMaxEnd = 1,11,8,20
 OSF3ptCutList = range(OSF3ptCutMin,OSF3ptCutMax+1)
 OneStateParList = {'C2':['Am','m0'] , 'C3':['B00']}
 #picked for plotting
 OSFCutList = ['cut4','cut5','cut6']
 OSFCutPicked = 'cut5'
-OSFfitvals = {'sm16': [9,14],'sm32': [9,14], 'sm64': [9,15] , 'sm128':[28,35],
-              PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[19,35],PickedStateStr+'CM':[8,13]}
+OSFfitvals = {'sm16': [9,14],'sm32': [9,14], 'sm64': [7,20] , 'sm128':[28,35],
+              PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[4,9],PickedStateStr+'CM':[9,17]}
     
 OSFfitr = {'sm32':str(OSFfitvals['sm32'][0])+'-'+str(OSFfitvals['sm32'][1]),
            'sm64':str(OSFfitvals['sm64'][0])+'-'+str(OSFfitvals['sm64'][1]),
@@ -89,7 +89,7 @@ TwoStateParList = {'C2':['Am','Amp','m0','Dm'] , 'C3':['B00','B10','B01','B11']}
 TSFCutList = ['cut3','cut4','cut5']
 TSFCutPicked = 'cut4'
 ##maybe make set depenant like above
-TSFfitvals = [4,12]
+TSFfitvals = [2,12]
 TSFfitr = str(TSFfitvals[0])+'-'+str(TSFfitvals[1])
 
 
