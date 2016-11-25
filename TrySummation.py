@@ -29,7 +29,7 @@ def FitSumWrap(thisGammaList,thisReadSetList,thisTSinkList,this2ptSetList,thisRe
         SumFitAvg.append(thisout[2])
         SumFitChi.append(thisout[3])
         SumFitList.append(thisout[4])
-    WipeSet(outputdir,thisGammaMomList.keys(),this2ptSetList,filepref='SumMeth/')
+    WipeSet(outputdir[0],thisGammaMomList.keys(),this2ptSetList,filepref='SumMeth/')
     PrintSumSetToFile(SummedRF,SumFitBoot,SumFitChi,SumFitList,str(this2ptSetList[0]),thisGammaMomList,thisTSinkList,SumMeth3ptCuts,infoRF)
     print 'Fitting ' , ' '.join(thisGammaList) , 'complete, took: ' + GetTimeStr(time.time()-thisstart)
 

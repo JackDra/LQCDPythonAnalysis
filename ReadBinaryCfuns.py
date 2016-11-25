@@ -104,29 +104,47 @@ class Read2ptCfunChroma:
 
 class Read2ptCfunChromaXML:
     def __init__(self,thisfile,thisMomList):
-        BarPart,ReadMom = False,False
         self.data = []
-        self.OutMomList = []
-        with open(thisfile,'r') as f:
-            for line in f:
-                strline = line.strip()
-                if strline == '<Shell_Shell_Wilson_Baryons>':
-                    BarPart = True
-                elif BarPart:
-                    if '<sink_mom_num>' in strline:
-                        thismom = int(strline.replace('<sink_mom_num>','').replace('</sink_mom_num>',''))
-                        if thismom in thisMomList:
-                            self.data.append([])
-                            self.OutMomList.append(thismom)
-                            ReadMom = True
-                        else:
-                            ReadMom = False
-                    elif '<re>' in strline and ReadMom:
-                        self.data[-1].append(float(strline.replace('<re>','').replace('</re>','')))
-                        if np.isnan(self.data[-1][-1]):
-                            raise NaNCfunError('NaN Values: '+thisfile+'  ' +qvecSet[int(self.OutMomList[-1])]  )
-                if strline == '</momenta>':
-                    if len(self.data) > 0: break
+        if XAvg: thisxsrcList = xsrcList
+        else: thisxsrcList = [xsrcList[0]]
+        for xsrc in thisxsrcList:
+            self.OutMomList = []
+            datahold = []
+            # print 'Reading ' ,thisfile.replace(xsrcList[0],xsrc)
+            with open(thisfile.replace(xsrcList[0],xsrc),'r') as f:
+                BarPart,InterpPart,ReadMom = False,False,False                
+                for line in f:
+                    strline = line.strip()
+                    if strline == '<Shell_Shell_Wilson_'+MesOrBar+'s>':
+                    # if strline == '<Shell_Shell_Wilson_Baryons>':
+                        BarPart = True
+                    elif InterpFlag in strline:
+                        if strline.replace('<'+InterpFlag+'>','').replace('</'+InterpFlag+'>','') == InterpNumb:
+                            InterpPart = True
+                    elif BarPart and InterpPart:
+                        if '<sink_mom_num>' in strline:
+                            thismom = int(strline.replace('<sink_mom_num>','').replace('</sink_mom_num>',''))
+                            if thismom in thisMomList:
+                                datahold.append([])
+                                self.OutMomList.append(thismom)
+                                ReadMom = True
+                            else:
+                                ReadMom = False
+                        elif '<re>' in strline and ReadMom:
+                            datahold[-1].append(float(strline.replace('<re>','').replace('</re>','')))
+                            if np.isnan(datahold[-1][-1]):
+                                raise NaNCfunError('NaN Values: '+thisfile+'  ' +qvecSet[int(self.OutMomList[-1])]  )
+                    if strline == '</momenta>' and InterpPart:
+                        if len(datahold) > 0: break
+            # print xsrc, ' data '
+            # print np.array(datahold)
+            # print self.data
+            # print 
+            if len(self.data) == 0:                    
+                self.data = np.array(datahold)
+            else:
+                self.data += np.array(datahold)
+        self.data = self.data/len(thisxsrcList)
         indicies =  np.searchsorted(self.OutMomList,thisMomList)
         if Debug:
             print 

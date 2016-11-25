@@ -49,12 +49,12 @@ for iFFcomb in feedin['FFcomb']:
     if iFFcomb == '':
         for icurr in ElongateName(feedin['comb'],feedin['current']):
             print 'Looking in ', icurr
-            datadict[icurr] = ReadFFDict(outputdir,GetCurrDict([icurr]))
+            datadict[icurr] = ReadFFDict(outputdir[0],GetCurrDict([icurr]))
             datadict[icurr] = datadict[icurr][datadict[icurr].keys()[0]]
     else:
         for icurr in ElongateName(thisFFcomb,thisCurrcomb):
             print 'Looking in ', icurr+iFFcomb
-            datadict[icurr+iFFcomb.replace('/','')] = ReadFFDict(outputdir,GetCurrDict([icurr+iFFcomb]))
+            datadict[icurr+iFFcomb.replace('/','')] = ReadFFDict(outputdir[0],GetCurrDict([icurr+iFFcomb]))
             datadict[icurr+iFFcomb.replace('/','')] = datadict[icurr+iFFcomb.replace('/','')][datadict[icurr+iFFcomb.replace('/','')].keys()[0]]
 # if Debug: print datadict.keys()
 # if Debug: print datadict[datadict.keys()[0]].keys()

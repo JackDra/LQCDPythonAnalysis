@@ -105,7 +105,7 @@ else:
     print 'nothing to calculate'        
     output = []
     
-# WipeSet(outputdir,RunGammaList,feedin['set'],filepref='Fits/')
+# WipeSet(outputdir[0],RunGammaList,feedin['set'],filepref='Fits/')
 print 'Done Fits ' + ' '*50
 for iout in output:
     PrintFitSetToFile(*iout)

@@ -127,12 +127,12 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
     return datadictout,datamassout
 
 
-def Get2ptSetMoms(outputdir,MomListIn,tvarlist=[],smlist=[],tsrclist=[]):
+def Get2ptSetMoms(thisoutputdir,MomListIn,tvarlist=[],smlist=[],tsrclist=[]):
     momlist = set([])
     xmlMomList = map(qstrTOqcond,MomListIn)
     for iflag in ['cfun/twopt','Mass']:
         for ip in xmlMomList:
-            thisdir = outputdir+iflag+MakeMomDir(ip)
+            thisdir = thisoutputdir+iflag+MakeMomDir(ip)
             for itvar in tvarlist:
                 if iflag == 'Mass':
                     ifile = thisdir+itvar+'LREM'+ip+'.xml'
@@ -150,11 +150,11 @@ def Get2ptSetMoms(outputdir,MomListIn,tvarlist=[],smlist=[],tsrclist=[]):
     return OrderMomList(momlist)
 
 
-def Get3SM(outputdir,thisGammaList,MomListIn,setlist):
+def Get3SM(thisoutputdir,thisGammaList,MomListIn,setlist):
     momlist = set([])
     xmlMomList = map(qstrTOqcond,MomListIn)
     for igamma in thisGammaList:
-        thisdir = outputdir+CreateOppDir(igamma)
+        thisdir = thisoutputdir+CreateOppDir(igamma)
         for iset in setlist:
             for ip in xmlMomList:
                 ifile = thisdir+MakeMomDir(ip)+iset+igamma+ip+'.xml'
@@ -162,9 +162,9 @@ def Get3SM(outputdir,thisGammaList,MomListIn,setlist):
     return OrderMomList(momlist)
             
 
-def Get3ptSetMoms(outputdir,thisGammaList,MomListIn,setlist):
-    return OrderMomList(set(Get3SM(outputdir,thisGammaList,MomListIn,setlist)) |
-                        set(Get3SM(outputdir+'cfun/',thisGammaList,MomListIn,setlist)))
+def Get3ptSetMoms(thisoutputdir,thisGammaList,MomListIn,setlist):
+    return OrderMomList(set(Get3SM(thisoutputdir,thisGammaList,MomListIn,setlist)) |
+                        set(Get3SM(thisoutputdir+'cfun/',thisGammaList,MomListIn,setlist)))
 
 
 ##NEW FUNCTIONS##
@@ -172,11 +172,11 @@ def Get3ptSetMoms(outputdir,thisGammaList,MomListIn,setlist):
 #data2pt = [ mom , set , it ] bs
 #data3pt = [ gamma , mom , set , it ] bs
 def ReadCfunsnp(thisGammaList,thisSetList,thisMomList=RunMomList,thisPrintRead=PrintRead):
-    datadict = ReadCfunsDict(outputdir,thisSetList,thisGammaList,thisMomList=thisMomList,thisPrintRead=thisPrintRead)
+    datadict = ReadCfunsDict(outputdir[0],thisSetList,thisGammaList,thisMomList=thisMomList,thisPrintRead=thisPrintRead)
     return SetRFDictToList(datadict,thisPrintRead=thisPrintRead)
 
 def ReadRFnp(thisGammaList,thisSetList,thisMomList=RunMomList,thisPrintRead=PrintRead):
-    datadict = ReadSetDict(outputdir,thisSetList,thisGammaList,['RF'],thisMomList=thisMomList,thisPrintRead=thisPrintRead)
+    datadict = ReadSetDict(outputdir[0],thisSetList,thisGammaList,['RF'],thisMomList=thisMomList,thisPrintRead=thisPrintRead)
     return SetRFDictToList(datadict,thisPrintRead=thisPrintRead)
 
 def ReadSetAndCfunsDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=RunMomList,thisPrintRead=PrintRead):

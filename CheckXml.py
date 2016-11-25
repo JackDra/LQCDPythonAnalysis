@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 from Params import *
-from Params import outputdir
 from XmlFuns import *
 from XmlFormatting import *
 from FitParams import *
@@ -15,7 +14,7 @@ import time
 
 def CheckNconfMass(CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=True,minmax='mim'):
     nconf = 10e16
-    thisdir = outputdir
+    thisdir = outputdir[0]
     NconfDict = OD()
     NconfDict['Missing'] = []
     NconfDict['Dep'] = []
@@ -24,7 +23,7 @@ def CheckNconfMass(CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=True
         thisSetList = ReduceTsink(CheckSetList)
         if 'RF' == CheckType: CheckType = ''
         if len(CheckType) > 0: CheckType += '/'
-        if cfuns: thisdir = outputdir + 'cfun/'
+        if cfuns: thisdir = outputdir[0] + 'cfun/'
         SFList = ['']
         if 'OSF' in CheckType:
             SFList = OneStateParList['C2']
@@ -93,7 +92,7 @@ def CheckNconfMass(CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=True
 
 def CheckNconf(inputGammaList,CheckSetList,thisMomList=RunMomList,CheckList=[''],cfuns=False,minmax='min'):
     nconf = 10e16
-    thisdir = outputdir
+    thisdir = outputdir[0]
     NconfDict = OD()
     NconfDict['Missing'] = []
     NconfDict['Dep'] = []
@@ -113,7 +112,7 @@ def CheckNconf(inputGammaList,CheckSetList,thisMomList=RunMomList,CheckList=['']
         if len(CheckType) > 0:
             CheckType += '/'
             if any([itype in CheckType for itype in ['SumMeth','TSF']]): thisSetList = ReduceTsink(CheckSetList)
-        if cfuns: thisdir = outputdir + 'cfun/'
+        if cfuns: thisdir = outputdir[0] + 'cfun/'
         SFList = ['']
         if 'OSF' in CheckType:
             SFList = OneStateParList['C3']
@@ -189,12 +188,12 @@ def CheckNconf(inputGammaList,CheckSetList,thisMomList=RunMomList,CheckList=['']
 ##xmlinput = { Ratio_Factor , Boots/Values , thismomlist , tlist } 
 ##outputdict = { thismom , [tVals] / [Vals] / [Valserr] / [Boot] bs }
 # def Check3ptFiles(thisGammaList,thisSetList,thisMomList,CheckType='',cfuns=False):
-#     CheckSetList,thisdir = thisSetList,outputdir
+#     CheckSetList,thisdir = thisSetList,outputdir[0]
 #     outputbool = True
 #     if len(CheckType) > 0:
 #         CheckType += '/'
 #         if any([itype in CheckType for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(thisSetList)
-#         if cfuns: thisdir = outputdir + 'cfuns/'
+#         if cfuns: thisdir = outputdir[0] + 'cfuns/'
 #     SFList = ['']
 #     if 'OSF' in CheckType:
 #         SFList = OneStateParList['C3']
@@ -217,13 +216,13 @@ def CheckNconf(inputGammaList,CheckSetList,thisMomList=RunMomList,CheckList=['']
 
 ## list of booleans corresponding to what needs to be done relative to list thisMomList
 def Check3ptArray(thisGammaList,thisSetList,thisMomList=RunMomList,CheckType='',cfuns=False,printout=True,thisNconf = RunNconfs):
-    CheckSetList,thisdir = thisSetList,outputdir
+    CheckSetList,thisdir = thisSetList,outputdir[0]
     totstart = time.time()
     outlist = {}
     if len(CheckType) > 0:
         CheckType += '/'
         if any([itype in CheckType for itype in ['SumMeth','TSF']]): CheckSetList = ReduceTsink(thisSetList)
-    if cfuns: thisdir = outputdir + 'cfun/'
+    if cfuns: thisdir = outputdir[0] + 'cfun/'
     SFList = ['']
     if 'OSF' in CheckType:
         SFList = OneStateParList['C3']

@@ -64,13 +64,13 @@ def SetOpps(AllList):
         if 'Run' in contents: iscmplx = 'cmplx'
     return sorted(Extra),sorted(thisOppList),sorted(thisDSList),sorted(thisProjList),'real, '+iscmplx
 
-def Wipe2pt(outputdir,tvarlist=[],smlist=[],thisMomList=RunMomList):
+def Wipe2pt(thisoutputdir,tvarlist=[],smlist=[],thisMomList=RunMomList):
     thistvarlist = ['PoF'+str(PoFShifts)+itvar for itvar in tvarlist]
     thistvarlist += ['CM'+itvar for itvar in tvarlist]
     xmlMomList = map(qstrTOqcond,thisMomList)
     for iflag in ['cfun/twopt','Mass']:
         for ip in xmlMomList:
-            thisdir = outputdir+iflag+MakeMomDir(ip)
+            thisdir = thisoutputdir+iflag+MakeMomDir(ip)
             for itvar in thistvarlist:
                 ifile = thisdir+itvar+'LREM'+ip+'.xml'
                 if os.path.isfile(ifile): os.remove(ifile)
@@ -89,10 +89,10 @@ def Wipe2pt(outputdir,tvarlist=[],smlist=[],thisMomList=RunMomList):
                 if os.path.isfile(ifile): os.remove(ifile)
     
 
-def WipeSet(outputdir,thisGammaList,setlist,thisMomList=RunMomList,filepref=''):
+def WipeSet(thisoutputdir,thisGammaList,setlist,thisMomList=RunMomList,filepref=''):
     xmlMomList = map(qstrTOqcond,thisMomList)
     for igamma in thisGammaList:
-        thisdir = outputdir+CreateOppDir(igamma)
+        thisdir = thisoutputdir+CreateOppDir(igamma)
         for iset in setlist:
             for ip in xmlMomList:
                 ifile = thisdir+MakeMomDir(ip)+filepref+iset+igamma+ip+'.xml'
@@ -101,9 +101,9 @@ def WipeSet(outputdir,thisGammaList,setlist,thisMomList=RunMomList,filepref=''):
                 if os.path.isfile(ifile): os.remove(ifile)
 
             
-# def WipeSet(outputdir,thisGammaList,tlist=[],treveclist=[],statelist=[],revectodtlist=[],todtlist=[],smlist=[],filepref=''):
+# def WipeSet(outputdir[0],thisGammaList,tlist=[],treveclist=[],statelist=[],revectodtlist=[],todtlist=[],smlist=[],filepref=''):
 #     for igamma in thisGammaList:
-#         thisdir = outputdir+CreateOppDir(igamma) + filepref        
+#         thisdir = outputdir[0]+CreateOppDir(igamma) + filepref        
 #         if len(tlist) > 0 or len(treveclist) > 0:
 #             for it in treveclist:
 #                 for istate in statelist:
@@ -154,14 +154,14 @@ def WipeSet(outputdir,thisGammaList,setlist,thisMomList=RunMomList,filepref=''):
 #                 if os.path.isfile(ifile): os.remove(ifile)
 #                 if os.path.isfile(ifb): os.remove(ifb)
 
-def WipeSF(outputdir,thisGammaList,RunName,OoT,statelist=[],todtlist=[],smlist=[],tsinklist=['']):
+def WipeSF(thisoutputdir,thisGammaList,RunName,OoT,statelist=[],todtlist=[],smlist=[],tsinklist=['']):
     for igamma in thisGammaList:
         if igamma == 'twopt':
-            thisdir = outputdir+'cfun/'+CreateOppDir(igamma)+RunName+'/'
+            thisdir = thisoutputdir+'cfun/'+CreateOppDir(igamma)+RunName+'/'
             thisParList = StateParList[OoT]['C2']
             thistsinklist = ['']
         else:
-            thisdir = outputdir+CreateOppDir(igamma)+RunName+'/'
+            thisdir = thisoutputdir+CreateOppDir(igamma)+RunName+'/'
             thisParList = StateParList[OoT]['C3']
             thistsinklist = tsinklist
         for ip in thisParList:
@@ -183,14 +183,14 @@ def WipeSF(outputdir,thisGammaList,RunName,OoT,statelist=[],todtlist=[],smlist=[
                     if os.path.isfile(ifile): os.remove(ifile)
                     if os.path.isfile(ifb): os.remove(ifb)
 
-def WipeSFSet(outputdir,thisGammaList,RunName,OoT,setlist=[]):
+def WipeSFSet(thisoutputdir,thisGammaList,RunName,OoT,setlist=[]):
     for igamma in thisGammaList:
         if igamma == 'twopt':
-            thisdir = outputdir+'cfun/'+CreateOppDir(igamma)+RunName+'/'
+            thisdir = thisoutputdir+'cfun/'+CreateOppDir(igamma)+RunName+'/'
             thisParList = StateParList[OoT]['C2']
             thissetlist = GetTsinkSmLists(setlist)[1]
         else:
-            thisdir = outputdir+CreateOppDir(igamma)+RunName+'/'
+            thisdir = thisoutputdir+CreateOppDir(igamma)+RunName+'/'
             thisParList = StateParList[OoT]['C3']
             thissetlist = setlist
         for ip in thisParList:

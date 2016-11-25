@@ -15,7 +15,7 @@ from OutputXmlData import *
 ##C3set [ igamma , iset , it ] bs1
 
 def PrintCfunToFile(C3set,thisSetList,thisMomList, thisGammaList,AddDict={}):
-    cfundir = outputdir + 'cfun/'
+    cfundir = outputdir[0] + 'cfun/'
     for thegamma,gammadata in zip(thisGammaList,C3set):
         gammadir = cfundir+CreateOppDir(thegamma)+'/'
         for iset,setdata in zip(thisSetList,gammadata):
@@ -26,7 +26,7 @@ def PrintCfunToFile(C3set,thisSetList,thisMomList, thisGammaList,AddDict={}):
 
 def PrintSetToFile(dataset,thisSetList,thisMomList, thisGammaList,tsink,AddDict={}):
     for thegamma,gammadata in zip(thisGammaList,dataset):
-        gammadir = outputdir+CreateOppDir(thegamma)+'/'
+        gammadir = outputdir[0]+CreateOppDir(thegamma)+'/'
         for iset,setdata in zip(thisSetList,gammadata):
             print 'Printing : ' , thegamma , iset , '                \r',
             if thegamma == 'Mass':
@@ -46,7 +46,7 @@ def PrintSetToFile(dataset,thisSetList,thisMomList, thisGammaList,tsink,AddDict=
 def PrintSumSetToFile(sumdata,sumfits,sumfitschi,thisFitList,thissm, thisGammaMomList,thisTSinkList,thisCutList,infoRF):
     for igamma,((thegamma,thisMomList),gammadata,gammafitdata,gfdchi,gfitlist) in enumerate(zip(thisGammaMomList.iteritems(),sumdata,sumfits,sumfitschi,thisFitList)):
         mprint('Printing : ' , thegamma , '                \r',)
-        gammadir = outputdir+CreateOppDir(thegamma)+'/SumMeth/'
+        gammadir = outputdir[0]+CreateOppDir(thegamma)+'/SumMeth/'
         filename = thissm+thegamma
         infosetRF = [ip for ip in infoRF[igamma]]
         PrintSumToFile(gammadata,gammafitdata,gfdchi,gammadir,filename,gfitlist,thisMomList,thisTSinkList,thisCutList,infosetRF)
@@ -57,7 +57,7 @@ def PrintSumSetToFile(sumdata,sumfits,sumfitschi,thisFitList,thissm, thisGammaMo
 
 def PrintFitSetToFile(dataset,datasetChi,thisGammaMomList,thisSetList,thisCutList,infosetRF):
     for igamma,(thisgamma,thismomlist) in enumerate(thisGammaMomList.iteritems()):
-        gammadir = outputdir+CreateOppDir(thisgamma)+'/Fits/'
+        gammadir = outputdir[0]+CreateOppDir(thisgamma)+'/Fits/'
         for iset,thisset in enumerate(thisSetList):
             mominfoRF = [ip[iset] for ip in infosetRF[igamma]]
             print 'Printing : ' , thisgamma , thisset , '                \r',
@@ -74,7 +74,7 @@ def PrintFitSetToFile(dataset,datasetChi,thisGammaMomList,thisSetList,thisCutLis
 def PrintFitMassSetToFile(dataset,datasetChi,thisMomList,thisStateList,thisFitR,AddDict={}):
     dataset = np.rollaxis(np.rollaxis(dataset,1),2)
     datasetChi = np.rollaxis(np.rollaxis(datasetChi,1),2)
-    gammadir = outputdir+'Mass/fits/'
+    gammadir = outputdir[0]+'Mass/fits/'
     mkdir_p(gammadir)
     for thisstate,statedata,statedataChi in zip(thisStateList,dataset,datasetChi):
         filename = (thisstate+'Mass')

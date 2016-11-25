@@ -50,7 +50,7 @@ def PickMKFFFewSets(currdata,thiscurr,thisSetList):
     return PickedSetList
 
 def ReadAndPlotMKFF(thisCurrDict,DoList='All'):
-    datadict = ReadMKFFDict(outputdir,thisCurrDict)
+    datadict = ReadMKFFDict(outputdir[0],thisCurrDict)
     start = time.time()
     currPSL = []
     for thiscurr,currdata in datadict.iteritems():

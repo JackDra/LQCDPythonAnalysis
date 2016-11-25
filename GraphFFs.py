@@ -98,7 +98,7 @@ def PickFFFewSets(currdata,thiscurr,thisSetList):
     return PickedSetList
 
 def ReadAndPlotFF(thisCurrDict,DoList='All'):
-    datadict = ReadFFDict(outputdir,thisCurrDict)
+    datadict = ReadFFDict(outputdir[0],thisCurrDict)
     start = time.time()
     currPSL = []
     for thiscurr,currdata in datadict.iteritems():

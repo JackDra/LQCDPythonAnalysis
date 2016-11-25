@@ -191,16 +191,16 @@ def ReadAndComb(inputargs,FunctList,fnamelist):
                     momstr = qstrTOqcond(imom)
                     momdir = MakeMomDir(imom)
                     for iset in thisSetList:
-                        filedoub = outputdir +'/'+ doubgammadir + methoddir + '/'+momdir + '/' + iset+doubgamma+ipref+momstr+'.xml'
-                        filesing = outputdir +'/'+ singgammadir + methoddir + '/'+momdir + '/' + iset+singgamma+ipref+momstr+'.xml'
+                        filedoub = outputdir[0] +'/'+ doubgammadir + methoddir + '/'+momdir + '/' + iset+doubgamma+ipref+momstr+'.xml'
+                        filesing = outputdir[0] +'/'+ singgammadir + methoddir + '/'+momdir + '/' + iset+singgamma+ipref+momstr+'.xml'
                         if Debug: print filedoub
                         if Debug: print filesing                        
                         outdata = CombTwoFiles(filedoub,filesing,FunctList)
                         for iout,ifname in zip(outdata,fnamelist):
                             if len(iout.keys()) != 1: continue
                             gammadir = CreateOppDir(ifname+igamma)
-                            mkdir_p( outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/')
-                            outfile = outputdir +'/'+ gammadir +methoddir + '/'+momdir + '/' + iset+ifname+igamma+ipref+momstr
+                            mkdir_p( outputdir[0] +'/'+ gammadir +methoddir + '/'+momdir + '/')
+                            outfile = outputdir[0] +'/'+ gammadir +methoddir + '/'+momdir + '/' + iset+ifname+igamma+ipref+momstr
                             if Debug: print outfile
                             # WriteXmlOutput(outfile,outdata)
                             MergeXmlOutput(outfile,iout)
@@ -215,15 +215,15 @@ def ReadAndCombFF(thisCurrDict,FunctList,funnameList):
         singcurr = 'sing'+icurr
         for iset in isetlist:
             print 'Combining ', icurr, iset, ' '*40 , ' \r' ,
-            filedoub = outputdir+'FormFactors/'+doubcurr+'/' +doubcurr+iset+'.xml'
-            filesing = outputdir+'FormFactors/'+singcurr+'/' +singcurr+iset+'.xml'
+            filedoub = outputdir[0]+'FormFactors/'+doubcurr+'/' +doubcurr+iset+'.xml'
+            filesing = outputdir[0]+'FormFactors/'+singcurr+'/' +singcurr+iset+'.xml'
             if Debug: print filedoub
             if Debug: print filesing                        
             outdata = CombTwoFiles(filedoub,filesing,FunctList)
             for funname,iout in zip(funnameList,outdata):
                 if 'Form_Factors' not in iout.keys(): continue
-                mkdir_p( outputdir+'FormFactors/'+funname+icurr+'/')
-                outfile = outputdir+'FormFactors/'+funname+icurr+'/'+ funname+icurr+iset
+                mkdir_p( outputdir[0]+'FormFactors/'+funname+icurr+'/')
+                outfile = outputdir[0]+'FormFactors/'+funname+icurr+'/'+ funname+icurr+iset
                 MergeXmlOutput(outfile,iout)
     print ' '*80 
 
@@ -232,13 +232,13 @@ def ReadAndCombTheFFs(thisCurrDict,FunctList,FFcombList):
     for icurr,isetlist in thisCurrDict.iteritems():
         for iset in isetlist:
             print 'Combining ', icurr, iset, ' '*40 , ' \r' ,
-            filecurr = outputdir+'FormFactors/'+icurr+'/' +icurr+iset+'.xml'
+            filecurr = outputdir[0]+'FormFactors/'+icurr+'/' +icurr+iset+'.xml'
             if Debug: print filecurr
             outdata = CombFFOneList(filecurr,FunctList)
             for iFFcomb,iout in zip(FFcombList,outdata):
                 if 'Form_Factors' not in iout.keys(): continue
-                mkdir_p( outputdir+'FormFactors/'+icurr+'/'+iFFcomb+'/')
-                outfile = outputdir+'FormFactors/'+icurr+'/'+iFFcomb+'/'+ iFFcomb+icurr+iset
+                mkdir_p( outputdir[0]+'FormFactors/'+icurr+'/'+iFFcomb+'/')
+                outfile = outputdir[0]+'FormFactors/'+icurr+'/'+iFFcomb+'/'+ iFFcomb+icurr+iset
                 if Debug: print outfile
                 MergeXmlOutput(outfile,iout)
     print ' '*80 

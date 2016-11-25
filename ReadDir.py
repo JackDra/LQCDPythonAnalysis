@@ -48,8 +48,8 @@ def GetCurrDict(thisCurrTypes,klist=False):
         thisSetList = None
         if klist == False:
             print 'Reading ' , iCurr , ' Form Factors '
-            # thisCurrDict[iCurr] = ReadAllDir(outputdir+'FormFactors/'+iCurr+'/',thisgamma=iCurr)
-            thisCurrDict[iCurr] = ReadSetDir(outputdir+'FormFactors/'+iCurr+'/',thisgamma=iCurr)
+            # thisCurrDict[iCurr] = ReadAllDir(outputdir[0]+'FormFactors/'+iCurr+'/',thisgamma=iCurr)
+            thisCurrDict[iCurr] = ReadSetDir(outputdir[0]+'FormFactors/'+iCurr+'/',thisgamma=iCurr)
             if thisSetList == None: 
                 thisSetList = set(thisCurrDict[iCurr])
             else:
@@ -60,8 +60,8 @@ def GetCurrDict(thisCurrTypes,klist=False):
             thisCurrDict[iCurr] = {}
             for ikappa in klist:
                 print 'Reading ' , iCurr , ' Form Factors '
-                # thisCurrDict[iCurr] = ReadAllDir(outputdir+'FormFactors/'+iCurr+'/',thisgamma=iCurr)
-                thisCurrDict[iCurr][ikappa] = ReadSetDir(outputdir.replace(str(kappa),ikappa)+'FormFactors/'+iCurr+'/',thisgamma=iCurr)
+                # thisCurrDict[iCurr] = ReadAllDir(outputdir[0]+'FormFactors/'+iCurr+'/',thisgamma=iCurr)
+                thisCurrDict[iCurr][ikappa] = ReadSetDir(outputdir[0].replace(str(kappa),ikappa)+'FormFactors/'+iCurr+'/',thisgamma=iCurr)
                 if thisSetList == None: 
                     thisSetList = set(thisCurrDict[iCurr][ikappa])
                 else:

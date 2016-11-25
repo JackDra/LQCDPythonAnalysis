@@ -91,7 +91,9 @@ with open('./setup.cfg','r') as f:
 PoFC2C3Dis = ''
 NewFileFlag = PoFC2C3Dis
 
-kappalist = ['']
+kappalist = ['k'+str(kappa),'xsrc1k'+str(kappa),'nboot1kk'+str(kappa),'XAvgk'+str(kappa)]
+# kappalist = ['k'+str(kappa),'xsrc1k'+str(kappa)]
+kappaflags = [ik.replace('k'+str(kappa),'') for ik in kappalist]
 ScalarNorm = 1 # normalisation for Scalar current
 PsScalarNorm = 1 # normalisation for Pseudo Scalar current
 VectorNorm = 1 # normalisation for Vector Current
@@ -113,7 +115,7 @@ ForcePos = False ## Forces all non-form factor graphs to be positive
 MultiCoreFitting = False # Multicore for Boot Fitting, not needed in current build
 DoMulticore = True # Runs multicore wherever implemented
 DoContentsCheck = False # True makes sure the xml file has the correct momenta first field, turn off for more performance
-OnlySelVar = False # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
+OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
 DoNorm = False # normalises the 2 point function (see CMSTech.py)
 DoSym = True # symmetrises the 2 point function (see CMSTech.py)
 # VarMethodMethod = 'Regular' # for solving the Variational method, different ways of doing it/
@@ -123,9 +125,13 @@ VarMethodMethod = 'AxBxlSolve' ## solve Ax = Bxc system directly (generalised ei
 NoSFRfacScale = False # Turn on to only scale the R function by sqrt((Epp+m)(Ep+m)/EppEp) for form factor creation
 ReadPoF2pt = False # Create PoF using already calculated eigenvectors. This is used if the statistics or solver method has changed.
 DeCorrPoF = False ## used for debugging the pencil of function method (decorrelation problem) !!!!!DEPRECIATED, LEAVE FALSE!!!!!
-TimeInv = False ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
-DoCM = False ## does correlation matrix result ( no PoF) 
+TimeInv = True ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
+DoCM = True ## does correlation matrix result ( no PoF) 
 
+if 'XAvg' in ListOrSet:
+    XAvg = True ## averages over source position locatinos before bootstrapping
+else:
+    XAvg = False
 
 ##DEBUG toggles (True/False):
 # Debug = True # for debugging, toggles alot of print statements on
@@ -138,6 +144,16 @@ DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, i
 MakeGraphDat = True # Creates a .dat file of the values plotted for the corresponding graph (where implemented)
 PhysicalUnits = True # uses lattice momenta or physical momenta
 ForceNoDer = False # Forces the fitting LLSBoot to use manual derivaive calculation
+# MesOrBar = 'Meson' ## selects meson or baryon to read
+MesOrBar = 'Baryon'
+
+if MesOrBar == 'Meson':
+    InterpFlag = 'gamma_value'
+    InterpNumb = '15'
+elif MesOrBar == 'Baryon':
+    InterpFlag = 'baryon_num'
+    InterpNumb = '0'
+    
 
 ## Currenlty, not using Time Invariance in the Pencil of Function Analysis is only properly implemented and tested for 2-point correlation analysis
 if TimeInv:
@@ -151,8 +167,8 @@ if Debug: print 'nconfs saved is: ' , RunNconfs
 VarMassCutoff = 0.4 # used in correlation matrix for cutting artifacts out of eigenmass sorting.
 kappas = 1364000
 
-dirread = datadir+'/cfun/Kud0'+str(kappa)+'Ks0'+str(kappas)
-outputdir = datadir+'results/'+ListOrSet+'k'+str(kappa)+'/'
+dirread = datadir+'/cfunRandT/Kud0'+str(kappa)+'Ks0'+str(kappas)
+outputdir = [datadir+'results/'+ListOrSet+ikappa+'/' for ikappa in kappalist]
 logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 momlistdir = datadir+'momdir/'
 pickledir = datadir+"pickledir/"
@@ -162,7 +178,8 @@ REvecDir = scriptdir+'REvecSave/k'+str(kappa)+'/'
 # RunMomList = [qvecSet[iqTOip(0)],qvecSet[iqTOip(3)]]
 RunMomList = [qvecSet[iqTOip(0)]]
 RunAvgMomList = [qvecAvgSet[0]]
-mkdir_p(outputdir)
+# map(mkdir_p,outputdir)
+mkdir_p(outputdir[0])
 mkdir_p(pickledir)
 mkdir_p(logdir)
 mkdir_p(REvecDir)
@@ -177,7 +194,13 @@ ns = 4
 if 'ReadList' in ListOrSet:
     nboot = 2
 elif 'ReadSet' in ListOrSet:
-    nboot = 200
+    if 'nboot1k' in ListOrSet:
+        nboot = 1000
+    else:
+        nboot = 200
+
+##DEBUGGING:
+print nboot , ListOrSet, XAvg
 # tsource = 17
 tsource = 0
 if TimeInv:
@@ -213,6 +236,7 @@ conflist = ['-a-004400_xsrc3',
             '-a-004440_xsrc3',
             '-a-004450_xsrc3']
             
+xsrcList = ['xsrc'+str(ix) for ix in range(1,6)]
 
 SourceList = ['']
 
@@ -245,19 +269,21 @@ for Proj,GL in DefProjDerList.iteritems():
 DefCombGammaList = DefGammaList+DefNoDSGammaList
 
 # DeftoList = [18]
-DeftoList = range(3,10)
+# DeftoList = range(1,10)
+DeftoList = range(1,10)
 # DeftoList = [20,21,22,23]
 # DeftoList = [17,18,19,20,21,22,23]
 # DeftoList = [17,18,19,20,21,22,23,24,25,26,27]
 # DeftoList = [18,19,20,21,22]
 # DeftoList = [16,17,18,19,20]
 # DefdtList = [1,2,3,4,5,6]
-DefdtList = range(1,7)
+# DefdtList = range(1,7)
+DefdtList = range(1,3)
 # DeftodtPicked = (18,2)
 ##MUST BE IN SORTING ORDER##
 # DeftodtPicked = [(18,2),(20,2)]
 # DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
-DeftodtPicked = [(2,1)]
+DeftodtPicked = [(3,2)]
 # DeftodtPicked = [(18,2)]
 DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
 
@@ -357,7 +383,7 @@ REvecFlagList = [PickedStateStr+iREvec for iREvec in REvecTvarList]
 if OnlySelVar:
     if TimeInv:
         # DefPoFVarList = [[1,1]]
-        DefPoFVarList = [[2,1]]
+        DefPoFVarList = [[3,1]]
     else:
         DefPoFVarList = [[4,4]]
     PoFTvarList = ['PoF'+str(PoFShifts)+'to'+str(DefPoFVarList[0][0])+'dt'+str(DefPoFVarList[0][1])]

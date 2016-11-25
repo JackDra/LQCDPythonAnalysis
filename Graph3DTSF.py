@@ -28,7 +28,7 @@ thisSetList = CreateSet(thisSmearL=['32'],thisStateL=[])[0]
 THISMACHINE = 'JackLapppy'
 
 if 'erwin' in THISMACHINE:
-    datadict = ReadSetFitRFDict(outputdir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
+    datadict = ReadSetFitRFDict(outputdir[0],thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
     for imom in thisMomList:
         for igamma in thisGammaList:
             if any([idst in igamma for idst in ['doub','sing','twopt']]): continue

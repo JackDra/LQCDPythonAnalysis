@@ -43,11 +43,14 @@ thisalpha = 0.3
 
 # MassTVals = 16,33
 # MassTVals = 3,25
-MassTVals = 1,20
-Massyrange = 0.5,1.0
+MassTVals = 1,21
+Massyrange = 0.5,1
 # Massyrange = 0.40,0.60
 # Massyrange = 0.40,0.61
 Qsqrdxlim = -0.03,1
+
+ErrTVals = 1,21
+Erryrange = 0,3
 
 ylimDict = {'VectorP4giDi':[-0.4,-0.15],
             'VectorP4g4':[0,4.0],
@@ -164,7 +167,7 @@ def CreateFFFile(thisCol,thisCurr,thisFF):
         pl.title(thistitle)
     else:
         pl.title(ForceTitle)
-    thisdir = outputdir + 'graphs/FormFactors/'+thisCurr + '/'
+    thisdir = outputdir[0] + 'graphs/FormFactors/'+thisCurr + '/'
     mkdir_p(thisdir)
     thisfile = thisCol+thisCurr.replace('/','') + thisFF
     return thisdir + thisfile
@@ -176,7 +179,7 @@ def CreateMKFFFile(thisCol,thisCurr,thisFF):
         pl.title(thistitle)
     else:
         pl.title(ForceTitle)
-    thisdir = outputdir.replace(str(kappa),'Comb') + 'graphs/FormFactors/'+thisCurr + '/'
+    thisdir = outputdir[0].replace(str(kappa),'Comb') + 'graphs/FormFactors/'+thisCurr + '/'
     mkdir_p(thisdir)
     thisfile = thisCol+thisCurr.replace('/','') + thisFF
     return thisdir + thisfile
@@ -202,7 +205,7 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False):
             pl.title(ForceTitle)
         else:
             thisfig.suptitle(ForceTitle, fontsize=20)
-    thisdir = outputdir + 'graphs/'+CreateOppDir(thisGamma)
+    thisdir = outputdir[0] + 'graphs/'+CreateOppDir(thisGamma)
     thisfile = TitlePref.replace(' ','')+thisflag
     thisdir += MakeMomDir(thisMom)
     mkdir_p(thisdir)
@@ -248,12 +251,22 @@ def SetMassAxies():
     SetxTicks()
     pl.legend()
     pl.tight_layout()
-    
+
+
+def SetErrAxies():
+    pl.xlabel(r'$t$')
+    pl.ylabel(r'$\Delta C/ \Delta C$')
+    pl.xlim(ErrTVals)
+    pl.ylim(Erryrange)
+    SetxTicks()
+    pl.legend()
+    pl.tight_layout()
+
 def SetLogAxies():
     pl.xlabel(r'$t$')
     pl.ylabel(r'$log(G_{2})$')
-    pl.xlim(0,16)
-    pl.ylim(-10,3)
+    pl.xlim(3,10)
+    pl.ylim(-5,0)
     # pl.xlim(0,6)
     # pl.ylim(-6,0)
     # pl.xlim(11,20)
@@ -313,6 +326,38 @@ def PlotMassData(data,thisSetList,thisMom,FT,TitleFlag=''):
     SetLogAxies()
     pl.savefig(CreateFile('','twopt',thisMom,TitleFlag+' Log Comparison')+'.pdf')
     pl.clf()
+
+def PlotMassErrComp(dataList,kappaflags,thisSetList,thisMom,FT,TitleFlag=''):
+    global ForceTitle
+    ForceTitle = FT
+    if 'xsrc1k'+str(kappa) in kappaflags:
+        PlotErrComp(dataList[0],dataList[kappaflags.index('xsrc1k'+str(kappa))],thisSetList)
+        SetErrAxies()
+        outfile = CreateFile('','twopt',thisMom,TitleFlag+' C5b1 div C1')+'.pdf'
+        if Debug: print 'creating: ' , outfile
+        pl.savefig(outfile)
+        pl.clf()
+    if 'nboot1kk'+str(kappa) in kappaflags:
+        PlotErrComp(dataList[kappaflags.index('nboot1kk'+str(kappa))],dataList[0],thisSetList)
+        SetErrAxies()
+        outfile = CreateFile('','twopt',thisMom,TitleFlag+' C5b2 div C5b1')+'.pdf'
+        if Debug: print 'creating: ' , outfile
+        pl.savefig(outfile)
+        pl.clf()
+    if 'XAvgk'+str(kappa) in kappaflags and 'xsrc1k'+str(kappa) in kappaflags:
+        PlotErrComp(dataList[kappaflags.index('XAvgk'+str(kappa))],dataList[kappaflags.index('xsrc1k'+str(kappa))],thisSetList)
+        SetErrAxies()
+        outfile = CreateFile('','twopt',thisMom,TitleFlag+' C5av div C1')+'.pdf'
+        if Debug: print 'creating: ' , outfile
+        pl.savefig(outfile)
+        pl.clf()
+    if 'nboot1kk'+str(kappa) in kappaflags and 'XAvgk'+str(kappa) in kappaflags :
+        PlotErrComp(dataList[kappaflags.index('nboot1kk'+str(kappa))],dataList[kappaflags.index('XAvgk'+str(kappa))],thisSetList)
+        SetErrAxies()
+        outfile = CreateFile('','twopt',thisMom,TitleFlag+' C5b2 div C5av')+'.pdf'
+        if Debug: print 'creating: ' , outfile
+        pl.savefig(outfile)
+        pl.clf()
 
 def PlotMassSFData(data,thisSetList,thisMom,FT,thisSF='SFCM'):
     global ForceTitle
@@ -471,6 +516,18 @@ def PlotLogSet(data,thisSetList,legrem=''):
         dataplot['Boot'] = np.log([tboot/norm for tboot in np.roll(dataplot['Boot'],-DoPoFS,0)])
         dataplot['Boot'] = GetBootStats(dataplot['Boot'])
         PlotRF(dataplot,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset.replace(legrem,'')),MP=True,Log=True)
+
+
+            
+def PlotErrComp(dataTop,dataBot,thisSetList,legrem=''):
+    thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
+    iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
+    for iset in iterSetList:
+        if not CheckDict(dataBot,'RF',iset): continue
+        if not CheckDict(dataTop,'RF',iset): continue        
+        dataplot = deepcopy(dataTop['RF'][iset])
+        dataplot['Values'] = Pullflag(dataTop['RF'][iset]['Boot'],'Std')/ Pullflag(dataBot['RF'][iset]['Boot'],'Std')
+        PlotRFNoBoot(dataplot,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset.replace(legrem,'')),MP=True,Log=True)
 
 def PlotLogSetOSF(data,thisSetList,thisSF,legrem=''):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
@@ -730,6 +787,25 @@ def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
             print it,val,valerr
     if ForcePos: dataavg = np.abs(dataavg)
     pl.errorbar(tvals[tsource:]-tsource,dataavg[tsource:],dataerr[tsource:],color=col,fmt=sym,label=lab)
+
+def PlotRFNoBoot(data,col,sym,shift,lab,MP=False,Log=False):
+    if MP:
+        if 'PoF' in lab and not Log:
+            tvals = np.array(data['tVals'])+1+(PoFShifts*PoFDelta) + shift
+        else:
+            tvals = np.array(data['tVals'])+1 + shift
+    else:
+        tvals = np.array(data['tVals'])
+        tvals = tvals-(tvals[-1]+tvals[0])/2.0 + shift
+    # dataavg = Pullflag(data['Boot'],'Avg')
+    # dataerr = Pullflag(data['Boot'],'Std')
+    if ForcePos: data['Values'] = np.abs(data['Values'])
+    if Debug:
+        print 
+        print 'Error Ratios: ',lab
+        for it,idata in zip(tvals[tsource:]-tsource,data['Values'][tsource:]):
+            print it, idata
+    pl.plot(tvals[tsource:]-tsource,data['Values'][tsource:],sym,color=col,label=lab)
 
 
 def PlotFit(data,col,shift,iset,thistsink):

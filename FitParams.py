@@ -61,7 +61,8 @@ def CreateFitList(thisTwoMin,thisTwoMinMax,thisTwoMax,thisTwoMaxMax,this3ptCutMi
     return this2ptList
 
 OSF3ptCutMin,OSF3ptCutMax = 3,7
-OSF2ptMinStart,OSF2ptMinEnd,OSF2ptMaxStart,OSF2ptMaxEnd = 1,11,8,20
+# OSF2ptMinStart,OSF2ptMinEnd,OSF2ptMaxStart,OSF2ptMaxEnd = 1,11,8,20
+OSF2ptMinStart,OSF2ptMinEnd,OSF2ptMaxStart,OSF2ptMaxEnd = 4,5,15,16
 OSF3ptCutList = range(OSF3ptCutMin,OSF3ptCutMax+1)
 OneStateParList = {'C2':['Am','m0'] , 'C3':['B00']}
 #picked for plotting
@@ -82,7 +83,8 @@ OSFfitr = {'sm32':str(OSFfitvals['sm32'][0])+'-'+str(OSFfitvals['sm32'][1]),
 #     OSFfitr[PickedStateStr+itvar] = str(OSFfitvals[PickedStateStr+itvar][0])+'-'+str(OSFfitvals[PickedStateStr+itvar][1])
 
 TSF3ptCutMin,TSF3ptCutMax = 2,5
-TSF2ptMinStart,TSF2ptMinEnd,TSF2ptMaxStart,TSF2ptMaxEnd = 0,5,7,15
+# TSF2ptMinStart,TSF2ptMinEnd,TSF2ptMaxStart,TSF2ptMaxEnd = 0,5,7,15
+TSF2ptMinStart,TSF2ptMinEnd,TSF2ptMaxStart,TSF2ptMaxEnd = 4,5,10,11
 TSF3ptCutList = range(TSF3ptCutMin,TSF3ptCutMax+1)
 TwoStateParList = {'C2':['Am','Amp','m0','Dm'] , 'C3':['B00','B10','B01','B11']}
 ## picked for plotting
@@ -120,7 +122,7 @@ def FitDefGuess(Fun,Len=1):
     elif Fun.__name__ == 'C2TwoStateFitFun':
         return [3.1861104305e-06,np.log(.45),4,np.log(0.3385347963)]
     elif Fun.__name__ == 'C2OneStateFitFun':
-        return [1,np.log(.45)]
+        return [1.3422466805e-20,np.log(.50)]
         # return [2.7174048910e-07,np.log(.45)]
     elif Fun.__name__ == 'C3OneStateFitFun':
         return [0]

@@ -22,7 +22,7 @@ ShowSetLists(feedin['set'])
 ShowMethodList(feedin['method'])
 
 thisNconfList = []
-mkdir_p(outputdir+'/Nconfs')
+map(mkdir_p,[iout+'/Nconfs' for iout in outputdir] )
 for imethod in feedin['method']:
     thisSetList = PickSetForMethod(imethod,feedin['set'])
     for iset in thisSetList:
@@ -32,7 +32,7 @@ for imethod in feedin['method']:
             thisNconfList.append(nconf)
         else:
             print imethod, iset , nconf
-        if len(nconfDict.keys()) > 0: WriteXml(outputdir+'/Nconfs/'+imethod+iset,{'Data':nconfDict})
+        if len(nconfDict.keys()) > 0: WriteXml(outputdir[0]+'/Nconfs/'+imethod+iset,{'Data':nconfDict})
 
 if len(thisNconfList) > 0:
     TotNconf = min(thisNconfList)

@@ -131,8 +131,8 @@ def PrintFitToFile(data,dataChi,iset,filedir,filename,thisMomList,thisCutList,mo
 def PrintLREvecMassToFile(thisLE,thisRE,thisEMass,thisMomList,thisTvar,AddDict={},DoPoF=True):
     xmlMomList = [ipTOqcond(imom,Avg=True) for imom in thisMomList]
     for ip,pLE,pRE,pEMass in zip(xmlMomList,thisLE,thisRE,thisEMass):
-        mkdir_p(outputdir+'/Mass/')
-        datadict,outputfile = SetUpPDict(ip,outputdir+'/Mass/',thisTvar+'LREM')
+        mkdir_p(outputdir[0]+'/Mass/')
+        datadict,outputfile = SetUpPDict(ip,outputdir[0]+'/Mass/',thisTvar+'LREM')
         datadict[ip]['Info'] = AddDict
         datadict[ip]['Values'] = OrderedDict()
         for istate,iLE,iRE,iEM in zip(GetStateSet(thisTvar),pLE,pRE,pEMass):
@@ -176,7 +176,7 @@ def PrintSumToFile(data,datafit,datafitchi,filedir,filename,thisFitList,thisMomL
 
 
 def PrintFFSet(FFin,Set,Mass,SetMass,theCurr,infoFF):
-    FFdir = outputdir +'/FormFactors/'+theCurr+'/'
+    FFdir = outputdir[0] +'/FormFactors/'+theCurr+'/'
     FFbootdir = FFdir + 'boots/'
     mkdir_p(FFbootdir)
     thisfile = FFdir +theCurr+Set
@@ -207,7 +207,7 @@ def PrintFFSet(FFin,Set,Mass,SetMass,theCurr,infoFF):
 
 ## outputdict : {iSet : nFF : Boot/Avg/Chi : F(0)/mEM }
 def PrintDPfit(iFF,outputdict,InfoDict):
-    FFdir = outputdir +'/FormFactors/DPfits/'
+    FFdir = outputdir[0] +'/FormFactors/DPfits/'
     FFbootdir = FFdir + 'boots/'
     mkdir_p(FFbootdir)
     thisfile = FFdir +iFF
@@ -249,7 +249,7 @@ def PickTF(iset,iA,setsize):
 
 def PrintTSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,thisMomList,info2pt):
     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
-    masspardir = outputdir + 'cfun/twopt/TSF'+fileprefix+'/'
+    masspardir = outputdir[0] + 'cfun/twopt/TSF'+fileprefix+'/'
     xmlMomList = map(qstrTOqcond,thisMomList)
     xml2ptFitList = map(xmlfitr,thisFit2ptList)
     for im in [-2,-1]: #TwoStateParList m0 and dm
@@ -314,7 +314,7 @@ def PrintTSFSetToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2pt
     for ipar,thispar in enumerate(TwoStateParList['C3']):
         for igamma,(thisgamma,thismomlist) in enumerate(thisGammaMomList.iteritems()):
             mprint('Printing ' , thispar , ' ' , thisgamma , ' to file      \r',)
-            gammapardir = outputdir+CreateOppDir(thisgamma)+'/TSF'+fileprefix+'/'
+            gammapardir = outputdir[0]+CreateOppDir(thisgamma)+'/TSF'+fileprefix+'/'
             mkdir_p(gammapardir)
             for ism,thesm in enumerate(thisSmList):                
                 PrintTSFToFile(gammapardir,thesm+thisgamma+thispar,thismomlist,xml2ptFitList,xmlTSFList,data3pt,data3ptChi,ipar,igamma,ism,infoRF)
@@ -325,7 +325,7 @@ def PrintTSFSetToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2pt
 #OneFit2ptChi    = [ ifit2pt , ip , ism ]
 def PrintOSFMassToFile(data2pt,data2ptChi,thisSetList,thisFit2ptList,fileprefix,thisMomList,info2pt):
     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
-    masspardir = outputdir + 'cfun/twopt/OSF'+fileprefix+'/'
+    masspardir = outputdir[0] + 'cfun/twopt/OSF'+fileprefix+'/'
     for im in [1,0]:
         for ism,thesm in enumerate(thisSmList):
             filename = thesm+'twopt'+OneStateParList['C2'][im]
@@ -376,7 +376,7 @@ def PrintOSFSetToFile(data3pt,data3ptChi,thisGammaMomList,thisSetList,thisFit2pt
     for ipar,thispar in enumerate(OneStateParList['C3']):
         for igamma,(thisgamma,thismomlist) in enumerate(thisGammaMomList.iteritems()):
             mprint('Printing ' , thispar , ' ' , thisgamma , ' to file      \r',)
-            gammapardir = outputdir+CreateOppDir(thisgamma)+'/OSF'+fileprefix+'/'
+            gammapardir = outputdir[0]+CreateOppDir(thisgamma)+'/OSF'+fileprefix+'/'
             mkdir_p(gammapardir)
             for ism,thesm in enumerate(thisSetList):
                 PrintOSFToFile(gammapardir,thesm+thisgamma+thispar,thismomlist,xml2ptFitList,xmlOSFList,data3pt,data3ptChi,ipar,igamma,ism,infoRF)

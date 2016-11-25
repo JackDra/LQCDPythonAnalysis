@@ -61,7 +61,7 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr,Rfac):
 
 #FitMasses later
 def DoFF(thisMethodList,thisCurr,thisSetList,thisGammaList,thisMomList):
-    data,MassSet = ExtractValues(outputdir,thisGammaList,thisSetList,thisMethodList,thisMomList=thisMomList)
+    data,MassSet = ExtractValues(outputdir[0],thisGammaList,thisSetList,thisMethodList,thisMomList=thisMomList)
     if len(data.keys()) == 0:
         mprint( 'No Sets Found, returning')
         return

@@ -202,10 +202,10 @@ def CreateMethodSetList(thisMethodList,setlist):
     return mslout
     
 # data { collection , gamma , mom }
-def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''):
+def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,thisoutputdir,dirpref=''):
     if iDS == False:            
         thisgammadir = dirpref + '/'
-        thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/'+iq+'/'
+        thisdir = thisoutputdir + 'graphs/Summarys/'+thisgammadir+'/'+iq+'/'
         mkdir_p(thisdir)
         if 'GeGm' in dirpref and '/' not in dirpref:
             if 'FF1' in igamma:
@@ -221,7 +221,7 @@ def PlotSummaryMethods(data,thisMethodSetList,iDS,igamma,iq,outputdir,dirpref=''
         thisfile = thisdir+'SummaryPlot'+titleStr.replace(' ','')+filegamma+iq
     else:
         thisgammadir = CreateOppDir(iDS+igamma)
-        thisdir = outputdir + 'graphs/Summarys/'+thisgammadir+'/qsqrd'+str(qsqrdstr(iq))+'/'
+        thisdir = thisoutputdir + 'graphs/Summarys/'+thisgammadir+'/qsqrd'+str(qsqrdstr(iq))+'/'
         mkdir_p(thisdir)
         thisfile = thisdir+'SummaryPlot'+dirpref+iDS+igamma+qstrTOqcond(iq)
     global DatFile
@@ -332,7 +332,7 @@ def PlotSummarySet(iDS,igamma,iq,data,thisMeth,thisSetList,xstart,col,sym):
 def ReadAndPlotSummary(thisMethodList,thisGammaList,thisSetList,thisMomList,thisCombList,FT=False):
     global ForceTitle
     ForceTitle = FT
-    data,massdata = ExtractValues(outputdir,thisGammaList,thisSetList,thisMethodList,thisMomList=thisMomList)
+    data,massdata = ExtractValues(outputdir[0],thisGammaList,thisSetList,thisMethodList,thisMomList=thisMomList)
     thisMethodSetList = CreateMethodSetList(thisMethodList,data.keys())
     for igamma in thisGammaList:
         if 'twopt' in igamma: continue
@@ -346,7 +346,7 @@ def ReadAndPlotSummary(thisMethodList,thisGammaList,thisSetList,thisMomList,this
             for imom in thisMomList:
                 gammastrip = igamma.replace('doub','').replace('sing','') 
                 print 'Plotting: ', iDS , gammastrip , imom , ' Complete  '
-                PlotSummaryMethods(data,thisMethodSetList,iDS,gammastrip,imom,outputdir)
+                PlotSummaryMethods(data,thisMethodSetList,iDS,gammastrip,imom,outputdir[0])
 
 
 def PlotFFSummary(thisSL,DSCurr,currdata,FT=False):
@@ -357,7 +357,7 @@ def PlotFFSummary(thisSL,DSCurr,currdata,FT=False):
     thisDS,thisCurr,thisFFComb = SplitDSCurr(DSCurr)
     for iFF in NoFFList[thisCurr]:
         for iqsqrd in QsqrdSet:
-            PlotSummaryMethods(currdata,thisMethodSetList,False,iFF,iqsqrd,outputdir,dirpref=DSCurr) 
+            PlotSummaryMethods(currdata,thisMethodSetList,False,iFF,iqsqrd,outputdir[0],dirpref=DSCurr) 
 
 # def PlotSummary(thisdata,thisopfile):
 #     pl.rcParams.update({'axes.labelsize' : 15})
@@ -505,9 +505,9 @@ def PlotFFSummary(thisSL,DSCurr,currdata,FT=False):
 
 # def ReadAndPlotSummary(thisGammaList,thisCombStateList,FilePrefix,SetTitle=False):
 #     RFList = ['Fit','FitBoot','Sum','SumBoot','TwoStateFit']
-#     SetData = ReadSetDict(thisGammaList,thisCombStateList,RFList,outputdir)
+#     SetData = ReadSetDict(thisGammaList,thisCombStateList,RFList,outputdir[0])
 #     for thisgamma,gammaData in SetData.iteritems():
-#         gammadirout = outputdir+'graphs/'+thisgamma+'/'
+#         gammadirout = outputdir[0]+'graphs/'+thisgamma+'/'
 #         mkdir_p(gammadirout)
 #         newkey = thisgamma.replace('doub','')
 #         singkey = thisgamma.replace('doub','sing')
@@ -518,6 +518,6 @@ def PlotFFSummary(thisSL,DSCurr,currdata,FT=False):
 #                 print 'found ' + newkey
 #                 gammaDatasing = SetData[singkey]
 #                 newdict = OppDicts(data,gammaDatasing[mom],'-',RFList,newkey,thisCombStateList)
-#                 mkdir_p(outputdir+'graphs/'+newkey+'/')
+#                 mkdir_p(outputdir[0]+'graphs/'+newkey+'/')
 #                 if SetTitle: newdict['Title'] = FilePrefix
-#                 PlotSummary(deepcopy(newdict),outputdir+'graphs/'+newkey+'/'+FilePrefix)
+#                 PlotSummary(deepcopy(newdict),outputdir[0]+'graphs/'+newkey+'/'+FilePrefix)

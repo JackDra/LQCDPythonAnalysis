@@ -33,7 +33,15 @@ def ReadAndPlotMass(thisMomList,thisSetList,thisMethodList):
     # thisAllSetList = thisSmearList+thisSetList
     # for isetlist,dump in thisSetPoFLists[:len(thisSetPoFLists)/2]:
     #     thisAllSetList += isetlist
-    datadict = ReadSetFitRFDict(outputdir,thisSetList,['twopt'],thisMethodList,thisMomList=thisMomList)
+    datadictlist = []
+    thiskappalist = []
+    for ioutput,ikappa in zip(outputdir,kappalist):
+        hold = ReadSetFitRFDict(ioutput,thisSetList,['twopt'],thisMethodList,thisMomList=thisMomList)
+        if CheckDict(hold,'twopt','q = 0 0 0'):
+            datadictlist.append(hold)
+            # thiskappalist.append(ikappa.replace('k'+str(ikappa),''))
+            thiskappalist.append(ikappa)
+    datadict = datadictlist[0]
     thisMassdict = datadict['twopt']['q = 0 0 0']
     start = time.time()
     for imom in thisMomList[-1:]:
@@ -41,6 +49,9 @@ def ReadAndPlotMass(thisMomList,thisSetList,thisMethodList):
         mprint( 'Plotting ' , imom , 'Mass            \r',)
         thistwoptdict = datadict['twopt'][imom]
         PlotMassData(thistwoptdict,thisSetList,imom,feedin['ForceTitle'])
+        mprint( 'Plotting ' , imom , 'Mass Error Ratios            \r',)
+        thistwoptdictlist = [idata['twopt'][imom] for idata in datadictlist]
+        PlotMassErrComp(thistwoptdictlist,thiskappalist,thisSetList,imom,feedin['ForceTitle'])
         if any(['SFCM' in imeth for imeth in thisMethodList]):
             mprint( 'Plotting ' , imom , 'State Fits      \r',)
             PlotMassSFData(thistwoptdict,thisSetList,imom,feedin['ForceTitle'])
@@ -51,7 +62,7 @@ def ReadAndPlotMass(thisMomList,thisSetList,thisMethodList):
     
     
 def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCombList):
-    datadict = ReadSetFitRFDict(outputdir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
+    datadict = ReadSetFitRFDict(outputdir[0],thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)
     combdatadict = CreateDictOldCombs(datadict,thisCombList)
     thisGammaList = datadict.keys()
     if CheckDict(datadict,'twopt','q = 0 0 0'):

@@ -46,7 +46,8 @@ def ReadAndBoot2pt(readfilelist,thisMomList,thisnboot,randlist=[]):
         # print 'Reading {}%  \r'.format(int((iconf*100)/float(len(readfilelist)))),
         # try:
         if CHROMA:
-            tempdata.append(Read2ptCfunChromaXML(ifile,thisMomList).data)
+            if xsrcList[0] in ifile or not XAvg:
+                tempdata.append(Read2ptCfunChromaXML(ifile,thisMomList).data)
         else:
             tempdata.append(Read2ptCfunPick(ifile,thisMomList).data)
         # except NaNCfunError as e:

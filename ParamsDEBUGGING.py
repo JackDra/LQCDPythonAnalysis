@@ -103,7 +103,7 @@ DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, i
 VarMassCutoff = 0.4 # used in correlation matrix for cutting artifacts out of eigenmass sorting.
 
 dirread = datadir+'/cfuns/k'+str(kappa)
-outputdir = datadir+'results/'+ListOrSet+'k'+str(kappa)+'/'
+outputdir[0] = datadir+'results/'+ListOrSet+'k'+str(kappa)+'/'
 logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 momlistdir = datadir+'momdir/'
 pickledir = datadir+"pickledir/"
@@ -112,7 +112,7 @@ RunMomList = qvecSet
 # For Debuggin, only use zero momenta
 # RunMomList = [qvecSet[iqTOip(0)],qvecSet[qvecTOip([0,0,1])]]
 # RunMomList = [qvecSet[iqTOip(0)]]
-mkdir_p(outputdir)
+mkdir_p(outputdir[0])
 mkdir_p(pickledir)
 mkdir_p(logdir)
 mkdir_p(REvecDir)

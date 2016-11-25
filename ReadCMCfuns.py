@@ -47,6 +47,9 @@ def ReadSet(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList, thisDSL
                 if CfunConfigCheck:
                     fileend2pt = CreateEnd2pt(DefSmearList[0],DefSmearList[0],thistsourceList[0],Interps[0],Interps[0])
                     if Debug: print ' comparing to: ',fileend2pt
+                    if xsrcList[0] not in ifile and (XAvg or 'xsrc1' in ListOrSet): continue
+                    # ## FOR DEBUGGING
+                    # if xsrcList[0] not in ifile: continue
                     if fileend2pt not in ifile or ".metadata" in ifile: continue
                     fileprefix = ifile.replace(fileend2pt,'')
                     if CheckAllSet(fileprefix,dirname+'/',Interps,tsourceList=thistsourceList):
@@ -55,7 +58,10 @@ def ReadSet(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList, thisDSL
                 else:
                     fileend2pt = CreateEnd2pt(thisSmearList[0],thisSmearList[0],thistsourceList[0],Interps[0],Interps[0])
                     if Debug: print ' comparing to: ',fileend2pt
-                    if fileend2pt not in ifile or ".metadata" in ifile: continue
+                    # if fileend2pt not in ifile or ".metadata" in ifile: continue
+                    # ## FOR DEBUGGING
+                    # if xsrcList[0] not in ifile: continue
+                    if xsrcList[0] not in ifile and (XAvg or 'xsrc1' in ListOrSet): continue
                     fileprefix = ifile.replace(fileend2pt,'')
                     if CheckSet(fileprefix,dirname+'/',thisSmearList,thisProjGammaList,
                                 thisProjDerList,thisDSList,thisTSinkList,Flag,Interps,tsourceList=thistsourceList):
