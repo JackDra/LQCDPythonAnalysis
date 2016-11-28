@@ -44,14 +44,14 @@ def ReadAndPlotMass(thisMomList,thisSetList,thisMethodList):
     datadict = datadictlist[0]
     thisMassdict = datadict['twopt']['q = 0 0 0']
     start = time.time()
-    for imom in thisMomList[-1:]:
+    for imom in thisMomList[1:]:
         momstart = time.time()
         mprint( 'Plotting ' , imom , 'Mass            \r',)
         thistwoptdict = datadict['twopt'][imom]
         PlotMassData(thistwoptdict,thisSetList,imom,feedin['ForceTitle'])
-        mprint( 'Plotting ' , imom , 'Mass Error Ratios            \r',)
-        thistwoptdictlist = [idata['twopt'][imom] for idata in datadictlist]
-        PlotMassErrComp(thistwoptdictlist,thiskappalist,thisSetList,imom,feedin['ForceTitle'])
+        # mprint( 'Plotting ' , imom , 'Mass Error Ratios            \r',)
+        # thistwoptdictlist = [idata['twopt'][imom] for idata in datadictlist]
+        # PlotMassErrComp(thistwoptdictlist,thiskappalist,thisSetList,imom,feedin['ForceTitle'])
         if any(['SFCM' in imeth for imeth in thisMethodList]):
             mprint( 'Plotting ' , imom , 'State Fits      \r',)
             PlotMassSFData(thistwoptdict,thisSetList,imom,feedin['ForceTitle'])
@@ -169,20 +169,20 @@ if thisGammaList == ['twopt']:
     ShowSetLists(feedin['set'])
     ShowMethodList(feedin['method'])
     
-    if DoMulticore and len(feedin['mom']) > 1:
+    if DoMulticore and len(feedin['mom']) > 1  and feedin['anaproc'] > 1:
         inputparams = []
-        for imom in feedin['mom']:
-            if imom == 'q = 0 0 0':
-                inputparams.append(([imom],feedin['set'],feedin['method']))
-            else:
-                inputparams.append((['q = 0 0 0',imom],feedin['set'],feedin['method']))                
+        for imom in GetAvgMomList(feedin['mom']):
+            # if imom == 'q = 0 0 0':
+            #     inputparams.append(([imom],feedin['set'],feedin['method']))
+            # else:
+            inputparams.append((['q = 0 0 0',imom],feedin['set'],feedin['method']))                
         makeContextFunctions(ReadAndPlotMass)
         thisPool = Pool(min(len(inputparams),feedin['anaproc']))
         output = thisPool.map(ReadAndPlotMass.mapper,inputparams)
         thisPool.close()
         thisPool.join()
     else:
-        ReadAndPlotMass(feedin['mom'],feedin['set'],feedin['method'])
+        ReadAndPlotMass(['q = 0 0 0']+GetAvgMomList(feedin['mom']),feedin['set'],feedin['method'])
 else:
     # if any([imom != 'q = 0 0 0' for imom in feedin['mom']]):
     #     feedin['method'] = ['RF']

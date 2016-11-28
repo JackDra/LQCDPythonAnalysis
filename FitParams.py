@@ -18,7 +18,9 @@ def GetCut(thisset,thisdict):
     return False
 
 
-MassDtList = range(1,12)
+MassDtList = range(1,5)
+DoFList = range(3,17)
+ChiThreshold = 0.001
 # MassDtList = [2]
 FitCutMin,FitCutMax = 3,9
 FitCutList = range(FitCutMin,FitCutMax+1)
@@ -62,14 +64,15 @@ def CreateFitList(thisTwoMin,thisTwoMinMax,thisTwoMax,thisTwoMaxMax,this3ptCutMi
 
 OSF3ptCutMin,OSF3ptCutMax = 3,7
 # OSF2ptMinStart,OSF2ptMinEnd,OSF2ptMaxStart,OSF2ptMaxEnd = 1,11,8,20
-OSF2ptMinStart,OSF2ptMinEnd,OSF2ptMaxStart,OSF2ptMaxEnd = 4,5,15,16
+OSF2ptMinStart,OSF2ptMinEnd,OSF2ptMaxStart,OSF2ptMaxEnd = 2,10,11,21
+FitMaxList = range(11,21)
 OSF3ptCutList = range(OSF3ptCutMin,OSF3ptCutMax+1)
 OneStateParList = {'C2':['Am','m0'] , 'C3':['B00']}
 #picked for plotting
 OSFCutList = ['cut4','cut5','cut6']
 OSFCutPicked = 'cut5'
-OSFfitvals = {'sm16': [9,14],'sm32': [9,14], 'sm64': [7,20] , 'sm128':[28,35],
-              PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[4,9],PickedStateStr+'CM':[9,17]}
+OSFfitvals = {'sm16': [8,21],'sm32': [7,21], 'sm64': [6,21] , 'sm128':[28,35],
+              PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[4,9],PickedStateStr+'CM':[4,21]}
     
 OSFfitr = {'sm32':str(OSFfitvals['sm32'][0])+'-'+str(OSFfitvals['sm32'][1]),
            'sm64':str(OSFfitvals['sm64'][0])+'-'+str(OSFfitvals['sm64'][1]),
@@ -83,15 +86,15 @@ OSFfitr = {'sm32':str(OSFfitvals['sm32'][0])+'-'+str(OSFfitvals['sm32'][1]),
 #     OSFfitr[PickedStateStr+itvar] = str(OSFfitvals[PickedStateStr+itvar][0])+'-'+str(OSFfitvals[PickedStateStr+itvar][1])
 
 TSF3ptCutMin,TSF3ptCutMax = 2,5
-# TSF2ptMinStart,TSF2ptMinEnd,TSF2ptMaxStart,TSF2ptMaxEnd = 0,5,7,15
-TSF2ptMinStart,TSF2ptMinEnd,TSF2ptMaxStart,TSF2ptMaxEnd = 4,5,10,11
+TSF2ptMinStart,TSF2ptMinEnd,TSF2ptMaxStart,TSF2ptMaxEnd = 1,7,7,20
+# TSF2ptMinStart,TSF2ptMinEnd,TSF2ptMaxStart,TSF2ptMaxEnd = 4,5,10,11
 TSF3ptCutList = range(TSF3ptCutMin,TSF3ptCutMax+1)
 TwoStateParList = {'C2':['Am','Amp','m0','Dm'] , 'C3':['B00','B10','B01','B11']}
 ## picked for plotting
 TSFCutList = ['cut3','cut4','cut5']
 TSFCutPicked = 'cut4'
 ##maybe make set depenant like above
-TSFfitvals = [2,12]
+TSFfitvals = [3,20]
 TSFfitr = str(TSFfitvals[0])+'-'+str(TSFfitvals[1])
 
 
@@ -120,9 +123,9 @@ def FitDefGuess(Fun,Len=1):
     elif Fun.__name__ == 'LinearFitFun':
         return [1,1]
     elif Fun.__name__ == 'C2TwoStateFitFun':
-        return [3.1861104305e-06,np.log(.45),4,np.log(0.3385347963)]
+        return [3.1861104305e-06,np.log(.6),4,np.log(0.3385347963)]
     elif Fun.__name__ == 'C2OneStateFitFun':
-        return [1.3422466805e-20,np.log(.50)]
+        return [1.3422466805e-10,np.log(.6)]
         # return [2.7174048910e-07,np.log(.45)]
     elif Fun.__name__ == 'C3OneStateFitFun':
         return [0]

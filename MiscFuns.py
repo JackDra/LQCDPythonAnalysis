@@ -12,6 +12,13 @@ from collections import OrderedDict
 import time,datetime
 from copy import deepcopy
 
+def RemoveNAN(thislist):
+   listout = []
+   for ilist in thislist:
+      if not np.isnan(ilist):
+         listout.append(ilist)
+   return listout
+      
 def SplitCmplxReal(array):
    realout,cmplxout = [],[]
    for ia in array:

@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import numpy as np
+from scipy.special import gamma
+import scipy.integrate as integrate
 from MiscFuns import VecDelta
 
 #def CalcChiSqrdPDF(funct,params,datax,datayAvg,datayStd):
@@ -18,7 +20,28 @@ def makexunit(xin):
         return 1.0
                 
     
+def ChiDistribution(dof,chi):
+    return (np.exp(-chi/2.)*(chi**((dof/2.) - 1)))/(gamma(dof/2.)*2**(dof/2.))
 
+def IntChiDist(dof,alpha,chiList):
+    # chiList = np.append(chiList,chiList[-1]*10)
+    # if alpha == 0.5:
+    #     for ichi,ifun in zip(chiList,ChiDistribution(dof,np.array(chiList))):
+    #         print ichi/dof, ifun
+    for ichi,chival in enumerate(chiList):
+        intval = integrate.simps(ChiDistribution(dof,np.array(chiList[ichi:])),chiList[ichi:])
+        if intval < alpha:
+            return chiList[ichi]
+    return 1000.0
+
+def AlphaVsChiDOF(dof):
+    alphalist = np.arange(0.01,1.01,0.01)
+    chiList = np.arange(0.01,100.1,0.01)
+    chinu = []    
+    for ialpha in alphalist:
+        chinu.append(IntChiDist(dof,ialpha,chiList))
+    return np.array(chinu)/dof,alphalist
+        
 def CreateFFO(thislen):
     def FormFactorO(x,p):
         return sum([ip*ix for ip,ix in zip(p[:thislen],x[:thislen])])

@@ -124,20 +124,23 @@ def InputParams(inputparams):
                 print 'Nothing found for set list, using default list'
                 feedout['set'] = DefSetList
         elif '-p' in isys:
-            momhold = isys.replace('-p=','').split(',')
-            feedout['mom'] = []
-            for imom in momhold:
-                if 'zmom' in imom:
-                    feedout['mom'] += ['q = 0 0 0']
-                else:
-                    feedout['mom'] += [' '.join(imom.replace('q','q=')).replace('- ','-')]
-            for ipl in feedout['mom']:            
-                if ipl not in qvecSet:                        
-                    feedout['mom'].remove(ipl)
-                    print 'Warning, ' + ipl + ' not found in qvecSet list, skipping.'
-            if len(feedout['mom']) == 0:
-                print 'Nothing found for mom list, using default list'
-                feedout['set'] = RunMomList
+            if isys.replace('-p=','') == 'MassList':
+                feedout['mom'] = RunAvgMomList
+            else:
+                momhold = isys.replace('-p=','').split(',')
+                feedout['mom'] = []
+                for imom in momhold:
+                    if 'zmom' in imom:
+                        feedout['mom'] += ['q = 0 0 0']
+                    else:
+                        feedout['mom'] += [' '.join(imom.replace('q','q=')).replace('- ','-')]
+                for ipl in feedout['mom']:            
+                    if ipl not in qvecSet:                        
+                        feedout['mom'].remove(ipl)
+                        print 'Warning, ' + ipl + ' not found in qvecSet list, skipping.'
+                if len(feedout['mom']) == 0:
+                    print 'Nothing found for mom list, using default list'
+                    feedout['set'] = RunMomList
         elif '-m' in isys:
             feedout['method'] = ExpandMethodList(isys.replace('-m=','').split(','))
             for iml in feedout['method']:

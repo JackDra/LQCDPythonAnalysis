@@ -128,11 +128,11 @@ def LSFit(parlen,xdata,yerr,fitfun,ydata):
     if float(len(ydata)-len(x)) == 0:
         chisqpdf = float('NaN')
     else:
-        print 'CHI2:'
-        print infodict["fvec"]
-        print infodict["fvec"]*infodict["fvec"]
-        print sum(infodict["fvec"]*infodict["fvec"])
-        print 
+        # print 'CHI2:'
+        # print infodict["fvec"]
+        # print infodict["fvec"]*infodict["fvec"]
+        # print sum(infodict["fvec"]*infodict["fvec"])
+        # print 
         chisqpdf=sum(infodict["fvec"]*infodict["fvec"])/float(len(ydata)-len(x))
     # if ier != 1:
     #    print x

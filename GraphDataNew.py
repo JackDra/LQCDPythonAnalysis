@@ -4,8 +4,8 @@ import matplotlib
 matplotlib.use('PDF') # Must be before importing matplotlib.pyplot or pylab!
 import matplotlib.pyplot as pl
 from Params import *
-from FitFunctions import DPfitfun,DPfitfun2
-from FitFunctions import DPfitfunOnePar
+from FitFunctions import DPfitfun,DPfitfun2,AlphaVsChiDOF
+from FitFunctions import DPfitfunOnePar,ChiDistribution
 import numpy as np
 from BootTest import BootStrap1
 # import pylab as pl
@@ -28,7 +28,6 @@ ForceTitle = False
 # ForceTitle = '$g_{A}$ Variational Comparison'
 # ForceTitle = '$g_{A}$ Variational Parameter $t_{0}$ Comparison'
 # ForceTitle = '$g_{A}$ Summed Ratio Function Comparison'
-
 colourset8 = [ '#000080','#B22222','#00B800','#8B008B', '#0000FF','#FF0000','#000000','#32CD32','#FF0066']
 markerset = ['o','s','^','v','d']
 shiftmax = 3
@@ -44,7 +43,7 @@ thisalpha = 0.3
 # MassTVals = 16,33
 # MassTVals = 3,25
 MassTVals = 1,21
-Massyrange = 0.5,1
+Massyrange = .5,1
 # Massyrange = 0.40,0.60
 # Massyrange = 0.40,0.61
 Qsqrdxlim = -0.03,1
@@ -184,7 +183,7 @@ def CreateMKFFFile(thisCol,thisCurr,thisFF):
     thisfile = thisCol+thisCurr.replace('/','') + thisFF
     return thisdir + thisfile
 
-def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False):
+def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False,subdir=False):
     if 'twopt' in thisGamma:
         if 'Dt' in thisflag:
             thistitle = thisGamma+' '+TitlePref+' $' + thisflag.replace('Dt','\Delta t=') + '$'
@@ -208,6 +207,7 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False):
     thisdir = outputdir[0] + 'graphs/'+CreateOppDir(thisGamma)
     thisfile = TitlePref.replace(' ','')+thisflag
     thisdir += MakeMomDir(thisMom)
+    if subdir !=False: thisdir += '/'+subdir+'/'
     mkdir_p(thisdir)
     return thisdir+thisfile
 
@@ -265,14 +265,73 @@ def SetErrAxies():
 def SetLogAxies():
     pl.xlabel(r'$t$')
     pl.ylabel(r'$log(G_{2})$')
-    pl.xlim(3,10)
-    pl.ylim(-5,0)
+    pl.xlim(1.9,15)
+    pl.ylim(-8,1.5)
     # pl.xlim(0,6)
     # pl.ylim(-6,0)
     # pl.xlim(11,20)
     # pl.ylim(-12,-8)
     SetxTicks()
     pl.legend()
+    pl.tight_layout()
+
+
+VsChi = False
+def SetChiAxies():
+    if VsChi:
+        pl.xlabel(r'$\chi^{2}$')
+        pl.xlim(0,10)
+        pl.ylim(0.55,0.65)
+    else:
+        pl.xlabel(r'$t_{min}$')
+        # pl.xlim(3,10)
+    pl.ylabel(r'$aM_{N}$')
+    # pl.xlim(0,6)
+    # pl.ylim(-6,0)
+    # pl.xlim(11,20)
+    # pl.ylim(-12,-8)
+    # SetxTicks()
+    pl.legend(loc='bottom right')
+    pl.tight_layout()
+
+Stacked = False
+Normed = False
+# HistType = 'bar'
+# HistType = 'barstacked'
+HistType = 'step'
+# HistType = 'stepfilled'
+FitMaxCutoff = 30
+FitMinCutoff = 0
+ChiThreshList = np.arange(0.1,2,0.1)
+binwidth = 0.0005
+Histx = {'q = 0 0 0' : (0.54,0.62),
+         'q = 1 0 0' : (0.56,0.66),
+         'q = 1 1 0' : (0.6,0.7),
+         'q = 1 1 1' : (0.64,0.74),
+         'q = 2 0 0' : (0.64,0.76)}
+         
+
+BinList = np.arange(0.5,1.0+binwidth,binwidth)
+def SetHistAxies(imom):
+    pl.xlabel(r'$aM_{N}$')
+    pl.ylabel(r'$Frequency$')
+    pl.xlim(Histx[imom][0],Histx[imom][1])
+    # SetxTicks()
+    pl.ylim(0,pl.ylim()[1])
+    pl.legend()
+    pl.tight_layout()
+
+def SetAlphaAxies():
+    pl.xlabel(r'$\chi^{2}/DoF$')
+    pl.ylabel(r'$\alpha$')
+    pl.ylim(0,1)
+    # pl.ylim(0,0.25)
+    # pl.xlim(0,6)
+    # pl.ylim(-6,0)
+    # pl.xlim(11,20)
+    # pl.ylim(-12,-8)
+    # SetxTicks()
+    pl.legend(loc='bottom right')
     pl.tight_layout()
 
 
@@ -379,7 +438,42 @@ def PlotMassSFData(data,thisSetList,thisMom,FT,thisSF='SFCM'):
     SetLogAxies()
     pl.savefig(CreateFile('','twopt',thisMom,'T'+thisSF+' Log Comparison')+'.pdf')
     pl.clf()
+    for iFitMax in FitMaxList:
+        PlotSetChiDist(data,thisSetList,'O'+thisSF,iFitMax)
+        SetChiAxies()
+        pl.savefig(CreateFile('','twopt',thisMom,'O'+thisSF+' ChiDist tmax'+str(iFitMax),subdir='ChiDists')+'.pdf')
+        pl.clf()
+        PlotSetChiDist(data,thisSetList,'T'+thisSF,iFitMax)
+        SetChiAxies()
+        pl.savefig(CreateFile('','twopt',thisMom,'T'+thisSF+' ChiDist tmax'+str(iFitMax),subdir='ChiDists')+'.pdf')
+        pl.clf()
 
+    for iThresh in ChiThreshList:
+        PlotSetHistDist(data,thisSetList,'O'+thisSF,iThresh)
+        SetHistAxies(thisMom)
+        pl.savefig(CreateFile('','twopt',thisMom,'O'+thisSF+' HistDist Thresh'+str(iThresh),subdir='Hists')+'.pdf')
+        pl.clf()
+        PlotSetHistDist(data,thisSetList,'T'+thisSF,iThresh)
+        SetHistAxies(thisMom)
+        pl.savefig(CreateFile('','twopt',thisMom,'T'+thisSF+' HistDist Thresh'+str(iThresh),subdir='Hists')+'.pdf')
+        pl.clf()
+
+    
+    # iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
+    # for iset in iterSetList:
+    #     if not CheckDict(data,'O'+thisSF,iset):
+    #         if Debug:
+    #             print data.keys(), thisSF
+    #             print data[thisSF].keys(), iset
+    #         continue
+    #     PlotAlphaDist(data['O'+thisSF][iset])
+    #     SetAlphaAxies()
+    #     pl.savefig(CreateFile('','twopt',thisMom,'O'+thisSF+' AlphaDist Set '+iset,subdir='AlphaDists')+'.pdf')
+    #     pl.clf()
+    #     return 
+        
+
+        
 def PlotCMOSFData(data,data2pt,thisSetList,thisGamma,thisMom,FT,thistsink='tsink29',thisSF='OSFCM'):
     global ForceTitle
     ForceTitle = FT
@@ -545,7 +639,7 @@ def PlotLogSetOSF(data,thisSetList,thisSF,legrem=''):
         dataplot['Boot'] = GetBootStats(dataplot['Boot'])
         PlotRF(dataplot,thiscol,thissym,thisshift,LegLab(iset.replace(legrem,'')),MP=True,Log=True)
         if not CheckDict(data,'O'+thisSF,iset): continue
-        PlotOSFLog(data['O'+thisSF][iset],thiscol,iset,norm,DoPoFS)
+        PlotOSFLog(data['O'+thisSF][iset],thiscol,iset,norm,thisshift,DoPoFS)
 
 
 
@@ -565,16 +659,16 @@ def PlotLogSetTSF(data,thisSetList,thisSF,legrem=''):
         dataplot['Boot'] = GetBootStats(dataplot['Boot'])
         PlotRF(dataplot,thiscol,thissym,thisshift,LegLab(iset.replace(legrem,'')),MP=True,Log=True)
         if not CheckDict(data,'T'+thisSF,iset): continue
-        PlotTSFLog(data['T'+thisSF][iset],thiscol,iset,norm,DoPoFS)
+        PlotTSFLog(data['T'+thisSF][iset],thiscol,iset,norm,thisshift,DoPoFS)
 
 def PlotMassSetOSF(data2pt,thisSetList,MassDt,thisSF):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
     
     for iset in iterSetList:
-        if Debug: print iset
+        # if Debug: print iset
         if not CheckDict(data2pt,'RF',iset): continue
-        if Debug: print 'present ' ,iset
+        # if Debug: print 'present ' ,iset
         thiscol = thiscolcyc.next()
         thissym = thissymcyc.next()
         thisshift = thisshiftcyc.next()
@@ -718,7 +812,7 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
     Avg,Err = np.array(Avg),np.array(Err)
     fitydatadown = np.array([min(iy1,iy2) for iy1,iy2 in zip(DPfitfun([fitqdata],Avg-Err),DPfitfun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])))])
     # fitydatadown = np.array([np.min(iy1,iy2) for iy1,iy2 in zip(DPfitfun([fitqdata],Avg-Err),DPfitfun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])))])
-    if Debug: print Avg[1], Err[1]
+    # if Debug: print Avg[1], Err[1]
     # if GetCharRad(Avg[1]) > 10 or Err[1]> 10: return
     ## Displays charge radius for FF1, and magnetic moment for FF2
     if 'FF1' in thisFF:
@@ -783,8 +877,8 @@ def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
     dataerr = Pullflag(data['Boot'],'Std')
     if Debug and not Log:
         print lab
-        for it,val,valerr in zip(tvals,dataavg,dataerr):
-            print it,val,valerr
+        # for it,val,valerr in zip(tvals,dataavg,dataerr):
+        #     print it,val,valerr
     if ForcePos: dataavg = np.abs(dataavg)
     pl.errorbar(tvals[tsource:]-tsource,dataavg[tsource:],dataerr[tsource:],color=col,fmt=sym,label=lab)
 
@@ -803,8 +897,8 @@ def PlotRFNoBoot(data,col,sym,shift,lab,MP=False,Log=False):
     if Debug:
         print 
         print 'Error Ratios: ',lab
-        for it,idata in zip(tvals[tsource:]-tsource,data['Values'][tsource:]):
-            print it, idata
+        # for it,idata in zip(tvals[tsource:]-tsource,data['Values'][tsource:]):
+        #     print it, idata
     pl.plot(tvals[tsource:]-tsource,data['Values'][tsource:],sym,color=col,label=lab)
 
 
@@ -1002,7 +1096,7 @@ def PlotTSFMassValue(data,thisdt):
     pl.fill_between([TSFfitvals[0]-tsource ,TSFfitvals[1]-tsource],[datadown,datadown],[dataup,dataup],facecolor='k',edgecolor='none',alpha=thisalpha)
 
 
-def PlotOSFLog(data,col,smear,norm,DoPoFS):
+def PlotOSFLog(data,col,smear,norm,thisshift,DoPoFS):
     smearindex,deltashift = CreateOSFfitKey(smear)
     if 'sum' in smear: smearindex = PickedStateStr+'sum'    
     if not CheckDict(data,'m0',OSFfitr[smearindex],'Boot'): return
@@ -1017,11 +1111,11 @@ def PlotOSFLog(data,col,smear,norm,DoPoFS):
     dataAvg,dataErr = np.array(Pullflag(linedata,'Avg')),np.array(Pullflag(linedata,'Std'))
     dataup = dataAvg+dataErr
     datadown = dataAvg-dataErr
-    pl.fill_between(tdata-DoPoFS,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
-    pl.plot([tdata[0]-DoPoFS,tdata[-1]-DoPoFS],[dataAvg[0],dataAvg[-1]],color=col)
+    pl.fill_between(tdata-DoPoFS+thisshift,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
+    pl.plot([tdata[0]-DoPoFS+thisshift,tdata[-1]-DoPoFS+thisshift],[dataAvg[0],dataAvg[-1]],color=col)
 
 
-def PlotTSFLog(data,col,smear,norm,DoPoFS):
+def PlotTSFLog(data,col,smear,norm,thisshift,DoPoFS):
     if not CheckDict(data,'m0',TSFfitr,'Boot'): return
     if not CheckDict(data,'Am',TSFfitr,'Boot'): return
     if not CheckDict(data,'Dm',TSFfitr,'Boot'): return
@@ -1038,6 +1132,105 @@ def PlotTSFLog(data,col,smear,norm,DoPoFS):
     dataAvg,dataErr = np.array(Pullflag(linedata,'Avg')),np.array(Pullflag(linedata,'Std'))
     dataup = dataAvg+dataErr
     datadown = dataAvg-dataErr
-    pl.fill_between(tdata-DoPoFS,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
-    pl.plot(tdata-DoPoFS,dataAvg,color=col)
+    pl.fill_between(tdata-DoPoFS+thisshift,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
+    pl.plot(tdata-DoPoFS+thisshift,dataAvg,color=col)
 
+
+
+def PlotChiDist(data,col,sym,lab,thisFitMax):
+    fitpar = len(data.keys())
+    if fitpar == 0: return
+    xdata,yavg,yerr,yup,ydown = [],[],[],[],[]
+    for thisfitr,chidata in data['m0'].iteritems():
+        if CheckDict(chidata,'Chi') and  CheckDict(chidata,'Boot'):
+            thisfitmin,thisfitmax = map(int,unxmlfitr(thisfitr))            
+            fitlen = thisfitmax-thisfitmin
+            dof = fitlen-fitpar
+            if thisFitMax == thisfitmax:
+                if VsChi:
+                    xdata.append(chidata['Chi'])
+                else:
+                    xdata.append(thisfitmin)
+                yavg.append(chidata['Boot'].Avg)
+                yerr.append(chidata['Boot'].Std)
+                yup.append(chidata['Boot'].Avg + chidata['Boot'].Std)
+                ydown.append(chidata['Boot'].Avg - chidata['Boot'].Std)
+    if len(xdata) == 0: return
+    xdata,yavg,yerr,yup,ydown = zip(*sorted(zip(xdata,yavg,yerr,yup,ydown)))
+    pl.errorbar(xdata,yavg,yerr,color=col,label=lab,fmt=sym)
+    pl.plot(xdata,yavg,color=col)
+    pl.fill_between(xdata,yup,ydown,color=col,alpha=thisalpha,edgecolor='none')
+
+
+def PlotSetChiDist(data,thisSetList,thisSF,thisFitMax):
+    thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
+    iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
+    for iset in iterSetList:
+        if not CheckDict(data,thisSF,iset):
+            if Debug:
+                print data.keys(), thisSF
+                print data[thisSF].keys(), iset
+            continue
+        thiscol = thiscolcyc.next()
+        thissym = thissymcyc.next()
+        thisshift = thisshiftcyc.next()
+        PlotChiDist(data[thisSF][iset],thiscol,thissym,LegLab(iset),thisFitMax)
+
+
+
+
+def PlotAlphaDist(data):
+    fitpar = len(data.keys())
+    if fitpar == 0: return
+    doflist = np.arange(3,17,4)
+    # for thisfitr,chidata in data[data.keys()[0]].iteritems():
+    #     if CheckDict(chidata,'Chi'):
+    #         fitlen = map(int,unxmlfitr(thisfitr))
+    #         fitlen = fitlen[1] - fitlen[0]
+    #         if fitlen-fitpar not in doflist:
+    #             doflist.append(fitlen-fitpar)
+    # doflist = sorted(doflist)
+    thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
+    for idof in doflist:
+        thiscol = thiscolcyc.next()
+        xdata,ydata = AlphaVsChiDOF(idof)
+        pl.plot(xdata,ydata,color=thiscol,label='DoF'+str(idof))
+
+
+
+def GetSetHist(data,iThresh):
+    yvals = []
+    if CheckDict(data,'m0'):
+        for thisfitr,chidata in data['m0'].iteritems():
+            if CheckDict(chidata,'Chi') and  CheckDict(chidata,'Boot'):
+                thisfitmin,thisfitmax = map(int,unxmlfitr(thisfitr))            
+                if float(chidata['Chi']) < iThresh and thisfitmax < FitMaxCutoff and thisfitmin > FitMinCutoff:
+                    yvals += RemoveNAN(np.array(chidata['Boot'].values).tolist())
+    yavg,ystd = np.mean(yvals),np.std(yvals)
+    return yvals,yavg,ystd
+
+
+def PlotSetHistDist(data,thisSetList,thisSF,iThresh):
+    thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
+    iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
+    collist,setlist,leglist = [],[],[]
+    for iset in iterSetList:
+        if not CheckDict(data,thisSF,iset):
+            if Debug:
+                print data.keys(), thisSF
+                print data[thisSF].keys(), iset
+            continue
+        thishist,thisavg,thisstd = GetSetHist(data[thisSF][iset],iThresh)
+        if len(thishist) > 0:
+            setlist.append(thishist)
+            collist.append(thiscolcyc.next())
+            leglist.append(LegLab(iset+'\ M='+ MakeValAndErr(thisavg,thisstd)))
+            # if MakeValAndErr(thisavg,thisstd) == 'Err':
+            #     print iset
+            #     for ihist in thishist:
+            #         print ihist
+                
+            
+    if len(setlist) > 0:
+        pl.hist(setlist,bins=BinList,color=collist,label=leglist,stacked=Stacked,histtype=HistType,normed=Normed)
+                

@@ -173,11 +173,12 @@ logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 momlistdir = datadir+'momdir/'
 pickledir = datadir+"pickledir/"
 REvecDir = scriptdir+'REvecSave/k'+str(kappa)+'/'
-# RunMomList = qvecSet 
+RunMomList = qvecSet 
+RunAvgMomList = qvecAvgSet
 # For Debuggin, only use zero momenta
 # RunMomList = [qvecSet[iqTOip(0)],qvecSet[iqTOip(3)]]
-RunMomList = [qvecSet[iqTOip(0)]]
-RunAvgMomList = [qvecAvgSet[0]]
+# RunMomList = [qvecSet[iqTOip(0)]]
+# RunAvgMomList = [qvecAvgSet[0]]
 # map(mkdir_p,outputdir)
 mkdir_p(outputdir[0])
 mkdir_p(pickledir)
@@ -278,12 +279,12 @@ DeftoList = range(1,10)
 # DeftoList = [16,17,18,19,20]
 # DefdtList = [1,2,3,4,5,6]
 # DefdtList = range(1,7)
-DefdtList = range(1,3)
+DefdtList = range(1,10)
 # DeftodtPicked = (18,2)
 ##MUST BE IN SORTING ORDER##
 # DeftodtPicked = [(18,2),(20,2)]
 # DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
-DeftodtPicked = [(3,2)]
+DeftodtPicked = [(3,3)]
 # DeftodtPicked = [(18,2)]
 DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
 
@@ -330,8 +331,8 @@ else:
     AnatodtList = DeftodtList
     AnaTvarList = DefTvarList
     
-# DefSmearList = ['16','32','64']
-DefSmearList = ['16']
+DefSmearList = ['16','32','64']
+# DefSmearList = ['16']
 # DefSmearList = ['64']
 # DefSmearList = ['8','16','32','64','128','256']
 # DefSmearList = ['64','128']
