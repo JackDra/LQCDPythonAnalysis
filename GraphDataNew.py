@@ -183,6 +183,8 @@ def CreateMKFFFile(thisCol,thisCurr,thisFF):
     thisfile = thisCol+thisCurr.replace('/','') + thisFF
     return thisdir + thisfile
 
+
+
 def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False,subdir=False):
     if 'twopt' in thisGamma:
         if 'Dt' in thisflag:
@@ -252,6 +254,13 @@ def SetMassAxies():
     pl.legend()
     pl.tight_layout()
 
+def SetDispAxies():
+    pl.xlabel(r'$\vec{p}^2$')
+    pl.ylabel(r'$E_{\vec{p}}$')
+    pl.legend(loc='upper left')
+    pl.tight_layout()
+
+    
 
 def SetErrAxies():
     pl.xlabel(r'$t$')
@@ -373,11 +382,11 @@ def PlotCMData(data,thisSetList,thisGamma,thisMom,FT,thistsink='tsink29'):
     PlotCol(data,thisSetList,[thistsink,'PoF'],thisGamma,thisMom,'Variational Comparison ')
 
 
-def PlotMassData(data,thisSetList,thisMom,FT,TitleFlag=''):
+def PlotMassData(data,massdata,thisSetList,thisMom,FT,TitleFlag=''):
     global ForceTitle
     ForceTitle = FT
     for thisDt in MassDtList:
-        PlotRFSet(data,thisSetList,MassDt=thisDt)
+        PlotMassSet(data,massdata,thisSetList,thisMom,MassDt=thisDt)
         SetMassAxies()        
         pl.savefig(CreateFile('Dt'+str(thisDt),'twopt',thisMom,TitleFlag+' Mass Comparison')+'.pdf')
         pl.clf()
@@ -418,11 +427,51 @@ def PlotMassErrComp(dataList,kappaflags,thisSetList,thisMom,FT,TitleFlag=''):
         pl.savefig(outfile)
         pl.clf()
 
-def PlotMassSFData(data,thisSetList,thisMom,FT,thisSF='SFCM'):
+def PlotDispersion(data,thisset,FT):
+    global ForceTitle
+    ForceTitle = FT
+    plotdata,dispdata,momlist = [],[],[]
+    thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
+    for iMom,momdata in data.iteritems():
+        dispdata.append([])
+        OSFKey,dump = CreateOSFfitKey(thisset)
+        # print momdata.keys(), 'OSFCM'
+        # print momdata['OSFCM'].keys(),thisset
+        # print momdata['OSFCM'][thisset].keys(),'m0'
+        # print momdata['OSFCM'][thisset]['m0'].keys(),OSFfitrMom[iMom][OSFKey]
+        # print momdata['OSFCM'][thisset]['m0'][OSFfitrMom[iMom][OSFKey]].keys(),'Boot'
+
+        # print data['q = 0 0 0'].keys(), 'OSFCM'
+        # print data['q = 0 0 0']['OSFCM'].keys(),thisset
+        # print data['q = 0 0 0']['OSFCM'][thisset].keys(),'m0'
+        # print data['q = 0 0 0']['OSFCM'][thisset]['m0'].keys(),OSFfitrMom[iMom][OSFKey]
+        # print data['q = 0 0 0']['OSFCM'][thisset]['m0'][OSFfitrMom[iMom][OSFKey]].keys(),'Boot'
+        # print 
+        if (CheckDict(momdata,'OSFCM',thisset,'m0',OSFfitrMom[iMom][OSFKey],'Boot') and
+            CheckDict(data,'q = 0 0 0','OSFCM',thisset,'m0',OSFfitrMom['q = 0 0 0'][OSFKey],'Boot')):
+            momlist.append(qsqrdstr(iMom)*(qunit**2))
+            plotdata.append(momdata['OSFCM'][thisset]['m0'][OSFfitrMom[iMom][OSFKey]]['Boot'])
+            for iDisp in  LatDispList:                
+                dispdata[-1].append(ScaledEffMass(iMom,[data['q = 0 0 0']['OSFCM'][thisset]['m0'][OSFfitrMom['q = 0 0 0'][OSFKey]]['Boot']],DispIn=iDisp)[0])
+    if len(momlist) == 0: return
+    momlist,dispdata,plotdata  = zip(*sorted(zip(np.array(momlist),dispdata,plotdata)))
+    dispdata = np.swapaxes(np.array(dispdata),0,1)
+    pl.errorbar(np.array(momlist)+0.02*thisshiftcyc.next(),Pullflag(plotdata,'Avg'),Pullflag(plotdata,'Std'),
+                color=thiscolcyc.next(),fmt=thissymcyc.next(),label='Lat Results')
+
+    for keydisp,idispdata in zip(DispKeyList,dispdata):
+        pl.errorbar(np.array(momlist)+0.02*thisshiftcyc.next(),Pullflag(idispdata,'Avg'),Pullflag(idispdata,'Std'),
+                    color=thiscolcyc.next(),fmt=thissymcyc.next(),label=LegLab(keydisp))
+    SetDispAxies()
+    pl.savefig(CreateFile('','twopt','q = 0 0 0','OSF Dispersion '+thisset,subdir='Disp')+'.pdf')
+    pl.clf()
+    
+        
+def PlotMassSFData(data,massdata,thisSetList,thisMom,FT,thisSF='SFCM'):
     global ForceTitle
     ForceTitle = FT
     for thisDt in MassDtList:
-        PlotMassSetOSF(data,thisSetList,thisDt,thisSF)
+        PlotMassSetOSF(data,massdata,thisSetList,thisDt,thisSF,thisMom)
         SetMassAxies()
         pl.savefig(CreateFile('Dt'+str(thisDt),'twopt',thisMom,'O'+thisSF+' Mass Comparison')+'.pdf')
         pl.clf()
@@ -449,11 +498,14 @@ def PlotMassSFData(data,thisSetList,thisMom,FT,thisSF='SFCM'):
         pl.clf()
 
     for iThresh in ChiThreshList:
-        PlotSetHistDist(data,thisSetList,'O'+thisSF,iThresh)
+        if thisMom != 'q = 0 0 0':
+            PlotSetHistDist(data,thisSetList,'O'+thisSF,iThresh,thisMom,Zmom=massdata)
+        else:
+            PlotSetHistDist(data,thisSetList,'O'+thisSF,iThresh,thisMom)
         SetHistAxies(thisMom)
         pl.savefig(CreateFile('','twopt',thisMom,'O'+thisSF+' HistDist Thresh'+str(iThresh),subdir='Hists')+'.pdf')
         pl.clf()
-        PlotSetHistDist(data,thisSetList,'T'+thisSF,iThresh)
+        PlotSetHistDist(data,thisSetList,'T'+thisSF,iThresh,thisMom)
         SetHistAxies(thisMom)
         pl.savefig(CreateFile('','twopt',thisMom,'T'+thisSF+' HistDist Thresh'+str(iThresh),subdir='Hists')+'.pdf')
         pl.clf()
@@ -598,6 +650,24 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
             # dataplot['tVals'] = dataplot['tVals'][MassDt:] 
             PlotRF(dataplot,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset),MP=True)
 
+def PlotMassSet(data,massdata,thisSetList,thisMom,legrem='',MassDt = 1):
+    thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
+    iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
+    for iset in iterSetList:
+        if not CheckDict(data,'RF',iset): continue
+        dataplot = deepcopy(data['RF'][iset])
+        dataplot['Boot'] = MassFun(dataplot['Boot'],MassDt)
+        thiscol,thissym,thisshift = thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next()
+        # dataplot['tVals'] = dataplot['tVals'][:-MassDt] 
+        # dataplot['tVals'] = dataplot['tVals'][MassDt:] 
+        PlotRF(dataplot,thiscol,thissym,thisshift,LegLab(iset),MP=True)
+        if thisMom != 'q = 0 0 0':
+            massdataplot = deepcopy(massdata['RF'][iset])
+            if not CheckDict(massdata,'RF',iset): continue
+            massdataplot['Boot'] = MassFun(massdataplot['Boot'],MassDt)
+            massdataplot['Boot'] = ScaledEffMass(thisMom,massdataplot['Boot'])
+            PlotRF(massdataplot,thiscol,thissym,thisshift,LegLab(iset+'\ Dis'),MP=True,alpha=0.5)
+        
 
     
 def PlotLogSet(data,thisSetList,legrem=''):
@@ -661,10 +731,9 @@ def PlotLogSetTSF(data,thisSetList,thisSF,legrem=''):
         if not CheckDict(data,'T'+thisSF,iset): continue
         PlotTSFLog(data['T'+thisSF][iset],thiscol,iset,norm,thisshift,DoPoFS)
 
-def PlotMassSetOSF(data2pt,thisSetList,MassDt,thisSF):
+def PlotMassSetOSF(data2pt,massdata,thisSetList,MassDt,thisSF,thisMom):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
-    iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
-    
+    iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]    
     for iset in iterSetList:
         # if Debug: print iset
         if not CheckDict(data2pt,'RF',iset): continue
@@ -678,6 +747,14 @@ def PlotMassSetOSF(data2pt,thisSetList,MassDt,thisSF):
         PlotRF(dataplot,thiscol,thissym,thisshift,LegLab(iset),MP=True)
         if not CheckDict(data2pt,'O'+thisSF,iset): continue
         PlotOSFMassValue(data2pt['O'+thisSF][iset],thiscol,iset,MassDt)
+        if thisMom != 'q = 0 0 0':
+            massdataplot = deepcopy(massdata['RF'][iset])
+            if not CheckDict(massdata,'RF',iset): continue
+            massdataplot['Boot'] = MassFun(massdataplot['Boot'],MassDt)
+            massdataplot['Boot'] = ScaledEffMass(thisMom,massdataplot['Boot'])
+            PlotRF(massdataplot,thiscol,thissym,thisshift,LegLab(iset+'\ Dis'),MP=True,alpha=0.5)
+            if not CheckDict(massdata,'O'+thisSF,iset): continue            
+            PlotOSFMassValue(massdata['O'+thisSF][iset],thiscol,iset,MassDt,MomScale=thisMom)
 
 
 def PlotMassSetTSF(data2pt,thisSetList,MassDt,thisSF):
@@ -864,7 +941,7 @@ def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
             pl.errorbar(qsqrdvals,dataavg,dataerr,color=col,fmt=sym,label=lab)
     return qsqrdvals
 
-def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
+def PlotRF(data,col,sym,shift,lab,MP=False,Log=False,alpha=1):
     if MP:
         if 'PoF' in lab and not Log:
             tvals = np.array(data['tVals'])+1+(PoFShifts*PoFDelta) + shift
@@ -880,7 +957,7 @@ def PlotRF(data,col,sym,shift,lab,MP=False,Log=False):
         # for it,val,valerr in zip(tvals,dataavg,dataerr):
         #     print it,val,valerr
     if ForcePos: dataavg = np.abs(dataavg)
-    pl.errorbar(tvals[tsource:]-tsource,dataavg[tsource:],dataerr[tsource:],color=col,fmt=sym,label=lab)
+    pl.errorbar(tvals[tsource:]-tsource,dataavg[tsource:],dataerr[tsource:],color=col,fmt=sym,label=lab,alpha=alpha)
 
 def PlotRFNoBoot(data,col,sym,shift,lab,MP=False,Log=False):
     if MP:
@@ -1068,7 +1145,7 @@ def PlotTSFMassLine(data2pt,col,smear,thisdt):
     pl.plot(tdata,map(abs,np.log(fit2ptdt/fit2pt)/thisdt),color=col)
 
 
-def PlotOSFMassValue(data,col,smear,thisdt):
+def PlotOSFMassValue(data,col,smear,thisdt,MomScale='q = 0 0 0'):
     smearindex,deltashift = CreateOSFfitKey(smear)
     if Debug:
         print data.keys(), 'm0'
@@ -1077,6 +1154,7 @@ def PlotOSFMassValue(data,col,smear,thisdt):
         print data['m0'][OSFfitr[smearindex]].keys(),'Boot','Avg','Std'
     if CheckDict(data,'m0',OSFfitr[smearindex],'Boot'): 
         databoot = data['m0'][OSFfitr[smearindex]]['Boot']
+        databoot = ScaledEffMass(MomScale,[databoot])[0]
         dataval = abs(databoot.Avg)
         dataup,datadown = dataval+databoot.Std,dataval-databoot.Std
     elif CheckDict(data,'m0',OSFfitr[smearindex],'Avg') and CheckDict(data,'m0',OSFfitr[smearindex],'Std'):
@@ -1198,19 +1276,22 @@ def PlotAlphaDist(data):
 
 
 
-def GetSetHist(data,iThresh):
+def GetSetHist(data,iThresh,thisMom=False):
     yvals = []
     if CheckDict(data,'m0'):
         for thisfitr,chidata in data['m0'].iteritems():
             if CheckDict(chidata,'Chi') and  CheckDict(chidata,'Boot'):
                 thisfitmin,thisfitmax = map(int,unxmlfitr(thisfitr))            
                 if float(chidata['Chi']) < iThresh and thisfitmax < FitMaxCutoff and thisfitmin > FitMinCutoff:
-                    yvals += RemoveNAN(np.array(chidata['Boot'].values).tolist())
+                    if thisMom != False:
+                        yvals += ScaledEffMassList(thisMom,RemoveNAN(np.array(chidata['Boot'].values))).tolist()
+                    else:
+                        yvals += RemoveNAN(np.array(chidata['Boot'].values).tolist())  
     yavg,ystd = np.mean(yvals),np.std(yvals)
     return yvals,yavg,ystd
 
 
-def PlotSetHistDist(data,thisSetList,thisSF,iThresh):
+def PlotSetHistDist(data,thisSetList,thisSF,iThresh,thisMom,Zmom=False):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
     collist,setlist,leglist = [],[],[]
@@ -1229,8 +1310,19 @@ def PlotSetHistDist(data,thisSetList,thisSF,iThresh):
             #     print iset
             #     for ihist in thishist:
             #         print ihist
-                
             
     if len(setlist) > 0:
         pl.hist(setlist,bins=BinList,color=collist,label=leglist,stacked=Stacked,histtype=HistType,normed=Normed)
+    if Zmom != False:
+        thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
+        collist,setlist,leglist = [],[],[]
+        for iset in iterSetList:
+            if not CheckDict(Zmom,thisSF,iset): continue
+            thishist,thisavg,thisstd = GetSetHist(Zmom[thisSF][iset],iThresh,thisMom=thisMom)
+            if len(thishist) > 0:
+                setlist.append(thishist)
+                collist.append(thiscolcyc.next())
+                leglist.append(LegLab(iset+'\ M='+ MakeValAndErr(thisavg,thisstd)+'\ Disp'))
+        if len(setlist) > 0:
+            pl.hist(setlist,bins=BinList,color=collist,label=leglist,stacked=Stacked,histtype=HistType,normed=Normed,alpha=0.5)
                 

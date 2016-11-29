@@ -48,18 +48,17 @@ def ReadAndPlotMass(thisMomList,thisSetList,thisMethodList):
         momstart = time.time()
         mprint( 'Plotting ' , imom , 'Mass            \r',)
         thistwoptdict = datadict['twopt'][imom]
-        PlotMassData(thistwoptdict,thisSetList,imom,feedin['ForceTitle'])
+        PlotMassData(thistwoptdict,thisMassdict,thisSetList,imom,feedin['ForceTitle'])
         # mprint( 'Plotting ' , imom , 'Mass Error Ratios            \r',)
         # thistwoptdictlist = [idata['twopt'][imom] for idata in datadictlist]
         # PlotMassErrComp(thistwoptdictlist,thiskappalist,thisSetList,imom,feedin['ForceTitle'])
         if any(['SFCM' in imeth for imeth in thisMethodList]):
             mprint( 'Plotting ' , imom , 'State Fits      \r',)
-            PlotMassSFData(thistwoptdict,thisSetList,imom,feedin['ForceTitle'])
+            PlotMassSFData(thistwoptdict,thisMassdict,thisSetList,imom,feedin['ForceTitle'])
         # for ipof,(itpl,thistf) in enumerate(thisSetPoFLists):
         #     mprint( 'Plotting ' , imom , 'PoFSets ', str(int((ipof*100)/len(thisSetPoFLists))),'%        \r',)
         #     PlotMassData(thistwoptdict,thisSmearList+itpl,imom,TitleFlag=thistf)
         print 'Plotting ' , imom, 'Took: ' , str(datetime.timedelta(seconds=(time.time()-momstart))) ,' h:m:s                      '
-    
     
 def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCombList):
     datadict = ReadSetFitRFDict(outputdir[0],thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList)

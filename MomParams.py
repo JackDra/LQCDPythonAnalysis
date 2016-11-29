@@ -25,15 +25,16 @@ DefMassPhys = DefMass*hbarcdivlat #Lat Units
 DiagPList = [[1, 1, 1, 2], [2, 2, 2, 4], [3, 3, 3, 6], [4, 4, 4, 8], [5, 5, 5, 10], [6, 6, 6, 12], [7, 7, 7, 14], [8, 8, 8, 16]]
 DiagPListtdiv = [[1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3], [4, 4, 4, 4], [5, 5, 5, 5], [6, 6, 6, 6], [7, 7, 7, 7], [8, 8, 8, 8]]
 
-def GetQsqrd(nqsqrd,Phys=True):
+def GetQsqrd(nqsqrd,Phys=True,Mass=DefMass):
     if Phys:
+        MassPhys = Mass**hbarcdivlat
         qsqrd = nqsqrd*(qunitPhys**2)
-        Ep = np.sqrt(DefMassPhys**2 + qsqrd)
-        return qsqrd - (Ep-DefMassPhys)**2
+        Ep = np.sqrt(MassPhys**2 + qsqrd)
+        return qsqrd - (Ep-MassPhys)**2
     else:
         qsqrd = nqsqrd*(qunit**2)
-        Ep = np.sqrt(DefMass**2 + qsqrd)
-        return qsqrd - (Ep-DefMass)**2
+        Ep = np.sqrt(Mass**2 + qsqrd)
+        return qsqrd - (Ep-Mass)**2
 
 def makeqlist(thisMaxqsqrd):
     qlist = np.array([])
@@ -203,18 +204,78 @@ def MomOrderLists(MLread,MLsort,*SortThese):
 
 
 def ipTOE(ip,mass,Avg=False):
-    return np.sqrt((qsqrdstr(ipTOqstr(ip,Avg=Avg))*qunit)**2 + mass**2)
+    return np.sqrt((qsqrdstr(ipTOqstr(ip,Avg=Avg))*(qunit**2)) + mass**2)
 
 
 def qstrTOE(ip,mass):
     return np.sqrt((qsqrdstr(ip)*qunit)**2 + mass**2)
 
+def qstrTOEBoot(ip,mass):
+    value = ((qsqrdstr(ip)*(qunit**2)) + mass**2)
+    value.sqrt()
+    return value
+
+
+LatDisDenominator = 4.
+LatDispList = [0.,1.,2.,4.]
+
+DispKeyList = []
+for iDisp in  LatDispList:
+    if iDisp == 0.:
+        DispKeyList.append('E^{2} = p^{2} + m^{2}')
+    else:
+        DispKeyList.append('Lat\ Disp\ Den='+str(iDisp))
+                                                
+
+def qstrTOLatEBoot(ip,mass,Disp=LatDisDenominator):
+    value = (mass/Disp)
+    value.sinh()
+    ipvec = qstrTOqvec(ip)
+    psqrdval = np.sum((np.sin(np.array(ipvec)*qunit)/Disp)**2)
+    value = (psqrdval + value**2)
+    value.sqrt()
+    value.arcsinh()
+    return value*Disp
+
+
+def qstrTOLatEList(ip,mass,Disp=LatDisDenominator):
+    value = np.sinh(np.array(mass)/Disp)
+    ipvec = qstrTOqvec(ip)
+    psqrdval = np.sum((np.sin(np.array(ipvec)*qunit)/Disp)**2)
+    value = np.arcsinh(np.sqrt(psqrdval + value**2))
+    return value*Disp
+
 def iqTOE(ip,mass):
-    return np.sqrt((qsqrdstr(iqTOqstr(ip))*qunit)**2 + mass**2)
+    return np.sqrt((qsqrdstr(iqTOqstr(ip))*(qunit**2)) + mass**2)
 
 def qvecTOE(ip,mass):
-    return np.sqrt((qsqrdstr(qvecTOqstr(ip))*qunit)**2 + mass**2)
-                
+    return np.sqrt((qsqrdstr(qvecTOqstr(ip))*(qunit**2)) + mass**2)
+
+
+## expecting qstr
+## MassBoot [tsink] BS 
+def ScaledEffMass(ip,MassBoot,DispIn=LatDisDenominator):
+    outdict = []
+    for tboot in MassBoot:
+        if DispIn == 0:
+            outdict.append(qstrTOEBoot(ip,tboot))
+        else:
+            outdict.append(qstrTOLatEBoot(ip,tboot,Disp=DispIn))
+        outdict[-1].Stats()
+    return np.array(outdict)
+
+
+## expecting qstr
+## MassBoot [tsink] BS 
+def ScaledEffMassList(ip,MassList,DispIn=LatDisDenominator):
+    outdict = []
+    for tboot in MassList:
+        if DispIn == 0:
+            outdict.append(qstrTOEList(ip,tboot))
+        else:
+            outdict.append(qstrTOLatEList(ip,tboot,Disp=DispIn))
+    return np.array(outdict)
+
 def MakeMomDir(ip):
     thisip = ip
     if ' ' in ip: thisip = qstrTOqcond(ip)    

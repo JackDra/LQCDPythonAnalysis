@@ -384,7 +384,7 @@ REvecFlagList = [PickedStateStr+iREvec for iREvec in REvecTvarList]
 if OnlySelVar:
     if TimeInv:
         # DefPoFVarList = [[1,1]]
-        DefPoFVarList = [[3,1]]
+        DefPoFVarList = [[6,1]]
     else:
         DefPoFVarList = [[4,4]]
     PoFTvarList = ['PoF'+str(PoFShifts)+'to'+str(DefPoFVarList[0][0])+'dt'+str(DefPoFVarList[0][1])]

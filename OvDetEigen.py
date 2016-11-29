@@ -15,16 +15,37 @@ import time
 
 ## qr factorisation of (B,A)
 def QRAppend(A,B):
-    return qr(np.bmat([B,A]),mode='r')
+    return qr(np.bmat([B,A]),mode='r')[0]
 
 
 ## R = [ R11 R12 ]
 ##     [  0  R22 ]
 def GetRs(A,B):
     Rtild = QRAppend(A,B)
-    Rtop,Rbot = np.split(Rtild[0],2)
+    print 'Rtild'
+    print Rtild
+    Rtop,Rbot = np.split(Rtild,2)
+    print 
+    print 'Rtop'
+    print Rtop
+    print 
+    print 'Rbot'
+    print Rbot
     R11,R12 = np.split(Rtop,2,1)
     R21,R22 = np.split(Rbot,2,1)
+    print 'R11'
+    print R11
+    print 
+    print 'R12'
+    print R12
+    print 
+    print 'R21'
+    print R21
+    print 
+    print 'R22'
+    print R22
+    print 
+
     if np.any(R21!=0.):
         print 'warning, did not QR factorise properly'
     return np.matrix(R11),np.matrix(R12),np.matrix(R22)
@@ -32,6 +53,18 @@ def GetRs(A,B):
 
 def GetQZ(R11,R12):
     R,R0,Q,Z = qz(R12,R11)
+    print 'R'
+    print R
+    print 
+    print 'R0'
+    print R0
+    print 
+    print 'Q'
+    print Q
+    print 
+    print 'Z'
+    print Z
+    print 
     return np.matrix(R0),np.matrix(R),np.matrix(Z)
 
 
@@ -41,8 +74,6 @@ def OverdetEigen(A,B,Niter):
     R,R0,Z = GetQZ(R11,R12)
     E = R22*Z
     C = E.getH()*E
-    print R0
-    print R
     Eval,Evec = eig(R0,b=R)
     EvalOut,EvecOut = Eval,Evec
     print 'Initial eval/evec'
@@ -51,6 +82,7 @@ def OverdetEigen(A,B,Niter):
         smEvec = np.matrix(sEvec)
         print 'eval: ', sEval
         print 'evec: ', sEvec
+        iiter = 0
         for iiter in range(Niter):
             Rmin1 = R0-(sEval*R)
             ydata = np.bmat([[-C*smEvec.T],[smEvec*smEvec.H]])

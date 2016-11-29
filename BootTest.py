@@ -250,6 +250,12 @@ class BootStrap1:
     def sqrt(self):
         self.Avg = sqrt(self.Avg)
         self.values = sqrt(self.values)
+    def sinh(self):
+        self.Avg = np.sinh(self.Avg)
+        self.values = np.sinh(self.values)
+    def arcsinh(self):
+        self.Avg = np.arcsinh(self.Avg)
+        self.values = np.arcsinh(self.values)
     def __mul__(self,fac):
         result=BootStrap1(self.nboot, self.confidence)
         try:
