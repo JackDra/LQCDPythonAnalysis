@@ -208,7 +208,7 @@ def ipTOE(ip,mass,Avg=False):
 
 
 def qstrTOE(ip,mass):
-    return np.sqrt((qsqrdstr(ip)*qunit)**2 + mass**2)
+    return np.sqrt(qsqrdstr(ip)*(qunit**2) + mass**2)
 
 def qstrTOEBoot(ip,mass):
     value = ((qsqrdstr(ip)*(qunit**2)) + mass**2)
@@ -216,8 +216,9 @@ def qstrTOEBoot(ip,mass):
     return value
 
 
-LatDisDenominator = 4.
-LatDispList = [0.,1.,2.,4.]
+LatDisDenominator = 0.
+# LatDispList = [0.,1.,2.,4.]
+LatDispList = [0.]
 
 DispKeyList = []
 for iDisp in  LatDispList:
@@ -252,12 +253,13 @@ def qvecTOE(ip,mass):
     return np.sqrt((qsqrdstr(qvecTOqstr(ip))*(qunit**2)) + mass**2)
 
 
+
 ## expecting qstr
 ## MassBoot [tsink] BS 
 def ScaledEffMass(ip,MassBoot,DispIn=LatDisDenominator):
     outdict = []
     for tboot in MassBoot:
-        if DispIn == 0:
+        if DispIn == 0.:
             outdict.append(qstrTOEBoot(ip,tboot))
         else:
             outdict.append(qstrTOLatEBoot(ip,tboot,Disp=DispIn))
@@ -270,8 +272,8 @@ def ScaledEffMass(ip,MassBoot,DispIn=LatDisDenominator):
 def ScaledEffMassList(ip,MassList,DispIn=LatDisDenominator):
     outdict = []
     for tboot in MassList:
-        if DispIn == 0:
-            outdict.append(qstrTOEList(ip,tboot))
+        if DispIn == 0.:
+            outdict.append(qstrTOE(ip,np.array(tboot)))
         else:
             outdict.append(qstrTOLatEList(ip,tboot,Disp=DispIn))
     return np.array(outdict)

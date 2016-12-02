@@ -2,12 +2,86 @@
 from array import array
 import numpy as np
 from Params import *
+from FFSympy import GammaTOChroma
 
 SeekIncSize = 8
 ChromaSIS = 16
+bar3ptChromaByteSwap = False
+
+def GetBar3ptLoc(ig,ip,tsinklen,momlistlen):
+    intlen = np.dtype(np.int32).itemsize
+    strlen = np.dtype('S13').itemsize
+    cmplxlen = np.dtype(np.complex64).itemsize
+    cmplxblocklen = cmplxlen*tsinklen
+    headerlen = intlen*19+strlen
+    momblocklen = cmplxblocklen + intlen*7
+    gammablocklen = momblocklen*momlistlen 
+    return headerlen+intlen*8 + gammablocklen*ig + momblocklen*ip
+
+## noDer[igamma , ip , it]
+class ReadFSCfunPickCHROMA:
+    def __init__(self,thisfile,thisMomList,thisGammaList,forcent=nt):
+        self.data = []
+        # if thistsink == 'FileName':
+        #     thistsink = int(re.findall('tsink.*?p',thisfile)[0].replace('tsink','').replace('p',''))
+        f = open(thisfile,'rb')
+        for igamma,thisgamma in enumerate(thisGammaList):
+            igammaloc = GammaTOChroma(thisgamma)
+            self.data.append([])
+            for ip,iploc in enumerate(thisMomList):      
+                # loc = 2*SeekIncSize*(igammaloc + iploc*GBSize)
+                loc = GetBar3ptLoc(igammaloc,iploc,forcent,len(thisMomList))
+                # f.seek(loc)
+                # tmpdata = np.fromfile(f,dtype=np.complex64,count=int(thistsink)) 
+                f.seek(loc-6*np.dtype(np.int32).itemsize)
+                if np.fromfile(f,dtype=np.int32,count=1).byteswap()[0] != 20301:
+                    print np.fromfile(f,dtype=np.int32,count=100).byteswap()
+                    raise IOError('Magic Number not found for ' +thisgamma+' '+ipTOqstr(iploc))
+                
+                # print thisgamma, igammaloc, ipTOqstr(iploc), iploc
+                # print 'magic number ' , 
+                f.seek(loc)
+                tmpdata = np.fromfile(f,dtype=np.complex64,count=forcent) 
+                # print 'PostStuff ' , np.fromfile(f,dtype=np.int32,count=30).byteswap()
+                if bar3ptChromaByteSwap:tmpdata = tmpdata.byteswap()
+                if 'cmplx' in thisgamma:                
+                    self.data[igamma].append(tmpdata.imag)
+                else:                    
+                    self.data[igamma].append(tmpdata.real)
+                # if np.isnan(self.data[igamma][ip][it]):
+                #     if Debug: self.data[igamma][ip][it] = 0.0
+                #     raise NaNCfunError('NaN Values: '+thisgamma+ ' ' +qvecSet[iploc] + ' it='+str(it+1) )
+        f.close()
 
 
-
+def holder(thisfile):
+    f = open(thisfile,'rb')    
+    d1 = np.fromfile(f,dtype=np.int32,count=10).byteswap()
+    output_version = d1[0] 
+    mom2max = d1[1]
+    j_decay = d1[2] 
+    nrow = d1[4:8]
+    wilson_version = d1[8]
+    Num_seqsrc = d1[9]
+    
+    nuc_type = np.fromfile(f,dtype='S13',count=1)[0]
+    d2 = np.fromfile(f,dtype=np.int32,count=17).byteswap()
+    tsource = d2[0] 
+    tsink = d2[1] 
+    sinkmom = d2[3:6]
+    gammanumber = d2[6]
+    FFoutput_version = d2[7]
+    numFF = d2[8]
+    gammaopp = d2[9]
+    numMom = d2[10]
+    MagicNumber = d2[11]
+    qmom = d2[13:16]
+    tcurrlen = d2[16]
+    values = np.fromfile(f,dtype=np.complex64,count=tsink-tsource)
+    
+    f.close()
+    
+        
 
 ## Der[igamma , ip , it]
 class ReadFSDerCfunPick:

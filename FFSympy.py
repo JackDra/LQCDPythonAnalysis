@@ -16,6 +16,25 @@ except:
 #2. Find Form Factor (look at end of file)
 #3. use vectorsubs or object.subs to imput your parameters
 
+def GammaTOChroma(Opp):
+    for i in [1,2,3,4]:
+        for j in [1,2,3,4]:
+            if 'g'+str(i)+'g'+str(j) in Opp:
+                return 2**(i-1) + 2**(j-1)
+    for i in [1,2,3,4]:
+        if 'g'+str(i)+'g5' in Opp:
+            return 15-2**(i-1)
+    for i in [1,2,3,4]:
+        if 'g'+str(i) in Opp:
+            return 2**(i-1)
+    if 'g5' in Opp:
+        return 15
+    elif 'I' in Opp:
+        return 0
+    else:
+        return -1
+
+
 if not NoLoad:
     GB = "UNSET"
 

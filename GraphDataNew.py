@@ -312,6 +312,7 @@ HistType = 'step'
 FitMaxCutoff = 30
 FitMinCutoff = 0
 ChiThreshList = np.arange(0.1,2,0.1)
+# ChiThreshList = [0.4]
 binwidth = 0.0005
 Histx = {'q = 0 0 0' : (0.54,0.62),
          'q = 1 0 0' : (0.56,0.66),
