@@ -228,17 +228,22 @@ for ider in DerSet:
         DGSet.append(igamma+ider)
 
 #this part is for ReadList (used for analying only specific configurations#
-# if kappa == 12:
-FileStruct = "RC32x64_B1900Kud01375400Ks01364000C1715"
+if kappa == 12:
+    FileStruct = "Testing.lime"
+    conflist = ['1_xsrc2']
+else:
+    FileStruct = "RC32x64_B1900Kud01375400Ks01364000C1715"
+    conflist = ['-a-004400_xsrc3',
+                '-a-004410_xsrc3',
+                '-a-004420_xsrc3',
+                '-a-004430_xsrc3',
+                '-a-004440_xsrc3',
+                '-a-004450_xsrc3']
+
 filelist = dirread+"/@/"+FileStruct+"*"
-conflist = ['-a-004400_xsrc3',
-            '-a-004410_xsrc3',
-            '-a-004420_xsrc3',
-            '-a-004430_xsrc3',
-            '-a-004440_xsrc3',
-            '-a-004450_xsrc3']
             
-xsrcList = ['xsrc'+str(ix) for ix in range(1,6)]
+nsrc = 2
+xsrcList = ['xsrc'+str(ix) for ix in range(1,nsrc)]
 
 SourceList = ['']
 
@@ -246,7 +251,8 @@ SourceList = ['']
 
 DefProjGammaList = { 'GMA4' : AllGammaSet ,'GMA3' : AllGammaSet }
 ReadProjDerList = {'GMA4' :['g4D4','g1D1','g2D2','g3D3']}
-DefProjDerList = {'GMA4' :['giDi']}
+# DefProjDerList = {'GMA4' :['giDi']}
+DefProjDerList = {}
 # DefDSList = ['doub']
 DefDSList = ['doub','sing']
 DefGammaList = []
