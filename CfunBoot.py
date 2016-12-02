@@ -50,10 +50,10 @@ def ReadAndBoot2pt(readfilelist,thisMomList,thisnboot,randlist=[]):
                 tempdata.append(Read2ptCfunChromaXML(ifile,thisMomList).data)
         else:
             tempdata.append(Read2ptCfunPick(ifile,thisMomList).data)
-        # except NaNCfunError as e:
-        #     print 'Deleting file ' + ifile
-        #     print e
-        #     os.remove(ifile)
+        except NaNCfunError as e:
+            print 'Deleting file ' + ifile
+            print e
+            os.remove(ifile)
     return BootSet2pt(tempdata,thisMomList,thisnboot,randlist=randlist)
 
 
@@ -63,10 +63,16 @@ def ReadAndBoot3pt(readfilelist,thisMomList,thisGammaList,thisDerGammaList,thisn
     for iconf,ifile in enumerate(readfilelist):
         # print 'Reading '+printstr+' {}%            \r'.format(int((iconf*100)/float(len(readfilelist)))),
         try:
-            if len(thisGammaList) > 0:
-                tempdata.append(ReadFSCfunPick(ifile,thisMomList,thisGammaList).data)
-            if len(thisDerGammaList) > 0:
-                tempdata.append(ReadFSDerCfunPick(ifile,thisMomList,thisDerGammaList).data)
+            if CHROMA:
+                if len(thisGammaList) > 0:
+                    tempdata.append(ReadFSCfunPickCHROMA(ifile,thisMomList,thisGammaList).data)
+                if len(thisDerGammaList) > 0:
+                    raise IOError('Chroma does not do derivatives, make DerList in Params.py be empty')
+            else:
+                if len(thisGammaList) > 0:
+                    tempdata.append(ReadFSCfunPick(ifile,thisMomList,thisGammaList).data)
+                if len(thisDerGammaList) > 0:
+                    tempdata.append(ReadFSDerCfunPick(ifile,thisMomList,thisDerGammaList).data)
         except NaNCfunError as e:
             print 'Deleting file ' + ifile
             print e

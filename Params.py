@@ -110,6 +110,7 @@ MomFracNorm = 1 # normalisation for Momentum Fraction
 
 
 myeps = np.finfo(0.0).eps
+DeleteNanCfgs = True
 ForceVecNorm = True ## Forces the vector current to be normalised to 2 for doublet and 1 for singlet at zero momentum transfer
 ForcePos = False ## Forces all non-form factor graphs to be positive
 MultiCoreFitting = False # Multicore for Boot Fitting, not needed in current build

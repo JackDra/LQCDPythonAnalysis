@@ -9,7 +9,7 @@ ChromaSIS = 16
 bar3ptChromaByteSwap = True
 # complextype = np.complex64
 complextype = np.complex64
-CheckMagic = True
+CheckMagic = False
 
 def GetBar3ptLoc(ig,ip,tsinklen,momlistlen):
     intlen = np.dtype(np.int32).itemsize
@@ -68,9 +68,11 @@ class ReadFSCfunPickCHROMA:
                     self.data[igamma].append(tmpdata.imag)
                 else:                    
                     self.data[igamma].append(tmpdata.real)
+                if any(np.isnan(self.data[igd][ip])) and DeleteNanCfgs:
+                    raise NaNCfunError('NaN Values: '+thisgamma+' ' +qvecSet[iploc]  )
         f.close()
 
-
+## Just a reference function for the extra parameters in the 3 point function file.
 def holder(thisfile):
     f = open(thisfile,'rb')    
     d1 = np.fromfile(f,dtype=np.int32,count=10).byteswap()
@@ -122,7 +124,7 @@ class ReadFSDerCfunPick:
                     tmpdata.read(f,1)
                     tmpdata.byteswap()
                     self.data[igd][ip].append(tmpdata[0])
-                    if np.isnan(self.data[igd][ip][it]):
+                    if np.isnan(self.data[igd][ip][it]) and DeleteNanCfgs:
                         raise NaNCfunError('NaN Values: '+thisgamma+' ' +qvecSet[iploc] + ' it='+str(it+1) )
         f.close()
 
@@ -148,7 +150,7 @@ class ReadFSCfunPick:
                     tmpdata.read(f,1)
                     tmpdata.byteswap()
                     self.data[igamma][ip].append(tmpdata[0])
-                    if np.isnan(self.data[igamma][ip][it]):
+                    if np.isnan(self.data[igamma][ip][it]) and DeleteNanCfgs:
                         if Debug: self.data[igamma][ip][it] = 0.0
                         raise NaNCfunError('NaN Values: '+thisgamma+ ' ' +qvecSet[iploc] + ' it='+str(it+1) )
         f.close()
@@ -175,7 +177,7 @@ class Read2ptCfunPick:
                 tmpdata.byteswap()
                 val += tmpdata[0]
                 self.data[ip].append(val)
-                if np.isnan(self.data[ip][it]):
+                if np.isnan(self.data[ip][it]) and DeleteNanCfgs:
                     raise NaNCfunError('NaN Values: ' +qvecSet[iploc] + ' it='+str(it+1) )
                 # if 'cmplx' in RI:
                 #     self.datai[ipread].append(tmpdata[loc+1]+tmpdata[loc+11])
@@ -223,7 +225,7 @@ class Read2ptCfunChromaXML:
                                 ReadMom = False
                         elif '<re>' in strline and ReadMom:
                             datahold[-1].append(float(strline.replace('<re>','').replace('</re>','')))
-                            if np.isnan(datahold[-1][-1]):
+                            if np.isnan(datahold[-1][-1]) and DeleteNanCfgs:
                                 raise NaNCfunError('NaN Values: '+thisfile+'  ' +qvecSet[int(self.OutMomList[-1])]  )
                     if strline == '</momenta>' and InterpPart:
                         if len(datahold) > 0: break
