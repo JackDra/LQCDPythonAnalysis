@@ -6,19 +6,39 @@ from FFSympy import GammaTOChroma
 
 SeekIncSize = 8
 ChromaSIS = 16
-bar3ptChromaByteSwap = False
+bar3ptChromaByteSwap = True
+# complextype = np.complex64
+complextype = np.complex64
+CheckMagic = True
 
 def GetBar3ptLoc(ig,ip,tsinklen,momlistlen):
     intlen = np.dtype(np.int32).itemsize
     strlen = np.dtype('S13').itemsize
-    cmplxlen = np.dtype(np.complex64).itemsize
-    cmplxblocklen = cmplxlen*tsinklen
-    headerlen = intlen*19+strlen
-    momblocklen = cmplxblocklen + intlen*7
-    gammablocklen = momblocklen*momlistlen 
-    return headerlen+intlen*8 + gammablocklen*ig + momblocklen*ip
-
+    cmplxlen = np.dtype(complextype).itemsize
+    cmplxblocklen = cmplxlen*tsinklen+intlen
+    # cmplxblocklen = intlen*16+intlen
+    headerlen = intlen*27+strlen
+    magicNumshift = intlen*6
+    magicNumshiftCons = intlen*5
+    momblocklen = cmplxblocklen + magicNumshift
+    momblocklenCons = cmplxblocklen*2 + magicNumshiftCons
+    momblockList = [momblocklen,momblocklenCons,momblocklenCons,momblocklen,momblocklenCons,
+                    momblocklen,momblocklen,momblocklenCons,momblocklenCons,momblocklen,
+                    momblocklen,momblocklenCons,momblocklen,momblocklenCons,momblocklenCons,
+                    momblocklen,momblocklen,momblocklen,momblocklen,momblocklen]
+    
+    gammablocklen = momblocklen*momlistlen + intlen*2
+    gammablocklenCons = momblocklenCons*momlistlen + intlen*2
+    gammablockList = [gammablocklen,gammablocklenCons,gammablocklenCons,gammablocklen,gammablocklenCons,
+                      gammablocklen,gammablocklen,gammablocklenCons,gammablocklenCons,gammablocklen,
+                      gammablocklen,gammablocklenCons,gammablocklen,gammablocklenCons,gammablocklenCons,
+                      gammablocklen,gammablocklen,gammablocklen,gammablocklen,gammablocklen]
+    outloc = headerlen + sum(gammablockList[:ig]) + momblockList[ig]*ip
+    return outloc , outloc + cmplxblocklen,magicNumshift
+        
+    
 ## noDer[igamma , ip , it]
+## forcent is total length, not array index!
 class ReadFSCfunPickCHROMA:
     def __init__(self,thisfile,thisMomList,thisGammaList,forcent=nt):
         self.data = []
@@ -29,28 +49,25 @@ class ReadFSCfunPickCHROMA:
             igammaloc = GammaTOChroma(thisgamma)
             self.data.append([])
             for ip,iploc in enumerate(thisMomList):      
-                # loc = 2*SeekIncSize*(igammaloc + iploc*GBSize)
-                loc = GetBar3ptLoc(igammaloc,iploc,forcent,len(thisMomList))
-                # f.seek(loc)
-                # tmpdata = np.fromfile(f,dtype=np.complex64,count=int(thistsink)) 
-                f.seek(loc-6*np.dtype(np.int32).itemsize)
-                if np.fromfile(f,dtype=np.int32,count=1).byteswap()[0] != 20301:
-                    print np.fromfile(f,dtype=np.int32,count=100).byteswap()
-                    raise IOError('Magic Number not found for ' +thisgamma+' '+ipTOqstr(iploc))
-                
-                # print thisgamma, igammaloc, ipTOqstr(iploc), iploc
-                # print 'magic number ' , 
+                loc,loccons,magmin = GetBar3ptLoc(igammaloc,iploc,forcent,len(qvecSet))
+                magicloc = loc-magmin
+                if 'Cons' in thisgamma:
+                    loc = loccons
+                if CheckMagic:
+                    f.seek(magicloc)
+                    MagicList =  np.fromfile(f,dtype=np.int32,count=1).byteswap()
+                    if MagicList[0] != 20301:
+                        f.seek(magicloc)
+                        MagicList =  np.fromfile(f,dtype=np.int32,count=100).byteswap()
+                        print MagicList
+                        raise IOError('Magic Number not found for ' +thisgamma+' '+ipTOqstr(iploc))                
                 f.seek(loc)
-                tmpdata = np.fromfile(f,dtype=np.complex64,count=forcent) 
-                # print 'PostStuff ' , np.fromfile(f,dtype=np.int32,count=30).byteswap()
+                tmpdata = np.fromfile(f,dtype=complextype,count=forcent)
                 if bar3ptChromaByteSwap:tmpdata = tmpdata.byteswap()
-                if 'cmplx' in thisgamma:                
+                if 'cmplx' in thisgamma:
                     self.data[igamma].append(tmpdata.imag)
                 else:                    
                     self.data[igamma].append(tmpdata.real)
-                # if np.isnan(self.data[igamma][ip][it]):
-                #     if Debug: self.data[igamma][ip][it] = 0.0
-                #     raise NaNCfunError('NaN Values: '+thisgamma+ ' ' +qvecSet[iploc] + ' it='+str(it+1) )
         f.close()
 
 
@@ -77,7 +94,7 @@ def holder(thisfile):
     MagicNumber = d2[11]
     qmom = d2[13:16]
     tcurrlen = d2[16]
-    values = np.fromfile(f,dtype=np.complex64,count=tsink-tsource)
+    values = np.fromfile(f,dtype=complextype,count=tsink-tsource)
     
     f.close()
     
