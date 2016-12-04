@@ -20,11 +20,14 @@ def ReadPickleBoot(filein):
     return dataout
 
 
-def ReadXmlDict(filein):
+def ReadXmlDict(filein,Boot=True):
     try:
         with open(filein,'r') as f:
             xmldata = RecFTDAS(xmltodict.parse(f.read()))
-        bootfile = xmldata[xmldata.keys()[0]]['Boots']
+        if Boot:
+            bootfile = xmldata[xmldata.keys()[0]]['Boots']
+        else:
+            bootfile = None
     except:
         if Debug: print 'Reading xml file fail: ' + filein
         xmldata = {}

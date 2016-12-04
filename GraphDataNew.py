@@ -44,6 +44,10 @@ thisalpha = 0.3
 # MassTVals = 3,25
 MassTVals = 1,21
 Massyrange = .5,1
+if kappa == 12:
+    MassTVals = 0,8
+    Massyrange = 0,3
+    
 # Massyrange = 0.40,0.60
 # Massyrange = 0.40,0.61
 Qsqrdxlim = -0.03,1

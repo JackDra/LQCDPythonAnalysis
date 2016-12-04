@@ -51,14 +51,14 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
     if 'ReadList' in ListOrSet:
         if 'PoF' in RunType:
             [data2pt,data3pt,filelist] = ReadList(thisSmearList,thisMomList,thisPGList,thisPDList,
-                                                  thisDSList,thisTSinkList,conflist,thisPrefList,thistsinkList=PoFtsourceList)
+                                                  thisDSList,thisTSinkList,conflist,thisPrefList,thistsourceList=PoFtsourceList)
         else:
             [data2pt,data3pt,filelist] = ReadList(thisSmearList,thisMomList,thisPGList,thisPDList,
                                                   thisDSList,thisTSinkList,conflist,thisPrefList)
     elif 'ReadSet' in ListOrSet:
         if 'PoF' in RunType:
             [data2pt,data3pt,filelist] = ReadSet(thisSmearList,thisMomList,thisPGList,thisPDList,
-                                                 thisDSList,thisTSinkList,dirread,thisPrefList,thistsinkList=PoFtsourceList)
+                                                 thisDSList,thisTSinkList,dirread,thisPrefList,thistsourceList=PoFtsourceList)
         else:
             [data2pt,data3pt,filelist] = ReadSet(thisSmearList,thisMomList,thisPGList,thisPDList,
                                                  thisDSList,thisTSinkList,dirread,thisPrefList)
@@ -67,7 +67,9 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
     InfoDict = {'nconfig':len(filelist)}
     ## data2pt = [ tsource, ism , jsm , ip ,  it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     ##data3pt = [ tsink, tsource, ism , jsm , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-
+    if Debug:
+        for it in range(0,8):
+            print it, data3pt[0][0][0][0][0][0][it].Avg, data2pt[0][0][0][0][it].Avg, data2pt[0][0][0][0][it].Std
 
     if 'CM' == RunType:
 ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
@@ -106,20 +108,19 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
     elif 'PoF' == RunType:
 ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 ## CMdata3pt  [ istate , ip , igamma , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-        if giDi:
-            for idata,idata3pt in enumerate(data3pt):
-                dumpdata3pt,dumpGammaList = CreategiDi(idata3pt,thisGammaList,thisDSList)
-                data3pt[idata] = dumpdata3pt
-            thisGammaList = dumpGammaList
-        if len(data3pt) < 2: raise IOError("PoF needs atleast two tsinks")
-        data2pt = np.array(PreptwoptCorr(data2pt))
+        # if giDi:
+        #     for idata,idata3pt in enumerate(data3pt):
+        #         dumpdata3pt,dumpGammaList = CreategiDi(idata3pt,thisGammaList,thisDSList)
+        #         data3pt[idata] = dumpdata3pt
+        #     thisGammaList = dumpGammaList
+        if len(data3pt) < 2 and TimeInv: raise IOError("PoF needs atleast two tsinks with time invariance")
+        data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
         print 'Creating PoF CM Tech ' , PoFTvarList[0]
-        ### FIX THIS DEBUG WARNING LOLOLOLOL
         [data2ptset,data3ptset] = CreateREPoFCfuns(np.array(data3pt),data2pt,DefPoFVarList[0],thisMomList)
         SetList,dump = CreateREvecSet(thisTSinkList,StateSet,PoFTvarList)
-        # for it in range(15,30):
-        #     print it, data3ptset[0][0][0][it].Avg, data2ptset[0][0][it].Avg
-            
+        # if Debug:
+        for it in range(0,8):
+            print it, data3ptset[0][0][0][it].Avg, data2ptset[0][0][it].Avg
     elif 'TSink' == RunType:
         data2pt = np.array(PreptwoptCorr(data2pt[0]))
         data3pt = np.array(data3pt)[0,0,:,:,:,:,:]
@@ -128,7 +129,7 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         SetList = ['tsink'+str(thisTSinkList[0])+'sm'+ism for ism in thisSmearList]
     print 'Analysis Complete'
 
-    [RFr,SqrtFac] = CalcRatioFactor(data2ptset,data3ptset,str(thisTSinkList[0]))
+    [RFr,SqrtFac] = CalcRatioFactor(data2ptset,data3ptset,str(thisTSinkList[0]),thisMomList)
     print 'RF Construction Complete'
     
     if DontWriteZero:

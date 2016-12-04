@@ -126,7 +126,7 @@ VarMethodMethod = 'AxBxlSolve' ## solve Ax = Bxc system directly (generalised ei
 NoSFRfacScale = False # Turn on to only scale the R function by sqrt((Epp+m)(Ep+m)/EppEp) for form factor creation
 ReadPoF2pt = False # Create PoF using already calculated eigenvectors. This is used if the statistics or solver method has changed.
 DeCorrPoF = False ## used for debugging the pencil of function method (decorrelation problem) !!!!!DEPRECIATED, LEAVE FALSE!!!!!
-TimeInv = True ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
+TimeInv = False ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
 DoCM = True ## does correlation matrix result ( no PoF) 
 
 if 'XAvg' in ListOrSet:
@@ -141,7 +141,10 @@ ScaleByP4g4 = False ## scales out all operators by P4g4 instead of 2 point corre
 ShowConfNum = Debug # debugging, show number of configs during read
 PrintRead = not DoMulticore # Screws up output if on and doing mulitcore reading
 DoCmplx = True # reads complex opperator values as well as real values, should be on
-DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
+DoCons = False # reads Conserved vector current ONLY WORKS WITH CHROMA
+RepWithCons = True # TEMPORARY, overrides vector current with Conserved vector current ONLY WORKS WITH CHROMA
+
+DefWipe = True # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
 MakeGraphDat = True # Creates a .dat file of the values plotted for the corresponding graph (where implemented)
 PhysicalUnits = True # uses lattice momenta or physical momenta
 ForceNoDer = False # Forces the fitting LLSBoot to use manual derivaive calculation
@@ -155,6 +158,7 @@ elif MesOrBar == 'Baryon':
     InterpFlag = 'baryon_num'
     InterpNumb = '0'
     
+if DoCons: RepWithCons = False
 
 ## Currenlty, not using Time Invariance in the Pencil of Function Analysis is only properly implemented and tested for 2-point correlation analysis
 if TimeInv:
@@ -166,28 +170,34 @@ else:
 if Debug: print 'nconfs saved is: ' , RunNconfs
 
 VarMassCutoff = 0.4 # used in correlation matrix for cutting artifacts out of eigenmass sorting.
-kappas = 1364000
+if kappa == 12:
+    kappas = kappa
+    dirread = datadir+'/cfun/Kud0'+str(kappa)+'Ks0'+str(kappas)
+    nt = 8
+    nx = 4
+else:
+    kappas = 1364000
+    dirread = datadir+'/cfunRandT/Kud0'+str(kappa)+'Ks0'+str(kappas)
+    nt = 64
+    nx = 32
 
-dirread = datadir+'/cfunRandT/Kud0'+str(kappa)+'Ks0'+str(kappas)
 outputdir = [datadir+'results/'+ListOrSet+ikappa+'/' for ikappa in kappalist]
 logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 momlistdir = datadir+'momdir/'
 pickledir = datadir+"pickledir/"
 REvecDir = scriptdir+'REvecSave/k'+str(kappa)+'/'
-RunMomList = qvecSet 
-RunAvgMomList = qvecAvgSet
+# RunMomList = qvecSet 
+# RunAvgMomList = qvecAvgSet
 # For Debuggin, only use zero momenta
 # RunMomList = [qvecSet[iqTOip(0)],qvecSet[iqTOip(3)]]
-# RunMomList = [qvecSet[iqTOip(0)]]
-# RunAvgMomList = [qvecAvgSet[0]]
+RunMomList = [qvecSet[iqTOip(0)]]
+RunAvgMomList = [qvecAvgSet[0]]
 # map(mkdir_p,outputdir)
 mkdir_p(outputdir[0])
 mkdir_p(pickledir)
 mkdir_p(logdir)
 mkdir_p(REvecDir)
 mkdir_p(momlistdir)
-nt = 64
-nx = 32
 ndim = [nx,nx,nx,nt]
 latspace = 0.074 ## in fm
 ns = 4
@@ -214,6 +224,8 @@ else:
 
 # note: dim of StateSet < dim of SmearSet
 GammaSet = ['I','g1','g2','g3','g4','g1g2','g1g3','g1g4','g2g3','g2g4','g3g4','g1g5','g2g5','g3g5','g4g5','g5']
+GammaConsSet = ['Consg1','Consg2','Consg3','Consg4']
+
 if DoCmplx:
     AllGammaSet = GammaSet + [igamma+'cmplx' for igamma in GammaSet]
 else:
@@ -230,7 +242,7 @@ for ider in DerSet:
 #this part is for ReadList (used for analying only specific configurations#
 if kappa == 12:
     FileStruct = "Testing.lime"
-    conflist = ['1_xsrc2']
+    conflist = ['21_xsrc1','21_xsrc2','41_xsrc1','41_xsrc2']
 else:
     FileStruct = "RC32x64_B1900Kud01375400Ks01364000C1715"
     conflist = ['-a-004400_xsrc3',
@@ -243,7 +255,7 @@ else:
 filelist = dirread+"/@/"+FileStruct+"*"
             
 nsrc = 2
-xsrcList = ['xsrc'+str(ix) for ix in range(1,nsrc)]
+xsrcList = ['xsrc'+str(ix) for ix in range(1,nsrc+1)]
 
 SourceList = ['']
 
@@ -278,7 +290,8 @@ DefCombGammaList = DefGammaList+DefNoDSGammaList
 
 # DeftoList = [18]
 # DeftoList = range(1,10)
-DeftoList = range(1,10)
+# DeftoList = range(1,10)
+DeftoList = range(1,2)
 # DeftoList = [20,21,22,23]
 # DeftoList = [17,18,19,20,21,22,23]
 # DeftoList = [17,18,19,20,21,22,23,24,25,26,27]
@@ -286,12 +299,14 @@ DeftoList = range(1,10)
 # DeftoList = [16,17,18,19,20]
 # DefdtList = [1,2,3,4,5,6]
 # DefdtList = range(1,7)
-DefdtList = range(1,10)
+# DefdtList = range(1,10)
+DefdtList = range(1,2)
 # DeftodtPicked = (18,2)
 ##MUST BE IN SORTING ORDER##
 # DeftodtPicked = [(18,2),(20,2)]
 # DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
-DeftodtPicked = [(3,3)]
+# DeftodtPicked = [(3,3)]
+DeftodtPicked = [(1,1)]
 # DeftodtPicked = [(18,2)]
 DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
 
@@ -393,7 +408,10 @@ if OnlySelVar:
         # DefPoFVarList = [[1,1]]
         DefPoFVarList = [[6,1]]
     else:
-        DefPoFVarList = [[4,4]]
+        if kappa == 12:
+            DefPoFVarList = [[1,1]]
+        else:
+            DefPoFVarList = [[4,4]]
     PoFTvarList = ['PoF'+str(PoFShifts)+'to'+str(DefPoFVarList[0][0])+'dt'+str(DefPoFVarList[0][1])]
 else:
     DefPoFVarList = DeftodtList

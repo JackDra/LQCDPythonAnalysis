@@ -34,7 +34,7 @@ def BootSet2pt(data,thisMomList,nboot,randlist=[]):
         #     print 'icfg=',icfg
         #     for it,tdata in enumerate(cfgdata):
         #         print tdata
-        bootdata,randlist = bt.CreateBoot(np.array(data)[:,ip,:],nboot,0,randlist=randlist)
+        bootdata,randlist = bt.CreateBoot(data[:,ip,:],nboot,0,randlist=randlist)
         dataout.append(bootdata)
     # print '                              \r',
     return dataout,randlist
@@ -42,19 +42,20 @@ def BootSet2pt(data,thisMomList,nboot,randlist=[]):
 #dataout = [ ip , it ]. bs
 def ReadAndBoot2pt(readfilelist,thisMomList,thisnboot,randlist=[]):
     tempdata = []
+        
     for iconf,ifile in enumerate(readfilelist):
         # print 'Reading {}%  \r'.format(int((iconf*100)/float(len(readfilelist)))),
-        # try:
-        if CHROMA:
-            if xsrcList[0] in ifile or not XAvg:
-                tempdata.append(Read2ptCfunChromaXML(ifile,thisMomList).data)
-        else:
-            tempdata.append(Read2ptCfunPick(ifile,thisMomList).data)
+        try:
+            if CHROMA:
+                if xsrcList[0] in ifile or not XAvg:
+                    tempdata.append(Read2ptCfunChromaXML(ifile,thisMomList).data)
+            else:
+                tempdata.append(Read2ptCfunPick(ifile,thisMomList).data)
         except NaNCfunError as e:
             print 'Deleting file ' + ifile
             print e
             os.remove(ifile)
-    return BootSet2pt(tempdata,thisMomList,thisnboot,randlist=randlist)
+    return BootSet2pt(np.array(tempdata),thisMomList,thisnboot,randlist=randlist)
 
 
 #dataout [ igamma , ip , it ]. bs

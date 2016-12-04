@@ -24,7 +24,7 @@ def ReadList(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSL
         f.write(file+'\n')
         thisfilelist.append(file)
     f.close()
-    data2pt,randlist = Read2ptSet(thisfilelist,thisSmearList,thisMomList,Interps,tsourceList=thistsourceList)
+    data2pt,randlist = Read2ptSet(thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
     # print ''
     data3pt = []
     for iFlag,itsink in zip(Flag,thisTSinkList):
@@ -40,13 +40,13 @@ def ReadSet(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList, thisDSL
     thisfilelist = []
     f = open('./cfglistset.txt','w')
     
+    fileend2pt = CreateEnd2pt(DefSmearList[0],DefSmearList[0],thistsourceList[0],Interps[0],Interps[0])
+    if Debug: print ' comparing to: ',fileend2pt
     for isource in SourceList:
         print 'reading directory: ' , directory+'/'+isource
         for (dirname,dirs,files) in walk(directory+'/'+isource):
             for ifile in files:
                 if CfunConfigCheck:
-                    fileend2pt = CreateEnd2pt(DefSmearList[0],DefSmearList[0],thistsourceList[0],Interps[0],Interps[0])
-                    if Debug: print ' comparing to: ',fileend2pt
                     if xsrcList[0] not in ifile and (XAvg or 'xsrc1' in ListOrSet): continue
                     # ## FOR DEBUGGING
                     # if xsrcList[0] not in ifile: continue
@@ -56,9 +56,7 @@ def ReadSet(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList, thisDSL
                         f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
                         thisfilelist.append(directory+'/'+isource+'/@/'+fileprefix)                    
                 else:
-                    fileend2pt = CreateEnd2pt(thisSmearList[0],thisSmearList[0],thistsourceList[0],Interps[0],Interps[0])
-                    if Debug: print ' comparing to: ',fileend2pt
-                    # if fileend2pt not in ifile or ".metadata" in ifile: continue
+                    if fileend2pt not in ifile or ".metadata" in ifile: continue
                     # ## FOR DEBUGGING
                     # if xsrcList[0] not in ifile: continue
                     if xsrcList[0] not in ifile and (XAvg or 'xsrc1' in ListOrSet): continue
@@ -76,7 +74,7 @@ def ReadSet(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList, thisDSL
             print ifile
         print ''
         
-    data2pt,randlist = Read2ptSet(thisfilelist,thisSmearList,thisMomList,Interps,tsourceList=thistsourceList)
+    data2pt,randlist = Read2ptSet(thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
     # print ''
     data3pt = []
     for iFlag,itsink in zip(Flag,thisTSinkList):
@@ -86,7 +84,10 @@ def ReadSet(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList, thisDSL
     return [data2pt,data3pt,thisfilelist]
 
 def CreateEnd3pt(ism,jsm,thists,Tsink,DS,Proj,Der):
-    return '.t'+str(thists)+'sm'+ism+jsm+Proj+'t'+str(Tsink)+'p000.'+DS+Der+'k'+str(kappa)+'.ifms.3cf'
+    if CHROMA:
+        return '_k'+str(kappa)+'_tsrc'+str(thists)+'sm'+ism+'_'+jsm+Proj+'tsink'+str(Tsink)+'p000'+DS+'NDer0.3cf'
+    else:
+        return '.t'+str(thists)+'sm'+ism+jsm+Proj+'t'+str(Tsink)+'p000.'+DS+Der+'k'+str(kappa)+'.ifms.3cf'
 
 def CreateEnd2pt(ism,jsm,thists,iterp,jterp):
     # if iterp == jterp: return '.t'+str(thists)+'sm'+ism+'k'+str(kappa)+'.ifmssi'+jsm+'.'+iterp+'.u.2cf'
@@ -94,10 +95,13 @@ def CreateEnd2pt(ism,jsm,thists,iterp,jterp):
     return '_k'+str(kappa)+'_tsrc'+str(thists)+'sm'+ism+'si'+jsm+'_'+iterp+'.2cf.xml'
 
 def CreateDir3pt(ism,jsm,Tsink,DS,Proj,Flag):    
-    return Flag+'sm'+ism+jsm+Proj+'t'+str(Tsink)+'p000.'+DS
+    if CHROMA:
+        return 'threept/sm'+ism+jsm+Proj+'tsink'+str(Tsink)+'p000'+DS
+    else:
+        return Flag+'sm'+ism+jsm+Proj+'t'+str(Tsink)+'p000.'+DS
 
 def CreateDir2pt(ism,jsm):
-    return 'twopt/twoptsm'+ism+'si'+jsm
+    return 'twoptRandT/twoptsm'+ism+'si'+jsm
 
 def CheckAllSet(FilePrefix,directory,Interps,tsourceList=[tsource]):
     for iterp,ism in Elongate(Interps,DefSmearList):
@@ -106,7 +110,7 @@ def CheckAllSet(FilePrefix,directory,Interps,tsourceList=[tsource]):
                 testfile2pt = (directory.replace(CreateDir2pt(DefSmearList[0],DefSmearList[0]),
                                                  CreateDir2pt(ism,jsm))
                                +FilePrefix+CreateEnd2pt(ism,jsm,thists,iterp,jterp))
-                if Debug: print 'Checking ' ,testfile2pt
+                if Debug: print 'Checking!! ' ,testfile2pt
                 if not os.path.isfile(testfile2pt): return False
     for iFlag in CfunCheckList:
         if iFlag not in TSinkDictList: continue
@@ -118,9 +122,14 @@ def CheckAllSet(FilePrefix,directory,Interps,tsourceList=[tsource]):
                     if 'REvec' in iFlag:
                         Jsmlist = ['REvec']
                     elif 'PoF' in iFlag:
-                        Jsmlist = ['RE'+PoFReadTvarList[0]]
-                        thisFlag = 'RE'+PoFDirTvarList[0]
-                        C2C3Dis = PoFC2C3Dis
+                        if CHROMA:
+                            Jsmlist = ['PoF'+str(PoFShifts)+'D'+str(PoFDelta)]
+                            thisFlag = ''
+                            C2C3Dis = ''
+                        else:
+                            Jsmlist = ['RE'+PoFReadTvarList[0]]
+                            thisFlag = 'RE'+PoFDirTvarList[0]
+                            C2C3Dis = PoFC2C3Dis
                     else:
                         Jsmlist = ['Xsm'+jsm for jsm in SmearDictList[iFlag]]
                     for jcsm,jsm3pt in enumerate(Jsmlist):
@@ -129,13 +138,13 @@ def CheckAllSet(FilePrefix,directory,Interps,tsourceList=[tsource]):
                                 testfile3pt = (directory.replace(CreateDir2pt(DefSmearList[0],DefSmearList[0]),
                                                                  CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
                                                +FilePrefix+CreateEnd3pt(ism,jsm3pt,thists,itsink,iDS,iProj,''))
-                                if Debug: print 'Checking ' ,  testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
+                                if Debug: print 'Checking!!! ' ,  testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
                                 if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
                             for iProj in DefProjDerList:
                                 testfile3pt = (directory.replace(CreateDir2pt(DefSmearList[0],DefSmearList[0]),
                                                                  CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
                                                +FilePrefix+CreateEnd3pt(ism,jsm3pt,thists,itsink,iDS,iProj,'D'))
-                                if Debug: print 'Checking ' ,testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
+                                if Debug: print 'Checking!!! ' ,testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
                                 if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
     return True
                 
@@ -149,7 +158,7 @@ def CheckSet(FilePrefix,directory,thisSmearList,thisProjGammaList,thisProjDerLis
                 testfile2pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
                                                  CreateDir2pt(ism,jsm))
                                +FilePrefix+CreateEnd2pt(ism,jsm,thists,iterp,jterp))
-                if Debug: print 'Checking ' ,testfile2pt
+                if Debug: print 'Checking~!! ' ,testfile2pt
                 if not os.path.isfile(testfile2pt): return False
             for iFlag,itsink in zip(Flag,thisTSinkList):
                 thisFlag = iFlag
@@ -157,9 +166,14 @@ def CheckSet(FilePrefix,directory,thisSmearList,thisProjGammaList,thisProjDerLis
                 if iFlag == 'REvec':
                     Jsmlist = ['REvec']
                 elif 'PoF' in iFlag:
-                    Jsmlist = ['RE'+PoFReadTvarList[0]]
-                    thisFlag = 'RE'+PoFDirTvarList[0]
-                    C2C3Dis = PoFC2C3Dis
+                    if CHROMA:
+                        Jsmlist = ['PoF'+str(PoFShifts)+'D'+str(PoFDelta)]
+                        thisFlag = ''
+                        C2C3Dis = ''
+                    else:
+                        Jsmlist = ['RE'+PoFReadTvarList[0]]
+                        thisFlag = 'RE'+PoFDirTvarList[0]
+                        C2C3Dis = PoFC2C3Dis
                 else:
                     Jsmlist = ['Xsm'+jsm for jsm in thisSmearList]
                 for jcsm,jsm3pt in enumerate(Jsmlist):
@@ -168,13 +182,13 @@ def CheckSet(FilePrefix,directory,thisSmearList,thisProjGammaList,thisProjDerLis
                             testfile3pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
                                                              CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
                                            +FilePrefix+CreateEnd3pt(ism,jsm3pt,thists,itsink,iDS,iProj,''))
-                            if Debug: print 'Checking ' ,  testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
+                            if Debug: print 'Checking~!!! ' ,  testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
                             if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
                         for iProj in thisProjDerList:
                             testfile3pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
                                                              CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
                                            +FilePrefix+CreateEnd3pt(ism,jsm3pt,thists,itsink,iDS,iProj,'D'))
-                            if Debug: print 'Checking ' ,  testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
+                            if Debug: print 'Checking~!!! ' ,  testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
                             if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
     return True
 
@@ -216,9 +230,14 @@ def Read3ptSet(readfilelist,thisSmearList,thisMomList,thisProjGammaList,thisProj
             if iFlag == 'REvec':
                 Jsmlist = ['REvec']
             elif iFlag == 'PoF':
-                Jsmlist = ['RE'+PoFReadTvarList[0]]
-                thisFlag = 'RE'+PoFDirTvarList[0]
-                C2C3Dis = PoFC2C3Dis
+                if CHROMA:
+                    Jsmlist = ['PoF'+str(PoFShifts)+'D'+str(PoFDelta)]
+                    thisFlag = ''
+                    C2C3Dis = ''
+                else:
+                    Jsmlist = ['RE'+PoFReadTvarList[0]]
+                    thisFlag = 'RE'+PoFDirTvarList[0]
+                    C2C3Dis = PoFC2C3Dis
             else:
                 Jsmlist = ['Xsm'+jsm for jsm in thisSmearList]
             for jcsm,jsm in enumerate(Jsmlist):

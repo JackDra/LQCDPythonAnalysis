@@ -51,7 +51,7 @@ class ReadFSCfunPickCHROMA:
             for ip,iploc in enumerate(thisMomList):      
                 loc,loccons,magmin = GetBar3ptLoc(igammaloc,iploc,forcent,len(qvecSet))
                 magicloc = loc-magmin
-                if 'Cons' in thisgamma:
+                if 'Cons' in thisgamma or (RepWithCons and ('g1' in thisgamma or 'g2' in thisgamma or 'g3' in thisgamma or 'g4' in thisgamma )):
                     loc = loccons
                 if CheckMagic:
                     f.seek(magicloc)
@@ -68,7 +68,7 @@ class ReadFSCfunPickCHROMA:
                     self.data[igamma].append(tmpdata.imag)
                 else:                    
                     self.data[igamma].append(tmpdata.real)
-                if any(np.isnan(self.data[igd][ip])) and DeleteNanCfgs:
+                if any(np.isnan(self.data[igamma][ip])) and DeleteNanCfgs:
                     raise NaNCfunError('NaN Values: '+thisgamma+' ' +qvecSet[iploc]  )
         f.close()
 
@@ -239,12 +239,12 @@ class Read2ptCfunChromaXML:
                 self.data += np.array(datahold)
         self.data = self.data/len(thisxsrcList)
         indicies =  np.searchsorted(self.OutMomList,thisMomList)
-        if Debug:
-            print 
-            print thisMomList
-            print thisfile
-            print indicies
-            print self.data
+        # if Debug:
+        #     print 
+        #     print thisMomList
+        #     print thisfile
+        #     print indicies
+        #     print self.data
         self.data = np.array(self.data)[indicies].tolist()
                     
                     

@@ -22,42 +22,30 @@ from ReadXml import *
 # R/L Evecs [ ip , istate , ival ]
 # Emass [ ip , istate ]
 def ReadLREM(todtval,thisMomList,filepref):
-    filename = REvecDir+filepref+'to'+str(todtval[0])+'dt'+str(todtval[1])+'LREM.txt'
-    # filename = REvecDir+VarPref+'TestLREM.txt'
-
-    readmom = False
+    ##OLD##
+    # filename = REvecDir+filepref+'to'+str(todtval[0])+'dt'+str(todtval[1])+'LREM.txt'
+    ##THIS NEEDS TO BE UPDATED##
     LEvec,REvec,Emass = [],[],[]
-    MomListOut = []
-    if os.path.isfile(filename):
-        with open(filename,'r') as f:
-            for line in f:
-                rdata = line.strip()
-                if rdata[0] == 'q':
-                    if qstrTOip(rdata) in thisMomList:
-                        LEvec.append([])
-                        REvec.append([])
-                        Emass.append([])
-                        MomListOut.append(rdata)
-                        readmom = True
-                    else:
-                        readmom = False
-                elif readmom and rdata[0] != 's':
-                    rdata = rdata.split()
-                    if 'L' in rdata[0] and 'R' not in rdata[0]:
-                        LEvec[-1].append(map(complex,rdata[1:-1]))
-                    elif 'R' in rdata[0] and 'L' not in rdata[0]:
-                        REvec[-1].append(map(complex,rdata[1:-1]))
-                        Emass[-1].append(complex(rdata[-1]))
-                    elif 'R' in rdata[0] and 'L' in rdata[0]:
-                        LEvec[-1].append(map(complex,rdata[1:-1]))
-                        REvec[-1].append(map(complex,rdata[1:-1]))
-                        Emass[-1].append(complex(rdata[-1]))
-        if Debug:
-            print map(ipTOqstr,thisMomList), MomListOut
-        return MomOrderLists(MomListOut,[ipTOqstr(ip) for ip in thisMomList],LEvec,REvec,Emass)
-    else:
-        mprint('Warning',filename, 'not found')
-        return None,None,None
+    for imom in thisMomList:
+        imomCond = ipTOqcond(imom,Avg=True)
+        filename = REvecDir+filepref+'to'+str(todtval[0])+'dt'+str(todtval[1])+'LREM'+imomCond+'.xml'
+        # filename = REvecDir+VarPref+'TestLREM.txt'
+        if os.path.isfile(filename):
+            data,dump = ReadXmlDict(filename,Boot=False)
+            for istate in GetStateSet('PoF'):
+                # for istate,idata in data[imomCond]['Values'].iteritems():
+                thisstate = 'State'+str(istate)
+                Emass.append(float(data[imomCond]['Values'][thisstate]['Emass']))
+                LEvec.append([])
+                REvec.append([])
+                # for leflag,levec in data['Left_Evec'].iteritems():
+                for thissm in DefSmList:
+                    LEvec.append(float(data[imomCond]['Values'][thisstate]['Left_Evec'][thissm]))
+                    REvec.append(float(data[imomCond]['Values'][thisstate]['Right_Evec'][thissm]))
+        else:
+            print 'warning, weight file not found', filename
+            return None,None,None        
+    return np.array(LEvec),np.array(REvec),np.array(Emass)
 
 ## readdata { gamma } { mom } { method } { set }
 ## datadictout { collection } { gamma } { mom }

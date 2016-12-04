@@ -54,7 +54,8 @@ def Avgqlist(thisMaxqsqrd):
                 if iq1**2 + iq2**2 + iq3**2 > thisMaxqsqrd: continue
                 if iq1**2 + iq2**2 + iq3**2 in qsqrdlist: continue
                 qsqrdlist.append(iq1**2 + iq2**2 + iq3**2)
-                qlist = np.append(qlist,'q = ' + str(iq3) + ' ' + str(iq2) + ' ' + str(iq1))
+                # qlist = np.append(qlist,'q = ' + str(iq3) + ' ' + str(iq2) + ' ' + str(iq1))
+                qlist = np.append(qlist,'q = ' + str(iq1) + ' ' + str(iq2) + ' ' + str(iq3))
     return qlist
     
 
@@ -332,15 +333,35 @@ def makeq4list(thisMinqsqrd,thisMaxqsqrd):
 
 
 def GetAvgMom(qstr):
-    for ip in qvecAvgSet:
-        if qsqrdstr(ip) == qsqrdstr(qstr):
-            return ip
-    raise IOError('Mom Not Found in AvgList')
+    if CHROMA:
+        for ip in qvecAvgSet:
+            if qsqrdstr(ip) == qsqrdstr(qstr):
+                return ip
+        raise IOError('Mom Not Found in AvgList')
+    else:
+        return qstr        
 
+def GetAvgMomip(ip):
+    if CHROMA:
+        for ipc,thep in enumerate(qvecAvgSet):
+            if qsqrdstr(thep) == qsqrdstr(ipTOqstr(ip)):
+                return ipc
+        raise IOError('Mom Not Found in AvgList')
+    else:
+        return qstr        
+    
 def GetAvgMomList(qlist):
     outlist = []
     for iq in qlist:
         iqavg = GetAvgMom(iq)
+        if iqavg not in outlist:
+            outlist.append(iqavg)
+    return outlist
+
+def GetAvgMomListip(iplist):
+    outlist = []
+    for iq in iplist:
+        iqavg = GetAvgMomip(iq)
         if iqavg not in outlist:
             outlist.append(iqavg)
     return outlist

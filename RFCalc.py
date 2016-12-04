@@ -74,9 +74,27 @@ def CalcSqrtFac(data2ptz,data2ptp,thistsink):
 #data2pt [ iset , ip , it ]  = bootstrap1 class (.Avg, .Std, .values, .nboot)
 #RFout [ iset , igamma , ip , it ] bs1
 
-def CalcRatioFactor(data2pt,data3pt,itsink):
+# def CalcRatioFactor(data2pt,data3pt,itsink):
+#     RFOut = []
+#     SqrtMomFac = []
+#     for icset,setdata2pt in enumerate(data2pt):
+#         SqrtMomFac.append([])
+#         for ip,pdata2pt in enumerate(setdata2pt):
+#             [CSFhold,Error] = CalcSqrtFac(deepcopy(setdata2pt[0]),deepcopy(pdata2pt),itsink)
+#             SqrtMomFac[icset].append(CSFhold)
+#             # if Error == True: print 'Neg SqrtFactor for ip: ' ,ip, ' iset: ' , icset
+#     for icset,(setdata3pt,setsqrt) in enumerate(zip(data3pt,SqrtMomFac)):
+#         RFOut.append([])
+#         for igamma,gammadata3pt in enumerate(setdata3pt):
+#             RFOut[icset].append([])
+#             for ip,(pdata3pt,psqrt) in enumerate(zip(gammadata3pt,setsqrt)):
+#                 RFOut[icset][igamma].append(RFMultFun(pdata3pt,psqrt,itsink))
+#     return [np.array(RFOut),np.array(SqrtMomFac)]
+
+def CalcRatioFactor(data2pt,data3pt,itsink,thisMomList):
     RFOut = []
     SqrtMomFac = []
+    twoptMomList= GetAvgMomListip(thisMomList)
     for icset,setdata2pt in enumerate(data2pt):
         SqrtMomFac.append([])
         for ip,pdata2pt in enumerate(setdata2pt):
@@ -87,10 +105,11 @@ def CalcRatioFactor(data2pt,data3pt,itsink):
         RFOut.append([])
         for igamma,gammadata3pt in enumerate(setdata3pt):
             RFOut[icset].append([])
-            for ip,(pdata3pt,psqrt) in enumerate(zip(gammadata3pt,setsqrt)):
+            for ipc,(pdata3pt,ip) in enumerate(zip(gammadata3pt,thisMomList)):
+                psqrt = setsqrt[GetAvgMomip(ip)]
                 RFOut[icset][igamma].append(RFMultFun(pdata3pt,psqrt,itsink))
     return [np.array(RFOut),np.array(SqrtMomFac)]
-    
+
 
 
 def RFMultFun(data,SQRTdata,itsink):

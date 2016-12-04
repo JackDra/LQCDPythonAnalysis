@@ -128,19 +128,22 @@ def CreatePoFMatrix(thisCfun,thisPoFShifts=PoFShifts):
 #     return thisCfunExt
 
 
-
+## Cfun[tsink,tsource,ism,1,tcurr]
 def CreateREvecProjPoFMatrix(thisCfun):
-    thisCfunjsm = np.array(thisCfun)[0,:,:,0,:]
-    if thisPoFShifts==0:
+    thisCfunjsm = np.array(thisCfun)[0,0,:,0,:]
+    if PoFShifts==0:
         thisCfunExt = thisCfunjsm
     else:
-        thisCfunjsmShift = np.array(thisCfunShift)[1,:,:,0,:]
-        # thisCfunjsmShift = np.roll(thisCfunjsmShift,-1,axis=2)
-        if thisPoFShifts==1:
+        if PoFShifts==1:
+            if TimeInv:
+                thisCfunjsmShift = np.array(thisCfun)[1,0,:,0,:]
+                thisCfunjsmShift = np.roll(thisCfunjsmShift,-1,axis=2)
+            else:
+                thisCfunjsmShift = np.array(thisCfun)[0,1,:,0,:]
+                # thisCfunjsmShift = np.roll(thisCfunjsmShift,-1,axis=2)
             thisCfunExt = np.concatenate((thisCfunjsm,thisCfunjsmShift))
-        # elif thisPoFShifts==2:
-        #     thisCfunjsmShift2 = np.roll(thisCfunjsmShift,-1,axis=2)
-        #     thisCfunExt = np.concatenate((thisCfunjsm,thisCfunjsmShift,thisCfunjsmShift2))
+        else:
+            raise EnvironmentError('thisPoFShifts > 1 is not support yet for 3pt correlators, combine correlators here if you want to implement')
     return thisCfunExt
 
 ## Emass = 101 is invalid eigenvalue out
@@ -307,12 +310,12 @@ def ProjectCorrPoF2pt(LEvec,Cfun,REvec,thisPoFShifts=PoFShifts):
     ##DEBUG##
     if Debug:
         print 'TwoPoint Run:'
-        print 'Cfun Shape ' , CfunExt.shape
-        print 'REvec Shape ' , REvec.shape
-        print 'LEvec Shape ' , LEvec.shape        
-        for ic,(iRE,iCfun) in enumerate(zip(REvec[0],np.dot(LEvec[0],CfunExt))):
-            iCfun[26].Stats()
-            print '27',ic,iRE,iCfun[26].Avg
+        # print 'Cfun Shape ' , CfunExt.shape
+        # print 'REvec Shape ' , REvec.shape
+        # print 'LEvec Shape ' , LEvec.shape        
+        # for ic,(iRE,iCfun) in enumerate(zip(REvec[0],np.dot(LEvec[0],CfunExt))):
+        #     iCfun[26].Stats()
+        #     print '27',ic,iRE,iCfun[26].Avg
         print ''
     for istate,(stateRE,stateLE) in enumerate(zip(REvec,LEvec)):
         CMCfun.append(np.dot(stateRE,np.dot(stateLE,CfunExt)))
@@ -332,16 +335,16 @@ def ProjectCorrPoF2pt(LEvec,Cfun,REvec,thisPoFShifts=PoFShifts):
 #     return CMCfun
 
 
-## Cfun[ism,1,tcurr]
+## Cfun[tsink,tsource,ism,1,tcurr]
 def ProjectREvecCorrPoF(Cfun,REvec):
     CMCfun = []
     CfunExt = CreateREvecProjPoFMatrix(Cfun)
     ##DEBUG##
     if Debug:
         print 'ThreePoint Run:'
-        for ic,(iRE,iCfun) in enumerate(zip(REvec[0],CfunExt)):
-            print ic,iRE,iCfun[24].Avg
-        print ''
+        # for ic,(iRE,iCfun) in enumerate(zip(REvec[0],CfunExt)):
+        #     print ic,iRE,iCfun[24].Avg
+        # print ''
     for istate,stateRE in enumerate(REvec):
         CMCfun.append(np.dot(stateRE,CfunExt))
         for it,itCM in enumerate(CMCfun[istate]):
@@ -354,8 +357,8 @@ def ProjectREvecCorr(Cfun,REvec):
     ##DEBUG##
     if Debug:
         print 'ThreePoint Run:'
-        for ic,(iRE,iCfun) in enumerate(zip(REvec[0],CfunExt)):
-            print ic,iRE,iCfun[24].Avg
+        # for ic,(iRE,iCfun) in enumerate(zip(REvec[0],CfunExt)):
+        #     print ic,iRE,iCfun[24].Avg
         print ''
     for istate,stateRE in enumerate(REvec):
         CMCfun.append(np.dot(stateRE,CfunExt))
@@ -510,22 +513,23 @@ def CreateREvecCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
 # #Cfuns3pt [ tsink, tsource , ism , 1 , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 # #CMCfun3pt  [ istate , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 def CreateREPoFCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
-    LEvec,REvec,Emass = ReadLREM(todtvals,thisMomList,'PoF'+str(PoFShifts))
+    twoptMomList = GetAvgMomListip(thisMomList)
+    LEvec,REvec,Emass = ReadLREM(todtvals,twoptMomList,'PoF'+str(PoFShifts))
     if REvec == None:
-        CMCfun2pt,LEvec,REvec,Emass = CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=False)
+        CMCfun2pt,LEvec,REvec,Emass = CreatePoF2ptCfuns(Cfuns2pt,todtvals,twoptMomList,DoPoF=True,printout=False)
         LEvec,REvec = SignEvec(np.array(LEvec),np.array(REvec))
     else:
         CMCfun2pt = []
-        for ip,thisp in enumerate(thisMomList):
+        for ip,thisp in enumerate(twoptMomList):
             CMCfun2pt.append(ProjectCorrPoF2pt(LEvec[ip],Cfuns2pt[:,:,:,ip],REvec[ip]))
         CMCfun2pt = np.rollaxis(np.array(CMCfun2pt),1)
     CMCfun3pt = []
-    for igamma,(gammaCfun,gammaCfunp1) in enumerate(zip(np.rollaxis(np.array(Cfuns3pt),3),np.rollaxis(np.array(Cfuns3ptp1),3))):
+    for igamma,gammaCfun in enumerate(np.rollaxis(np.array(Cfuns3pt),4)):
         CMCfun3pt.append([])
-        for ip,(pCfun,pCfunp1) in enumerate(zip(np.rollaxis(gammaCfun,3),np.rollaxis(gammaCfunp1,3))): 
+        for ipc,(pCfun,ip) in enumerate(zip(np.rollaxis(gammaCfun,4),thisMomList)): 
             ##DEBUG##
-            if Debug: print 'Three Point :(igamma,ip) ',igamma , ip
-            CMCfun3pt[igamma].append(ProjectREvecCorrPoF(pCfun,REvec[ip]))
+            if Debug: print 'Three Point :(igamma,ip) ',igamma , ip, 'with twopt mom' , GetAvgMomip(ip)
+            CMCfun3pt[igamma].append(ProjectREvecCorrPoF(pCfun,REvec[GetAvgMomip(ip)]))
     return [np.array(CMCfun2pt),np.rollaxis(np.array(CMCfun3pt),2)]
 
 
