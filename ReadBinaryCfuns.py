@@ -40,37 +40,58 @@ def GetBar3ptLoc(ig,ip,tsinklen,momlistlen):
 ## noDer[igamma , ip , it]
 ## forcent is total length, not array index!
 class ReadFSCfunPickCHROMA:
-    def __init__(self,thisfile,thisMomList,thisGammaList,forcent=nt):
+    def __init__(self,thisfile,thisMomList,thisGammaList,forcent=nt,srcshift=None):
         self.data = []
-        # if thistsink == 'FileName':
-        #     thistsink = int(re.findall('tsink.*?p',thisfile)[0].replace('tsink','').replace('p',''))
-        f = open(thisfile,'rb')
-        for igamma,thisgamma in enumerate(thisGammaList):
-            igammaloc = GammaTOChroma(thisgamma)
-            self.data.append([])
-            for ip,iploc in enumerate(thisMomList):      
-                loc,loccons,magmin = GetBar3ptLoc(igammaloc,iploc,forcent,len(qvecSet))
-                magicloc = loc-magmin
-                if 'Cons' in thisgamma or (RepWithCons and ('g1' in thisgamma or 'g2' in thisgamma or 'g3' in thisgamma or 'g4' in thisgamma )):
-                    loc = loccons
-                if CheckMagic:
-                    f.seek(magicloc)
-                    MagicList =  np.fromfile(f,dtype=np.int32,count=1).byteswap()
-                    if MagicList[0] != 20301:
+        if XAvg: thisxsrcList = xsrcList
+        else: thisxsrcList = [xsrcList[0]]
+        if srcshift == None: srcshift = [0]*len(thisxsrcList)
+        for xsrc,isshift in zip(thisxsrcList,srcshift):
+            # if thistsink == 'FileName':
+            #     thistsink = int(re.findall('tsink.*?p',thisfile)[0].replace('tsink','').replace('p',''))
+            datahold = []
+            corr_shift = isshift
+                
+            f = open(thisfile.replace(xsrcList[0],xsrc),'rb')
+            for igamma,thisgamma in enumerate(thisGammaList):
+                igammaloc = GammaTOChroma(thisgamma)
+                datahold.append([])
+                for ip,iploc in enumerate(thisMomList):      
+                    loc,loccons,magmin = GetBar3ptLoc(igammaloc,iploc,forcent,len(qvecSet))
+                    magicloc = loc-magmin
+                    if 'Cons' in thisgamma or (RepWithCons and ('g1' in thisgamma or 'g2' in thisgamma or 'g3' in thisgamma or 'g4' in thisgamma )):
+                        loc = loccons
+                    if CheckMagic:
                         f.seek(magicloc)
-                        MagicList =  np.fromfile(f,dtype=np.int32,count=100).byteswap()
-                        print MagicList
-                        raise IOError('Magic Number not found for ' +thisgamma+' '+ipTOqstr(iploc))                
-                f.seek(loc)
-                tmpdata = np.fromfile(f,dtype=complextype,count=forcent)
-                if bar3ptChromaByteSwap:tmpdata = tmpdata.byteswap()
-                if 'cmplx' in thisgamma:
-                    self.data[igamma].append(tmpdata.imag)
-                else:                    
-                    self.data[igamma].append(tmpdata.real)
-                if any(np.isnan(self.data[igamma][ip])) and DeleteNanCfgs:
-                    raise NaNCfunError('NaN Values: '+thisgamma+' ' +qvecSet[iploc]  )
-        f.close()
+                        MagicList =  np.fromfile(f,dtype=np.int32,count=1).byteswap()
+                        if MagicList[0] != 20301:
+                            f.seek(magicloc)
+                            MagicList =  np.fromfile(f,dtype=np.int32,count=100).byteswap()
+                            print MagicList
+                            raise IOError('Magic Number not found for ' +thisgamma+' '+ipTOqstr(iploc))                
+                    f.seek(loc)
+                    tmpdata = np.fromfile(f,dtype=complextype,count=forcent)
+                    if bar3ptChromaByteSwap:tmpdata = tmpdata.byteswap()
+                    if 'cmplx' in thisgamma:
+                        datahold[igamma].append(tmpdata.imag)
+                    else:                    
+                        datahold[igamma].append(tmpdata.real)
+                    # if isshift> nt-min(AllTSinkList)-1:
+                    datahold[igamma][-1][-corr_shift-1] = -datahold[igamma][-1][-corr_shift-1]
+                    # print
+                    # print thisfile.replace(xsrcList[0],xsrc)
+                    # print tmpdata.real
+                    # print corr_shift
+                    # print datahold[igamma][-1]
+                    # print
+                    # datahold[igamma][-1] = np.abs(datahold[igamma][-1])
+                    if any(np.isnan(datahold[igamma][ip])) and DeleteNanCfgs:
+                        raise NaNCfunError('NaN Values: '+thisgamma+' ' +qvecSet[iploc]  )
+            f.close()
+            if len(self.data) == 0:                    
+                self.data = np.array(datahold)
+            else:
+                self.data += np.array(datahold)
+        self.data = self.data/len(thisxsrcList)
 
 ## Just a reference function for the extra parameters in the 3 point function file.
 def holder(thisfile):
@@ -161,6 +182,9 @@ class Read2ptCfunPick:
     def __init__(self,thisfile,thisMomList):
         self.data = []
         f = open(thisfile,'rb')
+        if XAvg: thisxsrcList = xsrcList
+        else: thisxsrcList = [xsrcList[0]]
+        self.tshiftlist = [0]*len(thsixsrclist)
         for ip,iploc in enumerate(thisMomList):
             self.data.append([])
             for it in range(nt):
@@ -192,6 +216,9 @@ class Read2ptCfunChroma:
         self.data = []
         barnum = 0
         # barnum = 21
+        if XAvg: thisxsrcList = xsrcList
+        else: thisxsrcList = [xsrcList[0]]
+        self.tshiftlist = [0]*len(thsixsrclist)
         for ip,iploc in enumerate(thisMomList):
             self.data.append(np.memmap(thisfile,dtype=np.complex128,mode='r',offset=nt*ChromaSIS*ip,shape=(nt,)).byteswap())
 
@@ -200,15 +227,23 @@ class Read2ptCfunChromaXML:
         self.data = []
         if XAvg: thisxsrcList = xsrcList
         else: thisxsrcList = [xsrcList[0]]
+        self.tshiftlist = []
         for xsrc in thisxsrcList:
             self.OutMomList = []
+            TSRC_read = False
             datahold = []
             # print 'Reading ' ,thisfile.replace(xsrcList[0],xsrc)
             with open(thisfile.replace(xsrcList[0],xsrc),'r') as f:
                 BarPart,InterpPart,ReadMom = False,False,False                
                 for line in f:
                     strline = line.strip()
-                    if strline == '<Shell_Shell_Wilson_'+MesOrBar+'s>':
+                    if 't_srce' in strline and not TSRC_read:
+                        TSRC_read = True
+                        thissrclist = strline.replace('<t_srce>','').replace('</t_srce>','').split()
+                        # print thisfile.replace(xsrcList[0],xsrc)
+                        # print int(thissrclist[-1])
+                        self.tshiftlist.append(int(thissrclist[-1]))
+                    elif strline == '<Shell_Shell_Wilson_'+MesOrBar+'s>':
                     # if strline == '<Shell_Shell_Wilson_Baryons>':
                         BarPart = True
                     elif InterpFlag in strline:

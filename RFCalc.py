@@ -23,7 +23,12 @@ from copy import deepcopy
 
 def CalcSqrtFac(data2ptz,data2ptp,thistsink):
     SqrtFac = []
-    inttsink = int(thistsink)
+    if CHROMA:
+        inttsink = int(thistsink)+1
+        thistsrc = 0
+    else:
+        inttsink = int(thistsink)
+        thistsrc = tsource-1
     two = data2ptz[inttsink-1]*data2ptp[inttsink-1]
     NegSQRTRatFac = False
     for ict in range(len(two.values)):
@@ -31,7 +36,7 @@ def CalcSqrtFac(data2ptz,data2ptp,thistsink):
             NegSQRTRatFac = True
             two.values[ict] = abs(two.values[ict])
     two = two**(0.5)
-    for it in range(tsource-1,inttsink): 
+    for it in range(thistsrc,inttsink): 
         tflip = inttsink-it+tsource-2
         one = data2ptz[it]/data2ptp[it]
         three = data2ptp[tflip]/data2ptz[tflip]
@@ -98,7 +103,9 @@ def CalcRatioFactor(data2pt,data3pt,itsink,thisMomList):
     for icset,setdata2pt in enumerate(data2pt):
         SqrtMomFac.append([])
         for ip,pdata2pt in enumerate(setdata2pt):
-            [CSFhold,Error] = CalcSqrtFac(deepcopy(setdata2pt[0]),deepcopy(pdata2pt),itsink)
+            passitsink = itsink
+            # passitsink = len(pdata2pt)-1
+            [CSFhold,Error] = CalcSqrtFac(deepcopy(setdata2pt[0]),deepcopy(pdata2pt),passitsink)
             SqrtMomFac[icset].append(CSFhold)
             # if Error == True: print 'Neg SqrtFactor for ip: ' ,ip, ' iset: ' , icset
     for icset,(setdata3pt,setsqrt) in enumerate(zip(data3pt,SqrtMomFac)):
@@ -107,16 +114,37 @@ def CalcRatioFactor(data2pt,data3pt,itsink,thisMomList):
             RFOut[icset].append([])
             for ipc,(pdata3pt,ip) in enumerate(zip(gammadata3pt,thisMomList)):
                 psqrt = setsqrt[GetAvgMomip(ip)]
+                # if Debug:
+                # print
+                # # for it,(i3pt,i2pt) in enumerate(zip(pdata3pt,psqrt)):
+                # for it2pt,d2pt in enumerate(data2pt[icset][GetAvgMomip(ip)]):
+                #     print
+                #     for it,i3pt in enumerate(pdata3pt):
+                #     # print 'iGamma',igamma,'iset',icset,'pstr',ipTOqstr(ip),'pstr2pt',ipTOqstr(GetAvgMomip(ip),Avg=True),'it',it,'3pt',i3pt.Avg,'2pt',1/data2pt[icset][GetAvgMomip(ip)][-2].Avg,'Rfac',(i3pt/data2pt[icset][GetAvgMomip(ip)][-2]).Avg
+                #         rfac = i3pt/d2pt
+                #         rfac.Stats()
+                #         print 'it2pt',it2pt,'it',it,'Rfac',rfac.Avg,rfac.Std
+
                 RFOut[icset][igamma].append(RFMultFun(pdata3pt,psqrt,itsink))
+                
     return [np.array(RFOut),np.array(SqrtMomFac)]
 
 
 
 def RFMultFun(data,SQRTdata,itsink):
     dataout = []
-    for itz,(itdata,itSQRTdata) in enumerate(zip(data[tsource-1:int(itsink)],SQRTdata)):
+    if CHROMA:
+        datar = data[0:int(itsink)]
+    else:
+        datar = data[tsource-1:int(itsink)]
+    for itz,(itdata,itSQRTdata) in enumerate(zip(datar,SQRTdata)):
         dataout.append(itdata*itSQRTdata)
         dataout[-1].Stats()
+        # print 
+        # print 'Average'
+        # print 'c3pt',itdata.Avg,'c2pt',itSQRTdata.Avg,'Rfac',dataout[-1].Avg
+        # for iboot,(i2pt,i3pt,iRfac) in enumerate(zip(itSQRTdata.values,itdata.values,dataout[-1].values)):
+        #     print itz, iboot, 'c3pt',i3pt,'c2pt',i2pt,'Rfac',iRfac
     return np.array(dataout)
 
 

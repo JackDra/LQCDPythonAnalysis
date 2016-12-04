@@ -24,9 +24,11 @@ from ReadXml import *
 def ReadLREM(todtval,thisMomList,filepref):
     ##OLD##
     # filename = REvecDir+filepref+'to'+str(todtval[0])+'dt'+str(todtval[1])+'LREM.txt'
-    ##THIS NEEDS TO BE UPDATED##
     LEvec,REvec,Emass = [],[],[]
     for imom in thisMomList:
+        LEvec.append([])
+        REvec.append([])
+        Emass.append([])
         imomCond = ipTOqcond(imom,Avg=True)
         filename = REvecDir+filepref+'to'+str(todtval[0])+'dt'+str(todtval[1])+'LREM'+imomCond+'.xml'
         # filename = REvecDir+VarPref+'TestLREM.txt'
@@ -35,13 +37,13 @@ def ReadLREM(todtval,thisMomList,filepref):
             for istate in GetStateSet('PoF'):
                 # for istate,idata in data[imomCond]['Values'].iteritems():
                 thisstate = 'State'+str(istate)
-                Emass.append(float(data[imomCond]['Values'][thisstate]['Emass']))
-                LEvec.append([])
-                REvec.append([])
+                Emass[-1].append(float(data[imomCond]['Values'][thisstate]['Emass']))
+                LEvec[-1].append([])
+                REvec[-1].append([])
                 # for leflag,levec in data['Left_Evec'].iteritems():
                 for thissm in DefSmList:
-                    LEvec.append(float(data[imomCond]['Values'][thisstate]['Left_Evec'][thissm]))
-                    REvec.append(float(data[imomCond]['Values'][thisstate]['Right_Evec'][thissm]))
+                    LEvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Left_Evec'][thissm]))
+                    REvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Right_Evec'][thissm]))
         else:
             print 'warning, weight file not found', filename
             return None,None,None        

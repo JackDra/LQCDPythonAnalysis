@@ -89,7 +89,7 @@ def CreatePoFMatrixtodt(Cfunto,Cfuntodt,thisPoFShifts=PoFShifts):
 
 def CreatePoFMatrix(thisCfun,thisPoFShifts=PoFShifts):
     if thisPoFShifts==0:
-        thisCfunExt = thisCfun[0]
+        thisCfunExt = np.array(thisCfun[0])
     else:
         thisCfunShift = np.roll(thisCfun,-PoFDelta,axis=3)
         # if DEBUGPoF: thisCfunShift = np.roll(thisCfun,-PoFDelta/2,axis=3)
@@ -289,7 +289,6 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
 
 ## Cfun[tsource,ism,jsm,tcurr]
 def ProjectCorrPoF2pt(LEvec,Cfun,REvec,thisPoFShifts=PoFShifts):
-    CMCfun = []
     if DeCorrPoF:
         CfunExt = CreatePoFMatrixDECORRELATION(Cfun,thisPoFShifts=thisPoFShifts)
     else:
@@ -317,10 +316,12 @@ def ProjectCorrPoF2pt(LEvec,Cfun,REvec,thisPoFShifts=PoFShifts):
         #     iCfun[26].Stats()
         #     print '27',ic,iRE,iCfun[26].Avg
         print ''
+    CMCfun = []
     for istate,(stateRE,stateLE) in enumerate(zip(REvec,LEvec)):
         CMCfun.append(np.dot(stateRE,np.dot(stateLE,CfunExt)))
         for it,itCM in enumerate(CMCfun[istate]):
             CMCfun[istate][it].Stats()
+            # print 'istate',istate, 'it',it, 'values',CMCfun[istate][it].Avg, CMCfun[istate][it].Std
     return CMCfun
 
 
@@ -349,6 +350,7 @@ def ProjectREvecCorrPoF(Cfun,REvec):
         CMCfun.append(np.dot(stateRE,CfunExt))
         for it,itCM in enumerate(CMCfun[istate]):
             CMCfun[istate][it].Stats()
+            # print istate, it, CMCfun[istate][it].Avg, CMCfun[istate][it].Std
     return CMCfun
 
 def ProjectREvecCorr(Cfun,REvec):
@@ -515,6 +517,7 @@ def CreateREvecCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
 def CreateREPoFCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
     twoptMomList = GetAvgMomListip(thisMomList)
     LEvec,REvec,Emass = ReadLREM(todtvals,twoptMomList,'PoF'+str(PoFShifts))
+    
     if REvec == None:
         CMCfun2pt,LEvec,REvec,Emass = CreatePoF2ptCfuns(Cfuns2pt,todtvals,twoptMomList,DoPoF=True,printout=False)
         LEvec,REvec = SignEvec(np.array(LEvec),np.array(REvec))
@@ -527,7 +530,6 @@ def CreateREPoFCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
     for igamma,gammaCfun in enumerate(np.rollaxis(np.array(Cfuns3pt),4)):
         CMCfun3pt.append([])
         for ipc,(pCfun,ip) in enumerate(zip(np.rollaxis(gammaCfun,4),thisMomList)): 
-            ##DEBUG##
             if Debug: print 'Three Point :(igamma,ip) ',igamma , ip, 'with twopt mom' , GetAvgMomip(ip)
             CMCfun3pt[igamma].append(ProjectREvecCorrPoF(pCfun,REvec[GetAvgMomip(ip)]))
     return [np.array(CMCfun2pt),np.rollaxis(np.array(CMCfun3pt),2)]

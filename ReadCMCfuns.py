@@ -24,12 +24,12 @@ def ReadList(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSL
         f.write(file+'\n')
         thisfilelist.append(file)
     f.close()
-    data2pt,randlist = Read2ptSet(thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
+    data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
     # print ''
     data3pt = []
     for iFlag,itsink in zip(Flag,thisTSinkList):
         data3pt.append(Read3ptSet(thisfilelist,thisSmearList,thisMomList,thisProjGammaList,
-                                  thisProjDerList,thisDSList,itsink,iFlag,randlist=randlist,tsourceList=thistsourceList))
+                                  thisProjDerList,thisDSList,itsink,iFlag,shiftlist,randlist=randlist,tsourceList=thistsourceList))
     # print ''
     return [data2pt,data3pt,thisfilelist]
 
@@ -74,12 +74,12 @@ def ReadSet(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList, thisDSL
             print ifile
         print ''
         
-    data2pt,randlist = Read2ptSet(thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
+    data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
     # print ''
     data3pt = []
     for iFlag,itsink in zip(Flag,thisTSinkList):
         data3pt.append(Read3ptSet(thisfilelist,thisSmearList,thisMomList,thisProjGammaList
-                                  ,thisProjDerList,thisDSList,itsink,iFlag,randlist=randlist,tsourceList=thistsourceList))
+                                  ,thisProjDerList,thisDSList,itsink,iFlag,shiftlist,randlist=randlist,tsourceList=thistsourceList))
         # print ''
     return [data2pt,data3pt,thisfilelist]
 
@@ -194,34 +194,39 @@ def CheckSet(FilePrefix,directory,thisSmearList,thisProjGammaList,thisProjDerLis
 
 ##tempdata [ iconf ] .data [ ip , it ]
 ##thisdata2pt [ tsource, ism , jsm , ip , it ] bootdataclas
+##shiftlist = [ tsource , ism, jsm , icfg, isrc_number ]
 def Read2ptSet(readfilelist,thisSmearList,thisMomList,Interps,tsourceList=[tsource]):
     thisdata2pt = []
     start = time.time()
     icount = -1
     randlist = []
+    shiftlist = []
     for thists in tsourceList:
         thisdata2pt.append([])
+        shiftlist.append([])
         for icsm,(iterp,ism) in enumerate(Elongate(Interps,thisSmearList)):
             thisdata2pt[-1].append([])
+            shiftlist[-1].append([])
             for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,thisSmearList)):
                 icount += 1
                 timeleft = GetTimeLeft(icount,len(tsourceList)*len(Elongate(Interps,thisSmearList))**2,time.time()-start)
                 print 'Read 2pt: sm' + ism + 'Xsm'+jsm+' Time Left: ' +str(datetime.timedelta(seconds=timeleft)) , ' h:m:s \r',
                 thisstart = time.time()
                 thisfilelist = [ifile.replace('@',CreateDir2pt(ism,jsm))+CreateEnd2pt(ism,jsm,thists,iterp,jterp) for ifile in readfilelist]
-                dataout,randlist = ReadAndBoot2pt(thisfilelist,thisMomList,nboot) 
+                (dataout,randlist),thisshiftlist = ReadAndBoot2pt(thisfilelist,thisMomList,nboot) 
+                shiftlist[-1][icsm].append(thisshiftlist)
                 thisdata2pt[-1][icsm].append(dataout)
                 print 'Read 2pt: sm' + ism + 'Xsm'+jsm + ' t_src'+str(thists)+' took: ' +str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s        '
     print 'Read 2pt total time: ' + str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
-    return thisdata2pt,randlist
+    return thisdata2pt,randlist,shiftlist
 
 
 ##thisdata3pt [ thistsource, ism , jsm , igamma , ip ] bootdataclas
-def Read3ptSet(readfilelist,thisSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,tsink,iFlag,randlist=[],tsourceList=[tsource]):
+def Read3ptSet(readfilelist,thisSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,tsink,iFlag,shiftlist,randlist=[],tsourceList=[tsource]):
     thisdata3pt = []
     start = time.time()
     icount = -1
-    for thists in tsourceList:
+    for itsource,thists in enumerate(tsourceList):
         thisdata3pt.append([])
         for icsm,ism in enumerate(thisSmearList):
             thisdata3pt[-1].append([])
@@ -246,19 +251,21 @@ def Read3ptSet(readfilelist,thisSmearList,thisMomList,thisProjGammaList,thisProj
                 icount += 1
                 timeleft = GetTimeLeft(icount,len(tsourceList)*len(thisSmearList)*len(Jsmlist),time.time()-start)
                 print 'Read 3pt: sm' + ism + jsm + ' ts'+str(tsink)+' Time Remaining: '+ str(datetime.timedelta(seconds=timeleft)) , ' h:m:s \r',
+                thisshiftlist = shiftlist[itsource][icsm][jcsm]
                 for iDS in thisDSList:
                     for iProj,thisGammaList in thisProjGammaList.iteritems():
                         thisfilelist = [ifile.replace('@',CreateDir3pt(ism,jsm,tsink,iDS,iProj,thisFlag))
                                         .replace(FileStruct,FileStruct+C2C3Dis)
                                         +CreateEnd3pt(ism,jsm,thists,tsink,iDS,iProj,'') for ifile in readfilelist]
-                        holdres = ReadAndBoot3pt(thisfilelist,thisMomList,thisGammaList,[],nboot,printstr=iDS+iProj,randlist=randlist)
+
+                        holdres = ReadAndBoot3pt(thisfilelist,thisMomList,thisGammaList,[],nboot,thisshiftlist,printstr=iDS+iProj,randlist=randlist)
                         for gammares in holdres:
                             thisdata3pt[-1][icsm][jcsm].append(gammares)
                     for iProj,thisDerList in thisProjDerList.iteritems():
                         thisfilelist = [ifile.replace('@',CreateDir3pt(ism,jsm,tsink,iDS,iProj,thisFlag))
                                         .replace(FileStruct,FileStruct+C2C3Dis)
                                         +CreateEnd3pt(ism,jsm,thists,tsink,iDS,iProj,'D') for ifile in readfilelist]
-                        holdres = ReadAndBoot3pt(thisfilelist,thisMomList,[],thisDerList,nboot,printstr=iDS+iProj,randlist=randlist)
+                        holdres = ReadAndBoot3pt(thisfilelist,thisMomList,[],thisDerList,nboot,thisshiftlist,printstr=iDS+iProj,randlist=randlist)
                         for gammares in holdres:
                             thisdata3pt[-1][icsm][jcsm].append(gammares)
                 print 'Read 3pt: sm' + ism + jsm + 't_src'+str(thists)+' t_sink'+str(tsink)+ ' took: ' + str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s        '

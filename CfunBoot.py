@@ -42,42 +42,53 @@ def BootSet2pt(data,thisMomList,nboot,randlist=[]):
 #dataout = [ ip , it ]. bs
 def ReadAndBoot2pt(readfilelist,thisMomList,thisnboot,randlist=[]):
     tempdata = []
-        
+    shiftlist = []
     for iconf,ifile in enumerate(readfilelist):
         # print 'Reading {}%  \r'.format(int((iconf*100)/float(len(readfilelist)))),
         try:
             if CHROMA:
                 if xsrcList[0] in ifile or not XAvg:
-                    tempdata.append(Read2ptCfunChromaXML(ifile,thisMomList).data)
+                    data = Read2ptCfunChromaXML(ifile,thisMomList)
+                    tempdata.append(data.data)
+                    shiftlist.append(data.tshiftlist)
             else:
                 tempdata.append(Read2ptCfunPick(ifile,thisMomList).data)
         except NaNCfunError as e:
+            print 
             print 'Deleting file ' + ifile
             print e
+            print 'MUST RE-RUN AFTER THIS TO EXCLUDE BAD CONFIGS'
+            print
             os.remove(ifile)
-    return BootSet2pt(np.array(tempdata),thisMomList,thisnboot,randlist=randlist)
+    return BootSet2pt(np.array(tempdata),thisMomList,thisnboot,randlist=randlist),shiftlist
 
 
 #dataout [ igamma , ip , it ]. bs
-def ReadAndBoot3pt(readfilelist,thisMomList,thisGammaList,thisDerGammaList,thisnboot,printstr='',randlist=[]):
+def ReadAndBoot3pt(readfilelist,thisMomList,thisGammaList,thisDerGammaList,thisnboot,shiftlist,printstr='',randlist=[]):
     tempdata = []
+    counter = -1
     for iconf,ifile in enumerate(readfilelist):
         # print 'Reading '+printstr+' {}%            \r'.format(int((iconf*100)/float(len(readfilelist)))),
         try:
             if CHROMA:
-                if len(thisGammaList) > 0:
-                    tempdata.append(ReadFSCfunPickCHROMA(ifile,thisMomList,thisGammaList).data)
-                if len(thisDerGammaList) > 0:
-                    raise IOError('Chroma does not do derivatives, make DerList in Params.py be empty')
+                if xsrcList[0] in ifile or not XAvg:
+                    counter += 1
+                    if len(thisGammaList) > 0:
+                        tempdata.append(ReadFSCfunPickCHROMA(ifile,thisMomList,thisGammaList,srcshift=shiftlist[counter]).data)
+                    if len(thisDerGammaList) > 0:
+                        raise IOError('Chroma version does not do derivatives, make DerList in Params.py be empty')
             else:
                 if len(thisGammaList) > 0:
                     tempdata.append(ReadFSCfunPick(ifile,thisMomList,thisGammaList).data)
                 if len(thisDerGammaList) > 0:
                     tempdata.append(ReadFSDerCfunPick(ifile,thisMomList,thisDerGammaList).data)
         except NaNCfunError as e:
+            print 
             print 'Deleting file ' + ifile
             print e
-            readfilelist.remove(ifile)
+            print 'MUST RE-RUN AFTER THIS TO EXCLUDE BAD CONFIGS'
+            print
+            os.remove(ifile)
     if len(thisGammaList) > 0:
         return BootSet3pt(tempdata,thisMomList,thisGammaList,thisnboot,printstr='',randlist=randlist)
     elif len(thisDerGammaList) > 0:

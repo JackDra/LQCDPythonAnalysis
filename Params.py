@@ -242,7 +242,7 @@ for ider in DerSet:
 #this part is for ReadList (used for analying only specific configurations#
 if kappa == 12:
     FileStruct = "Testing.lime"
-    conflist = ['21_xsrc1','21_xsrc2','41_xsrc1','41_xsrc2']
+    conflist = ['21_xsrc1']
 else:
     FileStruct = "RC32x64_B1900Kud01375400Ks01364000C1715"
     conflist = ['-a-004400_xsrc3',
