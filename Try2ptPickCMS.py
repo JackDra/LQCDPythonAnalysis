@@ -31,7 +31,8 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     elif 'ReadSet' in ListOrSet:
         [data2pt,data3pt,filelist] = ReadSet(thisSmearList,thisMomList,{},{},[],[],
                                              dirread,[],Interps=DefInterpList,thistsourceList=PoFtsourceList)
-        
+
+    thisMomList = GetAvgMomListip(thisMomList)
     data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
     ncon = np.size(filelist)
     InfoDict = {'nconfig':ncon}

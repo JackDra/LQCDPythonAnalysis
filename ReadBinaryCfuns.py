@@ -76,14 +76,22 @@ class ReadFSCfunPickCHROMA:
                     else:                    
                         datahold[igamma].append(tmpdata.real)
                     # if isshift> nt-min(AllTSinkList)-1:
-                    datahold[igamma][-1][-corr_shift-1] = -datahold[igamma][-1][-corr_shift-1]
+                    # datahold[igamma][-1][-corr_shift-1] = -datahold[igamma][-1][-corr_shift-1]
                     # print
-                    # print thisfile.replace(xsrcList[0],xsrc)
                     # print tmpdata.real
-                    # print corr_shift
-                    # print datahold[igamma][-1]
                     # print
-                    # datahold[igamma][-1] = np.abs(datahold[igamma][-1])
+                    # totsign = np.sign(np.sum(np.sign(datahold[igamma][-1][:CMTSinkList[0]])))
+                    # datahold[igamma][-1] = totsign*np.abs(datahold[igamma][-1])
+                    datahold[igamma][-1] = np.sign(datahold[igamma][-1][0])*np.abs(datahold[igamma][-1])
+                    # print np.abs(datahold[igamma][-1][13]-datahold[igamma][-1][12])/datahold[igamma][-1][12]
+                    # if np.abs(datahold[igamma][-1][13]-datahold[igamma][-1][12])/datahold[igamma][-1][12] > 1.0:
+                    #     print
+                    #     print thisfile.replace(xsrcList[0],xsrc)
+                    #     print corr_shift
+                    #     for it,tdata in enumerate(datahold[igamma][-1]):
+                    #         print it, tdata
+                    # print np.roll(datahold[igamma][-1],isshift)
+                    # print np.roll(datahold[igamma][-1],-isshift)
                     if any(np.isnan(datahold[igamma][ip])) and DeleteNanCfgs:
                         raise NaNCfunError('NaN Values: '+thisgamma+' ' +qvecSet[iploc]  )
             f.close()

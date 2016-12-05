@@ -68,12 +68,14 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
     ## data2pt = [ tsource, ism , jsm , ip ,  it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     ##data3pt = [ tsink, tsource, ism , jsm , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     # if Debug:
-    # for it in range(0,8):
-    #     RF = data3pt[0][0][0][0][0][0][it]/data2pt[0][0][0][0][7]
-    #     RF.Stats()
+    # for it in range(0,15):
+    #     # RF = data3pt[0][0][0][0][0][0][it]/data2pt[0][0][-1][0][15]
+    #     # RF.Stats()
     #     print
-    #     for iBoot,(b3,b2,br) in enumerate(zip(data3pt[0][0][0][0][0][0][it].values,data2pt[0][0][0][0][7].values,RF.values)):
-    #         print it, iBoot,b3,b2,br 
+    #     # for iBoot,(b3,b2,br) in enumerate(zip(data3pt[0][0][0][0][0][0][it].values,data2pt[0][0][0][0][15].values,RF.values)):
+    #     #     print it, iBoot,b3,b2,br 
+    #     for iBoot,b3 in enumerate(data3pt[0][0][0][0][0][0][it].values):
+    #         print it, iBoot,b3 
         # print it, data3pt[0][0][0][0][0][0][it].Avg, data2pt[0][0][0][0][it].Avg, data2pt[0][0][0][0][it].Std, RF.Avg, RF.Std
         
     if 'CM' == RunType:
@@ -123,9 +125,12 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         print 'Creating PoF CM Tech ' , PoFTvarList[0]
         [data2ptset,data3ptset] = CreateREPoFCfuns(np.array(data3pt),data2pt,DefPoFVarList[0],thisMomList)
         SetList,dump = CreateREvecSet(thisTSinkList,StateSet,PoFTvarList)
-        if Debug:
-            for it in range(0,8):
-                print 'it',it, 'c3pt',data3ptset[0][0][0][it].Avg, 'c2pt',data2ptset[0][0][it].Avg
+        # if Debug:
+        # for it in range(0,15):
+        #     print
+        #     print 'it',it, 'c3ptAvg',data3ptset[0][0][0][it].Avg, 'c2ptAvg',data2ptset[0][0][it].Avg
+        #     for iboot in range(0,10):
+        #         print 'it',it, 'c3pt',data3ptset[0][0][0][it].values[iboot], 'c2pt',data2ptset[0][0][it].values[iboot]
     elif 'TSink' == RunType:
         data2pt = np.array(PreptwoptCorr(data2pt[0]))
         data3pt = np.array(data3pt)[0,0,:,:,:,:,:]

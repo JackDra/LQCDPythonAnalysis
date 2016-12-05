@@ -516,8 +516,11 @@ def CreateREvecCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
 # #CMCfun3pt  [ istate , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 def CreateREPoFCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
     twoptMomList = GetAvgMomListip(thisMomList)
-    LEvec,REvec,Emass = ReadLREM(todtvals,twoptMomList,'PoF'+str(PoFShifts))
-    
+    if PoFShifts == 0:
+        LEvec,REvec,Emass = ReadLREM(todtvals,twoptMomList,'CM')
+    else:
+        LEvec,REvec,Emass = ReadLREM(todtvals,twoptMomList,'PoF'+str(PoFShifts))
+        
     if REvec == None:
         CMCfun2pt,LEvec,REvec,Emass = CreatePoF2ptCfuns(Cfuns2pt,todtvals,twoptMomList,DoPoF=True,printout=False)
         LEvec,REvec = SignEvec(np.array(LEvec),np.array(REvec))

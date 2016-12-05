@@ -110,7 +110,7 @@ MomFracNorm = 1 # normalisation for Momentum Fraction
 
 
 myeps = np.finfo(0.0).eps
-DeleteNanCfgs = True
+DeleteNanCfgs = False ## Deletes configs that have nans
 ForceVecNorm = True ## Forces the vector current to be normalised to 2 for doublet and 1 for singlet at zero momentum transfer
 ForcePos = False ## Forces all non-form factor graphs to be positive
 MultiCoreFitting = False # Multicore for Boot Fitting, not needed in current build
@@ -118,7 +118,7 @@ DoMulticore = True # Runs multicore wherever implemented
 DoContentsCheck = False # True makes sure the xml file has the correct momenta first field, turn off for more performance
 OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
 DoNorm = False # normalises the 2 point function (see CMSTech.py)
-DoSym = True # symmetrises the 2 point function (see CMSTech.py)
+DoSym = False # symmetrises the 2 point function (see CMSTech.py)
 # VarMethodMethod = 'Regular' # for solving the Variational method, different ways of doing it/
 # VarMethodMethod = 'Symmetriceigh' ## Symmetic matrix construction WITH symmetric solver
 # VarMethodMethod = 'Symmetric' ## Symmetic matrix construction WITHOUT symmetric solver
@@ -141,10 +141,10 @@ ScaleByP4g4 = False ## scales out all operators by P4g4 instead of 2 point corre
 ShowConfNum = Debug # debugging, show number of configs during read
 PrintRead = not DoMulticore # Screws up output if on and doing mulitcore reading
 DoCmplx = True # reads complex opperator values as well as real values, should be on
-DoCons = False # reads Conserved vector current ONLY WORKS WITH CHROMA
+DoCons = False # reads Conserved vector current NOT IMPLEMENTED YET, USING BELOW UNTILL I GET AROUDN TO IT. ONLY WORKS WITH CHROMA
 RepWithCons = True # TEMPORARY, overrides vector current with Conserved vector current ONLY WORKS WITH CHROMA
 
-DefWipe = True # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
+DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
 MakeGraphDat = True # Creates a .dat file of the values plotted for the corresponding graph (where implemented)
 PhysicalUnits = True # uses lattice momenta or physical momenta
 ForceNoDer = False # Forces the fitting LLSBoot to use manual derivaive calculation
@@ -209,7 +209,7 @@ elif 'ReadSet' in ListOrSet:
     if 'nboot1k' in ListOrSet:
         nboot = 1000
     else:
-        nboot = 200
+        nboot = 3
 
 ##DEBUGGING:
 print nboot , ListOrSet, XAvg
@@ -242,20 +242,20 @@ for ider in DerSet:
 #this part is for ReadList (used for analying only specific configurations#
 if kappa == 12:
     FileStruct = "Testing.lime"
-    conflist = ['21_xsrc1']
+    conflist = ['21_xsrc1_']
 else:
     FileStruct = "RC32x64_B1900Kud01375400Ks01364000C1715"
-    conflist = ['-a-004400_xsrc3',
-                '-a-004410_xsrc3',
-                '-a-004420_xsrc3',
-                '-a-004430_xsrc3',
-                '-a-004440_xsrc3',
-                '-a-004450_xsrc3']
+    conflist = ['-a-004400_xsrc3_',
+                '-a-004410_xsrc3_',
+                '-a-004420_xsrc3_',
+                '-a-004430_xsrc3_',
+                '-a-004440_xsrc3_',
+                '-a-004450_xsrc3_']
 
 filelist = dirread+"/@/"+FileStruct+"*"
             
-nsrc = 2
-xsrcList = ['xsrc'+str(ix) for ix in range(1,nsrc+1)]
+nsrc = 20
+xsrcList = ['xsrc'+str(ix)+'_' for ix in range(1,nsrc+1)]
 
 SourceList = ['']
 
@@ -263,6 +263,7 @@ SourceList = ['']
 
 DefProjGammaList = { 'GMA4' : AllGammaSet ,'GMA3' : AllGammaSet }
 ReadProjDerList = {'GMA4' :['g4D4','g1D1','g2D2','g3D3']}
+# ReadProjDerList = {'GMA4' :[]}
 # DefProjDerList = {'GMA4' :['giDi']}
 DefProjDerList = {}
 # DefDSList = ['doub']
@@ -290,8 +291,8 @@ DefCombGammaList = DefGammaList+DefNoDSGammaList
 
 # DeftoList = [18]
 # DeftoList = range(1,10)
-# DeftoList = range(1,10)
-DeftoList = range(1,2)
+DeftoList = range(1,10)
+# DeftoList = range(1,2)
 # DeftoList = [20,21,22,23]
 # DeftoList = [17,18,19,20,21,22,23]
 # DeftoList = [17,18,19,20,21,22,23,24,25,26,27]
@@ -299,14 +300,14 @@ DeftoList = range(1,2)
 # DeftoList = [16,17,18,19,20]
 # DefdtList = [1,2,3,4,5,6]
 # DefdtList = range(1,7)
-# DefdtList = range(1,10)
-DefdtList = range(1,2)
+DefdtList = range(1,10)
+# DefdtList = range(1,2)
 # DeftodtPicked = (18,2)
 ##MUST BE IN SORTING ORDER##
 # DeftodtPicked = [(18,2),(20,2)]
 # DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
-# DeftodtPicked = [(3,3)]
-DeftodtPicked = [(1,1)]
+DeftodtPicked = [(3,3)]
+# DeftodtPicked = [(1,1)]
 # DeftodtPicked = [(18,2)]
 DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
 
@@ -379,7 +380,8 @@ DefInterpList = ['nucleon']
 DefSmList = ['sm'+ism for ism in DefSmearList]
 SingSmList = ['sm'+ism for ism in SingSmearList]
 DefInterpSmearList = ElongateName(DefInterpList,DefSmList)
-CMTSinkList = [14]
+##THIS NEEDS TO BE SET TO GET SIGN RIGHT ON CORRELATOR
+CMTSinkList = [13]
 AllTSinkList = [11,14,17,20,23]
 AllTSinkListNoCM = []
 for its in AllTSinkList:
@@ -411,7 +413,7 @@ if OnlySelVar:
         if kappa == 12:
             DefPoFVarList = [[1,1]]
         else:
-            DefPoFVarList = [[4,4]]
+            DefPoFVarList = [[3,3]]
     PoFTvarList = ['PoF'+str(PoFShifts)+'to'+str(DefPoFVarList[0][0])+'dt'+str(DefPoFVarList[0][1])]
 else:
     DefPoFVarList = DeftodtList
@@ -421,7 +423,7 @@ else:
 # DefPoFVarList = [19,2]
 # DefPoFVarList = [20,2]
 # DefPoFVarList = [22,2]
-AllPoFTSinkList = {str(kappa):[14]}
+AllPoFTSinkList = {str(kappa):[13]}
 PoFTSinkList = AllPoFTSinkList[str(kappa)]
 PoFTSinkStrList = ['tsink'+str(its) for its in PoFTSinkList]
 ##DEBUG##

@@ -19,6 +19,36 @@ import datetime
 from ReadXml import *
 
 
+## tflow [ itflow ]
+## topcharge [ itflow ]
+
+def ReadTopCharge(thisfile):
+    if os.path.isfile(thisfile):
+        toptout = np.loadtxt(thisfile)
+        toptout = np.rollaxis(toptout,1)
+        tflow = toptout[0]
+        topcharge = toptout[1]
+    return tflow,topcharge
+
+
+## cfglistout [ icfg ]
+## tflow [ icfg , itflow ]
+## topcharge [ icfg , itflow ]
+def ReadTopList(thisdir,thiscfglist):
+    cfglistout,tflow,topcharge = [],[],[]
+    for root, thisdir, thesefiles in os.walk(thisdir):
+        for icfg in thiscfglist:
+            for ifile in thesefiles:
+                if icfg in ifile:
+                    thistflow,thistcharge = ReadTopCharge(thisfile)
+                    if icfg in cfglistout:
+                        print 'warning, duplicate file in directory for config', icfg
+                    else:
+                        cfglistout.append(icfg)
+                        tflow.append(thistflow)
+                        topcharge.append(thistcharge)
+    return cfglistout,topcharge,tflow
+                
 # R/L Evecs [ ip , istate , ival ]
 # Emass [ ip , istate ]
 def ReadLREM(todtval,thisMomList,filepref):
@@ -32,6 +62,7 @@ def ReadLREM(todtval,thisMomList,filepref):
         imomCond = ipTOqcond(imom,Avg=True)
         filename = REvecDir+filepref+'to'+str(todtval[0])+'dt'+str(todtval[1])+'LREM'+imomCond+'.xml'
         # filename = REvecDir+VarPref+'TestLREM.txt'
+        if Debug: print filename
         if os.path.isfile(filename):
             data,dump = ReadXmlDict(filename,Boot=False)
             for istate in GetStateSet('PoF'):

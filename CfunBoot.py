@@ -16,6 +16,10 @@ def BootSet3pt(data,thisMomList,thisGammaList,nboot,printstr='',randlist=[]):
         dataout.append([])
         for ip,imom in enumerate(thisMomList):
             # print 'Booting '+printstr+igamma+' {}%               \r'.format(int((ip*100)/float(len(thisMomList)))),
+            # for it in range(16):
+            #     print 'pie3pt'
+            #     for idata in np.array(data)[:,ig,ip,:]:
+            #         print it,idata[it]
             bootdata,randlist = bt.CreateBoot(np.array(data)[:,ig,ip,:],nboot,0,randlist=randlist)
             dataout[ig].append(bootdata)
     # print '                             \r',
@@ -34,6 +38,9 @@ def BootSet2pt(data,thisMomList,nboot,randlist=[]):
         #     print 'icfg=',icfg
         #     for it,tdata in enumerate(cfgdata):
         #         print tdata
+        # print 'pie2pt'
+        # for iboot,idata in enumerate(np.array(data)[:,ip,12]):
+        #     print iboot,idata
         bootdata,randlist = bt.CreateBoot(data[:,ip,:],nboot,0,randlist=randlist)
         dataout.append(bootdata)
     # print '                              \r',
