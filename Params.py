@@ -182,6 +182,7 @@ else:
     nx = 32
 
 outputdir = [datadir+'results/'+ListOrSet+ikappa+'/' for ikappa in kappalist]
+TCDir = datadir+'topcharge/Kud0'+str(kappa)+'Ks0'+str(kappas)+'/PerGF/'
 logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 momlistdir = datadir+'momdir/'
 pickledir = datadir+"pickledir/"
@@ -209,7 +210,7 @@ elif 'ReadSet' in ListOrSet:
     if 'nboot1k' in ListOrSet:
         nboot = 1000
     else:
-        nboot = 3
+        nboot = 200
 
 ##DEBUGGING:
 print nboot , ListOrSet, XAvg
@@ -225,6 +226,8 @@ else:
 # note: dim of StateSet < dim of SmearSet
 GammaSet = ['I','g1','g2','g3','g4','g1g2','g1g3','g1g4','g2g3','g2g4','g3g4','g1g5','g2g5','g3g5','g4g5','g5']
 GammaConsSet = ['Consg1','Consg2','Consg3','Consg4']
+# tflowlist = map(float,np.arange(0,1000,100)) ## indicies of flows to read
+tflowlist = map(float,np.arange(0,1000))
 
 if DoCmplx:
     AllGammaSet = GammaSet + [igamma+'cmplx' for igamma in GammaSet]
@@ -245,12 +248,12 @@ if kappa == 12:
     conflist = ['21_xsrc1_']
 else:
     FileStruct = "RC32x64_B1900Kud01375400Ks01364000C1715"
-    conflist = ['-a-004400_xsrc3_',
-                '-a-004410_xsrc3_',
-                '-a-004420_xsrc3_',
-                '-a-004430_xsrc3_',
-                '-a-004440_xsrc3_',
-                '-a-004450_xsrc3_']
+    conflist = ['-a-004400_xsrc2',
+                '-a-004410_xsrc2',
+                '-a-004420_xsrc2',
+                '-a-004430_xsrc2',
+                '-a-004440_xsrc2',
+                '-a-004450_xsrc2']
 
 filelist = dirread+"/@/"+FileStruct+"*"
             
@@ -291,8 +294,8 @@ DefCombGammaList = DefGammaList+DefNoDSGammaList
 
 # DeftoList = [18]
 # DeftoList = range(1,10)
-DeftoList = range(1,10)
-# DeftoList = range(1,2)
+# DeftoList = range(1,10)
+DeftoList = range(1,4)
 # DeftoList = [20,21,22,23]
 # DeftoList = [17,18,19,20,21,22,23]
 # DeftoList = [17,18,19,20,21,22,23,24,25,26,27]
@@ -300,8 +303,8 @@ DeftoList = range(1,10)
 # DeftoList = [16,17,18,19,20]
 # DefdtList = [1,2,3,4,5,6]
 # DefdtList = range(1,7)
-DefdtList = range(1,10)
-# DefdtList = range(1,2)
+# DefdtList = range(1,10)
+DefdtList = range(1,2)
 # DeftodtPicked = (18,2)
 ##MUST BE IN SORTING ORDER##
 # DeftodtPicked = [(18,2),(20,2)]

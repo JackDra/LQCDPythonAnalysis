@@ -4,6 +4,7 @@ from os import walk
 from Params import *
 from ReadBinaryCfuns import ReadFSCfunPick, ReadFSDerCfunPick, Read2ptCfunPick, NaNCfunError
 from CfunBoot import *
+from ReadTxt import *
 from MiscFuns import *
 import time,datetime
 
@@ -15,6 +16,71 @@ def TestMomList(thisMomList):
         print "Must Read Zero Momentum value " + iqTOip(0)
 
 
+def ReadListTopCharge(thisSmearList,thisMomList,thisconflist,Interps=['nucleon'],thistsourceList=[tsource]):
+    thisfilelist = []
+    f = open('./cfglistlist.txt','w')
+    for iconf in thisconflist:
+        ifile = filelist.replace('*',iconf)
+        f.write(ifile+'\n')
+        thisfilelist.append(ifile)
+    f.close()
+
+    
+    cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist))
+    if not np.all(x==tflow[0] for x in tflow):
+        print 'warning, files had different flow times'
+    thisTflowList = tflow[0]
+    # if len(cfglistout) != len(thiscfglist):
+    #     print 'Not All Top Charge Found'
+        
+    data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
+    dataTop,randlist,shiftlist = Read2ptSetTop(topcharge,thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,cfglistout,thisTflowList,tsourceList=thistsourceList)
+    return [data2pt,dataTop,thisTflowList,thisfilelist]
+
+def ReadSetTopCharge(thisSmearList,thisMomList,directory,Interps=['nucleon'],thistsourceList=[tsource]):
+    # if len(thisTSinkList) > 0:
+    #     TestMomList(thisMomList)
+    thisfilelist = []
+    f = open('./cfglistset.txt','w')
+    
+    fileend2pt = CreateEnd2pt(DefSmearList[0],DefSmearList[0],thistsourceList[0],Interps[0],Interps[0])
+    if Debug: print ' comparing to: ',fileend2pt
+    for isource in SourceList:
+        print 'reading directory: ' , directory+'/'+isource
+        for (dirname,dirs,files) in walk(directory+'/'+isource):
+            for ifile in files:
+                if fileend2pt not in ifile or ".metadata" in ifile: continue
+                # ## FOR DEBUGGING
+                # if xsrcList[0] not in ifile: continue
+                if xsrcList[0] not in ifile and XAvg: continue
+                if 'xsrc' in ListOrSet:
+                    if ListOrSet.replace('ReadSet','').replace('ReadList','')+'_' not in ifile: continue
+                fileprefix = ifile.replace(fileend2pt,'')
+                if CheckSet(fileprefix,dirname+'/',thisSmearList,{},{},[],[],'',Interps,tsourceList=thistsourceList):
+                    f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
+                    thisfilelist.append(directory+'/'+isource+'/@/'+fileprefix)
+    f.close()
+    print 'number of configs = ' , len(thisfilelist)
+    print ''
+    if len(thisfilelist) == 0: raise IOError('No Configurations Found')
+    if ShowConfNum:
+        for ifile in thisfilelist:
+            print ifile
+        print ''
+        
+    cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist))
+    if not np.all([x==tflow[0] for x in tflow]):
+        print 'warning, files had different flow times'
+    thisTflowList = tflow[0]
+    # if len(cfglistout) != len(thiscfglist):
+    #     print 'Not All Top Charge Found'
+
+    data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
+    dataTop,randlist,shiftlist = Read2ptSetTop(topcharge,thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,cfglistout,thisTflowList,tsourceList=thistsourceList)
+    
+    return [data2pt,dataTop,thisTflowList,thisfilelist]
+
+        
 def ReadList(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,
              thisTSinkList,thisconflist,Flag,Interps=['nucleon'],thistsourceList=[tsource]):
     thisfilelist = []
@@ -290,3 +356,36 @@ def Read3ptSet(readfilelist,thisSmearList,thisMomList,thisProjGammaList,thisProj
     print 'Read 3pt total time: ' + str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
     return thisdata3pt
 
+
+
+
+
+##tempdata [ iconf ] .data [ ip , it ]
+##thisdata2pt [ tflow, tsource, ism , jsm , ip , it ] bootdataclas
+##shiftlist = [ tsource , ism, jsm , icfg, isrc_number ]
+##TopCharge = [ iconf , tflow ] 
+def Read2ptSetTop(TopCharge,readfilelist,thisSmearList,thisMomList,Interps,Topcfglist,thisTflowList,tsourceList=[tsource]):
+    thisdata2pt = []
+    start = time.time()
+    icount = -1
+    randlist = []
+    shiftlist = []
+    for thists in tsourceList:
+        thisdata2pt.append([])
+        shiftlist.append([])
+        for icsm,(iterp,ism) in enumerate(Elongate(Interps,thisSmearList)):
+            thisdata2pt[-1].append([])
+            shiftlist[-1].append([])
+            for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,thisSmearList)):
+                icount += 1
+                timeleft = GetTimeLeft(icount,len(tsourceList)*len(Elongate(Interps,thisSmearList))**2,time.time()-start)
+                print 'Read 2pt: sm' + ism + 'Xsm'+jsm+' Time Left: ' +str(datetime.timedelta(seconds=timeleft)) , ' h:m:s \r',
+                thisstart = time.time()
+                thisfilelist = [ifile.replace('@',CreateDir2pt(ism,jsm))+CreateEnd2pt(ism,jsm,thists,iterp,jterp) for ifile in readfilelist]
+                (dataout,randlist),thisshiftlist = ReadAndBoot2ptTop(thisfilelist,thisMomList,nboot,TopCharge,Topcfglist,thisTflowList) 
+                shiftlist[-1][icsm].append(thisshiftlist)
+                thisdata2pt[-1][icsm].append(dataout)
+                print 'Read 2pt: sm' + ism + 'Xsm'+jsm + ' t_src'+str(thists)+' took: ' +str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s        '
+    print 'Read 2pt total time: ' + str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
+    return np.rollaxis(np.array(thisdata2pt),3),randlist,shiftlist
+##thisdata2pt [ tflow, tsource, ism , jsm , ip , it ] bootdataclas

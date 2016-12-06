@@ -4,6 +4,13 @@ import xmltodict
 from collections import OrderedDict
 from Params import *
 
+def tflowstr(it):
+    return 't_flow'+str(it)
+
+def untflowstr(it):
+    return int(it.replace('t_flow',''))
+
+
 def tstr(it):
     return 't'+str(it)
 

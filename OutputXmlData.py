@@ -96,6 +96,25 @@ def PrintToFile(thisdata,filedir,filename,thisTList,thisMomList,AddDict={},frmtf
             datadict[ip]['Boots'][itstr] = tdata.values
         WriteXmlOutput(outputfile,datadict)
 
+        
+def PrintTopToFile(topdata,thisdata,filedir,filename,thisTopList,thisTList,thisMomList,AddDict={},frmtflag='f'):
+    xmlMomList = [ipTOqcond(imom,Avg=True) for imom in thisMomList]
+    tkeyList = map(tstr,thisTList)
+    for icp,(ip,pdata) in enumerate(zip(xmlMomList,thisdata)):
+        datadict,outputfile = SetUpPDict(ip,filedir,filename)
+        datadict[ip]['Info'] = AddDict
+        datadict[ip]['Values'] = OrderedDict()
+        datadict[ip]['Boots'] = OrderedDict()
+        for itflow,flowdata in zip(thisTopList,topdata):
+            Rat = []
+            datadict[ip]['Boots'][tflowstr(itflow)] = OrderedDict()
+            for itstr,tflowdata,tdata in zip(tkeyList,flowdata[icp],pdata):
+                Rat.append(tflowdata/tdata)
+                Rat[-1].Stats()
+                datadict[ip]['Boots'][tflowstr(itflow)][itstr] = Rat[-1].values
+            datadict[ip]['Values'][tflowstr(itflow)] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,Rat,[frmtflag]*len(pdata))))
+        WriteXmlOutput(outputfile,datadict)
+        
 # data = [ ip , icut ]
 def PrintFitMassToFile(data,dataChi,iset,filedir,filename,thisMomList,FitRanges,mominfo2pt):
     xmlMomList = map(qstrTOqcond,thisMomList)

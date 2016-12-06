@@ -18,7 +18,15 @@ import time
 import datetime
 from ReadXml import *
 
-
+def StripSrc(filelist):
+    output = []
+    for ifile in filelist:
+        thisout = re.sub('_xsrc.*','',ifile)[-4:]
+        if thisout not in output:
+            output.append(thisout)
+    return output
+        
+    
 ## tflow [ itflow ]
 ## topcharge [ itflow ]
 
@@ -26,21 +34,22 @@ def ReadTopCharge(thisfile):
     if os.path.isfile(thisfile):
         toptout = np.loadtxt(thisfile)
         toptout = np.rollaxis(toptout,1)
-        tflow = toptout[0]
-        topcharge = toptout[1]
-    return tflow,topcharge
-
+        tflow = toptout[0][tflowlist]
+        topcharge = toptout[1][tflowlist]
+        return tflow,topcharge
+    else:
+        return [],[]
 
 ## cfglistout [ icfg ]
 ## tflow [ icfg , itflow ]
 ## topcharge [ icfg , itflow ]
 def ReadTopList(thisdir,thiscfglist):
     cfglistout,tflow,topcharge = [],[],[]
-    for root, thisdir, thesefiles in os.walk(thisdir):
+    for root, thedir, thesefiles in os.walk(thisdir):
         for icfg in thiscfglist:
             for ifile in thesefiles:
                 if icfg in ifile:
-                    thistflow,thistcharge = ReadTopCharge(thisfile)
+                    thistflow,thistcharge = ReadTopCharge(root+ifile)
                     if icfg in cfglistout:
                         print 'warning, duplicate file in directory for config', icfg
                     else:
@@ -51,7 +60,7 @@ def ReadTopList(thisdir,thiscfglist):
                 
 # R/L Evecs [ ip , istate , ival ]
 # Emass [ ip , istate ]
-def ReadLREM(todtval,thisMomList,filepref):
+def ReadLREM(todtval,thisMomList,filepref,NoWar=False):
     ##OLD##
     # filename = REvecDir+filepref+'to'+str(todtval[0])+'dt'+str(todtval[1])+'LREM.txt'
     LEvec,REvec,Emass = [],[],[]
@@ -76,7 +85,8 @@ def ReadLREM(todtval,thisMomList,filepref):
                     LEvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Left_Evec'][thissm]))
                     REvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Right_Evec'][thissm]))
         else:
-            print 'warning, weight file not found', filename
+            if not NoWar:
+                print 'warning, weight file not found', filename
             return None,None,None        
     return np.array(LEvec),np.array(REvec),np.array(Emass)
 

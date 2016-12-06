@@ -46,6 +46,28 @@ def BootSet2pt(data,thisMomList,nboot,randlist=[]):
     # print '                              \r',
     return dataout,randlist
 
+#data = [ iconf , iflow , ip , it]
+#dataout = [ iflow, ip , it ]. bs
+def BootSet2ptTC(data,thisMomList,nboot,tflowlist,randlist=[]):
+    dataout = []
+    randlist = []
+    for icf,iflow in enumerate(tflowlist):
+        dataout.append([])
+        for ip,imom in enumerate(thisMomList):
+        # print 'Booting {}%  \r'.format(int((ip*100)/float(len(thisMomList)))),
+        # for icfg,cfgdata in enumerate(np.array(data)[:,ip,:]):
+        #     print ''
+        #     print 'icfg=',icfg
+        #     for it,tdata in enumerate(cfgdata):
+        #         print tdata
+        # print 'pie2pt'
+        # for iboot,idata in enumerate(np.array(data)[:,ip,12]):
+        #     print iboot,idata
+            bootdata,randlist = bt.CreateBoot(data[:,icf,ip,:],nboot,0,randlist=randlist)
+            dataout[-1].append(bootdata)
+    # print '                              \r',
+    return dataout,randlist
+
 #dataout = [ ip , it ]. bs
 def ReadAndBoot2pt(readfilelist,thisMomList,thisnboot,randlist=[]):
     tempdata = []
@@ -66,7 +88,7 @@ def ReadAndBoot2pt(readfilelist,thisMomList,thisnboot,randlist=[]):
             print e
             print 'MUST RE-RUN AFTER THIS TO EXCLUDE BAD CONFIGS'
             print
-            os.remove(ifile)
+            # os.remove(ifile)
     return BootSet2pt(np.array(tempdata),thisMomList,thisnboot,randlist=randlist),shiftlist
 
 
@@ -95,8 +117,42 @@ def ReadAndBoot3pt(readfilelist,thisMomList,thisGammaList,thisDerGammaList,thisn
             print e
             print 'MUST RE-RUN AFTER THIS TO EXCLUDE BAD CONFIGS'
             print
-            os.remove(ifile)
+            # os.remove(ifile)
     if len(thisGammaList) > 0:
         return BootSet3pt(tempdata,thisMomList,thisGammaList,thisnboot,printstr='',randlist=randlist)
     elif len(thisDerGammaList) > 0:
         return BootSet3pt(tempdata,thisMomList,thisDerGammaList,thisnboot,printstr='',randlist=randlist)
+
+    
+def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglist,flowlist,randlist=[]):
+    tempdata = []
+    shiftlist = []
+    for iconf,ifile in enumerate(readfilelist):
+        # print 'Reading {}%  \r'.format(int((iconf*100)/float(len(readfilelist)))),
+        try:
+            if CHROMA:
+                if xsrcList[0] in ifile or not XAvg:
+                    chargeindex = FileToChargeCfg(ifile,chargecfglist)
+                    data = Read2ptCfunChromaXML(ifile,thisMomList)
+                    tempdata.append([])
+                    for iflowdata in chargedata[chargeindex]:                      
+                        tempdata[-1].append(np.array(data.data)*iflowdata)
+                    shiftlist.append(data.tshiftlist)
+            else:
+                tempdata.append(Read2ptCfunPick(ifile,thisMomList).data)
+        except NaNCfunError as e:
+            print 
+            print 'Deleting file ' + ifile
+            print e
+            print 'MUST RE-RUN AFTER THIS TO EXCLUDE BAD CONFIGS'
+            print
+            # os.remove(ifile)
+    return BootSet2ptTC(np.array(tempdata),thisMomList,thisnboot,flowlist,randlist=randlist),shiftlist
+
+
+def FileToChargeCfg(ifile,chargecfglist):
+    for ic,icharge in enumerate(chargecfglist):
+        if icharge in ifile:
+           return ic
+    print 'charge cfg not found'
+    return None

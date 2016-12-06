@@ -297,7 +297,7 @@ class BootStrap1:
                 result.values=self.values/fac.values
             except:
                 print "ERROR: UNknown boot divide"
-                print tnboot,fac.nboot
+                print fac.nboot
                 assert 1==0
         return result
     def __add__(self,fac):

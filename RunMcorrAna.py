@@ -7,6 +7,7 @@ import sys
 from Params import *
 from SetLists import *
 from Try2ptPickCMS import CreateTwoPt
+from TryTopCharge import CreateTwoPtTop
 from Try3ptPickCMS import CreateRF
 from MiscFuns import touch
 from OppFuns import Wipe2pt,WipeSet
@@ -97,7 +98,9 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         thisPoFTvarList = []
         thisStateSet = [PickedState]
     elif 'TwoPt' in RunType:
-        DoTwoPt = True
+        DoTwo = True
+    elif 'TopCharge' in RunType:
+        DoTwo = True
     else:
         raise IOError('Choose CM , REvec , TSink or TwoPt along with Tsinks')
 
@@ -109,6 +112,13 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         # thisMomList = Get2ptSetMoms(outputdir[0],RunAvgMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
         thisMomList = Get2ptSetMoms(outputdir[0],RunMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
         CreateTwoPt([qstrTOip(imom) for imom in DragpZstr(thisMomList)],DefSmearList,feedin=feedin)
+        print 'Two Point Analysis Complete'
+    if RunType == 'TopCharge':
+        print 'Topological Charge Analysis'
+        # Wipe2pt(outputdir[0],tvarlist=TwoPtDefTvarList,smlist=DefSmearList)
+        # thisMomList = Get2ptSetMoms(outputdir[0],RunAvgMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
+        thisMomList = Get2ptSetMoms(outputdir[0],RunMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
+        CreateTwoPtTop([qstrTOip(imom) for imom in DragpZstr(thisMomList)],DefSmearList,feedin=feedin)
         print 'Two Point Analysis Complete'
     else:
         print 'Three Point Analysis '+Curr + ' ' + RunType + ' tsinks: ' + ' '.join(RunTSinkList)
@@ -177,7 +187,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
                                 thisPool.apply_async(CRFWrap,(RunType,itsinkList,thisSmearList,iPrefList,copy.copy(runmomlistcmplx),iProj,igamma+'cmplx'))
     sys.stdout = sys.__stdout__
     sys.stderr = sys.__stderr__
-    if 'TwoPt' not in RunType: print 'Three Point Analysis '+Curr + ' ' + RunType + ' tsinks: ' + ' '.join(RunTSinkList) + ' Added to jobs'
+    if 'TwoPt' not in RunType or 'TopCharge' not in RunType: print 'Three Point Analysis '+Curr + ' ' + RunType + ' tsinks: ' + ' '.join(RunTSinkList) + ' Added to jobs'
 
 if len(sys.argv) < 2: raise IOError("input current type as first argument")
 print sys.argv[1]
@@ -189,6 +199,9 @@ with open( logdir+'LogAll.log.end','a') as f:
     f.write('\n')
 thisPool = False
 if CurrIn == 'TwoPt':
+    feedin = InputParams(sys.argv[2:])
+    RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe,feedin=feedin)
+elif CurrIn == 'TopCharge':
     feedin = InputParams(sys.argv[2:])
     RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe,feedin=feedin)
 else:

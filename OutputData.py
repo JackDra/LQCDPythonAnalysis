@@ -10,12 +10,24 @@ from OppFuns import *
 from FormFactors import NoFFPars
 from OutputXmlData import *
 
+##topdataset [ iset , ttop, ip ,it ] bs1
+##dataset [iset , ip , it ] bs1
+
+def PrintTopSetToFile(topdataset,dataset,thisSetList,thisMomList, thisTopList, AddDict={}):
+    topdir = outputdir[0] + 'Top/Rat/'
+    for iset,setdata,topsetdata in zip(thisSetList,dataset,topdataset):
+        print 'Printing : ' , iset ,'                \r',
+        PrintTopToFile(topsetdata,setdata,topdir,iset,thisTopList,range(nt),thisMomList,AddDict=AddDict)
+
 
 
 ##C3set [ igamma , iset , it ] bs1
 
-def PrintCfunToFile(C3set,thisSetList,thisMomList, thisGammaList,AddDict={}):
-    cfundir = outputdir[0] + 'cfun/'
+def PrintCfunToFile(C3set,thisSetList,thisMomList, thisGammaList,AddDict={},Top=False):
+    if Top:
+        cfundir = outputdir[0] + 'Top/cfun/'
+    else:
+        cfundir = outputdir[0] + 'cfun/'
     for thegamma,gammadata in zip(thisGammaList,C3set):
         gammadir = cfundir+CreateOppDir(thegamma)+'/'
         for iset,setdata in zip(thisSetList,gammadata):
