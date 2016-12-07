@@ -187,7 +187,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
                                 thisPool.apply_async(CRFWrap,(RunType,itsinkList,thisSmearList,iPrefList,copy.copy(runmomlistcmplx),iProj,igamma+'cmplx'))
     sys.stdout = sys.__stdout__
     sys.stderr = sys.__stderr__
-    if 'TwoPt' not in RunType or 'TopCharge' not in RunType: print 'Three Point Analysis '+Curr + ' ' + RunType + ' tsinks: ' + ' '.join(RunTSinkList) + ' Added to jobs'
+    if 'TwoPt' not in RunType and 'TopCharge' not in RunType: print 'Three Point Analysis '+Curr + ' ' + RunType + ' tsinks: ' + ' '.join(RunTSinkList) + ' Added to jobs'
 
 if len(sys.argv) < 2: raise IOError("input current type as first argument")
 print sys.argv[1]

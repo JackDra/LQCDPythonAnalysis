@@ -264,6 +264,13 @@ def SetDispAxies():
     pl.legend(loc='upper left')
     pl.tight_layout()
 
+def SetTopAxies(title):
+    ax.set_xlabel(r'$t_{sink}$')
+    ax.set_ylabel(r'$t_{flow}$')
+    ax.set_zlabel(r'$\frac{\langle NNQ \rangle>}{\langle NN\rangle}$')
+    ax.set_title(title)
+    # ax.legend(loc='upper left')
+
     
 
 def SetErrAxies():
@@ -1331,3 +1338,71 @@ def PlotSetHistDist(data,thisSetList,thisSF,iThresh,thisMom,Zmom=False):
         if len(setlist) > 0:
             pl.hist(setlist,bins=BinList,color=collist,label=leglist,stacked=Stacked,histtype=HistType,normed=Normed,alpha=0.5)
                 
+
+
+def PlotTopCharge(data,iSet,iMom):
+    tflowlist,tlist,plotAvg,plotUp,plotDown = [],[],[],[],[]
+    momdata = data['RF'][iMom]['Boots']
+    for itflow,flowdata in momdata.iteritems():        
+        # tflowlist.append([])
+        # tlist.append([])
+        # plotAvg.append([])
+        # plotUp.append([])
+        # plotDown.append([])
+        for it,tdata in flowdata.iteritems():
+            # tflowlist[-1].append(untflowstr(itflow))
+            # tlist[-1].append(untstr(it))
+            tavg = np.mean(tdata)
+            tstd = np.std(tdata)
+            # plotAvg[-1].append(tdata.Avg)
+            # plotUp[-1].append(tdata.Avg+tdata.Std)
+            # plotDown[-1].append(tdata.Avg-tdata.Std)
+            # plotAvg[-1].append(tavg)
+            # plotUp[-1].append(tavg+tstd)
+            # plotDown[-1].append(tavg-tstd)
+            tflowlist.append(untflowstr(itflow))
+            tlist.append(untstr(it))
+            plotAvg.append(tavg)
+            plotUp.append(tavg+tstd)
+            plotDown.append(tavg-tstd)
+
+    if len(plotAvg) == 0: return
+    return tlist,tflowlist,plotAvg,plotUp,plotDown
+    # ax.errorbar(np.array(plotlist),Pullflag(plotdata,'Avg'),Pullflag(plotdata,'Std'),color=thiscolor,label=LegLab(iSet+'\ '+qstrTOqcond(iMom)))
+    
+def PlotTopSetCharge(data,thisSetList,thisMomList,FT):
+    global ForceTitle
+    # global ax
+    ForceTitle = FT
+    thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
+    # fig = pl.figure()
+    # ax = fig.gca(projection='3d')
+    thiscollist = []
+    thistlist,thistflowlist,thisplotAvg,thisplotUp,thisplotDown = [],[],[],[],[]
+    for iset,setdata in zip(thisSetList,data):
+        thiscollist.append([])
+        thistlist.append([])
+        thistflowlist.append([])
+        thisplotAvg.append([])
+        thisplotUp.append([])
+        thisplotDown.append([])
+        for imom in thisMomList:
+            if CheckDict(setdata,'RF',imom,'Boots'):
+                print 'plotting ', iset, imom
+                thiscollist[-1].append(thiscolcyc.next())
+                tlist,tflowlist,plotAvg,plotUp,plotDown = PlotTopCharge(setdata,iset,imom)
+                thistlist[-1].append(tlist)
+                thistflowlist[-1].append(tflowlist)
+                thisplotAvg[-1].append(plotAvg)
+                thisplotUp[-1].append(plotUp)
+                thisplotDown[-1].append(plotDown)
+                
+                # for it,itflow,iAvg in zip(tlist,tflowlist,plotAvg):
+                #     print
+                #     for jt,jtflow,jAvg in zip(it,itflow,iAvg):
+                #         print jt,jtflow,jAvg
+                # ax.scatter(tlist,tflowlist,plotAvg,color=thiscolcyc.next())
+    # SetTopAxies('Ratio NNQdivNN ')
+    # ax.savefig(CreateFile('','twopt','q = 0 0 0',,subdir='Top')+'.pdf')
+    # fig.show()
+    return thiscollist,thistlist,thistflowlist,thisplotAvg,thisplotUp,thisplotDown

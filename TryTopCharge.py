@@ -43,7 +43,7 @@ def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     dataTopHold = []
     for topdata in dataTop:
         dataTopHold.append(np.array(PreptwoptCorr(np.array(topdata))))
-    dataTop = dataTopHold
+    dataTop = np.array(dataTopHold)
     for topdata in dataTop:
         C2outTop.append(DiagSmearWithTsrc(topdata).tolist())
     ## C2out = [ t_src*ism*ism , ip , it ] 
@@ -53,12 +53,12 @@ def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     CMinputparams,PoFinputparams = [],[]
     makeContextFunctions(CreatePoF2ptCfuns)
     makeContextFunctions(CreateCM2ptCfuns)
-    for icount,itodt in enumerate(DeftodtList):
+    for icount,(itodt,itodtPoF) in enumerate(zip(DeftodtPicked,DefPoFVarList)):
         CMinputparams.append((data2pt[0],itodt,thisMomList))
-        PoFinputparams.append((data2pt,itodt,thisMomList))
+        PoFinputparams.append((data2pt,itodtPoF,thisMomList))
 
 
-    if DoMulticore and feedin['anaproc'] > 1:
+    if DoMulticore and feedin['anaproc'] > 1 and len(PoFinputparams) > 1 and len(CMinputparams) > 1:
         thisPool = Pool(min(len(CMinputparams),feedin['anaproc']))
         outputPoF = thisPool.map(CreatePoF2ptCfuns.mapper,PoFinputparams)
         if len(thisSmearList) > 1 and DoCM:
@@ -71,9 +71,9 @@ def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
         if len(thisSmearList) > 1 and DoCM:
             for iin in CMinputparams: outputCM.append(CreateCM2ptCfuns.mapper(iin))
 
-    thisPoFTvarList = ['PoF'+str(PoFShifts)+iTvar for iTvar in TwoPtDefTvarList]
+    thisPoFTvarList = PoFTvarPicked
     if len(thisSmearList) > 1 and DoCM:
-        thisCMTvarList = ['CM'+iTvar for iTvar in TwoPtDefTvarList]
+        thisCMTvarList = DefTvarPicked
         for iout,iTvar in zip(outputCM,thisCMTvarList):
             [CMdata2pt,LEvec,REvec,Emass] = iout
             ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
@@ -88,44 +88,54 @@ def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
         C2out += CMdata2pt.tolist()
         PrintLREvecMassToFile(LEvec,REvec,Emass,thisMomList,iTvar,AddDict=InfoDict,DoPoF=True)
 
+    SetList = []
+    SetList += CreateMassSet(thisSmearList,StateSet,[],tsrclist=PoFtsourceList,flipord=True)
+    if len(thisSmearList) > 1 and DoCM: SetList += CreateMassSet([],CMStateSet,thisCMTvarList,flipord=True)
+    SetList += CreateMassSet([],StateSet,thisPoFTvarList,flipord=True)
+    PrintCfunToFile([C2out],SetList,thisMomList,['twopt'],AddDict=InfoDict,Top=True)
+
+
+    CMinputparams,PoFinputparams = [],[]    
     for itop,topdata in enumerate(dataTop):
-        print 'CM Technique for Tflow=',itop
-        CMinputparams,PoFinputparams = [],[]
-        for icount,itodt in enumerate(DeftodtList):
+        # print 'CM Technique for Tflow=',itop,' \r'
+        # for icount,itodt in enumerate(DeftodtList):
+        for icount,(itodt,itodtPoF) in enumerate(zip(DeftodtPicked,DefPoFVarList)):
             CMinputparams.append((topdata[0],itodt,thisMomList))
-            PoFinputparams.append((topdata,itodt,thisMomList))
+            PoFinputparams.append((topdata,itodtPoF,thisMomList))
 
-
-        if DoMulticore and feedin['anaproc'] > 1:
-            thisPool = Pool(min(len(CMinputparams),feedin['anaproc']))
-            outputPoF = thisPool.map(CreatePoF2ptCfuns.mapper,PoFinputparams)
-            if len(thisSmearList) > 1 and DoCM:
-                outputCM = thisPool.map(CreateCM2ptCfuns.mapper,CMinputparams)
-            thisPool.close()
-            thisPool.join()
-        else:
-            outputPoFTop,outputCMTop = [],[]
-            for iin in PoFinputparams: outputPoFTop.append(CreatePoF2ptCfuns.mapper(iin))
-            if len(thisSmearList) > 1 and DoCM:
-                for iin in CMinputparams: outputCMTop.append(CreateCM2ptCfuns.mapper(iin))
+            
+    if DoMulticore and feedin['anaproc'] > 1:
+        thisPool = Pool(min(len(CMinputparams),feedin['anaproc']))
+        outputPoFTop = thisPool.map(CreatePoF2ptCfuns.mapper,PoFinputparams)
+        if len(thisSmearList) > 1 and DoCM:
+            outputCMTop = thisPool.map(CreateCM2ptCfuns.mapper,CMinputparams)
+        thisPool.close()
+        thisPool.join()
+    else:
+        outputPoFTop,outputCMTop = [],[]
+        for iin in PoFinputparams: outputPoFTop.append(CreatePoF2ptCfuns.mapper(iin))
+        if len(thisSmearList) > 1 and DoCM:
+            for iin in CMinputparams: outputCMTop.append(CreateCM2ptCfuns.mapper(iin))
             
     
-        thisPoFTvarList = ['PoF'+str(PoFShifts)+iTvar for iTvar in TwoPtDefTvarList]
-        if len(thisSmearList) > 1 and DoCM:
-            thisCMTvarList = ['CM'+iTvar for iTvar in TwoPtDefTvarList]
-            for iout,iTvar in zip(outputCMTop,thisCMTvarList):
-                [CMdata2pt,LEvec,REvec,Emass] = iout
-                ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-                C2outTop[itop] += CMdata2pt.tolist()
-        else:
-            thisCMTvarList = []
-
-        for iout,iTvar in zip(outputPoFTop,thisPoFTvarList):
-            [CMdata2pt,LEvec,REvec,Emass] = iout
+    if len(thisSmearList) > 1 and DoCM:
+        thisCMTvarList = DefTvarPicked
+        for itop,CMTop in enumerate(outputCMTop):
+            [CMdata2pt,LEvec,REvec,Emass] = CMTop
             ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
             C2outTop[itop] += CMdata2pt.tolist()
+    else:
+        thisCMTvarList = []
 
-    print 'CMTech Total Time Taken: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
+        
+    thisPoFTvarList = PoFTvarPicked
+    for itop,PoFTop in enumerate(outputPoFTop):
+        [PoFdata2pt,LEvec,REvec,Emass] = PoFTop
+        ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+        C2outTop[itop] += PoFdata2pt.tolist()
+
+    
+    print 'CMTech Total Time Taken: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                                         '
     start = time.time()
     print 'Printing to file \r',
 
@@ -133,7 +143,6 @@ def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     SetList += CreateMassSet(thisSmearList,StateSet,[],tsrclist=PoFtsourceList,flipord=True)
     if len(thisSmearList) > 1 and DoCM: SetList += CreateMassSet([],CMStateSet,thisCMTvarList,flipord=True)
     SetList += CreateMassSet([],StateSet,thisPoFTvarList,flipord=True)
-    PrintCfunToFile([C2out],SetList,thisMomList,['twopt'],AddDict=InfoDict,Top=True)
     PrintTopSetToFile(np.swapaxes(np.array(C2outTop),0,1),C2out,SetList,thisMomList,thisTopList,AddDict=InfoDict)
 
     print 'Printing took ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '

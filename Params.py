@@ -226,8 +226,8 @@ else:
 # note: dim of StateSet < dim of SmearSet
 GammaSet = ['I','g1','g2','g3','g4','g1g2','g1g3','g1g4','g2g3','g2g4','g3g4','g1g5','g2g5','g3g5','g4g5','g5']
 GammaConsSet = ['Consg1','Consg2','Consg3','Consg4']
-# tflowlist = map(float,np.arange(0,1000,100)) ## indicies of flows to read
-tflowlist = map(float,np.arange(0,1000))
+tflowlist = map(float,np.arange(0,1000,100)) ## indicies of flows to read
+# tflowlist = map(float,np.arange(0,1000))
 
 if DoCmplx:
     AllGammaSet = GammaSet + [igamma+'cmplx' for igamma in GammaSet]
@@ -304,7 +304,7 @@ DeftoList = range(1,4)
 # DefdtList = [1,2,3,4,5,6]
 # DefdtList = range(1,7)
 # DefdtList = range(1,10)
-DefdtList = range(1,2)
+DefdtList = range(1,8)
 # DeftodtPicked = (18,2)
 ##MUST BE IN SORTING ORDER##
 # DeftodtPicked = [(18,2),(20,2)]
@@ -408,20 +408,25 @@ REvecFlagList = [PickedStateStr+iREvec for iREvec in REvecTvarList]
 
 # REvecTvarList = []
 
-if OnlySelVar:
-    if TimeInv:
-        # DefPoFVarList = [[1,1]]
-        DefPoFVarList = [[6,1]]
+if TimeInv:
+    # DefPoFVarList = [[1,1]]
+    DefPoFVarPicked = [[6,1]]
+else:
+    if kappa == 12:
+        DefPoFVarPicked = [[1,1]]
     else:
-        if kappa == 12:
-            DefPoFVarList = [[1,1]]
-        else:
-            DefPoFVarList = [[3,3]]
-    PoFTvarList = ['PoF'+str(PoFShifts)+'to'+str(DefPoFVarList[0][0])+'dt'+str(DefPoFVarList[0][1])]
+        DefPoFVarPicked = [[3,3]]
+PoFTvarPicked = ['PoF'+str(PoFShifts)+'to'+str(DefPoFVarPicked[0][0])+'dt'+str(DefPoFVarPicked[0][1])]
+
+
+if OnlySelVar:
+    PoFTvarList = PoFTvarPicked
+    DefPoFVarList = DefPoFVarPicked
 else:
     DefPoFVarList = DeftodtList
     PoFTvarList = [itvar.replace('CM','PoF'+str(PoFShifts)) for itvar in DefTvarList]
 
+    
 # DefPoFVarList = [18,2]
 # DefPoFVarList = [19,2]
 # DefPoFVarList = [20,2]

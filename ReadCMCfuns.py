@@ -33,8 +33,8 @@ def ReadListTopCharge(thisSmearList,thisMomList,thisconflist,Interps=['nucleon']
     # if len(cfglistout) != len(thiscfglist):
     #     print 'Not All Top Charge Found'
         
-    data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
-    dataTop,randlist,shiftlist = Read2ptSetTop(topcharge,thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,cfglistout,thisTflowList,tsourceList=thistsourceList)
+    dataTop,data2pt,randlist,shiftlist = Read2ptSetTop(topcharge,thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),
+                                                       Interps,cfglistout,thisTflowList,tsourceList=thistsourceList)
     return [data2pt,dataTop,thisTflowList,thisfilelist]
 
 def ReadSetTopCharge(thisSmearList,thisMomList,directory,Interps=['nucleon'],thistsourceList=[tsource]):
@@ -75,8 +75,8 @@ def ReadSetTopCharge(thisSmearList,thisMomList,directory,Interps=['nucleon'],thi
     # if len(cfglistout) != len(thiscfglist):
     #     print 'Not All Top Charge Found'
 
-    data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
-    dataTop,randlist,shiftlist = Read2ptSetTop(topcharge,thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,cfglistout,thisTflowList,tsourceList=thistsourceList)
+    dataTop,data2pt,randlist,shiftlist = Read2ptSetTop(topcharge,thisfilelist,thisSmearList,
+                                                       GetAvgMomListip(thisMomList),Interps,cfglistout,thisTflowList,tsourceList=thistsourceList)
     
     return [data2pt,dataTop,thisTflowList,thisfilelist]
 
@@ -366,15 +366,18 @@ def Read3ptSet(readfilelist,thisSmearList,thisMomList,thisProjGammaList,thisProj
 ##TopCharge = [ iconf , tflow ] 
 def Read2ptSetTop(TopCharge,readfilelist,thisSmearList,thisMomList,Interps,Topcfglist,thisTflowList,tsourceList=[tsource]):
     thisdata2pt = []
+    thisdataTop = []
     start = time.time()
     icount = -1
     randlist = []
     shiftlist = []
     for thists in tsourceList:
         thisdata2pt.append([])
+        thisdataTop.append([])
         shiftlist.append([])
         for icsm,(iterp,ism) in enumerate(Elongate(Interps,thisSmearList)):
             thisdata2pt[-1].append([])
+            thisdataTop[-1].append([])
             shiftlist[-1].append([])
             for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,thisSmearList)):
                 icount += 1
@@ -382,10 +385,11 @@ def Read2ptSetTop(TopCharge,readfilelist,thisSmearList,thisMomList,Interps,Topcf
                 print 'Read 2pt: sm' + ism + 'Xsm'+jsm+' Time Left: ' +str(datetime.timedelta(seconds=timeleft)) , ' h:m:s \r',
                 thisstart = time.time()
                 thisfilelist = [ifile.replace('@',CreateDir2pt(ism,jsm))+CreateEnd2pt(ism,jsm,thists,iterp,jterp) for ifile in readfilelist]
-                (dataout,randlist),thisshiftlist = ReadAndBoot2ptTop(thisfilelist,thisMomList,nboot,TopCharge,Topcfglist,thisTflowList) 
+                dataoutTop,(dataout,randlist),thisshiftlist = ReadAndBoot2ptTop(thisfilelist,thisMomList,nboot,TopCharge,Topcfglist,thisTflowList) 
                 shiftlist[-1][icsm].append(thisshiftlist)
                 thisdata2pt[-1][icsm].append(dataout)
+                thisdataTop[-1][icsm].append(dataoutTop)
                 print 'Read 2pt: sm' + ism + 'Xsm'+jsm + ' t_src'+str(thists)+' took: ' +str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s        '
     print 'Read 2pt total time: ' + str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
-    return np.rollaxis(np.array(thisdata2pt),3),randlist,shiftlist
+    return np.rollaxis(np.array(thisdataTop),3),thisdata2pt,randlist,shiftlist
 ##thisdata2pt [ tflow, tsource, ism , jsm , ip , it ] bootdataclas

@@ -457,7 +457,7 @@ def GetTvarREvesPoF(Cfunin,thistodtvals,masscut,thisPoFShifts=PoFShifts):
 # R/L Evecs [ ip , istate , ival ]
 # Emass [ ip , istate ]
 
-def CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=True):
+def CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,printout=True,DoPoF=True):
     start = time.time()
     Cfuns2pt = np.array(Cfuns2pt)
     CMCfun2pt = []
@@ -480,8 +480,10 @@ def CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=True):
     for ip,thisp in enumerate(thisMomList):
         if DoPoF:
             CMCfun2pt.append(ProjectCorrPoF2pt(LEvec[ip],Cfuns2pt[:,:,:,ip],REvec[ip]))
+            # CMCfun2pt.append(ProjectCorrPoF2pt(np.array([[1,0,0],[0,1,0],[0,0,1]]),Cfuns2pt[:,:,:,ip],np.array([[1,0,0],[0,1,0],[0,0,1]])))
         else:
             CMCfun2pt.append(ProjectCorrPoF2pt(LEvec[ip],np.array([Cfuns2pt[:,:,ip]]),REvec[ip],thisPoFShifts=0))
+            # CMCfun2pt.append(ProjectCorrPoF2pt(np.array([[1,0,0],[0,1,0],[0,0,1]]),[Cfuns2pt[:,:,ip]],np.array([[1,0,0],[0,1,0],[0,0,1]]),thisPoFShifts=0))
     if printout:
         if DoPoF:
             print 'CM PoF Creation shift'+str(PoFShifts)+' to'+str(todtvals[0])+' dt'+str(todtvals[1])+ ' took: ' , GetTimeStr(time.time()-start)
@@ -490,8 +492,8 @@ def CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=True,printout=True):
     return [np.rollaxis(np.array(CMCfun2pt),1),LEvec,REvec,Emass]
 
 
-def CreateCM2ptCfuns(Cfuns2pt,todtvals,thisMomList):
-    return CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,DoPoF=False)
+def CreateCM2ptCfuns(Cfuns2pt,todtvals,thisMomList,printout=True):
+    return CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,printout=printout,DoPoF=False)
 
 # #Cfuns3pt [ tsink , ism , 1 , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 # #CMCfun3pt  [ istate , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)

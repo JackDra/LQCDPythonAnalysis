@@ -66,7 +66,7 @@ def BootSet2ptTC(data,thisMomList,nboot,tflowlist,randlist=[]):
             bootdata,randlist = bt.CreateBoot(data[:,icf,ip,:],nboot,0,randlist=randlist)
             dataout[-1].append(bootdata)
     # print '                              \r',
-    return dataout,randlist
+    return dataout
 
 #dataout = [ ip , it ]. bs
 def ReadAndBoot2pt(readfilelist,thisMomList,thisnboot,randlist=[]):
@@ -126,6 +126,7 @@ def ReadAndBoot3pt(readfilelist,thisMomList,thisGammaList,thisDerGammaList,thisn
     
 def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglist,flowlist,randlist=[]):
     tempdata = []
+    tempdataTop = []
     shiftlist = []
     for iconf,ifile in enumerate(readfilelist):
         # print 'Reading {}%  \r'.format(int((iconf*100)/float(len(readfilelist)))),
@@ -134,9 +135,10 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
                 if xsrcList[0] in ifile or not XAvg:
                     chargeindex = FileToChargeCfg(ifile,chargecfglist)
                     data = Read2ptCfunChromaXML(ifile,thisMomList)
-                    tempdata.append([])
+                    tempdataTop.append([])
+                    tempdata.append(data.data)
                     for iflowdata in chargedata[chargeindex]:                      
-                        tempdata[-1].append(np.array(data.data)*iflowdata)
+                        tempdataTop[-1].append(np.array(data.data)*iflowdata)
                     shiftlist.append(data.tshiftlist)
             else:
                 tempdata.append(Read2ptCfunPick(ifile,thisMomList).data)
@@ -147,7 +149,8 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
             print 'MUST RE-RUN AFTER THIS TO EXCLUDE BAD CONFIGS'
             print
             # os.remove(ifile)
-    return BootSet2ptTC(np.array(tempdata),thisMomList,thisnboot,flowlist,randlist=randlist),shiftlist
+    return (BootSet2ptTC(np.array(tempdataTop),thisMomList,thisnboot,flowlist,randlist=randlist),
+            BootSet2pt(np.array(tempdata),thisMomList,thisnboot,randlist=randlist),shiftlist)
 
 
 def FileToChargeCfg(ifile,chargecfglist):

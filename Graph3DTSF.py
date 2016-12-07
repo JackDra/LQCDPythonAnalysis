@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm
 import matplotlib.pyplot as plt
 import numpy as np
 from SetLists import *
@@ -89,6 +88,8 @@ else:
                 colcyc = itertools.cycle(colourset8)
                 for xval,yval,zval,zerr in zip(xvallist,yvallist,zvallist,zerrlist):
                     thiscol = next(colcyc)
+                    for ix,iy,iz in zip(xval,yval,zval):
+                        print ix, iy, iz
                     ax.scatter(xval,yval,zval,color=thiscol)
                     for i in np.arange(0, len(xval)):
                         ax.plot([xval[i], xval[i]], [yval[i], yval[i]], [zval[i]+zerr[i], zval[i]-zerr[i]],color=thiscol, marker="_")

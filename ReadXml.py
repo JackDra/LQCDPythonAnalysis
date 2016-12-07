@@ -114,6 +114,21 @@ def GetDPFitValue(SearchSet,iFF,thisCurr,thiskappa=str(kappa)):
             thisDPpStd.append(data['DP_Fits']['Values'][iFF]['mEM'][SearchSet]['Std'])
             thisDPpStd.append(data['DP_Fits']['Values'][iFF]['Radius'][SearchSet]['Std'])
     return thisDPpAvg,thisDPpStd
+
+
+def ReadTopFile(filedir,iset,thisMomList=RunMomList):
+    dictout = OrderedDict()
+    dictout['RF'] = OrderedDict()
+    dictout['cfun'] = OrderedDict()
+    for thismom in thisMomList:
+        ip = qstrTOqcond(thismom)
+        readfile = filedir+'Top/Rat/'+MakeMomDir(ip)+iset+ip
+        if Debug: print 'Reading TopCharge :' ,readfile
+        dictout['RF'][thismom] = ReadXmlAndPickle(readfile+'.xml')[0][ip]
+        # readfile = filedir+'Top/cfuns/twopt'+MakeMomDir(ip)+iset.replace('.xml',ip+'.xml')
+        # dictout['cfun'][thismom] = ReadXmlAndPickle(readfile)[0]
+    return dictout
+
 ##Also works for cfuns##
 ##xmlinput = { Ratio_Factor , Boots/Values , thismomlist , tlist } 
 ##outputdict = { thismom , [tVals] / [Vals] / [Valserr] / [Boot] bs }

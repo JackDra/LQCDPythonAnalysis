@@ -8,7 +8,7 @@ def tflowstr(it):
     return 't_flow'+str(it)
 
 def untflowstr(it):
-    return int(it.replace('t_flow',''))
+    return float(it.replace('t_flow',''))
 
 
 def tstr(it):
