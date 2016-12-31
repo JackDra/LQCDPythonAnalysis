@@ -77,8 +77,8 @@ def ReadAndBoot2pt(readfilelist,thisMomList,thisnboot,randlist=[]):
         try:
             if CHROMA:
                 if xsrcList[0] in ifile or not XAvg:
-                    data = Read2ptCfunChromaXML(ifile,thisMomList)[0]
-                    tempdata.append(data.data)
+                    data = Read2ptCfunChromaXML(ifile,thisMomList)
+                    tempdata.append(data.data[0])
                     shiftlist.append(data.tshiftlist)
             else:
                 tempdata.append(Read2ptCfunPick(ifile,thisMomList).data)
