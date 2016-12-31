@@ -38,6 +38,10 @@ for icol,it,itflow,iavg,iup,idown in zip(thiscollist,thistlist,thistflowlist,thi
                     javgp.append(avgplot)
                     jupp.append(upplot)
                     jdownp.append(downplot)
+        
+        print jtp
+        print jtflowp
+        print javgp
         ax.scatter(jtp,jtflowp,javgp,color=jcol) 
         for i in np.arange(0, len(javgp)):
             ax.plot([jtp[i], jtp[i]], [jtflowp[i], jtflowp[i]], [jupp[i], jdownp[i]],color=jcol, marker="_")

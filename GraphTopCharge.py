@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 
-# from Params import *
-# import numpy as np
+from Params import *
+import numpy as np
 from ReadXml import *
-# from MiscFuns import *
-# from FitParams import *
-# from StringFix import *
-# from SetLists import *
-# from OppFuns import CreateGammaList
-# import time,datetime
-# from MultiWrap import *
-# from multiprocessing import Pool
+from MiscFuns import *
+from FitParams import *
+from StringFix import *
+from SetLists import *
+from OppFuns import CreateGammaList
+import time,datetime
+from MultiWrap import *
+from multiprocessing import Pool
 from InputArgs import *
-# from CreateCombs import CreateDictOldCombs
-# from CombParams import *
+from CreateCombs import CreateDictOldCombs
+from CombParams import *
 import cPickle as pickle
 
 
@@ -130,7 +130,7 @@ if DoMulticore and len(feedin['set']) > 1  and feedin['anaproc'] > 1:
     inputparams = []
     for iset in feedin['set']:
         for imom in feedin['mom']:
-            inputparams.append([iset],[imom])
+            inputparams.append(([iset],[imom]))
     makeContextFunctions(ReadAndPlotDis)
     thisPool = Pool(min(len(inputparams),feedin['anaproc']))
     output = thisPool.map(ReadAndPlotDis.mapper,inputparams)

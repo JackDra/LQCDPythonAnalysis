@@ -1344,6 +1344,7 @@ def PlotTopCharge(data,iSet,iMom):
     tflowlist,tlist,plotAvg,plotUp,plotDown = [],[],[],[],[]
     momdata = data['RF'][iMom]['Boots']
     for itflow,flowdata in momdata.iteritems():        
+        if untflowstr(itflow) not in tflowlist: continue
         # tflowlist.append([])
         # tlist.append([])
         # plotAvg.append([])

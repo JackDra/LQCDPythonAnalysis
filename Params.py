@@ -154,9 +154,12 @@ MesOrBar = 'Baryon'
 if MesOrBar == 'Meson':
     InterpFlag = 'gamma_value'
     InterpNumb = '15'
+    INg5 = '15'
 elif MesOrBar == 'Baryon':
     InterpFlag = 'baryon_num'
-    InterpNumb = '0'
+    ## InterpNumb = '0' ## Old
+    InterpNumb = '9' ## Proton
+    INg5 = '0' ## 0 is Pp*g5 , 1 is g5 , 17 is g5*Pp 
     
 if DoCons: RepWithCons = False
 
@@ -226,8 +229,8 @@ else:
 # note: dim of StateSet < dim of SmearSet
 GammaSet = ['I','g1','g2','g3','g4','g1g2','g1g3','g1g4','g2g3','g2g4','g3g4','g1g5','g2g5','g3g5','g4g5','g5']
 GammaConsSet = ['Consg1','Consg2','Consg3','Consg4']
-tflowlist = map(float,np.arange(0,1000,100)) ## indicies of flows to read
-# tflowlist = map(float,np.arange(0,1000))
+# tflowlist = map(float,np.arange(0,1000,100)) ## indicies of flows to read
+tflowlist = map(float,np.arange(0,1000))
 
 if DoCmplx:
     AllGammaSet = GammaSet + [igamma+'cmplx' for igamma in GammaSet]

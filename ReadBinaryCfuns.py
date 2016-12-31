@@ -231,7 +231,7 @@ class Read2ptCfunChroma:
             self.data.append(np.memmap(thisfile,dtype=np.complex128,mode='r',offset=nt*ChromaSIS*ip,shape=(nt,)).byteswap())
 
 class Read2ptCfunChromaXML:
-    def __init__(self,thisfile,thisMomList):
+    def __init__(self,thisfile,thisMomList,INList=[InterpNumb]):
         self.data = []
         if XAvg: thisxsrcList = xsrcList
         else: thisxsrcList = [xsrcList[0]]
@@ -255,20 +255,21 @@ class Read2ptCfunChromaXML:
                     # if strline == '<Shell_Shell_Wilson_Baryons>':
                         BarPart = True
                     elif InterpFlag in strline:
-                        if strline.replace('<'+InterpFlag+'>','').replace('</'+InterpFlag+'>','') == InterpNumb:
+                        if strline.replace('<'+InterpFlag+'>','').replace('</'+InterpFlag+'>','') in thisInterpNumb:
                             InterpPart = True
+                            datahold.append([])
                     elif BarPart and InterpPart:
                         if '<sink_mom_num>' in strline:
                             thismom = int(strline.replace('<sink_mom_num>','').replace('</sink_mom_num>',''))
                             if thismom in thisMomList:
-                                datahold.append([])
+                                datahold[-1].append([])
                                 self.OutMomList.append(thismom)
                                 ReadMom = True
                             else:
                                 ReadMom = False
                         elif '<re>' in strline and ReadMom:
-                            datahold[-1].append(float(strline.replace('<re>','').replace('</re>','')))
-                            if np.isnan(datahold[-1][-1]) and DeleteNanCfgs:
+                            datahold[-1][-1].append(float(strline.replace('<re>','').replace('</re>','')))
+                            if np.isnan(datahold[-1][-1][-1]) and DeleteNanCfgs:
                                 raise NaNCfunError('NaN Values: '+thisfile+'  ' +qvecSet[int(self.OutMomList[-1])]  )
                     if strline == '</momenta>' and InterpPart:
                         if len(datahold) > 0: break
@@ -277,9 +278,9 @@ class Read2ptCfunChromaXML:
             # print self.data
             # print 
             if len(self.data) == 0:                    
-                self.data = np.array(datahold)
+                self.data = np.rollaxis(np.array(datahold),0,1)
             else:
-                self.data += np.array(datahold)
+                self.data += np.rollaxis(np.array(datahold),0,1)
         self.data = self.data/len(thisxsrcList)
         indicies =  np.searchsorted(self.OutMomList,thisMomList)
         # if Debug:
