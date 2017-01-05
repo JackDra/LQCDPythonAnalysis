@@ -58,7 +58,21 @@ def ReadTopList(thisdir,thiscfglist):
                         topcharge.append(thistcharge)
 
     return cfglistout,topcharge,tflow
-                
+
+## cfglistout [ icfg ]
+## tflow [ icfg , itflow ]
+## topcharge [ icfg , itflow ]
+def ReadTopAll(thisdir):
+    cfglistout,tflow,topcharge = [],[],[]
+    for root, thedir, thesefiles in os.walk(thisdir):
+        for ifile in thesefiles:
+            thistflow,thistcharge = ReadTopCharge(root+ifile)
+            cfglistout.append(ifile)
+            tflow.append(thistflow)
+            topcharge.append(thistcharge)
+    return cfglistout,topcharge,tflow
+
+
 # R/L Evecs [ ip , istate , ival ]
 # Emass [ ip , istate ]
 def ReadLREM(todtval,thisMomList,filepref,NoWar=False):

@@ -1397,3 +1397,50 @@ def PlotTopSetCharge(data,thisSetList,imom,FT):
         SetTopAxies('t')
         pl.savefig(CreateFile('','twopt',imom,'AlphaOverFlow'+str(itflow),subdir='Top')+'.pdf')
         pl.clf()
+
+
+def GraphQExp(Qlist,flowlist):
+    pl.errorbar(flowlist,np.mean(Qlist,axis=0),np.std(Qlist,axis=0),fmt='o')
+    pl.xlim(flowlist[0]-0.1,flowlist[-1]+0.1)
+    pl.xlabel(r'$ t_{flow} $')
+    pl.ylabel(r'$ \langle Q \rangle $')
+    thisdir = outputdir[0] + 'graphs/Qdata/'
+    pl.title(r'$ \langle Q \rangle $')
+    mkdir_p(thisdir)
+    pl.savefig(thisdir+'QExp.pdf')
+    pl.clf()
+
+
+def Graphchit(Qlist,flowlist):
+    ## Hard coded here....
+    thislatspace = 0.0947
+    coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
+    Q2list = np.array(Qlist)**2
+    Std = coeff*0.25*np.std(Q2list,axis=0)*np.mean(Q2list,axis=0)**(0.25-1)
+    pl.errorbar(flowlist,coeff*np.mean(Q2list,axis=0)**(0.25),Std,fmt='o')
+    pl.xlim(flowlist[0]-0.1,flowlist[-1]+0.1)
+    pl.xlabel(r'$ t_{flow} $')
+    pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
+    pl.ylim(0,0.4)
+    thisdir = outputdir[0] + 'graphs/Qdata/'
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{\hbar c}{aV^{1/4}} \langle Q^2 \rangle^{1/4} $',y=1.04)
+    mkdir_p(thisdir)
+    pl.savefig(thisdir+'chit.pdf')
+    pl.clf()
+
+def GraphQLines(Qlist,flowlist,cfglist):
+    thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
+    for icfg in cfglist:
+        pl.plot(flowlist,Qlist[icfg],color=thiscolcyc.next(),label='Q cfg='+str(icfg))
+    pl.xlim(flowlist[0]-0.1,flowlist[-1]+0.1)
+    pl.xlabel(r'$ t_{flow} $')
+    pl.ylabel(r'$ Q $')
+    pl.legend()
+    thisdir = outputdir[0] + 'graphs/Qdata/'
+    pl.title(r'$ Q \left( icfg \right) $')
+    pl.tight_layout()
+    mkdir_p(thisdir)
+    pl.savefig(thisdir+'QLines.pdf')
+    pl.clf()
+
+    
