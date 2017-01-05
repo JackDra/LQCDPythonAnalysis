@@ -1434,14 +1434,13 @@ def GraphQ2Hist(Qlist,thisflow):
     # coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
     Q2list = np.array(Qlist)[:,thisflow]**2
 
-    print Q2list
     Q2min,Q2max = 0,300
     pl.hist(Q2list,bins=np.arange(Q2min,Q2max,10),histtype=HistType,normed=False)
     pl.xlim(Q2min,Q2max)
     pl.xlabel(r'$\langle Q^2 \rangle $')
     pl.ylabel(r'$ N $')
     thisdir = outputdir[0] + 'graphs/Qdata/'
-    pl.title(r'$ Histogram \langle Q^2 \rangle $',y=1.02)
+    pl.title(r'$ Histogram\ \langle Q^2 \rangle $',y=1.02)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'Q2Hist.pdf')
     pl.clf()
