@@ -7,14 +7,13 @@ from MiscFuns import *
 from FitParams import *
 from StringFix import *
 from SetLists import *
-from OppFuns import CreateGammaList
 import time,datetime
 from MultiWrap import *
 from multiprocessing import Pool
 from InputArgs import *
 from CreateCombs import CreateDictOldCombs
 from CombParams import *
-import cPickle as pickle
+from GraphDataNew import *
 
 
 ##datadict = { gamma } { mom } { method } { set }
@@ -31,7 +30,9 @@ def ReadAndPlotDis(thisSetList,thisMomList):
     #     thisAllSetList += isetlist
     iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
     for imom in thisMomList:
-        datadict = ReadTopFile(outputdir[0],iset,thisMomList=thisMomList)
+        datadict = []
+        for iset in iterSetList:
+            datadict.append(ReadTopFile(outputdir[0],iset,thisMomList=[imom]))
         setstart = time.time()
         PlotTopSetCharge(datadict,iterSetList,imom,feedin['ForceTitle'])
         print 'Getting and plotting ' , imom, 'Took: ' , str(datetime.timedelta(seconds=(time.time()-setstart))) ,' h:m:s                      '
@@ -49,7 +50,6 @@ ShowSetLists(feedin['set'])
 feedin['mom'] = GetAvgMomList(feedin['mom'])
 
 if DoMulticore and len(feedin['set']) > 1  and feedin['anaproc'] > 1:
-    # inputparams = [([iset],feedin['mom'],feedin['method']) for iset in feedin['set']]
     inputparams = []
     for imom in feedin['mom']:
         inputparams.append((feedin['set'],[imom]))

@@ -264,12 +264,21 @@ def SetDispAxies():
     pl.legend(loc='upper left')
     pl.tight_layout()
 
-def SetTopAxies(title):
-    ax.set_xlabel(r'$t_{sink}$')
-    ax.set_ylabel(r'$t_{flow}$')
-    ax.set_zlabel(r'$\frac{\langle NNQ \rangle>}{\langle NN\rangle}$')
-    ax.set_title(title)
-    # ax.legend(loc='upper left')
+
+AlphaTflowList = np.arange(0.01,10,1)
+AlphaTlist = np.arange(3,21)
+def SetTopAxies(torflow):
+    if torflow == 't':
+        pl.xlabel(r'$t$')
+        pl.xlim(MassTVals)
+        SetxTicks()
+    elif torflow == 'flow':
+        pl.xlabel(r'$t_{flow}$')        
+        pl.xlim(0,10)
+    pl.ylabel(r'$ \alpha $')
+    pl.legend()
+    pl.tight_layout()
+    # pl.title(r'$\frac{\langle NNQ \rangle }{\langle NN\rangle} = \alpha + '+str(tval)'$')
 
     
 
@@ -1340,70 +1349,51 @@ def PlotSetHistDist(data,thisSetList,thisSF,iThresh,thisMom,Zmom=False):
                 
 
 
-def PlotTopCharge(data,iSet,iMom):
-    tflowlist,tlist,plotAvg,plotUp,plotDown = [],[],[],[],[]
+def PlotTopChargeOverFlow(data,iSet,iMom,tsink,thiscol,thissym,thisshift):
+    tflowlist,tlist,plotAvg,plotStd = [],[],[],[]
     momdata = data['RF'][iMom]['Boots']
     for itflow,flowdata in momdata.iteritems():        
-        if untflowstr(itflow) not in tflowlist: continue
-        # tflowlist.append([])
-        # tlist.append([])
-        # plotAvg.append([])
-        # plotUp.append([])
-        # plotDown.append([])
         for it,tdata in flowdata.iteritems():
-            # tflowlist[-1].append(untflowstr(itflow))
-            # tlist[-1].append(untstr(it))
-            tavg = np.mean(tdata)
-            tstd = np.std(tdata)
-            # plotAvg[-1].append(tdata.Avg)
-            # plotUp[-1].append(tdata.Avg+tdata.Std)
-            # plotDown[-1].append(tdata.Avg-tdata.Std)
-            # plotAvg[-1].append(tavg)
-            # plotUp[-1].append(tavg+tstd)
-            # plotDown[-1].append(tavg-tstd)
-            tflowlist.append(untflowstr(itflow))
-            tlist.append(untstr(it))
-            plotAvg.append(tavg)
-            plotUp.append(tavg+tstd)
-            plotDown.append(tavg-tstd)
-
+            if tsink == int(untstr(it)):
+                tflowlist.append(untflowstr(itflow)-thisshift)
+                # tlist.append(untstr(it))
+                plotAvg.append(np.mean(tdata))
+                plotStd.append(np.std(tdata))
     if len(plotAvg) == 0: return
-    return tlist,tflowlist,plotAvg,plotUp,plotDown
-    # ax.errorbar(np.array(plotlist),Pullflag(plotdata,'Avg'),Pullflag(plotdata,'Std'),color=thiscolor,label=LegLab(iSet+'\ '+qstrTOqcond(iMom)))
-    
-def PlotTopSetCharge(data,thisSetList,thisMomList,FT):
+    pl.errorbar(tflowlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ tsink='+str(tsink)))
+
+def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift):
+    tflowlist,tlist,plotAvg,plotStd = [],[],[],[]
+    momdata = data['RF'][iMom]['Boots']
+    for itflow,flowdata in momdata.iteritems():        
+        if untflowstr(itflow) == tflow:
+            for it,tdata in flowdata.iteritems():
+                if untstr(it) < MassTVals[1] and untstr(it) > MassTVals[0] :
+                    # tflowlist.append(untflowstr(itflow))
+                    tlist.append(untstr(it)-thisshift)
+                    plotAvg.append(np.mean(tdata))
+                    plotStd.append(np.std(tdata))
+    if len(plotAvg) == 0: return
+    pl.errorbar(tlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ tflow='+str(tflow)))
+
+def PlotTopSetCharge(data,thisSetList,imom,FT):
     global ForceTitle
-    # global ax
     ForceTitle = FT
-    thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
-    # fig = pl.figure()
-    # ax = fig.gca(projection='3d')
-    thiscollist = []
-    thistlist,thistflowlist,thisplotAvg,thisplotUp,thisplotDown = [],[],[],[],[]
-    for iset,setdata in zip(thisSetList,data):
-        thiscollist.append([])
-        thistlist.append([])
-        thistflowlist.append([])
-        thisplotAvg.append([])
-        thisplotUp.append([])
-        thisplotDown.append([])
-        for imom in thisMomList:
+    for itsink in AlphaTlist:
+        thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
+        for iset,setdata in zip(thisSetList,data):
             if CheckDict(setdata,'RF',imom,'Boots'):
-                print 'plotting ', iset, imom
-                thiscollist[-1].append(thiscolcyc.next())
-                tlist,tflowlist,plotAvg,plotUp,plotDown = PlotTopCharge(setdata,iset,imom)
-                thistlist[-1].append(tlist)
-                thistflowlist[-1].append(tflowlist)
-                thisplotAvg[-1].append(plotAvg)
-                thisplotUp[-1].append(plotUp)
-                thisplotDown[-1].append(plotDown)
-                
-                # for it,itflow,iAvg in zip(tlist,tflowlist,plotAvg):
-                #     print
-                #     for jt,jtflow,jAvg in zip(it,itflow,iAvg):
-                #         print jt,jtflow,jAvg
-                # ax.scatter(tlist,tflowlist,plotAvg,color=thiscolcyc.next())
-    # SetTopAxies('Ratio NNQdivNN ')
-    # ax.savefig(CreateFile('','twopt','q = 0 0 0',,subdir='Top')+'.pdf')
-    # fig.show()
-    return thiscollist,thistlist,thistflowlist,thisplotAvg,thisplotUp,thisplotDown
+                # print 'plotting ', iset, imom
+                PlotTopChargeOverFlow(setdata,iset,imom,itsink,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next())
+        SetTopAxies('flow')
+        pl.savefig(CreateFile('','twopt',imom,'AlphaOvert'+str(itsink),subdir='Top')+'.pdf')
+        pl.clf()
+    for itflow in AlphaTflowList:
+        thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
+        for iset,setdata in zip(thisSetList,data):
+            if CheckDict(setdata,'RF',imom,'Boots'):
+                # print 'plotting ', iset, imom
+                PlotTopChargeOvert(setdata,iset,imom,itflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next())
+        SetTopAxies('t')
+        pl.savefig(CreateFile('','twopt',imom,'AlphaOverFlow'+str(itflow),subdir='Top')+'.pdf')
+        pl.clf()
