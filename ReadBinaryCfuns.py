@@ -231,8 +231,9 @@ class Read2ptCfunChroma:
             self.data.append(np.memmap(thisfile,dtype=np.complex128,mode='r',offset=nt*ChromaSIS*ip,shape=(nt,)).byteswap())
 
 class Read2ptCfunChromaXML:
-    def __init__(self,thisfile,thisMomList,INList=[InterpNumb]):
+    def __init__(self,thisfile,thisMomList,Dog5=False):
         self.data = []
+        self.datag5 = []
         if XAvg: thisxsrcList = xsrcList
         else: thisxsrcList = [xsrcList[0]]
         self.tshiftlist = []
@@ -240,9 +241,10 @@ class Read2ptCfunChromaXML:
             self.OutMomList = []
             TSRC_read = False
             datahold = []
+            datag5hold = []
             # print 'Reading ' ,thisfile.replace(xsrcList[0],xsrc)
             with open(thisfile.replace(xsrcList[0],xsrc),'r') as f:
-                BarPart,InterpPart,ReadMom = False,False,False                
+                BarPart,InterpPart,InterpPartg5,ReadMom = False,False,False,False
                 for line in f:
                     strline = line.strip()
                     if 't_srce' in strline and not TSRC_read:
@@ -255,24 +257,39 @@ class Read2ptCfunChromaXML:
                     # if strline == '<Shell_Shell_Wilson_Baryons>':
                         BarPart = True
                     elif InterpFlag in strline:
-                        if strline.replace('<'+InterpFlag+'>','').replace('</'+InterpFlag+'>','') in INList:
+                        if strline.replace('<'+InterpFlag+'>','').replace('</'+InterpFlag+'>','') in InterpNumb:
+                            InterpPartg5 = False
                             InterpPart = True
-                            datahold.append([])
+                        elif strline.replace('<'+InterpFlag+'>','').replace('</'+InterpFlag+'>','') in INg5:
+                            InterpPart = False
+                            InterpPartg5 = True
                     elif BarPart and InterpPart:
                         if '<sink_mom_num>' in strline:
                             thismom = int(strline.replace('<sink_mom_num>','').replace('</sink_mom_num>',''))
                             if thismom in thisMomList:
-                                datahold[-1].append([])
+                                datahold.append([])
                                 self.OutMomList.append(thismom)
                                 ReadMom = True
                             else:
                                 ReadMom = False
                         elif '<re>' in strline and ReadMom:
-                            datahold[-1][-1].append(float(strline.replace('<re>','').replace('</re>','')))
-                            if np.isnan(datahold[-1][-1][-1]) and DeleteNanCfgs:
+                            datahold[-1].append(float(strline.replace('<re>','').replace('</re>','')))
+                            if np.isnan(datahold[-1][-1]) and DeleteNanCfgs:
+                                raise NaNCfunError('NaN Values: '+thisfile+'  ' +qvecSet[int(self.OutMomList[-1])]  )
+                    elif BarPart and InterpPartg5:
+                        if '<sink_mom_num>' in strline:
+                            thismom = int(strline.replace('<sink_mom_num>','').replace('</sink_mom_num>',''))
+                            if thismom in thisMomList:
+                                datag5hold.append([])
+                                ReadMom = True
+                            else:
+                                ReadMom = False
+                        elif '<re>' in strline and ReadMom:
+                            datag5hold[-1].append(float(strline.replace('<re>','').replace('</re>','')))
+                            if np.isnan(datag5hold[-1][-1]) and DeleteNanCfgs:
                                 raise NaNCfunError('NaN Values: '+thisfile+'  ' +qvecSet[int(self.OutMomList[-1])]  )
                     if strline == '</momenta>' and InterpPart:
-                        if len(datahold) > 0: break
+                        if len(datahold) > 0 and ((len(datag5hold) > 0) or (not Dog5 )): break
             # print xsrc, ' data '
             # print np.array(datahold)
             # print self.data
@@ -281,7 +298,13 @@ class Read2ptCfunChromaXML:
                 self.data = np.rollaxis(np.array(datahold),0,1)
             else:
                 self.data += np.rollaxis(np.array(datahold),0,1)
+            if Dog5:
+                if len(self.datag5) == 0:                    
+                    self.datag5 = np.rollaxis(np.array(datag5hold),0,1)
+                else:
+                    self.datag5 += np.rollaxis(np.array(datag5hold),0,1)
         self.data = self.data/len(thisxsrcList)
+        if Dog5: self.datag5 = self.datag5/len(thisxsrcList)
         indicies =  np.searchsorted(self.OutMomList,thisMomList)
         # if Debug:
         #     print 
@@ -290,6 +313,7 @@ class Read2ptCfunChromaXML:
         #     print indicies
         #     print self.data
         self.data = np.array(self.data)[indicies].tolist()
+        if Dog5: self.datag5 = np.array(self.datag5)[indicies].tolist()
                     
                     
                 
