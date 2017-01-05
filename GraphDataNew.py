@@ -1428,6 +1428,22 @@ def Graphchit(Qlist,flowlist):
     pl.savefig(thisdir+'chit.pdf')
     pl.clf()
 
+def GraphchitHist(Qlist,thisflow):
+    ## Hard coded here....
+    # thislatspace = 0.0947
+    # coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
+    Q2list = np.array(Qlist)[:,thisflow]**2
+    pl.hist(Q2list,bins=np.arange(0,0.4,0.001),histtype=HistType,normed=False)
+    pl.xlabel(r'$\langle Q^2 \rangle $')
+    pl.ylabel(r'$ N $')
+    pl.ylim(0,0.4)
+    thisdir = outputdir[0] + 'graphs/Qdata/'
+    pl.title(r'$ Histogram \langle Q^2 \rangle $',y=1.02)
+    mkdir_p(thisdir)
+    pl.savefig(thisdir+'Q2Hist.pdf')
+    pl.clf()
+
+    
 def GraphQLines(Qlist,flowlist,cfglist):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     for icfg in cfglist:
