@@ -78,7 +78,7 @@ def ReadAndBoot2pt(readfilelist,thisMomList,thisnboot,randlist=[]):
             if CHROMA:
                 if xsrcList[0] in ifile or not XAvg:
                     data = Read2ptCfunChromaXML(ifile,thisMomList)
-                    tempdata.append(data.data[0])
+                    tempdata.append(data.data)
                     shiftlist.append(data.tshiftlist)
             else:
                 tempdata.append(Read2ptCfunPick(ifile,thisMomList).data)
@@ -134,11 +134,11 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
             if CHROMA:
                 if xsrcList[0] in ifile or not XAvg:
                     chargeindex = FileToChargeCfg(ifile,chargecfglist)
-                    data = Read2ptCfunChromaXML(ifile,thisMomList,[InterpNumb,INg5])
+                    data = Read2ptCfunChromaXML(ifile,thisMomList,Dog5=True)
                     tempdataTop.append([])
-                    tempdata.append(data[0].data)
+                    tempdata.append(data.data)
                     for iflowdata in chargedata[chargeindex]:                      
-                        tempdataTop[-1].append(np.array(data[1].data)*iflowdata)
+                        tempdataTop[-1].append(np.array(data.datag5)*iflowdata)
                     shiftlist.append(data.tshiftlist)
             else:
                 tempdata.append(Read2ptCfunPick(ifile,thisMomList).data)
