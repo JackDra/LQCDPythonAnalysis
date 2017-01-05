@@ -27,7 +27,7 @@ def ReadListTopCharge(thisSmearList,thisMomList,thisconflist,Interps=['nucleon']
 
     
     cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist))
-    if not np.all(x==tflow[0] for x in tflow):
+    if not np.all([x==tflow[0] for x in tflow]):
         print 'warning, files had different flow times'
     thisTflowList = tflow[0]
     # if len(cfglistout) != len(thiscfglist):

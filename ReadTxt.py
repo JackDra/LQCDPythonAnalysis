@@ -56,6 +56,7 @@ def ReadTopList(thisdir,thiscfglist):
                         cfglistout.append(icfg)
                         tflow.append(thistflow)
                         topcharge.append(thistcharge)
+
     return cfglistout,topcharge,tflow
                 
 # R/L Evecs [ ip , istate , ival ]

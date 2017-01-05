@@ -180,12 +180,12 @@ if kappa == 12:
     nx = 4
 else:
     kappas = 1364000
-    dirread = datadir+'/cfunRandT/Kud0'+str(kappa)+'Ks0'+str(kappas)
+    dirread = datadir+'/cfunsg5/Kud0'+str(kappa)+'Ks0'+str(kappas)
     nt = 64
     nx = 32
 
-outputdir = [datadir+'results/'+ListOrSet+ikappa+'/' for ikappa in kappalist]
-TCDir = datadir+'topcharge/Kud0'+str(kappa)+'Ks0'+str(kappas)+'/PerGF/'
+outputdir = [datadir+'/results/'+ListOrSet+ikappa+'/' for ikappa in kappalist]
+TCDir = datadir+'/topcharge/Kud0'+str(kappa)+'Ks0'+str(kappas)+'/PerGF/'
 logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 momlistdir = datadir+'momdir/'
 pickledir = datadir+"pickledir/"
@@ -229,8 +229,8 @@ else:
 # note: dim of StateSet < dim of SmearSet
 GammaSet = ['I','g1','g2','g3','g4','g1g2','g1g3','g1g4','g2g3','g2g4','g3g4','g1g5','g2g5','g3g5','g4g5','g5']
 GammaConsSet = ['Consg1','Consg2','Consg3','Consg4']
-# tflowlist = map(float,np.arange(0,1000,100)) ## indicies of flows to read
-tflowlist = map(float,np.arange(0,1000))
+tflowlist = map(float,np.arange(0,1000,100)) ## indicies of flows to read
+# tflowlist = map(float,np.arange(0,1000))
 
 if DoCmplx:
     AllGammaSet = GammaSet + [igamma+'cmplx' for igamma in GammaSet]
@@ -251,16 +251,14 @@ if kappa == 12:
     conflist = ['21_xsrc1_']
 else:
     FileStruct = "RC32x64_B1900Kud01375400Ks01364000C1715"
-    conflist = ['-a-004400_xsrc2',
-                '-a-004410_xsrc2',
-                '-a-004420_xsrc2',
-                '-a-004430_xsrc2',
-                '-a-004440_xsrc2',
-                '-a-004450_xsrc2']
-
+    conflist = ['-a-004410_xsrc110',
+                '-a-004410_xsrc111',
+                '-a-004410_xsrc112']
+                
+                
 filelist = dirread+"/@/"+FileStruct+"*"
             
-nsrc = 20
+nsrc = 200
 xsrcList = ['xsrc'+str(ix)+'_' for ix in range(1,nsrc+1)]
 
 SourceList = ['']

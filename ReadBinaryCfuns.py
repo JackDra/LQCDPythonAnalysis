@@ -237,6 +237,7 @@ class Read2ptCfunChromaXML:
         if XAvg: thisxsrcList = xsrcList
         else: thisxsrcList = [xsrcList[0]]
         self.tshiftlist = []
+        datalen,datag5len = 0,0
         for xsrc in thisxsrcList:
             self.OutMomList = []
             TSRC_read = False
@@ -296,15 +297,19 @@ class Read2ptCfunChromaXML:
             # print 
             if len(self.data) == 0:                    
                 self.data = np.rollaxis(np.array(datahold),0,1)
+                datalen = 1
             else:
                 self.data += np.rollaxis(np.array(datahold),0,1)
+                datalen += 1
             if Dog5:
                 if len(self.datag5) == 0:                    
+                    datag5len = 1
                     self.datag5 = np.rollaxis(np.array(datag5hold),0,1)
                 else:
                     self.datag5 += np.rollaxis(np.array(datag5hold),0,1)
-        self.data = self.data/len(thisxsrcList)
-        if Dog5: self.datag5 = self.datag5/len(thisxsrcList)
+                    datag5len += 1
+        self.data = self.data/float(datalen)
+        if Dog5: self.datag5 = self.datag5/float(datag5len)
         indicies =  np.searchsorted(self.OutMomList,thisMomList)
         # if Debug:
         #     print 
