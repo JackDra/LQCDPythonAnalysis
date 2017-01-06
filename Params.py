@@ -216,8 +216,10 @@ elif 'ReadSet' in ListOrSet:
     if 'nboot1k' in ListOrSet:
         nboot = 1000
     else:
-        nboot = 20
-
+        if 'JackLappy' in socket.gethostname():
+            nboot = 20
+        else:
+            nboot = 200
 ##DEBUGGING:
 print nboot , ListOrSet, XAvg
 # tsource = 17
