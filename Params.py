@@ -159,7 +159,7 @@ elif MesOrBar == 'Baryon':
     InterpFlag = 'baryon_num'
     ## InterpNumb = '0' ## Old
     InterpNumb = '9' ## Proton
-    INg5 = '1' ## 0 is Pp*g5 , 1 is g5 , 17 is g5*Pp 
+    INg5 = '17' ## 0 is Pp*g5 , 1 is g5 , 17 is g5*Pp 
     
 if DoCons: RepWithCons = False
 

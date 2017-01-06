@@ -260,10 +260,10 @@ class Read2ptCfunChromaXML:
                     # if strline == '<Shell_Shell_Wilson_Baryons>':
                         BarPart = True
                     elif InterpFlag in strline:
-                        if strline.replace('<'+InterpFlag+'>','').replace('</'+InterpFlag+'>','') in InterpNumb:
+                        if int(strline.replace('<'+InterpFlag+'>','').replace('</'+InterpFlag+'>','')) == InterpNumb:
                             InterpPartg5 = False
                             InterpPart = True
-                        elif strline.replace('<'+InterpFlag+'>','').replace('</'+InterpFlag+'>','') in INg5:
+                        elif int(strline.replace('<'+InterpFlag+'>','').replace('</'+InterpFlag+'>','')) == INg5:
                             InterpPart = False
                             InterpPartg5 = True
                     elif BarPart and InterpPart:
