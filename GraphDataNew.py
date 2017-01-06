@@ -270,7 +270,7 @@ AlphaTlist = np.arange(3,9)
 def SetTopAxies(torflow,NNQ=False,Dt=2):
     if torflow == 't':
         pl.xlabel(r'$t$')
-        pl.xlim(MassTVals)
+        pl.xlim(MassTVals[0],AlphaTlist[-1])
         SetxTicks()
     elif torflow == 'flow':
         pl.xlabel(r'$t_{flow}$')        
@@ -1394,7 +1394,7 @@ def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,
     for itflow,flowdata in momdata.iteritems():        
         if untflowstr(itflow) == tflow:
             for (it,tdata),(itdump,tdataNN) in zip(flowdata.iteritems(),momdataNN.iteritems()):
-                if untstr(it) < AlphaTlist[1] and untstr(it) > MassTVals[0] :
+                if untstr(it) < AlphaTvals[-1] and untstr(it) > MassTVals[0] :
                     # tflowlist.append(untflowstr(itflow))
                     tlist.append(untstr(it)-thisshift)
                     if NNQ:
