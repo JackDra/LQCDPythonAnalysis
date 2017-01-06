@@ -189,7 +189,7 @@ else:
 
 
 if 'dev' in socket.gethostname() or 'gateway' in socket.gethostname():
-    homedir = /mnt/home/dragosja
+    homedir = '/mnt/home/dragosja'
     outputdir = [homedir+'/results/'+ListOrSet+ikappa+'/' for ikappa in kappalist]
 else:
     outputdir = [datadir+'/results/'+ListOrSet+ikappa+'/' for ikappa in kappalist]
