@@ -187,7 +187,12 @@ else:
     nt = 64
     nx = 32
 
-outputdir = [datadir+'/results/'+ListOrSet+ikappa+'/' for ikappa in kappalist]
+
+if 'dev' in socket.gethostname() or 'gateway' in socket.gethostname():
+    homedir = /mnt/home/dragosja
+    outputdir = [homedir+'/results/'+ListOrSet+ikappa+'/' for ikappa in kappalist]
+else:
+    outputdir = [datadir+'/results/'+ListOrSet+ikappa+'/' for ikappa in kappalist]
 TCDir = datadir+'/topcharge/Kud0'+str(kappa)+'Ks0'+str(kappas)+'/PerGF/'
 logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 momlistdir = datadir+'momdir/'
