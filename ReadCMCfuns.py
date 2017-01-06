@@ -171,7 +171,7 @@ def CreateDir3pt(ism,jsm,Tsink,DS,Proj,Flag):
         return Flag+'sm'+ism+jsm+Proj+'t'+str(Tsink)+'p000.'+DS
 
 def CreateDir2pt(ism,jsm):
-    return 'twopt/twoptsm'+ism+'si'+jsm
+    return 'twoptRandT/twoptsm'+ism+'si'+jsm
 
 def CheckAllSet(FilePrefix,directory,Interps,tsourceList=[tsource]):
     if XAvg: thisxsrcList = xsrcList
