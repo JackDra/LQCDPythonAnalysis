@@ -159,7 +159,7 @@ elif MesOrBar == 'Baryon':
     InterpFlag = 'baryon_num'
     ## InterpNumb = '0' ## Old
     InterpNumb = '9' ## Proton
-    INg5 = '0' ## 0 is Pp*g5 , 1 is g5 , 17 is g5*Pp 
+    INg5 = '17' ## 0 is Pp*g5 , 1 is g5 , 17 is g5*Pp 
     
 if DoCons: RepWithCons = False
 
@@ -213,7 +213,7 @@ elif 'ReadSet' in ListOrSet:
     if 'nboot1k' in ListOrSet:
         nboot = 1000
     else:
-        nboot = 200
+        nboot = 20
 
 ##DEBUGGING:
 print nboot , ListOrSet, XAvg

@@ -1382,7 +1382,7 @@ def PlotTopChargeOverFlow(data,iSet,iMom,tsink,thiscol,thissym,thisshift,NNQ=Fal
     if len(plotAvg) == 0: return
     pl.errorbar(tflowlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ tsink='+str(tsink)))
     if NNQ:
-        pl.errorbar(tflowlist,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
+        pl.errorbar(np.array(tflowlist)-0.5,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
 
 def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,Dt=2):
     tflowlist,tlist,plotAvg,plotStd = [],[],[],[]
@@ -1414,7 +1414,7 @@ def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,
     if len(plotAvg) == 0: return
     pl.errorbar(tlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ tflow='+str(tflow)))
     if NNQ:
-        pl.errorbar(tlist,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
+        pl.errorbar(np.array(tlist)-0.5,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
     
 def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False):
     global ForceTitle    
