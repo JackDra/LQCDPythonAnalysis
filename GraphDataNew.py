@@ -1394,7 +1394,7 @@ def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,
     for itflow,flowdata in momdata.iteritems():        
         if untflowstr(itflow) == tflow:
             for (it,tdata),(itdump,tdataNN) in zip(flowdata.iteritems(),momdataNN.iteritems()):
-                if untstr(it) < MassTVals[1] and untstr(it) > MassTVals[0] :
+                if untstr(it) < AlphaTlist[1] and untstr(it) > MassTVals[0] :
                     # tflowlist.append(untflowstr(itflow))
                     tlist.append(untstr(it)-thisshift)
                     if NNQ:
