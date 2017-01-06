@@ -97,9 +97,11 @@ class ReadFSCfunPickCHROMA:
             f.close()
             if len(self.data) == 0:                    
                 self.data = np.array(datahold)
+                datalen = 1
             else:
                 self.data += np.array(datahold)
-        self.data = self.data/len(thisxsrcList)
+                datalen += 1
+        self.data = self.data/float(datalen)
 
 ## Just a reference function for the extra parameters in the 3 point function file.
 def holder(thisfile):

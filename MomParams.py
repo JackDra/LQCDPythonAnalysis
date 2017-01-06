@@ -269,7 +269,7 @@ def ScaledEffMass(ip,MassBoot,DispIn=LatDisDenominator):
 
 
 ## expecting qstr
-## MassBoot [tsink] BS 
+## MassBoot [tsink, bootlist ] 
 def ScaledEffMassList(ip,MassList,DispIn=LatDisDenominator):
     outdict = []
     for tboot in MassList:

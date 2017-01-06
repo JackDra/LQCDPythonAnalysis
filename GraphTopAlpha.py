@@ -35,6 +35,7 @@ def ReadAndPlotDis(thisSetList,thisMomList):
             datadict.append(ReadTopFile(outputdir[0],iset,thisMomList=[imom]))
         setstart = time.time()
         PlotTopSetCharge(datadict,iterSetList,imom,feedin['ForceTitle'])
+        PlotTopSetCharge(datadict,iterSetList,imom,feedin['ForceTitle'],NNQ=True)
         print 'Getting and plotting ' , imom, 'Took: ' , str(datetime.timedelta(seconds=(time.time()-setstart))) ,' h:m:s                      '
 
 
@@ -49,7 +50,7 @@ feedin['set'] = ReduceTooMassSet(feedin['set'])
 ShowSetLists(feedin['set'])
 feedin['mom'] = GetAvgMomList(feedin['mom'])
 
-if DoMulticore and len(feedin['set']) > 1  and feedin['anaproc'] > 1:
+if DoMulticore and len(feedin['mom']) > 1  and feedin['anaproc'] > 1:
     inputparams = []
     for imom in feedin['mom']:
         inputparams.append((feedin['set'],[imom]))

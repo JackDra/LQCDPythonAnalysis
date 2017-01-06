@@ -228,21 +228,25 @@ def GetBootStats(data):
    return np.reshape(flatdata,np.array(data).shape)
 
 
-def MassFun(cfun,Dt=1):
+def MassFun(cfun,Dt=1,Boot=True):
    mass = []
    for it,tcfun in enumerate(cfun):
       if it+Dt < len(cfun):
          mass.append(np.abs(np.log(np.abs(cfun[it+Dt]/tcfun)))/Dt)          
       else:
          mass.append(tcfun/tcfun)
-   return GetBootStats(mass)
-
+   if Boot:
+      return GetBootStats(mass)
+   else:
+      return np.array(mass)
+   
 def cfunTOmass(cfun):
    if len(np.array(cfun).shape) > 1:
       out = np.array(NDimOpp(cfun,1,MassFun))
       return np.rollaxis(out,0,len(out.shape))
    else:
       return MassFun(cfun)
+
 def flattenAllBut(data,dimleft):
     data = np.array(data)
     return data.reshape(reduce(op.mul,data.shape[:-dimleft]), *data.shape[-dimleft:])

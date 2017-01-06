@@ -267,7 +267,7 @@ def SetDispAxies():
 
 AlphaTflowList = np.arange(0.01,10,1)
 AlphaTlist = np.arange(3,21)
-def SetTopAxies(torflow):
+def SetTopAxies(torflow,NNQ=False,Dt=2):
     if torflow == 't':
         pl.xlabel(r'$t$')
         pl.xlim(MassTVals)
@@ -275,11 +275,15 @@ def SetTopAxies(torflow):
     elif torflow == 'flow':
         pl.xlabel(r'$t_{flow}$')        
         pl.xlim(0,10)
-    pl.ylabel(r'$ \alpha $')
     pl.legend()
     pl.tight_layout()
-    # pl.title(r'$\frac{\langle NNQ \rangle }{\langle NN\rangle} = \alpha + '+str(tval)'$')
-
+    if NNQ:
+        pl.ylabel(r'$ Eff\ Mass $')
+        pl.title(r'$ Eff\ Mass\ of\ \gamma_{5}P_{+}NNQ\ and\ NN\ Dt='+str(Dt)+'$')
+    else:
+        pl.ylabel(r'$ \alpha $')
+        pl.title(r'$\frac{\langle NNQ \rangle }{\langle NN\rangle} = \alpha $',y=1.04)
+    
     
 
 def SetErrAxies():
@@ -1349,53 +1353,94 @@ def PlotSetHistDist(data,thisSetList,thisSF,iThresh,thisMom,Zmom=False):
                 
 
 
-def PlotTopChargeOverFlow(data,iSet,iMom,tsink,thiscol,thissym,thisshift):
+def PlotTopChargeOverFlow(data,iSet,iMom,tsink,thiscol,thissym,thisshift,NNQ=False,Dt=2):
     tflowlist,tlist,plotAvg,plotStd = [],[],[],[]
-    momdata = data['RF'][iMom]['Boots']
-    for itflow,flowdata in momdata.iteritems():        
-        for it,tdata in flowdata.iteritems():
+    plotAvgNN,plotStdNN = [],[]
+    DictFlag,thisValue = 'RF','Alapha'
+    if NNQ:  DictFlag,thisValue = 'NNQ','NNQ'
+    momdata = data[DictFlag][iMom]['Boots']
+    momdataNN = data['cfun'][iMom]['Boots']
+    for itflow,flowdata in momdata.iteritems():
+        for (it,tdata),(itdump,tdataNN) in zip(flowdata.iteritems(),momdataNN.iteritems()):
             if tsink == int(untstr(it)):
                 tflowlist.append(untflowstr(itflow)-thisshift)
                 # tlist.append(untstr(it))
-                plotAvg.append(np.mean(tdata))
-                plotStd.append(np.std(tdata))
-    if len(plotAvg) == 0: return
-    pl.errorbar(tflowlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ tsink='+str(tsink)))
-
-def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift):
-    tflowlist,tlist,plotAvg,plotStd = [],[],[],[]
-    momdata = data['RF'][iMom]['Boots']
-    for itflow,flowdata in momdata.iteritems():        
-        if untflowstr(itflow) == tflow:
-            for it,tdata in flowdata.iteritems():
-                if untstr(it) < MassTVals[1] and untstr(it) > MassTVals[0] :
-                    # tflowlist.append(untflowstr(itflow))
-                    tlist.append(untstr(it)-thisshift)
+                if NNQ:
+                    if untstr(it) +Dt <= len(flowdata.keys()):
+                        EffMass = np.abs(np.log(np.abs(np.array(tdata)/np.array(flowdata['t'+str(untstr(it)+Dt)])))/float(Dt))
+                        EffMassNN = np.abs(np.log(np.abs(tdataNN/momdataNN['t'+str(untstr(it)+Dt)]))/float(Dt))
+                    else:
+                        EffMass = 1.0
+                        EffMassNN = 1.0
+                    plotAvg.append(np.mean(EffMass))
+                    plotStd.append(np.std(EffMass))
+                    plotAvgNN.append(np.mean(EffMassNN))
+                    plotStdNN.append(np.std(EffMassNN))
+                else:
                     plotAvg.append(np.mean(tdata))
                     plotStd.append(np.std(tdata))
     if len(plotAvg) == 0: return
-    pl.errorbar(tlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ tflow='+str(tflow)))
+    pl.errorbar(tflowlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ tsink='+str(tsink)))
+    if NNQ:
+        pl.errorbar(tflowlist,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
 
-def PlotTopSetCharge(data,thisSetList,imom,FT):
-    global ForceTitle
+def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,Dt=2):
+    tflowlist,tlist,plotAvg,plotStd = [],[],[],[]
+    plotAvgNN,plotStdNN = [],[]
+    DictFlag,thisValue = 'RF','Alapha'
+    if NNQ:  DictFlag,thisValue = 'NNQ','NNQ'
+    momdata = data[DictFlag][iMom]['Boots']
+    momdataNN = data['cfun'][iMom]['Boots']
+    for itflow,flowdata in momdata.iteritems():        
+        if untflowstr(itflow) == tflow:
+            for (it,tdata),(itdump,tdataNN) in zip(flowdata.iteritems(),momdataNN.iteritems()):
+                if untstr(it) < MassTVals[1] and untstr(it) > MassTVals[0] :
+                    # tflowlist.append(untflowstr(itflow))
+                    tlist.append(untstr(it)-thisshift)
+                    if NNQ:
+                        if untstr(it) + Dt <= len(flowdata.keys()):
+                            EffMass = np.abs(np.log(np.abs(np.array(tdata)/np.array(flowdata['t'+str(untstr(it)+Dt)])))/float(Dt))
+                            EffMassNN = np.abs(np.log(np.abs(tdataNN/momdataNN['t'+str(untstr(it)+Dt)]))/float(Dt))
+                        else:
+                            EffMass = 1.0
+                            EffMassNN = 1.0
+                        plotAvg.append(np.mean(EffMass))
+                        plotStd.append(np.std(EffMass))
+                        plotAvgNN.append(np.mean(EffMassNN))
+                        plotStdNN.append(np.std(EffMassNN))
+                    else:
+                        plotAvg.append(np.mean(tdata))
+                        plotStd.append(np.std(tdata))
+    if len(plotAvg) == 0: return
+    pl.errorbar(tlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ tflow='+str(tflow)))
+    if NNQ:
+        pl.errorbar(tlist,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
+    
+def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False):
+    global ForceTitle    
+    DictFlag,thisValue = 'RF','Alpha'
+    if NNQ:  DictFlag,thisValue = 'NNQ','NNQ'
+    Dt=2
     ForceTitle = FT
     for itsink in AlphaTlist:
         thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
         for iset,setdata in zip(thisSetList,data):
-            if CheckDict(setdata,'RF',imom,'Boots'):
+            if CheckDict(setdata,DictFlag,imom,'Boots'):
                 # print 'plotting ', iset, imom
-                PlotTopChargeOverFlow(setdata,iset,imom,itsink,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next())
-        SetTopAxies('flow')
-        pl.savefig(CreateFile('','twopt',imom,'AlphaOvert'+str(itsink),subdir='Top')+'.pdf')
+                PlotTopChargeOverFlow(setdata,iset,imom,itsink,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt)
+        filename = CreateFile('','twopt',imom,thisValue+'Overt'+str(itsink),subdir='Top')        
+        SetTopAxies('flow',NNQ=NNQ,Dt=Dt)
+        pl.savefig(filename+'.pdf')
         pl.clf()
     for itflow in AlphaTflowList:
         thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
         for iset,setdata in zip(thisSetList,data):
-            if CheckDict(setdata,'RF',imom,'Boots'):
+            if CheckDict(setdata,DictFlag,imom,'Boots'):
                 # print 'plotting ', iset, imom
-                PlotTopChargeOvert(setdata,iset,imom,itflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next())
-        SetTopAxies('t')
-        pl.savefig(CreateFile('','twopt',imom,'AlphaOverFlow'+str(itflow),subdir='Top')+'.pdf')
+                PlotTopChargeOvert(setdata,iset,imom,itflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt)
+        filename = CreateFile('','twopt',imom,thisValue+'OverFlow'+str(itflow),subdir='Top')
+        SetTopAxies('t',NNQ=NNQ,Dt=Dt)
+        pl.savefig(filename+'.pdf')
         pl.clf()
 
 
