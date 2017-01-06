@@ -180,7 +180,10 @@ if kappa == 12:
     nx = 4
 else:
     kappas = 1364000
-    dirread = datadir+'/cfunsg5/Kud0'+str(kappa)+'Ks0'+str(kappas)
+    if 'JackLappy' in socket.gethostname():
+        dirread = datadir+'/cfunsg5/Kud0'+str(kappa)+'Ks0'+str(kappas)
+    else:
+        dirread = datadir+'/cfunPChroma/Kud0'+str(kappa)+'Ks0'+str(kappas)
     nt = 64
     nx = 32
 
