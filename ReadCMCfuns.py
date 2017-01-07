@@ -71,8 +71,9 @@ def ReadSetTopCharge(thisSmearList,thisMomList,directory,Interps=['nucleon'],thi
                         thisfilelist[prefnosrc].append(directory+'/'+isource+'/@/'+fileprefix)
     f.close()
     if ExactXSrcNumber:
+        maxlen = np.max([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
         for ikey in thisfilelist.iterkeys():
-            if len(thisfilelist[ikey]) != len(thisfilelist[thisfilelist.keys()[0]]):
+            if len(thisfilelist[ikey]) != maxfilelist:
                 del thisfilelist[ikey]
     print 'number of configs = ' , len(thisfilelist.keys())
     print 'average number of sources per cfg = ' ,np.mean([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
