@@ -128,20 +128,19 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
     tempdata = []
     tempdataTop = []
     shiftlist = []
-    for iconf,ifile in enumerate(readfilelist):
+    for ifilepref,ifileList in readfilelist.iteritems():
         # print 'Reading {}%  \r'.format(int((iconf*100)/float(len(readfilelist)))),
         try:
             if CHROMA:
-                if xsrcList[0] in ifile or not XAvg:
-                    chargeindex = FileToChargeCfg(ifile,chargecfglist)
-                    data = Read2ptCfunChromaXML(ifile,thisMomList,Dog5=True)
-                    tempdataTop.append([])
-                    tempdata.append(data.data)
-                    for iflowdata in chargedata[chargeindex]:                      
-                        tempdataTop[-1].append(np.array(data.datag5)*iflowdata)
-                    shiftlist.append(data.tshiftlist)
+                chargeindex = FileToChargeCfg(ifilepref,chargecfglist)
+                data = R2CChromaXMLFileList(ifileList,thisMomList,Dog5=True)
+                tempdataTop.append([])
+                tempdata.append(data.data)
+                for iflowdata in chargedata[chargeindex]:                      
+                    tempdataTop[-1].append(np.array(data.datag5)*iflowdata)
+                shiftlist.append(data.tshiftlist)
             else:
-                tempdata.append(Read2ptCfunPick(ifile,thisMomList).data)
+                raise IOError('Top Charge not implemented for non chroma results')
         except NaNCfunError as e:
             print 
             print 'Deleting file ' + ifile

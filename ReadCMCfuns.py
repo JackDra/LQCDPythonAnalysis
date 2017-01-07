@@ -17,16 +17,21 @@ def TestMomList(thisMomList):
 
 
 def ReadListTopCharge(thisSmearList,thisMomList,thisconflist,Interps=['nucleon'],thistsourceList=[tsource]):
-    thisfilelist = []
+    thisfilelist = OrderedDict()
     f = open('./cfglistlist.txt','w')
     for iconf in thisconflist:
         ifile = filelist.replace('*',iconf)
+        prefnosrc = re.sub('_xsrc.*','',ifile)
+        if prefnosrc not in thisfilelist.keys():
+            thisfilelist[prefnosrc] = [ifile]
+        else:
+            thisfilelist[prefnosrc].append(ifile)
         f.write(ifile+'\n')
-        thisfilelist.append(ifile)
     f.close()
 
     
-    cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist))
+    print thisfilelist.keys()
+    cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist.keys()))
     if not np.all([x==tflow[0] for x in tflow]):
         print 'warning, files had different flow times'
     thisTflowList = tflow[0]
@@ -37,10 +42,12 @@ def ReadListTopCharge(thisSmearList,thisMomList,thisconflist,Interps=['nucleon']
                                                        Interps,cfglistout,thisTflowList,tsourceList=thistsourceList)
     return [data2pt,dataTop,thisTflowList,thisfilelist]
 
+
+
 def ReadSetTopCharge(thisSmearList,thisMomList,directory,Interps=['nucleon'],thistsourceList=[tsource]):
     # if len(thisTSinkList) > 0:
     #     TestMomList(thisMomList)
-    thisfilelist = []
+    thisfilelist = OrderedDict()
     f = open('./cfglistset.txt','w')
     
     fileend2pt = CreateEnd2pt(DefSmearList[0],DefSmearList[0],thistsourceList[0],Interps[0],Interps[0])
@@ -52,15 +59,20 @@ def ReadSetTopCharge(thisSmearList,thisMomList,directory,Interps=['nucleon'],thi
                 if fileend2pt not in ifile or ".metadata" in ifile: continue
                 # ## FOR DEBUGGING
                 # if xsrcList[0] not in ifile: continue
-                if xsrcList[0] not in ifile and XAvg: continue
                 if 'xsrc' in ListOrSet:
                     if ListOrSet.replace('ReadSet','').replace('ReadList','')+'_' not in ifile: continue
                 fileprefix = ifile.replace(fileend2pt,'')
                 if CheckSet(fileprefix,dirname+'/',thisSmearList,{},{},[],[],'',Interps,tsourceList=thistsourceList):
                     f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
-                    thisfilelist.append(directory+'/'+isource+'/@/'+fileprefix)
+                    prefnosrc = re.sub('_xsrc.*','',fileprefix)
+                    if prefnosrc not in thisfilelist.keys():
+                        thisfilelist[prefnosrc] = [directory+'/'+isource+'/@/'+fileprefix]
+                    else:
+                        thisfilelist[prefnosrc].append(directory+'/'+isource+'/@/'+fileprefix)
     f.close()
-    print 'number of configs = ' , len(thisfilelist)
+    print 'number of configs = ' , len(thisfilelist.keys())
+    print 'average number of sources per cfg = ' ,np.mean([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
+    print 'total number of measurements = ' , np.sum([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
     print ''
     if len(thisfilelist) == 0: raise IOError('No Configurations Found')
     if ShowConfNum:
@@ -68,7 +80,7 @@ def ReadSetTopCharge(thisSmearList,thisMomList,directory,Interps=['nucleon'],thi
             print ifile
         print ''
         
-    cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist))
+    cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist.keys()))
     if not np.all([x==tflow[0] for x in tflow]):
         print 'warning, files had different flow times'
     thisTflowList = tflow[0]
@@ -384,7 +396,9 @@ def Read2ptSetTop(TopCharge,readfilelist,thisSmearList,thisMomList,Interps,Topcf
                 timeleft = GetTimeLeft(icount,len(tsourceList)*len(Elongate(Interps,thisSmearList))**2,time.time()-start)
                 print 'Read 2pt: sm' + ism + 'Xsm'+jsm+' Time Left: ' +str(datetime.timedelta(seconds=timeleft)) , ' h:m:s \r',
                 thisstart = time.time()
-                thisfilelist = [ifile.replace('@',CreateDir2pt(ism,jsm))+CreateEnd2pt(ism,jsm,thists,iterp,jterp) for ifile in readfilelist]
+                thisfilelist = OrderedDict()
+                for ireadkey,ireadfl in readfilelist.iteritems():
+                    thisfilelist[ireadkey] = [ifile.replace('@',CreateDir2pt(ism,jsm))+CreateEnd2pt(ism,jsm,thists,iterp,jterp) for ifile in ireadfl]
                 dataoutTop,(dataout,randlist),thisshiftlist = ReadAndBoot2ptTop(thisfilelist,thisMomList,nboot,TopCharge,Topcfglist,thisTflowList) 
                 shiftlist[-1][icsm].append(thisshiftlist)
                 thisdata2pt[-1][icsm].append(dataout)
