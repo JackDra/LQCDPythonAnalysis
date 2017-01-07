@@ -159,7 +159,11 @@ elif MesOrBar == 'Baryon':
     InterpFlag = 'baryon_num'
     ## InterpNumb = '0' ## Old
     InterpNumb = '9' ## Proton
-    INg5 = '17' ## 0 is Pp*g5 , 1 is g5 , 17 is g5*Pp 
+    if 'BarN' in ListOrSet:
+        INg5 = ListOrSet.split('BarN')[-1]
+        print 'INg5 set to ' , INg5
+    else:
+        INg5 = '17' ## 0 is Pp*g5 , 1 is g5 , 17 is g5*Pp 
     
 if DoCons: RepWithCons = False
 
