@@ -63,12 +63,13 @@ def ReadSetTopCharge(thisSmearList,thisMomList,directory,Interps=['nucleon'],thi
                     if ListOrSet.replace('ReadSet','').replace('ReadList','')+'_' not in ifile: continue
                 fileprefix = ifile.replace(fileend2pt,'')
                 if CheckSet(fileprefix,dirname+'/',thisSmearList,{},{},[],[],'',Interps,tsourceList=thistsourceList):
-                    f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
                     prefnosrc = re.sub('_xsrc.*','',fileprefix)
                     if prefnosrc not in thisfilelist.keys():
                         thisfilelist[prefnosrc] = [directory+'/'+isource+'/@/'+fileprefix]
                     else:
+                        if XSrcLen < len(thisfilelist[prefnosrc]) and ForceXSrcLen: continue
                         thisfilelist[prefnosrc].append(directory+'/'+isource+'/@/'+fileprefix)
+                    f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
     f.close()
     if ExactXSrcNumber:
         maxlen = np.max([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
