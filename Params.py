@@ -91,6 +91,7 @@ with open('./setup.cfg','r') as f:
 PoFC2C3Dis = ''
 NewFileFlag = PoFC2C3Dis
 
+
 kappalist = ['k'+str(kappa),'xsrc1k'+str(kappa),'nboot1kk'+str(kappa),'XAvgk'+str(kappa)]
 # kappalist = ['k'+str(kappa),'xsrc1k'+str(kappa)]
 kappaflags = [ik.replace('k'+str(kappa),'') for ik in kappalist]
@@ -133,7 +134,7 @@ if 'XAvg' in ListOrSet:
     XAvg = True ## averages over source position locatinos before bootstrapping
 else:
     XAvg = False
-
+ExactXSrcNumber = True ## makes it so there are the same number of sources for each configuration (hardwired to the first configuration found)
 ##DEBUG toggles (True/False):
 # Debug = True # for debugging, toggles alot of print statements on
 # DEBUGPoF = True ## Temp debug parameter to test PoF (REMOVE ONCE DONE)
