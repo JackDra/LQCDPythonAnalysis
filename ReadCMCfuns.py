@@ -67,7 +67,7 @@ def ReadSetTopCharge(thisSmearList,thisMomList,directory,Interps=['nucleon'],thi
                     if prefnosrc not in thisfilelist.keys():
                         thisfilelist[prefnosrc] = [directory+'/'+isource+'/@/'+fileprefix]
                     else:
-                        if XSrcLen < len(thisfilelist[prefnosrc]) and ForceXSrcLen: continue
+                        if XSrcLen <= len(thisfilelist[prefnosrc]) and ForceXSrcLen: continue
                         thisfilelist[prefnosrc].append(directory+'/'+isource+'/@/'+fileprefix)
                     f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
     f.close()
