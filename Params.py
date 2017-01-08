@@ -134,10 +134,13 @@ if 'XAvg' in ListOrSet:
     XAvg = True ## averages over source position locatinos before bootstrapping
 else:
     XAvg = False
-ExactXSrcNumber = True ## makes it so there are the same number of sources for each configuration (hardwired to the first configuration found)
-ForceXSrcLen = True
+ExactXSrcNumber = False ## makes it so there are the same number of sources for each configuration (hardwired to the first configuration found)
+ForceXSrcLen = False ## forces so that any more sorce locations after XSrcLen are ignored
 XSrcLen = 20
 NoXAvg = False ## Does each source separatly for each 
+
+ForceMinXSrcLen = True ## only calculates with a minumum of MinXSRCLen of sources per gauge field
+MinXSrcLen = 20
 ##DEBUG toggles (True/False):
 # Debug = True # for debugging, toggles alot of print statements on
 # DEBUGPoF = True ## Temp debug parameter to test PoF (REMOVE ONCE DONE)

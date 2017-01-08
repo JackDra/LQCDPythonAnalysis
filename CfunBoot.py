@@ -147,6 +147,9 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
                     tempdata.append(data.data)
                     for iflowdata in chargedata[chargeindex]:
                         tempdataTop[-1].append(np.array(data.datag5)*iflowdata)
+                    # print ifilepref
+                    # print data.datag5[0][7]*chargedata[chargeindex][40]
+                    # print 
                     shiftlist.append(data.tshiftlist)
             else:
                 raise IOError('Top Charge not implemented for non chroma results')

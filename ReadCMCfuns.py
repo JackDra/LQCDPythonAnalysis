@@ -76,6 +76,10 @@ def ReadSetTopCharge(thisSmearList,thisMomList,directory,Interps=['nucleon'],thi
         for ikey in thisfilelist.iterkeys():
             if len(thisfilelist[ikey]) != maxlen:
                 del thisfilelist[ikey]
+    if ForceMinXSrcLen:
+        for ikey in thisfilelist.iterkeys():
+            if len(thisfilelist[ikey]) < MinXSrcLen:
+                del thisfilelist[ikey]
     print 'number of configs = ' , len(thisfilelist.keys())
     print 'average number of sources per cfg = ' ,np.mean([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
     print 'total number of measurements = ' , np.sum([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
