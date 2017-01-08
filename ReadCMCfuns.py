@@ -246,52 +246,47 @@ def CheckAllSet(FilePrefix,directory,Interps,tsourceList=[tsource]):
 
 def CheckSet(FilePrefix,directory,thisSmearList,thisProjGammaList,thisProjDerList,thisDSList,
              thisTSinkList,Flag,Interps,tsourceList=[tsource]):
-    if XAvg:
-        thisxsrcList = xsrcList
-    else:
-        thisxsrcList = [xsrcList[0]]
-    for xsrc in thisxsrcList:
-        for iterp,ism in Elongate(Interps,thisSmearList):
-            for thists in tsourceList:
-                for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,thisSmearList)):
-                    testfile2pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
-                                                     CreateDir2pt(ism,jsm))
-                                   +FilePrefix+CreateEnd2pt(ism,jsm,thists,iterp,jterp))
-                    testfile2pt = testfile2pt.replace(xsrcList[0],xsrc)
-                    if Debug: print 'Checking~!! ' ,testfile2pt
-                    if not os.path.isfile(testfile2pt): return False
-                for iFlag,itsink in zip(Flag,thisTSinkList):
-                    thisFlag = iFlag
-                    C2C3Dis = ''
-                    if iFlag == 'REvec':
-                        Jsmlist = ['REvec']
-                    elif 'PoF' in iFlag:
-                        if CHROMA:
-                            Jsmlist = ['PoF'+str(PoFShifts)+'D'+str(PoFDelta)]
-                            thisFlag = ''
-                            C2C3Dis = ''
-                        else:
-                            Jsmlist = ['RE'+PoFReadTvarList[0]]
-                            thisFlag = 'RE'+PoFDirTvarList[0]
-                            C2C3Dis = PoFC2C3Dis
+    for iterp,ism in Elongate(Interps,thisSmearList):
+        for thists in tsourceList:
+            for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,thisSmearList)):
+                testfile2pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
+                                                 CreateDir2pt(ism,jsm))
+                               +FilePrefix+CreateEnd2pt(ism,jsm,thists,iterp,jterp))
+                # testfile2pt = testfile2pt.replace(xsrcList[0],xsrc)
+                if Debug: print 'Checking~!! ' ,testfile2pt
+                if not os.path.isfile(testfile2pt): return False
+            for iFlag,itsink in zip(Flag,thisTSinkList):
+                thisFlag = iFlag
+                C2C3Dis = ''
+                if iFlag == 'REvec':
+                    Jsmlist = ['REvec']
+                elif 'PoF' in iFlag:
+                    if CHROMA:
+                        Jsmlist = ['PoF'+str(PoFShifts)+'D'+str(PoFDelta)]
+                        thisFlag = ''
+                        C2C3Dis = ''
                     else:
-                        Jsmlist = ['Xsm'+jsm for jsm in thisSmearList]
-                    for jcsm,jsm3pt in enumerate(Jsmlist):
-                        for iDS in thisDSList:
-                            for iProj in thisProjGammaList:
-                                testfile3pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
-                                                                 CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
-                                               +FilePrefix+CreateEnd3pt(ism,jsm3pt,thists,itsink,iDS,iProj,''))
-                                testfile3pt = testfile3pt.replace(xsrcList[0],xsrc)
-                                if Debug: print 'Checking~!!! ' ,  testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
-                                if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
-                            for iProj in thisProjDerList:
-                                testfile3pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
-                                                                 CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
-                                               +FilePrefix+CreateEnd3pt(ism,jsm3pt,thists,itsink,iDS,iProj,'D'))
-                                testfile3pt = testfile3pt.replace(xsrcList[0],xsrc)
-                                if Debug: print 'Checking~!!! ' ,  testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
-                                if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
+                        Jsmlist = ['RE'+PoFReadTvarList[0]]
+                        thisFlag = 'RE'+PoFDirTvarList[0]
+                        C2C3Dis = PoFC2C3Dis
+                else:
+                    Jsmlist = ['Xsm'+jsm for jsm in thisSmearList]
+                for jcsm,jsm3pt in enumerate(Jsmlist):
+                    for iDS in thisDSList:
+                        for iProj in thisProjGammaList:
+                            testfile3pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
+                                                             CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
+                                           +FilePrefix+CreateEnd3pt(ism,jsm3pt,thists,itsink,iDS,iProj,''))
+                            # testfile3pt = testfile3pt.replace(xsrcList[0],xsrc)
+                            if Debug: print 'Checking~!!! ' ,  testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
+                            if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
+                        for iProj in thisProjDerList:
+                            testfile3pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
+                                                             CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
+                                           +FilePrefix+CreateEnd3pt(ism,jsm3pt,thists,itsink,iDS,iProj,'D'))
+                            # testfile3pt = testfile3pt.replace(xsrcList[0],xsrc)
+                            if Debug: print 'Checking~!!! ' ,  testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
+                            if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
     return True
 
 ##tempdata [ iconf ] .data [ ip , it ]

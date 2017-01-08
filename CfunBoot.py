@@ -138,14 +138,14 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
                         data = R2CChromaXMLFileList([ifile],thisMomList,Dog5=True)
                         tempdataTop.append([])
                         tempdata.append(data.data)
-                        for iflowdata in chargedata[chargeindex]:                      
+                        for iflowdata in chargedata[chargeindex]:
                             tempdataTop[-1].append(np.array(data.datag5)*iflowdata)
                         shiftlist.append(data.tshiftlist)
                 else:
                     data = R2CChromaXMLFileList(ifileList,thisMomList,Dog5=True)
                     tempdataTop.append([])
                     tempdata.append(data.data)
-                    for iflowdata in chargedata[chargeindex]:                      
+                    for iflowdata in chargedata[chargeindex]:
                         tempdataTop[-1].append(np.array(data.datag5)*iflowdata)
                     shiftlist.append(data.tshiftlist)
             else:
@@ -164,6 +164,6 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
 def FileToChargeCfg(ifile,chargecfglist):
     for ic,icharge in enumerate(chargecfglist):
         if icharge in ifile:
-           return ic
+            return ic
     print 'charge cfg not found'
     return None

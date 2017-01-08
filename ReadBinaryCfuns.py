@@ -194,7 +194,7 @@ class Read2ptCfunPick:
         f = open(thisfile,'rb')
         if XAvg: thisxsrcList = xsrcList
         else: thisxsrcList = [xsrcList[0]]
-        self.tshiftlist = [0]*len(thsixsrclist)
+        self.tshiftlist = [0]*len(thisxsrcList)
         for ip,iploc in enumerate(thisMomList):
             self.data.append([])
             for it in range(nt):
@@ -228,7 +228,7 @@ class Read2ptCfunChroma:
         # barnum = 21
         if XAvg: thisxsrcList = xsrcList
         else: thisxsrcList = [xsrcList[0]]
-        self.tshiftlist = [0]*len(thsixsrclist)
+        self.tshiftlist = [0]*len(thisxsrcList)
         for ip,iploc in enumerate(thisMomList):
             self.data.append(np.memmap(thisfile,dtype=np.complex128,mode='r',offset=nt*ChromaSIS*ip,shape=(nt,)).byteswap())
 
