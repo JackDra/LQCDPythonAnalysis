@@ -133,12 +133,21 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         try:
             if CHROMA:
                 chargeindex = FileToChargeCfg(ifilepref,chargecfglist)
-                data = R2CChromaXMLFileList(ifileList,thisMomList,Dog5=True)
-                tempdataTop.append([])
-                tempdata.append(data.data)
-                for iflowdata in chargedata[chargeindex]:                      
-                    tempdataTop[-1].append(np.array(data.datag5)*iflowdata)
-                shiftlist.append(data.tshiftlist)
+                if NoXAvg:
+                    for ifile in ifileList:
+                        data = R2CChromaXMLFileList([ifile],thisMomList,Dog5=True)
+                        tempdataTop.append([])
+                        tempdata.append(data.data)
+                        for iflowdata in chargedata[chargeindex]:                      
+                            tempdataTop[-1].append(np.array(data.datag5)*iflowdata)
+                        shiftlist.append(data.tshiftlist)
+                else:
+                    data = R2CChromaXMLFileList(ifileList,thisMomList,Dog5=True)
+                    tempdataTop.append([])
+                    tempdata.append(data.data)
+                    for iflowdata in chargedata[chargeindex]:                      
+                        tempdataTop[-1].append(np.array(data.datag5)*iflowdata)
+                    shiftlist.append(data.tshiftlist)
             else:
                 raise IOError('Top Charge not implemented for non chroma results')
         except NaNCfunError as e:
