@@ -137,7 +137,7 @@ else:
 ExactXSrcNumber = True ## makes it so there are the same number of sources for each configuration (hardwired to the first configuration found)
 ForceXSrcLen = True
 XSrcLen = 20
-NoXAvg = True ## Does each source separatly for each 
+NoXAvg = False ## Does each source separatly for each 
 ##DEBUG toggles (True/False):
 # Debug = True # for debugging, toggles alot of print statements on
 # DEBUGPoF = True ## Temp debug parameter to test PoF (REMOVE ONCE DONE)
