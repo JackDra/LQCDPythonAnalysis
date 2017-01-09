@@ -8,13 +8,13 @@ SeekIncSize = 8
 ChromaSIS = 16
 bar3ptChromaByteSwap = True
 # complextype = np.complex64
-complextype = np.complex64
+complextype = np.complex128
 CheckMagic = False
 
-def GetBar3ptLoc(ig,ip,tsinklen,momlistlen):
+def GetBar3ptLoc(ig,ip,tsinklen,momlistlen,thiscomplextype):
     intlen = np.dtype(np.int32).itemsize
     strlen = np.dtype('S13').itemsize
-    cmplxlen = np.dtype(complextype).itemsize
+    cmplxlen = np.dtype(thiscomplextype).itemsize
     cmplxblocklen = cmplxlen*tsinklen+intlen
     # cmplxblocklen = intlen*16+intlen
     headerlen = intlen*27+strlen
@@ -46,12 +46,17 @@ class ReadFSCfunPickCHROMA:
             # if thistsink == 'FileName':
             #     thistsink = int(re.findall('tsink.*?p',thisfile)[0].replace('tsink','').replace('p',''))
             datahold = []            
+            if os.path.getsize(thisfile) == 826009: thiscomplextype = np.complex128
+            elif os.path.getsize(thisfile) == 420505:
+                raise IOError(thisfile+ ' Is old 64 bit, please remove all smaller sized files')
+                # thiscomplextype = np.complex64
+            else: thiscomplextype = complextype
             f = open(thisfile,'rb')
             for igamma,thisgamma in enumerate(thisGammaList):
                 igammaloc = GammaTOChroma(thisgamma)
                 datahold.append([])
                 for ip,iploc in enumerate(thisMomList):      
-                    loc,loccons,magmin = GetBar3ptLoc(igammaloc,iploc,forcent,len(qvecSet))
+                    loc,loccons,magmin = GetBar3ptLoc(igammaloc,iploc,forcent,len(qvecSet),thiscomplextype)
                     magicloc = loc-magmin
                     if 'Cons' in thisgamma or (RepWithCons and ('g1' in thisgamma or 'g2' in thisgamma or 'g3' in thisgamma or 'g4' in thisgamma )):
                         loc = loccons
@@ -64,7 +69,7 @@ class ReadFSCfunPickCHROMA:
                             print MagicList
                             raise IOError('Magic Number not found for ' +thisgamma+' '+ipTOqstr(iploc))                
                     f.seek(loc)
-                    tmpdata = np.fromfile(f,dtype=complextype,count=forcent)
+                    tmpdata = np.fromfile(f,dtype=thiscomplextype,count=forcent)
                     if bar3ptChromaByteSwap:tmpdata = tmpdata.byteswap()
                     if 'cmplx' in thisgamma:
                         datahold[igamma].append(tmpdata.imag)
@@ -87,8 +92,15 @@ class ReadFSCfunPickCHROMA:
                     #         print it, tdata
                     # print np.roll(datahold[igamma][-1],isshift)
                     # print np.roll(datahold[igamma][-1],-isshift)
-                    if any(np.isnan(datahold[igamma][ip])) and DeleteNanCfgs:
-                        raise NaNCfunError('NaN Values: '+thisgamma+' ' +qvecSet[iploc]  )
+                    if any(np.isnan(datahold[igamma][ip])):
+                        print 
+                        print thisfile
+                        print 'thisgamma ',thisgamma,' iploc ', iploc
+                        print 'data:'
+                        for it,idata in enumerate(datahold[igamma][ip]):
+                            print it,idata
+                        if DeleteNanCfgs:
+                            raise NaNCfunError('NaN Values: '+thisgamma+' ' +qvecSet[iploc]  )
             f.close()
             if len(self.data) == 0:                    
                 self.data = np.array(datahold)

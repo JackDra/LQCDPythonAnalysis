@@ -393,7 +393,7 @@ def Read3ptSet(readfilelist,thisSmearList,thisMomList,thisProjGammaList,thisProj
                                                       .replace(FileStruct,FileStruct+C2C3Dis)
                                                       +CreateEnd3pt(ism,jsm,thists,tsink,iDS,iProj,'') for ifile in ireadfl]
 
-                        holdres = ReadAndBoot3pt(thisfilelist,thisMomList,thisGammaList,[],nboot,thisshiftlist,printstr=iDS+iProj,randlist=randlist)
+                        holdres = ReadAndBoot3pt(thisfilelist,thisMomList,thisGammaList,[],nboot,printstr=iDS+iProj,randlist=randlist)
                         for gammares in holdres:
                             thisdata3pt[-1][icsm][jcsm].append(gammares)
                     for iProj,thisDerList in thisProjDerList.iteritems():
@@ -402,7 +402,7 @@ def Read3ptSet(readfilelist,thisSmearList,thisMomList,thisProjGammaList,thisProj
                             thisfilelist = [ifile.replace('@',CreateDir3pt(ism,jsm,tsink,iDS,iProj,thisFlag))
                                             .replace(FileStruct,FileStruct+C2C3Dis)
                                             +CreateEnd3pt(ism,jsm,thists,tsink,iDS,iProj,'D') for ifile in ireadfl]
-                        holdres = ReadAndBoot3pt(thisfilelist,thisMomList,[],thisDerList,nboot,thisshiftlist,printstr=iDS+iProj,randlist=randlist)
+                        holdres = ReadAndBoot3pt(thisfilelist,thisMomList,[],thisDerList,nboot,printstr=iDS+iProj,randlist=randlist)
                         for gammares in holdres:
                             thisdata3pt[-1][icsm][jcsm].append(gammares)
                 print 'Read 3pt: sm' + ism + jsm + 't_src'+str(thists)+' t_sink'+str(tsink)+ ' took: ' + str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s        '

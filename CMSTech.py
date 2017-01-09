@@ -307,21 +307,18 @@ def ProjectCorrPoF2pt(LEvec,Cfun,REvec,thisPoFShifts=PoFShifts):
     #                               np.concatenate((CfunShift2,CfunShift3,CfunShift4),1)))
 
     ##DEBUG##
-    if Debug:
-        print 'TwoPoint Run:'
-        # print 'Cfun Shape ' , CfunExt.shape
-        # print 'REvec Shape ' , REvec.shape
-        # print 'LEvec Shape ' , LEvec.shape        
-        # for ic,(iRE,iCfun) in enumerate(zip(REvec[0],np.dot(LEvec[0],CfunExt))):
-        #     iCfun[26].Stats()
-        #     print '27',ic,iRE,iCfun[26].Avg
-        print ''
     CMCfun = []
     for istate,(stateRE,stateLE) in enumerate(zip(REvec,LEvec)):
         CMCfun.append(np.dot(stateRE,np.dot(stateLE,CfunExt)))
         for it,itCM in enumerate(CMCfun[istate]):
             CMCfun[istate][it].Stats()
             # print 'istate',istate, 'it',it, 'values',CMCfun[istate][it].Avg, CMCfun[istate][it].Std
+    if Debug:
+        print 'TwoPoint Run:'
+        for ic,(iRE,iCfun) in enumerate(zip(REvec[0],np.dot(LEvec[0],CfunExt))):
+            iCfun[5].Stats()
+            print '5',ic,iRE,iCfun[5].Avg, CMCfun[ic][5].Avg
+        print ''
     return CMCfun
 
 
@@ -340,17 +337,17 @@ def ProjectCorrPoF2pt(LEvec,Cfun,REvec,thisPoFShifts=PoFShifts):
 def ProjectREvecCorrPoF(Cfun,REvec):
     CMCfun = []
     CfunExt = CreateREvecProjPoFMatrix(Cfun)
-    ##DEBUG##
-    if Debug:
-        print 'ThreePoint Run:'
-        # for ic,(iRE,iCfun) in enumerate(zip(REvec[0],CfunExt)):
-        #     print ic,iRE,iCfun[24].Avg
-        # print ''
     for istate,stateRE in enumerate(REvec):
         CMCfun.append(np.dot(stateRE,CfunExt))
         for it,itCM in enumerate(CMCfun[istate]):
             CMCfun[istate][it].Stats()
             # print istate, it, CMCfun[istate][it].Avg, CMCfun[istate][it].Std
+    ##DEBUG##
+    if Debug:
+        print 'ThreePoint Run:'
+        for ic,(iRE,iCfun) in enumerate(zip(REvec[0],CfunExt)):
+            print ic,iRE,iCfun[5].Avg, CMCfun[ic][5].Avg
+        print ''
     return CMCfun
 
 def ProjectREvecCorr(Cfun,REvec):

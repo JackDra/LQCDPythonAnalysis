@@ -137,7 +137,7 @@ else:
 ExactXSrcNumber = False ## makes it so there are the same number of sources for each configuration (hardwired to the first configuration found)
 ForceXSrcLen = False ## forces so that any more sorce locations after XSrcLen are ignored
 XSrcLen = 20
-NoXAvg = False ## Does each source separatly for each 
+NoXAvg = True ## Does each source separatly for each 
 
 ForceMinXSrcLen = True ## only calculates with a minumum of MinXSRCLen of sources per gauge field
 MinXSrcLen = 10
@@ -151,7 +151,7 @@ DoCmplx = True # reads complex opperator values as well as real values, should b
 DoCons = False # reads Conserved vector current NOT IMPLEMENTED YET, USING BELOW UNTILL I GET AROUDN TO IT. ONLY WORKS WITH CHROMA
 RepWithCons = True # TEMPORARY, overrides vector current with Conserved vector current ONLY WORKS WITH CHROMA
 
-DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
+DefWipe = True # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
 MakeGraphDat = True # Creates a .dat file of the values plotted for the corresponding graph (where implemented)
 PhysicalUnits = True # uses lattice momenta or physical momenta
 ForceNoDer = False # Forces the fitting LLSBoot to use manual derivaive calculation
@@ -379,8 +379,8 @@ else:
     AnatodtList = DeftodtList
     AnaTvarList = DefTvarList
     
-DefSmearList = ['16','32','64']
-# DefSmearList = ['16']
+# DefSmearList = ['16','32','64']
+DefSmearList = ['16']
 # DefSmearList = ['64']
 # DefSmearList = ['8','16','32','64','128','256']
 # DefSmearList = ['64','128']

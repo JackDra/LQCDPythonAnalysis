@@ -97,7 +97,7 @@ def ReadAndBoot2pt(readfilelist,thisMomList,thisnboot,randlist=[]):
 #dataout [ igamma , ip , it ]. bs
 def ReadAndBoot3pt(readfilelist,thisMomList,thisGammaList,thisDerGammaList,thisnboot,printstr='',randlist=[]):
     tempdata = []
-    for ifileList in readfilelist.itervalue():
+    for ifileList in readfilelist.itervalues():
         # print 'Reading '+printstr+' {}%            \r'.format(int((iconf*100)/float(len(readfilelist)))),
         try:
             if CHROMA:
@@ -115,6 +115,10 @@ def ReadAndBoot3pt(readfilelist,thisMomList,thisGammaList,thisDerGammaList,thisn
             print 'MUST RE-RUN AFTER THIS TO EXCLUDE BAD CONFIGS'
             print
             # os.remove(ifile)
+    # print 'Values'
+    # for idata in tempdata:
+    #     print idata[0][0][5]
+    # print 
     if len(thisGammaList) > 0:
         return BootSet3pt(tempdata,thisMomList,thisGammaList,thisnboot,printstr='',randlist=randlist)
     elif len(thisDerGammaList) > 0:
@@ -136,17 +140,20 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
                         data = R2CChromaXMLFileList([ifile],thisMomList,Dog5=True)
                         tempdataTop.append([])
                         tempdata.append(data.data)
+                        # tempdata.append((np.array(data.data)*chargedata[chargeindex][40]).tolist())
                         for iflowdata in chargedata[chargeindex]:
-                            tempdataTop[-1].append(np.array(data.datag5)*iflowdata)
+                            # tempdataTop[-1].append(np.array(data.data)*iflowdata)
+                            tempdataTop[-1].append((np.array(data.datag5)*iflowdata).tolist())
+                            # tempdataTop[-1].append(np.abs(np.array(data.datag5)*iflowdata))
+                        # print ifile
+                        # print data.datag5[0][7],chargedata[chargeindex][40]
+                        # print 
                 else:
                     data = R2CChromaXMLFileList(ifileList,thisMomList,Dog5=True)
                     tempdataTop.append([])
                     tempdata.append(data.data)
                     for iflowdata in chargedata[chargeindex]:
                         tempdataTop[-1].append(np.array(data.datag5)*iflowdata)
-                    # print ifilepref
-                    # print data.datag5[0][7]*chargedata[chargeindex][40]
-                    # print 
                 shiftlist.append(data.tshiftlist)
             else:
                 raise IOError('Top Charge not implemented for non chroma results')
