@@ -48,8 +48,8 @@ class ReadFSCfunPickCHROMA:
             datahold = []            
             if os.path.getsize(thisfile) == 826009: thiscomplextype = np.complex128
             elif os.path.getsize(thisfile) == 420505:
-                raise IOError(thisfile+ ' Is old 64 bit, please remove all smaller sized files')
-                # thiscomplextype = np.complex64
+                # raise IOError(thisfile+ ' Is old 64 bit, please remove all smaller sized files')
+                thiscomplextype = np.complex64
             else: thiscomplextype = complextype
             f = open(thisfile,'rb')
             for igamma,thisgamma in enumerate(thisGammaList):
