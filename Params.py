@@ -140,7 +140,7 @@ XSrcLen = 20
 NoXAvg = False ## Does each source separatly for each 
 
 ForceMinXSrcLen = True ## only calculates with a minumum of MinXSRCLen of sources per gauge field
-MinXSrcLen = 20
+MinXSrcLen = 10
 ##DEBUG toggles (True/False):
 # Debug = True # for debugging, toggles alot of print statements on
 # DEBUGPoF = True ## Temp debug parameter to test PoF (REMOVE ONCE DONE)
@@ -390,7 +390,7 @@ DefSmearList = ['16','32','64']
 # DefSmearList = ['64']
 # DefSmearList = ['128']
 # if kappa == 12:
-SingSmearList = ['32']
+SingSmearList = [DefSmearList[0]] ## must be first element of DefSmearList for now FIX!!
 # DefSmearList = ['32']
 # DefSmearList = ['8','16','32']
 StateSet = map(str,range(1,(PoFShifts+1)*len(DefSmearList)+1))

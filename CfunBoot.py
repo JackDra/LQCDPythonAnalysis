@@ -72,16 +72,18 @@ def BootSet2ptTC(data,thisMomList,nboot,tflowlist,randlist=[]):
 def ReadAndBoot2pt(readfilelist,thisMomList,thisnboot,randlist=[]):
     tempdata = []
     shiftlist = []
-    for iconf,ifile in enumerate(readfilelist):
+    for ifilepref,ifileList in readfilelist.iteritems():
         # print 'Reading {}%  \r'.format(int((iconf*100)/float(len(readfilelist)))),
         try:
             if CHROMA:
-                if xsrcList[0] in ifile or not XAvg:
-                    data = Read2ptCfunChromaXML(ifile,thisMomList)
+                if NoXAvg:
+                    for ifile in ifileList:
+                        data = R2CChromaXMLFileList([ifile],thisMomList,Dog5=False)
+                        tempdata.append(data.data)
+                else:
+                    data = R2CChromaXMLFileList(ifileList,thisMomList,Dog5=False)
                     tempdata.append(data.data)
-                    shiftlist.append(data.tshiftlist)
-            else:
-                tempdata.append(Read2ptCfunPick(ifile,thisMomList).data)
+                shiftlist.append(data.tshiftlist)
         except NaNCfunError as e:
             print 
             print 'Deleting file ' + ifile
@@ -93,24 +95,19 @@ def ReadAndBoot2pt(readfilelist,thisMomList,thisnboot,randlist=[]):
 
 
 #dataout [ igamma , ip , it ]. bs
-def ReadAndBoot3pt(readfilelist,thisMomList,thisGammaList,thisDerGammaList,thisnboot,shiftlist,printstr='',randlist=[]):
+def ReadAndBoot3pt(readfilelist,thisMomList,thisGammaList,thisDerGammaList,thisnboot,printstr='',randlist=[]):
     tempdata = []
-    counter = -1
-    for iconf,ifile in enumerate(readfilelist):
+    for ifileList in readfilelist.itervalue():
         # print 'Reading '+printstr+' {}%            \r'.format(int((iconf*100)/float(len(readfilelist)))),
         try:
             if CHROMA:
-                if xsrcList[0] in ifile or not XAvg:
-                    counter += 1
-                    if len(thisGammaList) > 0:
-                        tempdata.append(ReadFSCfunPickCHROMA(ifile,thisMomList,thisGammaList,srcshift=shiftlist[counter]).data)
-                    if len(thisDerGammaList) > 0:
-                        raise IOError('Chroma version does not do derivatives, make DerList in Params.py be empty')
-            else:
                 if len(thisGammaList) > 0:
-                    tempdata.append(ReadFSCfunPick(ifile,thisMomList,thisGammaList).data)
+                    data = ReadFSCfunPickCHROMA(ifileList,thisMomList,thisGammaList)
+                    tempdata.append(data.data)
                 if len(thisDerGammaList) > 0:
-                    tempdata.append(ReadFSDerCfunPick(ifile,thisMomList,thisDerGammaList).data)
+                    raise IOError('Chroma version does not do derivatives, make DerList in Params.py be empty')
+            else:
+                raise IOError('Top Charge not implemented for non chroma results')
         except NaNCfunError as e:
             print 
             print 'Deleting file ' + ifile
@@ -122,6 +119,7 @@ def ReadAndBoot3pt(readfilelist,thisMomList,thisGammaList,thisDerGammaList,thisn
         return BootSet3pt(tempdata,thisMomList,thisGammaList,thisnboot,printstr='',randlist=randlist)
     elif len(thisDerGammaList) > 0:
         return BootSet3pt(tempdata,thisMomList,thisDerGammaList,thisnboot,printstr='',randlist=randlist)
+
 
     
 def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglist,flowlist,randlist=[]):
@@ -140,7 +138,6 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
                         tempdata.append(data.data)
                         for iflowdata in chargedata[chargeindex]:
                             tempdataTop[-1].append(np.array(data.datag5)*iflowdata)
-                        shiftlist.append(data.tshiftlist)
                 else:
                     data = R2CChromaXMLFileList(ifileList,thisMomList,Dog5=True)
                     tempdataTop.append([])
@@ -150,7 +147,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
                     # print ifilepref
                     # print data.datag5[0][7]*chargedata[chargeindex][40]
                     # print 
-                    shiftlist.append(data.tshiftlist)
+                shiftlist.append(data.tshiftlist)
             else:
                 raise IOError('Top Charge not implemented for non chroma results')
         except NaNCfunError as e:
@@ -170,3 +167,37 @@ def FileToChargeCfg(ifile,chargecfglist):
             return ic
     print 'charge cfg not found'
     return None
+
+
+
+# #dataout [ igamma , ip , it ]. bs
+# def ReadAndBoot3pt(readfilelist,thisMomList,thisGammaList,thisDerGammaList,thisnboot,shiftlist,printstr='',randlist=[]):
+#     tempdata = []
+#     counter = -1
+#     for iconf,ifile in enumerate(readfilelist):
+#         # print 'Reading '+printstr+' {}%            \r'.format(int((iconf*100)/float(len(readfilelist)))),
+#         try:
+#             if CHROMA:
+#                 if xsrcList[0] in ifile or not XAvg:
+#                     counter += 1
+#                     if len(thisGammaList) > 0:
+#                         tempdata.append(ReadFSCfunPickCHROMA(ifile,thisMomList,thisGammaList,srcshift=shiftlist[counter]).data)
+#                     if len(thisDerGammaList) > 0:
+#                         raise IOError('Chroma version does not do derivatives, make DerList in Params.py be empty')
+#             else:
+#                 if len(thisGammaList) > 0:
+#                     tempdata.append(ReadFSCfunPick(ifile,thisMomList,thisGammaList).data)
+#                 if len(thisDerGammaList) > 0:
+#                     tempdata.append(ReadFSDerCfunPick(ifile,thisMomList,thisDerGammaList).data)
+#         except NaNCfunError as e:
+#             print 
+#             print 'Deleting file ' + ifile
+#             print e
+#             print 'MUST RE-RUN AFTER THIS TO EXCLUDE BAD CONFIGS'
+#             print
+#             # os.remove(ifile)
+#     if len(thisGammaList) > 0:
+#         return BootSet3pt(tempdata,thisMomList,thisGammaList,thisnboot,printstr='',randlist=randlist)
+#     elif len(thisDerGammaList) > 0:
+#         return BootSet3pt(tempdata,thisMomList,thisDerGammaList,thisnboot,printstr='',randlist=randlist)
+

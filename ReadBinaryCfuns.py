@@ -40,18 +40,13 @@ def GetBar3ptLoc(ig,ip,tsinklen,momlistlen):
 ## noDer[igamma , ip , it]
 ## forcent is total length, not array index!
 class ReadFSCfunPickCHROMA:
-    def __init__(self,thisfile,thisMomList,thisGammaList,forcent=nt,srcshift=None):
+    def __init__(self,thisfileList,thisMomList,thisGammaList,forcent=nt):
         self.data = []
-        if XAvg: thisxsrcList = xsrcList
-        else: thisxsrcList = [xsrcList[0]]
-        if srcshift == None: srcshift = [0]*len(thisxsrcList)
-        for xsrc,isshift in zip(thisxsrcList,srcshift):
+        for thisfile in thisfileList:
             # if thistsink == 'FileName':
             #     thistsink = int(re.findall('tsink.*?p',thisfile)[0].replace('tsink','').replace('p',''))
-            datahold = []
-            corr_shift = isshift
-                
-            f = open(thisfile.replace(xsrcList[0],xsrc),'rb')
+            datahold = []            
+            f = open(thisfile,'rb')
             for igamma,thisgamma in enumerate(thisGammaList):
                 igammaloc = GammaTOChroma(thisgamma)
                 datahold.append([])
