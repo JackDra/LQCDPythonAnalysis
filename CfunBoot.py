@@ -144,10 +144,10 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
                         for iflowdata in chargedata[chargeindex]:
                             # tempdataTop[-1].append(np.array(data.data)*iflowdata)
                             # tempdataTop[-1].append((np.array(data.datag5)*iflowdata).tolist())
-                            tempdataTop[-1].append(np.abs(np.array(data.datag5))*iflowdata)
+                            tempdataTop[-1].append(np.array(data.datag5)*iflowdata)
                             # tempdataTop[-1].append(np.abs(np.array(data.datag5)*iflowdata))
                         # print ifile
-                        # print data.datag5[0][7],chargedata[chargeindex][40]
+                        # print data.datag5[0][7],data.datag5[0][7]/data.datag5[0][8],chargedata[chargeindex][40]
                         # print 
                 else:
                     data = R2CChromaXMLFileList(ifileList,thisMomList,Dog5=True)

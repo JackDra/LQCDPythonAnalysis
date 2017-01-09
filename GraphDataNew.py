@@ -1367,8 +1367,8 @@ def PlotTopChargeOverFlow(data,iSet,iMom,tsink,thiscol,thissym,thisshift,NNQ=Fal
                 # tlist.append(untstr(it))
                 if NNQ:
                     if untstr(it) +Dt <= len(flowdata.keys()):
-                        EffMass = np.abs(np.log(np.abs(np.array(tdata)/np.array(flowdata['t'+str(untstr(it)+Dt)])))/float(Dt))
-                        EffMassNN = np.abs(np.log(tdataNN/momdataNN['t'+str(untstr(it)+Dt)])/float(Dt))
+                        EffMass = np.log(np.array(tdata)/np.array(flowdata['t'+str(untstr(it)+Dt)]))/float(Dt)
+                        EffMassNN = np.log(tdataNN/momdataNN['t'+str(untstr(it)+Dt)])/float(Dt)
                     else:
                         EffMass = 1.0
                         EffMassNN = 1.0
