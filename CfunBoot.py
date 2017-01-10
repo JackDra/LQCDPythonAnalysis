@@ -5,6 +5,7 @@ import BootTest as bt
 from Params import *
 from MiscFuns import *
 from ReadBinaryCfuns import *
+import matplotlib.pyplot as pl
 
 ##NB CreateBoot take array [ iconf , it ]
 
@@ -140,14 +141,14 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
                         data = R2CChromaXMLFileList([ifile],thisMomList,Dog5=True)
                         tempdataTop.append([])
                         tempdata.append(data.data)
-                        # tempdata.append((np.array(data.data)*chargedata[chargeindex][40]).tolist())
+                        # tempdata.append(np.array(data.datag5)*chargedata[chargeindex][40])
                         for iflowdata in chargedata[chargeindex]:
                             # tempdataTop[-1].append(np.array(data.data)*iflowdata)
                             # tempdataTop[-1].append((np.array(data.datag5)*iflowdata).tolist())
                             tempdataTop[-1].append(np.array(data.datag5)*iflowdata)
                             # tempdataTop[-1].append(np.abs(np.array(data.datag5)*iflowdata))
                         # print ifile
-                        # print data.datag5[0][7],data.datag5[0][7]/data.datag5[0][8],chargedata[chargeindex][40]
+                        # print data.datag5[0][7],chargedata[chargeindex][40]
                         # print 
                 else:
                     data = R2CChromaXMLFileList(ifileList,thisMomList,Dog5=True)
@@ -155,7 +156,9 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
                     tempdata.append(data.data)
                     for iflowdata in chargedata[chargeindex]:
                         tempdataTop[-1].append(np.array(data.datag5)*iflowdata)
+                        # tempdataTop[-1].append(np.array(data.datag5))
                 shiftlist.append(data.tshiftlist)
+                
             else:
                 raise IOError('Top Charge not implemented for non chroma results')
         except NaNCfunError as e:
@@ -165,6 +168,9 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
             print 'MUST RE-RUN AFTER THIS TO EXCLUDE BAD CONFIGS'
             print
             # os.remove(ifile)
+    # pl.hist(setlist,bins=BinList,color=collist,label=leglist,stacked=Stacked,histtype=HistType,normed=Normed)
+    # pl.hist(np.array(tempdataTop)[:,40,0,7])
+    # pl.show()
     return (BootSet2ptTC(np.array(tempdataTop),thisMomList,thisnboot,flowlist,randlist=randlist),
             BootSet2pt(np.array(tempdata),thisMomList,thisnboot,randlist=randlist),shiftlist)
 

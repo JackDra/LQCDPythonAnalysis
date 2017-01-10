@@ -406,6 +406,7 @@ class R2CChromaXMLFileList:
                 else:
                     self.datag5 += np.rollaxis(np.array(datag5hold),0,1)
                     datag5len += 1
+        if datalen != datag5len: print 'Warning!, datag5len not equal to datalen'
         self.data = self.data/float(datalen)
         if Dog5: self.datag5 = self.datag5/float(datag5len)
         indicies =  np.searchsorted(self.OutMomList,thisMomList)
