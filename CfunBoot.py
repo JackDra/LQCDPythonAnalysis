@@ -184,26 +184,38 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
             # os.remove(ifile)
     # pl.hist(setlist,bins=BinList,color=collist,label=leglist,stacked=Stacked,histtype=HistType,normed=Normed)
     # pl.hist(np.array(tempdataTop)[:,40,0,7])
+    TCBdata,(Bdata,rlist),shiftlist = (BootSet2ptTC(np.array(tempdataTop),thisMomList,thisnboot,flowlist,randlist=randlist),
+                                       BootSet2pt(np.array(tempdata),thisMomList,thisnboot,randlist=randlist),shiftlist)
     if PlotMonte:
         mkdir_p('./montegraphs')
         xlist,yavg,yerr,yavgNNQ,yerrNNQ = [],[],[],[],[]
         # print 'values'
         # print np.mean(np.array(tempdataTop)[:,MonteFlow,0,MonteTime-1]),np.std(np.array(tempdataTop)[:,MonteFlow,0,MonteTime-1])
         # print
+        bplotdata = np.array(Bdata)[0,MonteTime-1]
+        bplotdataNNQ = np.array(TCBdata)[MonteFlow,0,MonteTime-1]
         plotdata = np.array(tempdata)[:,0,MonteTime-1]
         plotdataNNQ = np.array(tempdataTop)[:,MonteFlow,0,MonteTime-1]
         for ic,(icfg,iread) in enumerate(readfilelist.iteritems()):
             xlist.append(icfg)
             # xlist += iread
-            yavgNNQ.append(np.mean(plotdataNNQ[ic*len(iread):(ic+1)*len(iread)]))
-            yerrNNQ.append(np.std(plotdataNNQ[ic*len(iread):(ic+1)*len(iread)]))
-            yavg.append(np.mean(plotdata[ic*len(iread):(ic+1)*len(iread)]))
-            yerr.append(np.std(plotdata[ic*len(iread):(ic+1)*len(iread)]))
+            if NoXAvg:
+                yavgNNQ.append(np.mean(plotdataNNQ[ic*len(iread):(ic+1)*len(iread)]))
+                yerrNNQ.append(np.std(plotdataNNQ[ic*len(iread):(ic+1)*len(iread)]))
+                yavg.append(np.mean(plotdata[ic*len(iread):(ic+1)*len(iread)]))
+                yerr.append(np.std(plotdata[ic*len(iread):(ic+1)*len(iread)]))
+            else:
+                yavgNNQ.append(plotdataNNQ[ic])
+                yerrNNQ.append(0.0)
+                yavg.append(plotdata[ic])
+                yerr.append(0.0)
         # pl.scatter(map(GetCfgNumb,xlist),plotdataNNQ)
-        pl.fill_between([2500,4500],[-0.18*10**-10,-0.18*10**-10],[-0.12*10**-10,-0.12*10**-10],alpha=0.7,color='green',edgecolor='none')
+        pl.fill_between([2500,4500],[bplotdataNNQ.Avg+bplotdataNNQ.Std,bplotdataNNQ.Avg+bplotdataNNQ.Std],
+                        [bplotdataNNQ.Avg-bplotdataNNQ.Std,bplotdataNNQ.Avg-bplotdataNNQ.Std],alpha=0.7,color='green',edgecolor='none')
         pl.fill_between([2500,4500],np.mean(plotdataNNQ)-np.std(plotdataNNQ),np.mean(plotdataNNQ)+np.std(plotdataNNQ),alpha=0.5,color='red',edgecolor='none')
         pl.errorbar(map(GetCfgNumb,xlist),yavgNNQ,yerrNNQ,fmt='o')
-        pl.ylim(np.min(np.array(yavgNNQ)-np.array(yerrNNQ)),np.max(np.array(yavgNNQ)+np.array(yerrNNQ)))
+        # pl.ylim(np.min(np.array(yavgNNQ)-np.array(yerrNNQ)),np.max(np.array(yavgNNQ)+np.array(yerrNNQ)))
+        pl.ylim(-1*10**-10,1*10**-10)
         # pl.ylim(np.min(plotdataNNQ),np.max(plotdataNNQ))
         pl.ylabel('C2')
         pl.xlabel('icfg')
@@ -212,22 +224,22 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         pl.clf()
 
         # pl.scatter(map(GetCfgNumb,xlist),plotdata)
-        val = 1.1407114725e-10
-        err = 2.8994261166e-12
+        val = bplotdata.Avg
+        err = bplotdata.Std
         up = [val+err,val+err]
         down = [val-err,val-err]
         pl.fill_between([2500,4500],up,down,alpha=0.7,color='green',edgecolor='none')
         pl.fill_between([2500,4500],np.mean(plotdata)-np.std(plotdata),np.mean(plotdata)+np.std(plotdata),alpha=0.5,color='red',edgecolor='none')
         pl.errorbar(map(GetCfgNumb,xlist),yavg,yerr,fmt='o')
-        pl.ylim(np.min(np.array(yavg)-np.array(yerr)),np.max(np.array(yavg)+np.array(yerr)))
+        # pl.ylim(np.min(np.array(yavg)-np.array(yerr)),np.max(np.array(yavg)+np.array(yerr)))
+        pl.ylim(1*10**-10,1.5*10**-10)
         # pl.ylim(np.min(plotdata),np.max(plotdata))
         pl.ylabel('C2')
         pl.xlabel('icfg')
         pl.title('Monte Carlo time dependence of NN')
         pl.savefig('./montegraphs/MonteNNts'+str(MonteTime)+'.pdf')
         pl.clf()
-    return (BootSet2ptTC(np.array(tempdataTop),thisMomList,thisnboot,flowlist,randlist=randlist),
-            BootSet2pt(np.array(tempdata),thisMomList,thisnboot,randlist=randlist),shiftlist)
+    return TCBdata,(Bdata,rlist),shiftlist
 
 
 def FileToChargeCfg(ifile,chargecfglist):
