@@ -65,7 +65,19 @@ def BootSet2ptTC(data,thisMomList,nboot,tflowlist,randlist=[]):
         # print 'pie2pt'
         # for iboot,idata in enumerate(np.array(data)[:,ip,12]):
         #     print iboot,idata
-            bootdata,randlist = bt.CreateBoot(data[:,icf,ip,:],nboot,0,randlist=randlist)
+            bootdata,randlist = bt.CreateBoot(data[:,icf,ip,:],nboot,0)
+            # if icf == 40 and ip == 0:
+            #     print 'BootValue'
+            #     print data[:,icf,ip,7]
+            #     myseed=1234*len(data)/nboot
+            #     np.random.seed(myseed)
+            #     locrandint=np.random.random_integers
+            #     thislist = locrandint(0,len(data)-1,len(data))
+            #     print thislist
+            #     print np.mean(np.array(data)[thislist,icf,ip,7])
+            #     print bootdata[7].values[0]
+            #     # print bootdata[7].Avg, bootdata[7].Std
+            #     print
             dataout[-1].append(bootdata)
     # print '                              \r',
     return dataout
@@ -173,25 +185,47 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
     # pl.hist(setlist,bins=BinList,color=collist,label=leglist,stacked=Stacked,histtype=HistType,normed=Normed)
     # pl.hist(np.array(tempdataTop)[:,40,0,7])
     if PlotMonte:
-        xlist = []
-        yavg = []
-        yerr = []
-        # plotdata = np.array(tempdata)[:,0,MonteTime-1]
-        plotdata = np.array(tempdataTop)[:,MonteFlow,0,MonteTime-1]
+        mkdir_p('./montegraphs')
+        xlist,yavg,yerr,yavgNNQ,yerrNNQ = [],[],[],[],[]
+        # print 'values'
+        # print np.mean(np.array(tempdataTop)[:,MonteFlow,0,MonteTime-1]),np.std(np.array(tempdataTop)[:,MonteFlow,0,MonteTime-1])
+        # print
+        plotdata = np.array(tempdata)[:,0,MonteTime-1]
+        plotdataNNQ = np.array(tempdataTop)[:,MonteFlow,0,MonteTime-1]
         for ic,(icfg,iread) in enumerate(readfilelist.iteritems()):
-            # xlist.append(icfg)
-            xlist += iread
+            xlist.append(icfg)
+            # xlist += iread
+            yavgNNQ.append(np.mean(plotdataNNQ[ic*len(iread):(ic+1)*len(iread)]))
+            yerrNNQ.append(np.std(plotdataNNQ[ic*len(iread):(ic+1)*len(iread)]))
             yavg.append(np.mean(plotdata[ic*len(iread):(ic+1)*len(iread)]))
             yerr.append(np.std(plotdata[ic*len(iread):(ic+1)*len(iread)]))
-        # print np.array(tempdataTop)[:,40,0,7]
-        pl.scatter(map(GetCfgNumb,xlist),plotdata)
-        # pl.errorbar(map(GetCfgNumb,xlist),yavg,yerr,fmt='o')
-        # pl.ylim(np.min(np.array(yavg)-np.array(yerr)),np.max(np.array(yavg)+np.array(yerr)))
-        pl.ylim(np.min(plotdata),np.max(plotdata))
+        # pl.scatter(map(GetCfgNumb,xlist),plotdataNNQ)
+        pl.fill_between([2500,4500],[-0.18*10**-10,-0.18*10**-10],[-0.12*10**-10,-0.12*10**-10],alpha=0.7,color='green',edgecolor='none')
+        pl.fill_between([2500,4500],np.mean(plotdataNNQ)-np.std(plotdataNNQ),np.mean(plotdataNNQ)+np.std(plotdataNNQ),alpha=0.5,color='red',edgecolor='none')
+        pl.errorbar(map(GetCfgNumb,xlist),yavgNNQ,yerrNNQ,fmt='o')
+        pl.ylim(np.min(np.array(yavgNNQ)-np.array(yerrNNQ)),np.max(np.array(yavgNNQ)+np.array(yerrNNQ)))
+        # pl.ylim(np.min(plotdataNNQ),np.max(plotdataNNQ))
         pl.ylabel('C2')
         pl.xlabel('icfg')
         pl.title('Monte Carlo time dependence of NNQ')
-        pl.savefig('./MonteNNQflow'+str(MonteFlow)+'ts'+str(MonteTime)+'INg5'+INg5+'.pdf')
+        pl.savefig('./montegraphs/MonteNNQflow'+str(MonteFlow)+'ts'+str(MonteTime)+'INg5'+INg5+'.pdf')
+        pl.clf()
+
+        # pl.scatter(map(GetCfgNumb,xlist),plotdata)
+        val = 1.1407114725e-10
+        err = 2.8994261166e-12
+        up = [val+err,val+err]
+        down = [val-err,val-err]
+        pl.fill_between([2500,4500],up,down,alpha=0.7,color='green',edgecolor='none')
+        pl.fill_between([2500,4500],np.mean(plotdata)-np.std(plotdata),np.mean(plotdata)+np.std(plotdata),alpha=0.5,color='red',edgecolor='none')
+        pl.errorbar(map(GetCfgNumb,xlist),yavg,yerr,fmt='o')
+        pl.ylim(np.min(np.array(yavg)-np.array(yerr)),np.max(np.array(yavg)+np.array(yerr)))
+        # pl.ylim(np.min(plotdata),np.max(plotdata))
+        pl.ylabel('C2')
+        pl.xlabel('icfg')
+        pl.title('Monte Carlo time dependence of NN')
+        pl.savefig('./montegraphs/MonteNNts'+str(MonteTime)+'.pdf')
+        pl.clf()
     return (BootSet2ptTC(np.array(tempdataTop),thisMomList,thisnboot,flowlist,randlist=randlist),
             BootSet2pt(np.array(tempdata),thisMomList,thisnboot,randlist=randlist),shiftlist)
 

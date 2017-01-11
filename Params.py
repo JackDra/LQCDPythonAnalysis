@@ -140,7 +140,7 @@ else:
 ExactXSrcNumber = False ## makes it so there are the same number of sources for each configuration (hardwired to the first configuration found)
 ForceXSrcLen = False ## forces so that any more sorce locations after XSrcLen are ignored
 XSrcLen = 20
-NoXAvg = True ## Does each source separatly for each 
+NoXAvg = False ## Does each source separatly for each 
 
 ForceMinXSrcLen = True ## only calculates with a minumum of MinXSRCLen of sources per gauge field
 MinXSrcLen = 10
