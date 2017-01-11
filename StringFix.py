@@ -8,6 +8,10 @@ from Params import *
 from CombParams import CombList
 import re
 
+def GetCfgNumb(name):
+    cfgnum = re.search('-00....',name).group()
+    return int(cfgnum.replace('-00',''))
+               
 def MakeValAndErr(Avg,Err,Dec=2):
     try:
         int(np.floor(np.log10(Err)))-(Dec-1)

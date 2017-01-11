@@ -5,6 +5,7 @@ import BootTest as bt
 from Params import *
 from MiscFuns import *
 from ReadBinaryCfuns import *
+from StringFix import GetCfgNumb
 import matplotlib.pyplot as pl
 
 ##NB CreateBoot take array [ iconf , it ]
@@ -145,6 +146,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
                         for iflowdata in chargedata[chargeindex]:
                             # tempdataTop[-1].append(np.array(data.data)*iflowdata)
                             # tempdataTop[-1].append((np.array(data.datag5)*iflowdata).tolist())
+                            # tempdataTop[-1].append(np.array(data.datag5)*iflowdata)
                             tempdataTop[-1].append(np.array(data.datag5)*iflowdata)
                             # tempdataTop[-1].append(np.abs(np.array(data.datag5)*iflowdata))
                         # print ifile
@@ -170,7 +172,22 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
             # os.remove(ifile)
     # pl.hist(setlist,bins=BinList,color=collist,label=leglist,stacked=Stacked,histtype=HistType,normed=Normed)
     # pl.hist(np.array(tempdataTop)[:,40,0,7])
-    # pl.show()
+    if PlotMonte:
+        xlist = []
+        yavg = []
+        yerr = []
+        # plotdata = np.array(tempdata)[:,0,MonteTime-1]
+        plotdata = np.array(tempdataTop)[:,MonteFlow,0,MonteTime-1]
+        for ic,(icfg,iread) in enumerate(readfilelist.iteritems()):
+            xlist.append(icfg)
+            yavg.append(np.mean(plotdata[ic*len(iread):(ic+1)*len(iread)]))
+            yerr.append(np.std(plotdata[ic*len(iread):(ic+1)*len(iread)]))
+        # print np.array(tempdataTop)[:,40,0,7]
+        # pl.scatter(map(GetCfgNumb,xlist),np.array(tempdataTop)[:,40,0,7])
+        # pl.scatter(map(GetCfgNumb,xlist),np.array(tempdata)[:,0,7])
+        pl.errorbar(map(GetCfgNumb,xlist),yavg,yerr,fmt='o')
+        pl.ylim(np.min(np.array(yavg)-np.array(yerr)),np.max(np.array(yavg)+np.array(yerr)))
+        pl.show()
     return (BootSet2ptTC(np.array(tempdataTop),thisMomList,thisnboot,flowlist,randlist=randlist),
             BootSet2pt(np.array(tempdata),thisMomList,thisnboot,randlist=randlist),shiftlist)
 

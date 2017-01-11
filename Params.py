@@ -129,6 +129,9 @@ ReadPoF2pt = False # Create PoF using already calculated eigenvectors. This is u
 DeCorrPoF = False ## used for debugging the pencil of function method (decorrelation problem) !!!!!DEPRECIATED, LEAVE FALSE!!!!!
 TimeInv = False ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
 DoCM = True ## does correlation matrix result ( no PoF) 
+PlotMonte = True ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
+MonteTime = 7
+MonteFlow = 40
 
 if 'XAvg' in ListOrSet:
     XAvg = True ## averages over source position locatinos before bootstrapping
@@ -209,12 +212,12 @@ logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 momlistdir = datadir+'momdir/'
 pickledir = datadir+"pickledir/"
 REvecDir = scriptdir+'REvecSave/k'+str(kappa)+'/'
-RunMomList = qvecSet 
-RunAvgMomList = qvecAvgSet
+# RunMomList = qvecSet 
+# RunAvgMomList = qvecAvgSet
 # For Debuggin, only use zero momenta
 # RunMomList = [qvecSet[iqTOip(0)],qvecSet[iqTOip(3)]]
-# RunMomList = [qvecSet[iqTOip(0)]]
-# RunAvgMomList = [qvecAvgSet[0]]
+RunMomList = [qvecSet[iqTOip(0)]]
+RunAvgMomList = [qvecAvgSet[0]]
 # map(mkdir_p,outputdir)
 mkdir_p(outputdir[0])
 mkdir_p(pickledir)

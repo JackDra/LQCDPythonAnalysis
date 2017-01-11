@@ -26,7 +26,7 @@ def StripSrc(filelist):
             output.append(thisout)
     return output
         
-    
+
 ## tflow [ itflow ]
 ## topcharge [ itflow ]
 
