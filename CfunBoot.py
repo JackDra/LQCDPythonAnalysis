@@ -191,7 +191,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         pl.ylabel('C2')
         pl.xlabel('icfg')
         pl.title('Monte Carlo time dependence of NNQ')
-        pl.savefig('./MonteNNQflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
+        pl.savefig('./MonteNNQflow'+str(MonteFlow)+'ts'+str(MonteTime)+'INg5'+INg5+'.pdf')
     return (BootSet2ptTC(np.array(tempdataTop),thisMomList,thisnboot,flowlist,randlist=randlist),
             BootSet2pt(np.array(tempdata),thisMomList,thisnboot,randlist=randlist),shiftlist)
 
