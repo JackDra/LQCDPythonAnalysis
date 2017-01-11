@@ -187,7 +187,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         # pl.scatter(map(GetCfgNumb,xlist),np.array(tempdata)[:,0,7])
         pl.errorbar(map(GetCfgNumb,xlist),yavg,yerr,fmt='o')
         pl.ylim(np.min(np.array(yavg)-np.array(yerr)),np.max(np.array(yavg)+np.array(yerr)))
-        pl.show()
+        pl.savefig('./MonteNNQflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
     return (BootSet2ptTC(np.array(tempdataTop),thisMomList,thisnboot,flowlist,randlist=randlist),
             BootSet2pt(np.array(tempdata),thisMomList,thisnboot,randlist=randlist),shiftlist)
 
