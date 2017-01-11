@@ -83,7 +83,7 @@ def ReadLREM(todtval,thisMomList,filepref,NoWar=False):
         LEvec.append([])
         REvec.append([])
         Emass.append([])
-        imomCond = ipTOqcond(imom,Avg=True)
+        imomCond = ipTOqcond(GetAvgMomip(imom),Avg=True)
         filename = REvecDir+filepref+'to'+str(todtval[0])+'dt'+str(todtval[1])+'LREM'+imomCond+'.xml'
         # filename = REvecDir+VarPref+'TestLREM.txt'
         if Debug: print filename
