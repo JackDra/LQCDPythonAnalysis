@@ -179,14 +179,18 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         # plotdata = np.array(tempdata)[:,0,MonteTime-1]
         plotdata = np.array(tempdataTop)[:,MonteFlow,0,MonteTime-1]
         for ic,(icfg,iread) in enumerate(readfilelist.iteritems()):
-            xlist.append(icfg)
+            # xlist.append(icfg)
+            xlist += iread
             yavg.append(np.mean(plotdata[ic*len(iread):(ic+1)*len(iread)]))
             yerr.append(np.std(plotdata[ic*len(iread):(ic+1)*len(iread)]))
         # print np.array(tempdataTop)[:,40,0,7]
-        # pl.scatter(map(GetCfgNumb,xlist),np.array(tempdataTop)[:,40,0,7])
-        # pl.scatter(map(GetCfgNumb,xlist),np.array(tempdata)[:,0,7])
-        pl.errorbar(map(GetCfgNumb,xlist),yavg,yerr,fmt='o')
-        pl.ylim(np.min(np.array(yavg)-np.array(yerr)),np.max(np.array(yavg)+np.array(yerr)))
+        pl.scatter(map(GetCfgNumb,xlist),plotdata)
+        # pl.errorbar(map(GetCfgNumb,xlist),yavg,yerr,fmt='o')
+        # pl.ylim(np.min(np.array(yavg)-np.array(yerr)),np.max(np.array(yavg)+np.array(yerr)))
+        pl.ylim(np.min(plotdata),np.max(plotdata))
+        pl.ylabel('C2')
+        pl.xlabel('icfg')
+        pl.title('Monte Carlo time dependence of NNQ')
         pl.savefig('./MonteNNQflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
     return (BootSet2ptTC(np.array(tempdataTop),thisMomList,thisnboot,flowlist,randlist=randlist),
             BootSet2pt(np.array(tempdata),thisMomList,thisnboot,randlist=randlist),shiftlist)
