@@ -257,7 +257,6 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
             yavg,yerr,yavgNNQ,yerrNNQ = [],[],[],[]
             xlist.append(iXSrc)
             for ic,(icfg,iread) in enumerate(readfilelist.iteritems()):
-                ncfg = len(iread)
                 # xlist += iread
                 if NoXAvg:
                     yavgNNQ += plotdataNNQ[ic*len(iread):ic*len(iread)+iXSrc].tolist()
@@ -274,6 +273,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
             bootxsrcNNQerr.append(bootdataNNQ[0].Std)
             bootxsrc.append(bootdata[0].Avg)
             bootxsrcerr.append(bootdata[0].Std)
+        ncfg = len(readfilelist.keys())
         pl.errorbar(xlist,[0]*len(xlist),plotxsrcNNQerr,fmt='o',label='Reg')
         pl.errorbar(np.array(xlist)+0.25,[0]*len(xlist),bootxsrcNNQerr,fmt='o',label='boot='+str(nboot))
         pl.ylim(0,np.max(plotxsrcNNQerr+bootxsrcNNQerr))
