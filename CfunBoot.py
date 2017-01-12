@@ -239,6 +239,59 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         pl.title('Monte Carlo time dependence of NN')
         pl.savefig('./montegraphs/MonteNNts'+str(MonteTime)+'.pdf')
         pl.clf()
+    if PlotXSrcDep:
+        mkdir_p('./montegraphs')
+        # print 'values'
+        # print np.mean(np.array(tempdataTop)[:,MonteFlow,0,MonteTime-1]),np.std(np.array(tempdataTop)[:,MonteFlow,0,MonteTime-1])
+        # print
+        bplotdata = np.array(Bdata)[0,MonteTime-1]
+        bplotdataNNQ = np.array(TCBdata)[MonteFlow,0,MonteTime-1]
+        plotdata = np.array(tempdata)[:,0,MonteTime-1]
+        plotdataNNQ = np.array(tempdataTop)[:,MonteFlow,0,MonteTime-1]
+        plotxsrcNNQ,plotxsrcNNQerr = [],[]
+        plotxsrc,plotxsrcerr = [],[]
+        bootxsrcNNQ,bootxsrcNNQerr = [],[]
+        bootxsrc,bootxsrcerr = [],[]
+        xlist = []
+        for iXSrc in range(1,XSrcLen+1):
+            yavg,yerr,yavgNNQ,yerrNNQ = [],[],[],[]
+            xlist.append(iXSrc)
+            for ic,(icfg,iread) in enumerate(readfilelist.iteritems()):
+                # xlist += iread
+                if NoXAvg:
+                    yavgNNQ += plotdataNNQ[ic*len(iread):ic*len(iread)+iXSrc].tolist()
+                    yavg += plotdata[ic*len(iread):ic*len(iread)+iXSrc].tolist()
+                else:
+                    raise IOError('NoXAvg must be True if doing PlotXSrcDep (check Params.py)')
+            plotxsrcNNQ.append(np.mean(yavgNNQ))
+            plotxsrcNNQerr.append(np.std(yavgNNQ))
+            plotxsrc.append(np.mean(yavg))
+            plotxsrcerr.append(np.std(yavg))
+            bootdata,randlist = bt.CreateBoot(np.array(yavg).reshape(len(yavg),1),nboot,0)
+            bootdataNNQ,randlist = bt.CreateBoot(np.array(yavgNNQ).reshape(len(yavg),1),nboot,0)
+            bootxsrcNNQ.append(bootdataNNQ[0].Avg)
+            bootxsrcNNQerr.append(bootdataNNQ[0].Std)
+            bootxsrc.append(bootdata[0].Avg)
+            bootxsrcerr.append(bootdata[0].Std)
+        pl.errorbar(xlist,[0]*len(xlist),plotxsrcNNQerr,fmt='o',label='Reg')
+        pl.errorbar(np.array(xlist)+0.25,[0]*len(xlist),bootxsrcNNQerr,fmt='o',label='boot='+str(nboot))
+        pl.ylim(0,np.max(plotxsrcNNQerr+bootxsrcNNQerr))
+        pl.ylabel('Error')
+        pl.xlabel('iXSrc#')
+        pl.legend()
+        pl.title('XSrc number Error of NNQ')
+        pl.savefig('./montegraphs/XSrcErrNNQflow'+str(MonteFlow)+'ts'+str(MonteTime)+'INg5'+INg5+'.pdf')
+        pl.clf()
+
+        pl.errorbar(xlist,[0]*len(xlist),plotxsrcerr,fmt='o',label='Reg')
+        pl.errorbar(np.array(xlist)+0.25,[0]*len(xlist),bootxsrcerr,fmt='o',label='boot='+str(nboot))
+        pl.ylim(0,np.max(plotxsrcerr+bootxsrcerr))
+        pl.ylabel('Error')
+        pl.xlabel('iXSrc#')
+        pl.title('XSrc number Error of NN')
+        pl.legend()
+        pl.savefig('./montegraphs/XSrcErrNNts'+str(MonteTime)+'.pdf')
+        pl.clf()
     return TCBdata,(Bdata,rlist),shiftlist
 
 
