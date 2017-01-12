@@ -257,6 +257,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
             yavg,yerr,yavgNNQ,yerrNNQ = [],[],[],[]
             xlist.append(iXSrc)
             for ic,(icfg,iread) in enumerate(readfilelist.iteritems()):
+                ncfg = len(iread)
                 # xlist += iread
                 if NoXAvg:
                     yavgNNQ += plotdataNNQ[ic*len(iread):ic*len(iread)+iXSrc].tolist()
@@ -279,7 +280,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         pl.ylabel('Error')
         pl.xlabel('iXSrc#')
         pl.legend()
-        pl.title('XSrc number Error of NNQ')
+        pl.title('XSrc number Error of NNQ, ncfg = '+str(ncfg))
         pl.savefig('./montegraphs/XSrcErrNNQflow'+str(MonteFlow)+'ts'+str(MonteTime)+'INg5'+INg5+'.pdf')
         pl.clf()
 
@@ -288,7 +289,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         pl.ylim(0,np.max(plotxsrcerr+bootxsrcerr))
         pl.ylabel('Error')
         pl.xlabel('iXSrc#')
-        pl.title('XSrc number Error of NN')
+        pl.title('XSrc number Error of NN, ncfg = '+str(ncfg))
         pl.legend()
         pl.savefig('./montegraphs/XSrcErrNNts'+str(MonteTime)+'.pdf')
         pl.clf()
@@ -299,7 +300,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         pl.ylabel('C2')
         pl.xlabel('iXSrc#')
         pl.legend()
-        pl.title('XSrc number dependance of NNQ')
+        pl.title('XSrc number dependance of NNQ, ncfg = '+str(ncfg))
         pl.savefig('./montegraphs/XSrcNNQflow'+str(MonteFlow)+'ts'+str(MonteTime)+'INg5'+INg5+'.pdf')
         pl.clf()
 
@@ -308,7 +309,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         # pl.ylim(0,np.max(plotxsrcerr+bootxsrcerr))
         pl.ylabel('C2')
         pl.xlabel('iXSrc#')
-        pl.title('XSrc number dependance of NN')
+        pl.title('XSrc number dependance of NN, ncfg = '+str(ncfg))
         pl.legend()
         pl.savefig('./montegraphs/XSrcNNts'+str(MonteTime)+'.pdf')
         pl.clf()
