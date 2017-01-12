@@ -282,7 +282,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         fitline = thisfitfun([fitx],Bcoeff)
         # for ix,ifit in zip(fitx,fitline):
         #     print ix,ifit
-        pl.plot(fitx,fitline,color='blue',label='Chi2pdf='+str(chisqpdf))
+        pl.plot(fitx,fitline,color='blue',label=r'$f(n)=A+\frac{B}{n^{1/2}}\ ,\ \chi^{2}_{pdf}=$'+'{:.2e}'.format(chisqpdf))
         # pl.errorbar(xlist,[0]*len(xlist),plotxsrcNNQerr,fmt='o',label='Reg')
         pl.errorbar(np.array(xlist),[0]*len(xlist),bootxsrcNNQerr,fmt='o',label='boot='+str(nboot),color='blue')
         # pl.ylim(0,np.max(plotxsrcNNQerr+bootxsrcNNQerr))
@@ -298,7 +298,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         Bcoeff,covar,chisqpdf = LSFit(1,np.array(xlist),[1]*len(bootxsrcerr),thisfitfun,bootxsrcerr,derfun=OORNFFDer,iGuess = [bootxsrcerr[0]])
         fitx = np.arange(xlist[0],xlist[-1],0.1)
         fitline = thisfitfun([fitx],Bcoeff)
-        pl.plot(fitx,fitline,color='blue',label='Chi2pdf='+str(chisqpdf))
+        pl.plot(fitx,fitline,color='blue',label=r'$f(n)=A+\frac{B}{n^{1/2}}\ ,\ \chi^{2}_{pdf}=$'+'{:.2e}'.format(chisqpdf))
         # pl.errorbar(xlist,[0]*len(xlist),plotxsrcerr,fmt='o',label='Reg')
         pl.errorbar(np.array(xlist),[0]*len(xlist),bootxsrcerr,fmt='o',label='boot='+str(nboot),color='blue')
         # pl.ylim(0,np.max(plotxsrcerr+bootxsrcerr))
