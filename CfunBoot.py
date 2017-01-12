@@ -292,6 +292,26 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         pl.legend()
         pl.savefig('./montegraphs/XSrcErrNNts'+str(MonteTime)+'.pdf')
         pl.clf()
+        
+        pl.errorbar(xlist,plotxsrcNNQ,plotxsrcNNQerr,fmt='o',label='Reg')
+        pl.errorbar(np.array(xlist)+0.25,bootxsrcNNQ,bootxsrcNNQerr,fmt='o',label='boot='+str(nboot))
+        # pl.ylim(0,np.max(plotxsrcNNQerr+bootxsrcNNQerr))
+        pl.ylabel('C2')
+        pl.xlabel('iXSrc#')
+        pl.legend()
+        pl.title('XSrc number dependance of NNQ')
+        pl.savefig('./montegraphs/XSrcNNQflow'+str(MonteFlow)+'ts'+str(MonteTime)+'INg5'+INg5+'.pdf')
+        pl.clf()
+
+        pl.errorbar(xlist,plotxsrc,plotxsrcerr,fmt='o',label='Reg')
+        pl.errorbar(np.array(xlist)+0.25,bootxsrc,bootxsrcerr,fmt='o',label='boot='+str(nboot))
+        # pl.ylim(0,np.max(plotxsrcerr+bootxsrcerr))
+        pl.ylabel('C2')
+        pl.xlabel('iXSrc#')
+        pl.title('XSrc number dependance of NN')
+        pl.legend()
+        pl.savefig('./montegraphs/XSrcNNts'+str(MonteTime)+'.pdf')
+        pl.clf()
     return TCBdata,(Bdata,rlist),shiftlist
 
 
