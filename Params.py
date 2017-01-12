@@ -138,7 +138,7 @@ if 'XAvg' in ListOrSet:
 else:
     XAvg = False
 ExactXSrcNumber = False ## makes it so there are the same number of sources for each configuration (hardwired to the first configuration found)
-ForceXSrcLen = False ## forces so that any more sorce locations after XSrcLen are ignored
+ForceXSrcLen = True ## forces so that any more sorce locations after XSrcLen are ignored
 XSrcLen = 20
 NoXAvg = False ## Does each source separatly for each 
 
