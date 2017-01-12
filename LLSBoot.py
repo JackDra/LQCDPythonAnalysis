@@ -17,8 +17,8 @@ def LSCreate(Fun):
     def LSFun(par,val):
         xval = np.array(val[:-2])
         ## DEBUG THIS THING IS FINIKY, WITH SOME OTHER FITTING STUFF
-        if len(xval) == 1:
-            xval = xval[0]
+        # if len(xval) == 1:
+        #     xval = xval[0]
         yval = np.array(val[-2])
         errval = np.array(val[-1])
         # print 'LS values'
@@ -34,8 +34,8 @@ def LSDerCreate(FunDer):
     def LSDerFun(par,val):
         xval = np.array(val[:-2])
         ## DEBUG THIS THING IS FINIKY, WITH SOME OTHER FITTING STUFF
-        if len(xval) == 1:
-            xval = xval[0]
+        # if len(xval) == 1:
+        #     xval = xval[0]
         yval = val[-2]
         errval = val[-1]
         # print 'LSDer values'
@@ -79,6 +79,8 @@ def DerOfFun(Fun,Len=1):
         return DPfitfunOneParDer
     elif Fun.__name__ == 'DPfitfutn2':
         return DPfitfun2Der
+    elif Fun.__name__ == 'OneOnRootNFitFun':
+        return OORNFFDer
 
 def GetLSFuns(fitfun,derfun,iGuess,parlen):
    if iGuess == None:
@@ -109,10 +111,8 @@ def CreateArgs(xdata,ydata,yerr):
     return data
 
 
-def LSFit(parlen,xdata,yerr,fitfun,ydata):
-    iGuess = None
+def LSFit(parlen,xdata,yerr,fitfun,ydata,derfun=None,iGuess = None):
     MI = MaxIters
-    derfun = None
     data = CreateArgs(xdata,ydata,yerr)
     LSfitfun,LSDerfitfun,iGuess = GetLSFuns(fitfun,derfun,iGuess,parlen)
     # if isinstance(ydata[0],complex):iGuess = map(complex,iGuess)

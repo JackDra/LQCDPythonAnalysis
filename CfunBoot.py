@@ -5,6 +5,8 @@ import BootTest as bt
 from Params import *
 from MiscFuns import *
 from ReadBinaryCfuns import *
+from FitFunctions import CreateOORFF,OORNFFDer
+from LLSBoot import LSFit
 from StringFix import GetCfgNumb
 import matplotlib.pyplot as pl
 
@@ -274,8 +276,15 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
             bootxsrc.append(bootdata[0].Avg)
             bootxsrcerr.append(bootdata[0].Std)
         ncfg = len(readfilelist.keys())
+        thisfitfun = CreateOORFF(bootxsrcNNQerr[0])
+        Bcoeff,covar,chisqpdf = LSFit(1,np.array([xlist]),[1]*len(bootxsrcNNQerr),thisfitfun,bootxsrcNNQerr,derfun=OORNFFDer,iGuess=[bootxsrcNNQerr[0]])
+        fitx = np.arange(xlist[0],xlist[-1],0.1)
+        fitline = thisfitfun([fitx],Bcoeff)
+        # for ix,ifit in zip(fitx,fitline):
+        #     print ix,ifit
+        pl.plot(fitx,fitline,color='blue',label='Chi2pdf='+str(chisqpdf))
         # pl.errorbar(xlist,[0]*len(xlist),plotxsrcNNQerr,fmt='o',label='Reg')
-        pl.errorbar(np.array(xlist)+0.25,[0]*len(xlist),bootxsrcNNQerr,fmt='o',label='boot='+str(nboot))
+        pl.errorbar(np.array(xlist),[0]*len(xlist),bootxsrcNNQerr,fmt='o',label='boot='+str(nboot),color='blue')
         # pl.ylim(0,np.max(plotxsrcNNQerr+bootxsrcNNQerr))
         pl.ylim(0,np.max(bootxsrcNNQerr))
         pl.ylabel('Error')
@@ -285,8 +294,13 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         pl.savefig('./montegraphs/XSrcErrNNQflow'+str(MonteFlow)+'ts'+str(MonteTime)+'INg5'+INg5+'.pdf')
         pl.clf()
 
+        thisfitfun = CreateOORFF(bootxsrcerr[0])
+        Bcoeff,covar,chisqpdf = LSFit(1,np.array(xlist),[1]*len(bootxsrcerr),thisfitfun,bootxsrcerr,derfun=OORNFFDer,iGuess = [bootxsrcerr[0]])
+        fitx = np.arange(xlist[0],xlist[-1],0.1)
+        fitline = thisfitfun([fitx],Bcoeff)
+        pl.plot(fitx,fitline,color='blue',label='Chi2pdf='+str(chisqpdf))
         # pl.errorbar(xlist,[0]*len(xlist),plotxsrcerr,fmt='o',label='Reg')
-        pl.errorbar(np.array(xlist)+0.25,[0]*len(xlist),bootxsrcerr,fmt='o',label='boot='+str(nboot))
+        pl.errorbar(np.array(xlist),[0]*len(xlist),bootxsrcerr,fmt='o',label='boot='+str(nboot),color='blue')
         # pl.ylim(0,np.max(plotxsrcerr+bootxsrcerr))
         pl.ylim(0,np.max(bootxsrcerr))
         pl.ylabel('Error')

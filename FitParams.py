@@ -191,6 +191,8 @@ def FitDefGuess(Fun,Len=1):
         return [0,0,0]
     elif Fun.__name__ == 'TestTwoVarFitFun':
         return [1,1]
+    elif Fun.__name__ == 'OneOnRootNFitFun':
+        return [1]
     else:
         return [1]*100
 

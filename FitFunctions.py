@@ -105,6 +105,14 @@ FormList = [FormFactorO8,
 def ConstantFitFun(x,p):
     return p[0]*makexunit(x[0])
 
+def CreateOORFF(Const):
+    def OneOnRootNFitFun(x,p):
+        return Const + p[0]*(np.array(x[0])**(-1/2.)-1)
+    return OneOnRootNFitFun
+
+def OORNFFDer(x,p):
+    return [(-p[0]/2.)*(np.array(x[0])**(-3/2.))]
+
 def ConstFFDer(x,p):
     return makexunit(x[0])
 
