@@ -56,7 +56,7 @@ if not NoLoad:
     sigma_nu_5 = [g1*g5,g2*g5,g3*g5,g4*g5]
 
     G_unpol = (eye(4) + g4) / 2.
-    G_pol = G_unpol* g5 * g3
+    G_pol = -1j*G_unpol* g5 * g3
 
 
     Ep, px, py, pz = symbols('Ep px py pz')
@@ -170,7 +170,7 @@ if not NoLoad:
         sigma_nu_5 = [g1*g5,g2*g5,g3*g5,g4*g5]
 
         G_unpol = (eye(4) + g4) / 2.
-        G_pol = G_unpol* g5 * g3
+        G_pol = -1j*G_unpol* g5 * g3
 
 
     def GetProj(thisProj):
