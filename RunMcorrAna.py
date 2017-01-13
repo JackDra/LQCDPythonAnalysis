@@ -113,7 +113,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         thisMomList = Get2ptSetMoms(outputdir[0],RunMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
         CreateTwoPt([qstrTOip(imom) for imom in DragpZstr(thisMomList)],DefSmearList,feedin=feedin)
         print 'Two Point Analysis Complete'
-    if RunType == 'TopCharge':
+    elif RunType == 'TopCharge':
         print 'Topological Charge Analysis'
         # Wipe2pt(outputdir[0],tvarlist=TwoPtDefTvarList,smlist=DefSmearList)
         # thisMomList = Get2ptSetMoms(outputdir[0],RunAvgMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)

@@ -478,7 +478,7 @@ PoFFlagList = [PickedStateStr+iPoF for iPoF in PoFTvarList]
 # if kappa == 12:
 TSFFileFlags = ['CM','Tsink','test32','Small']
 OSFFileFlags = ['CM','Tsink']
-CfunCheckList = []
+CfunCheckList = ['PoFRead']
 
 MethodList = ['RF','Fits','SumMeth']+['TSF'+iTSF for iTSF in TSFFileFlags] + ['OSF'+iOSF for iOSF in OSFFileFlags]
 
