@@ -110,7 +110,7 @@ def MomTSSetFit(TSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,thi
         thisigamma += 1
         # print thisgamma , ' thismomlistlen=',len(thismomlist) , ' C3momlen=' , len(C3pt[thisigamma])
         for imom,thismom in enumerate(thismomlist):
-            imom2pt = thisGammaMomList['twopt'].index(thismom)
+            imom2pt = thisGammaMomList['twopt'].index(GetAvgMom(thismom))
             C3mom = C3pt[thisigamma][imom]
             Boot2ptMom = Boot2pt[imom2pt]
             inputparams.append((Boot2ptMom,Boot2ptZ,C3mom,this3ptCutList,thisTSinkList,thisSmList))
@@ -194,11 +194,13 @@ def TwoStateFitMom3pt(fitBoot2pt,C3pt,this3ptCutList,thisTSinkList):
             tsinkdata = C3pt[its]
             tsinkhalf = (thistsink-tsource)/2
             if cutval > tsinkhalf:
-                tdata3pt = [[tsinkhalf, thistsink-tsource]]
+                ##DEBUG chroma thing, two point correlator is at tsink not tsink-1
+                tdata3pt = [[tsinkhalf, thistsink-tsource+1]]
+                # tdata3pt = [[tsinkhalf, thistsink-tsource]]
                 fitdata3pt = [C3pt[tsinkhalf-1]]
             else:
                 for it in np.arange(cutval,thistsink-tsource-cutval+1):
-                    tdata3pt.append([it,thistsink-tsource])
+                    tdata3pt.append([it,thistsink-tsource+1])
                     # fitdata3pt.append(tsinkdata[it+tsource-1]/C2pt[thistsink-1])
                     fitdata3pt.append(tsinkdata[it+tsource-1])
         tdata3pt = np.rollaxis(np.array(tdata3pt),1)
@@ -252,8 +254,6 @@ def OneStateSet2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec):
     inputparams = [(C2pt[imom],thisSmList,this2ptFitR) for imom in range(len(thisGammaMomList['twopt']))]
     makeContextFunctions(sm2ptwrap)
     if DoMulticore:
-        print 'twoptnproc ',min(len(thisGammaMomList['twopt']),AnaProc)
-        print 'len of inputparams', len(inputparams)
         thisPool = Pool(min(len(thisGammaMomList['twopt']),AnaProc))
         output = thisPool.map(sm2ptwrap.mapper,inputparams)
     else:
@@ -304,7 +304,7 @@ def OneStateSetFit(OSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,
         if thisgamma == 'twopt': continue
         thisigamma += 1
         for imom,thismom in enumerate(thismomlist):
-            imom2pt = thisGammaMomList['twopt'].index(thismom)
+            imom2pt = thisGammaMomList['twopt'].index(GetAvgMom(thismom))
             C3mom =C3pt[thisigamma][imom]
             Boot2ptMom = Boot2pt[imom2pt]
             inputparams.append((Boot2ptMom,Boot2ptZ,C3mom,this3ptCutList,thisSetList,thisSmList))
@@ -370,7 +370,7 @@ def OneStateFit3pt(fitBoot2pt,C3pt,this3ptCutList,thistsink):
             fitdata3pt = [C3pt[tsinkhalf-1]]
         else:
             for it in np.arange(cutval,thistsink-tsource-cutval+1):
-                tdata3pt.append([it,thistsink-tsource])
+                tdata3pt.append([it,thistsink-tsource+1])
                 fitdata3pt.append(C3pt[it+tsource-1])
                 # tdata3pt.append(it)
                 # fitdata3pt.append(tsinkdata[it+tsource-1]/C2pt[thistsink-1])

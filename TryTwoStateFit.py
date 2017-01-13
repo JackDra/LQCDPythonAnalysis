@@ -124,7 +124,7 @@ else:
 
 
 def DoTSF(thisSetList,thisGammaList,TSF2ptarray,twoptGammaMomList,thisMomList):
-    print 'Running ' + thisGammaList[0] + ' ' + thisMomList[0]
+    # print 'Running ' + thisGammaList[0] + ' ' + thisMomList[0]
     totstart = time.time()
     mprint( 'Reading Data')
 
