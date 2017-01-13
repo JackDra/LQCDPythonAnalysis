@@ -16,7 +16,9 @@ except:
 
 ##DEAULT TAKEN FROM OSF from: /raid/jdragos/data/results/ReadSetk12090/cfuns/twopt/OSFCM/state1sum22to23dt4twoptm0.txt
 ##date/time calculated: 00:29 12 Oct 2015
-DefMassVal = {'22-31' : {'Avg':DefMass,'Std': 0.0028592256 ,'Chi': 0.4851841332}}
+# DefMassVal = {'22-31' : {'Avg':DefMass,'Std': 0.0028592256 ,'Chi': 0.4851841332}}
+
+DefMassVal = {'6-13' : {'Avg':DefMass,'Std': 0.0055870791 ,'Chi': 0.0432670739}}
 
 
 # THISMACHINE = socket.gethostname()
