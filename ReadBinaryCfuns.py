@@ -11,9 +11,12 @@ bar3ptChromaByteSwap = True
 complextype = np.complex128
 CheckMagic = False
 
-def GetBar3ptLoc(ig,ip,tsinklen,momlistlen,thiscomplextype):
+def GetBar3ptLoc(ig,ip,tsinklen,momlistlen,thiscomplextype,PolProj=False):
     intlen = np.dtype(np.int32).itemsize
-    strlen = np.dtype('S13').itemsize
+    if PolProj:
+        strlen = np.dtype('S11').itemsize
+    else:
+        strlen = np.dtype('S13').itemsize
     cmplxlen = np.dtype(thiscomplextype).itemsize
     cmplxblocklen = cmplxlen*tsinklen+intlen
     # cmplxblocklen = intlen*16+intlen
@@ -47,7 +50,7 @@ class ReadFSCfunPickCHROMA:
             #     thistsink = int(re.findall('tsink.*?p',thisfile)[0].replace('tsink','').replace('p',''))
             datahold = []            
             if os.path.getsize(thisfile) == 826009: thiscomplextype = np.complex128
-            elif os.path.getsize(thisfile) == 420505:
+            elif os.path.getsize(thisfile) < 600000:
                 # raise IOError(thisfile+ ' Is old 64 bit, please remove all smaller sized files')
                 thiscomplextype = np.complex64
             else: thiscomplextype = complextype
@@ -56,7 +59,7 @@ class ReadFSCfunPickCHROMA:
                 igammaloc = GammaTOChroma(thisgamma)
                 datahold.append([])
                 for ip,iploc in enumerate(thisMomList):      
-                    loc,loccons,magmin = GetBar3ptLoc(igammaloc,iploc,forcent,len(qvecSet),thiscomplextype)
+                    loc,loccons,magmin = GetBar3ptLoc(igammaloc,iploc,forcent,len(qvecSet),thiscomplextype,PolProj=('GMA3' in thisfile))
                     magicloc = loc-magmin
                     if 'Cons' in thisgamma or (RepWithCons and ('g1' in thisgamma or 'g2' in thisgamma or 'g3' in thisgamma or 'g4' in thisgamma )):
                         loc = loccons
@@ -121,7 +124,7 @@ def holder(thisfile):
     wilson_version = d1[8]
     Num_seqsrc = d1[9]
     
-    nuc_type = np.fromfile(f,dtype='S13',count=1)[0]
+    nuc_type = np.fromfile(f,dtype='S11',count=1)[0]
     d2 = np.fromfile(f,dtype=np.int32,count=17).byteswap()
     tsource = d2[0] 
     tsink = d2[1] 
@@ -137,6 +140,28 @@ def holder(thisfile):
     values = np.fromfile(f,dtype=complextype,count=tsink-tsource)
     
     f.close()
+
+    print 'output_version',output_version
+    print 'mom2max',mom2max 
+    print 'j_decay',j_decay
+    print 'nrow',nrow
+    print 'wilson_version',wilson_version
+    print 'Num_seqsrc',Num_seqsrc
+    
+    print 'nuc_type',nuc_type
+    print 'tsource',tsource
+    print 'tsink ',tsink 
+    print 'sinkmom ',sinkmom 
+    print 'gammanumber ',gammanumber 
+    print 'FFoutput_version ',FFoutput_version 
+    print 'numFF ',numFF 
+    print 'gammaopp ',gammaopp 
+    print 'numMom ',numMom 
+    print 'MagicNumber',MagicNumber
+    print 'qmom ',qmom 
+    print 'tcurrlen ',tcurrlen 
+    print 'values',values
+
     
         
 

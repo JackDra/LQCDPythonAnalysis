@@ -153,7 +153,7 @@ ShowConfNum = Debug # debugging, show number of configs during read
 PrintRead = not DoMulticore # Screws up output if on and doing mulitcore reading
 DoCmplx = True # reads complex opperator values as well as real values, should be on
 DoCons = False # reads Conserved vector current NOT IMPLEMENTED YET, USING BELOW UNTILL I GET AROUDN TO IT. ONLY WORKS WITH CHROMA
-RepWithCons = True # TEMPORARY, overrides vector current with Conserved vector current ONLY WORKS WITH CHROMA
+RepWithCons = False # TEMPORARY, overrides vector current with Conserved vector current ONLY WORKS WITH CHROMA
 
 DefWipe = True # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
 MakeGraphDat = True # Creates a .dat file of the values plotted for the corresponding graph (where implemented)
