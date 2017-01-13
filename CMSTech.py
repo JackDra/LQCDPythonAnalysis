@@ -459,7 +459,8 @@ def CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,printout=True,DoPoF=True):
     Cfuns2pt = np.array(Cfuns2pt)
     CMCfun2pt = []
     ##if ip**2 > pcutoff, make cfuns exclude sm128
-    LEvec,REvec,Emass = ReadLREM(todtvals,thisMomList,'PoF'+str(PoFShifts),NoWar=True)
+    # LEvec,REvec,Emass = ReadLREM(todtvals,thisMomList,'PoF'+str(PoFShifts),NoWar=True)
+    LEvec,REvec,Emass = ReadLREM(todtvals,thisMomList,'CM',NoWar=True)
     if (not DoPoF) or (not ReadPoF2pt) or (LEvec == None):
         Emass,LEvec,REvec = [],[],[]
         for ip,thisp in enumerate(thisMomList):
