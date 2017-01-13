@@ -252,6 +252,8 @@ def OneStateSet2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec):
     inputparams = [(C2pt[imom],thisSmList,this2ptFitR) for imom in range(len(thisGammaMomList['twopt']))]
     makeContextFunctions(sm2ptwrap)
     if DoMulticore:
+        print 'twoptnproc ',min(len(thisGammaMomList['twopt']),AnaProc)
+        print 'len of inputparams', len(inputparams)
         thisPool = Pool(min(len(thisGammaMomList['twopt']),AnaProc))
         output = thisPool.map(sm2ptwrap.mapper,inputparams)
     else:
