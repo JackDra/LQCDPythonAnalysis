@@ -129,8 +129,8 @@ ReadPoF2pt = False # Create PoF using already calculated eigenvectors. This is u
 DeCorrPoF = False ## used for debugging the pencil of function method (decorrelation problem) !!!!!DEPRECIATED, LEAVE FALSE!!!!!
 TimeInv = False ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
 DoCM = True ## does correlation matrix result ( no PoF) 
-PlotMonte = True ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
-PlotXSrcDep = True ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
+PlotMonte = False ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
+PlotXSrcDep = False ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
 MonteTime = 7
 MonteFlow = 40
 
@@ -139,12 +139,12 @@ if 'XAvg' in ListOrSet:
 else:
     XAvg = False
 ExactXSrcNumber = False ## makes it so there are the same number of sources for each configuration (hardwired to the first configuration found)
-ForceXSrcLen = True ## forces so that any more sorce locations after XSrcLen are ignored
+ForceXSrcLen = False ## forces so that any more sorce locations after XSrcLen are ignored
 XSrcLen = 15
-NoXAvg = True ## Does each source separatly for each 
+NoXAvg = False ## Does each source separatly for each 
 
 ForceMinXSrcLen = True ## only calculates with a minumum of MinXSRCLen of sources per gauge field
-MinXSrcLen = 15
+MinXSrcLen = 10
 ##DEBUG toggles (True/False):
 # Debug = True # for debugging, toggles alot of print statements on
 # DEBUGPoF = True ## Temp debug parameter to test PoF (REMOVE ONCE DONE)
