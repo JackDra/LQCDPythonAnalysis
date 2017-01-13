@@ -213,12 +213,12 @@ logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 momlistdir = datadir+'momdir/'
 pickledir = datadir+"pickledir/"
 REvecDir = scriptdir+'REvecSave/k'+str(kappa)+'/'
-# RunMomList = qvecSet 
-# RunAvgMomList = qvecAvgSet
+RunMomList = qvecSet 
+RunAvgMomList = qvecAvgSet
 # For Debuggin, only use zero momenta
 # RunMomList = [qvecSet[iqTOip(0)],qvecSet[iqTOip(3)]]
-RunMomList = [qvecSet[iqTOip(0)]]
-RunAvgMomList = [qvecAvgSet[0]]
+# RunMomList = [qvecSet[iqTOip(0)]]
+# RunAvgMomList = [qvecAvgSet[0]]
 # map(mkdir_p,outputdir)
 mkdir_p(outputdir[0])
 mkdir_p(pickledir)
@@ -383,8 +383,8 @@ else:
     AnatodtList = DeftodtList
     AnaTvarList = DefTvarList
     
-# DefSmearList = ['16','32','64']
-DefSmearList = ['16']
+DefSmearList = ['16','32','64']
+# DefSmearList = ['16']
 # DefSmearList = ['64']
 # DefSmearList = ['8','16','32','64','128','256']
 # DefSmearList = ['64','128']

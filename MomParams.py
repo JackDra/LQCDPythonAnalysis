@@ -349,22 +349,55 @@ def GetAvgMomip(ip):
         raise IOError('Mom Not Found in AvgList')
     else:
         return qstr        
-    
-def GetAvgMomList(qlist):
+
+def GetAvgMomTotal(qlist):    
+    outlist = []
+    for iq in qlist:
+        outlist.append(GetAvgMom(iq))
+    return outlist
+
+def GetAvgMomTotalip(iplist):
+    outlist = []
+    for iq in iplist:
+        outlist.append(GetAvgMomip(iq))
+    return outlist
+
+def SortAvgMomList(qlist):
+    qout = []
+    for imom in qvecAvgSet:
+        if imom in qlist:
+            qout.append(imom)
+    return qout
+
+def SortAvgMomListip(qlistip):
+    qout = []
+    avgip = [qstrTOip(ip,True) for ip in qvecAvgSet]
+    for imom in avgip:
+        if imom in qlistip:
+            qout.append(imom)
+    return qout
+
+def GetAvgMomList(qlist,sort=True):
     outlist = []
     for iq in qlist:
         iqavg = GetAvgMom(iq)
         if iqavg not in outlist:
             outlist.append(iqavg)
-    return outlist
+    if sort:
+        return SortAvgMomList(outlist)
+    else:
+        return outlist
 
-def GetAvgMomListip(iplist):
+def GetAvgMomListip(iplist,sort=True):
     outlist = []
     for iq in iplist:
         iqavg = GetAvgMomip(iq)
         if iqavg not in outlist:
             outlist.append(iqavg)
-    return outlist
+    if sort:
+        return SortAvgMomListip(outlist)
+    else:
+        return outlist
 
 
 def CreateSMOMNewPairs(thisMinqsqrd,thisMaxqsqrd):
