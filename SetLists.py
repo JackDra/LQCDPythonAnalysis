@@ -69,7 +69,6 @@ def SortMySet(SLin,massset=False):
             for iSLin in SLin:
                 if itsink in iSLin and 'sm' not in iSLin and 'to' not in iSLin and iSLin not in SLout:
                     SLout.append(iSLin)
-                    print iSLin,itint
                     TSinkLout.append(itint)
         for itsink,itint in zip(ntliststr,ntlist):
         # for itsink,itint in zip(AllTSinkStrList,AllTSinkList):
@@ -77,7 +76,6 @@ def SortMySet(SLin,massset=False):
             for ism in DefSmList+DefTvarList+PoFTvarList+REvecTvarList:
                 for iSLin in SLin:
                     if 'tsink'+itsink in iSLin and ism in iSLin and iSLin not in SLout:
-                        print iSLin,itint
                         TSinkLout.append(itint)
                         SLout.append(iSLin)
             # for ism in DefTvarList:
