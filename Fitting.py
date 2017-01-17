@@ -36,9 +36,9 @@ def Trange(ydata,tdata):
 #     return np.abs(np.log(ydata[np.array(tdata)]/ydata[np.array(tdata)+int(massdt)]))/massdt
 
 def FitRFWrap(ydata,tdata):
-    # if Debug:
-    print Pullflag(tdata,'Avg')
-    print Pullflag(Trange(ydata,tdata),'Avg')
+    if Debug:
+        print Pullflag(tdata,'Avg')
+        print Pullflag(Trange(ydata,tdata),'Avg')
     boot,Avg,Err = FitBoots(Trange(ydata,tdata),tdata,ConstantFitFun)
     return [boot[0],Avg[0],Err[0]]
 
@@ -51,10 +51,6 @@ def FitRFSet(RFin,thisTSinkList,icut):
     # print icut , len(RFin) , len(thisTSinkList)
     for its,itsink in enumerate(thisTSinkList):
         iRF = RFin[its]
-        print int(itsink)
-        print tsource
-        print icut
-        print int(itsink)-tsource-icut
         tdata = np.arange(icut, int(itsink)-tsource-icut)
         if tdata.size < 1: 
             fitBoot.append(iRF[(int(itsink)-tsource)/2])
