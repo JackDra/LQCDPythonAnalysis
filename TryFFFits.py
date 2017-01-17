@@ -126,7 +126,7 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
                         print 'Fitting to points using two parameter fit:'
                         for ix,iy in zip(xdatain, ydatain):
                             print ix, iy.Avg, iy.Std
-                    DPfit,DPfitAvg,DPfitChi = FitBoots(np.array(ydatain),np.array(xdatain),DPfitfun,derfun=DPfitfunDer)
+                    DPfit,DPfitAvg,DPfitChi = FitBoots(np.array(ydatain),np.array([xdatain]),DPfitfun,derfun=DPfitfunDer)
                     DPfit[0].values = np.abs(DPfit[0].values)
                     DPfit[0].Stats()
                     outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = [DPfit[0],DPfit[1]],[abs(DPfitAvg[0]),DPfitAvg[1]],DPfitChi
@@ -135,7 +135,7 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
                         print 'Fitting to points using one parameter fit:'
                         for ix,iy in zip(xdatain, ydatain):
                             print ix, iy.Avg, iy.Std
-                    DPfit,DPfitAvg,DPfitChi = FitBoots(np.array(ydatain),np.array(xdatain),DPfitfunOnePar,derfun=DPfitfunOneParDer)
+                    DPfit,DPfitAvg,DPfitChi = FitBoots(np.array(ydatain),np.array([xdatain]),DPfitfunOnePar,derfun=DPfitfunOneParDer)
                     outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = [yZero,DPfit[0]],[yZero.Avg,DPfitAvg[0]],DPfitChi*2 
     PrintDPfit(iCurr,outputdict,CurrSetInfo)
 
