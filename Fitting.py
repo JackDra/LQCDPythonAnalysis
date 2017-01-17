@@ -51,8 +51,9 @@ def FitRFSet(RFin,thisTSinkList,icut):
     # print icut , len(RFin) , len(thisTSinkList)
     for its,itsink in enumerate(thisTSinkList):
         iRF = RFin[its]
+        print icut
+        print int(itsink)-tsource-icut
         tdata = np.arange(icut, int(itsink)-tsource-icut)
-        print tdata.size
         if tdata.size < 1: 
             fitBoot.append(iRF[(int(itsink)-tsource)/2])
             fitAvg.append(iRF[(int(itsink)-tsource)/2].Avg)
