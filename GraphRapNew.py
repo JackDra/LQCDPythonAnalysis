@@ -191,6 +191,8 @@ else:
     if DoMulticore and len(thisGammaList) > 1 and feedin['anaproc'] > 1:
         inputparams = []
         for igamma in thisGammaList:
+            # if any([idst in igamma for idst in ['doub','sing','twopt']]): continue
+            print igamma
             if any([idst in igamma for idst in ['doub','sing','twopt']]): continue
             for imom in feedin['mom']:
                 if imom == 'q = 0 0 0' :
