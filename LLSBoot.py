@@ -27,8 +27,8 @@ def LSCreate(Fun):
         print par
         print Fun(xval,par)
         print yval
+        print (np.array(Fun(xval,par))-yval)/errval
         print 
-        # print (np.array(Fun(xval,par))-yval)/errval
         return (np.array(Fun(xval,par))-yval)/errval
     return LSFun
 
