@@ -192,8 +192,7 @@ else:
         inputparams = []
         for igamma in thisGammaList:
             # if any([idst in igamma for idst in ['doub','sing','twopt']]): continue
-            print igamma
-            if any([idst in igamma for idst in ['doub','sing','twopt']]): continue
+            if any([idst in igamma for idst in ['sing','twopt']]): continue
             for imom in feedin['mom']:
                 if imom == 'q = 0 0 0' :
                     inputparams.append((['doub'+igamma,'sing'+igamma,'twopt'],[imom],feedin['set'],feedin['method'],feedin['comb'])) 
