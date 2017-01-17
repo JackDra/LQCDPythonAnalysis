@@ -70,9 +70,9 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCom
         thisMassdict = datadict['twopt']['q = 0 0 0']
     start = time.time()
     for imom in thisMomList:
-        print imom
         # if imom == 'q = 0 0 0' and len(thisMomList) > 1 and DoMulticore: continue
         for icomb in combdatadict.keys():
+            print icomb
             for icg,igamma in enumerate(combdatadict[icomb].keys()):
                 print igamma
                 combgamma = icomb+igamma
