@@ -22,23 +22,26 @@ MassDtList = range(1,5)
 DoFList = range(3,17)
 ChiThreshold = 0.001
 # MassDtList = [2]
-FitCutMin,FitCutMax = 2,5
-FitCutList = range(FitCutMin,FitCutMax+1)
-FitCutArgs = ['cut'+str(ic) for ic in FitCutList]
+FitCutMin,FitCutMax = 0,5
+FitCutList,FitCutArgs = [],[]
+for icut in range(FitCutMin,FitCutMax+1):
+    for jcut in range(FitCutMin,FitCutMax+1):
+        FitCutList.append([icut,jcut])
+        FitCutArgs.append('cut'+str(icut)'-'+str(jcut))
 ##TryFits.py
-FitCutPicked =  {'tsink26sm32':'cut6',
-                 'tsink26'+PickedStateStr+'REvec':'cut4',
-                 'tsink29sm32':'cut5',
-                 'tsink29sm64':'cut5',
-                 'tsink29sm128':'cut5',
-                 'tsink29'+PickedStateStr+'CM':'cut5',
-                 'tsink29'+PickedStateStr+'REvec':'cut5',
-                 'tsink32sm32':'cut6',
-                 'tsink32'+PickedStateStr+'REvec':'cut6',
-                 'tsink35sm32':'cut6',
-                 'tsink38sm32':'cut6',
-                 'tsink26'+PickedStateStr+'PoF'+str(PoFShifts):'cut3',
-                 'tsink27'+PickedStateStr+'PoF'+str(PoFShifts):'cut3'}
+FitCutPicked =  {'tsink26sm32':'cut6-6',
+                 'tsink26'+PickedStateStr+'REvec':'cut4-4',
+                 'tsink29sm32':'cut5-5',
+                 'tsink29sm64':'cut5-5',
+                 'tsink29sm128':'cut5-5',
+                 'tsink29'+PickedStateStr+'CM':'cut5-5',
+                 'tsink29'+PickedStateStr+'REvec':'cut5-5',
+                 'tsink32sm32':'cut6-6',
+                 'tsink32'+PickedStateStr+'REvec':'cut6-6',
+                 'tsink35sm32':'cut6-6',
+                 'tsink38sm32':'cut6-6',
+                 'tsink26'+PickedStateStr+'PoF'+str(PoFShifts):'cut3-3',
+                 'tsink27'+PickedStateStr+'PoF'+str(PoFShifts):'cut3-3'}
 ##
 
 

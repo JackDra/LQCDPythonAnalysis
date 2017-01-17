@@ -18,10 +18,16 @@ def untstr(it):
     return int(it.replace('t',''))
 
 def xmlcut(icut):
-    return 'cut'+str(icut)
-
+    if isinstance( icut, int ):
+        return 'cut'+str(icut)
+    else:
+        return 'cut'+'-'.join(map(str,icut))
+    
 def unxmlcut(icut):
-    return int(icut.replace('cut',''))
+    if '-' in icut:
+        return map(int,icut.replace('cut','').split('-'))
+    else:
+        return int(icut.replace('cut',''))
 
 
 def AvgStdToFormat(Avg,Std,frmtflag='f'):
