@@ -48,7 +48,7 @@ def LSDerCreate(FunDer):
         print 
         # print np.transpose(FunDer(xval,par)/errval)
         # return np.transpose(FunDer(xval,par)/errval)
-        return np.transpose(FunDer(xval,par)/errval).tolist()
+        return FunDer(xval,par)/errval
         # return np.transpose(FunDer(xval,par))
         # return np.transpose(FunDer(xval,par)/errval)
     return LSDerFun
