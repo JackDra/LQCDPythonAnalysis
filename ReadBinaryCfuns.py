@@ -298,9 +298,13 @@ class Read2ptCfunChromaXML:
                         elif int(strline.replace('<'+InterpFlag+'>','').replace('</'+InterpFlag+'>','')) == int(INg5):
                             InterpPart = False
                             InterpPartg5 = True
+                        else:
+                            InterpPart = False
+                            InterpPartg5 = False
                     elif BarPart and InterpPart:
                         if '<sink_mom_num>' in strline:
                             thismom = int(strline.replace('<sink_mom_num>','').replace('</sink_mom_num>',''))
+                            print thisMomList, thismom
                             if thismom in thisMomList:
                                 datahold.append([])
                                 self.OutMomList.append(thismom)
@@ -324,6 +328,7 @@ class Read2ptCfunChromaXML:
                             if np.isnan(datag5hold[-1][-1]) and DeleteNanCfgs:
                                 raise NaNCfunError('NaN Values: '+thisfile+'  ' +qvecSet[int(self.OutMomList[-1])]  )
                     if strline == '</momenta>' and InterpPart:
+                        InterpPart = False
                         if len(datahold) > 0 and ((len(datag5hold) > 0) or (not Dog5 )): break
             # print xsrc, ' data '
             # print np.array(datahold)
@@ -387,6 +392,9 @@ class R2CChromaXMLFileList:
                         elif int(strline.replace('<'+InterpFlag+'>','').replace('</'+InterpFlag+'>','')) == int(INg5):
                             InterpPart = False
                             InterpPartg5 = True
+                        else:
+                            InterpPart = False
+                            InterpPartg5 = False
                     elif BarPart and InterpPart:
                         if '<sink_mom_num>' in strline:
                             thismom = int(strline.replace('<sink_mom_num>','').replace('</sink_mom_num>',''))
@@ -435,12 +443,14 @@ class R2CChromaXMLFileList:
         self.data = self.data/float(datalen)
         if Dog5: self.datag5 = self.datag5/float(datag5len)
         indicies =  np.searchsorted(self.OutMomList,thisMomList)
-        # if Debug:
-        #     print 
-        #     print thisMomList
-        #     print thisfile
-        #     print indicies
-        #     print self.data
+        if Debug:
+            print 
+            print thisfile
+            print thisMomList
+            print self.OutMomList
+            print indicies
+            print self.data
+            print self.datag5
         self.data = np.array(self.data)[indicies].tolist()
         if Dog5: self.datag5 = np.array(self.datag5)[indicies].tolist()
 
