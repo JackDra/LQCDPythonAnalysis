@@ -21,13 +21,14 @@ def LSCreate(Fun):
             xval = xval[0]
         yval = np.array(val[-2])
         errval = np.array(val[-1])
-        print 'LS values'
-        print val
-        print xval
-        print par
-        print Fun(xval,par)
-        print yval
-        print 
+        # print 'LS values'
+        # print val
+        # print xval
+        # print par
+        # print Fun(xval,par)
+        # print yval
+        # print 
+        print (np.array(Fun(xval,par))-yval)/errval
         return (np.array(Fun(xval,par))-yval)/errval
     return LSFun
 
@@ -39,12 +40,13 @@ def LSDerCreate(FunDer):
             xval = xval[0]
         yval = val[-2]
         errval = val[-1]
-        print 'LSDer values'
-        print val
-        print xval, par
-        print FunDer(xval,par)
-        print FunDer(xval,par)/errval
-        print 
+        # print 'LSDer values'
+        # print val
+        # print xval, par
+        # print FunDer(xval,par)
+        # print FunDer(xval,par)/errval
+        # print 
+        print np.transpose(FunDer(xval,par)/errval)
         return np.transpose(FunDer(xval,par)/errval)
         # return np.transpose(FunDer(xval,par))
         # return np.transpose(FunDer(xval,par)/errval)
@@ -118,14 +120,14 @@ def LSFit(parlen,xdata,yerr,fitfun,ydata,derfun=None,iGuess = None):
     data = CreateArgs(xdata,ydata,yerr)
     LSfitfun,LSDerfitfun,iGuess = GetLSFuns(fitfun,derfun,iGuess,parlen)
     # if isinstance(ydata[0],complex):iGuess = map(complex,iGuess)
-    if Debug:
-        print LSDerfitfun.__name__
-        print LSfitfun.__name__
-        print np.array(iGuess)        
-        print np.array(data)
-        print LSfitfun(iGuess,data[0])
-        print LSDerfitfun(iGuess,data[0])
-        print data[1]
+    # if Debug:
+    #     print LSDerfitfun.__name__
+    #     print LSfitfun.__name__
+    #     print np.array(iGuess)        
+    #     print np.array(data)
+    #     print LSfitfun(iGuess,data[0])
+    #     print LSDerfitfun(iGuess,data[0])
+    #     print data[1]
     if ForceNoDer:
         x,covar, infodict, mesg, ier=leastsq(LSfitfun,np.array(iGuess),args=np.array(data), maxfev=MI, full_output=1)
     else:
