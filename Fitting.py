@@ -51,6 +51,8 @@ def FitRFSet(RFin,thisTSinkList,icut):
     # print icut , len(RFin) , len(thisTSinkList)
     for its,itsink in enumerate(thisTSinkList):
         iRF = RFin[its]
+        print int(itsink)
+        print tsource
         print icut
         print int(itsink)-tsource-icut
         tdata = np.arange(icut, int(itsink)-tsource-icut)
