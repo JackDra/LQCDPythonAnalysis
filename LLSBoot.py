@@ -121,7 +121,8 @@ def LSFit(parlen,xdata,yerr,fitfun,ydata,derfun=None,iGuess = None):
         print LSfitfun.__name__
         print np.array(iGuess)        
         print np.array(data)
-        print LSfitfun(iGuess,data[0])
+        print LSfitfun(data[0],iGuess)
+        print LSDerfitfun(iGuess,data[0])
         print data[1]
     if ForceNoDer:
         x,covar, infodict, mesg, ier=leastsq(LSfitfun,np.array(iGuess),args=np.array(data), maxfev=MI, full_output=1)
