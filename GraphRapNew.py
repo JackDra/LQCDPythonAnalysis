@@ -206,7 +206,7 @@ else:
     else:
         passgammalist = ['twopt']
         for igamma in thisGammaList:
-            if any([idst in igamma for idst in ['doub','sing','twopt']]): continue
+            if any([idst in igamma for idst in ['sing','twopt']]): continue
             passgammalist += ['doub'+igamma,'sing'+igamma]
         ReadAndPlotDict(passgammalist,feedin['mom'],feedin['set'],feedin['method'],feedin['comb'])
         
