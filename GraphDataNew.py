@@ -51,7 +51,7 @@ if kappa == 12:
 # Massyrange = 0.40,0.60
 # Massyrange = 0.40,0.61
 # Qsqrdxlim = -0.03,1
-Qsqrdxlim = -0.03,0.3
+Qsqrdxlim = -0.03,0.4
 
 ErrTVals = 1,21
 Erryrange = 0,3
