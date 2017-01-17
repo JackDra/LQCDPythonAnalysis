@@ -48,6 +48,7 @@ def FitRFWrap(ydata,tdata):
 
 def FitRFSet(RFin,thisTSinkList,icut):
     fitBoot,fitAvg,fitChi = [],[],[]
+    print 'WHAT'
     # print icut , len(RFin) , len(thisTSinkList)
     for its,itsink in enumerate(thisTSinkList):
         iRF = RFin[its]
