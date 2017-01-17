@@ -278,6 +278,8 @@ def CreateGammaList(thislist,twopt=False):
                 GLout += DefNoDSGammaList
             elif ig in DerCurrTypes:
                 GLout += DoubSingList(['P4'+ig])
+            elif ig in [ig in icurr+'OnlyDS' for icurr in DerCurrTypes]:
+                GLout += ['P4'+ig]
             elif ig in DefCombGammaList:
                 GLout += [ig]
             elif ig in ['twopt','Mass']:
