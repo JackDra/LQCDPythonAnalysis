@@ -101,11 +101,11 @@ def GetLSFuns(fitfun,derfun,iGuess,parlen):
 
 def CreateArgs(xdata,ydata,yerr):
     data = []
-    if isinstance(xdata[0],list) or isinstance(xdata[0], np.ndarray):
-        for ix in xdata:
-            data.append(np.array(ix))
-    else:
-        data.append(xdata)
+    # if isinstance(xdata[0],list) or isinstance(xdata[0], np.ndarray):
+    #     for ix in xdata:
+    #         data.append(np.array(ix))
+    # else:
+    data.append(np.array(xdata))
     data.append(np.array(ydata))
     data.append(np.array(yerr))
     return data
@@ -119,7 +119,7 @@ def LSFit(parlen,xdata,yerr,fitfun,ydata,derfun=None,iGuess = None):
     if Debug:
         print LSDerfitfun.__name__
         print LSfitfun.__name__
-        print np.array(iGuess)
+        print np.array(iGuess)        
         print np.array(data)
     if ForceNoDer:
         x,covar, infodict, mesg, ier=leastsq(LSfitfun,np.array(iGuess),args=np.array(data), maxfev=MI, full_output=1)
