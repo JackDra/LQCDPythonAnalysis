@@ -77,12 +77,12 @@ def DerOfFun(Fun,Len=1):
         return FormFactorO2Der
     elif Fun.__name__ == 'FormFactorO3':
         return FormFactorO3Der
-    elif Fun.__name__ == 'DPfitfun':
-        return DPfitfunDer
     elif Fun.__name__ == 'DPfitfunOnePar':
         return DPfitfunOneParDer
     elif Fun.__name__ == 'DPfitfutn2':
         return DPfitfun2Der
+    elif Fun.__name__ == 'DPfitfun':
+        return DPfitfunDer
     elif Fun.__name__ == 'OneOnRootNFitFun':
         return OORNFFDer
 
