@@ -72,9 +72,7 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCom
     for imom in thisMomList:
         # if imom == 'q = 0 0 0' and len(thisMomList) > 1 and DoMulticore: continue
         for icomb in combdatadict.keys():
-            print icomb
             for icg,igamma in enumerate(combdatadict[icomb].keys()):
-                print igamma
                 combgamma = icomb+igamma
                 if any([idst in igamma for idst in ['twopt']]): continue
                 if any([idst in igamma for idst in ['doub','sing']]) and DoDS==False: continue
