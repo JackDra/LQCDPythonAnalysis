@@ -145,7 +145,7 @@ def LSFit(parlen,xdata,yerr,fitfun,ydata,derfun=None,iGuess = None):
 ##Note, xdatain must be in the form
 ## xdata [ [x1values] , [x2values] , ..... [xnvalues] ]
 ## for fitting functions over variables F( x1, x2, ... xn )
-def FitBoots(ydatain,xdatain,FitFun,DoW='T',MI=MaxIters,parlen=1,tBooted=False,thisnboot=nboot):
+def FitBoots(ydatain,xdatain,FitFun,DoW='T',MI=MaxIters,parlen=1,tBooted=False,thisnboot=nboot,derfun=None,iGuess = None):
     GetBootStats(ydatain)
     # print ydatain
     # print Pullflag(ydatain,'Avg')
@@ -160,9 +160,9 @@ def FitBoots(ydatain,xdatain,FitFun,DoW='T',MI=MaxIters,parlen=1,tBooted=False,t
     else:
         ydataStd = [1]*len(ydataAvg)
     if tBooted:
-        [fitdataAvg,fitdataAvgErr,fitdataChi] = LSFit(parlen,xdatain[0],ydataStd,FitFun,ydataAvg)
+        [fitdataAvg,fitdataAvgErr,fitdataChi] = LSFit(parlen,xdatain[0],ydataStd,FitFun,ydataAvg,derfun,iGuess)
     else:
-        [fitdataAvg,fitdataAvgErr,fitdataChi] = LSFit(parlen,xdatain,ydataStd,FitFun,ydataAvg)
+        [fitdataAvg,fitdataAvgErr,fitdataChi] = LSFit(parlen,xdatain,ydataStd,FitFun,ydataAvg,derfun,iGuess)
 
     if MultiCoreFitting:
         makeContextFunctions(LSFit)
@@ -181,9 +181,9 @@ def FitBoots(ydatain,xdatain,FitFun,DoW='T',MI=MaxIters,parlen=1,tBooted=False,t
         fitdatavals = []
         for iboot,bootdata in enumerate(ydatavals):
             if tBooted:
-                tempboot = LSFit(parlen,xdatain[iboot+1],ydataStd,FitFun,bootdata)
+                tempboot = LSFit(parlen,xdatain[iboot+1],ydataStd,FitFun,bootdata,derfun,iGuess)
             else:
-                tempboot = LSFit(parlen,xdatain,ydataStd,FitFun,bootdata)
+                tempboot = LSFit(parlen,xdatain,ydataStd,FitFun,bootdata,derfun,iGuess)
             fitdatavals.append([])
             for iy,iyd in enumerate(tempboot[0]):
                 fitdatavals[iboot].append(iyd)
