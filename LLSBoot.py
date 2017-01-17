@@ -107,7 +107,7 @@ def CreateArgs(xdata,ydata,yerr):
     data = []
     if isinstance(xdata[0],list) or isinstance(xdata[0], np.ndarray):
         for ix in xdata:
-            data.append(np.array(ix))
+            data.append(np.array([ix]))
     else:
         data.append(np.array(xdata))
     data.append(np.array(ydata))
