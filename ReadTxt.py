@@ -260,7 +260,7 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
         for imom in datadict[igamma].iterkeys():
             twoptmom = GetAvgMom(imom)
             # if zmomstr not in datadict[igamma].keys(): continue
-            if not CheckDict(datadict,igamma,imom,'RF'): return
+            if not CheckDict(datadict,igamma,imom,'RF'): continue
             for iset in datadict[igamma][imom]['RF'].keys():
                 twoptiset = 'tsrc'+str(tsource)+RemoveTSink(iset)
                 if not CheckDict(datadict['twopt'][twoptmom],'RF',twoptiset): continue
