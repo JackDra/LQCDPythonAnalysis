@@ -858,13 +858,13 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
     thissymcyc,thiscolcyc,thisshiftcycff = graphparams
     collist = []
     FixZ=False    
-    if 'Ge' in thisDSCurr or ('Vector' in thisDSCurr and ('PsVector' not in thisDSCurr.replace('IsoVector',''))):
-        if 'IsoVector' in thisDSCurr or 'Proton' in thisDSCurr or 'sing' in thisDSCurr:
-            FixZ= 1
-        elif 'Neutron' in thisDSCurr:
-            FixZ= 0
-        elif 'doub' in thisDSCurr:
-            FixZ= 2
+    # if 'Ge' in thisDSCurr or ('Vector' in thisDSCurr and ('PsVector' not in thisDSCurr.replace('IsoVector',''))):
+    #     if 'IsoVector' in thisDSCurr or 'Proton' in thisDSCurr or 'sing' in thisDSCurr:
+    #         FixZ= 1
+    #     elif 'Neutron' in thisDSCurr:
+    #         FixZ= 0
+    #     elif 'doub' in thisDSCurr:
+    #         FixZ= 2
     # DatDPFile = './'+thisFF+thisDSCurr+'.dat'
     datf = open(DatFile.replace('.dat','Params.dat'),'w')
     if 'FF1' in thisFF:
