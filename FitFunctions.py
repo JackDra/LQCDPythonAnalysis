@@ -61,13 +61,13 @@ def DPfitfunOnePar(x,p):
 
 def DPfitfunOneParDer(x,p):
     # return [1/((1+(x[0]/p[1]))**2), (-2*p[0]*p[1]**2)/((x[0]+p[1])**3)]
-    return [(-2/p[0])*1/((1+(x[0]/p[0]))**3]
+    return [(-2/p[0])*1/((1+(x[0]/p[0]))**3)]
 
 def DPfitfun2(x,p):
     return p[0]/(1+(x[0]/p[1])**2)**2
 
 def DPfitfun2Der(x,p):
-    return 1/(1+(x[0]/p[1])**2)**2,-4*p[0]*x[0]/(p[1]**2*(1+(x[0]/p[1]))**3)
+    return [1/(1+(x[0]/p[1])**2)**2,-4*p[0]*x[0]/(p[1]**2*(1+(x[0]/p[1]))**3)]
 
 def FormFactorO1(x,p):return p[0]*x[0]
 def FormFactorO1Der(x,p):return [x[0]]
