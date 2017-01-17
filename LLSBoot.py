@@ -123,7 +123,7 @@ def LSFit(parlen,xdata,yerr,fitfun,ydata,derfun=None,iGuess = None):
         print LSfitfun.__name__
         print np.array(iGuess)        
         print np.array(data)
-        print LSfitfun(data[0],iGuess)
+        print LSfitfun(iGuess,data[0])
         print LSDerfitfun(iGuess,data[0])
         print data[1]
     if ForceNoDer:
