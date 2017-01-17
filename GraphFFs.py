@@ -50,8 +50,8 @@ def PlotSumMethSets(currdata,thiscurr,thisSetList):
         PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'SumMeth',ifitr),'SumMeth'+ifitr+'CutComp')
 
 def PlotFitMethSets(currdata,thiscurr,thisSetList):
-    PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit','tsink29','cut6')+FlagList(thisSetList,'Fit','PoF','cut6'),'FitMytsink29')
-    PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit','sm32','cut6'),'FitMysm32')
+    # PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit','tsink29','cut6')+FlagList(thisSetList,'Fit','PoF','cut6'),'FitMytsink29')
+    # PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit','sm32','cut6'),'FitMysm32')
     for iset in DefSetList:
         PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit',iset),'Fit'+iset+'CutComp')
     for icut in FitCutArgs:

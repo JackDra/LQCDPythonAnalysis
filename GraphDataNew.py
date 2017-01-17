@@ -73,16 +73,17 @@ ylimDict = {'VectorP4giDi':[-0.4,-0.15],
             'IsoVectorP3g1g2':[1.22,1.02], ## Tsink Var 
             'IsoVectorP4g4':[0.8,1.1]}
 
-ylimFFDict = {'ProtonGeGmFF1/F1divF2':[0.3,0.5],
-              # 'NeutronGeGmFF2':[-1.2,-0.4],
-              'ProtonVectorFF2':[0.4,1.2],
-              'NeutronVectorFF2':[-1.2,-0.4],
-              'IsoVectorPsVectorFF2':[2,10],
-              'ProtonTensorFF2':[-0.5,-3],
-              'ProtonTensorFF3':[0.9,0.15],
-              'NeutronTensorFF2':[2.0,0.45],
-              'NeutronTensorFF3':[-0.2,-1],
-              'NeutronGeGmFF1/F1divF2':[0.0,0.06]}
+# ylimFFDict = {'ProtonGeGmFF1/F1divF2':[0.3,0.5],
+#               # 'NeutronGeGmFF2':[-1.2,-0.4],
+#               'ProtonVectorFF2':[0.4,1.2],
+#               'NeutronVectorFF2':[-1.2,-0.4],
+#               'IsoVectorPsVectorFF2':[2,10],
+#               'ProtonTensorFF2':[-0.5,-3],
+#               'ProtonTensorFF3':[0.9,0.15],
+#               'NeutronTensorFF2':[2.0,0.45],
+#               'NeutronTensorFF3':[-0.2,-1],
+#               'NeutronGeGmFF1/F1divF2':[0.0,0.06]}
+ylimFFDict = {}
 
 leglocFFDict = {'NeutronVectorFF2':'upper left',
                 'NeutronGeGmFF1':'upper left',
@@ -856,6 +857,7 @@ def SkipZeroFF(thisFF,thisset,thisCurr):
 def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
     thissymcyc,thiscolcyc,thisshiftcycff = graphparams
     collist = []
+    FixZ=False    
     if 'Ge' in thisDSCurr or ('Vector' in thisDSCurr and ('PsVector' not in thisDSCurr.replace('IsoVector',''))):
         if 'IsoVector' in thisDSCurr or 'Proton' in thisDSCurr or 'sing' in thisDSCurr:
             FixZ= 1
@@ -863,10 +865,6 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
             FixZ= 0
         elif 'doub' in thisDSCurr:
             FixZ= 2
-        else:
-            FixZ=False
-    else:
-        FixZ=False    
     # DatDPFile = './'+thisFF+thisDSCurr+'.dat'
     datf = open(DatFile.replace('.dat','Params.dat'),'w')
     if 'FF1' in thisFF:
