@@ -22,7 +22,7 @@ MassDtList = range(1,5)
 DoFList = range(3,17)
 ChiThreshold = 0.001
 # MassDtList = [2]
-FitCutMin,FitCutMax = 0,10
+FitCutMin,FitCutMax = 1,10
 FitCutList,FitCutArgs = [],[]
 for icut in range(FitCutMin,FitCutMax+1):
     for jcut in range(FitCutMin,FitCutMax+1):
