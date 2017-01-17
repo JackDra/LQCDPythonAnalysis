@@ -271,8 +271,8 @@ def CreateGammaList(thislist,twopt=False):
                 GLout += DoubSingList(CurrOpps[ig])
                 GLout += DoubSingCmplxList(CurrOpps[ig])      
             elif ig in [icurr + 'OnlyGamma' for icurr in CurrTypes]:
-                GLout += CurrOpps[ig]
-                GLout += [icurr+'cmplx' for icurr in CurrOpps[ig]]
+                GLout += CurrOpps[ig.replace('OnlyGamma','')]
+                GLout += [icurr+'cmplx' for icurr in CurrOpps[ig.replace('OnlyGamma','')]]
             elif 'SmallSet' in ig :
                 GLout += DoubSingList(['P4g4','P3g3g5','P4I','P3g1g2','P4giDi'])
             elif 'OnlyDS' in ig :
