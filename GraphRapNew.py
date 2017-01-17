@@ -198,6 +198,9 @@ else:
                 else:
                     inputparams.append((['doub'+igamma,'sing'+igamma,'twopt'],['q = 0 0 0',imom],feedin['set'],feedin['method'],feedin['comb']))
         makeContextFunctions(ReadAndPlotDict)
+        print len(inputparams)
+        print feedin['anaproc']
+        print min(len(inputparams),feedin['anaproc'])
         thisPool = Pool(min(len(inputparams),feedin['anaproc']))
         output = thisPool.map(ReadAndPlotDict.mapper,inputparams)
         thisPool.close()
