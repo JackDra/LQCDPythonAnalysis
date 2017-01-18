@@ -63,9 +63,9 @@ for iFFcomb in feedin['FFcomb']:
     
   
 def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
-    start = time.time()    
     outputdict = OrderedDict()
     CurrInfo = False
+    totalstart = time.time()
     if Debug: print 'iCurr' , icurr
     # if 'tsink29sm32Fitscut5' in Currdata.keys():
     #     iSet = 'tsink29sm32Fitscut5'
@@ -78,6 +78,7 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
     TwoBoot.values = np.array([2.0]*nboot)
     TwoBoot.Stats()
     for iSet,Setdata in Currdata.iteritems():    
+        start = time.time()    
         if not any([imethod in iSet for imethod in thisMethodList]): continue 
         if 'TSF' in iSet or 'SumMeth' in iSet:
             if not any([RemoveTSink(iset) in iSet for iset in thisSetList]): continue 
@@ -138,8 +139,9 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
                             print ix, iy.Avg, iy.Std
                     DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfitfunOnePar)
                     outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = [yZero,DPfit[0]],[yZero.Avg,DPfitAvg[0]],DPfitChi*2 
+        print iCurr ,iSet ' Complete , time:', GetTimeStr(time.time() - start)
     PrintDPfit(iCurr,outputdict,CurrSetInfo)
-    print iCurr , ' Complete, time:', GetTimeStr(time.time() - start)
+    print iCurr , ' Complete, total time:', GetTimeStr(time.time() - start)
 
 inputparams = []
 for iCurr,Currdata in datadict.iteritems():
