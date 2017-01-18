@@ -63,6 +63,7 @@ for iFFcomb in feedin['FFcomb']:
     
   
 def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
+    start = time.time()    
     outputdict = OrderedDict()
     CurrInfo = False
     if Debug: print 'iCurr' , icurr
@@ -101,16 +102,16 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
                     if '1' not in nFF:
                         yZero = False
                     else:
-                        if ('Ge' in iCurr or ('Vector' in iCurr and 'PsVector' not in iCurr.replace('IsoVector',''))):
-                            if 'IsoVector' in iCurr or 'Proton' in iCurr or 'sing' in iCurr:
-                                yZero = OneBoot
-                            elif 'Neutron' in iCurr:
-                                yZero = ZeroBoot
-                            elif 'doub' in iCurr:
-                                yZero = TwoBoot
-                            else:
-                                yZero = OneBoot
-                        elif 'Boot' in Qsdata:
+                        # if ('Ge' in iCurr or ('Vector' in iCurr and 'PsVector' not in iCurr.replace('IsoVector',''))):
+                        #     if 'IsoVector' in iCurr or 'Proton' in iCurr or 'sing' in iCurr:
+                        #         yZero = OneBoot
+                        #     elif 'Neutron' in iCurr:
+                        #         yZero = ZeroBoot
+                        #     elif 'doub' in iCurr:
+                        #         yZero = TwoBoot
+                        #     else:
+                        #         yZero = OneBoot
+                        if 'Boot' in Qsdata:
                             ydatain.append(Qsdata['Boot'])
                             xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),Phys=PhysicalUnits))
                 elif 'Boot' in Qsdata:
@@ -138,7 +139,7 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList):
                     DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfitfunOnePar)
                     outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = [yZero,DPfit[0]],[yZero.Avg,DPfitAvg[0]],DPfitChi*2 
     PrintDPfit(iCurr,outputdict,CurrSetInfo)
-
+    print iCurr , ' Complete, time:', GetTimeStr(time.time() - start)
 
 inputparams = []
 for iCurr,Currdata in datadict.iteritems():
