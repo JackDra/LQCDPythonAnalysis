@@ -22,10 +22,11 @@ MassDtList = range(1,5)
 DoFList = range(3,17)
 ChiThreshold = 0.001
 # MassDtList = [2]
-FitCutMin,FitCutMax = 1,10
+FitCutMin,FitCutMax = 1,9
 FitCutList,FitCutArgs = [],[]
 for icut in range(FitCutMin,FitCutMax+1):
     for jcut in range(FitCutMin,FitCutMax+1):
+        if icut + jcut == 10: continue
         FitCutList.append([icut,jcut])
         FitCutArgs.append('cut'+str(icut)+'-'+str(jcut))
 ##TryFits.py

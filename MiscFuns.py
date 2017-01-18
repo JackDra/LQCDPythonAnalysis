@@ -12,6 +12,23 @@ from collections import OrderedDict
 import time,datetime
 from copy import deepcopy
 
+def estimated_autocorrelation(x):
+   """
+   http://stackoverflow.com/q/14297012/190597
+   http://en.wikipedia.org/wiki/Autocorrelation#Estimation
+   """
+   n = len(x)
+   variance = x.var()
+   x = x-x.mean()
+   r = np.correlate(x, x, mode = 'full')[-n:]
+   assert np.allclose(r, np.array([(x[:n-k]*x[-(n-k):]).sum() for k in range(n)]))
+   result = r/(variance*(np.arange(n, 0, -1)))
+   return result
+
+def autocorr(x):
+   result = np.correlate(x, x, mode='full')
+   return result[result.size/2:]
+
 def RemoveNAN(thislist):
    listout = []
    for ilist in thislist:
