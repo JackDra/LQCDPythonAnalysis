@@ -26,7 +26,7 @@ FitCutMin,FitCutMax = 1,9
 FitCutList,FitCutArgs = [],[]
 for icut in range(FitCutMin,FitCutMax+1):
     for jcut in range(FitCutMin,FitCutMax+1):
-        if icut + jcut == 10: continue
+        if icut + jcut >= 10: continue
         FitCutList.append([icut,jcut])
         FitCutArgs.append('cut'+str(icut)+'-'+str(jcut))
 ##TryFits.py
