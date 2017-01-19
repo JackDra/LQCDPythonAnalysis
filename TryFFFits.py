@@ -77,6 +77,7 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList,cutlist):
     TwoBoot = BootStrap1(nboot,1)
     TwoBoot.values = np.array([2.0]*nboot)
     TwoBoot.Stats()
+    CurrSetInfo = 'None'
     for iSet,Setdata in Currdata.iteritems():    
         start = time.time()    
         if not any([imethod in iSet for imethod in thisMethodList]): continue 
