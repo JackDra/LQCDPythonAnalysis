@@ -5,6 +5,7 @@ from SetLists import *
 from FFParams import *
 from MiscFuns import DelDubs
 from CombParams import *
+from FitParams import FitCutArgs
 import sys
     
     
@@ -70,6 +71,7 @@ def InputParams(inputparams):
     feedout['anaproc'] = AnaProc
     feedout['gamma'] = ''
     feedout['set'] = DefSetList
+    feedout['cut'] = FitCutArgs
     feedout['method'] = MethodList
     feedout['current'] = NoFFList.keys()
     feedout['mom'] = RunMomList
@@ -93,6 +95,7 @@ def InputParams(inputparams):
             print '-s= specifies set list to use, choose from:\n' + '\n'.join(DefSetList)+'\n'
             print '-m= specifies Method used, choose from:\n' + '\n'.join(MethodList)+'\n'
             print '-c= specifies Current to look at, choose from:\n' + '\n'.join(CurrentDSList)+'\n'
+            print '-cut= specifies cut list, choose from:\n' + '\n'.join(FitCutArgs)+'\n'
             print '-DS= specifies how to combine DS for TryCombine.py, choose from:\n' + '\n'.join(DefDSList + CombList)+'\n'
             print '-FF= specifies how to combine Form Factors for TryFFCombine.py, choose from:\n' + '\n'.join(CombNSFFList)+'\n'
             print '-DoList= specifies a particular FF to plot in GraphFFs.py, choose ONE from:\n' + '\n'.join(DefGraphDoList+['All'])+'\n'
@@ -114,6 +117,15 @@ def InputParams(inputparams):
             feedout['klist'] = isys.replace('-k=','').split(',')
         elif '-FT' in isys:
             feedout['ForceTitle'] = isys.replace('-FT=','')
+        elif '-cut' in isys:
+            feedout['cut'] = isys.replace('-cut=','').split(',')
+            for icl in feedout['cut']:
+                if icl not in FitCutArgs:
+                    print 'Warning, ' + icl + ' not found in current list, skipping.'
+                    feedout['cut'].remove(icl)
+            if len(feedout['cut']) == 0:
+                print 'Nothing found for current list, using default list'
+                feedout['cut'] = FitCutArgs
         elif '-s' in isys:
             feedout['set'] = ExpandSetList(isys.replace('-s=','').split(','))[0]
             for isl in feedout['set']:
