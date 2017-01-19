@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<q000>
+    <Info>
+        <nconfig>999</nconfig>
+    </Info>
+    <Values>
+        <State1>
+            <Emass>        0.6464419726</Emass>
+            <Left_Evec>
+                <sm16>        0.0000005522</sm16>
+                <sm32>       -0.0001589143</sm32>
+                <sm64>        0.9999999874</sm64>
+            </Left_Evec>
+            <Right_Evec>
+                <sm16>        0.0000005522</sm16>
+                <sm32>       -0.0001589143</sm32>
+                <sm64>        0.9999999874</sm64>
+            </Right_Evec>
+        </State1>
+        <State2>
+            <Emass>        1.1964193122</Emass>
+            <Left_Evec>
+                <sm16>       -0.0000008383</sm16>
+                <sm32>        0.0002387248</sm32>
+                <sm64>       -0.9999999715</sm64>
+            </Left_Evec>
+            <Right_Evec>
+                <sm16>       -0.0000008383</sm16>
+                <sm32>        0.0002387248</sm32>
+                <sm64>       -0.9999999715</sm64>
+            </Right_Evec>
+        </State2>
+        <State3>
+            <Emass>        1.7963053340</Emass>
+            <Left_Evec>
+                <sm16>        0.0000022017</sm16>
+                <sm32>       -0.0003605728</sm32>
+                <sm64>        0.9999999350</sm64>
+            </Left_Evec>
+            <Right_Evec>
+                <sm16>        0.0000022017</sm16>
+                <sm32>       -0.0003605728</sm32>
+                <sm64>        0.9999999350</sm64>
+            </Right_Evec>
+        </State3>
+    </Values>
+    <Boots>/home/jackdra/PHD/CHROMA/TestVar/scratch/results/ReadSetk1375400//Mass//qsqrd0/q000/boots/CMto3dt3LREMq000.boot.p</Boots>
+</q000>

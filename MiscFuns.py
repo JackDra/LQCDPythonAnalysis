@@ -12,22 +12,47 @@ from collections import OrderedDict
 import time,datetime
 from copy import deepcopy
 
-def estimated_autocorrelation(x):
+      
+def autocorr(x,y):
    """
    http://stackoverflow.com/q/14297012/190597
    http://en.wikipedia.org/wiki/Autocorrelation#Estimation
    """
    n = len(x)
-   variance = x.var()
+   # variance = x.var()
    x = x-x.mean()
-   r = np.correlate(x, x, mode = 'full')[-n:]
-   assert np.allclose(r, np.array([(x[:n-k]*x[-(n-k):]).sum() for k in range(n)]))
-   result = r/(variance*(np.arange(n, 0, -1)))
+   y = y-y.mean()
+   r = np.correlate(x, y, mode = 'full')[-n:]
+   # assert np.allclose(r, np.array([(x[:n-k]*x[-(n-k):]).sum() for k in range(n)]))
+   result = r/np.arange(n, 0, -1)
    return result
 
-def autocorr(x):
-   result = np.correlate(x, x, mode='full')
-   return result[result.size/2:]
+
+def GammaAlpha_estimate(gQ,gN):
+   gQ = np.array(gQ)
+   gN = np.array(gN)
+   glen = len(gQ)
+   gQAvg = gQ.mean()
+   gNAvg = gN.mean()
+   
+   GQQt=autocorr(gQ,gQ)
+   GNQt=autocorr(gN,gQ)
+   GQNt=autocorr(gQ,gN)
+   GNNt=autocorr(gN,gN)
+   
+   ##alpha function derivates wrt NNQ and NN
+   fQ = gNAvg**(-1)
+   fN = -gQAvg/(2*gNAvg**2)
+
+   Gat = fQ**2 * GQQt + (fQ*fN * (GQNt + GNQt)) + fN**2 * GNNt
+
+   CaW = [Gat[0]] + [Gat[0] + 2*np.sum(Gat[1:W]) for W in range(1,len(Gat))]
+   return np.array(CaW)/glen
+
+
+# def autocorr(x):
+#    result = np.correlate(x, x, mode='full')
+#    return result[result.size/2:]
 
 def RemoveNAN(thislist):
    listout = []
