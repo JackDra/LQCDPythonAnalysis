@@ -147,7 +147,7 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList,cutlist):
 
 inputparams = []
 for iCurr,Currdata in datadict.iteritems():
-    inputparams.append([iCurr,Currdata,feedin['set'],feedin['method']],feedin['cut'])
+    inputparams.append([iCurr,Currdata,feedin['set'],feedin['method'],feedin['cut']])
 
 
 starttime = time.time()
