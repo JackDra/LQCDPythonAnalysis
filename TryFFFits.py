@@ -141,7 +141,7 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList,cutlist):
                             print ix, iy.Avg, iy.Std
                     DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfitfunOnePar)
                     outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = [yZero,DPfit[0]],[yZero.Avg,DPfitAvg[0]],DPfitChi*2 
-        print iCurr ,iSet ' Complete , time:', GetTimeStr(time.time() - start)
+        print iCurr ,iSet ,' Complete , time:', GetTimeStr(time.time() - start)
     PrintDPfit(iCurr,outputdict,CurrSetInfo)
     print iCurr , ' Complete, total time:', GetTimeStr(time.time() - start)
 
