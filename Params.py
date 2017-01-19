@@ -99,7 +99,7 @@ kappalist = ['k'+str(kappa),'xsrc1k'+str(kappa),'nboot1kk'+str(kappa),'XAvgk'+st
 kappaflags = [ik.replace('k'+str(kappa),'') for ik in kappalist]
 ScalarNorm = 1 # normalisation for Scalar current
 PsScalarNorm = 1 # normalisation for Pseudo Scalar current
-VectorNorm = 1 # normalisation for Vector Current
+VectorNorm = 0.736862 # normalisation for Vector Current from arXiv:1006.1164v2 beta = 1.9, Iwasaki gauge action, clover term Csw=1.7
 PsVectorNorm = 1 # normalisation for Pseudo Vector current
 TensorNorm = 1 # normalisation for Tensor Current
 MomFracNorm = 1 # normalisation for Momentum Fraction
