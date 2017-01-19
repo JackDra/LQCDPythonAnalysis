@@ -146,7 +146,9 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList,cutlist):
     if len(outputdict.keys()) > 0: 
         PrintDPfit(iCurr,outputdict,CurrSetInfo)
         print iCurr , ' Complete, total time:', GetTimeStr(time.time() - start)
-
+    else:
+        print iCurr , ' Nothing Found'
+        
 inputparams = []
 for iCurr,Currdata in datadict.iteritems():
     inputparams.append([iCurr,Currdata,feedin['set'],feedin['method'],feedin['cut']])
