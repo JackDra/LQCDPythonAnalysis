@@ -122,15 +122,22 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         #     thisGammaList = dumpGammaList
         if len(data3pt) < 2 and TimeInv: raise IOError("PoF needs atleast two tsinks with time invariance")
         data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
-        print 'Creating PoF CM Tech ' , PoFTvarList[0]
-        [data2ptset,data3ptset] = CreateREPoFCfuns(np.array(data3pt),data2pt,DefPoFVarList[0],thisMomList)
+        for iPoF in PoFTvarList:
+            print 'Creating PoF CM Tech ' , PoFTvarList[0]
+            [CMdata2pt,CMdata3pt] = CreateREPoFCfuns(np.array(data3pt),data2pt,DefPoFVarList[0],thisMomList)
+            # if Debug:
+            # for it in range(0,15):
+            #     print
+            #     print 'it',it, 'c3ptAvg',data3ptset[0][0][0][it].Avg, 'c2ptAvg',data2ptset[0][0][it].Avg
+            #     for iboot in range(0,10):
+            #         print 'it',it, 'c3pt',data3ptset[0][0][0][it].values[iboot], 'c2pt',data2ptset[0][0][it].values[iboot]
+            data2ptset += CMdata2pt.tolist()
+            data3ptset += CMdata3pt.tolist()
+            print 'CMTech ' , iTvar , ' Time Taken: ' , str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s  '
+        data3ptset = np.array(data3ptset)
+        data2ptset = np.array(data2ptset)
         SetList,dump = CreateREvecSet(thisTSinkList,StateSet,PoFTvarList)
-        # if Debug:
-        # for it in range(0,15):
-        #     print
-        #     print 'it',it, 'c3ptAvg',data3ptset[0][0][0][it].Avg, 'c2ptAvg',data2ptset[0][0][it].Avg
-        #     for iboot in range(0,10):
-        #         print 'it',it, 'c3pt',data3ptset[0][0][0][it].values[iboot], 'c2pt',data2ptset[0][0][it].values[iboot]
+        print 'CMTech Total Time Taken: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
     elif 'TSink' == RunType:
         data2pt = np.array(PreptwoptCorr(data2pt[0]))
         data3pt = np.array(data3pt)[0,0,:,:,:,:,:]
