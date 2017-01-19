@@ -445,7 +445,7 @@ else:
         DefPoFVarPicked = [[1,1]]
     else:
         DefPoFVarPicked = [[3,3],[1,3],[2,3],[4,3]]
-PoFTvarPicked = ['PoF'+str(PoFShifts)+'to'+str(DefPoFVarPicked[0][0])+'dt'+str(DefPoFVarPicked[0][1])]
+PoFTvarPicked = ['PoF'+str(PoFShifts)+'to'+str(iPoF[0])+'dt'+str(iPoF[1]) for iPoF in DefPoFVarPicked]
 
 
 if OnlySelVar:
