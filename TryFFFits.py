@@ -133,9 +133,9 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList,cutlist=False):
                         for ix,iy in zip(xdatain, ydatain):
                             print ix, iy.Avg, iy.Std
                         print DPfitAvg
-                    DPfit[0].values = np.abs(DPfit[0].values)
-                    DPfit[0].Stats()
-                    outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = [DPfit[0],DPfit[1]],[abs(DPfitAvg[0]),DPfitAvg[1]],DPfitChi
+                    # DPfit[0].values = np.abs(DPfit[0].values)
+                    # DPfit[0].Stats()
+                    outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = [DPfit[0],DPfit[1]],[DPfitAvg[0],DPfitAvg[1]],DPfitChi
                 else:
                     DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfitfunOnePar)
                     if Debug:
