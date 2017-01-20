@@ -127,11 +127,11 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList,cutlist=False):
                 print "too short ydata, skipping",iCurr, iSet, nFF, iQs 
             else:
                 if yZero == False:
-                    DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfitfun)
+                    DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfitfun2)
                     if Debug:
                         print 'Fitting to points using two parameter fit:'
                         for ix,iy in zip(xdatain, ydatain):
-                            print ix, iy.Avg, iy.Std , DPfitfun([ix],Pullflag(DPfit,'Avg'))
+                            print ix, iy.Avg, iy.Std , DPfitfun2([ix],Pullflag(DPfit,'Avg'))
                         print Pullflag(DPfit,'Avg')
                         
                     # DPfit[0].values = np.abs(DPfit[0].values)
