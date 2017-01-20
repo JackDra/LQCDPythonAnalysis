@@ -136,11 +136,12 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList,cutlist=False):
                     DPfit[0].Stats()
                     outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = [DPfit[0],DPfit[1]],[abs(DPfitAvg[0]),DPfitAvg[1]],DPfitChi
                 else:
+                    DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfitfunOnePar)
                     if Debug:
                         print 'Fitting to points using one parameter fit:'
                         for ix,iy in zip(xdatain, ydatain):
                             print ix, iy.Avg, iy.Std
-                    DPfit,DPfitAvg,DPfitChi = FitBoots(ydatain,xdatain,DPfitfunOnePar)
+                        print DPfitAvg
                     outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = [yZero,DPfit[0]],[yZero.Avg,DPfitAvg[0]],DPfitChi*2 
         print iCurr ,iSet ,' Complete , time:', GetTimeStr(time.time() - start)
     if len(outputdict.keys()) > 0: 
