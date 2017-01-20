@@ -142,7 +142,7 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList,cutlist=False):
                         print 'Fitting to points using one parameter fit:'
                         for ix,iy in zip(xdatain, ydatain):
                             print ix, iy.Avg, iy.Std
-                        print DPfitAvg
+                        print Pullflag(DPfit,'Avg')
                     outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = [yZero,DPfit[0]],[yZero.Avg,DPfitAvg[0]],DPfitChi*2 
         print iCurr ,iSet ,' Complete , time:', GetTimeStr(time.time() - start)
     if len(outputdict.keys()) > 0: 
