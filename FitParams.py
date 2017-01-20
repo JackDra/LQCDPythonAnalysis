@@ -156,13 +156,13 @@ StateParList = {'Two':TwoStateParList,'One':OneStateParList}
 MaxIters = 10
 def FitDefGuess(Fun,Len=1):
     if Fun.__name__ == 'DPfitfun':
-        return [3,0.3]
+        return [2.7,1]
         # return [-1,-1.6]
     if Fun.__name__ == 'DPfitfunOnePar':
         return [1.6]
         # return [-1,-1.6]
     if Fun.__name__ == 'DPfitfun2':
-        return [2.7,0]
+        return [2.7,1]
     if Fun.__name__ == 'FormFactorO1':
         return [1]
     if Fun.__name__ == 'FormFactorO2':
