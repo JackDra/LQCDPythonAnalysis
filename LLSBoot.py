@@ -81,7 +81,7 @@ def DerOfFun(Fun,Len=1):
         return FormFactorO3Der
     elif Fun.__name__ == 'DPfitfunOnePar':
         return DPfitfunOneParDer
-    elif Fun.__name__ == 'DPfitfutn2':
+    elif Fun.__name__ == 'DPfitfun2':
         return DPfitfun2Der
     elif Fun.__name__ == 'DPfitfun':
         return DPfitfunDer
