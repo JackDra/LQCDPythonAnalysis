@@ -62,7 +62,7 @@ for iFFcomb in feedin['FFcomb']:
 ## datadict { Set } { Mass:Set/Avg/Std/Chi/Boot , FF#:qsqrd:Avg/Std/Boot , Chi:qsqrd}
     
   
-def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList,cutlist):
+def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList,cutlist=False):
     outputdict = OrderedDict()
     CurrInfo = False
     totalstart = time.time()
@@ -86,7 +86,7 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList,cutlist):
         else:
             if not any([iset in iSet for iset in thisSetList]): continue                 
         if 'cut' in iSet and cutlist != False:
-            if iSet not in cutlist: continue
+            if all([icut not in iSet for icut in cutlist]): continue
         if Debug: print 'iSet', iSet
         outputdict[iSet] = OrderedDict()
         iFFloop = Setdata.keys()
