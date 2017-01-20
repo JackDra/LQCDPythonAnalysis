@@ -131,8 +131,9 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList,cutlist=False):
                     if Debug:
                         print 'Fitting to points using two parameter fit:'
                         for ix,iy in zip(xdatain, ydatain):
-                            print ix, iy.Avg, iy.Std
+                            print ix, iy.Avg, iy.Std , DPfitfun([ix],Pullflag(DPfit,'Avg'))
                         print Pullflag(DPfit,'Avg')
+                        
                     # DPfit[0].values = np.abs(DPfit[0].values)
                     # DPfit[0].Stats()
                     outputdict[iSet][nFF]['Boot'],outputdict[iSet][nFF]['Avg'],outputdict[iSet][nFF]['Chi'] = [DPfit[0],DPfit[1]],[DPfitAvg[0],DPfitAvg[1]],DPfitChi
