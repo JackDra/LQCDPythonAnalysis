@@ -450,3 +450,18 @@ def Read2ptSetTop(TopCharge,readfilelist,thisSmearList,thisMomList,Interps,Topcf
 ##thisdata2pt [ tflow, tsource, ism , jsm , ip , it ] bootdataclas
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+## IN DEV
+

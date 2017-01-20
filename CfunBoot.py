@@ -50,6 +50,26 @@ def BootSet2pt(data,thisMomList,nboot,randlist=[]):
     # print '                              \r',
     return dataout,randlist
 
+#data = [ iconf , iflow , igamma , ip , it ]
+#dataout = [iflow, igamma , ip , it ] bs
+def BootSet3ptTC(data,thisMomList,thisGammaList,nboot,tflowlist,printstr='',randlist=[]):
+    dataout = []
+    for icf,iflow in enumerate(tflowlist):
+        dataout.append([])
+        for ig,igamma in enumerate(thisGammaList):
+            dataout[icf].append([])
+            for ip,imom in enumerate(thisMomList):
+                # print 'Booting '+printstr+igamma+' {}%               \r'.format(int((ip*100)/float(len(thisMomList)))),
+                # for it in range(16):
+                #     print 'pie3pt'
+                #     for idata in np.array(data)[:,ig,ip,:]:
+                #         print it,idata[it]
+                bootdata,randlist = bt.CreateBoot(np.array(data)[:,icf,ig,ip,:],nboot,0,randlist=randlist)
+                dataout[icf][ig].append(bootdata)
+    # print '                             \r',
+    return dataout
+
+
 #data = [ iconf , iflow , ip , it]
 #dataout = [ iflow, ip , it ]. bs
 def BootSet2ptTC(data,thisMomList,nboot,tflowlist,randlist=[]):
@@ -117,11 +137,19 @@ def ReadAndBoot3pt(readfilelist,thisMomList,thisGammaList,thisDerGammaList,thisn
         # print 'Reading '+printstr+' {}%            \r'.format(int((iconf*100)/float(len(readfilelist)))),
         try:
             if CHROMA:
-                if len(thisGammaList) > 0:
-                    data = ReadFSCfunPickCHROMA(ifileList,thisMomList,thisGammaList)
-                    tempdata.append(data.data)
-                if len(thisDerGammaList) > 0:
-                    raise IOError('Chroma version does not do derivatives, make DerList in Params.py be empty')
+                if NoXAvg:
+                    for ifile in ifileList:
+                        if len(thisGammaList) > 0:
+                            data = ReadFSCfunPickCHROMA([ifile],thisMomList,thisGammaList)
+                            tempdata.append(data.data)
+                        if len(thisDerGammaList) > 0:
+                            raise IOError('Chroma version does not do derivatives, make DerList in Params.py be empty')
+                else:
+                    if len(thisGammaList) > 0:
+                        data = ReadFSCfunPickCHROMA(ifileList,thisMomList,thisGammaList)
+                        tempdata.append(data.data)
+                    if len(thisDerGammaList) > 0:
+                        raise IOError('Chroma version does not do derivatives, make DerList in Params.py be empty')
             else:
                 raise IOError('Top Charge not implemented for non chroma results')
         except NaNCfunError as e:
@@ -419,6 +447,57 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         pl.savefig('./montegraphs/XSrcNNts'+str(MonteTime)+'.pdf')
         pl.clf()
     return TCBdata,(Bdata,rlist),shiftlist
+
+
+
+#dataout [ iflow, igamma , ip , it ]. bs
+def ReadAndBoot3ptTop(readfilelist,thisMomList,thisGammaList,thisDerGammaList,thisnboot,chargedata,chargecfglist,flowlist,printstr='',randlist=[]):
+    tempdata = []
+    tempdataTop = []
+    for ifilepref,ifileList in readfilelist.iteritems():
+        # print 'Reading '+printstr+' {}%            \r'.format(int((iconf*100)/float(len(readfilelist)))),
+        try:
+            if CHROMA:
+                chargeindex = FileToChargeCfg(ifilepref,chargecfglist)
+                if NoXAvg:
+                    for ifile in ifileList:
+                        if len(thisGammaList) > 0:
+                            data = ReadFSCfunPickCHROMA([ifile],thisMomList,thisGammaList)
+                            tempdata.append(data.data)
+                            tempdataTop.append([])
+                            for iflowdata in chargedata[chargeindex]:
+                                tempdataTop[-1].append(np.array(data.data)*iflowdata)
+                        if len(thisDerGammaList) > 0:
+                            raise IOError('Chroma version does not do derivatives, make DerList in Params.py be empty')
+                else:
+                    if len(thisGammaList) > 0:
+                        data = ReadFSCfunPickCHROMA(ifileList,thisMomList,thisGammaList)
+                        tempdata.append(data.data)
+                        tempdataTop.append([])
+                        for iflowdata in chargedata[chargeindex]:
+                            tempdataTop[-1].append(np.array(data.data)*iflowdata)
+                    if len(thisDerGammaList) > 0:
+                        raise IOError('Chroma version does not do derivatives, make DerList in Params.py be empty')
+            else:
+                raise IOError('Top Charge not implemented for non chroma results')
+        except NaNCfunError as e:
+            print 
+            print 'Deleting file ' + ifile
+            print e
+            print 'MUST RE-RUN AFTER THIS TO EXCLUDE BAD CONFIGS'
+            print
+            # os.remove(ifile)
+    # print 'Values'
+    # for idata in tempdata:
+    #     print idata[0][0][5]
+    # print 
+    if len(thisGammaList) > 0:
+        return (BootSet3ptTC(tempdataTop,thisMomList,thisGammaList,thisnboot,flowlist,printstr='',randlist=randlist),
+                BootSet3pt(tempdata,thisMomList,thisGammaList,thisnboot,printstr='',randlist=randlist))
+    else:
+        raise IOError('No Gammas?')
+    # elif len(thisDerGammaList) > 0:
+    #     return BootSet3pt(tempdata,thisMomList,thisDerGammaList,thisnboot,printstr='',randlist=randlist)
 
 
 def FileToChargeCfg(ifile,chargecfglist):
