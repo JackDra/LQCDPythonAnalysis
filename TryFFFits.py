@@ -148,7 +148,7 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList,cutlist=False):
         print iCurr ,iSet ,' Complete , time:', GetTimeStr(time.time() - start)
     if len(outputdict.keys()) > 0: 
         PrintDPfit(iCurr,outputdict,CurrSetInfo)
-        print iCurr , ' Complete, total time:', GetTimeStr(time.time() - start)
+        print iCurr , ' Complete, total time:', GetTimeStr(time.time() - totalstart)
     else:
         print iCurr , ' Nothing Found'
         
