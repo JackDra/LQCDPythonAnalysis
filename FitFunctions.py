@@ -54,7 +54,7 @@ def DPfitfun(x,p):
 
 def DPfitfunDer(x,p):
     # return [1/((1+(x[0]/p[1]))**2), (-2*p[0]*p[1]**2)/((x[0]+p[1])**3)]
-    return [1/((1+(x[0]/p[1]))**2),(-2*p[0]/p[1])*1/((1+(x[0]/p[1]))**3)]
+    return [1/((1+(x[0]/p[1]))**2),(-2*p[0]/p[1])/((1+(x[0]/p[1]))**3)]
 
 def DPfitfunOnePar(x,p):
     return 1/((1+(x[0]/p[0]))**2)
