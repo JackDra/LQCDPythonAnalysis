@@ -139,6 +139,7 @@ def ReadTopFile(filedir,iset,thisMomList=RunMomList):
 def ReadRFFile(filedir,filename,thisMomList=RunMomList):
     renorm = GetRenorm(filename)
     dictout = {}
+    TopFile = 'Top' in filename
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
@@ -150,26 +151,53 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
                 bootdata = data['Boots']
                 dictout[thismom] = {}
                 dictout[thismom]['Info'] = data['Info']
-                dictout[thismom]['tVals'] = map(untstr,bootdata.keys())
-                dictout[thismom]['Boot'] = []
-                dictout[thismom]['Vals'] = []
-                dictout[thismom]['Valserr'] = []
-                for bootlist in bootdata.itervalues():
-                    dictout[thismom]['Boot'].append(BootStrap1(nboot,0))
-                    dictout[thismom]['Boot'][-1].values = np.array([iboot*renorm for iboot in bootlist])
-                    dictout[thismom]['Boot'][-1].Stats()
-                    dictout[thismom]['Vals'].append(dictout[thismom]['Boot'][-1].Avg)
-                    dictout[thismom]['Valserr'].append(dictout[thismom]['Boot'][-1].Std)
-            else:
+                if TopFile:
+                    for iflow,flowdata in bootdata.iteritems():
+                        dictout[thismom][iflow] = OrderedDict()
+                        dictout[thismom][iflow]['tVals'] = map(untstr,flowdata.keys())
+                        dictout[thismom][iflow]['Boot'] = []
+                        dictout[thismom][iflow]['Vals'] = []
+                        dictout[thismom][iflow]['Valserr'] = []
+                        for bootlist in flowdata.itervalues():
+                            dictout[thismom][iflow]['Boot'].append(BootStrap1(nboot,0))
+                            dictout[thismom][iflow]['Boot'][-1].values = np.array([iboot*renorm for iboot in bootlist])
+                            dictout[thismom][iflow]['Boot'][-1].Stats()
+                            dictout[thismom][iflow]['Vals'].append(dictout[thismom][iflow]['Boot'][-1].Avg)
+                            dictout[thismom][iflow]['Valserr'].append(dictout[thismom][iflow]['Boot'][-1].Std)
+
+                else:
+                    dictout[thismom]['tVals'] = map(untstr,bootdata.keys())
+                    dictout[thismom]['Boot'] = []
+                    dictout[thismom]['Vals'] = []
+                    dictout[thismom]['Valserr'] = []
+                    for bootlist in bootdata.itervalues():
+                        dictout[thismom]['Boot'].append(BootStrap1(nboot,0))
+                        dictout[thismom]['Boot'][-1].values = np.array([iboot*renorm for iboot in bootlist])
+                        dictout[thismom]['Boot'][-1].Stats()
+                        dictout[thismom]['Vals'].append(dictout[thismom]['Boot'][-1].Avg)
+                        dictout[thismom]['Valserr'].append(dictout[thismom]['Boot'][-1].Std)
+                        
+            elif 'Avg' in data.keys():
                 bootdata = data['Values']
-                dictout[thismom]['Info'] = data['Info']
                 dictout[thismom] = {}
-                dictout[thismom]['tVals'] = map(untstr,bootdata.keys())
-                dictout[thismom]['Vals'] = []
-                dictout[thismom]['Valserr'] = []
-                for tdata in bootdata.itervalues():
-                    dictout[thismom]['Vals'].append(tdata['Avg']*renorm)
-                    dictout[thismom]['Valserr'].append(tdata['Std'])
+                dictout[thismom]['Info'] = data['Info']
+                if TopFile:
+                    for iflow,flowdata in bootdata.iteritems():
+                        dictout[thismom][iflow] = OrderedDict()
+                        dictout[thismom][iflow]['tVals'] = map(untstr,flowdata.keys())
+                        dictout[thismom][iflow]['Vals'] = []
+                        dictout[thismom][iflow]['Valserr'] = []
+                        for tdata in flowdata.itervalues():
+                            dictout[thismom][iflow]['Vals'].append(tdata['Avg']*renorm)
+                            dictout[thismom][iflow]['Valserr'].append(tdata['Std'])
+                else:
+                    dictout[thismom]['tVals'] = map(untstr,bootdata.keys())
+                    dictout[thismom]['Vals'] = []
+                    dictout[thismom]['Valserr'] = []
+                    for tdata in bootdata.itervalues():
+                        dictout[thismom]['Vals'].append(tdata['Avg']*renorm)
+                        dictout[thismom]['Valserr'].append(tdata['Std'])
+                    
     return dictout
         
                     

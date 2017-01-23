@@ -18,7 +18,7 @@ from CheckXml import *
 
 def FitSumWrap(thisGammaList,thisReadSetList,thisTSinkList,this2ptSetList,thisReadMomList):
     thisstart = time.time()
-    [dataRF,data2pt,thisGammaMomList,BorA,infoRF,info2pt] = ReadRFnp(thisGammaList,thisReadSetList,thisMomList=thisReadMomList)
+    [dataRF,data2pt,thisGammaMomList,BorA,infoRF,info2pt,flowlist] = ReadRFnp(thisGammaList,thisReadSetList,thisMomList=thisReadMomList)
     # dataRF = [ gamma , mom , set , it ] bs
     if 'twopt' in thisGammaMomList.keys(): del thisGammaMomList['twopt']    
     SummedRF,SumFitBoot,SumFitAvg,SumFitChi,SumFitList = [],[],[],[],[]

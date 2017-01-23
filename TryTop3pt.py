@@ -122,8 +122,8 @@ def CreateRFTop(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thi
         # PrintSetToFile([data2ptset],MassSetList,thisMomList,['Mass'],0,AddDict=InfoDict)
     elif 'PoF' == RunType:
         ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-        ## CMdata3pt  [ istate , ip , igamma , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-        ## CMdata3ptTop  [ iflow, istate , ip , igamma , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+        ## CMdata3pt  [ istate , igamma , ip  , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+        ## CMdata3ptTop  [ iflow, istate igamma  , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
         if len(data3pt) < 2 and TimeInv: raise IOError("PoF needs atleast two tsinks with time invariance")
         data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
         data2ptset,data3ptset,data3ptsetTop = [],[],[]
@@ -167,11 +167,12 @@ def CreateRFTop(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thi
     print 'RF Construction Complete'
     
     
+    # print
+    # print data3ptset.shape
+    # print np.array(data3ptsetTop).shape
+    # print RFr.shape
+    # print np.array(RFrTop).shape
     if DontWriteZero:
-        # print data3ptset.shape
-        # print np.array(data3ptsetTop).shape
-        # print RFr.shape
-        # print np.array(RFrTop).shape
         thisMomList = thisMomList[1:]
         data3ptset = data3ptset[:,:,1:,:]
         data3ptsetTop = np.array(data3ptsetTop)[:,:,:,1:,:]

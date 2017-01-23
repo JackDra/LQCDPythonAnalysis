@@ -401,6 +401,7 @@ def SetRFDictToList(DictData,thisPrintRead=PrintRead):
     dataoutRF,dataout2pt = [],[]
     infolistRF,infolist2pt = [],[]
     gammalistout = OrderedDict()
+    flowlist = []
     BorA = ''
     start = time.time()
     for igamma,(thisgamma,gammadata) in enumerate(DictData.iteritems()):
@@ -414,13 +415,31 @@ def SetRFDictToList(DictData,thisPrintRead=PrintRead):
                 for iset,setdata in enumerate(momdata['RF'].itervalues()):
                     infolist2pt[imom].append(setdata['Info'])
                     if 'Boot' in setdata.keys():
-                        dataout2pt[imom].append(setdata['Boot'])
-                        if BorA == 'Avg': BorA = 'Mixed'
-                        else: BorA = 'Boot'
-                    else:
-                        dataout2pt[imom].append([setdata['Avg'],setdata['Std']])
-                        if BorA == 'Boot': BorA = 'Mixed'
-                        else:BorA = 'Avg'
+                        if 'Top' in thisgamma or 'Alpha' in thisgamma:
+                            dataout2pt[imom].append([])
+                            flowlist = []
+                            for icf,(iflow,flowdata) in enumerate(setdata['Boot'].iteritems()):
+                                dataout2pt[imom][icf].append(flowdata['Boot'])
+                                flowlist.append(iflow)
+                                if BorA == 'Avg': BorA = 'Mixed'
+                                else: BorA = 'Boot'
+                        else:
+                            dataout2pt[imom].append(setdata['Boot'])
+                            if BorA == 'Avg': BorA = 'Mixed'
+                            else: BorA = 'Boot'
+                    elif 'Avg' in setdata.keys():
+                        if 'Top' in thisgamma or 'Alpha' in thisgamma:
+                            dataout2pt[imom].append([])
+                            flowlist = []
+                            for icf,(iflow,flowdata) in enumerate(setdata['Boot'].iteritems()):
+                                dataout2pt[imom][icf].append([flowdata['Avg'],flowdata['Std']])
+                                flowlist.append(iflow)
+                                if BorA == 'Avg': BorA = 'Mixed'
+                                else: BorA = 'Boot'
+                        else:
+                            dataout2pt[imom].append()
+                            if BorA == 'Boot': BorA = 'Mixed'
+                            else:BorA = 'Avg'
         else:
             dataoutRF.append([])
             infolistRF.append([])
@@ -431,20 +450,38 @@ def SetRFDictToList(DictData,thisPrintRead=PrintRead):
                 for iset,(thisset,setdata) in enumerate(momdata['RF'].iteritems()):
                     infolistRF[-1][imom].append(setdata['Info'])
                     if 'Boot' in setdata.keys():
-                        dataoutRF[-1][imom].append(setdata['Boot'])
-                        if BorA == 'Avg': BorA = 'Mixed'
-                        else: BorA = 'Boot'
-                    else:
-                        dataoutRF[-1][imom].append([setdata['Avg'],setdata['Std']])
-                        if BorA == 'Boot': BorA = 'Mixed'
-                        else:BorA = 'Avg'
+                        if 'Top' in thisgamma:
+                            dataoutRF[-1][imom].append([])
+                            flowlist = []
+                            for icf,(iflow,flowdata) in enumerate(setdata['Boot'].iteritems()):
+                                dataoutRF[-1][imom][icf].append(flowdata['Boot'])
+                                flowlist.append(iflow)
+                                if BorA == 'Avg': BorA = 'Mixed'
+                                else: BorA = 'Boot'
+                        else:
+                            dataoutRF[-1][imom].append(setdata['Boot'])
+                            if BorA == 'Avg': BorA = 'Mixed'
+                            else: BorA = 'Boot'
+                    elif 'Avg' in setdata.keys():
+                        if 'Top' in thisgamma or 'Alpha' in thisgamma:
+                            dataoutRF[-1][imom].append([])
+                            flowlist = []
+                            for icf,(iflow,flowdata) in enumerate(setdata['Boot'].iteritems()):
+                                dataoutRF[-1][imom].append([flowdata['Avg'],flowdata['Std']])
+                                flowlist.append(iflow)
+                                if BorA == 'Avg': BorA = 'Mixed'
+                                else: BorA = 'Boot'
+                        else:
+                            dataoutRF[-1][imom].append([setdata['Avg'],setdata['Std']])
+                            if BorA == 'Boot': BorA = 'Mixed'
+                            else:BorA = 'Avg'
     if 'twopt' in gammalistout.keys():
         if 'q = 0 0 0' in gammalistout['twopt']:
             dataout2pt.insert(0, dataout2pt.pop(gammalistout['twopt'].index('q = 0 0 0')))
             infolist2pt.insert(0, infolist2pt.pop(gammalistout['twopt'].index('q = 0 0 0')))
             gammalistout['twopt'].insert(0, gammalistout['twopt'].pop(gammalistout['twopt'].index('q = 0 0 0')))
     if thisPrintRead: print 'Converting DictToList took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                     '
-    return dataoutRF,dataout2pt,gammalistout,BorA,infolistRF,infolist2pt
+    return dataoutRF,dataout2pt,gammalistout,BorA,infolistRF,infolist2pt,flowlist
 ##datadict.keys() is gammalist
 
 

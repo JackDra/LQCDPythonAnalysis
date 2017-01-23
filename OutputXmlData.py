@@ -180,17 +180,25 @@ def PrintFitMassToFile(data,dataChi,iset,filedir,filename,thisMomList,FitRanges,
         WriteXmlOutput(outputfile,datadict)
         
 # data = [ ip , icut , iset ]
-def PrintFitToFile(data,dataChi,iset,filedir,filename,thisMomList,thisCutList,mominfoRF):
+def PrintFitToFile(data,dataChi,iset,filedir,filename,thisMomList,thisCutList,mominfoRF,flowlist):
     xmlMomList = map(qstrTOqcond,thisMomList)
     xmlCutList = map(xmlcut,thisCutList)
     for ipc,(ip,pdata,pdataChi) in enumerate(zip(xmlMomList,data,dataChi)):        
         datadict,outputfile = SetUpPDict(ip,filedir,filename)
         datadict[ip]['Info'] = mominfoRF[ipc]
-        datadict[ip]['Values'] = OrderedDict()
-        datadict[ip]['Boots'] = OrderedDict()
-        for icutstr,cutdata,cutdataChi in zip(xmlCutList,pdata,pdataChi):
-            datadict[ip]['Values'][icutstr] = BootAvgStdChiToFormat(cutdata[iset],cutdataChi[iset])
-            datadict[ip]['Boots'][icutstr] = cutdata[iset].values
+        if 'Top' in outputfile:
+            for iflow,flowdata,flowdataChi in zip(flowlist,pdata,pdataChi):
+                datadict[ip]['Boots'][iflow] = OrderedDict()
+                datadict[ip]['Values'][iflow] = OrderedDict()
+                for icutstr,cutdata,cutdataChi in zip(xmlCutList,flowdata,flowdataChi):
+                    datadict[ip]['Values'][iflow][icutstr] = BootAvgStdChiToFormat(cutdata[iset],cutdataChi[iset])
+                    datadict[ip]['Boots'][iflow][icutstr] = cutdata[iset].values
+        else:   
+            datadict[ip]['Values'] = OrderedDict()
+            datadict[ip]['Boots'] = OrderedDict()
+            for icutstr,cutdata,cutdataChi in zip(xmlCutList,pdata,pdataChi):
+                datadict[ip]['Values'][icutstr] = BootAvgStdChiToFormat(cutdata[iset],cutdataChi[iset])
+                datadict[ip]['Boots'][icutstr] = cutdata[iset].values
         # MergeXmlOutput(outputfile,datadict)
         WriteXmlOutput(outputfile,datadict)
 

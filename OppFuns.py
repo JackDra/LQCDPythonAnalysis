@@ -17,52 +17,52 @@ def DoubSingCmplxList(listin):
                 
 def CreateOppDir(Opp):
     if Opp in ['Mass','twopt']: return Opp+'/'
-    thisSplitOpp,contents = SplitOpp(Opp)
-    count,iscmplx = 0,''
+    thisSplitOpp = SplitOpp(Opp)
+    contents = thisSplitOpp.keys()
+    iscmplx = ''
     DS = ''
+    prefolder = ''
+    Proj = ''
     if 'Gamma' in contents:
-        igamma = thisSplitOpp[count]
-        count += 1
+        igamma = thisSplitOpp['Gamma']
         if 'Der' in contents:
-            igamma = igamma + thisSplitOpp[count]
-            count += 1
+            igamma = igamma + thisSplitOpp['Gamma']
+    else:
+        raise  IOError('Invalid Opp string '+Opp)            
     if 'DS' in contents:
-        DS = thisSplitOpp[count]
-        count += 1
+        DS = thisSplitOpp['DS']
     if 'Proj' in contents:
-        Proj = thisSplitOpp[count]
-    if 'Run' in contents: iscmplx = 'cmplx'
-    try:
-        return igamma + '/' +DS+Proj + iscmplx + '/'
-    except:
+        Proj = thisSplitOpp['Proj']
+    else:
         raise  IOError('Invalid Opp string '+Opp)
+    if 'Run' in contents: iscmplx = 'cmplx'
+    if 'Top' in contents: prefolder = 'Top/'
+    return prefolder+'/'+igamma + '/' +DS+Proj + iscmplx + '/'
 
 def SetOpps(AllList):
     [Extra,thisOppList,thisProjList,thisDSList,RunList] = set([]),set([]),set([]),set([]),set([])
     iscmplx = ''
+    TopRun = False
     for iOpp in AllList:        
         if iOpp in ['Mass','twopt','P4giDi','doubP4giDi','singP4giDi']: 
             Extra = Extra.union([iOpp])
             continue
-        SplitOpps,contents = SplitOpp(iOpp)
-        count = 0
+        SplitOpps = SplitOpp(iOpp)
+        contents = SplitOpps.keys()
         if 'Gamma' in contents:
             if 'Der' in contents:
-                thisOppList = thisOppList.union([SplitOpps[count]+SplitOpps[count+1]])
-                count += 1
+                thisOppList = thisOppList.union([SplitOpps['Gamma']+SplitOpps['Der']])
             else:
-                thisOppList = thisOppList.union([SplitOpps[count]])
-            count += 1
-            
+                thisOppList = thisOppList.union([SplitOpps['Gamma']])            
         if 'DS' in contents:
-            thisDSList = thisDSList.union([SplitOpps[count]])
-            count += 1
+            thisDSList = thisDSList.union([SplitOpps['DS']])
         else:
             thisDSList = thisDSList.union(['UmD'])
         if 'Proj' in contents:
-            thisProjList = thisProjList.union([SplitOpps[count]])
+            thisProjList = thisProjList.union([SplitOpps['Proj']])
         if 'Run' in contents: iscmplx = 'cmplx'
-    return sorted(Extra),sorted(thisOppList),sorted(thisDSList),sorted(thisProjList),'real, '+iscmplx
+        if 'Top' in contents: TopRun=True
+    return sorted(Extra),sorted(thisOppList),sorted(thisDSList),sorted(thisProjList),'real, '+iscmplx,TopRun
 
 def Wipe2pt(thisoutputdir,tvarlist=[],smlist=[],thisMomList=RunMomList):
     thistvarlist = ['PoF'+str(PoFShifts)+itvar for itvar in tvarlist]
@@ -207,6 +207,7 @@ def WipeSFSet(thisoutputdir,thisGammaList,RunName,OoT,setlist=[]):
                     if os.path.isfile(ifb): os.remove(ifb)
 
 def SplitOpp(All):
+    outputDict = OrderedDict()
     Split,OrdSplit,contents = [],[],[]
     if any([igamma in All for igamma in GammaSet + ['gi']]):
         contents.append('Gamma')
@@ -216,33 +217,34 @@ def SplitOpp(All):
                 if len(igamma) > gammalen:
                     thisgamma = igamma
                 gammalen = len(igamma)
-        Split.append(thisgamma)
+        # Split.append(thisgamma)
+        outputDict['Gamma'] = thisgamma
     if 'D' in All:
-        contents.append('Der')
         for iDer in DerSet+['Di']:
-            if iDer in All: Split.append(iDer)
+            if iDer in All: outputdict['Der'] = iDer
     if any([iDS in All for iDS in DefDSList]) or any([icomb in All for icomb in CombList]):
-        contents.append('DS')
         for iDS in DefDSList+CombList:
             if iDS in All and 'Iso'+iDS not in All:
-                Split.append(iDS)
+                outputDict['DS'] = iDS
     if 'P4' in All or 'P3' in All:
-        contents.append('Proj')
-        if 'P4' in All: Split.append('P4')
-        if 'P3' in All: Split.append('P3')
+        if 'P4' in All: outputDict['Proj'] = 'P4'
+        if 'P3' in All: outputDict['Proj'] = 'P3'
     if 'cmplx' in All:
-        contents.append('Run')
-        Split.append('cmplx')
-        
-    return Split,contents
+        outputDict['Run'] = 'cmplx'
+    if 'Top' in All:
+        outputDict['Top'] = 'Top'
+    return outputDict
 
 def PrintOpps(AllList):
-    Extra,thisGS,thisDSS,thisProjS,RunRS = SetOpps(AllList)
+    Extra,thisGS,thisDSS,thisProjS,RunRS,TopRun = SetOpps(AllList)
     print 'All Opperators: \n'+'\n'.join(thisGS)
     print ''
     print 'Projectors: '+', '.join(thisProjS)
     # print 'DS: '+', '.join(thisDSS)
-    print 'Run: ' +RunRS
+    if TopRun:
+        print 'Run: ' +RunRS
+    else:
+        print 'Run: ' +RunRS + ', TopCharge '        
     print 'Extras: ' + ', '.join(Extra)
     print ''
 

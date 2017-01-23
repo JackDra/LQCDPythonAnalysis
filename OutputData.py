@@ -17,6 +17,10 @@ def PrintTopCfunToFile(C3setTop,thisSetList,thisMomList, thisGammaList,thisTopLi
     cfundir = outputdir[0] + 'Top/cfun/'
     for thegamma,gammadata in zip(thisGammaList,C3setTop):
         gammadir = cfundir+CreateOppDir(thegamma)+'/'
+        if 'cmplx' in thegamma:
+            thegamma = thegamma.replace('cmplx','Topcmplx')
+        else:
+            thegamma = thegamma+'Top'
         for iset,setdata in zip(thisSetList,gammadata):
             print 'Printing Top : ' , thegamma , iset , '                \r',
             Print3ptTopToFile(np.rollaxis(np.array(setdata),1),gammadir,iset+thegamma,thisTopList,range(nt),thisMomList,AddDict=AddDict,frmtflag='e')
@@ -27,11 +31,15 @@ def PrintTopCfunToFile(C3setTop,thisSetList,thisMomList, thisGammaList,thisTopLi
 def PrintTopSetToFile(C3setTop,thisSetList,thisMomList, thisGammaList,tsink,thisTopList,AddDict={}):
     for thegamma,gammadata in zip(thisGammaList,C3setTop):
         gammadir = outputdir[0]+'Top/'+CreateOppDir(thegamma)+'/'
+        if 'cmplx' in thegamma:
+            thegamma = thegamma.replace('cmplx','Topcmplx')
+        else:
+            thegamma = thegamma+'Top'
         for iset,setdata in zip(thisSetList,gammadata):
             print 'Printing Top : ' , thegamma , iset , '                \r',
             calcflag = 'Ratio_Factor_Top'
             tlist = range(tsource,int(tsink)+1)
-            Print3ptTopToFile(setdata,gammadir,iset+thegamma,thisTopList,tlist,thisMomList,AddDict=AddDict)
+            Print3ptTopToFile(np.rollaxis(np.array(setdata),1),gammadir,iset+thegamma,thisTopList,tlist,thisMomList,AddDict=AddDict)
 
 
 
@@ -101,14 +109,14 @@ def PrintSumSetToFile(sumdata,sumfits,sumfitschi,thisFitList,thissm, thisGammaMo
 
 #FitData = [ igamma , ip , icut , iset ]
 
-def PrintFitSetToFile(dataset,datasetChi,thisGammaMomList,thisSetList,thisCutList,infosetRF):
+def PrintFitSetToFile(dataset,datasetChi,thisGammaMomList,thisSetList,thisCutList,infosetRF,flowlist):
     for igamma,(thisgamma,thismomlist) in enumerate(thisGammaMomList.iteritems()):
         gammadir = outputdir[0]+CreateOppDir(thisgamma)+'/Fits/'
         for iset,thisset in enumerate(thisSetList):
             mominfoRF = [ip[iset] for ip in infosetRF[igamma]]
             print 'Printing : ' , thisgamma , thisset , '                \r',
             filename = thisset+thisgamma
-            PrintFitToFile(dataset[igamma],datasetChi[igamma],iset,gammadir,filename,thismomlist,thisCutList,mominfoRF)
+            PrintFitToFile(dataset[igamma],datasetChi[igamma],iset,gammadir,filename,thismomlist,thisCutList,mominfoRF,flowlist)
 
 
 #dataset    = [ cuts , ip , istate ] bs1

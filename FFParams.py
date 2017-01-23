@@ -132,9 +132,12 @@ DefGraphDoList = ['TSF','OSF','Sum','Fits','Collect','Few']
 def FindMomFromGamma(igamma,thisMomList=qvecSet):
     momout = []
     testgamma = igamma.replace('cmplx','').replace('doub','').replace('sing','')
+    thisFFtype = False
     for thisFF,iCurrOpps in CurrOpps.iteritems():
         if testgamma in iCurrOpps:
             thisFFtype = thisFF
+    if thisFFtype == False: return []
+    print igamma, ' corresponds to ' , thisFFtype
     for iq in thisMomList:
         iqvec = np.array(qstrTOqvec(iq))*qunit
         dump,rcheck,ccheck =  CurrFFs[thisFFtype](testgamma,iqvec.tolist(),[0,0,0],1.0)
@@ -147,8 +150,15 @@ def FindMomFromGamma(igamma,thisMomList=qvecSet):
             
 def DumpAllMomLists():
     mygammalist = ['P4'+igamma for igamma in AllGammaSet] +['P3'+igamma for igamma in AllGammaSet]
+    topgammalist = []
+    for ig in mygammalist:
+        if 'cmplx' in ig:
+            topgammalist.append( ig.replace('cmplx','Topcmplx'))
+        else:
+            topgammalist.append( ig+'Top')
+    mygammalist = topgammalist + mygammalist
     for igamma in mygammalist:
-        print ' Dumping MomList: ' + igamma
+        # print ' Dumping MomList: ' + igamma
         outfile = momlistdir + igamma + '.p'
         with open(outfile,'wb') as f:
             pickle.dump(FindMomFromGamma(igamma),f)

@@ -60,6 +60,7 @@ def VectorFF(opp,thisqvec,thisppvec,thismass,Rfac=True,PadF3=False):
 
 def VectorFFTop(opp,thisqvec,thisppvec,thismass,Rfac=True,alpha=1.0):
     thisp,thisq,thispp = Create4Mom(thisqvec,thisppvec,thismass)
+    opp = opp.replace('Top','')
     
     term1 = FFunTopCheck(opp,thisp,thispp,thismass,alpha,Rfac=Rfac)
     term2 = 0.0j

@@ -23,14 +23,15 @@ from CheckXml import *
 
 
 def TryFitsFun(thisGammaList,thisSetList,thisReadMomList,thisTSinkList,thischunk):
-    # dataRF = [ gamma , mom , set , it ] bs
     # for ig,gammadata in enumerate(dataRF):
     #     for im,momdata in enumerate(gammadata):
     #         for iset,setdata in enumerate(momdata):
     #             print thisGammaList[ig] , ' ' , thisGammaMomList[thisGammaList[ig]] , ' ' , SetList[iset]
     #             print Pullflag(setdata,'Avg')
     #             print ''
-    [dataRF,data2pt,thisGammaMomList,BorA,infolistRF,infolist2pt] = ReadRFnp(thisGammaList,thisSetList,thisMomList=thisReadMomList)
+    # dataRF = [ gamma , mom , set , iflow , it ] bs IF reading flow results
+    # dataRF = [ gamma , mom , set , it ] bs
+    [dataRF,data2pt,thisGammaMomList,BorA,infolistRF,infolist2pt,flowlist] = ReadRFnp(thisGammaList,thisSetList,thisMomList=thisReadMomList)
     start = time.time()
     FitDataBoot,FitDataAvg,FitDataChi = [],[],[]
     for igamma,(thisgamma,thismomlist) in enumerate(thisGammaMomList.iteritems()):
@@ -42,15 +43,29 @@ def TryFitsFun(thisGammaList,thisSetList,thisReadMomList,thisTSinkList,thischunk
             FitDataBoot[igamma].append([])
             FitDataAvg[igamma].append([])
             FitDataChi[igamma].append([])
-            for icut in FitCutList:
-                momdata = dataRF[igamma][imom]
-                dataoutBoot,dataoutAvg,dataoutChi = FitRFSet(momdata,thisTSinkList,icut)
-                FitDataBoot[igamma][imom].append(dataoutBoot)
-                FitDataAvg[igamma][imom].append(dataoutAvg)
-                FitDataChi[igamma][imom].append(dataoutChi)
+            if len(flowlist) > 0:
+                print 'CONTINUE FROM HERE '
+                for icf,iflow in enumerate(flowlist):
+                    FitDataBoot[igamma][imom].append([])
+                    FitDataAvg[igamma][imom].append([])
+                    FitDataChi[igamma][imom].append([])
+                    for icut in FitCutList:
+                        momdata = dataRF[igamma][imom][:,icf,:]
+                        dataoutBoot,dataoutAvg,dataoutChi = FitRFSet(momdata,thisTSinkList,icut)
+                        FitDataBoot[igamma][imom][icf].append(dataoutBoot)
+                        FitDataAvg[igamma][imom][icf].append(dataoutAvg)
+                        FitDataChi[igamma][imom][icf].append(dataoutChi)
+            else:
+                for icut in FitCutList:
+                    momdata = dataRF[igamma][imom]
+                    dataoutBoot,dataoutAvg,dataoutChi = FitRFSet(momdata,thisTSinkList,icut)
+                    FitDataBoot[igamma][imom].append(dataoutBoot)
+                    FitDataAvg[igamma][imom].append(dataoutAvg)
+                    FitDataChi[igamma][imom].append(dataoutChi)
     #FitData = [ igamma , ip , icut , iset ]
+    #FitData = [ igamma , ip , iflow , icut , iset ]
     # print ' '.join(thisGammaMomList.keys()) , ' at ' , thischunk,'% took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s '
-    return FitDataBoot,FitDataChi,thisGammaMomList,thisSetList,FitCutList,infolistRF
+    return FitDataBoot,FitDataChi,thisGammaMomList,thisSetList,FitCutList,infolistRF,flowlist
 
 
 
