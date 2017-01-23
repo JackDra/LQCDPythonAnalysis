@@ -16,7 +16,7 @@ def PicknFF(CT):
         return 1
     elif CT in ['Vector','PsVector']:
         return 2
-    elif CT == 'Tensor':
+    elif CT in ['Tensor','VectorTop']:
         return 3
     else:
         return -1
@@ -44,7 +44,7 @@ def ScalarFF(opp,thisqvec,thisppvec,thismass,Rfac=True):
     rcheck,ccheck = abs(term1.real)<myeps,abs(term1.imag)<myeps    
     return [term1],not rcheck, not ccheck
 
-def VectorFF(opp,thisqvec,thisppvec,thismass,Rfac=True):
+def VectorFF(opp,thisqvec,thisppvec,thismass,Rfac=True,PadF3=False):
     thisp,thisq,thispp = Create4Mom(thisqvec,thisppvec,thismass)
     term1 = FFunCheck(opp,thisp,thispp,thismass,Rfac=Rfac)
     term2 = 0.0j
@@ -53,7 +53,27 @@ def VectorFF(opp,thisqvec,thisppvec,thismass,Rfac=True):
             term2 += FFunCheck(opp+'g'+str(i),thisp,thispp,thismass,Rfac=Rfac)*thisq[i]
     term2 = term2/(2.0*thismass)
     rcheck,ccheck = abs(term1.real)<myeps and abs(term2.real)<myeps,abs(term1.imag)<myeps and abs(term2.imag)<myeps
-    return [term1,term2],not rcheck, not ccheck
+    if PadF3:
+        return [term1,term2,0.0],not rcheck, not ccheck
+    else:
+        return [term1,term2],not rcheck, not ccheck
+
+def VectorFFTop(opp,thisqvec,thisppvec,thismass,Rfac=True,alpha=1.0):
+    thisp,thisq,thispp = Create4Mom(thisqvec,thisppvec,thismass)
+    
+    term1 = FFunTopCheck(opp,thisp,thispp,thismass,alpha,Rfac=Rfac)
+    term2 = 0.0j
+    for i in [1,2,3,4]:
+        if i != int(opp[-1]) :
+            term2 += FFunTopCheck(opp+'g'+str(i),thisp,thispp,thismass,alpha,Rfac=Rfac)*thisq[i]
+    term2 = term2/(2.0*thismass)
+    term3 = 0.0j
+    for i in [1,2,3,4]:
+        if i != int(opp[-1]) :
+            term3 += FFunCheck(opp+'g'+str(i)+'g5',thisp,thispp,thismass,Rfac=Rfac)*thisq[i]
+    rcheck,ccheck = (abs(term1.real)<myeps and abs(term2.real)<myeps and abs(term3.real)<myeps,
+					 abs(term1.imag)<myeps and abs(term2.imag)<myeps  and abs(term3.imag)<myeps)
+    return [term1,term2,term3],not rcheck, not ccheck
 
 def PsVectorFF(opp,thisqvec,thisppvec,thismass,Rfac=True):
     thisp,thisq,thispp = Create4Mom(thisqvec,thisppvec,thismass)
@@ -147,6 +167,7 @@ def RenormFF(FF,Val,thisDS):
 
 CurrFFs = {'Scalar'   : ScalarFF,
            'Vector'   : VectorFF,
+           'VectorTop': VectorFFTop,
            'PsScalar' : ScalarFF,
            'PsVector' : PsVectorFF,
            'Tensor'   : TensorFF}

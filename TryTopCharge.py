@@ -5,9 +5,9 @@ import os
 import numpy as np
 import sys
 from Params import *
-from ReadCMCfuns import ReadSetTopCharge,ReadListTopCharge
+from ReadCMCfuns import ReadSetAlpha,ReadListAlpha
 from CMSTech import CreateCM2ptCfuns,CreatePoF2ptCfuns,PreptwoptCorr
-from OutputData import PrintSetToFile,PrintCfunToFile,PrintTopSetToFile
+from OutputData import PrintSetToFile,PrintCfunToFile,PrintAlphaSetToFile
 from OutputXmlData import PrintLREvecMassToFile
 from CreateCombs import CreategiDi
 from SetLists import CreateMassSet
@@ -26,9 +26,9 @@ def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     # print 'Running ' + ipTOqstr(thisMomList[0]) + ' ' +  str(int((thisMomList[0]*100)/float(len(qvecSet))))+'%' 
 
     if 'ReadList' in ListOrSet:
-        [data2pt,dataTop,thisTopList,filelist] = ReadListTopCharge(thisSmearList,thisMomList,conflist,Interps=DefInterpList,thistsourceList=PoFtsourceList)
+        [data2pt,dataTop,thisTopList,filelist] = ReadListAlpha(thisSmearList,thisMomList,conflist,Interps=DefInterpList,thistsourceList=PoFtsourceList)
     elif 'ReadSet' in ListOrSet:
-        [data2pt,dataTop,thisTopList,filelist] = ReadSetTopCharge(thisSmearList,thisMomList,dirread,Interps=DefInterpList,thistsourceList=PoFtsourceList)
+        [data2pt,dataTop,thisTopList,filelist] = ReadSetAlpha(thisSmearList,thisMomList,dirread,Interps=DefInterpList,thistsourceList=PoFtsourceList)
 
     thisMomList = GetAvgMomListip(thisMomList)
     data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
@@ -143,7 +143,7 @@ def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     SetList += CreateMassSet(thisSmearList,StateSet,[],tsrclist=PoFtsourceList,flipord=True)
     if len(thisSmearList) > 1 and DoCM: SetList += CreateMassSet([],CMStateSet,thisCMTvarList,flipord=True)
     SetList += CreateMassSet([],StateSet,thisPoFTvarList,flipord=True)
-    PrintTopSetToFile(np.swapaxes(np.array(C2outTop),0,1),C2out,SetList,thisMomList,thisTopList,AddDict=InfoDict)
+    PrintAlphaSetToFile(np.swapaxes(np.array(C2outTop),0,1),C2out,SetList,thisMomList,thisTopList,AddDict=InfoDict)
 
     print 'Printing took ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
     # print 'Completed ' + ipTOqstr(thisMomList[0])

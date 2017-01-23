@@ -51,12 +51,13 @@ for iPi in GMAi:
 
 DictGMA4giDi = ReadProjDerList
 
-CurrTypes = ['Scalar','Vector','PsScalar','PsVector','Tensor']
+CurrTypes = ['Scalar','Vector','VectorTop','PsScalar','PsVector','Tensor']
 DerCurrTypes = ['giDi']
 AllCurrTypes = CurrTypes + DerCurrTypes
 
 DictCurrOpps = {'Scalar'   : DictGMAiI,
                 'Vector'   : DictGMAigi,
+                'VectorTop': DictGMAigi,
                 'PsScalar' : DictGMAig5,
                 'PsVector' : DictGMAigig5,
                 'Tensor'   : DictGMAigigj,
@@ -66,6 +67,7 @@ DictCurrOpps = {'Scalar'   : DictGMAiI,
 
 CurrOpps = {'Scalar'   : PiI,
             'Vector'   : Pigi,
+            'VectorTop': Pigi,
             'PsScalar' : Pig5,
             'PsVector' : Pigig5,
             'Tensor'   : Pigigj}
@@ -73,12 +75,14 @@ CurrOpps = {'Scalar'   : PiI,
 
 CurrOppsNoProj = {'Scalar'   : ['I'],
                   'Vector'   : gi,
+                  'VectorTop': gi,
                   'PsScalar' : ['g5'],
                   'PsVector' : gig5,
                   'Tensor'   : gigj}
 
 CurrOppsNoProjSigBack = {'Scalar'   : ['I'],
                          'Vector'   : gi,
+                         'VectorTop': gi,
                          'PsScalar' : ['g5'],
                          'PsVector' : g5gi,
                          'Tensor'   : gjgi}
@@ -92,20 +96,23 @@ CurrOppsNoProjSigBack = {'Scalar'   : ['I'],
 
 FFFitFuns = {'Scalar'   : FormFactorO1,
              'Vector'   : FormFactorO2,
+             'VectorTop': FormFactorO3,
              'PsScalar' : FormFactorO1,
              'PsVector' : FormFactorO2,
              'Tensor'   : FormFactorO3}
 
 NoFFPars = {'Scalar'   : 1,
             'Vector'   : 2,
-            'GeGm'   : 2,
+            'VectorTop': 2,
+            'GeGm'     :  2,
             'PsScalar' : 1,
             'PsVector' : 2,
             'Tensor'   : 3}
 
 NoFFList = {'Scalar'   : ['FF1'],
             'Vector'   : ['FF1','FF2'],
-            'GeGm'   : ['FF1','FF2'],
+            'VectorTop': ['FF1','FF2','FF3'],
+            'GeGm'     : ['FF1','FF2'],
             'PsScalar' : ['FF1'],
             'PsVector' : ['FF1','FF2'],
             'Tensor'   : ['FF1','FF2','FF3']}

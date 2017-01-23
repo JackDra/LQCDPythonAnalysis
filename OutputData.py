@@ -10,18 +10,52 @@ from OppFuns import *
 from FormFactors import NoFFPars
 from OutputXmlData import *
 
+## IN DEV
+##C3setTop [ igamma , iset , iflow , ip , it ] bs1
+
+def PrintTopCfunToFile(C3setTop,thisSetList,thisMomList, thisGammaList,thisTopList,AddDict={}):
+    cfundir = outputdir[0] + 'Top/cfun/'
+    for thegamma,gammadata in zip(thisGammaList,C3setTop):
+        gammadir = cfundir+CreateOppDir(thegamma)+'/'
+        for iset,setdata in zip(thisSetList,gammadata):
+            print 'Printing Top : ' , thegamma , iset , '                \r',
+            Print3ptTopToFile(np.rollaxis(np.array(setdata),1),gammadir,iset+thegamma,thisTopList,range(nt),thisMomList,AddDict=AddDict,frmtflag='e')
+
+
+##dataset [ igamma , iset , iflow , ip , it ] bs1
+
+def PrintSetToFile(C3setTop,thisSetList,thisMomList, thisGammaList,tsink,thisTopList,AddDict={}):
+    for thegamma,gammadata in zip(thisGammaList,dataset):
+        gammadir = outputdir[0]+'Top/'+CreateOppDir(thegamma)+'/'
+        for iset,setdata in zip(thisSetList,gammadata):
+            print 'Printing Top : ' , thegamma , iset , '                \r',
+            calcflag = 'Ratio_Factor_Top'
+            tlist = range(tsource,int(tsink)+1)
+            Print3ptTopToFile(setdata,gammadir,iset+thegamma,tlist,thisMomList,AddDict=AddDict)
+
+
+
+
+
+
+
+
+            
+
 ##topdataset [ iset , ttop, ip ,it ] bs1
 ##dataset [iset , ip , it ] bs1
 
-def PrintTopSetToFile(topdataset,dataset,thisSetList,thisMomList, thisTopList, AddDict={}):
-    topdir = outputdir[0] + 'Top/Rat/'
+def PrintAlphaSetToFile(topdataset,dataset,thisSetList,thisMomList, thisTopList, AddDict={}):
+    topdir = outputdir[0] + 'Top/Alpha/'
+    mkdir_p(topdir)
+    mkdir_p(topdir.replace('Alpha/','cfun/NNQ/'))
     for iset,setdata,topsetdata in zip(thisSetList,dataset,topdataset):
         print 'Printing : ' , iset ,'                \r',
         PrintTopToFile(topsetdata,setdata,topdir,iset,thisTopList,range(nt),thisMomList,AddDict=AddDict)
 
 
 
-##C3set [ igamma , iset , it ] bs1
+##C3set [ igamma , iset , ip , it ] bs1
 
 def PrintCfunToFile(C3set,thisSetList,thisMomList, thisGammaList,AddDict={},Top=False):
     if Top:

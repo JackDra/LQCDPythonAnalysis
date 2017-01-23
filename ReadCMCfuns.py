@@ -8,6 +8,61 @@ from ReadTxt import *
 from MiscFuns import *
 import time,datetime
 
+##IN DEV
+
+
+def ReadListTopCharge(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,
+                      thisTSinkList,thisconflist,Flag,Interps=['nucleon'],thistsourceList=[tsource]):
+    thisfilelist = OrderedDict()
+    f = open('./cfglistlist.txt','w')
+    for iconf in thisconflist:
+        ifile = filelist.replace('*',iconf)
+        prefnosrc = re.sub('_xsrc.*','',ifile)
+        if prefnosrc not in thisfilelist.keys():
+            thisfilelist[prefnosrc] = [ifile]
+        else:
+            thisfilelist[prefnosrc].append(ifile)
+        f.write(ifile+'\n')
+    f.close()
+    data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
+    # print ''
+    cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist.keys()))
+    if not np.all([x==tflow[0] for x in tflow]):
+        print 'warning, files had different flow times'
+    thisTflowList = tflow[0]
+
+    data3pt,dataTop = [],[]
+    for iFlag,itsink in zip(Flag,thisTSinkList):
+        hold3pt,holdTop = Read3ptSetTop(topcharge,thisfilelist,thisSmearList,thisMomList,thisProjGammaList,
+                                        thisProjDerList,thisDSList,itsink,iFlag,shiftlist,cfglistout,thisTflowList,
+                                        randlist=randlist,tsourceList=thistsourceList)
+        data3pt.append(hold3pt)
+        dataTop.append(holdTop)
+    # print ''
+    return [data2pt,data3pt,np.rollaxis(np.array(dataTop),1),thisfilelist]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def TestMomList(thisMomList):
     try:
@@ -16,7 +71,7 @@ def TestMomList(thisMomList):
         print "Must Read Zero Momentum value " + iqTOip(0)
 
         
-def ReadListTopCharge(thisSmearList,thisMomList,thisconflist,Interps=['nucleon'],thistsourceList=[tsource]):
+def ReadListAlpha(thisSmearList,thisMomList,thisconflist,Interps=['nucleon'],thistsourceList=[tsource]):
     thisfilelist = OrderedDict()
     f = open('./cfglistlist.txt','w')
     for iconf in thisconflist:
@@ -44,7 +99,7 @@ def ReadListTopCharge(thisSmearList,thisMomList,thisconflist,Interps=['nucleon']
 
 
 
-def ReadSetTopCharge(thisSmearList,thisMomList,directory,Interps=['nucleon'],thistsourceList=[tsource]):
+def ReadSetAlpha(thisSmearList,thisMomList,directory,Interps=['nucleon'],thistsourceList=[tsource]):
     # if len(thisTSinkList) > 0:
     #     TestMomList(thisMomList)
     thisfilelist = OrderedDict()
@@ -463,5 +518,88 @@ def Read2ptSetTop(TopCharge,readfilelist,thisSmearList,thisMomList,Interps,Topcf
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 ## IN DEV
+
+##thisdata3pt [ thistsource, ism , jsm , igamma , ip ] bootdataclas
+##thisdataTop [ tflow, thistsource, ism , jsm , igamma , ip ] bootdataclas
+def Read3ptSetTop(TopCharge,readfilelist,thisSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,tsink,iFlag,shiftlist,
+                  Topcfglist,thisTflowList,randlist=[],tsourceList=[tsource]):
+    thisdata3pt = []
+    thisdataTop = []
+    start = time.time()
+    icount = -1
+    for itsource,thists in enumerate(tsourceList):
+        thisdata3pt.append([])
+        thisdataTop.append([])
+        for icsm,ism in enumerate(thisSmearList):
+            thisdata3pt[itsource].append([])
+            thisdataTop[itsource].append([])
+            thisFlag = iFlag
+            C2C3Dis,rownumb = '',''
+            if iFlag == 'REvec':
+                Jsmlist = ['REvec']
+            elif iFlag == 'PoF':
+                if CHROMA:
+                    Jsmlist = ['PoF'+str(PoFShifts)+'D'+str(PoFDelta)]
+                    thisFlag = ''
+                    C2C3Dis = ''
+                else:
+                    Jsmlist = ['RE'+PoFReadTvarList[0]]
+                    thisFlag = 'RE'+PoFDirTvarList[0]
+                    C2C3Dis = PoFC2C3Dis
+            else:
+                Jsmlist = ['Xsm'+jsm for jsm in thisSmearList]
+            for jcsm,jsm in enumerate(Jsmlist):
+                thisdata3pt[itsource][icsm].append([])
+                thisdataTop[itsource][icsm].append([])
+                thisstart = time.time()
+                icount += 1
+                timeleft = GetTimeLeft(icount,len(tsourceList)*len(thisSmearList)*len(Jsmlist),time.time()-start)
+                print 'Read 3pt: sm' + ism + jsm + ' ts'+str(tsink)+' Time Remaining: '+ str(datetime.timedelta(seconds=timeleft)) , ' h:m:s \r',
+                thisshiftlist = shiftlist[itsource][icsm][jcsm]
+                for iDS in thisDSList:
+                    for iProj,thisGammaList in thisProjGammaList.iteritems():
+                        thisfilelist = OrderedDict()
+                        for ireadkey,ireadfl in readfilelist.iteritems():
+                            thisfilelist[ireadkey] = [ifile.replace('@',CreateDir3pt(ism,jsm,tsink,iDS,iProj,thisFlag))
+                                                      .replace(FileStruct,FileStruct+C2C3Dis)
+                                                      +CreateEnd3pt(ism,jsm,thists,tsink,iDS,iProj,'') for ifile in ireadfl]
+
+                        holdresTop,holdres = ReadAndBoot3ptTop(thisfilelist,thisMomList,thisGammaList,[],nboot,TopCharge,Topcfglist,thisTflowList,
+                                                            printstr=iDS+iProj,randlist=randlist)
+                        for ig,gammares in enumerate(holdres):
+                            thisdata3pt[itsource][icsm][jcsm].append(gammares)
+                            thisdataTop[itsource][icsm][jcsm].append([])
+                            for iflow,flowres in enumerate(holdresTop):
+                                thisdataTop[itsource][icsm][jcsm][ig].append(flowres[ig])
+                    for iProj,thisDerList in thisProjDerList.iteritems():
+                        thisfilelist = OrderedDict()
+                        for ireadkey,ireadfl in readfilelist.iteritems():
+                            thisfilelist = [ifile.replace('@',CreateDir3pt(ism,jsm,tsink,iDS,iProj,thisFlag))
+                                            .replace(FileStruct,FileStruct+C2C3Dis)
+                                            +CreateEnd3pt(ism,jsm,thists,tsink,iDS,iProj,'D') for ifile in ireadfl]
+                        holdresTop,holdres = ReadAndBoot3ptTop(thisfilelist,thisMomList,[],thisDerList,nboot,TopCharge,Topcfglist,thisTflowList,
+                                                            printstr=iDS+iProj,randlist=randlist)
+                        for ig,gammares in enumerate(holdres):
+                            thisdata3pt[itsource][icsm][jcsm].append(gammares)
+                            thisdataTop[itsource][icsm][jcsm].append([])
+                            for iflow,flowres in enumerate(holdresTop):
+                                thisdataTop[itsource][icsm][jcsm][ig].append(flowres[ig])
+                print ('Read 3pt: sm' + ism + jsm + 't_src'+str(thists)+' t_sink'+str(tsink)+
+                       ' took: ' + str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s        ')
+    print 'Read 3pt total time: ' + str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
+    return np.rollaxis(np.array(thisdataTop),3),thisdata3pt
+
 

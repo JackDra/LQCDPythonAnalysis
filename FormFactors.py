@@ -48,6 +48,7 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True):
                         FFcoeff[iFF].append(iFFcof.real)
                     datavals.append(data[flagopp][iq]['Boot'])
                     infodict[iqs] = data[flagopp][iq]['Info']
+
         if len(datavals) == 0: continue
         zboot,zvec = [BootStrap1(nboot,0)],[0.0]
         if 'Scalar' in baseCurr :
@@ -59,27 +60,7 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True):
             FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff,FFFitFuns[baseCurr])
             thisdataout[iqs]['Boot'] = FFBoothold
             thisdataout[iqs]['Avg'] = FFAvghold
-        elif 'Vector' in baseCurr :
-            ## DEBUG ##
-            if Debug:
-                print 'Printing Form Factors debug:'
-                for FF1,FF2,res in zip(FFcoeff[0],FFcoeff[1],datavals):
-                    print iqsqrd, '   ' , FF1,'FF1 + ',FF2,'FF2 = ',res.Avg
-                print ''
-            if [0.0] not in FFcoeff and len(datavals) == 1: continue
-            if FFcoeff[0] == [0.0]:
-                FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff[1],FFFitFuns['Scalar'])
-                thisdataout[iqs]['Boot'] = zboot+FFBoothold
-                thisdataout[iqs]['Avg'] = zvec+FFAvghold
-            elif FFcoeff[1]== [0.0]:
-                FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff[0],FFFitFuns['Scalar'])
-                thisdataout[iqs]['Boot'] = FFBoothold+zboot
-                thisdataout[iqs]['Avg'] = FFAvghold+zvec
-            else:
-                FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff,FFFitFuns[baseCurr])
-                thisdataout[iqs]['Boot'] = FFBoothold
-                thisdataout[iqs]['Avg'] = FFAvghold
-        elif 'Tensor' in baseCurr:
+        elif 'Tensor' in baseCurr or 'Top' in baseCurr:
             if len(datavals) == 1:
                 if sum(ia == [0.0] for ia in FFcoeff) != 2: continue
                 if FFcoeff[0] != [0.0]:
@@ -108,6 +89,26 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True):
                     FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,[FFcoeff[0],FFcoeff[1]],FFFitFuns['Vector'])
                     thisdataout[iqs]['Boot'] = FFBoothold+zboot
                     thisdataout[iqs]['Avg'] = FFAvghold+zvec
+            else:
+                FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff,FFFitFuns[baseCurr])
+                thisdataout[iqs]['Boot'] = FFBoothold
+                thisdataout[iqs]['Avg'] = FFAvghold
+        elif 'Vector' in baseCurr :
+            ## DEBUG ##
+            if Debug:
+                print 'Printing Form Factors debug:'
+                for FF1,FF2,res in zip(FFcoeff[0],FFcoeff[1],datavals):
+                    print iqsqrd, '   ' , FF1,'FF1 + ',FF2,'FF2 = ',res.Avg
+                print ''
+            if [0.0] not in FFcoeff and len(datavals) == 1: continue
+            if FFcoeff[0] == [0.0]:
+                FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff[1],FFFitFuns['Scalar'])
+                thisdataout[iqs]['Boot'] = zboot+FFBoothold
+                thisdataout[iqs]['Avg'] = zvec+FFAvghold
+            elif FFcoeff[1]== [0.0]:
+                FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff[0],FFFitFuns['Scalar'])
+                thisdataout[iqs]['Boot'] = FFBoothold+zboot
+                thisdataout[iqs]['Avg'] = FFAvghold+zvec
             else:
                 FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff,FFFitFuns[baseCurr])
                 thisdataout[iqs]['Boot'] = FFBoothold

@@ -304,7 +304,6 @@ class Read2ptCfunChromaXML:
                     elif BarPart and InterpPart:
                         if '<sink_mom_num>' in strline:
                             thismom = int(strline.replace('<sink_mom_num>','').replace('</sink_mom_num>',''))
-                            print thisMomList, thismom
                             if thismom in thisMomList:
                                 datahold.append([])
                                 self.OutMomList.append(thismom)
@@ -443,14 +442,14 @@ class R2CChromaXMLFileList:
         self.data = self.data/float(datalen)
         if Dog5: self.datag5 = self.datag5/float(datag5len)
         indicies =  np.searchsorted(self.OutMomList,thisMomList)
-        if Debug:
-            print 
-            print thisfile
-            print thisMomList
-            print self.OutMomList
-            print indicies
-            print self.data
-            print self.datag5
+        # if Debug:
+        #     print 
+        #     print thisfile
+        #     print thisMomList
+        #     print self.OutMomList
+        #     print indicies
+        #     print self.data
+        #     print self.datag5
         self.data = np.array(self.data)[indicies].tolist()
         if Dog5: self.datag5 = np.array(self.datag5)[indicies].tolist()
 

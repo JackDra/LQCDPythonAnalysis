@@ -122,6 +122,7 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         #     thisGammaList = dumpGammaList
         if len(data3pt) < 2 and TimeInv: raise IOError("PoF needs atleast two tsinks with time invariance")
         data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
+        data3ptset,data2ptset = [],[]
         for iPoF in PoFTvarList:
             print 'Creating PoF CM Tech ' , PoFTvarList[0]
             [CMdata2pt,CMdata3pt] = CreateREPoFCfuns(np.array(data3pt),data2pt,DefPoFVarList[0],thisMomList)

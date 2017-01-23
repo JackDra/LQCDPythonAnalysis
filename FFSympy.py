@@ -184,7 +184,9 @@ if not NoLoad:
     def GetGamma(Opp):
         for i in [1,2,3,4]:
             for j in [1,2,3,4]:
-                if 'g'+str(i)+'g'+str(j) in Opp:
+                if 'g'+str(i)+'g'+str(j)+'g5' in Opp:
+                    return sigma_mu_nu[i][j]*g5
+                elif 'g'+str(i)+'g'+str(j) in Opp:
                     return sigma_mu_nu[i][j]
         for i in [1,2,3,4]:
             if 'g'+str(i)+'g5' in Opp:
@@ -229,9 +231,29 @@ if not NoLoad:
         else:
             return (pplusm * Opp * pprimeplusm) * 1/4.
 
+    def FFunTopOppCheck(Opp,pmu,ppmu,mass,alpha,Rfac=True):
+        p,pp = pmu,ppmu
+        m = mass
+        Ep, Epp = -1.0j*p[0],-1.0j*pp[0]
+        pplusm = (g4 - (1j/Ep) * (p[1]*g1 + p[2]*g2 + p[3]*g3) + (m / Ep) * eye(4))
+        pprimeplusm = (g4 - (1j/Epp) * (pp[1]*g1 + pp[2]*g2 + pp[3]*g3) + (m / Epp )* eye(4))
+        g5facp = (2.0*alpha*m/Ep)*g5
+        g5facpprime = (2.0*alpha*m/Epp)*g5
+        if Rfac:
+            return ((pplusm * Opp * g5facpprime)*sqrt(Epp*Ep/((Epp+m)*(Ep+m))) * 1/4.,
+                    (g5facp * Opp * pprimeplusm)*sqrt(Epp*Ep/((Epp+m)*(Ep+m))) * 1/4.)
+        else:
+            return ((pplusm * Opp * g5facpprime) * 1/4., (g5facp * Opp * pprimeplusm) * 1/4.)
+
     def FFunCheck(Opp,pmu,ppmu,mass,Rfac=True):
         thisOpp,thisProj = GetProjGamma(Opp)
         return complex(Trace(thisProj * FFunOppCheck(thisOpp,pmu,ppmu,mass,Rfac=Rfac)).doit())
+
+    def FFunTopCheck(Opp,pmu,ppmu,mass,alpha,Rfac=True):
+        thisOpp,thisProj = GetProjGamma(Opp)
+        leftval,rightval = FFunTopOppCheck(thisOpp,pmu,ppmu,mass,alpha,Rfac=Rfac)
+        return complex(Trace(thisProj * leftval).doit()+Trace(thisProj * rightval).doit())
+        # return complex(Trace(thisProj * FFunTopOppCheck(thisOpp,pmu,ppmu,mass,alpha,Rfac=Rfac)).doit())
 
 
     # def FormFactor(Gproj,index):

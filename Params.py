@@ -133,6 +133,7 @@ TimeInv = False ## uses time invariance to calculate the Pencil of Function meth
 DoCM = True ## does correlation matrix result ( no PoF) 
 PlotMonte = False ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
 PlotXSrcDep = False ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
+PlotAutocorr = False
 MonteTime = 7
 MonteFlow = 40
 
@@ -279,9 +280,9 @@ if kappa == 12:
     conflist = ['21_xsrc1_']
 else:
     FileStruct = "RC32x64_B1900Kud01375400Ks01364000C1715"
-    conflist = ['-a-004410_xsrc110',
-                '-a-004410_xsrc111',
-                '-a-004410_xsrc112']
+    conflist = ['-a-004310_xsrc117',
+                '-a-004010_xsrc105',
+                '-a-003310_xsrc102']
                 
                 
 filelist = dirread+"/@/"+FileStruct+"*"

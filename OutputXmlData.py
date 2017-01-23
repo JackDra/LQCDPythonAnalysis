@@ -96,32 +96,71 @@ def PrintToFile(thisdata,filedir,filename,thisTList,thisMomList,AddDict={},frmtf
             datadict[ip]['Boots'][itstr] = tdata.values
         WriteXmlOutput(outputfile,datadict)
 
+
+
+
+
+
+
+##pdata [  ip , iflow , it ] bs1
+def Print3ptTopToFile(pdata,filedir,filename,thisTopList,thisTList,thisMomList,AddDict={},frmtflag='f'):
+    xmlMomList = [ipTOqcond(imom,Avg=True) for imom in thisMomList]
+    tkeyList = map(tstr,thisTList)
+    for icp,(ip,topdata) in enumerate(zip(xmlMomList,pdata)):
+        datadictTop,outputfileTop = SetUpPDict(ip,filedir,filename)
+        datadictTop[ip]['Info'] = AddDict
+        datadictTop[ip]['Values'] = OrderedDict()
+        datadictTop[ip]['Boots'] = OrderedDict()
+        for itflow,flowdata in zip(thisTopList,topdata):
+            Top = []
+            datadictTop[ip]['Boots'][tflowstr(itflow)] = OrderedDict()
+            for itstr,tflowdata in zip(tkeyList,flowdata):
+                Top.append(tflowdata)
+                datadictTop[ip]['Boots'][tflowstr(itflow)][itstr] = tflowdata.values
+            datadictTop[ip]['Values'][tflowstr(itflow)] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,Top,[frmtflag]*len(xmlMomList))))
+        WriteXmlOutput(outputfileTop,datadictTop)
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
         
 def PrintTopToFile(topdata,thisdata,filedir,filename,thisTopList,thisTList,thisMomList,AddDict={},frmtflag='f'):
     xmlMomList = [ipTOqcond(imom,Avg=True) for imom in thisMomList]
     tkeyList = map(tstr,thisTList)
     for icp,(ip,pdata) in enumerate(zip(xmlMomList,thisdata)):
-        datadictRat,outputfileRat = SetUpPDict(ip,filedir,filename)
-        datadict,outputfile = SetUpPDict(ip,filedir.replace('Rat','NNQ'),filename)
+        datadictAlpha,outputfileAlpha = SetUpPDict(ip,filedir,filename)
+        datadict,outputfile = SetUpPDict(ip,filedir.replace('Alpha/','cfun/NNQ/'),filename)
         datadict[ip]['Info'] = AddDict
         datadict[ip]['Values'] = OrderedDict()
         datadict[ip]['Boots'] = OrderedDict()
-        datadictRat[ip]['Info'] = AddDict
-        datadictRat[ip]['Values'] = OrderedDict()
-        datadictRat[ip]['Boots'] = OrderedDict()
+        datadictAlpha[ip]['Info'] = AddDict
+        datadictAlpha[ip]['Values'] = OrderedDict()
+        datadictAlpha[ip]['Boots'] = OrderedDict()
         for itflow,flowdata in zip(thisTopList,topdata):
-            Rat,NNQ = [],[]
+            Alpha,NNQ = [],[]
             datadict[ip]['Boots'][tflowstr(itflow)] = OrderedDict()
-            datadictRat[ip]['Boots'][tflowstr(itflow)] = OrderedDict()
+            datadictAlpha[ip]['Boots'][tflowstr(itflow)] = OrderedDict()
             for itstr,tflowdata,tdata in zip(tkeyList,flowdata[icp],pdata):
-                Rat.append(tflowdata/tdata)
+                Alpha.append(tflowdata/tdata)
                 NNQ.append(tflowdata)
-                Rat[-1].Stats()
-                datadictRat[ip]['Boots'][tflowstr(itflow)][itstr] = Rat[-1].values
+                Alpha[-1].Stats()
+                datadictAlpha[ip]['Boots'][tflowstr(itflow)][itstr] = Alpha[-1].values
                 datadict[ip]['Boots'][tflowstr(itflow)][itstr] = NNQ[-1].values
-            datadictRat[ip]['Values'][tflowstr(itflow)] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,Rat,[frmtflag]*len(pdata))))
+            datadictAlpha[ip]['Values'][tflowstr(itflow)] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,Alpha,[frmtflag]*len(pdata))))
             datadict[ip]['Values'][tflowstr(itflow)] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,NNQ,['e']*len(pdata))))
-        WriteXmlOutput(outputfileRat,datadictRat)
+        WriteXmlOutput(outputfileAlpha,datadictAlpha)
         WriteXmlOutput(outputfile,datadict)
         
 # data = [ ip , icut ]

@@ -123,12 +123,12 @@ def ReadTopFile(filedir,iset,thisMomList=RunMomList):
     dictout['cfun'] = OrderedDict()
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
-        readfile = filedir+'Top/Rat/'+MakeMomDir(ip)+iset+ip
+        readfile = filedir+'Top/Alpha/'+MakeMomDir(ip)+iset+ip
         if Debug: print 'Reading TopCharge :' ,readfile
         dictout['RF'][thismom] = ReadXmlAndPickle(readfile+'.xml')[0][ip]
         thisreadfile = filedir+'Top/cfun/twopt/'+MakeMomDir(ip)+iset+'twopt'+ip
         dictout['cfun'][thismom] = ReadXmlAndPickle(thisreadfile+'.xml')[0][ip]
-        thisreadfile = readfile.replace('Top/Rat/','Top/NNQ/')
+        thisreadfile = readfile.replace('Top/Alpha/','Top/cfun/NNQ/')
         # readfile = filedir+'Top/NNQ/'+MakeMomDir(ip)+iset+ip
         dictout['NNQ'][thismom] = ReadXmlAndPickle(thisreadfile+'.xml')[0][ip]
     return dictout

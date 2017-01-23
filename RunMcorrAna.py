@@ -8,6 +8,7 @@ from Params import *
 from SetLists import *
 from Try2ptPickCMS import CreateTwoPt
 from TryTopCharge import CreateTwoPtTop
+from TryTop3pt import CreateRFTop
 from Try3ptPickCMS import CreateRF
 from MiscFuns import touch
 from OppFuns import Wipe2pt,WipeSet
@@ -43,16 +44,19 @@ def CRFDWrap(RunType,itsinkList,thisSmearList,iPrefList,thisDPList):
              [iqTOip(0)],thisPDList=thisDPList,giDi=True)
     
 
-def CRFWrap(RunType,itsinkList,thisSmearList,iPrefList,thisMomList,iProj,igamma):
+def CRFWrap(RunType,itsinkList,thisSmearList,iPrefList,thisMomList,iProj,igamma,DoTop):
     DRZ = False
     if 'q = 0 0 0' not in thisMomList:
         DRZ = True
         thisMomList = ['q = 0 0 0']+thisMomList
-    CreateRF(RunType,itsinkList,thisSmearList,iPrefList,
-             DragpZ([qstrTOip(iq) for iq in thisMomList]),thisPGList={iProj:[igamma]},DontWriteZero=DRZ)
+    if DoTop:
+        CreateRFTop(RunType,itsinkList,thisSmearList,iPrefList,
+                 DragpZ([qstrTOip(iq) for iq in thisMomList]),thisPGList={iProj:[igamma]},DontWriteZero=DRZ)
+    else:
+        CreateRF(RunType,itsinkList,thisSmearList,iPrefList,
+                 DragpZ([qstrTOip(iq) for iq in thisMomList]),thisPGList={iProj:[igamma]},DontWriteZero=DRZ)
 
-
-def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin=None):
+def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin=None,DoTop=False):
 
     # print "running " + Curr + ' ' + thisCol + ' tsinks: ' + ' '.join(RunTSinkList)
     sys.stdout = sys.__stdout__
@@ -99,7 +103,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         thisStateSet = [PickedState]
     elif 'TwoPt' in RunType:
         DoTwo = True
-    elif 'TopCharge' in RunType:
+    elif 'TopAlpha' in RunType:
         DoTwo = True
     else:
         raise IOError('Choose CM , REvec , TSink or TwoPt along with Tsinks')
@@ -113,7 +117,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         thisMomList = Get2ptSetMoms(outputdir[0],RunMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
         CreateTwoPt([qstrTOip(imom) for imom in DragpZstr(thisMomList)],DefSmearList,feedin=feedin)
         print 'Two Point Analysis Complete'
-    elif RunType == 'TopCharge':
+    elif RunType == 'TopAlpha':
         print 'Topological Charge Analysis'
         # Wipe2pt(outputdir[0],tvarlist=TwoPtDefTvarList,smlist=DefSmearList)
         # thisMomList = Get2ptSetMoms(outputdir[0],RunAvgMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
@@ -134,6 +138,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
                                                         thisREvecTvarL=thisREvecTvarList,thisREvecTSinkL=[str(itsink)],
                                                         thisPoFTvarL=thisPoFTvarList,thisPoFTSinkL=[str(itsink)])
             if 'giDi' in Curr:
+                if DoTop: print 'Warning, giDi not implemented with topological charge'
                 if WipeThisSet:
                     WipeSet(outputdir[0],['doubP4giDi','singP4giDi'],thisSetList)
                     WipeSet(outputdir[0]+'cfun/',['doubP4giDi','singP4giDi'],thisSetList)
@@ -150,17 +155,24 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
                         gammalistcmplx = ['doub'+PiOpp+'cmplx','sing'+PiOpp+'cmplx']
                         if WipeThisSet:
                             wipegammalist = gammalist + gammalistcmplx
-                            WipeSet(outputdir[0],wipegammalist,thisSetList)
-                            WipeSet(outputdir[0]+'cfun/',wipegammalist,thisSetList)
-                        MomDone = Get3ptSetMoms(outputdir[0],gammalist,RunMomList,thisSetList) 
-                        MomDoneCmplx = Get3ptSetMoms(outputdir[0],gammalistcmplx,RunMomList,thisSetList) 
+                            outpost = ''
+                            if DoTop: outpost = 'Top/'
+                            WipeSet(outputdir[0]+outpost,wipegammalist,thisSetList)
+                            WipeSet(outputdir[0]+outpost+'cfun/',wipegammalist,thisSetList)
+                        MomDone = Get3ptSetMoms(outputdir[0]+outpost,gammalist,RunMomList,thisSetList) 
+                        MomDoneCmplx = Get3ptSetMoms(outputdir[0]+outpost,gammalistcmplx,RunMomList,thisSetList) 
                         runmomlist,runmomlistcmplx = [],[]
                         for iq in RunMomList:
                             iqvec = np.array(qstrTOqvec(iq))*qunit
                             if Curr != 'Test':
-                                dump,rcheck,ccheck = CurrFFs[Curr](PiOpp,iqvec.tolist(),[0,0,0],1.0)
+                                if 'Top' in Curr:
+                                    dump,rcheck,ccheck = CurrFFs[Curr](PiOpp,iqvec.tolist(),[0,0,0],1.0,alpha=1.0)
+                                else:
+                                    dump,rcheck,ccheck = CurrFFs[Curr](PiOpp,iqvec.tolist(),[0,0,0],1.0)
                             else:
                                 rcheck,ccheck = True,False
+                            if rcheck and ccheck:
+                                print 'Warning, FormFactor result should be real or complex result, not both'
                             if rcheck:
                                 if iq in MomDone:
                                     print 'Adding   tsink='+str(itsink)+ ' ' +PiOpp+' '+iq
@@ -177,17 +189,18 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
                         sys.stderr = sys.__stderr__
                         if len(runmomlist) > 0:
                             if thisPool == False:
-                                CRFWrap(RunType,itsinkList,thisSmearList,iPrefList,copy.deepcopy(runmomlist),iProj,igamma)
+                                CRFWrap(RunType,itsinkList,thisSmearList,iPrefList,copy.deepcopy(runmomlist),iProj,igamma,DoTop)
                             else:
-                                thisPool.apply_async(CRFWrap,(RunType,itsinkList,thisSmearList,iPrefList,copy.copy(runmomlist),iProj,igamma))
+                                thisPool.apply_async(CRFWrap,(RunType,itsinkList,thisSmearList,iPrefList,copy.copy(runmomlist),iProj,igamma,DoTop))
                         if len(runmomlistcmplx) > 0:
                             if thisPool == False:
-                                CRFWrap(RunType,itsinkList,thisSmearList,iPrefList,copy.deepcopy(runmomlistcmplx),iProj,igamma+'cmplx')
+                                CRFWrap(RunType,itsinkList,thisSmearList,iPrefList,copy.deepcopy(runmomlistcmplx),iProj,igamma+'cmplx',DoTop)
                             else:
-                                thisPool.apply_async(CRFWrap,(RunType,itsinkList,thisSmearList,iPrefList,copy.copy(runmomlistcmplx),iProj,igamma+'cmplx'))
+                                thisPool.apply_async(CRFWrap,(RunType,itsinkList,thisSmearList,iPrefList,copy.copy(runmomlistcmplx),iProj,igamma+'cmplx',DoTop))
     sys.stdout = sys.__stdout__
     sys.stderr = sys.__stderr__
-    if 'TwoPt' not in RunType and 'TopCharge' not in RunType: print 'Three Point Analysis '+Curr + ' ' + RunType + ' tsinks: ' + ' '.join(RunTSinkList) + ' Added to jobs'
+    if 'TwoPt' not in RunType and 'TopAlpha' not in RunType:
+        print 'Three Point Analysis '+Curr + ' ' + RunType + ' tsinks: ' + ' '.join(RunTSinkList) + ' Added to jobs'
 
 if len(sys.argv) < 2: raise IOError("input current type as first argument")
 print sys.argv[1]
@@ -201,7 +214,7 @@ thisPool = False
 if CurrIn == 'TwoPt':
     feedin = InputParams(sys.argv[2:])
     RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe,feedin=feedin)
-elif CurrIn == 'TopCharge':
+elif CurrIn == 'TopAlpha':
     feedin = InputParams(sys.argv[2:])
     RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe,feedin=feedin)
 else:
@@ -220,18 +233,22 @@ else:
     if CurrIn == 'All':
         # RunOffCorrs(thisPool,'TwoPt','TwoPt')
         for iCurr in AllCurrTypes:
+            DoTop=False
+            if 'Top' in iCurr: DoTop=True
             # if iCurr != 'Tensor': continue
             if thisColIn == 'All':
                 for iCol in ReadColList:
-                    RunOffCorrs(thisPool,iCurr,iCol[0],RunTSinkList=iCol[1].split(),WipeThisSet=DefWipe)
+                    RunOffCorrs(thisPool,iCurr,iCol[0],RunTSinkList=iCol[1].split(),WipeThisSet=DefWipe,DoTop=DoTop)
             else:
-                RunOffCorrs(thisPool,iCurr,thisColIn,RunTSinkList=thisTSinkIn,WipeThisSet=DefWipe)
+                RunOffCorrs(thisPool,iCurr,thisColIn,RunTSinkList=thisTSinkIn,WipeThisSet=DefWipe,DoTop=DoTop)
     else:
+        DoTop=False
+        if 'Top' in CurrIn: DoTop=True
         if thisColIn == 'All':
             for iCol in ReadColList:
-                RunOffCorrs(thisPool,CurrIn,iCol[0],RunTSinkList=iCol[1].split(),WipeThisSet=DefWipe)
+                RunOffCorrs(thisPool,CurrIn,iCol[0],RunTSinkList=iCol[1].split(),WipeThisSet=DefWipe,DoTop=DoTop)
         else:
-            RunOffCorrs(thisPool,CurrIn,thisColIn,RunTSinkList=thisTSinkIn,WipeThisSet=DefWipe)
+            RunOffCorrs(thisPool,CurrIn,thisColIn,RunTSinkList=thisTSinkIn,WipeThisSet=DefWipe,DoTop=DoTop)
         
 if thisPool != False:
     thisPool.close()
