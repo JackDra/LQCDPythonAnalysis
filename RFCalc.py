@@ -113,7 +113,7 @@ def CalcRatioFactor(data2pt,data3pt,itsink,thisMomList):
         for igamma,gammadata3pt in enumerate(setdata3pt):
             RFOut[icset].append([])
             for ipc,(pdata3pt,ip) in enumerate(zip(gammadata3pt,thisMomList)):
-                psqrt = setsqrt[GetAvgMomip(ip)]
+                psqrt = setsqrt[twoptMomList.index(GetAvgMomip(ip))]
                 # if Debug:
                 # print
                 # # for it,(i3pt,i2pt) in enumerate(zip(pdata3pt,psqrt)):

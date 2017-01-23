@@ -11,6 +11,7 @@ Qtcut = 5
 
 
 gi = ['g'+str(i) for i in [1,2,3,4]]
+giTop = ['g'+str(i)+'Top' for i in [1,2,3,4]]
 gig5 = ['g'+str(i)+'g5' for i in [1,2,3,4]]
 g5gi = ['g5g'+str(i) for i in [1,2,3,4]]
 Pi = ['P'+str(i) for i in [4,3]]
@@ -31,6 +32,8 @@ Pig5   = ElongateName(Pi,['g5'])
 Pigi   = ElongateName(Pi,gi)
 Pigig5 = ElongateName(Pi,gig5)
 Pigigj = ElongateName(Pi,gigj)
+
+PigiTop   = ElongateName(Pi,giTop)
 
 # DictGMAiI = {iPi:['I'] for iPi in GMAi}
 # DictGMAig5 = {iPi:['g5'] for iPi in GMAi}
@@ -55,6 +58,8 @@ CurrTypes = ['Scalar','Vector','VectorTop','PsScalar','PsVector','Tensor']
 DerCurrTypes = ['giDi']
 AllCurrTypes = CurrTypes + DerCurrTypes
 
+
+## Only for use in RunMcorr
 DictCurrOpps = {'Scalar'   : DictGMAiI,
                 'Vector'   : DictGMAigi,
                 'VectorTop': DictGMAigi,
@@ -65,9 +70,11 @@ DictCurrOpps = {'Scalar'   : DictGMAiI,
                 'Test'     : {'GMA4':['g4']}}
 
 
+
+## Post RunMcorr analysis
 CurrOpps = {'Scalar'   : PiI,
             'Vector'   : Pigi,
-            'VectorTop': Pigi,
+            'VectorTop': PigiTop,
             'PsScalar' : Pig5,
             'PsVector' : Pigig5,
             'Tensor'   : Pigigj}
@@ -75,14 +82,14 @@ CurrOpps = {'Scalar'   : PiI,
 
 CurrOppsNoProj = {'Scalar'   : ['I'],
                   'Vector'   : gi,
-                  'VectorTop': gi,
+                  'VectorTop': giTop,
                   'PsScalar' : ['g5'],
                   'PsVector' : gig5,
                   'Tensor'   : gigj}
 
 CurrOppsNoProjSigBack = {'Scalar'   : ['I'],
                          'Vector'   : gi,
-                         'VectorTop': gi,
+                         'VectorTop': giTop,
                          'PsScalar' : ['g5'],
                          'PsVector' : g5gi,
                          'Tensor'   : gjgi}
@@ -103,7 +110,7 @@ FFFitFuns = {'Scalar'   : FormFactorO1,
 
 NoFFPars = {'Scalar'   : 1,
             'Vector'   : 2,
-            'VectorTop': 2,
+            'VectorTop': 3,
             'GeGm'     :  2,
             'PsScalar' : 1,
             'PsVector' : 2,
@@ -139,7 +146,7 @@ def FindMomFromGamma(igamma,thisMomList=qvecSet):
                                     
             
 def DumpAllMomLists():
-    mygammalist = ['P4'+igamma for igamma in AllGammaSet] +['P3'+igamma for igamma in AllGammaSet] 
+    mygammalist = ['P4'+igamma for igamma in AllGammaSet] +['P3'+igamma for igamma in AllGammaSet]
     for igamma in mygammalist:
         print ' Dumping MomList: ' + igamma
         outfile = momlistdir + igamma + '.p'

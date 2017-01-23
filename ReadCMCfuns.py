@@ -10,6 +10,95 @@ import time,datetime
 
 ##IN DEV
 
+def ReadSetTopCharge(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,
+                     thisTSinkList,directory,Flag,Interps=['nucleon'],thistsourceList=[tsource]):
+    # if len(thisTSinkList) > 0:
+    #     TestMomList(thisMomList)
+    thisfilelist = OrderedDict()
+    f = open('./cfglistset.txt','w')
+    
+    fileend2pt = CreateEnd2pt(DefSmearList[0],DefSmearList[0],thistsourceList[0],Interps[0],Interps[0])
+    if Debug: print ' comparing to: ',fileend2pt
+
+    for isource in SourceList:
+        print 'reading directory: ' , directory+'/'+isource
+        for (dirname,dirs,files) in walk(directory+'/'+isource):
+            for ifile in files:
+                if CfunConfigCheck:
+                    # ## FOR DEBUGGING
+                    # if xsrcList[0] not in ifile: continue
+                    if fileend2pt not in ifile or ".metadata" in ifile: continue
+                    if 'xsrc' in ListOrSet:
+                        if ListOrSet.replace('ReadSet','').replace('ReadList','')+'_' not in ifile: continue
+                    fileprefix = ifile.replace(fileend2pt,'')
+                    if CheckAllSet(fileprefix,dirname+'/',Interps,tsourceList=thistsourceList):
+                        prefnosrc = re.sub('_xsrc.*','',fileprefix)
+                        if prefnosrc not in thisfilelist.keys():
+                            thisfilelist[prefnosrc] = [directory+'/'+isource+'/@/'+fileprefix]
+                        else:
+                            if XSrcLen <= len(thisfilelist[prefnosrc]) and ForceXSrcLen: continue
+                            thisfilelist[prefnosrc].append(directory+'/'+isource+'/@/'+fileprefix)
+                        f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
+                else:
+                    if fileend2pt not in ifile or ".metadata" in ifile: continue
+                    # ## FOR DEBUGGING
+                    # if xsrcList[0] not in ifile: continue
+                    if 'xsrc' in ListOrSet:
+                        if ListOrSet.replace('ReadSet','').replace('ReadList','')+'_' not in ifile: continue
+                    fileprefix = ifile.replace(fileend2pt,'')
+                    if CheckSet(fileprefix,dirname+'/',thisSmearList,thisProjGammaList,
+                                thisProjDerList,thisDSList,thisTSinkList,Flag,Interps,tsourceList=thistsourceList):
+                        prefnosrc = re.sub('_xsrc.*','',fileprefix)
+                        if prefnosrc not in thisfilelist.keys():
+                            thisfilelist[prefnosrc] = [directory+'/'+isource+'/@/'+fileprefix]
+                        else:
+                            if XSrcLen <= len(thisfilelist[prefnosrc]) and ForceXSrcLen: continue
+                            thisfilelist[prefnosrc].append(directory+'/'+isource+'/@/'+fileprefix)
+                        f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
+    f.close()
+    if ExactXSrcNumber:
+        maxlen = np.max([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
+        for ikey in thisfilelist.iterkeys():
+            if len(thisfilelist[ikey]) != maxlen:
+                del thisfilelist[ikey]
+    if ForceMinXSrcLen:
+        for ikey in thisfilelist.iterkeys():
+            if len(thisfilelist[ikey]) < MinXSrcLen:
+                del thisfilelist[ikey]
+    print 'number of configs = ' , len(thisfilelist.keys())
+    print 'average number of sources per cfg = ' ,np.mean([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
+    print 'total number of measurements = ' , np.sum([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
+    print ''
+    if len(thisfilelist.keys()) == 0: raise IOError('No Configurations Found')
+    if ShowConfNum:
+        for ifile in thisfilelist.itervalues():
+            for iifile in ifile:
+                print iifile
+        print ''
+    # print 'number of configs = ' , len(thisfilelist)
+    # print ''
+    # if len(thisfilelist) == 0: raise IOError('No Configurations Found')
+    # if ShowConfNum:
+    #     for ifile in thisfilelist:
+    #         print ifile
+    #     print ''
+    data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
+    # print ''
+    cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist.keys()))
+    if not np.all([x==tflow[0] for x in tflow]):
+        print 'warning, files had different flow times'
+    thisTflowList = tflow[0]
+
+    data3pt,dataTop = [],[]
+    for iFlag,itsink in zip(Flag,thisTSinkList):
+        holdTop,hold3pt = Read3ptSetTop(topcharge,thisfilelist,thisSmearList,thisMomList,thisProjGammaList,
+                                        thisProjDerList,thisDSList,itsink,iFlag,shiftlist,cfglistout,thisTflowList,
+                                        randlist=randlist,tsourceList=thistsourceList)
+        data3pt.append(hold3pt)
+        dataTop.append(holdTop)
+    # print ''
+    return [data2pt,data3pt,np.rollaxis(np.array(dataTop),1),thisTflowList,thisfilelist]
+
 
 def ReadListTopCharge(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,
                       thisTSinkList,thisconflist,Flag,Interps=['nucleon'],thistsourceList=[tsource]):
@@ -33,13 +122,13 @@ def ReadListTopCharge(thisSmearList,thisMomList,thisProjGammaList,thisProjDerLis
 
     data3pt,dataTop = [],[]
     for iFlag,itsink in zip(Flag,thisTSinkList):
-        hold3pt,holdTop = Read3ptSetTop(topcharge,thisfilelist,thisSmearList,thisMomList,thisProjGammaList,
+        holdTop,hold3pt = Read3ptSetTop(topcharge,thisfilelist,thisSmearList,thisMomList,thisProjGammaList,
                                         thisProjDerList,thisDSList,itsink,iFlag,shiftlist,cfglistout,thisTflowList,
                                         randlist=randlist,tsourceList=thistsourceList)
         data3pt.append(hold3pt)
         dataTop.append(holdTop)
     # print ''
-    return [data2pt,data3pt,np.rollaxis(np.array(dataTop),1),thisfilelist]
+    return [data2pt,data3pt,np.rollaxis(np.array(dataTop),1),thisTflowList,thisfilelist]
 
 
 
@@ -578,28 +667,26 @@ def Read3ptSetTop(TopCharge,readfilelist,thisSmearList,thisMomList,thisProjGamma
                                                       +CreateEnd3pt(ism,jsm,thists,tsink,iDS,iProj,'') for ifile in ireadfl]
 
                         holdresTop,holdres = ReadAndBoot3ptTop(thisfilelist,thisMomList,thisGammaList,[],nboot,TopCharge,Topcfglist,thisTflowList,
-                                                            printstr=iDS+iProj,randlist=randlist)
-                        for ig,gammares in enumerate(holdres):
+                                                               printstr=iDS+iProj,randlist=randlist)
+                        for ig,(gammares,gammaTopres) in enumerate(zip(holdres,holdresTop)):
                             thisdata3pt[itsource][icsm][jcsm].append(gammares)
-                            thisdataTop[itsource][icsm][jcsm].append([])
-                            for iflow,flowres in enumerate(holdresTop):
-                                thisdataTop[itsource][icsm][jcsm][ig].append(flowres[ig])
-                    for iProj,thisDerList in thisProjDerList.iteritems():
-                        thisfilelist = OrderedDict()
-                        for ireadkey,ireadfl in readfilelist.iteritems():
-                            thisfilelist = [ifile.replace('@',CreateDir3pt(ism,jsm,tsink,iDS,iProj,thisFlag))
-                                            .replace(FileStruct,FileStruct+C2C3Dis)
-                                            +CreateEnd3pt(ism,jsm,thists,tsink,iDS,iProj,'D') for ifile in ireadfl]
-                        holdresTop,holdres = ReadAndBoot3ptTop(thisfilelist,thisMomList,[],thisDerList,nboot,TopCharge,Topcfglist,thisTflowList,
-                                                            printstr=iDS+iProj,randlist=randlist)
-                        for ig,gammares in enumerate(holdres):
-                            thisdata3pt[itsource][icsm][jcsm].append(gammares)
-                            thisdataTop[itsource][icsm][jcsm].append([])
-                            for iflow,flowres in enumerate(holdresTop):
-                                thisdataTop[itsource][icsm][jcsm][ig].append(flowres[ig])
-                print ('Read 3pt: sm' + ism + jsm + 't_src'+str(thists)+' t_sink'+str(tsink)+
-                       ' took: ' + str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s        ')
+                            thisdataTop[itsource][icsm][jcsm].append(gammaTopres)
+
+                    # for iProj,thisDerList in thisProjDerList.iteritems():
+                    #     thisfilelist = OrderedDict()
+                    #     for ireadkey,ireadfl in readfilelist.iteritems():
+                    #         thisfilelist = [ifile.replace('@',CreateDir3pt(ism,jsm,tsink,iDS,iProj,thisFlag))
+                    #                         .replace(FileStruct,FileStruct+C2C3Dis)
+                    #                         +CreateEnd3pt(ism,jsm,thists,tsink,iDS,iProj,'D') for ifile in ireadfl]
+                    #     holdresTop,holdres = ReadAndBoot3ptTop(thisfilelist,thisMomList,[],thisDerList,nboot,TopCharge,Topcfglist,thisTflowList,
+                    #                                         printstr=iDS+iProj,randlist=randlist)
+                    #     for ig,gammares in enumerate(holdres):
+                    #         thisdata3pt[itsource][icsm][jcsm].append(gammares)
+                    #         thisdataTop[itsource][icsm][jcsm].append([])
+                    #         for iflow,flowres in enumerate(holdresTop):
+                    #             thisdataTop[itsource][icsm][jcsm][ig].append(flowres[ig])
+                print 'Read 3pt: sm' + ism + jsm + 't_src'+str(thists)+' t_sink'+str(tsink)+' took: ' + str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s        '
     print 'Read 3pt total time: ' + str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
-    return np.rollaxis(np.array(thisdataTop),3),thisdata3pt
+    return np.rollaxis(np.array(thisdataTop),4),thisdata3pt
 
 

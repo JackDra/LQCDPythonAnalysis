@@ -104,7 +104,7 @@ def PrintToFile(thisdata,filedir,filename,thisTList,thisMomList,AddDict={},frmtf
 
 ##pdata [  ip , iflow , it ] bs1
 def Print3ptTopToFile(pdata,filedir,filename,thisTopList,thisTList,thisMomList,AddDict={},frmtflag='f'):
-    xmlMomList = [ipTOqcond(imom,Avg=True) for imom in thisMomList]
+    xmlMomList = map(ipTOqcond,thisMomList)
     tkeyList = map(tstr,thisTList)
     for icp,(ip,topdata) in enumerate(zip(xmlMomList,pdata)):
         datadictTop,outputfileTop = SetUpPDict(ip,filedir,filename)
@@ -117,7 +117,7 @@ def Print3ptTopToFile(pdata,filedir,filename,thisTopList,thisTList,thisMomList,A
             for itstr,tflowdata in zip(tkeyList,flowdata):
                 Top.append(tflowdata)
                 datadictTop[ip]['Boots'][tflowstr(itflow)][itstr] = tflowdata.values
-            datadictTop[ip]['Values'][tflowstr(itflow)] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,Top,[frmtflag]*len(xmlMomList))))
+            datadictTop[ip]['Values'][tflowstr(itflow)] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,Top,[frmtflag]*len(Top))))
         WriteXmlOutput(outputfileTop,datadictTop)
 
 

@@ -51,13 +51,13 @@ def BootSet2pt(data,thisMomList,nboot,randlist=[]):
     return dataout,randlist
 
 #data = [ iconf , iflow , igamma , ip , it ]
-#dataout = [iflow, igamma , ip , it ] bs
+#dataout = [igamma , iflow,  ip , it ] bs
 def BootSet3ptTC(data,thisMomList,thisGammaList,nboot,tflowlist,printstr='',randlist=[]):
     dataout = []
-    for icf,iflow in enumerate(tflowlist):
+    for ig,igamma in enumerate(thisGammaList):
         dataout.append([])
-        for ig,igamma in enumerate(thisGammaList):
-            dataout[icf].append([])
+        for icf,iflow in enumerate(tflowlist):
+            dataout[ig].append([])
             for ip,imom in enumerate(thisMomList):
                 # print 'Booting '+printstr+igamma+' {}%               \r'.format(int((ip*100)/float(len(thisMomList)))),
                 # for it in range(16):
@@ -65,7 +65,7 @@ def BootSet3ptTC(data,thisMomList,thisGammaList,nboot,tflowlist,printstr='',rand
                 #     for idata in np.array(data)[:,ig,ip,:]:
                 #         print it,idata[it]
                 bootdata,randlist = bt.CreateBoot(np.array(data)[:,icf,ig,ip,:],nboot,0,randlist=randlist)
-                dataout[icf][ig].append(bootdata)
+                dataout[ig][icf].append(bootdata)
     # print '                             \r',
     return dataout
 
@@ -492,6 +492,9 @@ def ReadAndBoot3ptTop(readfilelist,thisMomList,thisGammaList,thisDerGammaList,th
     #     print idata[0][0][5]
     # print 
     if len(thisGammaList) > 0:
+        # print 
+        # print 'TC',np.array(BootSet3ptTC(tempdataTop,thisMomList,thisGammaList,thisnboot,flowlist,printstr='',randlist=randlist)).shape
+        # print '3pt',np.array(BootSet3pt(tempdata,thisMomList,thisGammaList,thisnboot,printstr='',randlist=randlist)).shape
         return (BootSet3ptTC(tempdataTop,thisMomList,thisGammaList,thisnboot,flowlist,printstr='',randlist=randlist),
                 BootSet3pt(tempdata,thisMomList,thisGammaList,thisnboot,printstr='',randlist=randlist))
     else:

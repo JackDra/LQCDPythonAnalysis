@@ -24,14 +24,14 @@ def PrintTopCfunToFile(C3setTop,thisSetList,thisMomList, thisGammaList,thisTopLi
 
 ##dataset [ igamma , iset , iflow , ip , it ] bs1
 
-def PrintSetToFile(C3setTop,thisSetList,thisMomList, thisGammaList,tsink,thisTopList,AddDict={}):
-    for thegamma,gammadata in zip(thisGammaList,dataset):
+def PrintTopSetToFile(C3setTop,thisSetList,thisMomList, thisGammaList,tsink,thisTopList,AddDict={}):
+    for thegamma,gammadata in zip(thisGammaList,C3setTop):
         gammadir = outputdir[0]+'Top/'+CreateOppDir(thegamma)+'/'
         for iset,setdata in zip(thisSetList,gammadata):
             print 'Printing Top : ' , thegamma , iset , '                \r',
             calcflag = 'Ratio_Factor_Top'
             tlist = range(tsource,int(tsink)+1)
-            Print3ptTopToFile(setdata,gammadir,iset+thegamma,tlist,thisMomList,AddDict=AddDict)
+            Print3ptTopToFile(setdata,gammadir,iset+thegamma,thisTopList,tlist,thisMomList,AddDict=AddDict)
 
 
 

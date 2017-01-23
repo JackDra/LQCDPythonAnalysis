@@ -343,11 +343,11 @@ def ProjectREvecCorrPoF(Cfun,REvec):
             CMCfun[istate][it].Stats()
             # print istate, it, CMCfun[istate][it].Avg, CMCfun[istate][it].Std
     ##DEBUG##
-    if Debug:
-        print 'ThreePoint Run:'
-        for ic,(iRE,iCfun) in enumerate(zip(REvec[0],CfunExt)):
-            print ic,iRE,iCfun[5].Avg, CMCfun[ic][5].Avg
-        print ''
+    # if Debug:
+    #     print 'ThreePoint Run:'
+    #     for ic,(iRE,iCfun) in enumerate(zip(REvec[0],CfunExt)):
+    #         print ic,iRE,iCfun[5].Avg, CMCfun[ic][5].Avg
+    #     print ''
     return CMCfun
 
 def ProjectREvecCorr(Cfun,REvec):
@@ -533,8 +533,8 @@ def CreateREPoFCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
     for igamma,gammaCfun in enumerate(np.rollaxis(np.array(Cfuns3pt),4)):
         CMCfun3pt.append([])
         for ipc,(pCfun,ip) in enumerate(zip(np.rollaxis(gammaCfun,4),thisMomList)): 
-            if Debug: print 'Three Point :(igamma,ip) ',igamma , ip, 'with twopt mom' , GetAvgMomip(ip)
-            CMCfun3pt[igamma].append(ProjectREvecCorrPoF(pCfun,REvec[GetAvgMomip(ip)]))
+            # if Debug: print 'Three Point :(igamma,ip) ',igamma , ip, 'with twopt mom' , GetAvgMomip(ip)
+            CMCfun3pt[igamma].append(ProjectREvecCorrPoF(pCfun,REvec[twoptMomList.index(GetAvgMomip(ip))]))
     return [np.array(CMCfun2pt),np.rollaxis(np.array(CMCfun3pt),2)]
 
 

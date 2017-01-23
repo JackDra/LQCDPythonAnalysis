@@ -165,10 +165,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
                         for iq in RunMomList:
                             iqvec = np.array(qstrTOqvec(iq))*qunit
                             if Curr != 'Test':
-                                if 'Top' in Curr:
-                                    dump,rcheck,ccheck = CurrFFs[Curr](PiOpp,iqvec.tolist(),[0,0,0],1.0,alpha=1.0)
-                                else:
-                                    dump,rcheck,ccheck = CurrFFs[Curr](PiOpp,iqvec.tolist(),[0,0,0],1.0)
+                                dump,rcheck,ccheck = CurrFFs[Curr](PiOpp,iqvec.tolist(),[0,0,0],1.0)
                             else:
                                 rcheck,ccheck = True,False
                             if rcheck and ccheck:

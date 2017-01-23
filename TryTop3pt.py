@@ -5,10 +5,10 @@ import numpy as np
 import sys
 from Params import *
 from RFCalc import CalcRatioFactor
-# from ReadCMCfuns import ReadSetTopCharge
+from ReadCMCfuns import ReadSetTopCharge
 from ReadCMCfuns import ReadListTopCharge
 from CMSTech import CreateCMCfuns, CreateREvecCfuns,CreateREPoFCfuns,PreptwoptCorr
-from OutputData import PrintSetToFile,PrintCfunToFile
+from OutputData import PrintSetToFile,PrintCfunToFile,PrintTopSetToFile,PrintTopCfunToFile
 from CreateCombs import CreategiDi, CreateDS
 from Fitting import FitRFSet
 from SetLists import CreateDataTsinkSet,CreateDataSet,CreateREvecSet,CreateMassSet
@@ -56,18 +56,22 @@ def CreateRFTop(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thi
         else:
             [data2pt,data3pt,data3ptTop,thisTopList,filelist] = ReadListTopCharge(thisSmearList,thisMomList,thisPGList,thisPDList,
                                                                 thisDSList,thisTSinkList,conflist,thisPrefList)
-    # elif 'ReadSet' in ListOrSet:
-    #     if 'PoF' in RunType:
-    #         [data2pt,data3pt,data3ptTop,thisTopList,filelist] = ReadSetTop(thisSmearList,thisMomList,thisPGList,thisPDList,
-    #                                              thisDSList,thisTSinkList,dirread,thisPrefList,thistsourceList=PoFtsourceList)
-    #     else:
-    #         [data2pt,data3pt,data3ptTop,thisTopList,filelist] = ReadSetTop(thisSmearList,thisMomList,thisPGList,thisPDList,
-    #                                              thisDSList,thisTSinkList,dirread,thisPrefList)
+    elif 'ReadSet' in ListOrSet:
+        if 'PoF' in RunType:
+            [data2pt,data3pt,data3ptTop,thisTopList,filelist] = ReadSetTopCharge(thisSmearList,thisMomList,thisPGList,thisPDList,
+                                                 thisDSList,thisTSinkList,dirread,thisPrefList,thistsourceList=PoFtsourceList)
+        else:
+            [data2pt,data3pt,data3ptTop,thisTopList,filelist] = ReadSetTopCharge(thisSmearList,thisMomList,thisPGList,thisPDList,
+                                                 thisDSList,thisTSinkList,dirread,thisPrefList)
     print 'Read Complete'
     print 'ncon=',len(filelist)
     InfoDict = {'nconfig':len(filelist)}
     ## data2pt = [ tsource, ism , jsm , ip ,  it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     ##data3pt = [ tsink, tsource, ism , jsm , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+    ##data3pt = [ tflow, tsink, tsource, ism , jsm , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+    # print np.array(data2pt).shape
+    # print np.array(data3pt).shape
+    # print np.array(data3ptTop).shape
     # if Debug:
     # for it in range(0,15):
     #     # RF = data3pt[0][0][0][0][0][0][it]/data2pt[0][0][-1][0][15]
@@ -123,12 +127,14 @@ def CreateRFTop(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thi
         if len(data3pt) < 2 and TimeInv: raise IOError("PoF needs atleast two tsinks with time invariance")
         data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
         data2ptset,data3ptset,data3ptsetTop = [],[],[]
-        for iPoF in PoFTvarList:
-            print 'Creating PoF CM Tech ' , PoFTvarList[0]
-            [CMdata2pt,CMdata3pt] = CreateREPoFCfuns(np.array(data3pt),data2pt,DefPoFVarList[0],thisMomList)
+        start = time.time()
+        for itodt,iTvar in zip(DefPoFVarList,PoFTvarList):
+            thisstart = time.time()
+            print 'Creating PoF CM Tech ' , iTvar
+            [CMdata2pt,CMdata3pt] = CreateREPoFCfuns(np.array(data3pt),data2pt,itodt,thisMomList)
             CMdata3ptTop = []
             for flow3pt in data3ptTop:
-                CMdata3ptTop.append(CreateREPoFCfuns(np.array(flow3pt),data2pt,DefPoFVarList[0],thisMomList))[-1]
+                CMdata3ptTop.append(CreateREPoFCfuns(np.array(flow3pt),data2pt,itodt,thisMomList)[-1])
             
             # if Debug:
             # for it in range(0,15):
@@ -138,8 +144,9 @@ def CreateRFTop(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thi
             #         print 'it',it, 'c3pt',data3ptset[0][0][0][it].values[iboot], 'c2pt',data2ptset[0][0][it].values[iboot]
             data2ptset += CMdata2pt.tolist()
             data3ptset += CMdata3pt.tolist()
-            data3ptsetTop += CMdata3ptTop
+            data3ptsetTop += np.rollaxis(np.array(CMdata3ptTop),1).tolist()
             print 'CMTech ' , iTvar , ' Time Taken: ' , str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s  '
+        data3ptsetTop = np.array(data3ptsetTop)
         data3ptset = np.array(data3ptset)
         data2ptset = np.array(data2ptset)
         SetList,dump = CreateREvecSet(thisTSinkList,StateSet,PoFTvarList)
@@ -155,17 +162,21 @@ def CreateRFTop(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thi
 
     [RFr,SqrtFac] = CalcRatioFactor(data2ptset,data3ptset,str(thisTSinkList[0]),thisMomList)
     RFrTop = []
-    for flowdata in data3ptsetTop:
-        RFrTop.append(CalcRatioFactor(data2ptset,flowdata,str(thisTSinkList[0]),thisMomList))
+    for flowdata in np.rollaxis(data3ptsetTop,1):
+        RFrTop.append(CalcRatioFactor(data2ptset,flowdata,str(thisTSinkList[0]),thisMomList)[0])
     print 'RF Construction Complete'
     
     
     if DontWriteZero:
+        # print data3ptset.shape
+        # print np.array(data3ptsetTop).shape
+        # print RFr.shape
+        # print np.array(RFrTop).shape
         thisMomList = thisMomList[1:]
         data3ptset = data3ptset[:,:,1:,:]
-        data3ptsetTop = data3ptsetTop[:,:,:,1:,:]
+        data3ptsetTop = np.array(data3ptsetTop)[:,:,:,1:,:]
         RFr = RFr[:,:,1:,:]
-        RFrTop = RFrTop[:,:,:,1:,:]
+        RFrTop = np.array(RFrTop)[:,:,:,1:,:]
     ## data2ptset [ iset , ip , it ]
     ## data3ptset [ iset , igamma , ip , it ] bs1
     ## data3ptsetTop [ iflow, iset , igamma , ip , it ] bs1
