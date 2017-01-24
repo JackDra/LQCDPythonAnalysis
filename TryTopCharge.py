@@ -53,9 +53,10 @@ def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     CMinputparams,PoFinputparams = [],[]
     makeContextFunctions(CreatePoF2ptCfuns)
     makeContextFunctions(CreateCM2ptCfuns)
-    for icount,(itodt,itodtPoF) in enumerate(zip(DeftodtPicked,DefPoFVarList)):
-        CMinputparams.append((data2pt[0],itodt,thisMomList))
+    for itodtPoF in DefPoFVarList:
         PoFinputparams.append((data2pt,itodtPoF,thisMomList))
+    for itodt in AnatodtList:
+        CMinputparams.append((data2pt[0],itodt,thisMomList))
 
 
     if DoMulticore and feedin['anaproc'] > 1 and len(PoFinputparams) > 1 and len(CMinputparams) > 1:
@@ -99,9 +100,10 @@ def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     for itop,topdata in enumerate(dataTop):
         # print 'CM Technique for Tflow=',itop,' \r'
         # for icount,itodt in enumerate(DeftodtList):
-        for icount,(itodt,itodtPoF) in enumerate(zip(DeftodtPicked,DefPoFVarList)):
-            CMinputparams.append((topdata[0],itodt,thisMomList))
+        for itodtPoF in DefPoFVarList:
             PoFinputparams.append((topdata,itodtPoF,thisMomList))
+        for itodt in AnatodtList:
+            CMinputparams.append((topdata[0],itodt,thisMomList))
 
             
     if DoMulticore and feedin['anaproc'] > 1:
@@ -123,7 +125,7 @@ def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
         for itop,CMTop in enumerate(outputCMTop):
             [CMdata2pt,LEvec,REvec,Emass] = CMTop
             ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-            C2outTop[itop] += CMdata2pt.tolist()
+            C2outTop[itop/len(AnatodtList)] += CMdata2pt.tolist()
     else:
         thisCMTvarList = []
 
@@ -132,7 +134,7 @@ def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     for itop,PoFTop in enumerate(outputPoFTop):
         [PoFdata2pt,LEvec,REvec,Emass] = PoFTop
         ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-        C2outTop[itop] += PoFdata2pt.tolist()
+        C2outTop[itop/len(DefPoFVarList)] += PoFdata2pt.tolist()
 
     
     print 'CMTech Total Time Taken: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                                         '

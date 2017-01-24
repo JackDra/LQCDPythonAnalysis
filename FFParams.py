@@ -74,7 +74,7 @@ DictCurrOpps = {'Scalar'   : DictGMAiI,
 ## Post RunMcorr analysis
 CurrOpps = {'Scalar'   : PiI,
             'Vector'   : Pigi,
-            'VectorTop': PigiTop,
+            'VectorTop': Pigi+PigiTop,
             'PsScalar' : Pig5,
             'PsVector' : Pigig5,
             'Tensor'   : Pigigj}
@@ -82,14 +82,14 @@ CurrOpps = {'Scalar'   : PiI,
 
 CurrOppsNoProj = {'Scalar'   : ['I'],
                   'Vector'   : gi,
-                  'VectorTop': giTop,
+                  'VectorTop': gi+giTop,
                   'PsScalar' : ['g5'],
                   'PsVector' : gig5,
                   'Tensor'   : gigj}
 
 CurrOppsNoProjSigBack = {'Scalar'   : ['I'],
                          'Vector'   : gi,
-                         'VectorTop': giTop,
+                         'VectorTop': gi+giTop,
                          'PsScalar' : ['g5'],
                          'PsVector' : g5gi,
                          'Tensor'   : gjgi}

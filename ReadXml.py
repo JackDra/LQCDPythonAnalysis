@@ -133,6 +133,16 @@ def ReadTopFile(filedir,iset,thisMomList=RunMomList):
         dictout['NNQ'][thismom] = ReadXmlAndPickle(thisreadfile+'.xml')[0][ip]
     return dictout
 
+def ReadAlphaFile(filedir,iset,thisMomList=RunMomList):
+    dictout = OrderedDict()
+    dictout['RF'] = OrderedDict()
+    for thismom in thisMomList:
+        ip = qstrTOqcond(thismom)
+        readfile = filedir+'Top/Alpha/'+MakeMomDir(ip)+iset+ip
+        if Debug: print 'Reading TopCharge :' ,readfile+'.xml'
+        if os.path.isfile(readfile+'.xml'): dictout['RF'][thismom] = ReadXmlAndPickle(readfile+'.xml')[0][ip]
+    return dictout
+
 ##Also works for cfuns##
 ##xmlinput = { Ratio_Factor , Boots/Values , thismomlist , tlist } 
 ##outputdict = { thismom , [tVals] / [Vals] / [Valserr] / [Boot] bs }
@@ -212,19 +222,32 @@ def ReadFitFile(filedir,filename,thisMomList=RunMomList):
         data = ReadXmlAndPickle(readfile)[0]
         if len(data.keys()) > 0:
             data = data[data.keys()[0]]
-            dictout[thismom]['Info'] = data['Info']
             if 'Boots' in data.keys():
                 bootdata = data['Boots']
-                for icut,cutdata in bootdata.iteritems():
-                    dictout[thismom][icut] = {}
-                    dictout[thismom][icut]['Boot'] = BootStrap1(nboot,0)
-                    dictout[thismom][icut]['Boot'].values = np.array(cutdata)
-                    dictout[thismom][icut]['Boot'].Stats()
-                    dictout[thismom][icut]['Avg'] = dictout[thismom][icut]['Boot'].Avg
-                    dictout[thismom][icut]['Std'] = dictout[thismom][icut]['Boot'].Std
-                    dictout[thismom][icut]['Chi'] = data['Values'][icut]['Chi']
+                if 'Top' in readfile:
+                    dictout[thismom] = OrderedDict()
+                    for iflow,flowdata in bootdata.iteritems():
+                        dictout[thismom][iflow] = OrderedDict()
+                        for icut,cutdata in flowdata.iteritems():
+                            dictout[thismom][iflow][icut] = OrderedDict()
+                            dictout[thismom][iflow][icut]['Boot'] = BootStrap1(nboot,0)
+                            dictout[thismom][iflow][icut]['Boot'].values = np.array(cutdata)
+                            dictout[thismom][iflow][icut]['Boot'].Stats()
+                            dictout[thismom][iflow][icut]['Avg'] = dictout[thismom][iflow][icut]['Boot'].Avg
+                            dictout[thismom][iflow][icut]['Std'] = dictout[thismom][iflow][icut]['Boot'].Std
+                            dictout[thismom][iflow][icut]['Chi'] = data['Values'][iflow][icut]['Chi']
+                else:
+                    for icut,cutdata in bootdata.iteritems():
+                        dictout[thismom][icut] = OrderedDict()
+                        dictout[thismom][icut]['Boot'] = BootStrap1(nboot,0)
+                        dictout[thismom][icut]['Boot'].values = np.array(cutdata)
+                        dictout[thismom][icut]['Boot'].Stats()
+                        dictout[thismom][icut]['Avg'] = dictout[thismom][icut]['Boot'].Avg
+                        dictout[thismom][icut]['Std'] = dictout[thismom][icut]['Boot'].Std
+                        dictout[thismom][icut]['Chi'] = data['Values'][icut]['Chi']
             else:
                 dictout[thismom] = data
+            dictout[thismom]['Info'] = data['Info']
     return dictout
 
 ##outputdict = { thismom , cutpar , tsinkrpar/tsinkval , Avg / Std / Chi / Boot (bs) }

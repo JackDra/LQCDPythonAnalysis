@@ -22,10 +22,14 @@ MassDtList = range(1,5)
 DoFList = range(3,17)
 ChiThreshold = 0.001
 # MassDtList = [2]
-FitCutMin,FitCutMax = 1,9
+
+FlowArgs = ['t_flow4.01','t_flow5.01','t_flow6.01']
+
+FitCutMinLeft,FitCutMaxLeft = 1,3
+FitCutMinRight,FitCutMaxRight = 4,9
 FitCutList,FitCutArgs = [],[]
-for icut in range(FitCutMin,FitCutMax+1):
-    for jcut in range(FitCutMin,FitCutMax+1):
+for icut in range(FitCutMinLeft,FitCutMaxLeft+1):
+    for jcut in range(FitCutMinRight,FitCutMaxRight+1):
         if icut + jcut >= 10: continue
         FitCutList.append([icut,jcut])
         FitCutArgs.append('cut'+str(icut)+'-'+str(jcut))

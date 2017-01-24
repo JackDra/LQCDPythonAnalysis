@@ -38,13 +38,13 @@ def SubsMom(thisFFun,thisp,thispp,thismass):
     thisFFun = subsvector(Ep,px,py,pz,thisp[4]/(1j),thisp[1],thisp[2],thisp[3],thisFFun)
     return thisFFun.subs(m,thismass)
 
-def ScalarFF(opp,thisqvec,thisppvec,thismass,Rfac=True):
+def ScalarFF(opp,thisqvec,thisppvec,thismass,Rfac=True,alpha=1.0):
     thisp,thisq,thispp = Create4Mom(thisqvec,thisppvec,thismass)
     term1 = FFunCheck(opp,thisp,thispp,thismass,Rfac=Rfac)
     rcheck,ccheck = abs(term1.real)<myeps,abs(term1.imag)<myeps    
     return [term1],not rcheck, not ccheck
 
-def VectorFF(opp,thisqvec,thisppvec,thismass,Rfac=True,PadF3=False):
+def VectorFF(opp,thisqvec,thisppvec,thismass,Rfac=True,PadF3=False,alpha=1.0):
     thisp,thisq,thispp = Create4Mom(thisqvec,thisppvec,thismass)
     term1 = FFunCheck(opp,thisp,thispp,thismass,Rfac=Rfac)
     term2 = 0.0j
@@ -60,23 +60,26 @@ def VectorFF(opp,thisqvec,thisppvec,thismass,Rfac=True,PadF3=False):
 
 def VectorFFTop(opp,thisqvec,thisppvec,thismass,Rfac=True,alpha=1.0):
     thisp,thisq,thispp = Create4Mom(thisqvec,thisppvec,thismass)
-    opp = opp.replace('Top','')
-    
-    term1 = FFunTopCheck(opp,thisp,thispp,thismass,alpha,Rfac=Rfac)
-    term2 = 0.0j
-    for i in [1,2,3,4]:
-        if i != int(opp[-1]) :
-            term2 += FFunTopCheck(opp+'g'+str(i),thisp,thispp,thismass,alpha,Rfac=Rfac)*thisq[i]
-    term2 = term2/(2.0*thismass)
-    term3 = 0.0j
-    for i in [1,2,3,4]:
-        if i != int(opp[-1]) :
-            term3 += FFunCheck(opp+'g'+str(i)+'g5',thisp,thispp,thismass,Rfac=Rfac)*thisq[i]
-    rcheck,ccheck = (abs(term1.real)<myeps and abs(term2.real)<myeps and abs(term3.real)<myeps,
-					 abs(term1.imag)<myeps and abs(term2.imag)<myeps  and abs(term3.imag)<myeps)
-    return [term1,term2,term3],not rcheck, not ccheck
+    if 'Top' in opp:
+        opp = opp.replace('Top','')
 
-def PsVectorFF(opp,thisqvec,thisppvec,thismass,Rfac=True):
+        term1 = FFunTopCheck(opp,thisp,thispp,thismass,alpha,Rfac=Rfac)
+        term2 = 0.0j
+        for i in [1,2,3,4]:
+            if i != int(opp[-1]) :
+                term2 += FFunTopCheck(opp+'g'+str(i),thisp,thispp,thismass,alpha,Rfac=Rfac)*thisq[i]
+        term2 = term2/(2.0*thismass)
+        term3 = 0.0j
+        for i in [1,2,3,4]:
+            if i != int(opp[-1]) :
+                term3 += FFunCheck(opp+'g'+str(i)+'g5',thisp,thispp,thismass,Rfac=Rfac)*thisq[i]
+        rcheck,ccheck = (abs(term1.real)<myeps and abs(term2.real)<myeps and abs(term3.real)<myeps,
+                         abs(term1.imag)<myeps and abs(term2.imag)<myeps  and abs(term3.imag)<myeps)
+        return [term1,term2,term3],not rcheck, not ccheck
+    else:
+        return VectorFF(opp,thisqvec,thisppvec,thismass,Rfac=Rfac,PadF3=True)
+    
+def PsVectorFF(opp,thisqvec,thisppvec,thismass,Rfac=True,alpha=1.0):
     thisp,thisq,thispp = Create4Mom(thisqvec,thisppvec,thismass)
     index1 = opp[-1]
     if index1 == '5': index1 = opp[-3]
@@ -86,7 +89,7 @@ def PsVectorFF(opp,thisqvec,thisppvec,thismass,Rfac=True):
     return [term1,term2],not rcheck, not ccheck
 
 
-def TensorFF(opp,thisqvec,thisppvec,thismass,Rfac=True):
+def TensorFF(opp,thisqvec,thisppvec,thismass,Rfac=True,alpha=1.0):
     thisp,thisq,thispp = Create4Mom(thisqvec,thisppvec,thismass)
     ## P = pp + p = 2*pp -q
     thisP = [ip+ipp for ip,ipp in zip(thisp,thispp)]

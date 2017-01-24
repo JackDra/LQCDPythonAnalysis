@@ -72,7 +72,18 @@ def ReadTopAll(thisdir):
             topcharge.append(thistcharge)
     return cfglistout,topcharge,tflow
 
-
+## output = { ip [iAvg,boot1,boot2,...,bootn] }
+def ReadAlphaList(thisset):
+    twoptset = ReduceTooMassSet([thisset])[0]
+    DictRead = ReadAlphaFile(outputdir[0],twoptset,thisMomList=['q = 0 0 0'])
+    ## TODO: implement fitting for Alpha parameter, hardcoaded to pick source-sink separation of 7
+    thistsink = 't7'
+    outdict = [1.0]
+    for thisflow,flowdict in momdict['q = 0 0 0']['Boots'].iteritems():
+        if thisflow in thisset:
+            outdict = [np.mean(flowdict[thistsink])] + flowdict[thistsink]
+    return outdict
+    
 # R/L Evecs [ ip , istate , ival ]
 # Emass [ ip , istate ]
 def ReadLREM(todtval,thisMomList,filepref,NoWar=False):
@@ -164,11 +175,20 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                                         datadictout[iSet+iMeth+icut+fitdict][igamma][imom] = thisdict[icut][ifit]
                                         datadictout[iSet+iMeth+icut+fitdict][igamma][imom]['Info'] = thisdict['Info']
                         elif 'Fits' in iMeth:
-                            for icut in FitCutArgs:
-                                if icut in thisdict.keys():
-                                    datadictout = SetupDict(datadictout,igamma,iSet+iMeth+icut)
-                                    datadictout[iSet+iMeth+icut][igamma][imom] = thisdict[icut]
-                                    datadictout[iSet+iMeth+icut][igamma][imom]['Info'] = thisdict['Info']
+                            if any(['t_flow' in ikey for ikey in thisdict.iterkeys()]):
+                                for iflow in FlowArgs:
+                                    if iflow not in thisdict.keys(): continue
+                                    for icut in FitCutArgs:
+                                        if icut not in thisdict[iflow].keys(): continue
+                                        datadictout = SetupDict(datadictout,igamma,iSet+iMeth+icut+iflow)
+                                        datadictout[iSet+iMeth+icut+iflow][igamma][imom] = thisdict[iflow][icut]
+                                        datadictout[iSet+iMeth+icut+iflow][igamma][imom]['Info'] = thisdict['Info']
+                            else:
+                                for icut in FitCutArgs:
+                                    if icut in thisdict.keys():
+                                        datadictout = SetupDict(datadictout,igamma,iSet+iMeth+icut)
+                                        datadictout[iSet+iMeth+icut+iflow][igamma][imom] = thisdict[icut]
+                                        datadictout[iSet+iMeth+icut+iflow][igamma][imom]['Info'] = thisdict['Info']
     if thisPrintRead: print 'Extracting data took: ', str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                  '
     return datadictout,datamassout
 

@@ -154,6 +154,8 @@ def LSFit(parlen,xdata,yerr,fitfun,ydata,derfun=None,iGuess = None):
 ##Note, xdatain must be in the form
 ## xdata [ [x1values] , [x2values] , ..... [xnvalues] ]
 ## for fitting functions over variables F( x1, x2, ... xn )
+## xdata [ [ [x1values] , [x2values] , ..... [xnvalues] ]_Average , [ [x1values] , [x2values] , ..... [xnvalues] ]_boot1 ....  ]
+## for bootstrapped x values
 def FitBoots(ydatain,xdatain,FitFun,DoW='T',MI=MaxIters,parlen=1,tBooted=False,thisnboot=nboot,derfun=None,iGuess = None):
     GetBootStats(ydatain)
     # print ydatain

@@ -3,7 +3,7 @@
 import numpy as np
 from Params import *
 from MiscFuns import *
-from ReadTxt import ExtractValues
+from ReadTxt import ExtractValues,ReadAlphaList
 from SetLists import *
 from FormFactors import CreateFF
 from OutputData import PrintFFSet
@@ -37,6 +37,10 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr,Rfac):
 ## FF { { momsqrd } { Boot/Avg/Chi } }
     thisstart = time.time()
     thisDS,baseCurr,dump = SplitDSCurr(thisCurr)
+    if 'Top' in thisCurr:
+        alphalist = ReadAlphaList(theset)
+    else:
+        alphalist = [1.0]
     if thisDS == '':
         thisCurrList = [thisCurr for ids in DefDSList]
         thisgflist = DefDSList
@@ -46,9 +50,9 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr,Rfac):
     for iCurr,igf in zip(thisCurrList,thisgflist):
         combCurr = igf+iCurr
         if NoSFRfacScale:
-            FF,infodict = CreateFF(setdict,thisMass['Avg'],iCurr,gammaflag=igf,Rfac=Rfac)
+            FF,infodict = CreateFF(setdict,thisMass['Avg'],iCurr,gammaflag=igf,Rfac=Rfac,alphalist=alphalist)
         else:
-            FF,infodict = CreateFF(setdict,thisMass['Avg'],iCurr,gammaflag=igf,Rfac=True)            
+            FF,infodict = CreateFF(setdict,thisMass['Avg'],iCurr,gammaflag=igf,Rfac=True,alphalist=alphalist)            
         if 'Vector' in thisCurr and 'Top' not in thisCurr and 'IsoVector' not in thisCurr and 'PsVector' not in thisCurr:
             if ForceVecNorm: FF = RenormFF(FF,FF['qsqrd0']['Boot'][0].Avg,igf)
             PrintFFSet(FF,theset,thisMass,thesetmass,combCurr,infodict)
@@ -75,14 +79,16 @@ def DoFF(thisMethodList,thisCurr,thisSetList,thisGammaList,thisMomList):
     mprint( '')
     mprint( 'Creating Form Factors:' )
     inputparams = []
+    totsetlist = []
     for theset,setdict in data.iteritems():
-        if 'SF' in theset:
-            inputparams.append(PickMassSet(MassSet,theset)+(theset,setdict,thisCurr,False))
-        else:
-            inputparams.append(PickMassSet(MassSet,theset)+(theset,setdict,thisCurr,True))
-    start = time.time()
-    for ipar in inputparams: CreateFFWrap(*ipar)        
-    print 'Fit and Print for ' , ' '.join(thisMethodList) , thisCurr , ' '.join(thisSetList) ,' in total took: ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s'
+        totsetlist.append(theset)
+        inputparams.append(PickMassSet(MassSet,theset)+(theset,setdict,thisCurr,'SF' not in theset))
+    totstart = time.time()
+    for ic,(ipar,iset) in enumerate(zip(inputparams,totsetlist)):
+        start = time.time()
+        CreateFFWrap(*ipar)
+        print thisCurr,iset, GetTimeForm(ic+1,len(totsetlist),time.time()-totstart)
+    print 'Fit and Print for ' , ' '.join(thisMethodList) , thisCurr , ' '.join(thisSetList) ,' in total took: ',str(datetime.timedelta(seconds=time.time()-totstart)) , ' h:m:s'
     mprint( '')
 
 
