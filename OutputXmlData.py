@@ -180,6 +180,8 @@ def PrintFitMassToFile(data,dataChi,iset,filedir,filename,thisMomList,FitRanges,
         WriteXmlOutput(outputfile,datadict)
         
 # data = [ ip , icut , iset ]
+# OR
+# data = [ ip , iflow , icut , iset ]
 def PrintFitToFile(data,dataChi,iset,filedir,filename,thisMomList,thisCutList,mominfoRF,flowlist):
     xmlMomList = map(qstrTOqcond,thisMomList)
     xmlCutList = map(xmlcut,thisCutList)

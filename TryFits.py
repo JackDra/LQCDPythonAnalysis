@@ -40,17 +40,17 @@ def TryFitsFun(thisGammaList,thisSetList,thisReadMomList,thisTSinkList,thischunk
         FitDataChi.append([])
         for imom,thismom in enumerate(thismomlist):
             # print 'Fitting ' , thisgamma , thismom , '       \r',
+            start = time.time()
             FitDataBoot[igamma].append([])
             FitDataAvg[igamma].append([])
             FitDataChi[igamma].append([])
             if len(flowlist) > 0:
-                print 'CONTINUE FROM HERE '
                 for icf,iflow in enumerate(flowlist):
                     FitDataBoot[igamma][imom].append([])
                     FitDataAvg[igamma][imom].append([])
                     FitDataChi[igamma][imom].append([])
                     for icut in FitCutList:
-                        momdata = dataRF[igamma][imom][:,icf,:]
+                        momdata = np.array(dataRF[igamma][imom])[:,icf,:]
                         dataoutBoot,dataoutAvg,dataoutChi = FitRFSet(momdata,thisTSinkList,icut)
                         FitDataBoot[igamma][imom][icf].append(dataoutBoot)
                         FitDataAvg[igamma][imom][icf].append(dataoutAvg)
@@ -62,9 +62,9 @@ def TryFitsFun(thisGammaList,thisSetList,thisReadMomList,thisTSinkList,thischunk
                     FitDataBoot[igamma][imom].append(dataoutBoot)
                     FitDataAvg[igamma][imom].append(dataoutAvg)
                     FitDataChi[igamma][imom].append(dataoutChi)
+            print thisgamma , thismom , ' Took: ',GetTimeStr(time.time()-start)
     #FitData = [ igamma , ip , icut , iset ]
     #FitData = [ igamma , ip , iflow , icut , iset ]
-    # print ' '.join(thisGammaMomList.keys()) , ' at ' , thischunk,'% took: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s '
     return FitDataBoot,FitDataChi,thisGammaMomList,thisSetList,FitCutList,infolistRF,flowlist
 
 

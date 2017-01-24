@@ -149,7 +149,7 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
             data = data[data.keys()[0]]
             if 'Boots' in data.keys():
                 bootdata = data['Boots']
-                dictout[thismom] = {}
+                dictout[thismom] = OrderedDict()
                 dictout[thismom]['Info'] = data['Info']
                 if TopFile:
                     for iflow,flowdata in bootdata.iteritems():
