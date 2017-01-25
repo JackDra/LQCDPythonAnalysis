@@ -166,13 +166,14 @@ def PrintTopToFile(topdata,thisdata,filedir,filename,thisTopList,thisTList,thisM
 ## data = {ip , iflow , ifit , Boot/Avg/Chi }
 def PrintAlphaFitFile(data,iset,filedir):
     for ip,pdata in data.iteritems():
-        datadict,outputfile = SetUpPDict(ip,filedir,iset)
-        datadict[ip]['Info'] = pdata['Info']
-        datadict[ip]['Boots'] = pdata['Boots']
+        pcond = qstrTOqcond(ip)
+        datadict,outputfile = SetUpPDict(pcond,filedir,iset)
+        datadict[pcond]['Info'] = pdata['Info']
+        datadict[pcond]['Boots'] = pdata['Boots']
         for (itflow,flowdata),chiflowdata in zip(pdata['Boots'].iteritems(),pdata['Chi'].itervalues()):
-            datadict[ip]['Values'][itflow] = OrderedDict()
+            datadict[pcond]['Values'][itflow] = OrderedDict()
             for (ifitr,fitdata),chifitdata in zip(flowdata.iteritems(),chiflowdata.itervalues()):
-                datadict[ip]['Values'][itflow][ifitr] = BootAvgStdChiToFormat(fitdata,chifitdata)
+                datadict[pcond]['Values'][itflow][ifitr] = BootAvgStdChiToFormat(fitdata,chifitdata)
         WriteXmlOutput(outputfile,datadict)
 
         
