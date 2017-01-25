@@ -206,14 +206,24 @@ def ReadSetAlpha(thisSmearList,thisMomList,directory,Interps=['nucleon'],thistso
                 if 'xsrc' in ListOrSet:
                     if ListOrSet.replace('ReadSet','').replace('ReadList','')+'_' not in ifile: continue
                 fileprefix = ifile.replace(fileend2pt,'')
-                if CheckSet(fileprefix,dirname+'/',thisSmearList,{},{},[],[],'',Interps,tsourceList=thistsourceList):
-                    prefnosrc = re.sub('_xsrc.*','',fileprefix)
-                    if prefnosrc not in thisfilelist.keys():
-                        thisfilelist[prefnosrc] = [directory+'/'+isource+'/@/'+fileprefix]
-                    else:
-                        if XSrcLen <= len(thisfilelist[prefnosrc]) and ForceXSrcLen: continue
-                        thisfilelist[prefnosrc].append(directory+'/'+isource+'/@/'+fileprefix)
-                    f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
+                if CfunConfigCheck:
+                    if CheckAllSet(fileprefix,dirname+'/',Interps,tsourceList=thistsourceList):
+                        prefnosrc = re.sub('_xsrc.*','',fileprefix)
+                        if prefnosrc not in thisfilelist.keys():
+                            thisfilelist[prefnosrc] = [directory+'/'+isource+'/@/'+fileprefix]
+                        else:
+                            if XSrcLen <= len(thisfilelist[prefnosrc]) and ForceXSrcLen: continue
+                            thisfilelist[prefnosrc].append(directory+'/'+isource+'/@/'+fileprefix)
+                        f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
+                else:
+                    if CheckSet(fileprefix,dirname+'/',thisSmearList,{},{},[],[],'',Interps,tsourceList=thistsourceList):
+                        prefnosrc = re.sub('_xsrc.*','',fileprefix)
+                        if prefnosrc not in thisfilelist.keys():
+                            thisfilelist[prefnosrc] = [directory+'/'+isource+'/@/'+fileprefix]
+                        else:
+                            if XSrcLen <= len(thisfilelist[prefnosrc]) and ForceXSrcLen: continue
+                            thisfilelist[prefnosrc].append(directory+'/'+isource+'/@/'+fileprefix)
+                        f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
     f.close()
     if ExactXSrcNumber:
         maxlen = np.max([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
@@ -284,13 +294,13 @@ def ReadSet(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList, thisDSL
         print 'reading directory: ' , directory+'/'+isource
         for (dirname,dirs,files) in walk(directory+'/'+isource):
             for ifile in files:
+                if fileend2pt not in ifile or ".metadata" in ifile: continue
+                if 'xsrc' in ListOrSet:
+                    if ListOrSet.replace('ReadSet','').replace('ReadList','')+'_' not in ifile: continue
+                fileprefix = ifile.replace(fileend2pt,'')
                 if CfunConfigCheck:
                     # ## FOR DEBUGGING
                     # if xsrcList[0] not in ifile: continue
-                    if fileend2pt not in ifile or ".metadata" in ifile: continue
-                    if 'xsrc' in ListOrSet:
-                        if ListOrSet.replace('ReadSet','').replace('ReadList','')+'_' not in ifile: continue
-                    fileprefix = ifile.replace(fileend2pt,'')
                     if CheckAllSet(fileprefix,dirname+'/',Interps,tsourceList=thistsourceList):
                         prefnosrc = re.sub('_xsrc.*','',fileprefix)
                         if prefnosrc not in thisfilelist.keys():
@@ -300,12 +310,6 @@ def ReadSet(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList, thisDSL
                             thisfilelist[prefnosrc].append(directory+'/'+isource+'/@/'+fileprefix)
                         f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
                 else:
-                    if fileend2pt not in ifile or ".metadata" in ifile: continue
-                    # ## FOR DEBUGGING
-                    # if xsrcList[0] not in ifile: continue
-                    if 'xsrc' in ListOrSet:
-                        if ListOrSet.replace('ReadSet','').replace('ReadList','')+'_' not in ifile: continue
-                    fileprefix = ifile.replace(fileend2pt,'')
                     if CheckSet(fileprefix,dirname+'/',thisSmearList,thisProjGammaList,
                                 thisProjDerList,thisDSList,thisTSinkList,Flag,Interps,tsourceList=thistsourceList):
                         prefnosrc = re.sub('_xsrc.*','',fileprefix)

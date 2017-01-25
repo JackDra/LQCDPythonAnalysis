@@ -134,6 +134,8 @@ def ReadTopFile(filedir,iset,thisMomList=RunMomList):
         dictout['NNQ'][thismom] = ReadXmlAndPickle(thisreadfile+'.xml')[0][ip]
     return dictout
 
+
+## dictout = { 'RF' , imom , Info/ Boots: itflow , tsink }  
 def ReadAlphaFile(filedir,iset,thisMomList=RunMomList):
     dictout = OrderedDict()
     dictout['RF'] = OrderedDict()
