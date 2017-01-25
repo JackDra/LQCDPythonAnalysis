@@ -79,9 +79,9 @@ def ReadAlphaList(thisset):
     ## TODO: implement fitting for Alpha parameter, hardcoaded to pick source-sink separation of 7
     thistsink = 't7'
     outdict = [1.0]
-    for thisflow,flowdict in momdict['q = 0 0 0']['Boots'].iteritems():
+    for thisflow,flowdict in DictRead['RF']['q = 0 0 0']['Boots'].iteritems():
         if thisflow in thisset:
-            outdict = [np.mean(flowdict[thistsink])] + flowdict[thistsink]
+            outdict = [np.mean(flowdict[thistsink])] + flowdict[thistsink].tolist()
     return outdict
     
 # R/L Evecs [ ip , istate , ival ]

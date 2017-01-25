@@ -25,10 +25,11 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True,alphalist = [1.0]):
         iqs = 'qsqrd'+str(iqsqrd)
         thisdataout['qsqrd'+str(iqsqrd)] = {}
         datavals,FFcoeff = [],[]
-        for ica in range(nboot):
+        for ica in range(len(alphalist)):
             FFcoeff.append([])
             for iff in range(NoFFPars[baseCurr]):
                 FFcoeff[ica].append([])
+        opplist = []
         for iopp in Opps:                    
             flagopp = gammaflag+iopp
             RealVal,CmplxVal = False,False
@@ -45,13 +46,18 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True,alphalist = [1.0]):
                     if CmplxVal and ccheck:
                         for iFF,iFFcof in enumerate(FFcoeffhold):
                             FFcoeff[ica][iFF].append(iFFcof.imag)
-                        datavals.append(data[flagopp+'cmplx'][iq]['Boot'])
-                        infodict[iqs] = data[flagopp+'cmplx'][iq]['Info']
                     if RealVal and rcheck:
                         for iFF,iFFcof in enumerate(FFcoeffhold):
                             FFcoeff[ica][iFF].append(iFFcof.real)
-                        datavals.append(data[flagopp][iq]['Boot'])
-                        infodict[iqs] = data[flagopp][iq]['Info']
+                    if ica == 0:
+                        if CmplxVal and ccheck:
+                            datavals.append(data[flagopp+'cmplx'][iq]['Boot'])
+                            infodict[iqs] = data[flagopp+'cmplx'][iq]['Info']
+                            opplist.append(flagopp+'cmplx '+ iq)
+                        if RealVal and rcheck:
+                            datavals.append(data[flagopp][iq]['Boot'])
+                            infodict[iqs] = data[flagopp][iq]['Info']
+                            opplist.append(flagopp +' '+ iq)
 
         if len(datavals) == 0: continue
         zboot,zvec = [BootStrap1(nboot,0)],[0.0]        
@@ -70,35 +76,35 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True,alphalist = [1.0]):
             FFcoeff = np.array(FFcoeff)
             if Debug:
                 print 'Printing Form Factors debug:'
-                for FF1,FF2,FF3,res in zip(FFcoeff[0,0],FFcoeff[0,1],FFcoeff[0,2],datavals):
-                    print iqsqrd, '   ' , FF1,'FF1 + ',FF2,'FF2 + ',FF3,'FF3 = ',res.Avg
+                for FF1,FF2,FF3,res,iopp in zip(FFcoeff[0,0],FFcoeff[0,1],FFcoeff[0,2],datavals,opplist):
+                    print iqsqrd, '   ' , iopp, ' ',FF1,'FF1 + ',FF2,'FF2 + ',FF3,'FF3 = ',res.Avg, res.Std
                 print ''
             if len(datavals) == 1:
                 if sum(ia == [0.0] for ia in FFcoeff[0]) != 2: continue
                 if FFcoeff[0,0] != [0.0]:
-                    FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff[:,0],FFFitFuns['Scalar'],tBooted=DoTop)
+                    FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff[:,0,:],FFFitFuns['Scalar'],tBooted=DoTop)
                     thisdataout[iqs]['Boot'] = FFBoothold+zboot+zboot
                     thisdataout[iqs]['Avg'] = FFAvghold+zvec+zvec
                 elif FFcoeff[0,1] != [0.0]:
-                    FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff[:,1],FFFitFuns['Scalar'],tBooted=DoTop)
+                    FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff[:,1,:],FFFitFuns['Scalar'],tBooted=DoTop)
                     thisdataout[iqs]['Boot'] = zboot+FFBoothold+zboot
                     thisdataout[iqs]['Avg'] = zvec+FFAvghold+zvec
                 elif FFcoeff[0,2] != [0.0]:
-                    FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff[:,2],FFFitFuns['Scalar'],tBooted=DoTop)
+                    FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff[:,2,:],FFFitFuns['Scalar'],tBooted=DoTop)
                     thisdataout[iqs]['Boot'] = zboot+zboot+FFBoothold
                     thisdataout[iqs]['Avg'] = zvec+zvec+FFAvghold
             elif len(datavals) == 2:
                 if [0.0] not in FFcoeff[0]: continue
                 if FFcoeff[0,0] == [0.0]:
-                    FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,[FFcoeff[:,1],FFcoeff[:,2]],FFFitFuns['Vector'],tBooted=DoTop)
+                    FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,[FFcoeff[:,1,:],FFcoeff[:,2,:]],FFFitFuns['Vector'],tBooted=DoTop)
                     thisdataout[iqs]['Boot'] = zboot+FFBoothold
                     thisdataout[iqs]['Avg'] = zvec+FFAvghold
                 elif FFcoeff[0,1] == [0.0]:
-                    FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,[FFcoeff[:,0],FFcoeff[:,2]],FFFitFuns['Vector'],tBooted=DoTop)
+                    FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,[FFcoeff[:,0,:],FFcoeff[:,2,:]],FFFitFuns['Vector'],tBooted=DoTop)
                     thisdataout[iqs]['Boot'] = [FFAvghold[0]]+zvec+[FFAvghold[1]]
                     thisdataout[iqs]['Avg'] = [FFBoothold[0]]+zboot+[FFBoothold[1]]
                 elif FFcoeff[0,2] == [0.0]:
-                    FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,[FFcoeff[:,0],FFcoeff[:,1]],FFFitFuns['Vector'],tBooted=DoTop)
+                    FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,[FFcoeff[:,0,:],FFcoeff[:,1,:]],FFFitFuns['Vector'],tBooted=DoTop)
                     thisdataout[iqs]['Boot'] = FFBoothold+zboot
                     thisdataout[iqs]['Avg'] = FFAvghold+zvec
             else:
