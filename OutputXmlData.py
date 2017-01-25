@@ -170,7 +170,9 @@ def PrintAlphaFitFile(data,iset,filedir):
         datadict[ip]['Info'] = pdata['Info']
         datadict[ip]['Boots'] = pdata['Boots']
         for (itflow,flowdata),chiflowdata in zip(pdata['Boots'].iteritems(),pdata['Chi'].itervalues()):
-            datadict[ip]['Values'][itflow] = BootAvgStdToFormat(flowdata,chiflowdata)
+            datadict[ip]['Values'][itflow] = OrderedDict()
+            for (ifitr,fitdata),chifitdata in zip(flowdata.iteritems(),chiflowdata.itervalues()):
+                datadict[ip]['Values'][itflow][ifitr] = BootAvgStdChiToFormat(fitdata,chifitdata)
         WriteXmlOutput(outputfile,datadict)
 
         

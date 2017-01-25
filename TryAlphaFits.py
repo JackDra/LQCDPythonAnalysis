@@ -8,7 +8,7 @@ from BootTest import BootStrap1
 from ReadTxt import *
 from SetLists import *
 from Fitting import FitAlpha
-from OutputData import PrintAlphaFitFile
+from OutputXmlData import PrintAlphaFitFile
 from FitParams import *
 from multiprocessing import Pool
 from MultiWrap import *
@@ -22,7 +22,7 @@ from CheckXml import *
 
 
 
-def TryAlphaFitsFun(thisSetList,thisReadMomList):
+def TryAlphaFitsFun(thisSetList,thisMomList):
     # dataRF = { iset , imom , Info/ Boots: itflow , tsink } bs
     dataRF = ReadAlphaSet(thisSetList,thisMomList)
     start = time.time()
@@ -44,9 +44,9 @@ def TryAlphaFitsFun(thisSetList,thisReadMomList):
                 fitdata = CreateBootClass(flowdata,nboot)
                 for fitr,ifit in zip(FitAlphaList,FitAlphaArgs):
                     FitDatahold = FitAlpha(fitdata,fitr)
-                    FitData[iset][thismom]['Avg'][iflow][ifit] = FitDatahold['Avg']
-                    FitData[iset][thismom]['Boots'][iflow][ifit] = FitDatahold['Boots']
-                    FitData[iset][thismom]['Chi'][iflow][ifit] = FitDatahold['Chi']
+                    FitData[iset][thismom]['Avg'][iflow][ifit] = FitDatahold['Avg'][0]
+                    FitData[iset][thismom]['Boots'][iflow][ifit] = FitDatahold['Boots'][0]
+                    FitData[iset][thismom]['Chi'][iflow][ifit] = FitDatahold['Chi'][0]
             print ' Took: ',GetTimeStr(time.time()-start) , 'For ',thismom  , '   ', iset
     #FitData = { iset , ip , Boot/Avg/Chi , iflow , ifit   }
     return FitData,thisSetList
@@ -62,8 +62,8 @@ ShowSetLists(feedin['set'])
 totstart = time.time()
 inputparams = []
 # RunGammaList = []
+thisMomList = RunAvgMomList
 for iSet in feedin['set']:
-    thisMomList = RunAvgMomList
     for imom in thisMomList:
         inputparams.append(([iSet],[imom]))
 
@@ -92,7 +92,7 @@ topfitdir = outputdir[0] + 'Top/Alpha/Fits'
 mkdir_p(topfitdir)
 
 for iout in output:
-    for setdata,iset in zip(iout[0],iout[1]):
-        PrintAlphaFitFile(setdata,iset,topfitdir)
+    thisset = iout[1][0]
+    PrintAlphaFitFile(iout[0][thisset],thisset,topfitdir)
 
 print 'Total fit time took: ' , str(datetime.timedelta(seconds=time.time()-totstart)) , ' h:m:s '
