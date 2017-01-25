@@ -153,9 +153,9 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
                         PiOpp = 'P'+iProj[-1]+igamma
                         gammalist = ['doub'+PiOpp,'sing'+PiOpp]
                         gammalistcmplx = ['doub'+PiOpp+'cmplx','sing'+PiOpp+'cmplx']
+                        outpost = ''
                         if WipeThisSet:
                             wipegammalist = gammalist + gammalistcmplx
-                            outpost = ''
                             if DoTop: outpost = 'Top/'
                             WipeSet(outputdir[0]+outpost,wipegammalist,thisSetList)
                             WipeSet(outputdir[0]+outpost+'cfun/',wipegammalist,thisSetList)
