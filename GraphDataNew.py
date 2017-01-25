@@ -98,10 +98,10 @@ leglocFFDict = {'NeutronVectorFF2':'upper left',
 params = {'legend.fontsize': 10,
           'legend.numpoints': 1,
           'axes.labelsize' : 20,
-          'axes.titlesize' : 20,
           'figure.autolayout': True,
           'axes.grid': True,
           'axes.xmargin':0.01,
+          'axes.titlesize' : 20,
           'axes.ymargin':0.01}
 
 symcyc = itertools.cycle(markerset)
@@ -167,7 +167,8 @@ def SiftAndSort(thisSetList,comp,nocm=True):
 
 
 def CreateFFFile(thisCol,thisCurr,thisFF):
-    thistitle = thisCol + TitleFixFF(thisCurr.replace('/',' '),thisFF)
+    # thistitle = thisCol
+    thistitle = TitleFixFF(thisCurr.replace('/',' '),thisFF)
     if ForceTitle == False:
         pl.title(thistitle)
     else:
@@ -248,7 +249,7 @@ def SetFFAxies(thisCurr):
         pl.legend()
     else:
         pl.legend(loc=leglocFFDict[thisCurr])
-    pl.tight_layout()
+    # pl.tight_layout()
 
 
 def SetMassAxies():

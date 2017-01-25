@@ -94,10 +94,11 @@ def GetDPFitValue(SearchSet,iFF,thisCurr,thiskappa=str(kappa)):
     if thiskappa == None: thiskappa = kappa 
     FFdir = outputdir[0].replace('k'+str(kappa),'k'+str(thiskappa)) +'/FormFactors/DPfits/'
     filename = FFdir +thisCurr
-    if Debug: print filename+'.xml'
-    if not os.path.isfile(filename+'.xml'):
-        print 'Warrning, file not found' , filename+'.xml'
-        return [],[]
+    if Debug:
+        print filename+'.xml'
+        if not os.path.isfile(filename+'.xml'):
+            print 'Warrning, file not found' , filename+'.xml'
+    if not os.path.isfile(filename+'.xml'): return [],[]
     data = ReadXmlDict(filename+'.xml')[0]
     thisDPpAvg = []
     thisDPpStd = []
