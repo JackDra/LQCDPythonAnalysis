@@ -10,9 +10,35 @@ from BootTest import BootStrap1
 from SetLists import GetTsinkSmLists
 from Params import *
 from collections import OrderedDict
+from XmlFormatting import tstr,untstr
 import re
 import time
 import datetime
+
+
+## alphain = { itsink } bs
+## ifit = [ifitmin ifitmax]
+def FitAlpha(alphain,ifit):
+    fitout = OrderedDict()
+    fitout[its] = OrderedDict()
+    thistdata = map(tstr,np.arange(ifit[0], ifit[1]+1))
+    fitdata,fitt = [],[]
+    for it,ialpha in alphain.iteritems():
+        if it in thistdata:
+            fitt.append(untstr(it))
+            fitdata.append(ialpha)
+    fitt = np.array(fitt)
+    ParamDict = OrderedDict()
+    if fitt.size < 1:
+        raise LookupError('Fit range' + str(ifit[0]) + '-' + str(ifit[1])+ ' has no values, please fix in FitParams.py')
+        # if tdata.size < 1: raise IndexError("Ifit reduced a set to 0 time slices (do separatly please)")
+    else:
+        [fitBoothold,fitAvghold,fitChihold] = FitBoots(fitdata,fitt,ConstantFitFun)
+        ParamDict['Boots'] = fitBoothold
+        ParamDict['Avg'] = fitAvghold
+        ParamDict['Chi'] = fitChihold
+    return ParamDict
+
 
 def FitSMList(data,fitr,nsm):
     tdata = np.arange(fitr[0]-tsource,fitr[1]-tsource+1)

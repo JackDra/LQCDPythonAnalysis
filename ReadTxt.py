@@ -72,10 +72,12 @@ def ReadTopAll(thisdir):
             topcharge.append(thistcharge)
     return cfglistout,topcharge,tflow
 
-## dictout = { 'RF' , imom , Info/ Boots: itflow , tsink }
-def ReadAlphaSet(thisSetList,thisMomList)
-    DictRead = ReadAlphaFile(outputdir[0],twoptset,thisMomList=thisMomList)
-    return outdict['RF']
+## dictout = { iset , imom , Info/ Boots: itflow , tsink }
+def ReadAlphaSet(thisSetList,thisMomList):
+    dictout = OrderedDict()
+    for iset in thisSetList:
+        dictout[iset] = ReadAlphaFile(outputdir[0],iset,thisMomList=thisMomList)['RF']
+    return dictout
 
 ## output = { ip [iAvg,boot1,boot2,...,bootn] }
 def ReadAlphaList(thisset):

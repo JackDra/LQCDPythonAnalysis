@@ -25,6 +25,17 @@ ChiThreshold = 0.001
 
 FlowArgs = ['t_flow4.01','t_flow5.01','t_flow6.01']
 
+FitAlphaMinLeft,FitAlphaMaxLeft = 5,9
+FitAlphaMinRight,FitAlphaMaxRight = 5,13
+FitAlphaList,FitAlphaArgs = [],[]
+for ifit in range(FitAlphaMinLeft,FitAlphaMaxLeft+1):
+    for jfit in range(FitAlphaMinRight,FitAlphaMaxRight+1):
+        if ifit+4 > jfit: continue
+        FitAlphaList.append([ifit,jfit])
+        FitAlphaArgs.append('fitr'+str(ifit)+'-'+str(jfit))
+
+
+
 FitCutMinLeft,FitCutMaxLeft = 1,3
 FitCutMinRight,FitCutMaxRight = 4,9
 FitCutList,FitCutArgs = [],[]

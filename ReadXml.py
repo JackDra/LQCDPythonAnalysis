@@ -136,7 +136,7 @@ def ReadTopFile(filedir,iset,thisMomList=RunMomList):
 
 
 ## dictout = { 'RF' , imom , Info/ Boots: itflow , tsink }  
-def ReadAlphaFile(filedir,iset,thisMomList=RunMomList):
+def ReadAlphaFile(filedir,iset,thisMomList=RunMomList,BSClass=False):
     dictout = OrderedDict()
     dictout['RF'] = OrderedDict()
     for thismom in thisMomList:

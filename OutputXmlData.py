@@ -162,6 +162,17 @@ def PrintTopToFile(topdata,thisdata,filedir,filename,thisTopList,thisTList,thisM
             datadict[ip]['Values'][tflowstr(itflow)] = OrderedDict(zip(tkeyList,map(BootAvgStdToFormat,NNQ,['e']*len(pdata))))
         WriteXmlOutput(outputfileAlpha,datadictAlpha)
         WriteXmlOutput(outputfile,datadict)
+
+## data = {ip , iflow , ifit , Boot/Avg/Chi }
+def PrintAlphaFitFile(data,iset,filedir):
+    for ip,pdata in data.iteritems():
+        datadict,outputfile = SetUpPDict(ip,filedir,iset)
+        datadict[ip]['Info'] = pdata['Info']
+        datadict[ip]['Boots'] = pdata['Boots']
+        for (itflow,flowdata),chiflowdata in zip(pdata['Boots'].iteritems(),pdata['Chi'].itervalues()):
+            datadict[ip]['Values'][itflow] = BootAvgStdToFormat(flowdata,chiflowdata)
+        WriteXmlOutput(outputfile,datadict)
+
         
 # data = [ ip , icut ]
 def PrintFitMassToFile(data,dataChi,iset,filedir,filename,thisMomList,FitRanges,mominfo2pt):

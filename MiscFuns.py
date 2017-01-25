@@ -12,7 +12,18 @@ from collections import OrderedDict
 import time,datetime
 from copy import deepcopy
 
-      
+
+#tdata = { itsink , iboot }
+#dataout = { itsink } bs
+def CreateBootClass(data,thisnboot):
+    bootout = OrderedDict()
+    for it,tdata in data.iteritems():
+        bootout[it] = BootStrap1(thisnboot,1)
+        bootout[it].values = tdata
+        bootout[it].Stats()
+    return bootout
+
+
 def autocorr(x,y):
    """
    http://stackoverflow.com/q/14297012/190597
