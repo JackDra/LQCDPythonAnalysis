@@ -82,13 +82,11 @@ def ReadAlphaSet(thisSetList,thisMomList):
 ## output = { ip [iAvg,boot1,boot2,...,bootn] }
 def ReadAlphaList(thisset):
     twoptset = ReduceTooMassSet([thisset])[0]
-    DictRead = ReadAlphaFile(outputdir[0],twoptset,thisMomList=['q = 0 0 0'])
-    ## TODO: implement fitting for Alpha parameter, hardcoaded to pick source-sink separation of 7
-    thistsink = 't7'
+    DictRead = ReadAlphaFitFile(outputdir[0],twoptset,thisMomList=['q = 0 0 0'])
     outdict = [1.0]
-    for thisflow,flowdict in DictRead['RF']['q = 0 0 0']['Boots'].iteritems():
+    for thisflow,flowdict in DictRead['q = 0 0 0']['Boots'].iteritems():
         if thisflow in thisset:
-            outdict = [np.mean(flowdict[thistsink])] + flowdict[thistsink].tolist()
+            outdict = [flowdict[AlphaFitRPick].Avg] + np.array(flowdict[AlphaFitRPick].values).tolist()
     return outdict
     
 # R/L Evecs [ ip , istate , ival ]
