@@ -185,9 +185,7 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                                         datadictout[iSet+iMeth+icut+fitdict][igamma][imom] = thisdict[icut][ifit]
                                         datadictout[iSet+iMeth+icut+fitdict][igamma][imom]['Info'] = thisdict['Info']
                         elif 'Fits' in iMeth:
-                            print 'DEBUG'
-                            print igamma
-                            if any(['t_flow' in ikey for ikey in thisdict.iterkeys()]):
+                            if 'Top' in igamma:
                                 for iflow in FlowArgs:
                                     if iflow not in thisdict.keys(): continue
                                     for icut in FitCutArgs:
