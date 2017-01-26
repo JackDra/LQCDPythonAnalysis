@@ -157,6 +157,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
                         if WipeThisSet:
                             wipegammalist = gammalist + gammalistcmplx
                             if DoTop: outpost = 'Top/'
+                            print outputdir[0]+outpost
                             WipeSet(outputdir[0]+outpost,wipegammalist,thisSetList)
                             WipeSet(outputdir[0]+outpost+'cfun/',wipegammalist,thisSetList)
                         MomDone = Get3ptSetMoms(outputdir[0]+outpost,gammalist,RunMomList,thisSetList) 
