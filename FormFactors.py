@@ -82,15 +82,15 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True,alphalist = [1.0]):
             if len(datavals) == 1:
                 if sum(ia == [0.0] for ia in FFcoeff[0]) != 2: continue
                 if FFcoeff[0,0] != [0.0]:
-                    FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff[:,0,:],FFFitFuns['Scalar'],tBooted=DoTop)
+                    FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,[FFcoeff[:,0,:]],FFFitFuns['Scalar'],tBooted=DoTop)
                     thisdataout[iqs]['Boot'] = FFBoothold+zboot+zboot
                     thisdataout[iqs]['Avg'] = FFAvghold+zvec+zvec
                 elif FFcoeff[0,1] != [0.0]:
-                    FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff[:,1,:],FFFitFuns['Scalar'],tBooted=DoTop)
+                    FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,[FFcoeff[:,1,:]],FFFitFuns['Scalar'],tBooted=DoTop)
                     thisdataout[iqs]['Boot'] = zboot+FFBoothold+zboot
                     thisdataout[iqs]['Avg'] = zvec+FFAvghold+zvec
                 elif FFcoeff[0,2] != [0.0]:
-                    FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,FFcoeff[:,2,:],FFFitFuns['Scalar'],tBooted=DoTop)
+                    FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,[FFcoeff[:,2,:]],FFFitFuns['Scalar'],tBooted=DoTop)
                     thisdataout[iqs]['Boot'] = zboot+zboot+FFBoothold
                     thisdataout[iqs]['Avg'] = zvec+zvec+FFAvghold
             elif len(datavals) == 2:
