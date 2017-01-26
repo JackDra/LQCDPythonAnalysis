@@ -127,7 +127,6 @@ for thisCurr in feedin['current']:
                 inputparams.append(([imeth],thisCurr,[iSet],thisGammaList,feedin['mom']))
             
 starttime = time.time()
-print thisGammaList
 feedin['anaproc'] = min(feedin['anaproc'],len(inputparams))
 if DoMulticore and feedin['anaproc'] > 1:
     makeContextFunctions(DoFF)
