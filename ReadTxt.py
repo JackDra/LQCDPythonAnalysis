@@ -129,7 +129,7 @@ def ReadLREM(todtval,thisMomList,filepref,NoWar=False):
 ## readdata { gamma } { mom } { method } { set }
 ## datadictout { collection } { gamma } { mom }
 ## datamassout { collection }
-def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList=qvecSet,thisPrintRead=PrintRead):
+def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList=qvecSet,thisPrintRead=PrintRead,TopRead=False):
     def SetupDict(dictin,thisgamma,thiscol):
         if thiscol not in dictin.keys():
             dictin[thiscol] = {}
@@ -192,6 +192,13 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                                         if icut not in thisdict[iflow].keys(): continue
                                         datadictout = SetupDict(datadictout,igamma,iSet+iMeth+icut+iflow)
                                         datadictout[iSet+iMeth+icut+iflow][igamma][imom] = thisdict[iflow][icut]
+                                        datadictout[iSet+iMeth+icut+iflow][igamma][imom]['Info'] = thisdict['Info']
+                            elif TopRead:
+                                for iflow in FlowArgs:
+                                    for icut in FitCutArgs:
+                                        if icut not in thisdict.keys(): continue
+                                        datadictout = SetupDict(datadictout,igamma,iSet+iMeth+icut+iflow)
+                                        datadictout[iSet+iMeth+icut+iflow][igamma][imom] = thisdict[icut]
                                         datadictout[iSet+iMeth+icut+iflow][igamma][imom]['Info'] = thisdict['Info']
                             else:
                                 for icut in FitCutArgs:
