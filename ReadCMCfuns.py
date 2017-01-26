@@ -246,6 +246,8 @@ def ReadSetAlpha(thisSmearList,thisMomList,directory,Interps=['nucleon'],thistso
         print ''
         
     cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist.keys()))
+    if len(tflow) == 0:
+        raise IOError('Topological charge data not found in ' + TCDir )
     if not np.all([x==tflow[0] for x in tflow]):
         print 'warning, files had different flow times'
     thisTflowList = tflow[0]
