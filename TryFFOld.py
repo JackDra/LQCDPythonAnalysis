@@ -62,45 +62,37 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr,Rfac):
         else:
             PrintFFSet(FF,theset,thisMass,thesetmass,combCurr,infodict)
 
-    print 'Fit and Print for ' , theset , ' took: ',str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s'   
+    mprint( 'Fit and Print for ' , theset , ' took: ',str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s'    )
 
 
 #FitMasses later
-# def DoFF(thisMethodList,thisCurr,thisSetList,thisGammaList,thisMomList):
-def DoFF(inputlist):
-    datalist = []
-    MassSetlist = []
-    for iin in inputlist:
-        thisMethodList,thisCurr,thisSetList,thisGammaList,thisMomList = iin
-        data,MassSet = ExtractValues(outputdir[0],thisGammaList,thisSetList,thisMethodList,thisMomList=thisMomList,TopRead='Top' in thisCurr)
-        print 'data Collected:'
-        for iCol in data.keys():
-            print thisMethodList[0], thisCurr, iCol
-        print ''
-        datalist.append(data)
-        MassSetlist.append(MassSet)
-    if len(data.keys()) == 0: return
+def DoFF(thisMethodList,thisCurr,thisSetList,thisGammaList,thisMomList):
+    data,MassSet = ExtractValues(outputdir[0],thisGammaList,thisSetList,thisMethodList,thisMomList=thisMomList,TopRead='Top' in thisCurr)
+    if len(data.keys()) == 0:
+        mprint( 'No Sets Found, returning')
+        return
 
+    mprint( 'All data Collected:')
+    for iCol in data.keys():
+        mprint( iCol)
+    mprint( '')
+    # data { { StateList } { gamma } { mom } { Fit(Boot/Avg/Std/Chi) } }
+    mprint( '')
+    mprint( 'Creating Form Factors:' )
     inputparams = []
-    for data,MassSet in zip(datalist,MassSetlist):
-        for theset,setdict in data.iteritems():
-            inputparams.append(PickMassSet(MassSet,theset)+(theset,setdict,thisCurr,'SF' not in theset))
+    totsetlist = []
+    for theset,setdict in data.iteritems():
+        totsetlist.append(theset)
+        inputparams.append(PickMassSet(MassSet,theset)+(theset,setdict,thisCurr,'SF' not in theset))
+    totstart = time.time()
+    for ic,(ipar,iset) in enumerate(zip(inputparams,totsetlist)):
+        start = time.time()
+        CreateFFWrap(*ipar)
+        print thisCurr,iset, GetTimeForm(ic+1,len(totsetlist),time.time()-totstart)
+    print 'Fit and Print for ' , ' '.join(thisMethodList) , thisCurr , ' '.join(thisSetList) ,' in total took: ',str(datetime.timedelta(seconds=time.time()-totstart)) , ' h:m:s'
+    mprint( '')
 
 
-    starttime = time.time()
-    print 'Total Paralell:', len(inputparams)
-    feedin['anaproc'] = min(feedin['anaproc'],len(inputparams))
-    if DoMulticore and feedin['anaproc'] > 1:
-        makeContextFunctions(CreateFFWrap)
-        thisPool = Pool(feedin['anaproc'])
-        thisPool.map(CreateFFWrap.mapper,inputparams)
-        thisPool.close()
-        thisPool.join()
-    else:
-        for ip,iparam in enumerate(inputparams):
-            print 'Total percent: ' ,GetPercent(ip,len(inputparams))
-            print 'Time Left:' , GetTimeLeftStr(ip,len(inputparams),time.time()-starttime)
-            CreateFFWrap(*iparam)
 
 feedin = InputParams(sys.argv[1:])
 
@@ -135,5 +127,17 @@ for thisCurr in feedin['current']:
                 print 'Adding to queue FF: ' , imeth , thisCurr , iSet
                 inputparams.append(([imeth],thisCurr,[iSet],thisGammaList,feedin['mom']))
             
-DoFF(inputparams)
+starttime = time.time()
+feedin['anaproc'] = min(feedin['anaproc'],len(inputparams))
+if DoMulticore and feedin['anaproc'] > 1:
+    makeContextFunctions(DoFF)
+    thisPool = Pool(feedin['anaproc'])
+    thisPool.map(DoFF.mapper,inputparams)
+    thisPool.close()
+    thisPool.join()
+else:
+    for ip,iparam in enumerate(inputparams):
+        print 'Total percent: ' ,GetPercent(ip,len(inputparams))
+        print 'Time Left:' , GetTimeLeftStr(ip,len(inputparams),time.time()-starttime)
+        DoFF(*iparam)
 print 'Form Factor Creation Complete, time taken:', str(datetime.timedelta(seconds=time.time()-starttime)) , ' h:m:s '
