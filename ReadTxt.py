@@ -187,7 +187,6 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                         elif 'Fits' in iMeth:
                             if 'Top' in igamma:
                                 for iflow in FlowArgs:
-                                    print 'DEBUG FIX THIS'
                                     if iflow not in thisdict.keys(): continue
                                     for icut in FitCutArgs:
                                         if icut not in thisdict[iflow].keys(): continue
