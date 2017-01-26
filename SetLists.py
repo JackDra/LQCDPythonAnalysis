@@ -135,14 +135,20 @@ def CreateStateTsinkSet(thisState,tsinkL):
     return ['tsink'+str(itsink)+thisState for itsink in tsinkL]
 
 
-def CreateREvecSet(TSinkList,thisStateList,TvarList):
+def CreateREvecSet(TSinkList,thisStateList,TvarList,fliptodt=False):
     SetGraph = []
     SetTsink = []
     for itsink in TSinkList:
-        for istate in thisStateList:
+        if fliptodt:
             for itvar in TvarList:
-                SetGraph.append('tsink'+str(itsink)+'state'+str(istate)+itvar)
-                SetTsink.append(int(itsink))
+                for istate in thisStateList:
+                    SetGraph.append('tsink'+str(itsink)+'state'+str(istate)+itvar)
+                    SetTsink.append(int(itsink))
+        else:
+            for istate in thisStateList:
+                for itvar in TvarList:
+                    SetGraph.append('tsink'+str(itsink)+'state'+str(istate)+itvar)
+                    SetTsink.append(int(itsink))
     return SetGraph,SetTsink
 
 def CreateGenericSet(thisTSinkList,thisSmearList,thisStateList,thisTvarList):

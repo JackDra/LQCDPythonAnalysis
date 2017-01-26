@@ -149,7 +149,7 @@ def CreateRFTop(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thi
         data3ptsetTop = np.array(data3ptsetTop)
         data3ptset = np.array(data3ptset)
         data2ptset = np.array(data2ptset)
-        SetList,dump = CreateREvecSet(thisTSinkList,StateSet,PoFTvarList)
+        SetList,dump = CreateREvecSet(thisTSinkList,StateSet,PoFTvarList,fliptodt=True)
         print 'CMTech Total Time Taken: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
     elif 'TSink' == RunType:
         raise IOError('TSink Run type not implemented for 3 point Top Charge stuff')        

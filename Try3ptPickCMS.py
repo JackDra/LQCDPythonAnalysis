@@ -123,9 +123,11 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         if len(data3pt) < 2 and TimeInv: raise IOError("PoF needs atleast two tsinks with time invariance")
         data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
         data3ptset,data2ptset = [],[]
-        for iPoF in PoFTvarList:
-            print 'Creating PoF CM Tech ' , PoFTvarList[0]
-            [CMdata2pt,CMdata3pt] = CreateREPoFCfuns(np.array(data3pt),data2pt,DefPoFVarList[0],thisMomList)
+        start = time.time()
+        for itodt,iTvar in zip(DefPoFVarList,PoFTvarList):
+            print 'Creating PoF CM Tech ' , iTvar
+            thisstart = time.time()
+            [CMdata2pt,CMdata3pt] = CreateREPoFCfuns(np.array(data3pt),data2pt,itodt,thisMomList,todtvalsLeft = DefPoFTvarRef)
             # if Debug:
             # for it in range(0,15):
             #     print
@@ -137,7 +139,7 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
             print 'CMTech ' , iTvar , ' Time Taken: ' , str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s  '
         data3ptset = np.array(data3ptset)
         data2ptset = np.array(data2ptset)
-        SetList,dump = CreateREvecSet(thisTSinkList,StateSet,PoFTvarList)
+        SetList,dump = CreateREvecSet(thisTSinkList,StateSet,PoFTvarList,fliptodt=True)
         print 'CMTech Total Time Taken: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
     elif 'TSink' == RunType:
         data2pt = np.array(PreptwoptCorr(data2pt[0]))
