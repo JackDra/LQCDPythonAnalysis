@@ -84,6 +84,8 @@ def ReadAlphaList(thisset):
     twoptset = ReduceTooMassSet([thisset])[0]
     DictRead = ReadAlphaFitFile(outputdir[0],twoptset,thisMomList=['q = 0 0 0'])
     outdict = [1.0]
+    if 'q = 0 0 0' not in DictRead.keys():
+        raise IOError(' Alpha Fit File not read in properly for' + twoptset )
     for thisflow,flowdict in DictRead['q = 0 0 0']['Boots'].iteritems():
         if thisflow in thisset:
             if AlphaFitRPick in flowdict.keys():
