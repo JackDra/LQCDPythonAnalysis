@@ -83,11 +83,15 @@ def ReadAlphaSet(thisSetList,thisMomList):
 def ReadAlphaList(thisset):
     twoptset = ReduceTooMassSet([thisset])[0]
     DictRead = ReadAlphaFitFile(outputdir[0],twoptset,thisMomList=['q = 0 0 0'])
-    print DictRead
     outdict = [1.0]
     for thisflow,flowdict in DictRead['q = 0 0 0']['Boots'].iteritems():
         if thisflow in thisset:
-            outdict = [flowdict[AlphaFitRPick].Avg] + np.array(flowdict[AlphaFitRPick].values).tolist()
+            if AlphaFitRPick in flowdict.keys():
+                outdict = [flowdict[AlphaFitRPick].Avg] + np.array(flowdict[AlphaFitRPick].values).tolist()
+            else:
+                raise IOError(AlphaFitRPick+ ' not in alpha file ' + twoptset)
+    if outdict == [1.0]:
+        raise IOError(thisset + ' does not contain the flow time in file ' )
     return outdict
     
 # R/L Evecs [ ip , istate , ival ]
