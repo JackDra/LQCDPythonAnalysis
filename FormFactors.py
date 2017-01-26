@@ -169,7 +169,7 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True,alphalist = [1.0]):
                 thisdataout[iqs]['Boot'] = FFBoothold
                 thisdataout[iqs]['Avg'] = FFAvghold
         thisdataout[iqs]['Chi'] = FFChihold[0]
-        print 'All Done',iqs,', time taken:' , GetTimeStr(time.time()-momstart)
+        # print 'All Done',iqs,', time taken:' , GetTimeStr(time.time()-momstart)
     return thisdataout,infodict
 
 

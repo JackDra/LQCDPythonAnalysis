@@ -205,7 +205,7 @@ def PrintFitToFile(data,dataChi,iset,filedir,filename,thisMomList,thisCutList,mo
         datadict,outputfile = SetUpPDict(ip,filedir,filename)
         datadict[ip]['Info'] = mominfoRF[ipc]
         print outputfile
-        if 'Top' in outputfile and 'Top'+kappalist[0] not in outputfile:
+        if 'Top' in outputfile.replace('Top'+kappalist[0],''):
             for iflow,flowdata,flowdataChi in zip(flowlist,pdata,pdataChi):
                 datadict[ip]['Boots'][iflow] = OrderedDict()
                 datadict[ip]['Values'][iflow] = OrderedDict()
