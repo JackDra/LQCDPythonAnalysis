@@ -131,10 +131,10 @@ def CreateRFTop(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thi
         for itodt,iTvar in zip(DefPoFVarList,PoFTvarList):
             thisstart = time.time()
             print 'Creating PoF CM Tech ' , iTvar
-            [CMdata2pt,CMdata3pt] = CreateREPoFCfuns(np.array(data3pt),data2pt,itodt,thisMomList)
+            [CMdata2pt,CMdata3pt] = CreateREPoFCfuns(np.array(data3pt),data2pt,itodt,thisMomList,todtvalsLeft = DefPoFTvarRef)
             CMdata3ptTop = []
             for flow3pt in data3ptTop:
-                CMdata3ptTop.append(CreateREPoFCfuns(np.array(flow3pt),data2pt,itodt,thisMomList)[-1])
+                CMdata3ptTop.append(CreateREPoFCfuns(np.array(flow3pt),data2pt,itodt,thisMomList,todtvalsLeft = DefPoFTvarRef)[-1])
             
             # if Debug:
             # for it in range(0,15):

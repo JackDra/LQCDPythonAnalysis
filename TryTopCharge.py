@@ -54,7 +54,7 @@ def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     makeContextFunctions(CreatePoF2ptCfuns)
     makeContextFunctions(CreateCM2ptCfuns)
     for itodtPoF in DefPoFVarList:
-        PoFinputparams.append((data2pt,itodtPoF,thisMomList))
+        PoFinputparams.append((data2pt,itodtPoF,thisMomList,DefPoFTvarRef))
     for itodt in AnatodtList:
         CMinputparams.append((data2pt[0],itodt,thisMomList))
 
@@ -101,7 +101,7 @@ def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
         # print 'CM Technique for Tflow=',itop,' \r'
         # for icount,itodt in enumerate(DeftodtList):
         for itodtPoF in DefPoFVarList:
-            PoFinputparams.append((topdata,itodtPoF,thisMomList))
+            PoFinputparams.append((topdata,itodtPoF,thisMomList,DefPoFTvarRef))
         for itodt in AnatodtList:
             CMinputparams.append((topdata[0],itodt,thisMomList))
 

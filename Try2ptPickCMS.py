@@ -48,7 +48,7 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     makeContextFunctions(CreateCM2ptCfuns)
     for icount,itodt in enumerate(DeftodtList):
         CMinputparams.append((data2pt[0],itodt,thisMomList))
-        PoFinputparams.append((data2pt,itodt,thisMomList))
+        PoFinputparams.append((data2pt,itodt,thisMomList,DefPoFTvarRef))
 
 
     if DoMulticore and feedin['anaproc'] > 1:

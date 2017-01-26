@@ -454,13 +454,15 @@ def GetTvarREvesPoF(Cfunin,thistodtvals,masscut,thisPoFShifts=PoFShifts):
 # R/L Evecs [ ip , istate , ival ]
 # Emass [ ip , istate ]
 
-def CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,printout=True,DoPoF=True):
+def CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,printout=True,DoPoF=True,todtvalsLeft=False):
+    if todtvalsLeft == False: todtvalsLeft = todtvals
     start = time.time()
     Cfuns2pt = np.array(Cfuns2pt)
     CMCfun2pt = []
     ##if ip**2 > pcutoff, make cfuns exclude sm128
     # LEvec,REvec,Emass = ReadLREM(todtvals,thisMomList,'PoF'+str(PoFShifts),NoWar=True)
-    LEvec,REvec,Emass = ReadLREM(todtvals,thisMomList,'CM',NoWar=True)
+    Dump,REvec,Emass = ReadLREM(todtvals,thisMomList,'CM',NoWar=True)
+    LEvec,Dump,EmassLeft = ReadLREM(todtvalsLeft,thisMomList,'CM',NoWar=True)
     if (not DoPoF) or (not ReadPoF2pt) or (LEvec == None):
         Emass,LEvec,REvec = [],[],[]
         for ip,thisp in enumerate(thisMomList):
@@ -514,12 +516,15 @@ def CreateREvecCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
 
 # #Cfuns3pt [ tsink, tsource , ism , 1 , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
 # #CMCfun3pt  [ istate , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-def CreateREPoFCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList):
+def CreateREPoFCfuns(Cfuns3pt,Cfuns2pt,todtvals,thisMomList,todtvalsLeft=False):
+    if todtvalsLeft == False: todtvalsLeft = todtvals
     twoptMomList = GetAvgMomListip(thisMomList)
     if PoFShifts == 0:
-        LEvec,REvec,Emass = ReadLREM(todtvals,twoptMomList,'CM')
+        Dump,REvec,Emass = ReadLREM(todtvals,twoptMomList,'CM')
+        LEvec,Dump,EmassLeft = ReadLREM(todtvalsLeft,twoptMomList,'CM')
     else:
-        LEvec,REvec,Emass = ReadLREM(todtvals,twoptMomList,'PoF'+str(PoFShifts))
+        Dump,REvec,Emass = ReadLREM(todtvals,twoptMomList,'PoF'+str(PoFShifts))
+        LEvec,Dump,EmassLeft = ReadLREM(todtvalsLeft,twoptMomList,'PoF'+str(PoFShifts))
         
     if REvec == None:
         CMCfun2pt,LEvec,REvec,Emass = CreatePoF2ptCfuns(Cfuns2pt,todtvals,twoptMomList,DoPoF=True,printout=False)

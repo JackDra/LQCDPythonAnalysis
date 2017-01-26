@@ -184,7 +184,8 @@ def FitDefGuess(Fun,Len=1):
     if Fun.__name__ == 'FormFactorO2':
         return [1,1]
     if Fun.__name__ == 'FormFactorO3':
-        return [1,1,1]
+        # return [1,1,1]
+        return [1.0,0.5,0.1]
     if Fun.__name__ == 'FormFactorO':
         return [1]*Len
     if Fun.__name__ == 'ConstantFitFun':
