@@ -933,7 +933,8 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
     #     pl.plot(fitqdata+thisshift,-np.array(fitydataAvg),label=LegVal,color=thiscol)
     #     pl.fill_between(fitqdata+thisshift,-np.array(fitydataup),-np.array(fitydatadown),color=thiscol,alpha=thisalpha,edgecolor='none')
     # else:
-    pl.plot(fitqdata+thisshift,fitydataAvg,label=LegVal,color=thiscol)
+    pl.plot(fitqdata+thisshift,fitydataAvg,color=thiscol)
+    pl.errorbar([0.0],[Avg[0]],[Err[0]],fmt='--',color=thiscol,label=LegVal)
     # pl.fill_between(fitqdata+thisshift,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
 
     

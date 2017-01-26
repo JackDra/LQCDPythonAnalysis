@@ -160,7 +160,7 @@ def CreateRFTop(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thi
         # SetList = ['tsink'+str(thisTSinkList[0])+'sm'+ism for ism in thisSmearList]
     print 'Analysis Complete'
 
-    [RFr,SqrtFac] = CalcRatioFactor(data2ptset,data3ptset,str(thisTSinkList[0]),thisMomList)
+    # [RFr,SqrtFac] = CalcRatioFactor(data2ptset,data3ptset,str(thisTSinkList[0]),thisMomList)
     RFrTop = []
     for flowdata in np.rollaxis(data3ptsetTop,1):
         RFrTop.append(CalcRatioFactor(data2ptset,flowdata,str(thisTSinkList[0]),thisMomList)[0])
@@ -176,17 +176,17 @@ def CreateRFTop(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thi
         thisMomList = thisMomList[1:]
         data3ptset = data3ptset[:,:,1:,:]
         data3ptsetTop = np.array(data3ptsetTop)[:,:,:,1:,:]
-        RFr = RFr[:,:,1:,:]
+        # RFr = RFr[:,:,1:,:]
         RFrTop = np.array(RFrTop)[:,:,:,1:,:]
     ## data2ptset [ iset , ip , it ]
     ## data3ptset [ iset , igamma , ip , it ] bs1
     ## data3ptsetTop [ iflow, iset , igamma , ip , it ] bs1
-    PrintCfunToFile(np.rollaxis(data3ptset,1),SetList,thisMomList,thisGammaList,AddDict=InfoDict)
+    # PrintCfunToFile(np.rollaxis(data3ptset,1),SetList,thisMomList,thisGammaList,AddDict=InfoDict)
     PrintTopCfunToFile(np.rollaxis(np.rollaxis(data3ptsetTop,1),2),SetList,thisMomList,thisGammaList,thisTopList,AddDict=InfoDict)
 
     ## RFr = [  iset , igamma , ip , it ] bs1
     ## RFrTop = [  iflow , iset , igamma , ip , it ] bs1
-    PrintSetToFile(np.rollaxis(RFr,1),SetList,thisMomList,thisGammaList,thisTSinkList[0],AddDict=InfoDict)
+    # PrintSetToFile(np.rollaxis(RFr,1),SetList,thisMomList,thisGammaList,thisTSinkList[0],AddDict=InfoDict)
     PrintTopSetToFile(np.rollaxis(np.rollaxis(RFrTop,1),2),SetList,thisMomList,thisGammaList,thisTSinkList[0],thisTopList,AddDict=InfoDict)
 
     print 'Finished '+ RunType + ' tsink='+str(thisTSinkList[0]) + ' '+iglog + '                       '
