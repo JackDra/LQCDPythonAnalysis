@@ -21,6 +21,7 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True,alphalist = [1.0]):
     Opps = CurrOpps[baseCurr]
     thisdataout = OrderedDict()
     infodict = {}
+    print alphalist
     for iqsqrd in MomSqrdSet:        
         iqs = 'qsqrd'+str(iqsqrd)
         thisdataout['qsqrd'+str(iqsqrd)] = {}
@@ -82,8 +83,6 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True,alphalist = [1.0]):
             if len(datavals) == 1:
                 if sum(ia == [0.0] for ia in FFcoeff[0]) != 2: continue
                 if FFcoeff[0,0] != [0.0]:
-                    print len(FFcoeff)
-                    print len(FFcoeff[0][0])
                     FFBoothold,FFAvghold,FFChihold = FitBoots(datavals,[FFcoeff[:,0,:]],FFFitFuns['Scalar'],tBooted=DoTop)
                     thisdataout[iqs]['Boot'] = FFBoothold+zboot+zboot
                     thisdataout[iqs]['Avg'] = FFAvghold+zvec+zvec
