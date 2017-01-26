@@ -62,9 +62,9 @@ def Trange(ydata,tdata):
 #     return np.abs(np.log(ydata[np.array(tdata)]/ydata[np.array(tdata)+int(massdt)]))/massdt
 
 def FitRFWrap(ydata,tdata):
-    if Debug:
-        print tdata
-        print Pullflag(Trange(ydata,tdata),'Avg')
+    # if Debug:
+    #     print tdata
+    #     print Pullflag(Trange(ydata,tdata),'Avg')
     boot,Avg,Err = FitBoots(Trange(ydata,tdata),tdata,ConstantFitFun)
     return [boot[0],Avg[0],Err[0]]
 

@@ -57,7 +57,7 @@ def TryFitsFun(thisGammaList,thisSetList,thisReadMomList,thisTSinkList,thischunk
                         FitDataChi[igamma][imom][icf].append(dataoutChi)
             else:
                 for icut in FitCutList:
-                    momdata = dataRF[igamma][imom]
+                    momdata = np.array(dataRF[igamma][imom])
                     dataoutBoot,dataoutAvg,dataoutChi = FitRFSet(momdata,thisTSinkList,icut)
                     FitDataBoot[igamma][imom].append(dataoutBoot)
                     FitDataAvg[igamma][imom].append(dataoutAvg)

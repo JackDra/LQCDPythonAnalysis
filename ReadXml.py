@@ -163,7 +163,7 @@ def ReadAlphaFitFile(filedir,iset,thisMomList=RunMomList,BSClass=False):
 def ReadRFFile(filedir,filename,thisMomList=RunMomList):
     renorm = GetRenorm(filename)
     dictout = {}
-    TopFile = 'Top' in filename
+    TopFile = ('Top' in filename) and ('Top'+kappalist[0] not in filename)
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
@@ -238,7 +238,7 @@ def ReadFitFile(filedir,filename,thisMomList=RunMomList):
             data = data[data.keys()[0]]
             if 'Boots' in data.keys():
                 bootdata = data['Boots']
-                if 'Top' in readfile:
+                if 'Top' in readfile and 'Top'+kappalist[0] not in readfile:
                     dictout[thismom] = OrderedDict()
                     for iflow,flowdata in bootdata.iteritems():
                         dictout[thismom][iflow] = OrderedDict()

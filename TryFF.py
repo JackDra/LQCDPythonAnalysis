@@ -38,6 +38,7 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr,Rfac):
     thisstart = time.time()
     thisDS,baseCurr,dump = SplitDSCurr(thisCurr)
     if 'Top' in thisCurr:
+        baseCurr = baseCurr+'Top'
         alphalist = ReadAlphaList(theset)
     else:
         alphalist = [1.0]

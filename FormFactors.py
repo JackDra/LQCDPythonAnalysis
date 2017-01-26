@@ -10,6 +10,7 @@ from collections import OrderedDict
 from BootTest import BootStrap1
 from FFParams import *
 from LLSBoot import *
+import time
 
 ## data { { gamma } { mom } { Fit(Boot/Avg/Std/Chi) } }
 ## dataout { { momsqrd } { Boot/Avg/Chi }
@@ -22,6 +23,7 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True,alphalist = [1.0]):
     thisdataout = OrderedDict()
     infodict = {}
     for iqsqrd in MomSqrdSet:        
+        momstart = time.time()
         iqs = 'qsqrd'+str(iqsqrd)
         thisdataout['qsqrd'+str(iqsqrd)] = {}
         datavals,FFcoeff = [],[]
@@ -36,6 +38,7 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True,alphalist = [1.0]):
             if flagopp in data.keys(): RealVal = True
             if flagopp+'cmplx' in data.keys(): CmplxVal = True
             if not RealVal and not CmplxVal: continue
+            start = time.time()
             for iq in qvecINqsqrd(int(iqsqrd)):
                 if RealVal: 
                     if iq not in data[flagopp].keys(): continue 
@@ -58,6 +61,7 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True,alphalist = [1.0]):
                             datavals.append(data[flagopp][iq]['Boot'])
                             infodict[iqs] = data[flagopp][iq]['Info']
                             opplist.append(flagopp +' '+ iq)
+            # print 'PullOutLHS iopp',iopp,', time taken:' , GetTimeStr(time.time()-start)
 
         if len(datavals) == 0: continue
         zboot,zvec = [BootStrap1(nboot,0)],[0.0]        
@@ -165,6 +169,7 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True,alphalist = [1.0]):
                 thisdataout[iqs]['Boot'] = FFBoothold
                 thisdataout[iqs]['Avg'] = FFAvghold
         thisdataout[iqs]['Chi'] = FFChihold[0]
+        print 'All Done',iqs,', time taken:' , GetTimeStr(time.time()-momstart)
     return thisdataout,infodict
 
 

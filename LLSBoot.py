@@ -9,7 +9,8 @@ from scipy.optimize import leastsq,curve_fit
 from Params import *
 from FitParams import *
 from MiscFuns import *
-
+import time
+import datetime
 ##Fitting Routines##
 
 
@@ -157,6 +158,7 @@ def LSFit(parlen,xdata,yerr,fitfun,ydata,derfun=None,iGuess = None):
 ## xdata [ [ [x1values] , [x2values] , ..... [xnvalues] ]_Average , [ [x1values] , [x2values] , ..... [xnvalues] ]_boot1 ....  ]
 ## for bootstrapped x values
 def FitBoots(ydatain,xdatain,FitFun,DoW='T',MI=MaxIters,parlen=1,tBooted=False,thisnboot=nboot,derfun=None,iGuess = None):
+    totstart = time.time()
     GetBootStats(ydatain)
     # print ydatain
     # print Pullflag(ydatain,'Avg')
@@ -170,11 +172,13 @@ def FitBoots(ydatain,xdatain,FitFun,DoW='T',MI=MaxIters,parlen=1,tBooted=False,t
         ydataStd = Pullflag(ydatain,'Std')
     else:
         ydataStd = [1]*len(ydataAvg)
+    start = time.time()
     if tBooted:
         [fitdataAvg,fitdataAvgErr,fitdataChi] = LSFit(parlen,xdatain[0],ydataStd,FitFun,ydataAvg,derfun,iGuess)
     else:
         [fitdataAvg,fitdataAvgErr,fitdataChi] = LSFit(parlen,xdatain,ydataStd,FitFun,ydataAvg,derfun,iGuess)
-
+    # if Debug: print 'fit avg took: ' , GetTimeStr(time.time()-start)
+        
     if MultiCoreFitting:
         makeContextFunctions(LSFit)
         FitPool = Pool(processes=AnaProc)
@@ -191,10 +195,12 @@ def FitBoots(ydatain,xdatain,FitFun,DoW='T',MI=MaxIters,parlen=1,tBooted=False,t
     else:
         fitdatavals = []
         for iboot,bootdata in enumerate(ydatavals):
+            start = time.time()
             if tBooted:
                 tempboot = LSFit(parlen,xdatain[iboot+1],ydataStd,FitFun,bootdata,derfun,iGuess)
             else:
                 tempboot = LSFit(parlen,xdatain,ydataStd,FitFun,bootdata,derfun,iGuess)
+            # if Debug: print 'fit iboot'+str(iboot),' took: ' , GetTimeStr(time.time()-start)
             fitdatavals.append([])
             for iy,iyd in enumerate(tempboot[0]):
                 fitdatavals[iboot].append(iyd)
@@ -203,6 +209,7 @@ def FitBoots(ydatain,xdatain,FitFun,DoW='T',MI=MaxIters,parlen=1,tBooted=False,t
             for iboot in range(thisnboot):
                 fitdata[iy].values[iboot] = fitdatavals[iboot][iy]
     GetBootStats(fitdata)
+    # if Debug: print 'fit total took: ' , GetTimeStr(time.time()-totstart)
     # fitdataChi = CalcChiSqrdPDF(FitFun,fitdataAvg,xdatain,ydataAvg,ydataStd)
     return fitdata,fitdataAvg,[fitdataChi]*len(fitdata)
 
