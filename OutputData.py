@@ -22,7 +22,7 @@ def PrintTopCfunToFile(C3setTop,thisSetList,thisMomList, thisGammaList,thisTopLi
         else:
             thegamma = thegamma+'Top'
         for iset,setdata in zip(thisSetList,gammadata):
-            print 'Printing Top : ' , thegamma , iset , '                \r',
+            print 'Printing cfuns Top : ' , thegamma , iset , '                \r',
             Print3ptTopToFile(np.rollaxis(np.array(setdata),1),gammadir,iset+thegamma,thisTopList,range(nt),thisMomList,AddDict=AddDict,frmtflag='e')
 
 

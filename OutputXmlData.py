@@ -53,6 +53,8 @@ def WriteXmlOutput(thisfile,outputdict):
     if 'Info' in outputdict[firstkey].keys(): Vals[firstkey]['Info'] = outputdict[firstkey]['Info']
     Boots = outputdict[firstkey]['Boots']
     outdirlist = thisfile.split('/')
+    thisdir = '/'.join(outdirlist[:-1])
+    mkdir_p(thisdir)
     bootdir = '/'.join(outdirlist[:-1]+['boots'])
     bootout = '/'.join(outdirlist[:-1]+['boots']+[outdirlist[-1]])
     mkdir_p(bootdir)
