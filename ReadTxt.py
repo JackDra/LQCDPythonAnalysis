@@ -192,8 +192,8 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                                 for icut in FitCutArgs:
                                     if icut in thisdict.keys():
                                         datadictout = SetupDict(datadictout,igamma,iSet+iMeth+icut)
-                                        datadictout[iSet+iMeth+icut+iflow][igamma][imom] = thisdict[icut]
-                                        datadictout[iSet+iMeth+icut+iflow][igamma][imom]['Info'] = thisdict['Info']
+                                        datadictout[iSet+iMeth+icut][igamma][imom] = thisdict[icut]
+                                        datadictout[iSet+iMeth+icut][igamma][imom]['Info'] = thisdict['Info']
     if thisPrintRead: print 'Extracting data took: ', str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                  '
     return datadictout,datamassout
 
