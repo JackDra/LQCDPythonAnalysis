@@ -891,10 +891,12 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
         thiscol = thiscolcyc.next()
         collist.append(thiscol)
         skipzero,flipsign = SkipZeroFF(thisFF,keyset,thisCurr)
-        if ('IsoVectorPsVector' in thisDSCurr and 'FF2' in thisFF) or ('NeutronGeGm' in thisDSCurr and 'FF1' in thisFF) or 'F1divF2' in thisDSCurr:
+        if ('IsoVectorPsVector' in thisDSCurr and 'FF2' in thisFF) or ('NeutronGeGm' in thisDSCurr and 'FF1' in thisFF) or 'F1divF2' in thisDSCurr or 'FF3' in thisFF:
         # if ('IsoVectorPsVector' in thisDSCurr) or ('NeutronGeGm' in thisDSCurr and 'FF1' in thisFF):
             thisshift = thisshiftcycff.next()
             qrange = PlotFF(dataset[keyset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
+            if 'FF3' in thisFF:
+                PlotDPFit(keyset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign,datf,thiskappa)
         else:
             thisshift = 0.0
             qrange = PlotFF(dataset[keyset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
