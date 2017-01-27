@@ -5,6 +5,7 @@ matplotlib.use('PDF') # Must be before importing matplotlib.pyplot or pylab!
 import matplotlib.pyplot as pl
 from Params import *
 from FitFunctions import DPfitfun,DPfitfun2,AlphaVsChiDOF
+from FitFunctions import LinearFitFun
 from FitFunctions import DPfitfunOnePar,ChiDistribution
 import numpy as np
 from BootTest import BootStrap1
