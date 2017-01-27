@@ -136,7 +136,7 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCom
 feedin = InputParams(sys.argv[1:] + ['-noprompt'])
     
 thisGammaList = CreateGammaList(feedin['gamma'],twopt=True)
-
+print thisGammaList
 
 if thisGammaList == ['twopt']:
     # # feedin['method'] = ['RF','OSFCM','TSFCM']

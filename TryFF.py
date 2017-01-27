@@ -85,7 +85,7 @@ def DoFF(inputlist):
     for data,MassSet in zip(datalist,MassSetlist):
         for theset,setdict in data.iteritems():
             # print outputdir[0] +'/FormFactors/'+DefDSList[0]+thisCurr+'/'+DefDSList[0]+thisCurr+theset+'.xml'
-            if not all([os.path.isfile(outputdir[0] +'/FormFactors/'+iDS+thisCurr+'/'+iDS+thisCurr+theset+'.xml') for iDS in DefDSList]):
+            if (not all([os.path.isfile(outputdir[0] +'/FormFactors/'+iDS+thisCurr+'/'+iDS+thisCurr+theset+'.xml') for iDS in DefDSList])) or DefWipe:
                 inputparams.append(PickMassSet(MassSet,theset)+(theset,setdict,thisCurr,'SF' not in theset))
 
 

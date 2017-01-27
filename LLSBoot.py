@@ -74,12 +74,12 @@ def DerOfFun(Fun,Len=1):
         return TestTwoVarFFDer
     elif Fun.__name__ == 'FormFactorO1':
         return FormFactorO1Der
-    elif Fun.__name__ == 'FormFactorO':
-        return CreateFFO(Len)[1]
     elif Fun.__name__ == 'FormFactorO2':
         return FormFactorO2Der
     elif Fun.__name__ == 'FormFactorO3':
         return FormFactorO3Der
+    elif Fun.__name__ == 'FormFactorO':
+        return CreateFFO(Len)[1]
     elif Fun.__name__ == 'DPfitfunOnePar':
         return DPfitfunOneParDer
     elif Fun.__name__ == 'DPfitfun2':
