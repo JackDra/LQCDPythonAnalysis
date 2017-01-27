@@ -960,14 +960,14 @@ def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
         if FlipSign: dataavg = -1*np.array(dataavg)
         if ForcePos: dataavg = np.abs(dataavg)
         AppendFFDat(qsqrdvals,dataavg,dataerr)
+        for iq,qavg,qerr in zip(qsqrdvals,dataavg,dataerr):
+            print iq,qavg,qerr
         if SkipZero and len(qsqrdvals) > 1:
             pl.errorbar(qsqrdvals[1:],dataavg[1:],dataerr[1:],color=col,fmt=sym,label=lab)
         elif FixZ != False:
             pl.plot([0],[FixZ],sym,color=col)            
             pl.errorbar(qsqrdvals[1:],dataavg[1:],dataerr[1:],color=col,fmt=sym,label=lab)            
         else:
-            for iq,qavg,qerr in zip(qsqrdvals,dataavg,dataerr):
-                print iq,qavg,qerr
             pl.errorbar(qsqrdvals,dataavg,dataerr,color=col,fmt=sym,label=lab)
     return qsqrdvals
 
