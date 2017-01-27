@@ -52,11 +52,22 @@ def PlotSumMethSets(currdata,thiscurr,thisSetList):
 def PlotFitMethSets(currdata,thiscurr,thisSetList):
     # PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit','tsink29','cut6')+FlagList(thisSetList,'Fit','PoF','cut6'),'FitMytsink29')
     # PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit','sm32','cut6'),'FitMysm32')
-    for iset in DefSetList:
-        PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit',iset),'Fit'+iset+'CutComp')
-    for icut in FitCutArgs:
-        PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit',icut),'Fit'+icut+'SetComp')
-        
+    if 'Top' in thiscurr:
+        for iset in DefSetList:
+            for icut in FitCutArgs:
+                PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit',iset,icut),'Fit'+iset+icut+'CutComp')
+        for icut in FitCutArgs:
+            for iflow in FlowArgs:
+                PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit',icut,iflow),'Fit'+icut+iflow+'SetComp')
+        for iset in DefSetList:
+            for iflow in FlowArgs:
+                PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit',iset,iflow),'Fit'+iset+iflow+'CutComp')
+    else:
+        for iset in DefSetList:
+            PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit',iset),'Fit'+iset+'CutComp')
+        for icut in FitCutArgs:
+            PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit',icut),'Fit'+icut+'CutComp')
+                
 
 def PickFFAllSets(currdata,thiscurr,thisSetList):
     PickedSetList = []
