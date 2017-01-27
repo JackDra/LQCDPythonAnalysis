@@ -876,7 +876,7 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
     elif 'FF2' in thisFF:
         datf.write('\(\mu\)  \n')
     else:
-        datf.write('nothing \n')
+        datf.write('F_{3}(0) \n')
     # for thisset in SortMySet(thisSetFlag)[0]:
     for thisset in thisSetFlag:
         ##make legend formatting function
@@ -897,6 +897,7 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
             qrange = PlotFF(dataset[keyset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
         else:
             thisshift = 0.0
+            print thisFF
             qrange = PlotFF(dataset[keyset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
             # if 'sm32' in thisset or 'CM' in thisset or 'TSF' in thisset or '12104' in str(thiskappa):
             PlotDPFit(keyset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign,datf,thiskappa)
@@ -927,7 +928,8 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
         LegVal = '$\\mu='+MakeValAndErr(Avg[0],Err[0])+'$'        
         datf.write(MakeValAndErr(Avg[0],Err[0])+' \n')
     else:
-        LegVal = 'nothing'        
+        LegVal = '$F_{3}(0)='+MakeValAndErr(Avg[0],Err[0])+'$'        
+        datf.write(MakeValAndErr(Avg[0],Err[0])+' \n')
     # print 'DPFit flip sign', flipsign
     # if flipsign:
     #     pl.plot(fitqdata+thisshift,-np.array(fitydataAvg),label=LegVal,color=thiscol)
@@ -964,6 +966,9 @@ def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
             pl.plot([0],[FixZ],sym,color=col)            
             pl.errorbar(qsqrdvals[1:],dataavg[1:],dataerr[1:],color=col,fmt=sym,label=lab)            
         else:
+            if Debug:
+                for iq,qavg,qerr in zip(qsqrdvals,dataavg,dataerr):
+                    print iq,qavg,qerr
             pl.errorbar(qsqrdvals,dataavg,dataerr,color=col,fmt=sym,label=lab)
     return qsqrdvals
 
