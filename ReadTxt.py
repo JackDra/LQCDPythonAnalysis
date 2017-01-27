@@ -302,7 +302,7 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
             if not CheckDict(datadict,igamma,imom,'RF'): continue
             for iset in datadict[igamma][imom]['RF'].keys():
                 twoptiset = 'tsrc'+str(tsource)+RemoveTSink(iset)
-                if not CheckDict(datadict['twopt'][twoptmom],'RF',twoptiset): continue
+                if not CheckDict(datadict,'twopt',twoptmom,'RF',twoptiset): continue
                 # if thisPrintRead: print RemoveTSinkTsrc(iset)+' not in two point set list, not constructing RF'
                 data3pt = data3ptdict[igamma][imom]['RF'][iset]['Boot']
                 for iSF in ['OSF'+iOSF for iOSF in OSFFileFlags]+['TSF'+iTSF for iTSF in TSFFileFlags]:
