@@ -1026,9 +1026,10 @@ def PlotFit(data,col,shift,iset,thistsink):
             print 'warning', iset, 'not in FitCutPicked'
             print FitCutPicked.keys()
     else:
-        thiscutint = int(thiscut.replace('cut',''))
-        LRM = max((int(thistsink)-tsource)/2.-thiscutint,0)
-        tvals = np.array([-LRM+shift,LRM+shift])
+        cutlow,cuthigh = map(int,thiscut.replace('cut','').split('-'))
+        LM = max((int(thistsink)-tsource)/2.-cutlow,0)
+        RM = max((int(thistsink)-tsource)/2.-cuthigh,0)
+        tvals = np.array([-LM+shift,RM+shift])
         # if Debug:
         #     print data.keys(), thiscut
         #     print data[thiscut].keys(), 'Boot'
