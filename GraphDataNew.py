@@ -574,7 +574,7 @@ def PlotCol(data,thisSetList,thisflag,thisGamma,thisMom,TitlePref):
         thislegrem = 'state1'
     else:
         thislegrem = thisflag[0]
-    PlotRFSet(data,SiftAndSort(thisSetList,thisflag,nocm=False),legrem=thislegrem)
+    PlotRFSet(data,SiftAndSort(thisSetList,thisflag,nocm=False),legrem=thislegrem,Top='Top' in thisGamma)
     SetRFAxies(thisGamma)
     pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+'.pdf')
     pl.clf()
