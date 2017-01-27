@@ -120,7 +120,7 @@ def LinearFitFun(x,p):
     return p[0]*np.array(x[0])+p[1]
 
 def LinFFDer(x,p):
-    return [x,makexunit(x[0])]
+    return [x[0],makexunit(x[0])]
 
 def TestTwoVarFitFun(x,p):
     return p[0]*x[0]+ p[1]*x[1]**2
