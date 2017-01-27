@@ -658,7 +658,7 @@ def PlotRFSetSum(data,thisSetList,thisTsinkR,legrem=''):
 
 
 
-def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
+def PlotRFSet(data,thisSetList,legrem='',MassDt = False,Top=False):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     if MassDt == False:
         iterSetList = SortMySet(thisSetList)[0]
@@ -668,10 +668,17 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False):
         if not CheckDict(data,'RF',iset): continue
         if MassDt == False:
             thiscol,thisshift = thiscolcyc.next(),thisshiftcyc.next()
-            thistsink = data['RF'][iset]['tVals'][-1]
-            PlotRF(data['RF'][iset],thiscol,thissymcyc.next(),thisshift,LegLab(iset.replace(legrem,'')))
-            if CheckDict(data,'Fits',iset):
-                PlotFit(data['Fits'][iset],thiscol,thisshift,iset,thistsink)
+            if Top:                
+                thistflow = 't_flow4.01'
+                thistsink = data['RF'][iset][thistflow]['tVals'][-1]
+                PlotRF(data['RF'][iset][thistflow],thiscol,thissymcyc.next(),thisshift,LegLab(iset+thistflow.replace(legrem,'')))
+                if CheckDict(data,'Fits',iset,thistflow):
+                    PlotFit(data['Fits'][iset][thistflow],thiscol,thisshift,iset+thistflow,thistsink)
+            else:
+                thistsink = data['RF'][iset]['tVals'][-1]
+                PlotRF(data['RF'][iset],thiscol,thissymcyc.next(),thisshift,LegLab(iset.replace(legrem,'')))
+                if CheckDict(data,'Fits',iset):
+                    PlotFit(data['Fits'][iset],thiscol,thisshift,iset,thistsink)
         else:
             dataplot = deepcopy(data['RF'][iset])
             dataplot['Boot'] = MassFun(dataplot['Boot'],MassDt)
