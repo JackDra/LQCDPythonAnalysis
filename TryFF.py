@@ -84,7 +84,8 @@ def DoFF(inputlist):
     inputparams = []
     for data,MassSet in zip(datalist,MassSetlist):
         for theset,setdict in data.iteritems():
-            inputparams.append(PickMassSet(MassSet,theset)+(theset,setdict,thisCurr,'SF' not in theset))
+            if not os.path.isfile(outputdir[0] +'/FormFactors/'+theCurr+'/'+theCurr+Set):
+                inputparams.append(PickMassSet(MassSet,theset)+(theset,setdict,thisCurr,'SF' not in theset))
 
 
     starttime = time.time()
@@ -135,5 +136,6 @@ for thisCurr in feedin['current']:
                 print 'Adding to queue FF: ' , imeth , thisCurr , iSet
                 inputparams.append(([imeth],thisCurr,[iSet],thisGammaList,feedin['mom']))
             
+starttime = time.time()
 DoFF(inputparams)
 print 'Form Factor Creation Complete, time taken:', str(datetime.timedelta(seconds=time.time()-starttime)) , ' h:m:s '
