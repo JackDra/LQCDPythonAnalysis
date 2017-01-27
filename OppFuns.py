@@ -285,6 +285,8 @@ def CreateGammaList(thislist,twopt=False):
                 GLout += DoubSingList(['P4'+ig])
             elif ig in DefCombGammaList:
                 GLout += [ig]
+            elif ig in [(igamma+'Top').replace('cmplxTop','Topcmplx') for igamma in DefCombGammaList]:
+                GLout += [ig]
             elif ig in ['twopt','Mass']:
                 GLout += ['twopt']
             else:
