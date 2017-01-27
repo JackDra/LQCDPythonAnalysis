@@ -941,7 +941,7 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
     # else:
     pl.plot(fitqdata+thisshift,fitydataAvg,color=thiscol)
     if Err[0] < 10.0:
-        pl.errorbar([0.0],[Avg[0]],[Err[0]],fmt='--',color=thiscol,label=LegVal)
+        pl.errorbar([0.0+thisshift],[Avg[0]],[Err[0]],fmt='--',color=thiscol,label=LegVal)
     # pl.fill_between(fitqdata+thisshift,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
 
     

@@ -37,7 +37,7 @@ for ifit in range(FitAlphaMinLeft,FitAlphaMaxLeft+1):
 
 
 
-FitCutMinLeft,FitCutMaxLeft = 1,3
+FitCutMinLeft,FitCutMaxLeft = 2,3
 FitCutMinRight,FitCutMaxRight = 4,9
 FitCutList,FitCutArgs = [],[]
 for icut in range(FitCutMinLeft,FitCutMaxLeft+1):
