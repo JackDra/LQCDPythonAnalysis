@@ -73,6 +73,7 @@ def VectorFFTop(opp,thisqvec,thisppvec,thismass,Rfac=True,alpha=1.0):
         for i in [1,2,3,4]:
             if i != int(opp[-1]) :
                 term3 += FFunCheck(opp+'g'+str(i)+'g5',thisp,thispp,thismass,Rfac=Rfac)*thisq[i]
+        term3 = term3/(2.0*thismass)
         rcheck,ccheck = (abs(term1.real)<myeps and abs(term2.real)<myeps and abs(term3.real)<myeps,
                          abs(term1.imag)<myeps and abs(term2.imag)<myeps  and abs(term3.imag)<myeps)
         return [term1,term2,term3],not rcheck, not ccheck
