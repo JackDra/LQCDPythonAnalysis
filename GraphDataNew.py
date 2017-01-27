@@ -911,11 +911,13 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
     if len(Avg) == 0: return
     Avg,Err = np.array(Avg),np.array(Err)
     fitqdata = np.arange(qrange[0]-thisshift,qrange[-1]+incr-thisshift,incr)
-    fitydataAvg = DPfitfun([fitqdata],Avg)
-    fitydataup = np.array([max(iy1,iy2) for iy1,iy2 in zip(DPfitfun([fitqdata],Avg+Err),DPfitfun([fitqdata],np.array([Avg[0]-Err[0],Avg[1]+Err[1]])))])
+    thisFitFun = DPfitfun
+    if '3' in thisFF: thisFitFun = LinearFitFun
+    fitydataAvg = thisFitFun([fitqdata],Avg)
+    fitydataup = np.array([max(iy1,iy2) for iy1,iy2 in zip(thisFitFun([fitqdata],Avg+Err),thisFitFun([fitqdata],np.array([Avg[0]-Err[0],Avg[1]+Err[1]])))])
     Avg,Err = np.array(Avg),np.array(Err)
-    fitydatadown = np.array([min(iy1,iy2) for iy1,iy2 in zip(DPfitfun([fitqdata],Avg-Err),DPfitfun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])))])
-    # fitydatadown = np.array([np.min(iy1,iy2) for iy1,iy2 in zip(DPfitfun([fitqdata],Avg-Err),DPfitfun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])))])
+    fitydatadown = np.array([min(iy1,iy2) for iy1,iy2 in zip(thisFitFun([fitqdata],Avg-Err),thisFitFun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])))])
+    # fitydatadown = np.array([np.min(iy1,iy2) for iy1,iy2 in zip(thisFitFun([fitqdata],Avg-Err),thisFitFun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])))])
     # if Debug: print Avg[1], Err[1]
     # if GetCharRad(Avg[1]) > 10 or Err[1]> 10: return
     ## Displays charge radius for FF1, and magnetic moment for FF2
