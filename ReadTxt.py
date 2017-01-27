@@ -288,7 +288,9 @@ def RewriteRF(RFdict,threeptdict,thisopp,thismom):
                 
 def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=RunMomList,thisPrintRead=PrintRead):
     if 'twopt' not in thisGammaList: raise IOError('twopt needed in set list')
-    data3ptdict = ReadCfunsDict(thisindir,thisSetList,thisGammaList,thisMomList=thisMomList)
+    sflist = ['OSF'+iOSF for iOSF in OSFFileFlags]+['TSF'+iTSF for iTSF in TSFFileFlags]
+    if any([imeth in sflist for imeth in thisMethodList]):
+        data3ptdict = ReadCfunsDict(thisindir,thisSetList,thisGammaList,thisMomList=thisMomList)
     datadict = ReadSetDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomList=thisMomList,thisPrintRead=thisPrintRead)
     zmomstr = 'q = 0 0 0'
     start = time.time()
@@ -305,7 +307,7 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
                 if not CheckDict(datadict,'twopt',twoptmom,'RF',twoptiset): continue
                 # if thisPrintRead: print RemoveTSinkTsrc(iset)+' not in two point set list, not constructing RF'
                 data3pt = data3ptdict[igamma][imom]['RF'][iset]['Boot']
-                for iSF in ['OSF'+iOSF for iOSF in OSFFileFlags]+['TSF'+iTSF for iTSF in TSFFileFlags]:
+                for iSF in sflist:
                     # print 'ONE ',datadict['twopt'][imom].keys(), iSF
                     # if CheckDict(datadict['twopt'][imom],iSF): print 'Two ',datadict['twopt'][imom][iSF].keys(), twoptiset, iset
                     if CheckDict(datadict['twopt'][twoptmom],iSF,twoptiset):
