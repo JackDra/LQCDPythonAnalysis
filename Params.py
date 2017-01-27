@@ -441,7 +441,9 @@ else:
     if kappa == 12:
         DefPoFVarPicked = [[1,1]]
     else:
-        DefPoFVarPicked = [[3,3],[1,3],[2,3],[4,3]]
+        # DefPoFVarPicked = [[3,3],[1,3],[2,3],[4,3]]
+        ## 1,3 not working for some reason
+        DefPoFVarPicked = [[3,3],[2,3],[4,3]]
 DefPoFTvarRef = DefPoFVarPicked[0]
 PoFTvarPicked = ['PoF'+str(PoFShifts)+'to'+str(iPoF[0])+'dt'+str(iPoF[1]) for iPoF in DefPoFVarPicked]
 
