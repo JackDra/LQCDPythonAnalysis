@@ -54,7 +54,7 @@ for iPi in GMAi:
 
 DictGMA4giDi = ReadProjDerList
 
-CurrTypes = ['Scalar','Vector','VectorTop','PsScalar','PsVector','Tensor']
+CurrTypes = ['Scalar','Vector','VectorTop','VectorTopNoV','PsScalar','PsVector','Tensor']
 DerCurrTypes = ['giDi']
 AllCurrTypes = CurrTypes + DerCurrTypes
 
@@ -75,6 +75,7 @@ DictCurrOpps = {'Scalar'   : DictGMAiI,
 CurrOpps = {'Scalar'   : PiI,
             'Vector'   : Pigi,
             'VectorTop': Pigi+PigiTop,
+            'VectorTopNoV': PigiTop,
             'PsScalar' : Pig5,
             'PsVector' : Pigig5,
             'Tensor'   : Pigigj}
@@ -83,6 +84,7 @@ CurrOpps = {'Scalar'   : PiI,
 CurrOppsNoProj = {'Scalar'   : ['I'],
                   'Vector'   : gi,
                   'VectorTop': gi+giTop,
+                  'VectorTopNoV': giTop,
                   'PsScalar' : ['g5'],
                   'PsVector' : gig5,
                   'Tensor'   : gigj}
@@ -90,6 +92,7 @@ CurrOppsNoProj = {'Scalar'   : ['I'],
 CurrOppsNoProjSigBack = {'Scalar'   : ['I'],
                          'Vector'   : gi,
                          'VectorTop': gi+giTop,
+                         'VectorTopNoV': giTop,
                          'PsScalar' : ['g5'],
                          'PsVector' : g5gi,
                          'Tensor'   : gjgi}
@@ -104,6 +107,7 @@ CurrOppsNoProjSigBack = {'Scalar'   : ['I'],
 FFFitFuns = {'Scalar'   : FormFactorO1,
              'Vector'   : FormFactorO2,
              'VectorTop': FormFactorO3,
+             'VectorTopNoV': FormFactorO3,
              'PsScalar' : FormFactorO1,
              'PsVector' : FormFactorO2,
              'Tensor'   : FormFactorO3}
@@ -111,6 +115,7 @@ FFFitFuns = {'Scalar'   : FormFactorO1,
 NoFFPars = {'Scalar'   : 1,
             'Vector'   : 2,
             'VectorTop': 3,
+            'VectorTopNoV': 3,
             'GeGm'     :  2,
             'PsScalar' : 1,
             'PsVector' : 2,
@@ -119,6 +124,7 @@ NoFFPars = {'Scalar'   : 1,
 NoFFList = {'Scalar'   : ['FF1'],
             'Vector'   : ['FF1','FF2'],
             'VectorTop': ['FF1','FF2','FF3'],
+            'VectorTopNoV': ['FF1','FF2','FF3'],
             'GeGm'     : ['FF1','FF2'],
             'PsScalar' : ['FF1'],
             'PsVector' : ['FF1','FF2'],

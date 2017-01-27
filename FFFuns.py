@@ -16,7 +16,7 @@ def PicknFF(CT):
         return 1
     elif CT in ['Vector','PsVector']:
         return 2
-    elif CT in ['Tensor','VectorTop']:
+    elif CT in ['Tensor','VectorTop','VectorTopNoV']:
         return 3
     else:
         return -1
@@ -173,6 +173,7 @@ def RenormFF(FF,Val,thisDS):
 CurrFFs = {'Scalar'   : ScalarFF,
            'Vector'   : VectorFF,
            'VectorTop': VectorFFTop,
+           'VectorTopNoV': VectorFFTop,
            'PsScalar' : ScalarFF,
            'PsVector' : PsVectorFF,
            'Tensor'   : TensorFF}
