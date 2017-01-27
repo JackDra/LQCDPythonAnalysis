@@ -37,6 +37,7 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr,Rfac):
 ## FF { { momsqrd } { Boot/Avg/Chi } }
     thisstart = time.time()
     thisDS,baseCurr,dump = SplitDSCurr(thisCurr)
+    print thisDS
     if 'Top' in thisCurr:
         baseCurr = baseCurr+'Top'
         alphalist = ReadAlphaList(theset)
@@ -84,7 +85,8 @@ def DoFF(inputlist):
     inputparams = []
     for data,MassSet in zip(datalist,MassSetlist):
         for theset,setdict in data.iteritems():
-            if not os.path.isfile(outputdir[0] +'/FormFactors/'+theCurr+'/'+theCurr+Set):
+            # print outputdir[0] +'/FormFactors/'+DefDSList[0]+thisCurr+'/'+DefDSList[0]+thisCurr+theset+'.xml'
+            if not all([os.path.isfile(outputdir[0] +'/FormFactors/'+iDS+thisCurr+'/'+iDS+thisCurr+theset+'.xml') for iDS in DefDSList]):
                 inputparams.append(PickMassSet(MassSet,theset)+(theset,setdict,thisCurr,'SF' not in theset))
 
 
