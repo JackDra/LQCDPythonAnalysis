@@ -64,6 +64,7 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True,alphalist = [1.0]):
                         if RealVal and rcheck:
                             datavals.append(data[flagopp][iq]['Boot'])
                             infodict[iqs] = data[flagopp][iq]['Info']
+                            infodict[iqs]['Info'] = data[flagopp][iq]['Info']
                             opplist.append(flagopp +' '+ iq)
                             infodict[iqs]['Info']['alpha'] = OrderedDict()
                             infodict[iqs]['Info']['alpha']['Avg'] = ialpha
