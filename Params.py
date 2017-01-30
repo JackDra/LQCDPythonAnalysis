@@ -19,11 +19,11 @@ except:
 # DefMassVal = {'22-31' : {'Avg':DefMass,'Std': 0.0028592256 ,'Chi': 0.4851841332}}
 
 DefMassVal = {}
-DefMassVal['6-13'] = OrderedDict()
-DefMassVal['6-13']['Avg'] = DefMass
-DefMassVal['6-13']['Std'] = 0.0071123989
-DefMassVal['6-13']['Chi'] = 0.2782012297
-DefMassVal['6-13']['File'] = '/home/jackdra/PHD/CHROMA/TestVar/scratch/results/ReadSetBarN17k1375400/cfun/twopt/OSFCM/qsqrd0/q000/state1PoF0to3dt3twoptm0q000.xml'
+DefMassVal['fitr6-13'] = OrderedDict()
+DefMassVal['fitr6-13']['Avg'] = DefMass
+DefMassVal['fitr6-13']['Std'] = 0.0071123989
+DefMassVal['fitr6-13']['Chi'] = 0.2782012297
+DefMassVal['fitr6-13']['File'] = '/home/jackdra/PHD/CHROMA/TestVar/scratch/results/ReadSetBarN17k1375400/cfun/twopt/OSFCM/qsqrd0/q000/state1PoF0to3dt3twoptm0q000.xml'
 
 # THISMACHINE = socket.gethostname()
 
