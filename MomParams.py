@@ -19,7 +19,8 @@ latspace = 0.0957 ## In fermi
 hbarcdivlat = hbarc/latspace
 qunitPhys = qunit*hbarcdivlat
 
-DefMass = 0.5723293466 #Lat Units
+# DefMass = 0.5723293466 #Lat Units
+DefMass = 0.5554004119 #Lat Units
 DefMassPhys = DefMass*hbarcdivlat #Lat Units
 
 

@@ -79,22 +79,29 @@ def ReadAlphaSet(thisSetList,thisMomList):
         dictout[iset] = ReadAlphaFile(outputdir[0],iset,thisMomList=thisMomList)['RF']
     return dictout
 
-## output = { ip [iAvg,boot1,boot2,...,bootn] }
+## output = [iAvg,boot1,boot2,...,bootn]
 def ReadAlphaList(thisset):
     twoptset = ReduceTooMassSet([thisset])[0]
-    DictRead = ReadAlphaFitFile(outputdir[0],twoptset,thisMomList=['q = 0 0 0'])
+    DictRead,thisfile = ReadAlphaFitFile(outputdir[0],twoptset,thisMomList=['q = 0 0 0'],givefile=True)
     outdict = [1.0]
+    infodict = OrderedDict()
     if 'q = 0 0 0' not in DictRead.keys():
         raise IOError(' Alpha Fit File not read in properly for' + twoptset )
     for thisflow,flowdict in DictRead['q = 0 0 0']['Boots'].iteritems():
         if thisflow in thisset:
             if AlphaFitRPick in flowdict.keys():
                 outdict = [flowdict[AlphaFitRPick].Avg] + np.array(flowdict[AlphaFitRPick].values).tolist()
+                thischi = flowdict[AlphaFitRPick]['Chi']
             else:
                 raise IOError(AlphaFitRPick+ ' not in alpha file ' + twoptset)
     if outdict == [1.0]:
         raise IOError(thisset + ' does not contain the flow time in file ' )
-    return outdict
+    infodict['Avg'] = outdict[0]
+    infodict['Std'] = np.std(outdict[1:])
+    infodict['fit_range'] = AlphaFitRPick
+    infodict['Chi'] = thischi
+    infodict['File'] = thisfile
+    return outdict,infodict
     
 # R/L Evecs [ ip , istate , ival ]
 # Emass [ ip , istate ]

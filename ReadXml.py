@@ -147,15 +147,17 @@ def ReadAlphaFile(filedir,iset,thisMomList=RunMomList,BSClass=False):
     return dictout
 
 ## dictout = { imom , Info/ Boots: itflow , fitr }  
-def ReadAlphaFitFile(filedir,iset,thisMomList=RunMomList,BSClass=False):
+def ReadAlphaFitFile(filedir,iset,thisMomList=RunMomList,BSClass=False,givefile=False):
     dictout = OrderedDict()
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
         readfile = filedir+'Top/Alpha/Fits/'+MakeMomDir(ip)+iset+ip
         if Debug: print 'Reading TopCharge Fits :' ,readfile+'.xml'
         if os.path.isfile(readfile+'.xml'): dictout[thismom] = ReadXmlAndPickle(readfile+'.xml')[0][ip]
-    return dictout
-
+    if givefile:
+        return dictout,readfile
+    else:
+        return dictout
 
 ##Also works for cfuns##
 ##xmlinput = { Ratio_Factor , Boots/Values , thismomlist , tlist } 

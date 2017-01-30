@@ -39,9 +39,15 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr,Rfac):
     thisDS,baseCurr,dump = SplitDSCurr(thisCurr)
     if 'Top' in thisCurr:
         baseCurr = baseCurr+'Top'
-        alphalist = ReadAlphaList(theset)
+        alphalist,alphadata = ReadAlphaList(theset)
     else:
         alphalist = [1.0]
+        alphainfo = OrderedDict()
+        alphainfo['Avg'] = 1.0
+        alphainfo['Std'] = 0.0
+        alphainto['Chi'] = 0.0
+        alphainfo['fit_range'] = 'fitr0-0'
+        alphainfo['File'] = ''
     if thisDS == '':
         thisCurrList = [thisCurr for ids in DefDSList]
         thisgflist = DefDSList
