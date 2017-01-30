@@ -7,14 +7,14 @@
         <State1>
             <Emass>        0.6837196055</Emass>
             <Left_Evec>
-                <sm16>        0.0000</sm16>
+                <sm16>        1.0000</sm16>
                 <sm32>        0.000</sm32>
-                <sm64>        1.000</sm64>
+                <sm64>        0.000</sm64>
             </Left_Evec>
             <Right_Evec>
-                <sm16>        0.00</sm16>
+                <sm16>        1.00</sm16>
                 <sm32>        0.00</sm32>
-                <sm64>        1.00</sm64>
+                <sm64>        0.00</sm64>
             </Right_Evec>
         </State1>
         <State2>
