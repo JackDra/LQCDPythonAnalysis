@@ -22,6 +22,9 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True,alphalist = [1.0]):
     Opps = CurrOpps[baseCurr]
     thisdataout = OrderedDict()
     infodict = {}
+    infodict['alpha'] = OrderedDict()
+    infodict['alpha']['Avg'] = alphalist[0]
+    infodict['alpha']['Std'] = np.std(alphalist[1:])                        
     for iqsqrd in MomSqrdSet:        
         momstart = time.time()
         iqs = 'qsqrd'+str(iqsqrd)
@@ -57,16 +60,10 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True,alphalist = [1.0]):
                             datavals.append(data[flagopp+'cmplx'][iq]['Boot'])
                             infodict[iqs] = data[flagopp+'cmplx'][iq]['Info']
                             opplist.append(flagopp+'cmplx '+ iq)
-                            infodict[iqs]['Info']['alpha'] = OrderedDict()
-                            infodict[iqs]['Info']['alpha']['Avg'] = ialpha
-                            infodict[iqs]['Info']['alpha']['Std'] = np.std(alphalist[1:])                        
                         if RealVal and rcheck:
                             datavals.append(data[flagopp][iq]['Boot'])
                             infodict[iqs] = data[flagopp][iq]['Info']
                             opplist.append(flagopp +' '+ iq)
-                            infodict[iqs]['Info']['alpha'] = OrderedDict()
-                            infodict[iqs]['Info']['alpha']['Avg'] = ialpha
-                            infodict[iqs]['Info']['alpha']['Std'] = np.std(alphalist[1:])                        
             # print 'PullOutLHS iopp',iopp,', time taken:' , GetTimeStr(time.time()-start)
         if len(datavals) == 0: continue
         zboot,zvec = [BootStrap1(nboot,0)],[0.0]        
