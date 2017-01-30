@@ -325,7 +325,7 @@ def ReadFFFile(filename):
         data = data[data.keys()[0]]
         dataout = OrderedDict()
         dataout['Info'] = data['Info']
-        dataout['Mass'] = data['Values']['Mass']
+        if 'Mass' in data['Values'].keys(): dataout['Mass'] = data['Values']['Mass']
         dataout['Chi'] = OrderedDict()
         if 'Boots' in data.keys():
             for iq,qdata in data['Boots'].iteritems():
@@ -360,7 +360,7 @@ def ReadFFCombFile(filename):
         data = data[data.keys()[0]]
         dataout = OrderedDict()
         dataout['Info'] = data['Info']
-        dataout['Mass'] = data['Values']['Mass']
+        if 'Mass' in data['Values'].keys(): dataout['Mass'] = data['Values']['Mass']
         if 'Boots' in data.keys():
             for iq,qdata in data['Boots'].iteritems():
                 dataout[iq] = OrderedDict()
@@ -379,7 +379,7 @@ def ReadFFCombFile(filename):
 def MakeFFCombLikeFF(data):
     dataout = {}
     dataout['Info'] = data['Info']
-    dataout['Mass'] = data['Mass']
+    if 'Mass' in data.keys(): dataout['Mass'] = data['Mass']
     dataout['FF1'] = OrderedDict()
     dataout['Chi'] = OrderedDict()
     for iq in data.iterkeys():
