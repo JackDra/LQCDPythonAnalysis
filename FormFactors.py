@@ -53,16 +53,19 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True,alphalist = [1.0]):
                         for iFF,iFFcof in enumerate(FFcoeffhold):
                             FFcoeff[ica][iFF].append(iFFcof.real)
                     if ica == 0:
+                        infodict[iqs]['Info']['alpha'] = OrderedDict()
+                        infodict[iqs]['Info']['alpha']['Avg'] = ialpha
+                        infodict[iqs]['Info']['alpha']['Std'] = np.std(alphalist[1:])                        
                         if CmplxVal and ccheck:
                             datavals.append(data[flagopp+'cmplx'][iq]['Boot'])
                             infodict[iqs] = data[flagopp+'cmplx'][iq]['Info']
+                            infodict[iqs]['Info'] = data[flagopp+'cmplx'][iq]['Info']
                             opplist.append(flagopp+'cmplx '+ iq)
                         if RealVal and rcheck:
                             datavals.append(data[flagopp][iq]['Boot'])
                             infodict[iqs] = data[flagopp][iq]['Info']
                             opplist.append(flagopp +' '+ iq)
             # print 'PullOutLHS iopp',iopp,', time taken:' , GetTimeStr(time.time()-start)
-
         if len(datavals) == 0: continue
         zboot,zvec = [BootStrap1(nboot,0)],[0.0]        
         if not DoTop:
