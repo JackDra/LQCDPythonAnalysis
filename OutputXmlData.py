@@ -276,14 +276,14 @@ def PrintFFSet(FFin,Set,Mass,SetMass,theCurr,infoFF):
     datadict = {'Form_Factors':{'Values':OrderedDict(),'Boots':OrderedDict()}}
     if 'Chi' not in Mass.keys(): Mass['Chi'] = float('NaN')
     datadict['Form_Factors']['Values']['Mass'] = OrderedDict()
-    datadict['Form_Factors']['Info'] = OrderedDict()
+    datadict['Form_Factors']['Info'] = infoFF
     datadict['Form_Factors']['Values']['Mass']['Set'] = SetMass
     datadict['Form_Factors']['Values']['Mass']['Avg'] = Mass['Avg']
     datadict['Form_Factors']['Values']['Mass']['Std'] = Mass['Std']
     datadict['Form_Factors']['Values']['Mass']['Chi'] = Mass['Chi']
     for iqsqrd,qdata in FFin.iteritems():
         if len(qdata.keys()) > 0:
-            datadict['Form_Factors']['Info'][iqsqrd] = infoFF[iqsqrd]
+            # datadict['Form_Factors']['Info'][iqsqrd] = infoFF[iqsqrd]
             datadict['Form_Factors']['Values'][iqsqrd] = OrderedDict()
             datadict['Form_Factors']['Values'][iqsqrd]['Chi'] = qdata['Chi']
             for ic,iFF in enumerate(qdata['Boot']):
@@ -294,7 +294,6 @@ def PrintFFSet(FFin,Set,Mass,SetMass,theCurr,infoFF):
             for ic,iFF in enumerate(qdata['Boot']):
                 datadict['Form_Factors']['Boots'][iqsqrd]['FF'+str(ic+1)] = iFF.values
     # MergeXmlOutput(thisfile,datadict,CheckMom=False)
-    print datadict['Form_Factors']['Info']
     WriteXmlOutput(thisfile,datadict)
     
 
