@@ -64,6 +64,7 @@ def CreateFFWrap(thisMass,thesetmass,massfitr,theset,setdict,thisCurr,Rfac):
         infodict['Mass'] = thisMass
         infodict['Mass']['Set'] = thesetmass
         infodict['Mass']['fit_range'] = massfitr
+        infodict['alpha'] = alphadata
         if 'Vector' in thisCurr and 'Top' not in thisCurr and 'IsoVector' not in thisCurr and 'PsVector' not in thisCurr:
             if ForceVecNorm: FF = RenormFF(FF,FF['qsqrd0']['Boot'][0].Avg,igf)
             PrintFFSet(FF,theset,thisMass,thesetmass,combCurr,infodict)

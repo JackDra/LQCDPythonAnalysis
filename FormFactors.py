@@ -21,10 +21,7 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True,alphalist = [1.0]):
     baseCurr = iCurr.replace(gammaflag,'')
     Opps = CurrOpps[baseCurr]
     thisdataout = OrderedDict()
-    infodict = {}
-    infodict['alpha'] = OrderedDict()
-    infodict['alpha']['Avg'] = alphalist[0]
-    infodict['alpha']['Std'] = np.std(alphalist[1:])                        
+    infodict = OrderedDict()
     for iqsqrd in MomSqrdSet:        
         momstart = time.time()
         iqs = 'qsqrd'+str(iqsqrd)
