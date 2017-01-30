@@ -22,7 +22,8 @@ from InputArgs import *
 
 
 def PickMassSet(MassSet,theset):
-    theMass = DefMassVal[DefMassVal.keys()[0]]
+    massfitr = DefMassVal.keys()[0]
+    theMass = DefMassVal[massfitr]
     thesetmass = 'Default'
     # if 'SF' in theset and RemoveTSink(theset) in MassSet.keys():
     #     thesetmass = RemoveTSink(theset)
@@ -30,9 +31,9 @@ def PickMassSet(MassSet,theset):
     # elif 'SumMeth' in theset and 'sm32OSFTsink' in MassSet.keys():
     #     thesetmass = 'sm32OSFTsink'
     #     theMass = MassSet[thesetmass]['Boot'].Avg
-    return theMass,thesetmass
+    return theMass,thesetmass,massfitr
 
-def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr,Rfac):
+def CreateFFWrap(thisMass,thesetmass,massfitr,theset,setdict,thisCurr,Rfac):
     # mprint( 'Set:' + theset + ' MassSetPicked:'+thesetmass)
 ## FF { { momsqrd } { Boot/Avg/Chi } }
     thisstart = time.time()
@@ -62,6 +63,7 @@ def CreateFFWrap(thisMass,thesetmass,theset,setdict,thisCurr,Rfac):
             FF,infodict = CreateFF(setdict,thisMass['Avg'],iCurr,gammaflag=igf,Rfac=True,alphalist=alphalist)            
         infodict['Mass'] = thisMass
         infodict['Mass']['Set'] = thesetmass
+        infodict['Mass']['fit_range'] = massfitr
         if 'Vector' in thisCurr and 'Top' not in thisCurr and 'IsoVector' not in thisCurr and 'PsVector' not in thisCurr:
             if ForceVecNorm: FF = RenormFF(FF,FF['qsqrd0']['Boot'][0].Avg,igf)
             PrintFFSet(FF,theset,thisMass,thesetmass,combCurr,infodict)

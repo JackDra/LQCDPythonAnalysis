@@ -91,7 +91,7 @@ def ReadAlphaList(thisset):
         if thisflow in thisset:
             if AlphaFitRPick in flowdict.keys():
                 outdict = [flowdict[AlphaFitRPick].Avg] + np.array(flowdict[AlphaFitRPick].values).tolist()
-                thischi = flowdict[AlphaFitRPick]['Chi']
+                thischi = DictRead['q = 0 0 0']['Values'][thisflow][AlphaFitRPick]['Chi']
             else:
                 raise IOError(AlphaFitRPick+ ' not in alpha file ' + twoptset)
     if outdict == [1.0]:
