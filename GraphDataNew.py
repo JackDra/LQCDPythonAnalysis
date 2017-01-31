@@ -239,8 +239,9 @@ def SetRFAxies(thisGamma):
     pl.tight_layout()
     
 def SetFFAxies(thisCurr):
+    currnumb = thisCurr[-1]
     pl.xlabel(FFxlab)
-    pl.ylabel(FFylab)
+    pl.ylabel(FFylab.replace('F','F_{'+currnumb+'}'))
     if thisCurr in ylimFFDict.keys():
         pl.ylim(ylimFFDict[thisCurr])
     # else:
