@@ -22,6 +22,7 @@ from FormFactors import NoFFPars
 from SetLists import SortMySet
 from CombParams import *
 from FFParams import Qtcut,GetCharRad
+import BootTest as bt
 
 ##FORCE TITLE PARAMETER, SET TO FALSE TO USE NORMAL TITLES#
 
@@ -1489,10 +1490,12 @@ def GraphQExp(Qlist,flowlist):
 def Graphchit(Qlist,flowlist):
     ## Hard coded here....
     thislatspace = 0.0947
+    Qlist = bt.CreateBoot(np.rollaxis(np.array(data),1),nboot,0)
     coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
-    Q2list = np.array(Qlist)**2
-    Std = coeff*0.25*np.std(Q2list,axis=0)*np.mean(Q2list,axis=0)**(0.25-1)
-    pl.errorbar(flowlist,coeff*np.mean(Q2list,axis=0)**(0.25),Std,fmt='o')
+    Q2list = Qlist**2
+    Q2list.Stats()
+    Std = coeff*0.25*Pullflag(Q2list,'Std')*Pullflag(Q2list,'Avg')**(0.25-1)
+    pl.errorbar(flowlist,coeff*Pullflag(Q2list,'Avg')**(0.25),Std,fmt='o')
     pl.xlim(flowlist[0]-0.1,flowlist[-1]+0.1)
     pl.xlabel(r'$ t_{flow} $')
     pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
