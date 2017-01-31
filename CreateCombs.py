@@ -102,6 +102,8 @@ def XmlBootToAvg(datadict,BootDict=None):
         if isinstance(datadict[key], dict):
             if key == 'Values':
                 XmlBootToAvg(datadict[key],BootDict = BootDict['Boots'])
+            elif key == 'Info':
+                datadict[key] = BootDict[key] 
             else:
                 if 'Avg' not in datadict[key].keys():
                     XmlBootToAvg(datadict[key],BootDict = BootDict[key])          
