@@ -1432,6 +1432,7 @@ def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,
     pl.errorbar(tlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ tflow='+str(tflow)))
     if NNQ:
         pl.errorbar(np.array(tlist)-0.5,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
+    print data.keys()
     if not NNQ and 'Fits' in data.keys():
         momdataFit = data['Fits'][iMom]['Boots']
         tflowlist = [] 
