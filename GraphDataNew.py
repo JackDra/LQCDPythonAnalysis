@@ -1432,20 +1432,19 @@ def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,
     pl.errorbar(tlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ tflow='+str(tflow)))
     if NNQ:
         pl.errorbar(np.array(tlist)-0.5,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
-    print data.keys()
     if not NNQ and 'Fits' in data.keys():
         momdataFit = data['Fits'][iMom]['Boots']
         tflowlist = [] 
         for itflow,flowfitdata in momdataFit.iteritems():
             if untflowstr(itflow) == tflow:
                 if AlphaFitRPick in flowfitdata.keys():                
-                    tvals = unxmlfitr(AlphaFitRPick)
+                    tvals = map(int,unxmlfitr(AlphaFitRPick))
                     dataavg = flowfitdata[AlphaFitRPick].Avg
                     datastd = flowfitdata[AlphaFitRPick].Std
                     dataup = dataavg+datastd
                     datadown = dataavg-datastd
                     pl.plot(tvals,[dataavg,dataavg],color=thiscol)
-                    pl.fill_between(tvals,dataup,datadown,color=thiscol,alpha=thisalpha,edgecolor='none')
+                    pl.fill_between(tvals,[dataup,dataup],[datadown,datadown],color=thiscol,alpha=thisalpha,edgecolor='none')
 
 def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False):
     global ForceTitle    
@@ -1465,7 +1464,7 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False):
         pl.clf()
     for itflow in AlphaTflowList:
         thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
-        for iset,setdata in zip(thisSetList,data):
+        for iset,setdata in data.iteritems():
             if CheckDict(setdata,DictFlag,imom,'Boots'):
                 # print 'plotting ', iset, imom
                 PlotTopChargeOvert(setdata,iset,imom,itflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt)
