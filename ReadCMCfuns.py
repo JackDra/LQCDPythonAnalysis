@@ -8,9 +8,8 @@ from ReadTxt import *
 from MiscFuns import *
 import time,datetime
 
-##IN DEV
 
-def ReadSetTopCharge(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,
+def ReadSetTopCharge(thisiSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,
                      thisTSinkList,directory,Flag,Interps=['nucleon'],thistsourceList=[tsource]):
     # if len(thisTSinkList) > 0:
     #     TestMomList(thisMomList)
