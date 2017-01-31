@@ -64,8 +64,10 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
 
     if 'CM' in RunType:
         thisTSinkList = RunTSinkList
-        thisSmearList = DefSmearList
-        wipeSL = thisSmearList
+        thisiSmearList = DefiSmearList
+        thisjSmearList = DefjSmearList
+        wipeiSL = thisiSmearList
+        wipejSL = thisjSmearList
         thisPrefList = ['cm' for s in thisTSinkList]
         thisTvarList = AnaTvarList
         thisREvecTvarList = []
@@ -73,8 +75,10 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         thisStateSet = CMStateSet
     elif 'REvec' in RunType:
         thisTSinkList = RunTSinkList
-        thisSmearList = DefSmearList
-        wipeSL = []
+        thisiSmearList = DefiSmearList
+        thisjSmearList = DefjSmearList
+        wipeiSL = []
+        wipejSL = []
         thisPrefList = ['REvec' for s in thisTSinkList]
         thisTvarList = []
         thisREvecTvarList = REvecTvarList
@@ -82,8 +86,10 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         thisStateSet = [PickedState]
     elif 'PoF' in RunType:
         thisTSinkList = RunTSinkList
-        thisSmearList = DefSmearList
-        wipeSL = []
+        thisiSmearList = DefiSmearList
+        thisjSmearList = DefjSmearList
+        wipeiSL = []
+        wipejSL = []
         thisPrefList = ['PoF' for s in thisTSinkList]
         thisTvarList = []
         thisREvecTvarList = []
@@ -92,7 +98,8 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
     elif 'TSink' in RunType:
         thisTSinkList = RunTSinkList
         thisSmearList = ['32']
-        wipeSL = thisSmearList
+        wipeiSL = thisiSmearList
+        wipejSL = thisjSmearList
         thisPrefList = []
         for itsink in thisTSinkList:
             if itsink == '29': thisPrefList.append('cm')
@@ -112,17 +119,17 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
     print '----------------------------------------------------------------------------------'
     if RunType == 'TwoPt':
         print 'Two Point Analysis'
-        Wipe2pt(outputdir[0],tvarlist=TwoPtDefTvarList,smlist=DefSmearList)
+        Wipe2pt(outputdir[0],tvarlist=TwoPtDefTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList)
         # thisMomList = Get2ptSetMoms(outputdir[0],RunAvgMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
-        thisMomList = Get2ptSetMoms(outputdir[0],RunMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
-        CreateTwoPt([qstrTOip(imom) for imom in DragpZstr(thisMomList)],DefSmearList,feedin=feedin)
+        thisMomList = Get2ptSetMoms(outputdir[0],RunMomList,tvarlist=TwoTotDefTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList,tsrclist=PoFtsourceList)
+        CreateTwoPt([qstrTOip(imom) for imom in DragpZstr(thisMomList)],DefiSmearList,DefjSmearList,feedin=feedin)
         print 'Two Point Analysis Complete'
     elif RunType == 'TopAlpha':
         print 'Topological Charge Analysis'
         # Wipe2pt(outputdir[0],tvarlist=TwoPtDefTvarList,smlist=DefSmearList)
         # thisMomList = Get2ptSetMoms(outputdir[0],RunAvgMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
-        thisMomList = Get2ptSetMoms(outputdir[0],RunMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
-        CreateTwoPtTop([qstrTOip(imom) for imom in DragpZstr(thisMomList)],DefSmearList,feedin=feedin)
+        thisMomList = Get2ptSetMoms(outputdir[0]+'/Top/',RunMomList,tvarlist=TwoTotDefTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList,tsrclist=PoFtsourceList)
+        CreateTwoPtTop([qstrTOip(imom) for imom in DragpZstr(thisMomList)],DefiSmearList,DefjSmearList,feedin=feedin)
         print 'Two Point Analysis Complete'
     else:
         print 'Three Point Analysis '+Curr + ' ' + RunType + ' tsinks: ' + ' '.join(RunTSinkList)
@@ -132,8 +139,8 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
                 iPrefList = [thisPrefList[it]]*len(itsinkList)
             else:
                 itsinkList,iPrefList = [int(itsink)],[thisPrefList[it]]
-            thisSetList,this2ptSetList,dump = CreateSet(thisSmearL=wipeSL,thisCMTSinkL=[str(itsink)]
-                                                        ,thisStateL=thisStateSet,thisSingSmearL=wipeSL,
+            thisSetList,this2ptSetList,dump = CreateSet(thisiSmearL=wipeiSL,thisjSmearL=wipejSL,thisCMTSinkL=[str(itsink)]
+                                                        ,thisStateL=thisStateSet,
                                                         thisTvarL=thisTvarList,thisTSinkL=[str(itsink)],
                                                         thisREvecTvarL=thisREvecTvarList,thisREvecTSinkL=[str(itsink)],
                                                         thisPoFTvarL=thisPoFTvarList,thisPoFTSinkL=[str(itsink)])

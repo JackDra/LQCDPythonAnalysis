@@ -41,14 +41,12 @@ elif kappa == 12104:
     
 twoptoutfile = outfile
 if outfile == 'Tsink':
-    ReadSmearList = ['32']
     ReadTSinkList = AllTSinkList
     CaptString = ['TSINKSET']
     ReadTvarList = []
     ReadREvecTSinkList = []
     ReadREvecTvarList = []
 elif outfile == 'CM':
-    ReadSmearList = DefSmearList
     ReadTSinkList = CMTSinkList
     # CaptString = ['SMSET','CMSET','PoFSET','REvecSET']
     # CaptString = ['SMSET','CMSET','PoFSET']
@@ -58,7 +56,6 @@ elif outfile == 'CM':
     ReadREvecTvarList = []
 elif outfile == 'JustCM':
     outfile = 'CM'
-    ReadSmearList = []
     ReadTSinkList = CMTSinkList
     # CaptString = ['SMSET','CMSET','PoFSET','REvecSET']
     CaptString = ['CMSET']
@@ -67,7 +64,6 @@ elif outfile == 'JustCM':
     ReadREvecTvarList = []
 elif outfile == 'JustSM':
     outfile = 'CM'
-    ReadSmearList = []
     ReadTSinkList = CMTSinkList
     # CaptString = ['SMSET','CMSET','PoFSET','REvecSET']
     CaptString = ['SMSET']
@@ -76,7 +72,6 @@ elif outfile == 'JustSM':
     ReadREvecTvarList = []
 elif outfile == 'JustPoF':
     outfile = 'CM'
-    ReadSmearList = []
     ReadTSinkList = CMTSinkList
     ReadTvarList = AnaTvarList
     CaptString = ['PoFSET']
@@ -85,7 +80,6 @@ elif outfile == 'JustPoF':
     ReadREvecTSinkList = []
     ReadREvecTvarList = []
 elif outfile == 'REvec':
-    ReadSmearList = []
     ReadTSinkList = []
     ReadTvarList = []
     CaptString = ['REvecSET']

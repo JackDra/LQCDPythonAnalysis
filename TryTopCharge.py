@@ -16,7 +16,7 @@ import time,datetime
 from MultiWrap import *
 from multiprocessing import Pool
 
-def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
+def CreateTwoPtTop(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':AnaProc}):
     logfile = logdir+'LogTopCharge.log'
     errfile = logdir+'LogTopCharge.log'
     touch(logfile)
@@ -26,9 +26,9 @@ def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     # print 'Running ' + ipTOqstr(thisMomList[0]) + ' ' +  str(int((thisMomList[0]*100)/float(len(qvecSet))))+'%' 
 
     if 'ReadList' in ListOrSet:
-        [data2pt,dataTop,thisTopList,filelist] = ReadListAlpha(thisSmearList,thisMomList,conflist,Interps=DefInterpList,thistsourceList=PoFtsourceList)
+        [data2pt,dataTop,thisTopList,filelist] = ReadListAlpha(thisiSmearList,thisjSmearList,thisMomList,conflist,Interps=DefInterpList,thistsourceList=PoFtsourceList)
     elif 'ReadSet' in ListOrSet:
-        [data2pt,dataTop,thisTopList,filelist] = ReadSetAlpha(thisSmearList,thisMomList,dirread,Interps=DefInterpList,thistsourceList=PoFtsourceList)
+        [data2pt,dataTop,thisTopList,filelist] = ReadSetAlpha(thisiSmearList,thisjSmearList,thisMomList,dirread,Interps=DefInterpList,thistsourceList=PoFtsourceList)
 
     thisMomList = GetAvgMomListip(thisMomList)
     data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
@@ -38,17 +38,18 @@ def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     # print 'nboot = ' + str(nboot)
     ## data2pt = [ t_src, ism , jsm , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     ## dataTop = [ t_flow, t_src, ism , jsm , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-    C2out = DiagSmearWithTsrc(data2pt).tolist()
+    C2out = FlattenSmearWithTsrc(data2pt).tolist()
     C2outTop = []
     dataTopHold = []
     for topdata in dataTop:
         dataTopHold.append(np.array(PreptwoptCorr(np.array(topdata))))
     dataTop = np.array(dataTopHold)
     for topdata in dataTop:
-        C2outTop.append(DiagSmearWithTsrc(topdata).tolist())
+        C2outTop.append(FlattenSmearWithTsrc(topdata).tolist())
     ## C2out = [ t_src*ism*ism , ip , it ] 
     ## C2outTop = [ tflow , t_src*ism*ism , ip , it ] 
     
+    if len(thisiSmearList) == len(thisjSmearList): print 'Warning: source and sink smearing lists are different sizes, CM analysis skipped'
     start = time.time()
     CMinputparams,PoFinputparams = [],[]
     makeContextFunctions(CreatePoF2ptCfuns)
@@ -62,18 +63,18 @@ def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     if DoMulticore and feedin['anaproc'] > 1 and len(PoFinputparams) > 1 and len(CMinputparams) > 1:
         thisPool = Pool(min(len(CMinputparams),feedin['anaproc']))
         outputPoF = thisPool.map(CreatePoF2ptCfuns.mapper,PoFinputparams)
-        if len(thisSmearList) > 1 and DoCM:
+        if len(thisiSmearList) > 1 and len(thisiSmearList) == len(thisjSmearList) and  DoCM:
             outputCM = thisPool.map(CreateCM2ptCfuns.mapper,CMinputparams)
         thisPool.close()
         thisPool.join()
     else:
         outputPoF,outputCM = [],[]
         for iin in PoFinputparams: outputPoF.append(CreatePoF2ptCfuns.mapper(iin))
-        if len(thisSmearList) > 1 and DoCM:
+        if len(thisiSmearList) > 1 and len(thisiSmearList) == len(thisjSmearList) and  DoCM:
             for iin in CMinputparams: outputCM.append(CreateCM2ptCfuns.mapper(iin))
 
     thisPoFTvarList = PoFTvarPicked
-    if len(thisSmearList) > 1 and DoCM:
+    if len(thisiSmearList) > 1 and len(thisiSmearList) == len(thisjSmearList) and  DoCM:
         thisCMTvarList = DefTvarPicked
         for iout,iTvar in zip(outputCM,thisCMTvarList):
             [CMdata2pt,LEvec,REvec,Emass] = iout
@@ -90,9 +91,9 @@ def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
         PrintLREvecMassToFile(LEvec,REvec,Emass,thisMomList,iTvar,AddDict=InfoDict,DoPoF=True)
 
     SetList = []
-    SetList += CreateMassSet(thisSmearList,StateSet,[],tsrclist=PoFtsourceList,flipord=True)
-    if len(thisSmearList) > 1 and DoCM: SetList += CreateMassSet([],CMStateSet,thisCMTvarList,flipord=True)
-    SetList += CreateMassSet([],StateSet,thisPoFTvarList,flipord=True)
+    SetList += CreateMassSet(thisiSmearList,thisjSmearList,StateSet,[],tsrclist=PoFtsourceList,flipord=True)
+    if len(thisiSmearList) > 1 and len(thisiSmearList) == len(thisjSmearList) and  DoCM: SetList += CreateMassSet([],[],CMStateSet,thisCMTvarList,flipord=True)
+    SetList += CreateMassSet([],[],StateSet,thisPoFTvarList,flipord=True)
     PrintCfunToFile([C2out],SetList,thisMomList,['twopt'],AddDict=InfoDict,Top=True)
 
 
@@ -109,18 +110,18 @@ def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     if DoMulticore and feedin['anaproc'] > 1:
         thisPool = Pool(min(len(CMinputparams),feedin['anaproc']))
         outputPoFTop = thisPool.map(CreatePoF2ptCfuns.mapper,PoFinputparams)
-        if len(thisSmearList) > 1 and DoCM:
+        if len(thisiSmearList) > 1 and len(thisiSmearList) == len(thisjSmearList) and  DoCM:
             outputCMTop = thisPool.map(CreateCM2ptCfuns.mapper,CMinputparams)
         thisPool.close()
         thisPool.join()
     else:
         outputPoFTop,outputCMTop = [],[]
         for iin in PoFinputparams: outputPoFTop.append(CreatePoF2ptCfuns.mapper(iin))
-        if len(thisSmearList) > 1 and DoCM:
+        if len(thisiSmearList) > 1 and len(thisiSmearList) == len(thisjSmearList) and  DoCM:
             for iin in CMinputparams: outputCMTop.append(CreateCM2ptCfuns.mapper(iin))
             
     
-    if len(thisSmearList) > 1 and DoCM:
+    if len(thisiSmearList) > 1 and len(thisiSmearList) == len(thisjSmearList) and  DoCM:
         thisCMTvarList = DefTvarPicked
         for itop,CMTop in enumerate(outputCMTop):
             [CMdata2pt,LEvec,REvec,Emass] = CMTop
@@ -142,9 +143,9 @@ def CreateTwoPtTop(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     print 'Printing to file \r',
 
     SetList = []
-    SetList += CreateMassSet(thisSmearList,StateSet,[],tsrclist=PoFtsourceList,flipord=True)
-    if len(thisSmearList) > 1 and DoCM: SetList += CreateMassSet([],CMStateSet,thisCMTvarList,flipord=True)
-    SetList += CreateMassSet([],StateSet,thisPoFTvarList,flipord=True)
+    SetList += CreateMassSet(thisiSmearList,thisjSmearList,StateSet,[],tsrclist=PoFtsourceList,flipord=True)
+    if len(thisiSmearList) > 1 and len(thisiSmearList) == len(thisjSmearList) and  DoCM: SetList += CreateMassSet([],[],CMStateSet,thisCMTvarList,flipord=True)
+    SetList += CreateMassSet([],[],StateSet,thisPoFTvarList,flipord=True)
     PrintAlphaSetToFile(np.swapaxes(np.array(C2outTop),0,1),C2out,SetList,thisMomList,thisTopList,AddDict=InfoDict)
 
     print 'Printing took ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '

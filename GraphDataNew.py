@@ -149,8 +149,6 @@ def SetxTicks(thisfig=False):
         thisfig.axes[-1].set_xticks(np.arange(int(xmin),int(xmax)+thisinc,thisinc))
         
 
-def getsmindex(thissm):return DefSmearList.index(thissm)
-
 def PullThisDicts(datadict,igamma,imom):
     thisdatadict = {}
     for iset in datadict.keys():

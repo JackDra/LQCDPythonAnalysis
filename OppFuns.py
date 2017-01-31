@@ -64,7 +64,7 @@ def SetOpps(AllList):
         if 'Top' in contents: TopRun=True
     return sorted(Extra),sorted(thisOppList),sorted(thisDSList),sorted(thisProjList),'real, '+iscmplx,TopRun
 
-def Wipe2pt(thisoutputdir,tvarlist=[],smlist=[],thisMomList=RunMomList):
+def Wipe2pt(thisoutputdir,tvarlist=[],ismlist=[],jsmlist=[],thisMomList=RunMomList,tsrclist = PoFtsourceList):
     thistvarlist = ['PoF'+str(PoFShifts)+itvar for itvar in tvarlist]
     thistvarlist += ['CM'+itvar for itvar in tvarlist]
     xmlMomList = map(qstrTOqcond,thisMomList)
@@ -82,11 +82,13 @@ def Wipe2pt(thisoutputdir,tvarlist=[],smlist=[],thisMomList=RunMomList):
                     if os.path.isfile(ifile): os.remove(ifile)
                     ifile = thisdir+'boots/state'+istate+itvar+iflag.replace('cfun/','')+ip+'.boot.p'
                     if os.path.isfile(ifile): os.remove(ifile)
-            for ism in smlist:
-                ifile = thisdir+'sm'+ism+iflag.replace('cfun/','')+ip+'.xml'
-                if os.path.isfile(ifile): os.remove(ifile)
-                ifile = thisdir+'boots/sm'+ism+iflag.replace('cfun/','')+ip+'.boot.p'
-                if os.path.isfile(ifile): os.remove(ifile)
+            for itsrc in tsrclist:
+                for ism in ismlist:
+                    for jsm in jsmlist:
+                        ifile = thisdir+'tsrc'+itsrc+'ism'+ism+'jsm'+jsm+iflag.replace('cfun/','')+ip+'.xml'
+                        if os.path.isfile(ifile): os.remove(ifile)
+                        ifile = thisdir+'boots/tsrc'+itsrc+'ism'+ism+'jsm'+jsm+iflag.replace('cfun/','')+ip+'.boot.p'
+                        if os.path.isfile(ifile): os.remove(ifile)
     
 
 def WipeSet(thisoutputdir,thisGammaList,setlist,thisMomList=RunMomList,filepref=''):

@@ -52,13 +52,14 @@ def SortMySet(SLin,massset=False):
     TSinkLout = []
     if massset:
         for itsrc in PoFtsourceList:
-            for ism in DefSmList:
-                for iSLin in SLin:
-                    if (itsrc in iSLin and ism in iSLin) and iSLin not in SLout:
-                        SLout.append(iSLin)
-        for ism in TwoTotDefTvarList:
+            for ism in DefiSmList:
+                for jsm in DefjSmList:
+                    for iSLin in SLin:
+                        if (itsrc in iSLin and ism in iSLin and jsm in iSLin) and iSLin not in SLout:
+                            SLout.append(iSLin)
+        for itodt in TwoTotDefTvarList:
             for iSLin in SLin:
-                if ism in iSLin and iSLin not in SLout:
+                if itodt in iSLin and iSLin not in SLout:
                     SLout.append(iSLin)
     else:
         for ism in DefSmList+PoFTvarList+REvecTvarList+DefTvarList:
@@ -122,14 +123,16 @@ def RemoveToDt(thisstring):
     return thisstring
 
 
-def CreateStateSet(smL,stateL,tvarL):
-    Lout = ['sm'+str(ism) for ism in smL]
+def CreateStateSet(ismL,jsmL,stateL,tvarL):
+    Lout = []
+    for ism in ismL:
+        Lout += ['ism'+str(ism)+'jsm'+str(jsm) for jsm in jsmL]
     for istate in stateL:
         Lout += ['state'+str(istate)+str(itvar) for itvar in tvarL]
     return Lout
 
-def CreateTSinkStateSet(thisTsink,smL,stateL,tvarL):
-    return ['tsink'+str(thisTsink)+istate for istate in CreateStateSet(smL,stateL,tvarL)]
+def CreateTSinkStateSet(thisTsink,ismL,jsmL,stateL,tvarL):
+    return ['tsink'+str(thisTsink)+istate for istate in CreateStateSet(ismL,jsmL,stateL,tvarL)]
 
 def CreateStateTsinkSet(thisState,tsinkL):
     return ['tsink'+str(itsink)+thisState for itsink in tsinkL]
@@ -151,37 +154,39 @@ def CreateREvecSet(TSinkList,thisStateList,TvarList,fliptodt=False):
                     SetTsink.append(int(itsink))
     return SetGraph,SetTsink
 
-def CreateGenericSet(thisTSinkList,thisSmearList,thisStateList,thisTvarList):
+def CreateGenericSet(thisTSinkList,thisiSmearList,thisjSmearList,thisStateList,thisTvarList):
     output = []
     for itsink in thisTSinkList:
-        output += CreateTSinkStateSet(itsink,thisSmearList,[],[])
-        output += CreateTSinkStateSet(itsink,[],thisStateList,thisTvarList)
+        output += CreateTSinkStateSet(itsink,thisiSmearList,thisjSmearList,[],[])
+        output += CreateTSinkStateSet(itsink,[],[],thisStateList,thisTvarList)
     return output
 
-def CreateSet(thisSmearL=DefSmearList,thisSingSmearL=SingSmearList,
+def CreateSet(thisiSmearL=DefiSmearList,thisjSmearL=DefjSmearList,thisSingSmearL=SingSmearList,
               thisStateL=[str(PickedState)],thisTvarL=AnaTvarList,
               thisTSinkL=AllTSinkList,thisCMTSinkL=CMTSinkList,
               thisREvecTvarL=REvecTvarList,thisREvecTSinkL=REvecTSinkList,
               thisPoFTvarL=PoFTvarList,thisPoFTSinkL=PoFTSinkList):
     SetGraph,SetMassGraph = [],[]
     SetTsink = []
-    SetMassGraph += CreateMassSet(thisSmearL,thisStateL,thisTvarL)
-    SetMassGraph += CreateMassSet(thisSingSmearL,[],[])
-    SetGraph += CreateGenericSet(thisCMTSinkL,thisSmearL,[],[])
-    SetGraph += CreateGenericSet(thisTSinkL,thisSingSmearL,[],[])
-    SetGraph += CreateGenericSet(thisCMTSinkL,[],thisStateL,thisTvarL)        
-    SetGraph += CreateGenericSet(thisREvecTSinkL,[],thisStateL,thisREvecTvarL)        
-    SetGraph += CreateGenericSet(thisPoFTSinkL,[],thisStateL,thisPoFTvarL)
+    SetMassGraph += CreateMassSet(thisiSmearL,thisjSmearL,thisStateL,thisTvarL)
+    SetMassGraph += CreateMassSet(thisSingSmearL,thisSingSmearL,[],[])
+    SetGraph += CreateGenericSet(thisCMTSinkL,thisiSmearL,thisjSmearL,[],[])
+    SetGraph += CreateGenericSet(thisTSinkL,thisSingSmearL,thisSingSmearL,[],[])
+    SetGraph += CreateGenericSet(thisCMTSinkL,[],[],thisStateL,thisTvarL)        
+    SetGraph += CreateGenericSet(thisREvecTSinkL,[],[],thisStateL,thisREvecTvarL)        
+    SetGraph += CreateGenericSet(thisPoFTSinkL,[],[],thisStateL,thisPoFTvarL)
     SetGraph,SetTsink = SortMySet(SetGraph,massset=False)
     return [SetGraph,SortMySet(SetMassGraph,massset=True)[0],SetTsink]
 
 
 
-def CreateMassSet(thisSmearL,thisStateList,thisTvarList,tsrclist = PoFtsourceList,flipord=False,tsrc=False):
+def CreateMassSet(thisiSmearL,thisjSmearL,thisStateList,thisTvarList,tsrclist = PoFtsourceList,flipord=False,tsrc=False):
     SetGraph = []
     for its in tsrclist:
-        for ismear in thisSmearL:        
-            SetGraph.append('tsrc'+its+'sm'+ismear)
+        for ismear in thisiSmearL:        
+            for jsmear in thisjSmearL:        
+                SetGraph.append('tsrc'+its+'ism'+ismear+'jsm'+ismear)
+            # SetGraph.append('tsrc'+its+'sm'+ismear)
     if flipord:
         for itvar in thisTvarList:
             for istate in thisStateList:
@@ -198,14 +203,14 @@ def CreateMassSet(thisSmearL,thisStateList,thisTvarList,tsrclist = PoFtsourceLis
 ## dataout = [ (istatetodt / ismism) ]
 
 
-def CreateDataSet(dataCM,data,thisSmearList,thisStateList,thisTvarList,Interps=['nucleon']):
+def CreateDataSet(dataCM,data,thisiSmearList,thisjSmearList,thisStateList,thisTvarList,Interps=['nucleon']):
     dataCM,data = np.array(dataCM),np.array(data)
     dataCMflat = dataCM.reshape((dataCM.shape[0]*dataCM.shape[1],)+dataCM.shape[2:])
-    return [np.array(data.tolist()+dataCMflat.tolist()),CreateMassSet(thisSmearList,thisStateList,thisTvarList)]
+    return [np.array(data.tolist()+dataCMflat.tolist()),CreateMassSet(thisiSmearList,thisjSmearList,thisStateList,thisTvarList)]
 
-def CreateDataTsinkSet(dataCM,data,thisSmearList,thisStateList,thisTvarList,tsink):
+def CreateDataTsinkSet(dataCM,data,thisiSmearList,thisjSmearList,thisStateList,thisTvarList,tsink):
     dataCMflat= dataCM.reshape((dataCM.shape[0]*dataCM.shape[1],)+dataCM.shape[2:])
-    thisSetList = CreateMassSet(thisSmearList,thisStateList,thisTvarList)
+    thisSetList = CreateMassSet(thisiSmearList,thisjSmearList,thisStateList,thisTvarList)
     data = np.array(data)
     return [np.array(data.tolist()+dataCMflat.tolist()),['tsink'+str(tsink)+iS for iS in thisSetList]]
 
@@ -316,8 +321,9 @@ def PickSetForMethod(thismethod,thisSetList):
     if 'Tsink' in thismethod or 'Small' in thismethod or 'test32' in thismethod:
         outSetList = []
         for itsink in AllTSinkStrList:
-            if itsink+SingSmList[0] in thisSetList:
-                outSetList.append(itsink+SingSmList[0])
+            for thissm in SingSmList:
+                if itsink+thissm in thisSetList:
+                    outSetList.append(itsink+thissm)
     elif 'CM' in thismethod:
         outSetList = []
         for iset in thisSetList:
@@ -343,7 +349,7 @@ def PickSetForMethod(thismethod,thisSetList):
     if 'TSF' in thismethod:
         outSetList = ReduceTsink(outSetList,NoPoF=True)
     elif 'SumMeth' in thismethod:
-        outSetList = SingSmList
+        outSetList = SingiSmList+SingiSmList
     return outSetList
                 
 
@@ -352,7 +358,7 @@ def PickSetForMethod(thismethod,thisSetList):
 
 DefSetCol = CreateSet()
 
-AllCMSetList = CreateGenericSet(CMTSinkList,[],[PickedState],DefTvarList)
+AllCMSetList = CreateGenericSet(CMTSinkList,[],[],[PickedState],DefTvarList)
     
 DefSetList,DefMassSetList,DefTSinkSetList = DefSetCol
 

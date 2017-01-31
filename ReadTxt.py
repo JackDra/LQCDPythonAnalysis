@@ -126,9 +126,16 @@ def ReadLREM(todtval,thisMomList,filepref,NoWar=False):
                 LEvec[-1].append([])
                 REvec[-1].append([])
                 # for leflag,levec in data['Left_Evec'].iteritems():
-                for thissm in DefSmList:
-                    LEvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Left_Evec'][thissm]))
-                    REvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Right_Evec'][thissm]))
+                for thissm in DefjSmList:
+                    if thissm not in data[imomCond]['Values'][thisstate]['Left_Evec'].keys():
+                        LEvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Left_Evec'][thissm.replace('jsm','sm')]))
+                    else:
+                        LEvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Left_Evec'][thissm]))
+                for thissm in DefiSmList:
+                    if thissm not in data[imomCond]['Values'][thisstate]['Right_Evec'].keys():
+                        REvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Right_Evec'][thissm.replace('ism','sm')]))
+                    else:
+                        REvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Right_Evec'][thissm]))
         else:
             if not NoWar:
                 print 'warning, weight file not found', filename
@@ -219,7 +226,7 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
     return datadictout,datamassout
 
 
-def Get2ptSetMoms(thisoutputdir,MomListIn,tvarlist=[],smlist=[],tsrclist=[]):
+def Get2ptSetMoms(thisoutputdir,MomListIn,tvarlist=[],ismlist=[],jsmlist=[],tsrclist=[]):
     momlist = set([])
     xmlMomList = map(qstrTOqcond,MomListIn)
     for iflag in ['cfun/twopt','Mass']:
@@ -233,12 +240,14 @@ def Get2ptSetMoms(thisoutputdir,MomListIn,tvarlist=[],smlist=[],tsrclist=[]):
                     ifile = thisdir+MakeMomDir(ip)+'state'+istate+itvar+iflag.replace('cfun/','')+ip+'.xml'
                     if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
             for its in tsrclist:
-                for ism in smlist:
-                    ts,sm = str(its),str(ism)
-                    if 'tsrc' not in ts: ts = 'tsrc'+ts
-                    if 'sm' not in sm: sm = 'sm'+sm
-                    ifile = thisdir+MakeMomDir(ip)+ts+sm+iflag.replace('cfun/','')+ip+'.xml'
-                    if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
+                for ism in ismlist:
+                    for jsm in jsmlist:
+                        ts,ismstr,jsmstr = str(its),str(ism),str(jsm)
+                        if 'tsrc' not in ts: ts = 'tsrc'+ts
+                        if 'ism' not in ismstr: ismstr = 'ism'+ismstr
+                        if 'jsm' not in jsmstr: jsmstr = 'jsm'+jsmstr
+                        ifile = thisdir+MakeMomDir(ip)+ts+ismstr+jsmstr+iflag.replace('cfun/','')+ip+'.xml'
+                        if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
     return OrderMomList(momlist)
 
 

@@ -16,7 +16,7 @@ import time,datetime
 from MultiWrap import *
 from multiprocessing import Pool
 
-def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
+def CreateTwoPt(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':AnaProc}):
     logfile = logdir+'LogTwoPt.log'
     errfile = logdir+'LogTwoPt.log'
     touch(logfile)
@@ -26,10 +26,10 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     # print 'Running ' + ipTOqstr(thisMomList[0]) + ' ' +  str(int((thisMomList[0]*100)/float(len(qvecSet))))+'%' 
 
     if 'ReadList' in ListOrSet:
-        [data2pt,data3pt,filelist] = ReadList(thisSmearList,thisMomList,{},{},[],[],
+        [data2pt,data3pt,filelist] = ReadList(thisiSmearList,thisjSmearList,thisMomList,{},{},[],[],
                                               conflist,[],Interps=DefInterpList,thistsourceList=PoFtsourceList)
     elif 'ReadSet' in ListOrSet:
-        [data2pt,data3pt,filelist] = ReadSet(thisSmearList,thisMomList,{},{},[],[],
+        [data2pt,data3pt,filelist] = ReadSet(thisiSmearList,thisjSmearList,thisMomList,{},{},[],[],
                                              dirread,[],Interps=DefInterpList,thistsourceList=PoFtsourceList)
 
     thisMomList = GetAvgMomListip(thisMomList)
@@ -39,9 +39,10 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     print 'ncon = ' + str(ncon)
     # print 'nboot = ' + str(nboot)
     ## data2pt = [ t_src, ism , jsm , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-    C2out = DiagSmearWithTsrc(data2pt).tolist()
+    C2out = FlattenSmearWithTsrc(data2pt).tolist()
     ## C2out = [ t_src*ism*ism , ip , it ] 
     
+    if len(thisiSmearList) == len(thisjSmearList): print 'Warning: source and sink smearing lists are different sizes, CM analysis skipped'
     start = time.time()
     CMinputparams,PoFinputparams = [],[]
     makeContextFunctions(CreatePoF2ptCfuns)
@@ -54,19 +55,19 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     if DoMulticore and feedin['anaproc'] > 1:
         thisPool = Pool(min(len(CMinputparams),feedin['anaproc']))
         outputPoF = thisPool.map(CreatePoF2ptCfuns.mapper,PoFinputparams)
-        if len(thisSmearList) > 1 and DoCM:
+        if len(thisiSmearList) == len(thisjSmearList) and DoCM and len(thisiSmearList) > 1:
             outputCM = thisPool.map(CreateCM2ptCfuns.mapper,CMinputparams)
         thisPool.close()
         thisPool.join()
     else:
         outputPoF,outputCM = [],[]
         for iin in PoFinputparams: outputPoF.append(CreatePoF2ptCfuns.mapper(iin))
-        if len(thisSmearList) > 1 and DoCM:
+        if len(thisiSmearList) == len(thisjSmearList) and DoCM and len(thisiSmearList) > 1:
             for iin in CMinputparams: outputCM.append(CreateCM2ptCfuns.mapper(iin))
     
     
     thisPoFTvarList = ['PoF'+str(PoFShifts)+iTvar for iTvar in TwoPtDefTvarList]
-    if len(thisSmearList) > 1 and DoCM:
+    if len(thisiSmearList) == len(thisjSmearList) and DoCM and len(thisiSmearList) > 1:
         thisCMTvarList = ['CM'+iTvar for iTvar in TwoPtDefTvarList]
         for iout,iTvar in zip(outputCM,thisCMTvarList):
             [CMdata2pt,LEvec,REvec,Emass] = iout
@@ -88,9 +89,9 @@ def CreateTwoPt(thisMomList,thisSmearList,feedin= {'anaproc':AnaProc}):
     print 'Printing to file \r',
 
     SetList = []
-    SetList += CreateMassSet(thisSmearList,StateSet,[],tsrclist=PoFtsourceList,flipord=True)
-    if len(thisSmearList) > 1 and DoCM: SetList += CreateMassSet([],CMStateSet,thisCMTvarList,flipord=True)
-    SetList += CreateMassSet([],StateSet,thisPoFTvarList,flipord=True)
+    SetList += CreateMassSet(thisiSmearList,thisjSmearList,StateSet,[],tsrclist=PoFtsourceList,flipord=True)
+    if len(thisiSmearList) == len(thisjSmearList) and DoCM and len(thisiSmearList) > 1: SetList += CreateMassSet([],[],CMStateSet,thisCMTvarList,flipord=True)
+    SetList += CreateMassSet([],[],StateSet,thisPoFTvarList,flipord=True)
     PrintCfunToFile([C2out],SetList,thisMomList,['twopt'],AddDict=InfoDict)
     PrintSetToFile([C2out],SetList,thisMomList,['Mass'],0,AddDict=InfoDict)
     print 'Printing took ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '

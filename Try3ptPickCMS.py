@@ -10,12 +10,12 @@ from CMSTech import CreateCMCfuns, CreateREvecCfuns,CreateREPoFCfuns,PreptwoptCo
 from OutputData import PrintSetToFile,PrintCfunToFile
 from CreateCombs import CreategiDi, CreateDS
 from Fitting import FitRFSet
-from SetLists import CreateDataTsinkSet,CreateDataSet,CreateREvecSet,CreateMassSet
+from SetLists import CreateREvecSet,CreateMassSet
 from MiscFuns import touch
 import copy
 
 
-def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPGList={},thisPDList={},thisDSList=DefDSList,giDi=False,DontWriteZero=False):
+def CreateRF(RunType,thisTSinkList,thisiSmearList,thisjSmearList,thisPrefList,thisMomList,thisPGList={},thisPDList={},thisDSList=DefDSList,giDi=False,DontWriteZero=False):
     thisGammaList = []
     for iDS in thisDSList:
         for Proj,GL in thisPGList.iteritems():
@@ -50,17 +50,17 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
     
     if 'ReadList' in ListOrSet:
         if 'PoF' in RunType:
-            [data2pt,data3pt,filelist] = ReadList(thisSmearList,thisMomList,thisPGList,thisPDList,
+            [data2pt,data3pt,filelist] = ReadList(thisiSmearList,thisjSmearList,thisMomList,thisPGList,thisPDList,
                                                   thisDSList,thisTSinkList,conflist,thisPrefList,thistsourceList=PoFtsourceList)
         else:
-            [data2pt,data3pt,filelist] = ReadList(thisSmearList,thisMomList,thisPGList,thisPDList,
+            [data2pt,data3pt,filelist] = ReadList(thisiSmearList,thisjSmearList,thisMomList,thisPGList,thisPDList,
                                                   thisDSList,thisTSinkList,conflist,thisPrefList)
     elif 'ReadSet' in ListOrSet:
         if 'PoF' in RunType:
-            [data2pt,data3pt,filelist] = ReadSet(thisSmearList,thisMomList,thisPGList,thisPDList,
+            [data2pt,data3pt,filelist] = ReadSet(thisiSmearList,thisjSmearList,thisMomList,thisPGList,thisPDList,
                                                  thisDSList,thisTSinkList,dirread,thisPrefList,thistsourceList=PoFtsourceList)
         else:
-            [data2pt,data3pt,filelist] = ReadSet(thisSmearList,thisMomList,thisPGList,thisPDList,
+            [data2pt,data3pt,filelist] = ReadSet(thisiSmearList,thisjSmearList,thisMomList,thisPGList,thisPDList,
                                                  thisDSList,thisTSinkList,dirread,thisPrefList)
     print 'Read Complete'
     print 'ncon=',len(filelist)
@@ -84,8 +84,8 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         data2pt = np.array(PreptwoptCorr(data2pt[0]))
         data3pt = np.array(data3pt)[0,0,:,:,:,:,:]
         if giDi: data3pt,thisGammaList = CreategiDi(data3pt,thisGammaList,thisDSList)
-        data2ptset = DiagSmear(data2pt).tolist()
-        data3ptset = DiagSmear(data3pt).tolist()
+        data2ptset = FlattenSmear(data2pt).tolist()
+        data3ptset = FlattenSmear(data3pt).tolist()
         start = time.time()
         for icount,(itodt,iTvar) in enumerate(zip(AnatodtList,AnaTvarList)):
             thisstart = time.time()
@@ -97,7 +97,7 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
             print 'CMTech ' , iTvar , ' Time Taken: ' , str(datetime.timedelta(seconds=time.time()-thisstart)) , ' h:m:s  '
         data3ptset = np.array(data3ptset)
         data2ptset = np.array(data2ptset)
-        SetList = CreateMassSet(thisSmearList,CMStateSet,AnaTvarList,flipord=True)
+        SetList = CreateMassSet(thisiSmearList,thisjSmearList,CMStateSet,AnaTvarList,flipord=True)
         SetList = ['tsink'+str(thisTSinkList[0])+iS for iS in SetList]
         print 'CMTech Total Time Taken: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
     elif 'REvec' == RunType:
@@ -109,7 +109,7 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         print 'Creating REvec CM Tech ' , REvecTvarList[0]
         [data2ptset,data3ptset] = CreateREvecCfuns(data3pt,data2pt,DefREvecVarList,thisMomList)
         SetList,dump = CreateREvecSet(thisTSinkList,[PickedState],REvecTvarList)
-        MassSetList = CreateMassSet([],[PickedState],REvecTvarList,flipord=True)
+        MassSetList = CreateMassSet([],[],[PickedState],REvecTvarList,flipord=True)
         PrintCfunToFile([data2ptset],MassSetList,thisMomList,['twopt'],AddDict=InfoDict)
         PrintSetToFile([data2ptset],MassSetList,thisMomList,['Mass'],0,AddDict=InfoDict)
     elif 'PoF' == RunType:
@@ -145,8 +145,10 @@ def CreateRF(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPG
         data2pt = np.array(PreptwoptCorr(data2pt[0]))
         data3pt = np.array(data3pt)[0,0,:,:,:,:,:]
         if giDi: data3pt,thisGammaList = CreategiDi(data3pt,thisGammaList,thisDSList)
-        data2ptset,data3ptset = DiagSmear(data2pt),DiagSmear(data3pt)
-        SetList = ['tsink'+str(thisTSinkList[0])+'sm'+ism for ism in thisSmearList]
+        data2ptset,data3ptset = FlattenSmear(data2pt),FlattenSmear(data3pt)
+        SetList = []
+        for ism in thisiSmearList:
+            SetList += ['tsink'+str(thisTSinkList[0])+'ism'+ism+'jsm'+jsm for jsm in thisjSmearList]
     print 'Analysis Complete'
 
     [RFr,SqrtFac] = CalcRatioFactor(data2ptset,data3ptset,str(thisTSinkList[0]),thisMomList)

@@ -44,7 +44,6 @@ TSFColList = ['Tsink','test32','Small','CM']
 if outfile == 'Tsink':
     print 'Tsink run'
     CaptString = ['TSINKSET']
-    ReadSmearList = ['32']
     ReadTSinkList = AllTSinkList
     ReadStateList = []
     ReadTvarList = []
@@ -52,7 +51,6 @@ if outfile == 'Tsink':
     ReadREvecTvarList = []
 elif outfile == 'test32':
     print 'test32 run'
-    ReadSmearList = ['32']
     ReadTSinkList = [32,35,38]
     CaptString = ['tsink'+str(its)+'sm32' for its in ReadTSinkList]
     ReadStateList = []
@@ -61,7 +59,6 @@ elif outfile == 'test32':
     ReadREvecTvarList = []
 elif outfile == 'Small':
     print 'Small run'
-    ReadSmearList = ['32']
     ReadTSinkList = [26,29,32]
     CaptString = ['tsink'+str(its)+'sm32' for its in ReadTSinkList]
     ReadStateList = []
@@ -70,7 +67,6 @@ elif outfile == 'Small':
     ReadREvecTvarList = []
 elif outfile == 'CM':
     print 'CM run'
-    ReadSmearList = DefSmearList
     ReadTSinkList = [29]
     CaptString = ['SMSET','CMSET']
     ReadStateList = []
@@ -80,7 +76,6 @@ elif outfile == 'CM':
 elif outfile == 'SM':
     print 'SM run'
     outfile = 'CM'
-    ReadSmearList = DefSmearList
     ReadTSinkList = [29]
     CaptString = ['SMSET']
     ReadStateList = []
@@ -90,7 +85,6 @@ elif outfile == 'SM':
 elif outfile == 'JustCM':
     print 'JustCM run'
     outfile = 'CM'
-    ReadSmearList = DefSmearList
     ReadTSinkList = [29]
     CaptString = ['CMSET']
     ReadStateList = []
@@ -100,7 +94,6 @@ elif outfile == 'JustCM':
 elif outfile == 'REvec':
     print 'REvec run'
     CaptString = ['REvecSET']
-    ReadSmearList = []
     ReadTSinkList = []
     ReadTvarList = []
     ReadREvecTSinkList = REvecTSinkList
@@ -109,7 +102,6 @@ elif outfile == 'PoF'+str(PoFShifts):
     thisPoF = 'PoF'+str(PoFShifts)
     print thisPoF+' run'
     CaptString = ['PoFSET']
-    ReadSmearList = []
     ReadTSinkList = []
     ReadTvarList = []
     ReadREvecTSinkList = PoFTSinkList

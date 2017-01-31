@@ -9,14 +9,14 @@ from MiscFuns import *
 import time,datetime
 
 
-def ReadSetTopCharge(thisiSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,
+def ReadSetTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,
                      thisTSinkList,directory,Flag,Interps=['nucleon'],thistsourceList=[tsource]):
     # if len(thisTSinkList) > 0:
     #     TestMomList(thisMomList)
     thisfilelist = OrderedDict()
     f = open('./cfglistset.txt','w')
     
-    fileend2pt = CreateEnd2pt(DefSmearList[0],DefSmearList[0],thistsourceList[0],Interps[0],Interps[0])
+    fileend2pt = CreateEnd2pt(DefiSmearList[0],DefjSmearList[0],thistsourceList[0],Interps[0],Interps[0])
     if Debug: print ' comparing to: ',fileend2pt
 
     for isource in SourceList:
@@ -45,7 +45,7 @@ def ReadSetTopCharge(thisiSmearList,thisMomList,thisProjGammaList,thisProjDerLis
                     if 'xsrc' in ListOrSet:
                         if ListOrSet.replace('ReadSet','').replace('ReadList','')+'_' not in ifile: continue
                     fileprefix = ifile.replace(fileend2pt,'')
-                    if CheckSet(fileprefix,dirname+'/',thisSmearList,thisProjGammaList,
+                    if CheckSet(fileprefix,dirname+'/',thisiSmearList,thisjSmearList,thisProjGammaList,
                                 thisProjDerList,thisDSList,thisTSinkList,Flag,Interps,tsourceList=thistsourceList):
                         prefnosrc = re.sub('_xsrc.*','',fileprefix)
                         if prefnosrc not in thisfilelist.keys():
@@ -81,7 +81,7 @@ def ReadSetTopCharge(thisiSmearList,thisMomList,thisProjGammaList,thisProjDerLis
     #     for ifile in thisfilelist:
     #         print ifile
     #     print ''
-    data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
+    data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisiSmearList,thisjSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
     # print ''
     cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist.keys()))
     if not np.all([x==tflow[0] for x in tflow]):
@@ -90,7 +90,7 @@ def ReadSetTopCharge(thisiSmearList,thisMomList,thisProjGammaList,thisProjDerLis
 
     data3pt,dataTop = [],[]
     for iFlag,itsink in zip(Flag,thisTSinkList):
-        holdTop,hold3pt = Read3ptSetTop(topcharge,thisfilelist,thisSmearList,thisMomList,thisProjGammaList,
+        holdTop,hold3pt = Read3ptSetTop(topcharge,thisfilelist,thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,
                                         thisProjDerList,thisDSList,itsink,iFlag,shiftlist,cfglistout,thisTflowList,
                                         randlist=randlist,tsourceList=thistsourceList)
         data3pt.append(hold3pt)
@@ -99,7 +99,7 @@ def ReadSetTopCharge(thisiSmearList,thisMomList,thisProjGammaList,thisProjDerLis
     return [data2pt,data3pt,np.rollaxis(np.array(dataTop),1),thisTflowList,thisfilelist]
 
 
-def ReadListTopCharge(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,
+def ReadListTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,
                       thisTSinkList,thisconflist,Flag,Interps=['nucleon'],thistsourceList=[tsource]):
     thisfilelist = OrderedDict()
     f = open('./cfglistlist.txt','w')
@@ -112,7 +112,7 @@ def ReadListTopCharge(thisSmearList,thisMomList,thisProjGammaList,thisProjDerLis
             thisfilelist[prefnosrc].append(ifile)
         f.write(ifile+'\n')
     f.close()
-    data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
+    data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisiSmearList,thisjSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
     # print ''
     cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist.keys()))
     if not np.all([x==tflow[0] for x in tflow]):
@@ -121,35 +121,13 @@ def ReadListTopCharge(thisSmearList,thisMomList,thisProjGammaList,thisProjDerLis
 
     data3pt,dataTop = [],[]
     for iFlag,itsink in zip(Flag,thisTSinkList):
-        holdTop,hold3pt = Read3ptSetTop(topcharge,thisfilelist,thisSmearList,thisMomList,thisProjGammaList,
+        holdTop,hold3pt = Read3ptSetTop(topcharge,thisfilelist,thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,
                                         thisProjDerList,thisDSList,itsink,iFlag,shiftlist,cfglistout,thisTflowList,
                                         randlist=randlist,tsourceList=thistsourceList)
         data3pt.append(hold3pt)
         dataTop.append(holdTop)
     # print ''
     return [data2pt,data3pt,np.rollaxis(np.array(dataTop),1),thisTflowList,thisfilelist]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 def TestMomList(thisMomList):
@@ -159,7 +137,7 @@ def TestMomList(thisMomList):
         print "Must Read Zero Momentum value " + iqTOip(0)
 
         
-def ReadListAlpha(thisSmearList,thisMomList,thisconflist,Interps=['nucleon'],thistsourceList=[tsource]):
+def ReadListAlpha(thisiSmearList,thisjSmearList,thisMomList,thisconflist,Interps=['nucleon'],thistsourceList=[tsource]):
     thisfilelist = OrderedDict()
     f = open('./cfglistlist.txt','w')
     for iconf in thisconflist:
@@ -181,19 +159,19 @@ def ReadListAlpha(thisSmearList,thisMomList,thisconflist,Interps=['nucleon'],thi
     # if len(cfglistout) != len(thiscfglist):
     #     print 'Not All Top Charge Found'
         
-    dataTop,data2pt,randlist,shiftlist = Read2ptSetTop(topcharge,thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),
+    dataTop,data2pt,randlist,shiftlist = Read2ptSetTop(topcharge,thisfilelist,thisiSmearList,thisjSmearList,GetAvgMomListip(thisMomList),
                                                        Interps,cfglistout,thisTflowList,tsourceList=thistsourceList)
     return [data2pt,dataTop,thisTflowList,thisfilelist]
 
 
 
-def ReadSetAlpha(thisSmearList,thisMomList,directory,Interps=['nucleon'],thistsourceList=[tsource]):
+def ReadSetAlpha(thisiSmearList,thisjSmearList,thisMomList,directory,Interps=['nucleon'],thistsourceList=[tsource]):
     # if len(thisTSinkList) > 0:
     #     TestMomList(thisMomList)
     thisfilelist = OrderedDict()
     f = open('./cfglistset.txt','w')
     
-    fileend2pt = CreateEnd2pt(DefSmearList[0],DefSmearList[0],thistsourceList[0],Interps[0],Interps[0])
+    fileend2pt = CreateEnd2pt(DefiSmearList[0],DefjSmearList[0],thistsourceList[0],Interps[0],Interps[0])
     if Debug: print ' comparing to: ',fileend2pt
     for isource in SourceList:
         print 'reading directory: ' , directory+'/'+isource
@@ -215,7 +193,7 @@ def ReadSetAlpha(thisSmearList,thisMomList,directory,Interps=['nucleon'],thistso
                             thisfilelist[prefnosrc].append(directory+'/'+isource+'/@/'+fileprefix)
                         f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
                 else:
-                    if CheckSet(fileprefix,dirname+'/',thisSmearList,{},{},[],[],'',Interps,tsourceList=thistsourceList):
+                    if CheckSet(fileprefix,dirname+'/',thisiSmearList,thisjSmearList,{},{},[],[],'',Interps,tsourceList=thistsourceList):
                         prefnosrc = re.sub('_xsrc.*','',fileprefix)
                         if prefnosrc not in thisfilelist.keys():
                             thisfilelist[prefnosrc] = [directory+'/'+isource+'/@/'+fileprefix]
@@ -253,13 +231,13 @@ def ReadSetAlpha(thisSmearList,thisMomList,directory,Interps=['nucleon'],thistso
     # if len(cfglistout) != len(thiscfglist):
     #     print 'Not All Top Charge Found'
 
-    dataTop,data2pt,randlist,shiftlist = Read2ptSetTop(topcharge,thisfilelist,thisSmearList,
+    dataTop,data2pt,randlist,shiftlist = Read2ptSetTop(topcharge,thisfilelist,thisiSmearList,thisjSmearList,
                                                        GetAvgMomListip(thisMomList),Interps,cfglistout,thisTflowList,tsourceList=thistsourceList)
     
     return [data2pt,dataTop,thisTflowList,thisfilelist]
 
         
-def ReadList(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,
+def ReadList(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,
              thisTSinkList,thisconflist,Flag,Interps=['nucleon'],thistsourceList=[tsource]):
     thisfilelist = OrderedDict()
     f = open('./cfglistlist.txt','w')
@@ -272,23 +250,23 @@ def ReadList(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSL
             thisfilelist[prefnosrc].append(ifile)
         f.write(ifile+'\n')
     f.close()
-    data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
+    data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisiSmearList,thisjSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
     # print ''
     data3pt = []
     for iFlag,itsink in zip(Flag,thisTSinkList):
-        data3pt.append(Read3ptSet(thisfilelist,thisSmearList,thisMomList,thisProjGammaList,
+        data3pt.append(Read3ptSet(thisfilelist,thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,
                                   thisProjDerList,thisDSList,itsink,iFlag,shiftlist,randlist=randlist,tsourceList=thistsourceList))
     # print ''
     return [data2pt,data3pt,thisfilelist]
 
-def ReadSet(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList, thisDSList,
+def ReadSet(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,thisProjDerList, thisDSList,
             thisTSinkList,directory,Flag,Interps=['nucleon'],thistsourceList=[tsource]):
     # if len(thisTSinkList) > 0:
     #     TestMomList(thisMomList)
     thisfilelist = OrderedDict()
     f = open('./cfglistset.txt','w')
     
-    fileend2pt = CreateEnd2pt(DefSmearList[0],DefSmearList[0],thistsourceList[0],Interps[0],Interps[0])
+    fileend2pt = CreateEnd2pt(DefiSmearList[0],DefjSmearList[0],thistsourceList[0],Interps[0],Interps[0])
     if Debug: print ' comparing to: ',fileend2pt
 
     for isource in SourceList:
@@ -311,7 +289,7 @@ def ReadSet(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList, thisDSL
                             thisfilelist[prefnosrc].append(directory+'/'+isource+'/@/'+fileprefix)
                         f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
                 else:
-                    if CheckSet(fileprefix,dirname+'/',thisSmearList,thisProjGammaList,
+                    if CheckSet(fileprefix,dirname+'/',thisiSmearList,thisjSmearList,thisProjGammaList,
                                 thisProjDerList,thisDSList,thisTSinkList,Flag,Interps,tsourceList=thistsourceList):
                         prefnosrc = re.sub('_xsrc.*','',fileprefix)
                         if prefnosrc not in thisfilelist.keys():
@@ -348,11 +326,11 @@ def ReadSet(thisSmearList,thisMomList,thisProjGammaList,thisProjDerList, thisDSL
     #         print ifile
     #     print ''
         
-    data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
+    data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisiSmearList,thisjSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
     # print ''
     data3pt = []
     for iFlag,itsink in zip(Flag,thisTSinkList):
-        data3pt.append(Read3ptSet(thisfilelist,thisSmearList,thisMomList,thisProjGammaList
+        data3pt.append(Read3ptSet(thisfilelist,thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList
                                   ,thisProjDerList,thisDSList,itsink,iFlag,shiftlist,randlist=randlist,tsourceList=thistsourceList))
         # print ''
     return [data2pt,data3pt,thisfilelist]
@@ -378,10 +356,10 @@ def CreateDir2pt(ism,jsm):
     return 'twoptRandT/twoptsm'+ism+'si'+jsm
 
 def CheckAllSet(FilePrefix,directory,Interps,tsourceList=[tsource]):
-    for iterp,ism in Elongate(Interps,DefSmearList):
-        for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,DefSmearList)):
+    for iterp,ism in Elongate(Interps,DefiSmearList):
+        for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,DefjSmearList)):
             for thists in tsourceList:
-                testfile2pt = (directory.replace(CreateDir2pt(DefSmearList[0],DefSmearList[0]),
+                testfile2pt = (directory.replace(CreateDir2pt(DefiSmearList[0],DefjSmearList[0]),
                                                  CreateDir2pt(ism,jsm))
                                +FilePrefix+CreateEnd2pt(ism,jsm,thists,iterp,jterp))
                 if Debug: print 'Checking!! ' ,testfile2pt
@@ -409,13 +387,13 @@ def CheckAllSet(FilePrefix,directory,Interps,tsourceList=[tsource]):
                     for jcsm,jsm3pt in enumerate(Jsmlist):
                         for iDS in DefDSList:
                             for iProj in DefProjGammaList:
-                                testfile3pt = (directory.replace(CreateDir2pt(DefSmearList[0],DefSmearList[0]),
+                                testfile3pt = (directory.replace(CreateDir2pt(DefiSmearList[0],DefjSmearList[0]),
                                                                  CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
                                                +FilePrefix+CreateEnd3pt(ism,jsm3pt,thists,itsink,iDS,iProj,''))
                                 if Debug: print 'Checking!!! ' ,  testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
                                 if not os.path.isfile(testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)): return False
                             for iProj in DefProjDerList:
-                                testfile3pt = (directory.replace(CreateDir2pt(DefSmearList[0],DefSmearList[0]),
+                                testfile3pt = (directory.replace(CreateDir2pt(DefiSmearList[0],DefjSmearList[0]),
                                                                  CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
                                                +FilePrefix+CreateEnd3pt(ism,jsm3pt,thists,itsink,iDS,iProj,'D'))
                                 if Debug: print 'Checking!!! ' ,testfile3pt.replace(FileStruct,FileStruct+C2C3Dis)
@@ -424,12 +402,12 @@ def CheckAllSet(FilePrefix,directory,Interps,tsourceList=[tsource]):
                 
 
 
-def CheckSet(FilePrefix,directory,thisSmearList,thisProjGammaList,thisProjDerList,thisDSList,
+def CheckSet(FilePrefix,directory,thisiSmearList,thisjSmearList,thisProjGammaList,thisProjDerList,thisDSList,
              thisTSinkList,Flag,Interps,tsourceList=[tsource]):
-    for iterp,ism in Elongate(Interps,thisSmearList):
+    for iterp,ism in Elongate(Interps,thisiSmearList):
         for thists in tsourceList:
-            for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,thisSmearList)):
-                testfile2pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
+            for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,thisjSmearList)):
+                testfile2pt = (directory.replace(CreateDir2pt(thisiSmearList[0],thisjSmearList[0]),
                                                  CreateDir2pt(ism,jsm))
                                +FilePrefix+CreateEnd2pt(ism,jsm,thists,iterp,jterp))
                 # testfile2pt = testfile2pt.replace(xsrcList[0],xsrc)
@@ -450,11 +428,11 @@ def CheckSet(FilePrefix,directory,thisSmearList,thisProjGammaList,thisProjDerLis
                         thisFlag = 'RE'+PoFDirTvarList[0]
                         C2C3Dis = PoFC2C3Dis
                 else:
-                    Jsmlist = ['Xsm'+jsm for jsm in thisSmearList]
+                    Jsmlist = ['Xsm'+jsm for jsm in thisjSmearList]
                 for jcsm,jsm3pt in enumerate(Jsmlist):
                     for iDS in thisDSList:
                         for iProj in thisProjGammaList:
-                            testfile3pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
+                            testfile3pt = (directory.replace(CreateDir2pt(thisiSmearList[0],thisjSmearList[0]),
                                                              CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
                                            +FilePrefix+CreateEnd3pt(ism,jsm3pt,thists,itsink,iDS,iProj,''))
                             # testfile3pt = testfile3pt.replace(xsrcList[0],xsrc)
@@ -462,7 +440,7 @@ def CheckSet(FilePrefix,directory,thisSmearList,thisProjGammaList,thisProjDerLis
                             if Debug: print 'Checking~!!! ' ,  thisfile3pt
                             if not os.path.isfile(thisfile3pt): return False
                         for iProj in thisProjDerList:
-                            testfile3pt = (directory.replace(CreateDir2pt(thisSmearList[0],thisSmearList[0]),
+                            testfile3pt = (directory.replace(CreateDir2pt(thisiSmearList[0],thisjSmearList[0]),
                                                              CreateDir3pt(ism,jsm3pt,itsink,iDS,iProj,thisFlag))
                                            +FilePrefix+CreateEnd3pt(ism,jsm3pt,thists,itsink,iDS,iProj,'D'))
                             # testfile3pt = testfile3pt.replace(xsrcList[0],xsrc)
@@ -474,7 +452,7 @@ def CheckSet(FilePrefix,directory,thisSmearList,thisProjGammaList,thisProjDerLis
 ##tempdata [ iconf ] .data [ ip , it ]
 ##thisdata2pt [ tsource, ism , jsm , ip , it ] bootdataclas
 ##shiftlist = [ tsource , ism, jsm , icfg, isrc_number ]
-def Read2ptSet(readfilelist,thisSmearList,thisMomList,Interps,tsourceList=[tsource]):
+def Read2ptSet(readfilelist,thisiSmearList,thisjSmearList,thisMomList,Interps,tsourceList=[tsource]):
     thisdata2pt = []
     start = time.time()
     icount = -1
@@ -483,12 +461,12 @@ def Read2ptSet(readfilelist,thisSmearList,thisMomList,Interps,tsourceList=[tsour
     for thists in tsourceList:
         thisdata2pt.append([])
         shiftlist.append([])
-        for icsm,(iterp,ism) in enumerate(Elongate(Interps,thisSmearList)):
+        for icsm,(iterp,ism) in enumerate(Elongate(Interps,thisiSmearList)):
             thisdata2pt[-1].append([])
             shiftlist[-1].append([])
-            for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,thisSmearList)):
+            for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,thisjSmearList)):
                 icount += 1
-                timeleft = GetTimeLeft(icount,len(tsourceList)*len(Elongate(Interps,thisSmearList))**2,time.time()-start)
+                timeleft = GetTimeLeft(icount,len(tsourceList)*len(thisiSmearList)*len(thisjSmearList)*len(Interps)**2,time.time()-start)
                 print 'Read 2pt: sm' + ism + 'Xsm'+jsm+' Time Left: ' +str(datetime.timedelta(seconds=timeleft)) , ' h:m:s \r',
                 thisstart = time.time()
                 thisfilelist = OrderedDict()
@@ -504,13 +482,13 @@ def Read2ptSet(readfilelist,thisSmearList,thisMomList,Interps,tsourceList=[tsour
 
 
 ##thisdata3pt [ thistsource, ism , jsm , igamma , ip ] bootdataclas
-def Read3ptSet(readfilelist,thisSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,tsink,iFlag,shiftlist,randlist=[],tsourceList=[tsource]):
+def Read3ptSet(readfilelist,thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,tsink,iFlag,shiftlist,randlist=[],tsourceList=[tsource]):
     thisdata3pt = []
     start = time.time()
     icount = -1
     for itsource,thists in enumerate(tsourceList):
         thisdata3pt.append([])
-        for icsm,ism in enumerate(thisSmearList):
+        for icsm,ism in enumerate(thisiSmearList):
             thisdata3pt[-1].append([])
             thisFlag = iFlag
             C2C3Dis,rownumb = '',''
@@ -526,12 +504,12 @@ def Read3ptSet(readfilelist,thisSmearList,thisMomList,thisProjGammaList,thisProj
                     thisFlag = 'RE'+PoFDirTvarList[0]
                     C2C3Dis = PoFC2C3Dis
             else:
-                Jsmlist = ['Xsm'+jsm for jsm in thisSmearList]
+                Jsmlist = ['Xsm'+jsm for jsm in thisjSmearList]
             for jcsm,jsm in enumerate(Jsmlist):
                 thisdata3pt[-1][icsm].append([])
                 thisstart = time.time()
                 icount += 1
-                timeleft = GetTimeLeft(icount,len(tsourceList)*len(thisSmearList)*len(Jsmlist),time.time()-start)
+                timeleft = GetTimeLeft(icount,len(tsourceList)*len(thisiSmearList)*len(Jsmlist),time.time()-start)
                 print 'Read 3pt: sm' + ism + jsm + ' ts'+str(tsink)+' Time Remaining: '+ str(datetime.timedelta(seconds=timeleft)) , ' h:m:s \r',
                 thisshiftlist = shiftlist[itsource][icsm][jcsm]
                 for iDS in thisDSList:
@@ -566,7 +544,7 @@ def Read3ptSet(readfilelist,thisSmearList,thisMomList,thisProjGammaList,thisProj
 ##thisdata2pt [ tflow, tsource, ism , jsm , ip , it ] bootdataclas
 ##shiftlist = [ tsource , ism, jsm , icfg, isrc_number ]
 ##TopCharge = [ iconf , tflow ] 
-def Read2ptSetTop(TopCharge,readfilelist,thisSmearList,thisMomList,Interps,Topcfglist,thisTflowList,tsourceList=[tsource]):
+def Read2ptSetTop(TopCharge,readfilelist,thisiSmearList,thisjSmearList,thisMomList,Interps,Topcfglist,thisTflowList,tsourceList=[tsource]):
     thisdata2pt = []
     thisdataTop = []
     start = time.time()
@@ -577,13 +555,13 @@ def Read2ptSetTop(TopCharge,readfilelist,thisSmearList,thisMomList,Interps,Topcf
         thisdata2pt.append([])
         thisdataTop.append([])
         shiftlist.append([])
-        for icsm,(iterp,ism) in enumerate(Elongate(Interps,thisSmearList)):
+        for icsm,(iterp,ism) in enumerate(Elongate(Interps,thisiSmearList)):
             thisdata2pt[-1].append([])
             thisdataTop[-1].append([])
             shiftlist[-1].append([])
-            for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,thisSmearList)):
+            for jcsm,(jterp,jsm) in enumerate(Elongate(Interps,thisjSmearList)):
                 icount += 1
-                timeleft = GetTimeLeft(icount,len(tsourceList)*len(Elongate(Interps,thisSmearList))**2,time.time()-start)
+                timeleft = GetTimeLeft(icount,len(tsourceList)*len(thisiSmearList)*len(thisjSmearList)*len(Interps)**2,time.time()-start)
                 print 'Read 2pt: sm' + ism + 'Xsm'+jsm+' Time Left: ' +str(datetime.timedelta(seconds=timeleft)) , ' h:m:s \r',
                 thisstart = time.time()
                 thisfilelist = OrderedDict()
@@ -600,35 +578,9 @@ def Read2ptSetTop(TopCharge,readfilelist,thisSmearList,thisMomList,Interps,Topcf
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## IN DEV
-
 ##thisdata3pt [ thistsource, ism , jsm , igamma , ip ] bootdataclas
 ##thisdataTop [ tflow, thistsource, ism , jsm , igamma , ip ] bootdataclas
-def Read3ptSetTop(TopCharge,readfilelist,thisSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,tsink,iFlag,shiftlist,
+def Read3ptSetTop(TopCharge,readfilelist,thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,tsink,iFlag,shiftlist,
                   Topcfglist,thisTflowList,randlist=[],tsourceList=[tsource]):
     thisdata3pt = []
     thisdataTop = []
@@ -637,7 +589,7 @@ def Read3ptSetTop(TopCharge,readfilelist,thisSmearList,thisMomList,thisProjGamma
     for itsource,thists in enumerate(tsourceList):
         thisdata3pt.append([])
         thisdataTop.append([])
-        for icsm,ism in enumerate(thisSmearList):
+        for icsm,ism in enumerate(thisiSmearList):
             thisdata3pt[itsource].append([])
             thisdataTop[itsource].append([])
             thisFlag = iFlag
@@ -654,13 +606,13 @@ def Read3ptSetTop(TopCharge,readfilelist,thisSmearList,thisMomList,thisProjGamma
                     thisFlag = 'RE'+PoFDirTvarList[0]
                     C2C3Dis = PoFC2C3Dis
             else:
-                Jsmlist = ['Xsm'+jsm for jsm in thisSmearList]
+                Jsmlist = ['Xsm'+jsm for jsm in thisjSmearList]
             for jcsm,jsm in enumerate(Jsmlist):
                 thisdata3pt[itsource][icsm].append([])
                 thisdataTop[itsource][icsm].append([])
                 thisstart = time.time()
                 icount += 1
-                timeleft = GetTimeLeft(icount,len(tsourceList)*len(thisSmearList)*len(Jsmlist),time.time()-start)
+                timeleft = GetTimeLeft(icount,len(tsourceList)*len(thisiSmearList)*len(Jsmlist),time.time()-start)
                 print 'Read 3pt: sm' + ism + jsm + ' ts'+str(tsink)+' Time Remaining: '+ str(datetime.timedelta(seconds=timeleft)) , ' h:m:s \r',
                 thisshiftlist = shiftlist[itsource][icsm][jcsm]
                 for iDS in thisDSList:

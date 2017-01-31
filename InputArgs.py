@@ -36,9 +36,9 @@ def ExpandSetList(thisSL):
     SLout = []
     for iset in thisSL:
         if 'SMSET' in iset:
-            SLout += CreateGenericSet(CMTSinkList,DefSmearList,[],[])
+            SLout += CreateGenericSet(CMTSinkList,DefiSmearList,DefjSmearList,[],[])
         elif 'TSINKSET' in iset:
-            SLout += CreateStateTsinkSet('sm32',AllTSinkList)
+            SLout += CreateStateTsinkSet(SingSmList[0],AllTSinkList)
         elif 'PoFSET' in iset:
             SLout += CreateREvecSet(PoFTSinkList,[PickedState],PoFTvarList)[0]
         elif 'REvecSET' in iset:

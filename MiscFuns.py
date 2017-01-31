@@ -252,6 +252,13 @@ def DiagSmear(data2pt):
         data2ptout.append(ismdata[ism])
     return np.array(data2ptout)
 
+def FlattenSmear(data2pt):
+    data2ptout = []
+    for ism,ismdata in enumerate(data2pt):
+        for jsm,jsmdata in enumerate(ismdata):
+            data2ptout.append(jsmdata)
+    return np.array(data2ptout)
+
 
 def DiagSmearWithTsrc(data2pt):
     data2ptout = []
@@ -259,13 +266,14 @@ def DiagSmearWithTsrc(data2pt):
        for ism,ismdata in enumerate(tsdata):
           data2ptout.append(ismdata[ism])
     return np.array(data2ptout)
- 
-def DiagSmearWithTsrc(data2pt):
-   data2ptout = []
-   for its,tsdata in enumerate(data2pt):
-      for ism,ismdata in enumerate(tsdata):
-         data2ptout.append(ismdata[ism])
-   return np.array(data2ptout)
+
+def FlattenSmearWithTsrc(data2pt):
+    data2ptout = []
+    for its,tsdata in enumerate(data2pt):
+       for ism,ismdata in enumerate(tsdata):
+           for jsm,jsmdata in enumerate(ismdata):
+               data2ptout.append(jsmdata)
+    return np.array(data2ptout)
 
 def Diag3ptSmear(data3pt):
     data3ptout = []

@@ -11,12 +11,12 @@ from CMSTech import CreateCMCfuns, CreateREvecCfuns,CreateREPoFCfuns,PreptwoptCo
 from OutputData import PrintSetToFile,PrintCfunToFile,PrintTopSetToFile,PrintTopCfunToFile
 from CreateCombs import CreategiDi, CreateDS
 from Fitting import FitRFSet
-from SetLists import CreateDataTsinkSet,CreateDataSet,CreateREvecSet,CreateMassSet
+from SetLists import CreateREvecSet,CreateMassSet
 from MiscFuns import touch
 import copy
 
 
-def CreateRFTop(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thisPGList={},thisPDList={},thisDSList=DefDSList,giDi=False,DontWriteZero=False):
+def CreateRFTop(RunType,thisTSinkList,thisiSmearList,thisjSmearList,thisPrefList,thisMomList,thisPGList={},thisPDList={},thisDSList=DefDSList,giDi=False,DontWriteZero=False):
     thisGammaList = []
     for iDS in thisDSList:
         for Proj,GL in thisPGList.iteritems():
@@ -51,17 +51,17 @@ def CreateRFTop(RunType,thisTSinkList,thisSmearList,thisPrefList,thisMomList,thi
     
     if 'ReadList' in ListOrSet:
         if 'PoF' in RunType:
-            [data2pt,data3pt,data3ptTop,thisTopList,filelist] = ReadListTopCharge(thisSmearList,thisMomList,thisPGList,thisPDList,
+            [data2pt,data3pt,data3ptTop,thisTopList,filelist] = ReadListTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisPGList,thisPDList,
                                                                 thisDSList,thisTSinkList,conflist,thisPrefList,thistsourceList=PoFtsourceList)
         else:
-            [data2pt,data3pt,data3ptTop,thisTopList,filelist] = ReadListTopCharge(thisSmearList,thisMomList,thisPGList,thisPDList,
+            [data2pt,data3pt,data3ptTop,thisTopList,filelist] = ReadListTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisPGList,thisPDList,
                                                                 thisDSList,thisTSinkList,conflist,thisPrefList)
     elif 'ReadSet' in ListOrSet:
         if 'PoF' in RunType:
-            [data2pt,data3pt,data3ptTop,thisTopList,filelist] = ReadSetTopCharge(thisSmearList,thisMomList,thisPGList,thisPDList,
+            [data2pt,data3pt,data3ptTop,thisTopList,filelist] = ReadSetTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisPGList,thisPDList,
                                                  thisDSList,thisTSinkList,dirread,thisPrefList,thistsourceList=PoFtsourceList)
         else:
-            [data2pt,data3pt,data3ptTop,thisTopList,filelist] = ReadSetTopCharge(thisSmearList,thisMomList,thisPGList,thisPDList,
+            [data2pt,data3pt,data3ptTop,thisTopList,filelist] = ReadSetTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisPGList,thisPDList,
                                                  thisDSList,thisTSinkList,dirread,thisPrefList)
     print 'Read Complete'
     print 'ncon=',len(filelist)
