@@ -90,7 +90,10 @@ def xmlfitr(thefitr):
     return 'r'+'-'.join(map(str,thefitr))
 
 def unxmlfitr(thefitr):
-    return thefitr.replace('r','').split('-')
+    if 'fitr' in thefitr:
+        return thefitr.replace('fitr','').split('-')
+    else:
+        return thefitr.replace('r','').split('-')
     
 def xmlTSink(thestr):
     return 'tsink'+str(thestr)

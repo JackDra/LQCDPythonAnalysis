@@ -1400,7 +1400,7 @@ def PlotTopChargeOverFlow(data,iSet,iMom,tsink,thiscol,thissym,thisshift,NNQ=Fal
     pl.errorbar(tflowlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ tsink='+str(tsink)))
     if NNQ:
         pl.errorbar(np.array(tflowlist)-0.5,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
-
+        
 def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,Dt=2):
     tflowlist,tlist,plotAvg,plotStd = [],[],[],[]
     plotAvgNN,plotStdNN = [],[]
@@ -1432,7 +1432,20 @@ def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,
     pl.errorbar(tlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ tflow='+str(tflow)))
     if NNQ:
         pl.errorbar(np.array(tlist)-0.5,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
-    
+    if not NNQ and 'Fits' in data.keys():
+        momdataFit = data['Fits'][iMom]['Boots']
+        tflowlist = [] 
+        for itflow,flowfitdata in momdataFit.iteritems():
+            if untflowstr(itflow) == tflow:
+                if AlphaFitRPick in flowfitdata.keys():                
+                    tvals = unxmlfitr(AlphaFitRPick)
+                    dataavg = flowfitdata[AlphaFitRPick].Avg
+                    datastd = flowfitdata[AlphaFitRPick].Std
+                    dataup = dataavg+datastd
+                    datadown = dataavg-datastd
+                    pl.plot(tvals,[dataavg,dataavg],color=thiscol)
+                    pl.fill_between(tvals,dataup,datadown,color=thiscol,alpha=thisalpha,edgecolor='none')
+
 def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False):
     global ForceTitle    
     DictFlag,thisValue = 'RF','Alpha'
@@ -1441,7 +1454,7 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False):
     ForceTitle = FT
     for itsink in AlphaTlist:
         thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
-        for iset,setdata in zip(thisSetList,data):
+        for iset,setdata in data.iteritems():
             if CheckDict(setdata,DictFlag,imom,'Boots'):
                 # print 'plotting ', iset, imom
                 PlotTopChargeOverFlow(setdata,iset,imom,itsink,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt)
