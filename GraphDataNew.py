@@ -1493,7 +1493,7 @@ def Graphchit(Qlist,flowlist):
     Qlist,dump = bt.CreateBoot(np.rollaxis(np.array(Qlist),1),nboot,0)
     coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
     Q2list = np.array(Qlist)**2
-    Q2list.Stats()
+    Q2list = GetBootStats(Q2list)
     Std = coeff*0.25*Pullflag(Q2list,'Std')*Pullflag(Q2list,'Avg')**(0.25-1)
     pl.errorbar(flowlist,coeff*Pullflag(Q2list,'Avg')**(0.25),Std,fmt='o')
     pl.xlim(flowlist[0]-0.1,flowlist[-1]+0.1)
