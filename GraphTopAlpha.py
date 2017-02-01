@@ -30,9 +30,11 @@ def ReadAndPlotDis(thisSetList,thisMomList):
     #     thisAllSetList += isetlist
     iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
     for imom in thisMomList:
-        datadict = []
+        datadict = {}
         for iset in iterSetList:
-            datadict.append(ReadTopFile(outputdir[0],iset,thisMomList=[imom]))
+            datadict[iset] = OrderedDict()
+            datadict[iset] = ReadTopFile(outputdir[0],iset,thisMomList=[imom])
+            datadict[iset]['Fits'] = ReadAlphaFitFile(outputdir[0],iset,thisMomList=[imom])
         setstart = time.time()
         PlotTopSetCharge(datadict,iterSetList,imom,feedin['ForceTitle'])
         PlotTopSetCharge(datadict,iterSetList,imom,feedin['ForceTitle'],NNQ=True)

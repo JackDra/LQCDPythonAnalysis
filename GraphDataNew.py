@@ -22,6 +22,7 @@ from FormFactors import NoFFPars
 from SetLists import SortMySet
 from CombParams import *
 from FFParams import Qtcut,GetCharRad
+import BootTest as bt
 
 ##FORCE TITLE PARAMETER, SET TO FALSE TO USE NORMAL TITLES#
 
@@ -72,6 +73,8 @@ ylimDict = {'VectorP4giDi':[-0.4,-0.15],
             # 'IsoVectorP3g1g2':[1.23,1.], ## OSFTsink and TSFTsink
             # 'IsoVectorP3g1g2':[1.18,1.02], ## TSFCM 
             'IsoVectorP3g1g2':[1.22,1.02], ## Tsink Var 
+            'ProtonP3g2':[0.1,0.5], ## Tsink Var 
+            'NeutronP3g2':[-0.4,0.0], ## Tsink Var 
             'IsoVectorP4g4':[0.8,1.1]}
 
 # ylimFFDict = {'ProtonGeGmFF1/F1divF2':[0.3,0.5],
@@ -84,7 +87,7 @@ ylimDict = {'VectorP4giDi':[-0.4,-0.15],
 #               'NeutronTensorFF2':[2.0,0.45],
 #               'NeutronTensorFF3':[-0.2,-1],
 #               'NeutronGeGmFF1/F1divF2':[0.0,0.06]}
-ylimFFDict = {}
+ylimFFDict = {'ProtonVectorTopFF3':[-2,2]}
 
 leglocFFDict = {'NeutronVectorFF2':'upper left',
                 'NeutronGeGmFF1':'upper left',
@@ -237,8 +240,9 @@ def SetRFAxies(thisGamma):
     pl.tight_layout()
     
 def SetFFAxies(thisCurr):
+    currnumb = thisCurr[-1]
     pl.xlabel(FFxlab)
-    pl.ylabel(FFylab)
+    pl.ylabel(FFylab.replace('F','F_{'+currnumb+'}'))
     if thisCurr in ylimFFDict.keys():
         pl.ylim(ylimFFDict[thisCurr])
     # else:
@@ -1397,7 +1401,7 @@ def PlotTopChargeOverFlow(data,iSet,iMom,tsink,thiscol,thissym,thisshift,NNQ=Fal
     pl.errorbar(tflowlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ tsink='+str(tsink)))
     if NNQ:
         pl.errorbar(np.array(tflowlist)-0.5,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
-
+        
 def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,Dt=2):
     tflowlist,tlist,plotAvg,plotStd = [],[],[],[]
     plotAvgNN,plotStdNN = [],[]
@@ -1429,7 +1433,20 @@ def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,
     pl.errorbar(tlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ tflow='+str(tflow)))
     if NNQ:
         pl.errorbar(np.array(tlist)-0.5,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
-    
+    if not NNQ and CheckDict(data,'Fits',iMom,'Boots'):
+        momdataFit = data['Fits'][iMom]['Boots']
+        tflowlist = [] 
+        for itflow,flowfitdata in momdataFit.iteritems():
+            if untflowstr(itflow) == tflow:
+                if AlphaFitRPick in flowfitdata.keys():                
+                    tvals = map(int,unxmlfitr(AlphaFitRPick))
+                    dataavg = flowfitdata[AlphaFitRPick].Avg
+                    datastd = flowfitdata[AlphaFitRPick].Std
+                    dataup = dataavg+datastd
+                    datadown = dataavg-datastd
+                    pl.plot(tvals,[dataavg,dataavg],color=thiscol)
+                    pl.fill_between(tvals,[dataup,dataup],[datadown,datadown],color=thiscol,alpha=thisalpha,edgecolor='none')
+
 def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False):
     global ForceTitle    
     DictFlag,thisValue = 'RF','Alpha'
@@ -1438,7 +1455,7 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False):
     ForceTitle = FT
     for itsink in AlphaTlist:
         thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
-        for iset,setdata in zip(thisSetList,data):
+        for iset,setdata in data.iteritems():
             if CheckDict(setdata,DictFlag,imom,'Boots'):
                 # print 'plotting ', iset, imom
                 PlotTopChargeOverFlow(setdata,iset,imom,itsink,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt)
@@ -1448,7 +1465,7 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False):
         pl.clf()
     for itflow in AlphaTflowList:
         thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
-        for iset,setdata in zip(thisSetList,data):
+        for iset,setdata in data.iteritems():
             if CheckDict(setdata,DictFlag,imom,'Boots'):
                 # print 'plotting ', iset, imom
                 PlotTopChargeOvert(setdata,iset,imom,itflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt)
@@ -1472,15 +1489,31 @@ def GraphQExp(Qlist,flowlist):
 
 def Graphchit(Qlist,flowlist):
     ## Hard coded here....
-    thislatspace = 0.0947
+    flowlist = np.array(flowlist)
+    thislatspace = 0.0907
     coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
-    Q2list = np.array(Qlist)**2
-    Std = coeff*0.25*np.std(Q2list,axis=0)*np.mean(Q2list,axis=0)**(0.25-1)
-    pl.errorbar(flowlist,coeff*np.mean(Q2list,axis=0)**(0.25),Std,fmt='o')
-    pl.xlim(flowlist[0]-0.1,flowlist[-1]+0.1)
+
+    Qboot,dump = bt.CreateBoot(Qlist,nboot,0)
+    Q2boot = np.array(Qboot)**2
+    chit = coeff*np.array(Q2boot)**(0.25)
+    chit = GetBootStats(chit)
+    pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q Boot$')
+
+    Q2boot,dump = bt.CreateBoot(np.array(Qlist)**2,nboot,0)
+    chit = coeff*np.array(Q2boot)**(0.25)
+    chit = GetBootStats(chit)
+    pl.errorbar(flowlist-0.02,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q^{2} Boot$')
+
+    Qavg = np.mean(np.array(Qlist)**2,axis=0)
+    Qstd = np.std(np.array(Qlist)**2,axis=0)
+    chitAvg = coeff*Qavg**(0.25)
+    chitStd = coeff*0.25*Qstd*Qavg**(0.25-1)
+    pl.errorbar(flowlist+0.1,chitAvg,chitStd,fmt='o',label=r'$No Boot$')
+    pl.xlim(flowlist[0]-0.02,flowlist[-1]+0.1)
     pl.xlabel(r'$ t_{flow} $')
     pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
-    pl.ylim(0,0.4)
+    # pl.ylim(0,0.4)
+    pl.legend()
     thisdir = outputdir[0] + 'graphs/Qdata/'
     pl.title(r'$ \chi_{t}^{1/4} = \frac{\hbar c}{aV^{1/4}} \langle Q^2 \rangle^{1/4} $',y=1.04)
     mkdir_p(thisdir)
@@ -1489,7 +1522,7 @@ def Graphchit(Qlist,flowlist):
 
 def GraphQ2Hist(Qlist,thisflow):
     ## Hard coded here....
-    # thislatspace = 0.0947
+    # thislatspace = 0.0907
     # coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
     Q2list = np.array(Qlist)[:,thisflow]**2
 

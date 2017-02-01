@@ -103,7 +103,7 @@ kappalist = ['k'+str(kappa),'xsrc1k'+str(kappa),'nboot1kk'+str(kappa),'XAvgk'+st
 kappaflags = [ik.replace('k'+str(kappa),'') for ik in kappalist]
 ScalarNorm = 1 # normalisation for Scalar current
 PsScalarNorm = 1 # normalisation for Pseudo Scalar current
-VectorNorm = 0.736862 # normalisation for Vector Current from arXiv:1006.1164v2 beta = 1.9, Iwasaki gauge action, clover term Csw=1.715
+VectorNorm = 0.736862 # normalisation for Vector Current from arXiv:1006.1164v2 beta = 1.9, Iwasaki gauge action, clover term Csw=1.7
 PsVectorNorm = 1 # normalisation for Pseudo Vector current
 TensorNorm = 1 # normalisation for Tensor Current
 MomFracNorm = 1 # normalisation for Momentum Fraction
@@ -151,7 +151,7 @@ XSrcLen = 15
 NoXAvg = False ## Does each source separatly for each 
 
 ForceMinXSrcLen = True ## only calculates with a minumum of MinXSRCLen of sources per gauge field
-MinXSrcLen = 15
+MinXSrcLen = 10
 ##DEBUG toggles (True/False):
 # Debug = True # for debugging, toggles alot of print statements on
 # DEBUGPoF = True ## Temp debug parameter to test PoF (REMOVE ONCE DONE)
@@ -162,7 +162,7 @@ DoCmplx = True # reads complex opperator values as well as real values, should b
 DoCons = False # reads Conserved vector current NOT IMPLEMENTED YET, USING BELOW UNTILL I GET AROUDN TO IT. ONLY WORKS WITH CHROMA
 RepWithCons = False # TEMPORARY, overrides vector current with Conserved vector current ONLY WORKS WITH CHROMA
 
-DefWipe = True # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
+DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
 MakeGraphDat = True # Creates a .dat file of the values plotted for the corresponding graph (where implemented)
 PhysicalUnits = True # uses lattice momenta or physical momenta
 ForceNoDer = False # Forces the fitting LLSBoot to use manual derivaive calculation
@@ -258,7 +258,7 @@ else:
 # note: dim of StateSet < dim of SmearSet
 GammaSet = ['I','g1','g2','g3','g4','g1g2','g1g3','g1g4','g2g3','g2g4','g3g4','g1g5','g2g5','g3g5','g4g5','g5']
 GammaConsSet = ['Consg1','Consg2','Consg3','Consg4']
-tflowlist = map(float,np.arange(0,1000,20)) ## indicies of flows to read
+tflowlist = map(float,np.arange(0,1000,100)) ## indicies of flows to read
 # tflowlist = map(float,np.arange(0,1000))
 
 if DoCmplx:
@@ -458,7 +458,9 @@ else:
     if kappa == 12:
         DefPoFVarPicked = [[1,1]]
     else:
-        DefPoFVarPicked = [[3,3],[1,3],[2,3],[4,3]]
+        # DefPoFVarPicked = [[3,3],[1,3],[2,3],[4,3]]
+        ## 1,3 not working for some reason
+        DefPoFVarPicked = [[3,3],[2,3],[4,3]]
 DefPoFTvarRef = DefPoFVarPicked[0]
 PoFTvarPicked = ['PoF'+str(PoFShifts)+'to'+str(iPoF[0])+'dt'+str(iPoF[1]) for iPoF in DefPoFVarPicked]
 

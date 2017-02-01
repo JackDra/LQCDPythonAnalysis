@@ -387,10 +387,9 @@ else:
     AnatodtList = DeftodtList
     AnaTvarList = DefTvarList
     
+DefSmearList = ['16','32','64']
 # DefSmearList = ['16']
-DefiSmearList = ['64']
-# DefjSmearList = ['64']
-DefjSmearList = ['16','32','64']
+# DefSmearList = ['64']
 # DefSmearList = ['8','16','32','64','128','256']
 # DefSmearList = ['64','128']
 # DefSmearList = ['32','64']
@@ -399,11 +398,11 @@ DefjSmearList = ['16','32','64']
 # DefSmearList = ['64']
 # DefSmearList = ['128']
 # if kappa == 12:
-SingSmearList = [DefiSmearList[0]] ## must be first element of DefSmearList for now FIX!!
+SingSmearList = [DefSmearList[0]] ## must be first element of DefSmearList for now FIX!!
 # DefSmearList = ['32']
 # DefSmearList = ['8','16','32']
-StateSet = map(str,range(1,(PoFShifts+1)*min(len(DefiSmearList),len(DefjSmearList))+1))
-CMStateSet = map(str,range(1,min(len(DefiSmearList),len(DefjSmearList))+1))
+StateSet = map(str,range(1,(PoFShifts+1)*len(DefSmearList)+1))
+CMStateSet = map(str,range(1,len(DefSmearList)+1))
 def GetStateSet(keystring):
     if 'PoF' in keystring: return StateSet
     else: return CMStateSet
@@ -411,21 +410,9 @@ PickedState = 1
 PickedStateStr = 'state'+str(PickedState)
 DefInterpList = ['nucleon']
 # DefInterpList = ['nucleon','nucleon2']
-DefiSmList = ['ism'+ism for ism in DefiSmearList]
-DefjSmList = ['jsm'+jsm for jsm in DefjSmearList]
-DefSmList = []
-for ism in DefiSmList:
-    for jsm in DefjSmList:
-        DefSmList.append(ism+jsm)
-        
-SingiSmList = ['ism'+ism for ism in SingSmearList]
-SingjSmList = ['jsm'+ism for ism in SingSmearList]
-SingSmList = []
-for ism in SingiSmList:
-    for jsm in SingjSmList:
-        SingSmList.append(ism+jsm)
-DefInterpiSmearList = ElongateName(DefInterpList,DefiSmList)
-DefInterpjSmearList = ElongateName(DefInterpList,DefjSmList)
+DefSmList = ['sm'+ism for ism in DefSmearList]
+SingSmList = ['sm'+ism for ism in SingSmearList]
+DefInterpSmearList = ElongateName(DefInterpList,DefSmList)
 ##THIS NEEDS TO BE SET TO GET SIGN RIGHT ON CORRELATOR
 CMTSinkList = [13]
 AllTSinkList = [11,14,17,20,23]
@@ -546,12 +533,11 @@ if len(PoFTSinkList) > 0:
 
 
 SmearDictList = {'PoF' : PoFFlagList,
-                 'PoFRead' : DefiSmearList,
+                 'PoFRead' : DefSmearList,
                  'REvec' : REvecFlagList,
-                 'REvecRead' : DefiSmearList,
-                 'CM' : DefjSmList,
-                 'cmRead' : DefiSmearList,
-                 'Tsink' : SingjSmList,
+                 'REvecRead' : DefSmearList,
+                 'CM' : DefSmList,
+                 'cmRead' : DefSmearList,
+                 'Tsink' : SingSmList,
                  'tsinkRead' : SingSmearList}
-
 
