@@ -162,7 +162,7 @@ DoCmplx = True # reads complex opperator values as well as real values, should b
 DoCons = False # reads Conserved vector current NOT IMPLEMENTED YET, USING BELOW UNTILL I GET AROUDN TO IT. ONLY WORKS WITH CHROMA
 RepWithCons = False # TEMPORARY, overrides vector current with Conserved vector current ONLY WORKS WITH CHROMA
 
-DefWipe = True # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
+DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
 MakeGraphDat = True # Creates a .dat file of the values plotted for the corresponding graph (where implemented)
 PhysicalUnits = True # uses lattice momenta or physical momenta
 ForceNoDer = False # Forces the fitting LLSBoot to use manual derivaive calculation
@@ -258,7 +258,7 @@ else:
 # note: dim of StateSet < dim of SmearSet
 GammaSet = ['I','g1','g2','g3','g4','g1g2','g1g3','g1g4','g2g3','g2g4','g3g4','g1g5','g2g5','g3g5','g4g5','g5']
 GammaConsSet = ['Consg1','Consg2','Consg3','Consg4']
-tflowlist = map(float,np.arange(0,1000,20)) ## indicies of flows to read
+tflowlist = map(float,np.arange(0,1000,100)) ## indicies of flows to read
 # tflowlist = map(float,np.arange(0,1000))
 
 if DoCmplx:
@@ -388,7 +388,10 @@ else:
     AnaTvarList = DefTvarList
     
 # DefSmearList = ['16']
-DefiSmearList = ['64']
+if kappa == 1375400:
+    DefiSmearList = ['16','32','64']
+else:
+    DefiSmearList = ['64']
 # DefjSmearList = ['64']
 DefjSmearList = ['16','32','64']
 # DefSmearList = ['8','16','32','64','128','256']

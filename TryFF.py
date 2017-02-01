@@ -40,13 +40,13 @@ def CreateFFWrap(thisMass,thesetmass,massfitr,theset,setdict,thisCurr,Rfac):
     thisDS,baseCurr,dump = SplitDSCurr(thisCurr)
     if 'Top' in thisCurr:
         baseCurr = baseCurr+'Top'
-        alphalist,alphadata = ReadAlphaList(theset)
+        alphalist,alphainfo = ReadAlphaList(theset)
     else:
         alphalist = [1.0]
         alphainfo = OrderedDict()
         alphainfo['Avg'] = 1.0
         alphainfo['Std'] = 0.0
-        alphainto['Chi'] = 0.0
+        alphainfo['Chi'] = 0.0
         alphainfo['fit_range'] = 'fitr0-0'
         alphainfo['File'] = ''
     if thisDS == '':
@@ -64,7 +64,7 @@ def CreateFFWrap(thisMass,thesetmass,massfitr,theset,setdict,thisCurr,Rfac):
         infodict['Mass'] = thisMass
         infodict['Mass']['Set'] = thesetmass
         infodict['Mass']['fit_range'] = massfitr
-        infodict['alpha'] = alphadata
+        infodict['alpha'] = alphainfo
         if 'Vector' in thisCurr and 'Top' not in thisCurr and 'IsoVector' not in thisCurr and 'PsVector' not in thisCurr:
             if ForceVecNorm: FF = RenormFF(FF,FF['qsqrd0']['Boot'][0].Avg,igf)
             PrintFFSet(FF,theset,thisMass,thesetmass,combCurr,infodict)

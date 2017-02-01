@@ -44,16 +44,16 @@ def CRFDWrap(RunType,itsinkList,thisSmearList,iPrefList,thisDPList):
              [iqTOip(0)],thisPDList=thisDPList,giDi=True)
     
 
-def CRFWrap(RunType,itsinkList,thisSmearList,iPrefList,thisMomList,iProj,igamma,DoTop):
+def CRFWrap(RunType,itsinkList,thisiSmearList,thisjSmearList,iPrefList,thisMomList,iProj,igamma,DoTop):
     DRZ = False
     if 'q = 0 0 0' not in thisMomList:
         DRZ = True
         thisMomList = ['q = 0 0 0']+thisMomList
     if DoTop:
-        CreateRFTop(RunType,itsinkList,thisSmearList,iPrefList,
+        CreateRFTop(RunType,itsinkList,thisiSmearList,thisjSmearList,iPrefList,
                  DragpZ([qstrTOip(iq) for iq in thisMomList]),thisPGList={iProj:[igamma]},DontWriteZero=DRZ)
     else:
-        CreateRF(RunType,itsinkList,thisSmearList,iPrefList,
+        CreateRF(RunType,itsinkList,thisiSmearList,thisjSmearList,iPrefList,
                  DragpZ([qstrTOip(iq) for iq in thisMomList]),thisPGList={iProj:[igamma]},DontWriteZero=DRZ)
 
 def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin=None,DoTop=False):
@@ -195,14 +195,14 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
                         sys.stderr = sys.__stderr__
                         if len(runmomlist) > 0:
                             if thisPool == False:
-                                CRFWrap(RunType,itsinkList,thisSmearList,iPrefList,copy.deepcopy(runmomlist),iProj,igamma,DoTop)
+                                CRFWrap(RunType,itsinkList,thisiSmearList,thisjSmearList,iPrefList,copy.deepcopy(runmomlist),iProj,igamma,DoTop)
                             else:
-                                thisPool.apply_async(CRFWrap,(RunType,itsinkList,thisSmearList,iPrefList,copy.copy(runmomlist),iProj,igamma,DoTop))
+                                thisPool.apply_async(CRFWrap,(RunType,itsinkList,thisiSmearList,thisjSmearList,iPrefList,copy.copy(runmomlist),iProj,igamma,DoTop))
                         if len(runmomlistcmplx) > 0:
                             if thisPool == False:
-                                CRFWrap(RunType,itsinkList,thisSmearList,iPrefList,copy.deepcopy(runmomlistcmplx),iProj,igamma+'cmplx',DoTop)
+                                CRFWrap(RunType,itsinkList,thisiSmearList,thisjSmearList,iPrefList,copy.deepcopy(runmomlistcmplx),iProj,igamma+'cmplx',DoTop)
                             else:
-                                thisPool.apply_async(CRFWrap,(RunType,itsinkList,thisSmearList,iPrefList,copy.copy(runmomlistcmplx),iProj,igamma+'cmplx',DoTop))
+                                thisPool.apply_async(CRFWrap,(RunType,itsinkList,thisiSmearList,thisjSmearList,iPrefList,copy.copy(runmomlistcmplx),iProj,igamma+'cmplx',DoTop))
     sys.stdout = sys.__stdout__
     sys.stderr = sys.__stderr__
     if 'TwoPt' not in RunType and 'TopAlpha' not in RunType:

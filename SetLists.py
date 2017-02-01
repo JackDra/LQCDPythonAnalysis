@@ -185,7 +185,7 @@ def CreateMassSet(thisiSmearL,thisjSmearL,thisStateList,thisTvarList,tsrclist = 
     for its in tsrclist:
         for ismear in thisiSmearL:        
             for jsmear in thisjSmearL:        
-                SetGraph.append('tsrc'+its+'ism'+ismear+'jsm'+ismear)
+                SetGraph.append('tsrc'+its+'ism'+ismear+'jsm'+jsmear)
             # SetGraph.append('tsrc'+its+'sm'+ismear)
     if flipord:
         for itvar in thisTvarList:
