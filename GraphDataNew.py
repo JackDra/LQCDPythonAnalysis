@@ -1492,9 +1492,9 @@ def GraphQExp(Qlist,flowlist):
 def Graphchit(Qlist,flowlist):
     ## Hard coded here....
     thislatspace = 0.0947
+    coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
     Qboot,dump = bt.CreateBoot(Qlist,nboot,0)
     Q2boot = np.array(Qboot)**2
-    # coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
     # Q2boot,dump = bt.CreateBoot(np.array(Qlist)**2,nboot,0)
     chit = coeff*np.array(Q2boot)**(0.25)
     chit = GetBootStats(chit)
