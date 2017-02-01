@@ -1495,6 +1495,8 @@ def Graphchit(Qlist,flowlist):
     # Qboot,dump = bt.CreateBoot(Qlist,nboot,0)
     # Q2boot = np.array(Qboot)**2
     coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
+    print Qlist[0]
+    print (np.array(Qlist)**2)[0]
     Q2boot = bt.CreateBoot(np.array(Qlist)**2,nboot,0)
     Q2boot = GetBootStats(np.array(Q2boot))
     # print
