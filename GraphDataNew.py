@@ -87,7 +87,7 @@ ylimDict = {'VectorP4giDi':[-0.4,-0.15],
 #               'NeutronTensorFF2':[2.0,0.45],
 #               'NeutronTensorFF3':[-0.2,-1],
 #               'NeutronGeGmFF1/F1divF2':[0.0,0.06]}
-ylimFFDict = {}
+ylimFFDict = {'ProtonVectorTopFF3':[-2,2]}
 
 leglocFFDict = {'NeutronVectorFF2':'upper left',
                 'NeutronGeGmFF1':'upper left',
@@ -1497,7 +1497,9 @@ def Graphchit(Qlist,flowlist):
     Q2list = np.array(Qlist)**2
     Q2list = GetBootStats(Q2list)
     Std = coeff*0.25*Pullflag(Q2list,'Std')*Pullflag(Q2list,'Avg')**(0.25-1)
-    
+    print
+    for iflow, val, err in zip(flowlist,coeff*Pullflag(Q2list,'Avg')**(0.25),Std):
+        print iflow,ival,err
     pl.errorbar(flowlist,coeff*Pullflag(Q2list,'Avg')**(0.25),Std,fmt='o')
     pl.xlim(flowlist[0]-0.1,flowlist[-1]+0.1)
     pl.xlabel(r'$ t_{flow} $')
