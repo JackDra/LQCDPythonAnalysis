@@ -1497,7 +1497,7 @@ def Graphchit(Qlist,flowlist):
     Q2boot = np.array(Qboot)**2
     Q2boot = GetBootStats(Q2boot)
     print
-    for iq,iqb in zip(np.mean(np.array(Qlist)**2,axis=0),Pullflag(Q2boot,'Avg')):
+    for iq,iqb in zip(coeff*np.mean(np.array(Qlist)**2,axis=0)**(0.25),coeff*Pullflag(Q2boot,'Avg')**(0.25)):
         print iq, iqb
     Std = coeff*0.25*Pullflag(Q2boot,'Std')*Pullflag(Q2boot,'Avg')**(0.25-1)
     pl.errorbar(flowlist,coeff*Pullflag(Q2boot,'Avg')**(0.25),Std,fmt='o')
