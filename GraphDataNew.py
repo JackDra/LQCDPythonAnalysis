@@ -1499,7 +1499,7 @@ def Graphchit(Qlist,flowlist):
     Std = coeff*0.25*Pullflag(Q2list,'Std')*Pullflag(Q2list,'Avg')**(0.25-1)
     print
     for iflow, val, err in zip(flowlist,coeff*Pullflag(Q2list,'Avg')**(0.25),Std):
-        print iflow,ival,err
+        print iflow,val,err
     pl.errorbar(flowlist,coeff*Pullflag(Q2list,'Avg')**(0.25),Std,fmt='o')
     pl.xlim(flowlist[0]-0.1,flowlist[-1]+0.1)
     pl.xlabel(r'$ t_{flow} $')
