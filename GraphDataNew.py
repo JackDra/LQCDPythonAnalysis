@@ -1496,7 +1496,7 @@ def Graphchit(Qlist,flowlist):
     # Q2boot = np.array(Qboot)**2
     # Q2boot = GetBootStats(Q2boot)
     coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
-    Q2boot = bt.CreateBoot(np.array(Qlist)**2,nboot,0)
+    Q2boot = np.array(bt.CreateBoot(np.array(Qlist)**2,nboot,0))
     # print
     # for iq,iqb in zip(coeff*np.mean(np.array(Qlist)**2,axis=0)**(0.25),coeff*Pullflag(Q2boot,'Avg')**(0.25)):
     #     print iq, iqb
