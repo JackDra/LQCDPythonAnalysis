@@ -1496,11 +1496,13 @@ def Graphchit(Qlist,flowlist):
     # Q2boot = np.array(Qboot)**2
     coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
     Q2boot,dump = bt.CreateBoot(np.array(Qlist)**2,nboot,0)
+    chit = coeff*Q2boot**(0.25)
+    chit = GetBootStats(chit)
     # print
     # for iq,iqb in zip(coeff*np.mean(np.array(Qlist)**2,axis=0)**(0.25),coeff*Pullflag(Q2boot,'Avg')**(0.25)):
     #     print iq, iqb
-    Std = coeff*0.25*Pullflag(Q2boot,'Std')*Pullflag(Q2boot,'Avg')**(0.25-1)
-    pl.errorbar(flowlist,coeff*Pullflag(Q2boot,'Avg')**(0.25),Std,fmt='o')
+    # Std = coeff*0.25*Pullflag(Q2boot,'Std')*Pullflag(Q2boot,'Avg')**(0.25-1)
+    pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o')
     pl.xlim(flowlist[0]-0.1,flowlist[-1]+0.1)
     pl.xlabel(r'$ t_{flow} $')
     pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
