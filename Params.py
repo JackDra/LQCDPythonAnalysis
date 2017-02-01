@@ -136,7 +136,7 @@ DeCorrPoF = False ## used for debugging the pencil of function method (decorrela
 TimeInv = False ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
 DoCM = False ## does correlation matrix result ( no PoF) 
 PlotMonte = False ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
-PlotXSrcDep = True ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
+PlotXSrcDep = False ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
 PlotAutocorr = False
 MonteTime = 7
 MonteFlow = 40
@@ -146,7 +146,7 @@ if 'XAvg' in ListOrSet:
 else:
     XAvg = False
 ExactXSrcNumber = False ## makes it so there are the same number of sources for each configuration (hardwired to the first configuration found)
-ForceXSrcLen = True ## forces so that any more sorce locations after XSrcLen are ignored
+ForceXSrcLen = False ## forces so that any more sorce locations after XSrcLen are ignored
 XSrcLen = 15
 NoXAvg = False ## Does each source separatly for each 
 
