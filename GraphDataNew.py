@@ -1492,13 +1492,15 @@ def GraphQExp(Qlist,flowlist):
 def Graphchit(Qlist,flowlist):
     ## Hard coded here....
     thislatspace = 0.0947
-    print np.array(Qlist).shape
-    Qlist,dump = bt.CreateBoot(np.array(Qlist),nboot,0)
+    Qboot,dump = bt.CreateBoot(Qlist,nboot,0)
     coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
-    Q2list = np.array(Qlist)**2
-    Q2list = GetBootStats(Q2list)
-    Std = coeff*0.25*Pullflag(Q2list,'Std')*Pullflag(Q2list,'Avg')**(0.25-1)
-    pl.errorbar(flowlist,coeff*Pullflag(Q2list,'Avg')**(0.25),Std,fmt='o')
+    Q2boot = np.array(Qboot)*np.array(Qboot)
+    Q2boot = GetBootStats(Q2boot)
+    print
+    for iq,iqb in zip(np.mean(Qlist,1),Pullflag(Qlist,'Avg')):
+        print iq, iqb
+    Std = coeff*0.25*Pullflag(Q2boot,'Std')*Pullflag(Q2boot,'Avg')**(0.25-1)
+    pl.errorbar(flowlist,coeff*Pullflag(Q2boot,'Avg')**(0.25),Std,fmt='o')
     pl.xlim(flowlist[0]-0.1,flowlist[-1]+0.1)
     pl.xlabel(r'$ t_{flow} $')
     pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
