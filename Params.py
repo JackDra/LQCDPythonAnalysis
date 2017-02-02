@@ -136,7 +136,7 @@ DeCorrPoF = False ## used for debugging the pencil of function method (decorrela
 TimeInv = False ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
 DoCM = False ## does correlation matrix result ( no PoF) 
 PlotMonte = False ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
-PlotXSrcDep = True ## Plots value and error over number of sources per gauge field
+PlotXSrcDep = False ## Plots value and error over number of sources per gauge field
 
 if PlotXSrcDep:
     NoXAvg = True ## Does each source separatly for each 
