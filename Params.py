@@ -139,7 +139,7 @@ PlotMonte = False ## Plots montecarlo time history of NNQ at time slice MonteTim
 PlotXSrcDep = True ## Plots value and error over number of sources per gauge field
 PlotAutocorr = False ## In Dev
 MonteTime = 7
-MonteFlow = 40
+MonteFlow = 4
 
 if 'XAvg' in ListOrSet:
     XAvg = True ## averages over source position locatinos before bootstrapping
