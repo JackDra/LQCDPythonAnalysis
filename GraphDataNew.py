@@ -1493,22 +1493,23 @@ def Graphchit(Qlist,flowlist):
     thislatspace = 0.0907
     coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
 
-    Qboot,dump = bt.CreateBoot(Qlist,nboot,0)
-    Q2boot = np.array(Qboot)**2
-    chit = coeff*np.array(Q2boot)**(0.25)
-    chit = GetBootStats(chit)
-    pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q Boot$')
+    # Qboot,dump = bt.CreateBoot(Qlist,nboot,0)
+    # Q2boot = np.array(Qboot)**2
+    # chit = coeff*np.array(Q2boot)**(0.25)
+    # chit = GetBootStats(chit)
+    # pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q Boot$')
 
     Q2boot,dump = bt.CreateBoot(np.array(Qlist)**2,nboot,0)
     chit = coeff*np.array(Q2boot)**(0.25)
     chit = GetBootStats(chit)
-    pl.errorbar(flowlist-0.02,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q^{2} Boot$')
+    # pl.errorbar(flowlist-0.02,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q^{2} Boot$')
+    pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o')
 
-    Qavg = np.mean(np.array(Qlist)**2,axis=0)
-    Qstd = np.std(np.array(Qlist)**2,axis=0,ddof=1)
-    chitAvg = coeff*Qavg**(0.25)
-    chitStd = coeff*0.25*Qstd*Qavg**(0.25-1)
-    pl.errorbar(flowlist+0.1,chitAvg,chitStd,fmt='o',label=r'$No Boot$')
+    # Qavg = np.mean(np.array(Qlist)**2,axis=0)
+    # Qstd = np.std(np.array(Qlist)**2,axis=0,ddof=1)
+    # chitAvg = coeff*Qavg**(0.25)
+    # chitStd = coeff*0.25*Qstd*Qavg**(0.25-1)
+    # pl.errorbar(flowlist+0.1,chitAvg,chitStd,fmt='o',label=r'$No Boot$')
     pl.xlim(flowlist[0]-0.02,flowlist[-1]+0.1)
     pl.xlabel(r'$ t_{flow} $')
     pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
