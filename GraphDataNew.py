@@ -942,8 +942,8 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
         LegVal = '$\\mu='+MakeValAndErr(Avg[0],Err[0])+'$'        
         datf.write(MakeValAndErr(Avg[0],Err[0])+' \n')
     else:
-        LegVal = '$F_{3}(0)='+MakeValAndErr(Avg[0],Err[0])+'$'        
-        datf.write(MakeValAndErr(Avg[0],Err[0])+' \n')
+        LegVal = '$F_{3}(0)='+MakeValAndErr(Avg[1],Err[1])+'$'        
+        datf.write(MakeValAndErr(Avg[1],Err[1])+' \n')
     # print 'DPFit flip sign', flipsign
     # if flipsign:
     #     pl.plot(fitqdata+thisshift,-np.array(fitydataAvg),label=LegVal,color=thiscol)
@@ -951,7 +951,7 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
     # else:
     pl.plot(fitqdata+thisshift,fitydataAvg,color=thiscol)
     if Err[0] < 1.0:
-        pl.errorbar([0.0+thisshift],[Avg[0]],[Err[0]],fmt='--',color=thiscol,label=LegVal)
+        pl.errorbar([0.0+thisshift],[Avg[1]],[Err[1]],fmt='--',color=thiscol,label=LegVal)
     # pl.fill_between(fitqdata+thisshift,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
 
     
