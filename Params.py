@@ -137,6 +137,12 @@ TimeInv = False ## uses time invariance to calculate the Pencil of Function meth
 DoCM = False ## does correlation matrix result ( no PoF) 
 PlotMonte = False ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
 PlotXSrcDep = True ## Plots value and error over number of sources per gauge field
+
+if PlotXSrcDep:
+    NoXAvg = True ## Does each source separatly for each 
+else:
+    NoXAvg = False ## Does each source separatly for each 
+    
 PlotAutocorr = False ## In Dev
 MonteTime = 7
 MonteFlow = 4
@@ -148,7 +154,6 @@ else:
 ExactXSrcNumber = False ## makes it so there are the same number of sources for each configuration (hardwired to the first configuration found)
 ForceXSrcLen = False ## forces so that any more sorce locations after XSrcLen are ignored
 XSrcLen = 15
-NoXAvg = False ## Does each source separatly for each 
 
 ForceMinXSrcLen = True ## only calculates with a minumum of MinXSRCLen of sources per gauge field
 MinXSrcLen = 15
