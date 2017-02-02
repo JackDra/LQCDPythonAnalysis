@@ -466,7 +466,7 @@ else:
     if kappa == 12:
         DefPoFVarPicked = [[1,1]]
     elif kappa == 1370000:
-        DefPoFVarPicked = [[3,3]]
+        DefPoFVarPicked = [[4,3]]
     else:
         DefPoFVarPicked = [[3,3],[1,3],[2,3],[4,3]]
 
