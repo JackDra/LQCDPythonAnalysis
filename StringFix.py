@@ -43,6 +43,11 @@ def NoTSink(thestring):
         thestring = thestring.replace(i,'')
     return thestring
 
+def NoTSource(thestring):
+    for i in PoFTsrcstrList:
+        thestring = thestring.replace(i,'')
+    return thestring
+
 def NoCM(thestring):
     for itvar in PoFTvarList:
         thestring = thestring.replace(itvar,'')
@@ -70,7 +75,7 @@ def ProperTsink(thestring):
 def ProperSmear(thestring):
     # for i,ism in enumerate(DefSmList):
     #     thestring = thestring.replace(ism,'sm'+str(i+1))
-    return thestring.replace('sm','SPACEsm')
+    return thestring.replace('ism','SPACEism').replace('jsm','SPACEjsm')
 
 def SplitToDt(tvar):
     try:
@@ -187,21 +192,21 @@ def TitleFixFF(string,FF):
 def LabToXaxis(thestring,col):
     stringout = thestring
     if col in 'FitsSm':
-        stringout = NoTSink(re.sub('cut.','',stringout))
+        stringout = NoTSink(re.sub('cut.-.','',stringout))
     elif col in 'FitsTsink':
-        stringout = NoCM(NoSm(re.sub('cut.','',stringout)))
+        stringout = NoCM(NoSm(re.sub('cut.-.','',stringout)))
     elif col in 'FitsVar':        
-        stringout = re.sub('dt.','',re.sub('cut.','',stringout))
+        stringout = re.sub('dt.','',re.sub('cut.-.','',stringout))
     elif col in 'SumMeth':
         stringout = NoCM(NoSm(stringout))
         stringout = stringout.replace('fitr0-4','')
         stringout = stringout.replace('fitr1-4','')
         stringout = stringout.replace('fitr2-4','')
     elif col in 'OSFCM':
-        stringout = NoTSink(re.sub('cut.','',stringout))
+        stringout = NoTSink(re.sub('cut.-.','',stringout))
         stringout = re.sub('dt.','',stringout)
     elif col in 'OSFTsink':
-        stringout = NoCM(NoSm(re.sub('cut.','',stringout)))
+        stringout = NoCM(NoSm(re.sub('cut.-.','',stringout)))
     elif col in 'TSFCM':
         stringout = NoTSink(NoCM(NoSm(stringout)))
     elif col in 'TSFTsink':
