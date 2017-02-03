@@ -1541,7 +1541,7 @@ def GraphchitKappas(Qlist,flowlist):
     ## Hard coded here....
     flowlist = np.array(flowlist)
     thislatspace = 0.0907
-    coeff = (1/(thislatspace*nx**(0.75)*nt**(0.25)))
+    coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
 
     # Qboot,dump = bt.CreateBoot(Qlist,nboot,0)
     # Q2boot = np.array(Qboot)**2
@@ -1550,7 +1550,7 @@ def GraphchitKappas(Qlist,flowlist):
     # pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q Boot$')
     tflowindex = flowlist[0].tolist().index(4.01)
     chitKappa = []
-    MpiList = [0.32242,0.18903]
+    MpiList = [0.32242*hbarcdivlat,0.18903*hbarcdivlat]
     for iQ in Qlist:
         Q2boot,dump = bt.CreateBoot(np.array(iQ)**2,nboot,0)
         chit = coeff*np.array(Q2boot)**(0.25)
@@ -1566,8 +1566,8 @@ def GraphchitKappas(Qlist,flowlist):
     # pl.errorbar(flowlist+0.1,chitAvg,chitStd,fmt='o',label=r'$No Boot$')
     pl.xlim(0,pl.xlim()[1])
     pl.ylim(0,1.5)
-    pl.xlabel(r'$ m_{\pi} $')
-    pl.ylabel(r'$\chi_{t}^{1/4}$')
+    pl.xlabel(r'$ m_{\pi} GeV $')
+    pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
     # pl.ylim(0,0.4)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Qdata/'
