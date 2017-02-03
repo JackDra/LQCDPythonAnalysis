@@ -141,7 +141,7 @@ def LegLabFF(string,NoSm=False,NoTSink=False):
     thisstr = thisstr.replace('Fits','SPACEFits')
     if NoSm:
         thisstr = NoSm(thisstr)
-    if NoTSink:
+    if NoTSink or len(CMTSinkList) == 1:
         thisstr = NoTSink(thisstr)    
     cutstr = re.search('cut.-.',thisstr)
     try:
