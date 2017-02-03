@@ -29,7 +29,7 @@ DiagPListtdiv = [[1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3], [4, 4, 4, 4], [5, 5, 
 
 def GetQsqrd(nqsqrd,Phys=True,Mass=DefMass):
     if Phys:
-        MassPhys = Mass**hbarcdivlat
+        MassPhys = Mass*hbarcdivlat
         qsqrd = nqsqrd*(qunitPhys**2)
         Ep = np.sqrt(MassPhys**2 + qsqrd)
         return qsqrd - (Ep-MassPhys)**2
