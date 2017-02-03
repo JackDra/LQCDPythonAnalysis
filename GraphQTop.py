@@ -20,14 +20,17 @@ from GraphDataNew import *
 ## topcharge [ icfg , itflow ]
 kappatopc,kappatflow = [],[]
 for ikappa in kappalist:    
-    filelist,topcharge,tflow = ReadTopAll(TCDir)
+    filelist,topcharge,tflow = ReadTopAll(TCDir.replace(kappa,ikappa))
+    if ikappa == kappa:
+        GraphQExp(topcharge,tflow[0])
+        GraphQLines(topcharge,tflow[0],np.arange(0,200,33))
+        Graphchit(topcharge,tflow[0])
+        GraphQ2Hist(topcharge,tflow[0].tolist().index(3.01))
+
+
     kappatopc.append(topcharge)
     kappatflow.append(tflow[0])
     
-GraphQExp(topcharge,tflow[0])
-GraphQLines(topcharge,tflow[0],np.arange(0,200,33))
-Graphchit(topcharge,tflow[0])
-GraphQ2Hist(topcharge,tflow[0].tolist().index(3.01))
 
 GraphchitKappas(kappatopc,kappatflow)
     
