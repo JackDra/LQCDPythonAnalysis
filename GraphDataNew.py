@@ -1550,7 +1550,7 @@ def GraphchitKappas(Qlist,flowlist):
     # pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q Boot$')
     tflowindex = flowlist[0].tolist().index(4.01)
     chitKappa = []
-    MpiList = [0.18903,0.32242]
+    MpiList = [0.32242,0.18903]
     for iQ in Qlist:
         Q2boot,dump = bt.CreateBoot(np.array(iQ)**2,nboot,0)
         chit = coeff*np.array(Q2boot)**(0.25)
