@@ -1537,7 +1537,7 @@ def Graphchit(Qlist,flowlist):
     pl.clf()
 
 
-def GraphchitKappas(Qlist,flowlist,alist):
+def GraphchitKappas(Qlist,flowlist):
     ## Hard coded here....
     flowlist = np.array(flowlist)
     thislatspace = 0.0907
