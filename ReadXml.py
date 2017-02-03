@@ -327,7 +327,11 @@ def ReadFFFile(filename):
         data = data[data.keys()[0]]
         dataout = OrderedDict()
         dataout['Info'] = data['Info']
-        if 'Mass' in data['Values'].keys(): dataout['Mass'] = data['Values']['Mass']
+        if 'Mass' in data['Values'].keys():
+            dataout['Mass'] = data['Values']['Mass']
+            thismass = dataout['Mass']['Avg']
+        else:
+            thismass = 1.0
         dataout['Chi'] = OrderedDict()
         if 'Boots' in data.keys():
             for iq,qdata in data['Boots'].iteritems():
@@ -338,7 +342,10 @@ def ReadFFFile(filename):
                         dataout[iff] = OrderedDict()
                     dataout[iff][iq] = OrderedDict()
                     dataout[iff][iq]['Boot'] = BootStrap1(nboot,0)
-                    dataout[iff][iq]['Boot'].values = np.array(ffdata)
+                    if NormF3Top and 'VectorTop' in filename and '3' in iff:
+                        dataout[iff][iq]['Boot'].values = np.array(ffdata/(2*thismass))
+                    else:
+                        dataout[iff][iq]['Boot'].values = np.array(ffdata)
                     dataout[iff][iq]['Boot'].Stats()
                     dataout[iff][iq]['Avg'] = dataout[iff][iq]['Boot'].Avg
                     dataout[iff][iq]['Std'] =dataout[iff][iq]['Boot'].Std

@@ -111,6 +111,8 @@ PsVectorNorm = 1 # normalisation for Pseudo Vector current
 TensorNorm = 1 # normalisation for Tensor Current
 MomFracNorm = 1 # normalisation for Momentum Fraction
 
+F3Div2M = True ## Reads in F3 for VectorTop with dividing by the mass
+
 # ScalarNorm = 0.6822 # normalisation for Scalar current
 # PsScalarNorm = 0.4948 # normalisation for Pseudo Scalar current
 # VectorNorm = 0.8574 # normalisation for Vector Current
