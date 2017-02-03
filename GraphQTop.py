@@ -18,7 +18,7 @@ from GraphDataNew import *
 ## cfglistout [ icfg ]
 ## tflow [ icfg , itflow ]
 ## topcharge [ icfg , itflow ]
-kappatopc,kappatflow
+kappatopc,kappatflow = [],[]
 for ikappa in kappalist:    
     filelist,topcharge,tflow = ReadTopAll(TCDir)
     kappatopc.append(topcharge)
