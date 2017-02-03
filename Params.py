@@ -96,9 +96,9 @@ if kappa == 1370000:
     DefMassVal = {}
     DefMassVal['fitr6-13'] = OrderedDict()
     DefMassVal['fitr6-13']['Avg'] = DefMass[str(kappa)]
-    DefMassVal['fitr6-13']['Std'] = 0.0071123989
-    DefMassVal['fitr6-13']['Chi'] = 0.2782012297
-    DefMassVal['fitr6-13']['File'] = '/home/jackdra/PHD/CHROMA/TestVar/scratch/results/ReadSetBarN17k1375400/cfun/twopt/OSFCM/qsqrd0/q000/state1PoF0to3dt3twoptm0q000.xml'
+    DefMassVal['fitr6-13']['Std'] = 0.0
+    DefMassVal['fitr6-13']['Chi'] = 0.0
+    DefMassVal['fitr6-13']['File'] = 'Evernote_Paper'
 elif kappa == 1375400:
     DefMassVal = {}
     DefMassVal['fitr6-13'] = OrderedDict()
