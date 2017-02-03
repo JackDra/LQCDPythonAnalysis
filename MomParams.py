@@ -19,9 +19,10 @@ latspace = 0.0907 ## In fermi
 hbarcdivlat = hbarc/latspace
 qunitPhys = qunit*hbarcdivlat
 
-# DefMass = 0.5723293466 #Lat Units
-DefMass = 0.5554004119 #Lat Units
-DefMassPhys = DefMass*hbarcdivlat #Lat Units
+DefMass = {}
+DefMass['1370000'] = 0.7277 #Lat Units
+DefMass['1375400'] = 0.5554004119 #Lat Units
+
 
 
 DiagPList = [[1, 1, 1, 2], [2, 2, 2, 4], [3, 3, 3, 6], [4, 4, 4, 8], [5, 5, 5, 10], [6, 6, 6, 12], [7, 7, 7, 14], [8, 8, 8, 16]]

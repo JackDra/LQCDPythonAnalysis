@@ -18,12 +18,6 @@ except:
 ##date/time calculated: 00:29 12 Oct 2015
 # DefMassVal = {'22-31' : {'Avg':DefMass,'Std': 0.0028592256 ,'Chi': 0.4851841332}}
 
-DefMassVal = {}
-DefMassVal['fitr6-13'] = OrderedDict()
-DefMassVal['fitr6-13']['Avg'] = DefMass
-DefMassVal['fitr6-13']['Std'] = 0.0071123989
-DefMassVal['fitr6-13']['Chi'] = 0.2782012297
-DefMassVal['fitr6-13']['File'] = '/home/jackdra/PHD/CHROMA/TestVar/scratch/results/ReadSetBarN17k1375400/cfun/twopt/OSFCM/qsqrd0/q000/state1PoF0to3dt3twoptm0q000.xml'
 
 # THISMACHINE = socket.gethostname()
 
@@ -98,6 +92,23 @@ PoFC2C3Dis = ''
 NewFileFlag = PoFC2C3Dis
 
 
+if kappa == 1370000:
+    DefMassVal = {}
+    DefMassVal['fitr6-13'] = OrderedDict()
+    DefMassVal['fitr6-13']['Avg'] = DefMass[str(kappa)]
+    DefMassVal['fitr6-13']['Std'] = 0.0071123989
+    DefMassVal['fitr6-13']['Chi'] = 0.2782012297
+    DefMassVal['fitr6-13']['File'] = '/home/jackdra/PHD/CHROMA/TestVar/scratch/results/ReadSetBarN17k1375400/cfun/twopt/OSFCM/qsqrd0/q000/state1PoF0to3dt3twoptm0q000.xml'
+elif kappa == 1375400:
+    DefMassVal = {}
+    DefMassVal['fitr6-13'] = OrderedDict()
+    DefMassVal['fitr6-13']['Avg'] = DefMass[str(kappa)]
+    DefMassVal['fitr6-13']['Std'] = 0.0071123989
+    DefMassVal['fitr6-13']['Chi'] = 0.2782012297
+    DefMassVal['fitr6-13']['File'] = '/home/jackdra/PHD/CHROMA/TestVar/scratch/results/ReadSetBarN17k1375400/cfun/twopt/OSFCM/qsqrd0/q000/state1PoF0to3dt3twoptm0q000.xml'
+    
+DefMassPhys = DefMass[str(kappa)]*hbarcdivlat #GeV
+         
 # kappalist = ['k'+str(kappa),'xsrc1k'+str(kappa),'nboot1kk'+str(kappa),'XAvgk'+str(kappa)]
 kappalist = [1370000,1375400]
 if kappa not in kappalist:
