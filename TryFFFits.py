@@ -117,10 +117,10 @@ def CurrFFDPfit(iCurr,Currdata,thisSetList,thisMethodList,cutlist=False):
                         #         yZero = OneBoot
                         if 'Boot' in Qsdata:
                             ydatain.append(Qsdata['Boot'])
-                            xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),DefMass[str(kappa)],Phys=PhysicalUnits))
+                            xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),DefMass[str(kappa)],Phys=False))
                 elif 'Boot' in Qsdata:
                     ydatain.append(Qsdata['Boot'])
-                    xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),DefMass[str(kappa)],Phys=PhysicalUnits))
+                    xdatain.append(GetQsqrd(float(iQs.replace('qsqrd','')),DefMass[str(kappa)],Phys=False))
                 else:
                     print 'Warning, Boot not found in', iCurr, iSet, nFF, iQs 
             if len(ydatain) < 2:
