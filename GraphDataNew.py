@@ -1557,6 +1557,8 @@ def GraphchitKappas(Qlist,flowlist):
         chit = GetBootStats(chit)
         Qkappa.append(chit[tflowindex])
     # pl.errorbar(flowlist-0.02,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q^{2} Boot$')
+    print MpiList
+    print Pullflag(chit,'Avg')
     pl.errorbar(MpiList,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o')
 
     # Qavg = np.mean(np.array(Qlist)**2,axis=0)
