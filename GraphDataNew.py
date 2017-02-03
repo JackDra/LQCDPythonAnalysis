@@ -243,7 +243,10 @@ def SetRFAxies(thisGamma):
 def SetFFAxies(thisCurr):
     currnumb = thisCurr[-1]
     pl.xlabel(FFxlab)
-    pl.ylabel(FFylab.replace('F','F_{'+currnumb+'}'))
+    if currnumb == '3':
+        pl.ylabel(FFylab.replace('F','F_{'+currnumb+'}/2m_{N}'))
+    else:
+        pl.ylabel(FFylab.replace('F','F_{'+currnumb+'}'))
     if thisCurr in ylimFFDict.keys():
         pl.ylim(ylimFFDict[thisCurr])
     # else:
@@ -950,9 +953,12 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
     #     pl.fill_between(fitqdata+thisshift,-np.array(fitydataup),-np.array(fitydatadown),color=thiscol,alpha=thisalpha,edgecolor='none')
     # else:
     pl.plot(fitqdata+thisshift,fitydataAvg,color=thiscol)
-    if Err[0] < 1.0:
-        pl.errorbar([0.0+thisshift],[Avg[1]],[Err[1]],fmt='--',color=thiscol,label=LegVal)
-    # pl.fill_between(fitqdata+thisshift,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
+    if Err[0] < 1.0 and 'FF1' not in thisFF:
+        if 'FF3' in thisFF:
+            pl.errorbar([0.0+thisshift],[Avg[1]],[Err[1]],fmt='--',color=thiscol,label=LegVal)
+        else:
+            pl.errorbar([0.0+thisshift],[Avg[0]],[Err[0]],fmt='--',color=thiscol,label=LegVal)
+            # pl.fill_between(fitqdata+thisshift,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
 
     
 def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
