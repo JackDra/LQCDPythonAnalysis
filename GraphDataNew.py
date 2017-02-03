@@ -244,7 +244,7 @@ def SetFFAxies(thisCurr):
     currnumb = thisCurr[-1]
     pl.xlabel(FFxlab)
     if currnumb == '3':
-        pl.ylabel(FFylab.replace('F','\frac{F_{'+currnumb+'}')+'}{2m_{N}}')
+        pl.ylabel(FFylab.replace('F','\\frac{F_{'+currnumb+'}')+'}{2m_{N}}')
     else:
         if 'GeGm' in thisCurr:
             if currnumb == '1':
@@ -952,7 +952,7 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
         LegVal = '$\\mu='+MakeValAndErr(Avg[0],Err[0])+'$'        
         datf.write(MakeValAndErr(Avg[0],Err[0])+' \n')
     else:
-        LegVal = '$\frac{F_{3}(0)='+MakeValAndErr(Avg[1],Err[1])+'}{2m_{N}}$'        
+        LegVal = '$\\frac{F_{3}(0)='+MakeValAndErr(Avg[1],Err[1])+'}{2m_{N}}$'        
         datf.write(MakeValAndErr(Avg[1],Err[1])+' \n')
     # print 'DPFit flip sign', flipsign
     # if flipsign:
