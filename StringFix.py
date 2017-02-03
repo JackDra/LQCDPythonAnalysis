@@ -123,7 +123,9 @@ def LegLab(string,NoSm=False,NoTSink=False):
     if NoSm:
         thisstr = NoSm(thisstr)
     if NoTSink:
-        thisstr = NoTSink(thisstr)    
+    # if NoTSink:
+    ## only single sourcesink sep here
+    thisstr = NoTSink(thisstr)    
     return r'$'+ProperAll(thisstr).replace('SPACE','\ ')+'$'
 
 
@@ -141,8 +143,9 @@ def LegLabFF(string,NoSm=False,NoTSink=False):
     thisstr = thisstr.replace('Fits','SPACEFits')
     if NoSm:
         thisstr = NoSm(thisstr)
-    if NoTSink:
-        thisstr = NoTSink(thisstr)    
+    # if NoTSink:
+    ## only single sourcesink sep here
+    thisstr = NoTSink(thisstr)    
     cutstr = re.search('cut.-.',thisstr)
     try:
         cutstr = cutstr.group()
