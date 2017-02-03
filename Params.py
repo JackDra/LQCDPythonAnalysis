@@ -235,8 +235,15 @@ else:
     nt = 64
     nx = 32
 
-
-outputdir = [datadir+'/results/'+ListOrSet+ikappa+'/' for ikappa in kappalist]
+thisoutputdir = [datadir+'/results/'+ListOrSet+ikappa+'/' for ikappa in kappalist]
+outputdir = []
+for ioutput in thisoutputdir:
+    if str(kappa) in ioutput:
+        outputdir = [ioutput] + outputdir
+    else:
+        outputdir.append(ioutput)
+        
+        
 TCDir = datadir+'/topcharge/Kud0'+str(kappa)+'Ks0'+str(kappas)+'/PerGF/'
 logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 momlistdir = datadir+'momdir/'
