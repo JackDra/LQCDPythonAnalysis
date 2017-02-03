@@ -247,10 +247,10 @@ def SetFFAxies(thisCurr):
         pl.ylabel(FFylab.replace('F','F_{'+currnumb+'}/2m_{N}'))
     else:
         if 'GeGm' in thisCurr:
-            if currnum == '1':
-                currnum = 'E'
-            elif currnum == '2':
-                currnum = 'M'
+            if currnumb == '1':
+                currnumb = 'E'
+            elif currnumb == '2':
+                currnumb = 'M'
             pl.ylabel(FFylab.replace('F','G_{'+currnumb+'}'))
         else:
             pl.ylabel(FFylab.replace('F','F_{'+currnumb+'}'))
