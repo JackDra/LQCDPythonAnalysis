@@ -141,6 +141,7 @@ def cutTOfitr(thiscutstr,thistsink):
 def LegLabFF(string,thisNoSm=False,thisNoTSink=False):
     if len(string) == 0: return ''
     thisstr = string.replace('state1','')
+    thisstr = FixTflow(thisstr)
     thisstr = thisstr.replace('OSFCM','SPACE1SF')
     thisstr = thisstr.replace('TSFTsink','SPACE2SF')
     thisstr = thisstr.replace('CM','SPACEVar')
