@@ -972,7 +972,7 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
 def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
     qsqrdvals,dataavg,dataerr = [],[],[]
     for iqsqrd,(qsqrd,values) in enumerate(data.iteritems()):
-        Qsqrd = GetQsqrd(float(qsqrd.replace('qsqrd','')),Phys=PhysicalUnits)
+        Qsqrd = GetQsqrd(float(qsqrd.replace('qsqrd','')),DefMass[str(kappa)],Phys=PhysicalUnits)
         thisshift = shift
         if PhysicalUnits: thisshift *= hbarcdivlat**2
         qsqrdvals.append(Qsqrd+shift)

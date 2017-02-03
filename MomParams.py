@@ -28,7 +28,7 @@ DefMass['1375400'] = 0.5554004119 #Lat Units
 DiagPList = [[1, 1, 1, 2], [2, 2, 2, 4], [3, 3, 3, 6], [4, 4, 4, 8], [5, 5, 5, 10], [6, 6, 6, 12], [7, 7, 7, 14], [8, 8, 8, 16]]
 DiagPListtdiv = [[1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3], [4, 4, 4, 4], [5, 5, 5, 5], [6, 6, 6, 6], [7, 7, 7, 7], [8, 8, 8, 8]]
 
-def GetQsqrd(nqsqrd,Phys=True,Mass=DefMass):
+def GetQsqrd(nqsqrd,Mass,Phys=True):
     if Phys:
         MassPhys = Mass*hbarcdivlat
         qsqrd = nqsqrd*(qunitPhys**2)
