@@ -246,7 +246,14 @@ def SetFFAxies(thisCurr):
     if currnumb == '3':
         pl.ylabel(FFylab.replace('F','F_{'+currnumb+'}/2m_{N}'))
     else:
-        pl.ylabel(FFylab.replace('F','F_{'+currnumb+'}'))
+        if 'GeGm' in thisCurr:
+            if currnum == '1':
+                currnum = 'E'
+            elif currnum == '2':
+                currnum = 'M'
+            pl.ylabel(FFylab.replace('F','G_{'+currnumb+'}'))
+        else:
+            pl.ylabel(FFylab.replace('F','F_{'+currnumb+'}'))
     if thisCurr in ylimFFDict.keys():
         pl.ylim(ylimFFDict[thisCurr])
     # else:
