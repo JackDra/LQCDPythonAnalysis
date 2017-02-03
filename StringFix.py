@@ -91,6 +91,14 @@ def SplitToDt(tvar):
 
 def ProperCM(thestring):
     thestring = thestring.replace('state1','')
+    if 'PoF0to1dt3' in thestring :
+        return thestring.replace('PoF0to1dt3','ism16SPACEjsm64')
+    if 'PoF0to2dt3' in thestring :
+        return thestring.replace('PoF0to2dt3','ism32SPACEjsm64')
+    if 'PoF0to4dt3' in thestring :
+        return thestring.replace('PoF0to4dt3','ism64SPACEjsm64')
+
+        
     thestring = thestring.replace('CM','CMSPACE')
     thestring = thestring.replace('REvec','CMSPACE')
     thestring = thestring.replace('PoF','PoFSPACE')
