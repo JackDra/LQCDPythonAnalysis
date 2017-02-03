@@ -342,7 +342,7 @@ def ReadFFFile(filename):
                         dataout[iff] = OrderedDict()
                     dataout[iff][iq] = OrderedDict()
                     dataout[iff][iq]['Boot'] = BootStrap1(nboot,0)
-                    if NormF3Top and 'VectorTop' in filename and '3' in iff:
+                    if F3Div2M and 'VectorTop' in filename and '3' in iff:
                         dataout[iff][iq]['Boot'].values = np.array(ffdata/(2*thismass))
                     else:
                         dataout[iff][iq]['Boot'].values = np.array(ffdata)
