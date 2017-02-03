@@ -6,6 +6,7 @@ import os
 # from MiscFuns import *
 from Params import *
 from CombParams import CombList
+from XmlFormatting import *
 import re
 
 def GetCfgNumb(name):
@@ -139,7 +140,7 @@ def LegLabFF(string,thisNoSm=False,thisNoTSink=False):
     thisstr = thisstr.replace('OSFCM','SPACE1SF')
     thisstr = thisstr.replace('TSFTsink','SPACE2SF')
     thisstr = thisstr.replace('CM','SPACEVar')
-    thisstr = thisstr.replace('Fits','SPACEFits')
+    thisstr = thisstr.replace('Fits','SPACEFitSPACE')
     if thisNoSm:
         thisstr = NoSm(thisstr)
     ## if thisNoTSink:
@@ -149,7 +150,8 @@ def LegLabFF(string,thisNoSm=False,thisNoTSink=False):
     try:
         cutstr = cutstr.group()
         ## WARNING, cut is forced to tsink 13, CHANGE LATER
-        thisstr = thisstr.replace(cutstr,cutTOfitr(cutstr,'13'))
+        fitstr = cutTOfitr(cutstr,'13')
+        thisstr = thisstr.replace(cutstr,fitstr)
     except:
         return r'$'+ProperAll(thisstr).replace('SPACE','\ ')+'$'
     return r'$'+ProperAll(thisstr).replace('SPACE','\ ')+'$'
