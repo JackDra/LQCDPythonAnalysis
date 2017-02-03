@@ -208,6 +208,9 @@ def TitleFixFF(string,FF):
         FF = FF.replace('FF2','E_{T}')
         FF = FF.replace('FF3','E_{1T}')
         return string+ ' $'+FF +'$'
+    elif 'Vector' in string:
+        FF = FF.replace('Vector','')
+        return string+ ' $'+FF.replace('FF','F_{')+'} $'
     else:        
         return string+ ' $'+FF.replace('FF','F_{')+'} $'
         
