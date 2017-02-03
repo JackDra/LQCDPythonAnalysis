@@ -32,6 +32,7 @@ def StripSrc(filelist):
 
 def ReadTopCharge(thisfile):
     if os.path.isfile(thisfile):
+        if Debug: print 'Reading: ',thisfile
         toptout = np.loadtxt(thisfile)
         toptout = np.rollaxis(toptout,1)
         tflow = toptout[0][tflowlist]
