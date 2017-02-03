@@ -244,8 +244,7 @@ def SetFFAxies(thisCurr):
     currnumb = thisCurr[-1]
     pl.xlabel(FFxlab)
     if currnumb == '3':
-        print FFylab.replace('F','\\frac{F_{'+currnumb+'}')+'}{2m_{N}}'
-        pl.ylabel(FFylab.replace('F','\\frac{F_{'+currnumb+'}')+'}{2m_{N}}')
+        pl.ylabel(FFylab.replace('F','\\frac{F_{'+currnumb+'}').replace(') $',')}{2m_{N}} $')
     else:
         if 'GeGm' in thisCurr:
             if currnumb == '1':
