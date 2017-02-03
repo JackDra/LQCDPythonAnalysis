@@ -98,7 +98,9 @@ PoFC2C3Dis = ''
 NewFileFlag = PoFC2C3Dis
 
 
-kappalist = ['k'+str(kappa),'xsrc1k'+str(kappa),'nboot1kk'+str(kappa),'XAvgk'+str(kappa)]
+# kappalist = ['k'+str(kappa),'xsrc1k'+str(kappa),'nboot1kk'+str(kappa),'XAvgk'+str(kappa)]
+kappa2 = '1375400'
+kappalist = ['k'+str(kappa),'k'+str(kappa2)]
 # kappalist = ['k'+str(kappa),'xsrc1k'+str(kappa)]
 kappaflags = [ik.replace('k'+str(kappa),'') for ik in kappalist]
 ScalarNorm = 1 # normalisation for Scalar current

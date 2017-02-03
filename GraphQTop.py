@@ -18,11 +18,16 @@ from GraphDataNew import *
 ## cfglistout [ icfg ]
 ## tflow [ icfg , itflow ]
 ## topcharge [ icfg , itflow ]
-filelist,topcharge,tflow = ReadTopAll(TCDir)
-
+kappatopc,kappatflow
+for ikappa in kappalist:    
+    filelist,topcharge,tflow = ReadTopAll(TCDir)
+    kappatopc.append(topcharge)
+    kappatflow.append(tflow[0])
+    
 GraphQExp(topcharge,tflow[0])
 GraphQLines(topcharge,tflow[0],np.arange(0,200,33))
 Graphchit(topcharge,tflow[0])
 GraphQ2Hist(topcharge,tflow[0].tolist().index(3.01))
 
+GraphchitKappas(kappatopc,kappatflow)
     

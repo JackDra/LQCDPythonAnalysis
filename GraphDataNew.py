@@ -1536,6 +1536,48 @@ def Graphchit(Qlist,flowlist):
     pl.savefig(thisdir+'chit.pdf')
     pl.clf()
 
+
+def GraphchitKappas(Qlist,flowlist):
+    ## Hard coded here....
+    flowlist = np.array(flowlist)
+    thislatspace = 0.0907
+    coeff = (1/(thislatspace*nx**(0.75)*nt**(0.25)))
+
+    # Qboot,dump = bt.CreateBoot(Qlist,nboot,0)
+    # Q2boot = np.array(Qboot)**2
+    # chit = coeff*np.array(Q2boot)**(0.25)
+    # chit = GetBootStats(chit)
+    # pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q Boot$')
+
+    tflowindex = flowlist.index(4.01)
+    Qkappa = []
+    MpiList = [0.18903,0.32242]
+    for iQ in Qlist:
+        Q2boot,dump = bt.CreateBoot(np.array(Qlist)**2,nboot,0)
+        chit = coeff*np.array(Q2boot)**(0.25)
+        chit = GetBootStats(chit)
+        Qkappa.append(chit[tflowindex])
+    # pl.errorbar(flowlist-0.02,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q^{2} Boot$')
+    pl.errorbar(MpiList,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o')
+
+    # Qavg = np.mean(np.array(Qlist)**2,axis=0)
+    # Qstd = np.std(np.array(Qlist)**2,axis=0,ddof=1)
+    # chitAvg = coeff*Qavg**(0.25)
+    # chitStd = coeff*0.25*Qstd*Qavg**(0.25-1)
+    # pl.errorbar(flowlist+0.1,chitAvg,chitStd,fmt='o',label=r'$No Boot$')
+    pl.xlim(0,pl.xlim()[1])
+    pl.xlabel(r'$ m_{\pi} $')
+    pl.ylabel(r'$\chi_{t}^{1/4}$')
+    # pl.ylim(0,0.4)
+    pl.legend()
+    thisdir = outputdir[0] + 'graphs/Qdata/'
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{aV^{1/4}} \langle Q^2 \rangle^{1/4} $',y=1.04)
+    mkdir_p(thisdir)
+    pl.savefig(thisdir+'chitKappa.pdf')
+    pl.clf()
+
+
+    
 def GraphQ2Hist(Qlist,thisflow):
     ## Hard coded here....
     # thislatspace = 0.0907
