@@ -147,7 +147,7 @@ def LegLabFF(string,NoSm=False,NoTSink=False):
     try:
         cutstr = cutstr.group()
         ## WARNING, cut is forced to tsink 13, CHANGE LATER
-        thisstr = thisstr.replace(cutstr,cutTOfitr(cutstr,13))
+        thisstr = thisstr.replace(cutstr,cutTOfitr(cutstr,'13'))
     except:
         return r'$'+ProperAll(thisstr).replace('SPACE','\ ')+'$'
     return r'$'+ProperAll(thisstr).replace('SPACE','\ ')+'$'
