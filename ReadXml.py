@@ -165,7 +165,7 @@ def ReadAlphaFitFile(filedir,iset,thisMomList=RunMomList,BSClass=False,givefile=
 def ReadRFFile(filedir,filename,thisMomList=RunMomList):
     renorm = GetRenorm(filename)
     dictout = {}
-    TopFile = 'Top' in filename.replace('Top'+kappalist[0],'')
+    TopFile = 'Top' in filename.replace('Topk'+str(kappa),'')
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
