@@ -20,6 +20,7 @@ from GraphDataNew import *
 ## topcharge [ icfg , itflow ]
 kappatopc,kappatflow = [],[]
 for ikappa in kappalist:    
+    print kappa,ikappa
     filelist,topcharge,tflow = ReadTopAll(TCDir.replace(kappa,ikappa))
     if ikappa == kappa:
         GraphQExp(topcharge,tflow[0])
