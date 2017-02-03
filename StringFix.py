@@ -122,7 +122,6 @@ def LegLab(string,NoSm=False,NoTSink=False):
     if len(string) == 0: return ''
     if NoSm:
         thisstr = NoSm(thisstr)
-    if NoTSink:
     # if NoTSink:
     ## only single sourcesink sep here
     thisstr = NoTSink(thisstr)    
