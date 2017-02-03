@@ -124,6 +124,7 @@ def LegLab(string,NoSm=False,NoTSink=False):
         thisstr = NoSm(thisstr)
     # if NoTSink:
     ## only single sourcesink sep here
+    print NoTSink(thisstr)
     thisstr = NoTSink(thisstr)    
     return r'$'+ProperAll(thisstr).replace('SPACE','\ ')+'$'
 
