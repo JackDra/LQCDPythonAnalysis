@@ -119,7 +119,7 @@ def ProperAll(thestring):
     return ProperTsink(ProperSmear(ProperCM(thestring)))
 
 def FixTflow(thisstr):
-    return thisstr.replace('t_flow','t_{flow}')
+    return thisstr.replace('t_flow','SPACEt_{flow}')
 
 def LegLab(string,thisNoSm=False,thisNoTSink=False):
     thisstr = string
