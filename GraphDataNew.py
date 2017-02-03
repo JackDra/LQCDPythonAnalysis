@@ -1537,7 +1537,7 @@ def Graphchit(Qlist,flowlist):
     pl.clf()
 
 
-def GraphchitKappas(Qlist,flowlist):
+def GraphchitKappas(Qlist,flowlist,alist):
     ## Hard coded here....
     flowlist = np.array(flowlist)
     thislatspace = 0.0907
@@ -1550,7 +1550,7 @@ def GraphchitKappas(Qlist,flowlist):
     # pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q Boot$')
     tflowindex = flowlist[0].tolist().index(4.01)
     chitKappa = []
-    MpiList = [0.32242*hbarcdivlat,0.18903*hbarcdivlat]
+    MpiList = [0.32242*hbarc/thislatspace,0.18903*hbarc/thislatspace]
     for iQ in Qlist:
         Q2boot,dump = bt.CreateBoot(np.array(iQ)**2,nboot,0)
         chit = coeff*np.array(Q2boot)**(0.25)
