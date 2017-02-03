@@ -37,7 +37,7 @@ def NoSm(thestring):
     return thestring
 
 def NoTSink(thestring):
-    for i in AllTSinkStrList:
+    for i in AllTSinkStrList + CMTSinkStrList:
         thestring = thestring.replace(i,'')
     for i in AllTSinkStrListVar:
         thestring = thestring.replace(i,'')
@@ -117,14 +117,13 @@ def ProperCM(thestring):
 def ProperAll(thestring):
     return ProperTsink(ProperSmear(ProperCM(thestring)))
         
-def LegLab(string,NoSm=False,NoTSink=False):
+def LegLab(string,thisNoSm=False,thisNoTSink=False):
     thisstr = string
     if len(string) == 0: return ''
-    if NoSm:
+    if thisNoSm:
         thisstr = NoSm(thisstr)
-    # if NoTSink:
+    # if thisNoTSink:
     ## only single sourcesink sep here
-    print NoTSink(thisstr)
     thisstr = NoTSink(thisstr)    
     return r'$'+ProperAll(thisstr).replace('SPACE','\ ')+'$'
 
@@ -134,16 +133,16 @@ def cutTOfitr(thiscutstr,thistsink):
     intcut[1] = int(thistsink) - intcut[1]
     return xmlfitr(intcut)
 
-def LegLabFF(string,NoSm=False,NoTSink=False):
+def LegLabFF(string,thisNoSm=False,thisNoTSink=False):
     if len(string) == 0: return ''
     thisstr = string.replace('state1','')
     thisstr = thisstr.replace('OSFCM','SPACE1SF')
     thisstr = thisstr.replace('TSFTsink','SPACE2SF')
     thisstr = thisstr.replace('CM','SPACEVar')
     thisstr = thisstr.replace('Fits','SPACEFits')
-    if NoSm:
+    if thisNoSm:
         thisstr = NoSm(thisstr)
-    # if NoTSink:
+    ## if thisNoTSink:
     ## only single sourcesink sep here
     thisstr = NoTSink(thisstr)    
     cutstr = re.search('cut.-.',thisstr)
