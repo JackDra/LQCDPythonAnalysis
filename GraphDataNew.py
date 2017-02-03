@@ -1552,7 +1552,7 @@ def GraphchitKappas(Qlist,flowlist):
     Qkappa = []
     MpiList = [0.18903,0.32242]
     for iQ in Qlist:
-        Q2boot,dump = bt.CreateBoot(np.array(Qlist)**2,nboot,0)
+        Q2boot,dump = bt.CreateBoot(np.array(iQ)**2,nboot,0)
         chit = coeff*np.array(Q2boot)**(0.25)
         chit = GetBootStats(chit)
         Qkappa.append(chit[tflowindex])
