@@ -193,7 +193,7 @@ def TitleFixFF(string,FF):
     if 'F1divF2' in string:
         return string.replace('F1divF2','').replace(' GeGm','')+ ' $G_{E}/G_{M}$'        
     elif 'GeGm' in string:
-        string = string.replace(' GeGm',' Vector')
+        string = string.replace(' GeGm','')
         FF = FF.replace('FF1','G_{E}')
         FF = FF.replace('FF2','G_{M}')
         return string+ ' $'+FF +'$'
@@ -209,7 +209,7 @@ def TitleFixFF(string,FF):
         FF = FF.replace('FF3','E_{1T}')
         return string+ ' $'+FF +'$'
     elif 'Vector' in string:
-        string = string.replace('Vector','')
+        string = string.replace(' Vector','')
         return string+ ' $'+FF.replace('FF','F_{')+'} $'
     else:        
         return string+ ' $'+FF.replace('FF','F_{')+'} $'
