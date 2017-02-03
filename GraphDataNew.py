@@ -960,7 +960,8 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
     #     pl.fill_between(fitqdata+thisshift,-np.array(fitydataup),-np.array(fitydatadown),color=thiscol,alpha=thisalpha,edgecolor='none')
     # else:
     pl.plot(fitqdata+thisshift,fitydataAvg,color=thiscol)
-    if Err[0] < 1.0 and 'FF1' not in thisFF:
+    if Err[0] < 1.0 :
+        if 'FF1' not in thisFF and 'Neutron' in thisCurr: continue
         if 'FF3' in thisFF:
             pl.errorbar([0.0+thisshift],[Avg[1]],[Err[1]],fmt='--',color=thiscol,label=LegVal)
         else:
