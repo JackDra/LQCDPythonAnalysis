@@ -127,9 +127,14 @@ def LegLab(string,NoSm=False,NoTSink=False):
     return r'$'+ProperAll(thisstr).replace('SPACE','\ ')+'$'
 
 
+def cutTOfitr(thiscutstr,thistsink):
+    intcut = unxmlcut(thiscutstr)
+    intcut[1] = int(thistsink) - intcut[1]
+    return xmlfitr(intcut)
+
 def LegLabFF(string,NoSm=False,NoTSink=False):
     if len(string) == 0: return ''
-    thisstr = re.sub('cut.','',string)
+    thisstr = string.replace('state1','')
     thisstr = thisstr.replace('OSFCM','SPACE1SF')
     thisstr = thisstr.replace('TSFTsink','SPACE2SF')
     thisstr = thisstr.replace('CM','SPACEVar')
@@ -138,6 +143,13 @@ def LegLabFF(string,NoSm=False,NoTSink=False):
         thisstr = NoSm(thisstr)
     if NoTSink:
         thisstr = NoTSink(thisstr)    
+    cutstr = re.search('cut.-.',thisstr)
+    try:
+        cutstr = cutstr.group()
+        ## WARNING, cut is forced to tsink 13, CHANGE LATER
+        thisstr = thisstr.replace(cutstr,cutTOfitr(cutstr,13))
+    except:
+        return r'$'+ProperAll(thisstr).replace('SPACE','\ ')+'$'
     return r'$'+ProperAll(thisstr).replace('SPACE','\ ')+'$'
 
 def TitleFix(string):
