@@ -21,7 +21,7 @@ from GraphDataNew import *
 kappatopc,kappatflow = [],[]
 for ikappa in kappalist:    
     print kappa,ikappa
-    filelist,topcharge,tflow = ReadTopAll(TCDir.replace(kappa,ikappa))
+    filelist,topcharge,tflow = ReadTopAll(TCDir.replace('k'+str(kappa),ikappa))
     if ikappa == kappa:
         GraphQExp(topcharge,tflow[0])
         GraphQLines(topcharge,tflow[0],np.arange(0,200,33))
