@@ -840,6 +840,27 @@ def PlotFFs(data,DSCurr,thisSetList,CollName,FT):
         pl.savefig(DatFile.replace('.dat','.pdf'))
         pl.clf()
 
+def PlotFFsPN(data,dataPN,DSCurr,thisSetList,CollName,FT):
+    global ForceTitle
+    global DatFile
+    ForceTitle = FT
+    if len(thisSetList) == 0: return
+    thisDS,thisCurr,thisFFComb = SplitDSCurr(DSCurr)
+    thisDS = thisDS.replace('Proton','PandN')
+    DScurr = DScurr.replace('Proton','PandN')
+    for iFF in range(1,NoFFPars[thisCurr]+1):
+        thisFF = 'FF'+str(iFF)
+        if len(thisFFComb) > 1: thisFFComb = '/'+thisFFComb
+        DatFile = CreateFFFile(CollName,DSCurr,thisFF)+'.dat'
+        WipeFile(DatFile)
+        graphparams = GetPlotItersff()
+        PlotFFSet(data,thisFF,thisSetList,thisCurr,DSCurr.replace('/',''),graphparams)
+        PlotFFSet(dataPN,thisFF,thisSetList,thisCurr.replace('Proton','Neutron'),DSCurr.replace('/',''),graphparams)
+        SetFFAxies(thisDS+thisCurr+thisFF+thisFFComb)
+        pl.savefig(DatFile.replace('.dat','.pdf'))
+        pl.clf()
+
+        
 def PlotMKFFs(kdata,DSCurr,thisSetList,CollName,FT):
     global ForceTitle
     global DatFile

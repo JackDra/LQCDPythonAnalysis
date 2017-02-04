@@ -22,6 +22,9 @@ feedin = InputParams(sys.argv[1:]+['-noprompt'])
 def PlotFFWrap(a,b,c,d):
     PlotFFs(a,b,c,d,feedin['ForceTitle'])
 
+def PlotFFWrapPN(a,b,c,d,e):
+    PlotFFsPN(a,b,c,d,e,feedin['ForceTitle'])
+
 
 def PlotTSFSets(currdata,thiscurr,thisSetList):
     for iTSF in TSFFileFlags:
@@ -67,7 +70,26 @@ def PlotFitMethSets(currdata,thiscurr,thisSetList):
             PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit',iset),'Fit'+iset+'CutComp')
         for icut in FitCutArgs:
             PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit',icut),'Fit'+icut+'CutComp')
-                
+
+def PlotFitMethPN(currdata,Ncurrdata,thiscurr,thisSetList):
+    # PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit','tsink29','cut6')+FlagList(thisSetList,'Fit','PoF','cut6'),'FitMytsink29')
+    # PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit','sm32','cut6'),'FitMysm32')
+    if 'Top' in thiscurr:
+        for iset in DefSetList:
+            for icut in FitCutArgs:
+                PlotFFWrapPN(currdata,Ncurrdata,thiscurr,FlagList(thisSetList,'Fit',iset,icut),'Fit'+iset+icut+'CutComp')
+        for icut in FitCutArgs:
+            for iflow in FlowArgs:
+                PlotFFWrapPN(currdata,Ncurrdata,thiscurr,FlagList(thisSetList,'Fit',icut,iflow),'Fit'+icut+iflow+'SetComp')
+        for iset in DefSetList:
+            for iflow in FlowArgs:
+                PlotFFWrapPN(currdata,Ncurrdata,thiscurr,FlagList(thisSetList,'Fit',iset,iflow),'Fit'+iset+iflow+'CutComp')
+    else:
+        for iset in DefSetList:
+            PlotFFWrapPN(currdata,Ncurrdata,thiscurr,FlagList(thisSetList,'Fit',iset),'Fit'+iset+'CutComp')
+        for icut in FitCutArgs:
+            PlotFFWrapPN(currdata,Ncurrdata,thiscurr,FlagList(thisSetList,'Fit',icut),'Fit'+icut+'CutComp')
+
 
 def PickFFAllSets(currdata,thiscurr,thisSetList):
     PickedSetList = []
@@ -125,6 +147,8 @@ def ReadAndPlotFF(thisCurrDict,DoList='All'):
         if 'Fits' in DoList or 'All' in DoList:
             print 'Plotting ' , thiscurr ,'4/6 Fits            '
             PlotFitMethSets(currdata,thiscurr,thisCurrDict[thiscurr])
+            if 'ProtonVectorTop' in thiscurr:
+                PlotFitMethPN(currdata,datadict[thiscurr.replace('Proton','Neutron')],thiscurr,thisCurrDict[thiscurr])
         if 'Collect' in DoList or 'All' in DoList:
             print 'Collecting ' , thiscurr ,'5/6 for Summary            '
             currPSL.append(PickFFAllSets(currdata,thiscurr,thisCurrDict[thiscurr]))
