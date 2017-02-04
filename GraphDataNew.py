@@ -1000,9 +1000,10 @@ def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
     qsqrdvals,dataavg,dataerr = [],[],[]
     for iqsqrd,(qsqrd,values) in enumerate(data.iteritems()):
         Qsqrd = GetQsqrd(float(qsqrd.replace('qsqrd','')),DefMass[str(kappa)],Phys=PhysicalUnits)
+        Qsqrdnonphys = GetQsqrd(float(qsqrd.replace('qsqrd','')),DefMass[str(kappa)],Phys=False)
         thisshift = shift
         if PhysicalUnits: thisshift *= hbarcdivlat**2
-        qsqrdvals.append(Qsqrd+shift)
+        qsqrdvals.append(Qsqrdnonphys+shift)
         if 'Boot' in values.keys():
             dataavg.append(values['Boot'].Avg)
             dataerr.append(values['Boot'].Std)
