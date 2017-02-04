@@ -87,7 +87,7 @@ ylimDict = {'VectorP4giDi':[-0.4,-0.15],
 #               'NeutronTensorFF2':[2.0,0.45],
 #               'NeutronTensorFF3':[-0.2,-1],
 #               'NeutronGeGmFF1/F1divF2':[0.0,0.06]}
-ylimFFDict = {'ProtonVectorTopFF3':[-2,2],'NeutronVectorTopFF3':[-2,2],'PorNVectorTopFF3':[-2,2]}
+ylimFFDict = {'ProtonVectorTopFF3':[-2,2],'NeutronVectorTopFF3':[-2,2],'PandNVectorTopFF3':[-2,2]}
 
 leglocFFDict = {'NeutronVectorFF2':'upper left',
                 'NeutronGeGmFF1':'upper left',
