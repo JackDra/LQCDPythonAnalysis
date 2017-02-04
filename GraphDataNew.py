@@ -87,7 +87,7 @@ ylimDict = {'VectorP4giDi':[-0.4,-0.15],
 #               'NeutronTensorFF2':[2.0,0.45],
 #               'NeutronTensorFF3':[-0.2,-1],
 #               'NeutronGeGmFF1/F1divF2':[0.0,0.06]}
-ylimFFDict = {'ProtonVectorTopFF3':[-2,2],'NeutronVectorTopFF3':[-2,2],'PandNVectorTopFF3':[-2,2]}
+ylimFFDict = {'ProtonVectorTopFF3':[-1,1],'NeutronVectorTopFF3':[-1,1],'PandNVectorTopFF3':[-1,1]}
 
 leglocFFDict = {'NeutronVectorFF2':'upper left',
                 'NeutronGeGmFF1':'upper left',
@@ -855,6 +855,8 @@ def PlotFFsPN(data,dataPN,DSCurr,thisSetList,CollName,FT):
         WipeFile(DatFile)
         graphparams = GetPlotItersff()
         PlotFFSet(data,thisFF,['Proton'+iset for iset in thisSetList],thisCurr,DSCurr.replace('/',''),graphparams)
+        graphparams = GetPlotItersff()
+        graphparams = graphparams[0].next(),graphparams[1].next(),graphparams[2]
         PlotFFSet(dataPN,thisFF,['Neutron'+iset for iset in thisSetList],thisCurr.replace('Proton','Neutron'),DSCurr.replace('/',''),graphparams)
         SetFFAxies(thisDS+thisCurr+thisFF+thisFFComb)
         pl.savefig(DatFile.replace('.dat','.pdf'))
