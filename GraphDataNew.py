@@ -927,10 +927,9 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
         #     print dataset.keys(), keyset
         #     if keyset in dataset.keys(): dataset[keyset],thisFF
         #     print
-            
-        print dataset.keys(), keyset
-        print dataset[keyset].keys(), thisFF
-        print dataset[keyset][thisFF]
+
+        keyset = keyset.replace('Proton','')
+        keyset = keyset.replace('Neutron','')
         if not CheckDict(dataset,keyset,thisFF): continue
         if dataset[keyset][thisFF] == False: continue        
         thiscol = thiscolcyc.next()
