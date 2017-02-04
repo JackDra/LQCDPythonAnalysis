@@ -139,7 +139,7 @@ def GetPlotIters():
     return itertools.cycle(markerset),itertools.cycle(colourset8),itertools.cycle(shiftset)
 
 def GetPlotItersff():
-    return itertools.cycle(markerset),itertools.cycle(colourset8),itertools.cycle(shiftsetff)
+    return [itertools.cycle(markerset),itertools.cycle(colourset8),itertools.cycle(shiftsetff)]
 
 def SetxTicks(thisfig=False):
     xmin,xmax = pl.xlim()
