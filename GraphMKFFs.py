@@ -36,6 +36,10 @@ def PickMKFFFewSets(currdata,thiscurr,thisSetList):
         # elif kappa == 12104:
     if '12104' in currdata.keys():
         PickedSetList += ['k12104'+ifl for ifl in FlagList(thisSetList['12104'],'Fit','tsink29state1REvec',FitCutPicked['tsink29state1REvec'])]
+    if '1375400' in currdata.keys():
+        PickedSetList += ['k1375400'+ifl for ifl in FlagList(thisSetList['1375400'],'Fit','t_flow4.01','tsink13PoF0to3dt3',FitCutPicked['tsink13PoF0'])]
+    if '1370000' in currdata.keys():
+        PickedSetList += ['k1370000'+ifl for ifl in FlagList(thisSetList['1370000'],'Fit','t_flow4.01','tsink13PoF0to4dt3',FitCutPicked['tsink13PoF0'])]
         # PickedSetList += ['k12104'+ifl for ifl in FlagList(thisSetList['12104'],'OSFCM','tsink29state1REvec',OSFCutPicked)]
         
     # PickedSetList += FlagList(thisSetList,'OSFCM','tsink29sm32',OSFCutPicked)
