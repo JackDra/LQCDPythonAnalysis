@@ -855,8 +855,7 @@ def PlotFFsPN(data,dataPN,DSCurr,thisSetList,CollName,FT):
         WipeFile(DatFile)
         graphparams = GetPlotItersff()
         PlotFFSet(data,thisFF,['Proton'+iset for iset in thisSetList],thisCurr,DSCurr.replace('/',''),graphparams)
-        graphparams = GetPlotItersff()
-        graphparams = graphparams[0].next(),graphparams[1].next(),graphparams[2]
+        graphparams[2] = GetPlotItersff()[2]
         PlotFFSet(dataPN,thisFF,['Neutron'+iset for iset in thisSetList],thisCurr.replace('Proton','Neutron'),DSCurr.replace('/',''),graphparams)
         SetFFAxies(thisDS+thisCurr+thisFF+thisFFComb)
         pl.savefig(DatFile.replace('.dat','.pdf'))
