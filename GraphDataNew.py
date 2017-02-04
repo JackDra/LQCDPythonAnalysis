@@ -928,6 +928,10 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
         #     if keyset in dataset.keys(): dataset[keyset],thisFF
         #     print
 
+        if ('Proton' in keyset or 'Neutron' in keyset) and 't_flow4.01' not in keyset: continue
+        PorN = ''
+        if 'Proton' in keyset: PorN = 'Proton'
+        if 'Neutron' in keyset: PorN = 'Neutron'
         keyset = keyset.replace('Proton','')
         keyset = keyset.replace('Neutron','')
         if not CheckDict(dataset,keyset,thisFF): continue
@@ -940,18 +944,18 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
             thisshift = thisshiftcycff.next()
             qrange = PlotFF(dataset[keyset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
             if 'FF3' in thisFF:
-                PlotDPFit(keyset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign,datf,thiskappa)
+                PlotDPFit(keyset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign,datf,thiskappa,thisPN=PorN)
         else:
             thisshift = 0.0
             qrange = PlotFF(dataset[keyset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
             # if 'sm32' in thisset or 'CM' in thisset or 'TSF' in thisset or '12104' in str(thiskappa):
-            PlotDPFit(keyset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign,datf,thiskappa)
+            PlotDPFit(keyset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign,datf,thiskappa,thisPN=PorN)
     datf.close()
     return collist
 
-def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thiskappa=kappa):
+def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thiskappa=kappa,thisPN=''):
     if Debug: print thisset,thisFF
-    Avg,Err = GetDPFitValue(thisset,thisFF,thisCurr,thiskappa=thiskappa)
+    Avg,Err = GetDPFitValue(thisset,thisFF,thisCurr.replace('PandN',thisPN),thiskappa=thiskappa)
     if len(Avg) == 0: return
     Avg,Err = np.array(Avg),np.array(Err)
     fitqdata = np.arange(qrange[0]-thisshift,qrange[-1]+incr-thisshift,incr)
