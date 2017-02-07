@@ -23,6 +23,9 @@ DefMass = {}
 DefMass['1370000'] = 0.7277 #Lat Units
 DefMass['1375400'] = 0.5554004119 #Lat Units
 
+DefPionMass = {}
+DefPionMass['1370000'] = 0.32242 #Lat Units 
+DefPionMass['1375400'] = 0.18903 #Lat Units 
 
 
 DiagPList = [[1, 1, 1, 2], [2, 2, 2, 4], [3, 3, 3, 6], [4, 4, 4, 8], [5, 5, 5, 10], [6, 6, 6, 12], [7, 7, 7, 14], [8, 8, 8, 16]]
