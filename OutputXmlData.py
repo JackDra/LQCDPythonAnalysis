@@ -176,7 +176,6 @@ def PrintAlphaFitFile(data,iset,filedir):
             datadict[pcond]['Values'][itflow] = OrderedDict()
             for (ifitr,fitdata),chifitdata in zip(flowdata.iteritems(),chiflowdata.itervalues()):
                 datadict[pcond]['Values'][itflow][ifitr] = BootAvgStdChiToFormat(fitdata,chifitdata)
-        if Debug: print 'outputting to: ',outputfile
         WriteXmlOutput(outputfile,datadict)
 
         

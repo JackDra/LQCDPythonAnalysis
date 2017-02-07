@@ -89,9 +89,9 @@ else:
 print 'Done Fits ' + ' '*50
 #FitData = { iset , ip , iflow , ifit  , Boot/Avg/Chi }
 if feedin['Wein']:
-    topfitdir = outputdir[0] + 'Top/Alpha/Fits'
-else:
     topfitdir = outputdir[0] + 'Wein/Alpha/Fits'
+else:
+    topfitdir = outputdir[0] + 'Top/Alpha/Fits'
 mkdir_p(topfitdir)
 
 for iout in output:
