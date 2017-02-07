@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+ #!/usr/bin/env python
 
 from Params import *
 from FitParams import *
@@ -43,7 +43,7 @@ def PrintTopSetToFile(C3setTop,thisSetList,thisMomList, thisGammaList,tsink,this
         else:
             gammadir = outputdir[0]+'Top/'+CreateOppDir(thegamma)+'/'
         if 'cmplx' in thegamma:
-            thegamma = thegamma.replace('cmplx',TopOrWein'cmplx')
+            thegamma = thegamma.replace('cmplx',TopOrWein+'cmplx')
         else:
             thegamma = thegamma+TopOrWein
         for iset,setdata in zip(thisSetList,gammadata):
