@@ -82,7 +82,7 @@ def PrintAlphaSetToFile(topdataset,dataset,thisSetList,thisMomList, thisTopList,
 def PrintCfunToFile(C3set,thisSetList,thisMomList, thisGammaList,AddDict={},Top=False):
     if Top == 'Wein':
         cfundir = outputdir[0] + 'Wein/cfun/'        
-    if Top:
+    elif Top:
         cfundir = outputdir[0] + 'Top/cfun/'
     else:
         cfundir = outputdir[0] + 'cfun/'
