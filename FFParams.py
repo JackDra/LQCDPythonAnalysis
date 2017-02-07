@@ -12,6 +12,7 @@ Qtcut = 5
 
 gi = ['g'+str(i) for i in [1,2,3,4]]
 giTop = ['g'+str(i)+'Top' for i in [1,2,3,4]]
+giWein = ['g'+str(i)+'Wein' for i in [1,2,3,4]]
 gig5 = ['g'+str(i)+'g5' for i in [1,2,3,4]]
 g5gi = ['g5g'+str(i) for i in [1,2,3,4]]
 Pi = ['P'+str(i) for i in [4,3]]
@@ -34,6 +35,7 @@ Pigig5 = ElongateName(Pi,gig5)
 Pigigj = ElongateName(Pi,gigj)
 
 PigiTop   = ElongateName(Pi,giTop)
+PigiWein   = ElongateName(Pi,giWein)
 
 # DictGMAiI = {iPi:['I'] for iPi in GMAi}
 # DictGMAig5 = {iPi:['g5'] for iPi in GMAi}
@@ -54,7 +56,7 @@ for iPi in GMAi:
 
 DictGMA4giDi = ReadProjDerList
 
-CurrTypes = ['Scalar','Vector','VectorTop','VectorTopNoV','PsScalar','PsVector','Tensor']
+CurrTypes = ['Scalar','Vector','VectorTop','VectorWein','VectorTopNoV','PsScalar','PsVector','Tensor']
 DerCurrTypes = ['giDi']
 AllCurrTypes = CurrTypes + DerCurrTypes
 
@@ -63,6 +65,7 @@ AllCurrTypes = CurrTypes + DerCurrTypes
 DictCurrOpps = {'Scalar'   : DictGMAiI,
                 'Vector'   : DictGMAigi,
                 'VectorTop': DictGMAigi,
+                'VectorWein': DictGMAigi,
                 'PsScalar' : DictGMAig5,
                 'PsVector' : DictGMAigig5,
                 'Tensor'   : DictGMAigigj,
@@ -75,6 +78,7 @@ DictCurrOpps = {'Scalar'   : DictGMAiI,
 CurrOpps = {'Scalar'   : PiI,
             'Vector'   : Pigi,
             'VectorTop': Pigi+PigiTop,
+            'VectorWein': Pigi+PigiWein,
             'VectorTopNoV': PigiTop,
             'PsScalar' : Pig5,
             'PsVector' : Pigig5,
@@ -84,6 +88,7 @@ CurrOpps = {'Scalar'   : PiI,
 CurrOppsNoProj = {'Scalar'   : ['I'],
                   'Vector'   : gi,
                   'VectorTop': gi+giTop,
+                  'VectorWein': gi+giWein,
                   'VectorTopNoV': giTop,
                   'PsScalar' : ['g5'],
                   'PsVector' : gig5,
@@ -92,6 +97,7 @@ CurrOppsNoProj = {'Scalar'   : ['I'],
 CurrOppsNoProjSigBack = {'Scalar'   : ['I'],
                          'Vector'   : gi,
                          'VectorTop': gi+giTop,
+                         'VectorWein': gi+giWein,
                          'VectorTopNoV': giTop,
                          'PsScalar' : ['g5'],
                          'PsVector' : g5gi,
@@ -107,6 +113,7 @@ CurrOppsNoProjSigBack = {'Scalar'   : ['I'],
 FFFitFuns = {'Scalar'   : FormFactorO1,
              'Vector'   : FormFactorO2,
              'VectorTop': FormFactorO3,
+             'VectorWein': FormFactorO3,
              'VectorTopNoV': FormFactorO3,
              'PsScalar' : FormFactorO1,
              'PsVector' : FormFactorO2,
@@ -115,6 +122,7 @@ FFFitFuns = {'Scalar'   : FormFactorO1,
 NoFFPars = {'Scalar'   : 1,
             'Vector'   : 2,
             'VectorTop': 3,
+            'VectorWein': 3,
             'VectorTopNoV': 3,
             'GeGm'     :  2,
             'PsScalar' : 1,
@@ -124,7 +132,8 @@ NoFFPars = {'Scalar'   : 1,
 NoFFList = {'Scalar'   : ['FF1'],
             'Vector'   : ['FF1','FF2'],
             'VectorTop': ['FF1','FF2','FF3'],
-            'VectorTopNoV': ['FF1','FF2','FF3'],
+            'VectorWein': ['FF1','FF2','FF3'],
+            'VectorWeinNoV': ['FF1','FF2','FF3'],
             'GeGm'     : ['FF1','FF2'],
             'PsScalar' : ['FF1'],
             'PsVector' : ['FF1','FF2'],
@@ -156,13 +165,15 @@ def FindMomFromGamma(igamma,thisMomList=qvecSet):
             
 def DumpAllMomLists():
     mygammalist = ['P4'+igamma for igamma in AllGammaSet] +['P3'+igamma for igamma in AllGammaSet]
-    topgammalist = []
+    topgammalist,weingammalist = [],[]
     for ig in mygammalist:
         if 'cmplx' in ig:
             topgammalist.append( ig.replace('cmplx','Topcmplx'))
+            weingammalist.append( ig.replace('cmplx','Weincmplx'))
         else:
             topgammalist.append( ig+'Top')
-    mygammalist = topgammalist + mygammalist
+            weingammalist.append( ig+'Wein')
+    mygammalist = weingammalist + topgammalist + mygammalist
     for igamma in mygammalist:
         # print ' Dumping MomList: ' + igamma
         outfile = momlistdir + igamma + '.p'

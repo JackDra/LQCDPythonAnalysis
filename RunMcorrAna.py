@@ -49,13 +49,16 @@ def CRFWrap(RunType,itsinkList,thisiSmearList,thisjSmearList,iPrefList,thisMomLi
     if 'q = 0 0 0' not in thisMomList:
         DRZ = True
         thisMomList = ['q = 0 0 0']+thisMomList
-    if DoTop:
+    if 'Wein' == DoTop:
         CreateRFTop(RunType,itsinkList,thisiSmearList,thisjSmearList,iPrefList,
-                 DragpZ([qstrTOip(iq) for iq in thisMomList]),thisPGList={iProj:[igamma]},DontWriteZero=DRZ)
+                    DragpZ([qstrTOip(iq) for iq in thisMomList]),thisPGList={iProj:[igamma]},DontWriteZero=DRZ,Wein=True)
+    elif DoTop == True:
+        CreateRFTop(RunType,itsinkList,thisiSmearList,thisjSmearList,iPrefList,
+                    DragpZ([qstrTOip(iq) for iq in thisMomList]),thisPGList={iProj:[igamma]},DontWriteZero=DRZ)
     else:
         CreateRF(RunType,itsinkList,thisiSmearList,thisjSmearList,iPrefList,
                  DragpZ([qstrTOip(iq) for iq in thisMomList]),thisPGList={iProj:[igamma]},DontWriteZero=DRZ)
-
+        
 def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin=None,DoTop=False):
 
     # print "running " + Curr + ' ' + thisCol + ' tsinks: ' + ' '.join(RunTSinkList)
@@ -166,7 +169,8 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
                         gammalist = ['doub'+PiOpp,'sing'+PiOpp]
                         gammalistcmplx = ['doub'+PiOpp+'cmplx','sing'+PiOpp+'cmplx']
                         outpost = ''
-                        if DoTop: outpost = 'Top/'
+                        if DoTop == 'Wein': outpost = 'Wein/'
+                        elif DoTop : outpost = 'Top/'
                         if WipeThisSet:
                             wipegammalist = gammalist + gammalistcmplx
                             WipeSet(outputdir[0]+outpost,wipegammalist,thisSetList)
@@ -178,7 +182,8 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
                             iqvec = np.array(qstrTOqvec(iq))*qunit
                             if Curr != 'Test':
                                 checkPiOpp = PiOpp
-                                if DoTop: checkPiOpp = PiOpp+'Top'
+                                if DoTop=='Wein': checkPiOpp = PiOpp+'Wein'
+                                elif DoTop: checkPiOpp = PiOpp+'Top'
                                 dump,rcheck,ccheck = CurrFFs[Curr](checkPiOpp,iqvec.tolist(),[0,0,0],1.0)
                             else:
                                 rcheck,ccheck = True,False
@@ -210,7 +215,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
                                 thisPool.apply_async(CRFWrap,(RunType,itsinkList,thisiSmearList,thisjSmearList,iPrefList,copy.copy(runmomlistcmplx),iProj,igamma+'cmplx',DoTop))
     sys.stdout = sys.__stdout__
     sys.stderr = sys.__stderr__
-    if 'TwoPt' not in RunType and 'TopAlpha' not in RunType:
+    if 'TwoPt' not in RunType and 'Alpha' not in RunType:
         print 'Three Point Analysis '+Curr + ' ' + RunType + ' tsinks: ' + ' '.join(RunTSinkList) + ' Added to jobs'
 
 if len(sys.argv) < 2: raise IOError("input current type as first argument")
@@ -243,6 +248,7 @@ else:
         for iCurr in AllCurrTypes:
             DoTop=False
             if 'Top' in iCurr: DoTop=True
+            if 'Wein' in iCurr: DoTop='Wein'
             # if iCurr != 'Tensor': continue
             if thisColIn == 'All':
                 for iCol in ReadColList:
@@ -252,6 +258,7 @@ else:
     else:
         DoTop=False
         if 'Top' in CurrIn: DoTop=True
+        if 'Wein' in CurrIn: DoTop='Wein'
         if thisColIn == 'All':
             for iCol in ReadColList:
                 RunOffCorrs(thisPool,CurrIn,iCol[0],RunTSinkList=iCol[1].split(),WipeThisSet=DefWipe,DoTop=DoTop)

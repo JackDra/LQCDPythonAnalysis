@@ -13,8 +13,12 @@ from OutputXmlData import *
 ## IN DEV
 ##C3setTop [ igamma , iset , iflow , ip , it ] bs1
 
-def PrintTopCfunToFile(C3setTop,thisSetList,thisMomList, thisGammaList,thisTopList,AddDict={}):
-    cfundir = outputdir[0] + 'Top/cfun/'
+def PrintTopCfunToFile(C3setTop,thisSetList,thisMomList, thisGammaList,thisTopList,AddDict={},Wein=False):
+    if Wein:
+        cfundir = outputdir[0] + 'Wein/cfun/'
+    else:
+        cfundir = outputdir[0] + 'Top/cfun/'
+        
     for thegamma,gammadata in zip(thisGammaList,C3setTop):
         gammadir = cfundir+CreateOppDir(thegamma)+'/'
         if 'cmplx' in thegamma:
@@ -28,16 +32,23 @@ def PrintTopCfunToFile(C3setTop,thisSetList,thisMomList, thisGammaList,thisTopLi
 
 ##dataset [ igamma , iset , iflow , ip , it ] bs1
 
-def PrintTopSetToFile(C3setTop,thisSetList,thisMomList, thisGammaList,tsink,thisTopList,AddDict={}):
+def PrintTopSetToFile(C3setTop,thisSetList,thisMomList, thisGammaList,tsink,thisTopList,AddDict={},Wein=False):
+    if Wein:
+        TopOrWein = 'Wein'
+    else:
+        TopOrWein = 'Top'
     for thegamma,gammadata in zip(thisGammaList,C3setTop):
-        gammadir = outputdir[0]+'Top/'+CreateOppDir(thegamma)+'/'
-        if 'cmplx' in thegamma:
-            thegamma = thegamma.replace('cmplx','Topcmplx')
+        if Wein:
+            gammadir = outputdir[0]+'Wein/'+CreateOppDir(thegamma)+'/'
         else:
-            thegamma = thegamma+'Top'
+            gammadir = outputdir[0]+'Top/'+CreateOppDir(thegamma)+'/'
+        if 'cmplx' in thegamma:
+            thegamma = thegamma.replace('cmplx',TopOrWein'cmplx')
+        else:
+            thegamma = thegamma+TopOrWein
         for iset,setdata in zip(thisSetList,gammadata):
-            print 'Printing Top : ' , thegamma , iset , '                \r',
-            calcflag = 'Ratio_Factor_Top'
+            print 'Printing ',TopOrWein' : ' , thegamma , iset , '                \r',
+            calcflag = 'Ratio_Factor_'+TopOrWein
             tlist = range(tsource,int(tsink)+1)
             Print3ptTopToFile(np.rollaxis(np.array(setdata),1),gammadir,iset+thegamma,thisTopList,tlist,thisMomList,AddDict=AddDict)
 

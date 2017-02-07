@@ -16,7 +16,7 @@ from MiscFuns import touch
 import copy
 
 
-def CreateRFTop(RunType,thisTSinkList,thisiSmearList,thisjSmearList,thisPrefList,thisMomList,thisPGList={},thisPDList={},thisDSList=DefDSList,giDi=False,DontWriteZero=False):
+def CreateRFTop(RunType,thisTSinkList,thisiSmearList,thisjSmearList,thisPrefList,thisMomList,thisPGList={},thisPDList={},thisDSList=DefDSList,giDi=False,DontWriteZero=False,Wein=False):
     thisGammaList = []
     for iDS in thisDSList:
         for Proj,GL in thisPGList.iteritems():
@@ -52,17 +52,17 @@ def CreateRFTop(RunType,thisTSinkList,thisiSmearList,thisjSmearList,thisPrefList
     if 'ReadList' in ListOrSet:
         if 'PoF' in RunType:
             [data2pt,data3pt,data3ptTop,thisTopList,filelist] = ReadListTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisPGList,thisPDList,
-                                                                thisDSList,thisTSinkList,conflist,thisPrefList,thistsourceList=PoFtsourceList)
+                                                                                  thisDSList,thisTSinkList,conflist,thisPrefList,thistsourceList=PoFtsourceList,Wein=Wein)
         else:
             [data2pt,data3pt,data3ptTop,thisTopList,filelist] = ReadListTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisPGList,thisPDList,
-                                                                thisDSList,thisTSinkList,conflist,thisPrefList)
+                                                                                  thisDSList,thisTSinkList,conflist,thisPrefList,Wein=Wein)
     elif 'ReadSet' in ListOrSet:
         if 'PoF' in RunType:
             [data2pt,data3pt,data3ptTop,thisTopList,filelist] = ReadSetTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisPGList,thisPDList,
-                                                 thisDSList,thisTSinkList,dirread,thisPrefList,thistsourceList=PoFtsourceList)
+                                                                                 thisDSList,thisTSinkList,dirread,thisPrefList,thistsourceList=PoFtsourceList,Wein=Wein)
         else:
             [data2pt,data3pt,data3ptTop,thisTopList,filelist] = ReadSetTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisPGList,thisPDList,
-                                                 thisDSList,thisTSinkList,dirread,thisPrefList)
+                                                                                 thisDSList,thisTSinkList,dirread,thisPrefList,Wein=Wein)
     print 'Read Complete'
     print 'ncon=',len(filelist)
     InfoDict = {'nconfig':len(filelist)}
@@ -182,12 +182,12 @@ def CreateRFTop(RunType,thisTSinkList,thisiSmearList,thisjSmearList,thisPrefList
     ## data3ptset [ iset , igamma , ip , it ] bs1
     ## data3ptsetTop [ iflow, iset , igamma , ip , it ] bs1
     # PrintCfunToFile(np.rollaxis(data3ptset,1),SetList,thisMomList,thisGammaList,AddDict=InfoDict)
-    PrintTopCfunToFile(np.rollaxis(np.rollaxis(data3ptsetTop,1),2),SetList,thisMomList,thisGammaList,thisTopList,AddDict=InfoDict)
+    PrintTopCfunToFile(np.rollaxis(np.rollaxis(data3ptsetTop,1),2),SetList,thisMomList,thisGammaList,thisTopList,AddDict=InfoDict,Wein=Wein)
 
     ## RFr = [  iset , igamma , ip , it ] bs1
     ## RFrTop = [  iflow , iset , igamma , ip , it ] bs1
     # PrintSetToFile(np.rollaxis(RFr,1),SetList,thisMomList,thisGammaList,thisTSinkList[0],AddDict=InfoDict)
-    PrintTopSetToFile(np.rollaxis(np.rollaxis(RFrTop,1),2),SetList,thisMomList,thisGammaList,thisTSinkList[0],thisTopList,AddDict=InfoDict)
+    PrintTopSetToFile(np.rollaxis(np.rollaxis(RFrTop,1),2),SetList,thisMomList,thisGammaList,thisTSinkList[0],thisTopList,AddDict=InfoDict,Wein=Wein)
 
     print 'Finished '+ RunType + ' tsink='+str(thisTSinkList[0]) + ' '+iglog + '                       '
     sys.stdout = open(logfileend,'a',0)
