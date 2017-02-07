@@ -88,7 +88,7 @@ else:
 # WipeSet(outputdir[0],RunGammaList,feedin['set'],filepref='Fits/')
 print 'Done Fits ' + ' '*50
 #FitData = { iset , ip , iflow , ifit  , Boot/Avg/Chi }
-if inputargs['Wein']:
+if feedin['Wein']:
     topfitdir = outputdir[0] + 'Top/Alpha/Fits'
 else:
     topfitdir = outputdir[0] + 'Wein/Alpha/Fits'
