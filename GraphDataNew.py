@@ -1529,6 +1529,18 @@ def GraphQExp(Qlist,flowlist):
     pl.savefig(thisdir+'QExp.pdf')
     pl.clf()
 
+def GraphWExp(Wlist,flowlist):
+    pl.errorbar(flowlist,np.mean(Wlist,axis=0),np.std(Wlist,axis=0),fmt='o')
+    pl.xlim(flowlist[0]-0.1,flowlist[-1]+0.1)
+    pl.xlabel(r'$ t_{flow} $')
+    pl.ylabel(r'$ \langle W \rangle $')
+    thisdir = outputdir[0] + 'graphs/Wdata/'
+    pl.title(r'$ \langle W \rangle $')
+    mkdir_p(thisdir)
+    pl.savefig(thisdir+'WExp.pdf')
+    pl.clf()
+
+    
 
 def Graphchit(Qlist,flowlist):
     ## Hard coded here....
@@ -1564,6 +1576,41 @@ def Graphchit(Qlist,flowlist):
     pl.savefig(thisdir+'chit.pdf')
     pl.clf()
 
+def GraphWchit(Wlist,flowlist):
+    ## Hard coded here....
+    flowlist = np.array(flowlist)
+    thislatspace = 0.0907
+    coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
+
+    # Wboot,dump = bt.CreateBoot(Wlist,nboot,0)
+    # W2boot = np.array(Wboot)**2
+    # chit = coeff*np.array(W2boot)**(0.25)
+    # chit = GetBootStats(chit)
+    # pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$W Boot$')
+
+    W2boot,dump = bt.CreateBoot(np.array(Wlist)**2,nboot,0)
+    chit = coeff*np.array(W2boot)**(0.25)
+    chit = GetBootStats(chit)
+    # pl.errorbar(flowlist-0.02,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$W^{2} Boot$')
+    pl.errorbar(flowlist[1:],Pullflag(chit,'Avg')[1:],Pullflag(chit,'Std')[1:],fmt='o')
+
+    # Wavg = np.mean(np.array(Wlist)**2,axis=0)
+    # Wstd = np.std(np.array(Wlist)**2,axis=0,ddof=1)
+    # chitAvg = coeff*Wavg**(0.25)
+    # chitStd = coeff*0.25*Wstd*Wavg**(0.25-1)
+    # pl.errorbar(flowlist+0.1,chitAvg,chitStd,fmt='o',label=r'$No Boot$')
+    pl.xlim(flowlist[0]-0.02,flowlist[-1]+0.1)
+    pl.xlabel(r'$ t_{flow} $')
+    pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
+    # pl.ylim(0,0.4)
+    pl.legend()
+    thisdir = outputdir[0] + 'graphs/Wdata/'
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{\hbar c}{aV^{1/4}} \langle W^2 \rangle^{1/4} $',y=1.04)
+    mkdir_p(thisdir)
+    pl.savefig(thisdir+'chit.pdf')
+    pl.clf()
+
+    
 
 def GraphchitKappas(Qlist,flowlist):
     ## Hard coded here....
@@ -1604,6 +1651,46 @@ def GraphchitKappas(Qlist,flowlist):
     pl.savefig(thisdir+'chitKappa.pdf')
     pl.clf()
 
+def GraphWchitKappas(Wlist,flowlist):
+    ## Hard coded here....
+    flowlist = np.array(flowlist)
+    thislatspace = 0.0907
+    coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
+
+    # Wboot,dump = bt.CreateBoot(Wlist,nboot,0)
+    # W2boot = np.array(Wboot)**2
+    # chit = coeff*np.array(W2boot)**(0.25)
+    # chit = GetBootStats(chit)
+    # pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$W Boot$')
+    tflowindex = flowlist[0].tolist().index(4.01)
+    chitKappa = []
+    MpiList = [DefPionMass['1370000']*hbarc/thislatspace,DefPionMass['1375400']*hbarc/thislatspace]
+    for iW in Wlist:
+        W2boot,dump = bt.CreateBoot(np.array(iW)**2,nboot,0)
+        chit = coeff*np.array(W2boot)**(0.25)
+        chit = GetBootStats(chit)
+        chitKappa.append(chit[tflowindex])
+    # pl.errorbar(flowlist-0.02,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$W^{2} Boot$')
+    pl.errorbar(MpiList,Pullflag(chitKappa,'Avg'),Pullflag(chitKappa,'Std'),fmt='o')
+
+    # Wavg = np.mean(np.array(Wlist)**2,axis=0)
+    # Wstd = np.std(np.array(Wlist)**2,axis=0,ddof=1)
+    # chitAvg = coeff*Wavg**(0.25)
+    # chitStd = coeff*0.25*Wstd*Wavg**(0.25-1)
+    # pl.errorbar(flowlist+0.1,chitAvg,chitStd,fmt='o',label=r'$No Boot$')
+    pl.xlim(0,pl.xlim()[1])
+    pl.ylim(0,0.22)
+    pl.xlabel(r'$ m_{\pi} GeV $')
+    pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
+    # pl.ylim(0,0.4)
+    pl.legend()
+    thisdir = outputdir[0] + 'graphs/Wdata/'
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{aV^{1/4}} \langle W^2 \rangle^{1/4} $',y=1.04)
+    mkdir_p(thisdir)
+    pl.savefig(thisdir+'chitKappa.pdf')
+    pl.clf()
+
+    
 
     
 def GraphQ2Hist(Qlist,thisflow):
@@ -1639,4 +1726,39 @@ def GraphQLines(Qlist,flowlist,cfglist):
     pl.savefig(thisdir+'QLines.pdf')
     pl.clf()
 
+
+def GraphW2Hist(Wlist,thisflow):
+    ## Hard coded here....
+    # thislatspace = 0.0907
+    # coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
+    W2list = np.array(Wlist)[:,thisflow]**2
+
+    W2min,W2max = 0,300
+    pl.hist(W2list,bins=np.arange(W2min,W2max,10),histtype=HistType,normed=False)
+    pl.xlim(W2min,W2max)
+    pl.xlabel(r'$\langle W^2 \rangle $')
+    pl.ylabel(r'$ N $')
+    thisdir = outputdir[0] + 'graphs/Wdata/'
+    pl.title(r'$ Histogram\ \langle W^2 \rangle $',y=1.02)
+    mkdir_p(thisdir)
+    pl.savefig(thisdir+'W2Hist.pdf')
+    pl.clf()
+
+    
+def GraphWLines(Wlist,flowlist,cfglist):
+    thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
+    for icfg in cfglist:
+        pl.plot(flowlist,Wlist[icfg],color=thiscolcyc.next(),label='W cfg='+str(icfg))
+    pl.xlim(flowlist[0]-0.1,flowlist[-1]+0.1)
+    pl.xlabel(r'$ t_{flow} $')
+    pl.ylabel(r'$ W $')
+    pl.legend()
+    thisdir = outputdir[0] + 'graphs/Wdata/'
+    pl.title(r'$ W \left( icfg \right) $')
+    pl.tight_layout()
+    mkdir_p(thisdir)
+    pl.savefig(thisdir+'WLines.pdf')
+    pl.clf()
+
+    
     
