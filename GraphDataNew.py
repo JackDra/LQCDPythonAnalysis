@@ -1512,7 +1512,7 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False,Wein=False):
     for itflow in AlphaTflowList:
         thisitflow = itflow
         if Wein: thisitflow = itflow - 0.01
-        if thisitflow = 0.00: continue
+        if thisitflow == 0.00: continue
         thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
         for iset,setdata in data.iteritems():
             if CheckDict(setdata,DictFlag,imom,'Boots'):
