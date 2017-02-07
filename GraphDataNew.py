@@ -1422,6 +1422,7 @@ def PlotTopChargeOverFlow(data,iSet,iMom,tsink,thiscol,thissym,thisshift,NNQ=Fal
     momdata = data[DictFlag][iMom]['Boots']
     momdataNN = data['cfun'][iMom]['Boots']
     for itflow,flowdata in momdata.iteritems():
+        if 't_flow0.0' == itflow: continue
         for (it,tdata),(itdump,tdataNN) in zip(flowdata.iteritems(),momdataNN.iteritems()):
             if tsink == int(untstr(it)):
                 tflowlist.append(untflowstr(itflow)-thisshift)
@@ -1453,7 +1454,6 @@ def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,
     momdata = data[DictFlag][iMom]['Boots']
     momdataNN = data['cfun'][iMom]['Boots']
     for itflow,flowdata in momdata.iteritems():        
-        print 't_flow0.0', itflow, 't_flow0.0' == itflow
         if 't_flow0.0' == itflow: continue
         if untflowstr(itflow) == tflow:
             for (it,tdata),(itdump,tdataNN) in zip(flowdata.iteritems(),momdataNN.iteritems()):
