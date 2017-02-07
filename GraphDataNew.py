@@ -1453,6 +1453,7 @@ def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,
     momdata = data[DictFlag][iMom]['Boots']
     momdataNN = data['cfun'][iMom]['Boots']
     for itflow,flowdata in momdata.iteritems():        
+        print itflow
         if untflowstr(itflow) == tflow:
             for (it,tdata),(itdump,tdataNN) in zip(flowdata.iteritems(),momdataNN.iteritems()):
                 if untstr(it) < AlphaTlist[-1] and untstr(it) > MassTVals[0] :
@@ -1512,7 +1513,6 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False,Wein=False):
     for itflow in AlphaTflowList:
         thisitflow = itflow
         if Wein: thisitflow = itflow - 0.01
-        if thisitflow == 0.00: continue
         thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
         for iset,setdata in data.iteritems():
             if CheckDict(setdata,DictFlag,imom,'Boots'):
