@@ -284,7 +284,7 @@ def SetDispAxies():
 
 AlphaTflowList = np.arange(0.01,10,1)
 AlphaTlist = np.arange(3,15)
-def SetTopAxies(torflow,NNQ=False,Dt=2,Wein):
+def SetTopAxies(torflow,NNQ=False,Dt=2,Wein=False):
     if torflow == 't':
         pl.xlabel(r'$t$')
         pl.xlim(MassTVals[0],AlphaTlist[-1])
