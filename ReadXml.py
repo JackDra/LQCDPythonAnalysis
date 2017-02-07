@@ -151,8 +151,10 @@ def ReadAlphaFile(filedir,iset,thisMomList=RunMomList,BSClass=False,Wein=False):
     return dictout
 
 ## dictout = { imom , Info/ Boots: itflow , fitr }  
-def ReadAlphaFitFile(filedir,iset,thisMomList=RunMomList,BSClass=False,givefile=False):
+def ReadAlphaFitFile(filedir,iset,thisMomList=RunMomList,BSClass=False,givefile=False,Wein=False):
     dictout = OrderedDict()
+    if Wein:TopOrWein ='Wein'
+    else: TopOrWein = 'Top'
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
         readfile = filedir+TopOrWein+'/Alpha/Fits/'+MakeMomDir(ip)+iset+ip
