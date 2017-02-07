@@ -284,7 +284,7 @@ def SetDispAxies():
 
 AlphaTflowList = np.arange(0.01,10,1)
 AlphaTlist = np.arange(3,15)
-def SetTopAxies(torflow,NNQ=False,Dt=2):
+def SetTopAxies(torflow,NNQ=False,Dt=2,Wein):
     if torflow == 't':
         pl.xlabel(r'$t$')
         pl.xlim(MassTVals[0],AlphaTlist[-1])
@@ -296,10 +296,16 @@ def SetTopAxies(torflow,NNQ=False,Dt=2):
     pl.tight_layout()
     if NNQ:
         pl.ylabel(r'$ Eff\ Mass $')
-        pl.title(r'$ Eff\ Mass\ of\ \gamma_{5}P_{+}NNQ\ and\ NN\ Dt='+str(Dt)+'$')
+        if Wein:
+            pl.title(r'$ Eff\ Mass\ of\ \gamma_{5}P_{+}NNW\ and\ NN\ Dt='+str(Dt)+'$')
+        else:
+            pl.title(r'$ Eff\ Mass\ of\ \gamma_{5}P_{+}NNQ\ and\ NN\ Dt='+str(Dt)+'$')
     else:
         pl.ylabel(r'$ \alpha $')
-        pl.title(r'$\frac{\langle NNQ \rangle }{\langle NN\rangle} = \alpha $',y=1.04)
+        if Wein:
+            pl.title(r'$\frac{\langle NNW \rangle }{\langle NN\rangle} = \alpha $',y=1.04)
+        else:
+            pl.title(r'$\frac{\langle NNQ \rangle }{\langle NN\rangle} = \alpha $',y=1.04)
     
     
 
@@ -1508,7 +1514,7 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False,Wein=False):
                 PlotTopChargeOverFlow(setdata,iset,imom,itsink,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt)
 
         filename = CreateFile('','twopt',imom,thisValue+'Overt'+str(itsink),subdir=thissubdir)        
-        SetTopAxies('flow',NNQ=NNQ,Dt=Dt)
+        SetTopAxies('flow',NNQ=NNQ,Dt=Dt,Wein=Wein)
         pl.savefig(filename+'.pdf')
         pl.clf()
     for itflow in AlphaTflowList:
@@ -1520,7 +1526,7 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False,Wein=False):
                 # print 'plotting ', iset, imom
                 PlotTopChargeOvert(setdata,iset,imom,thisitflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt)
         filename = CreateFile('','twopt',imom,thisValue+'OverFlow'+str(thisitflow),subdir=thissubdir)
-        SetTopAxies('t',NNQ=NNQ,Dt=Dt)
+        SetTopAxies('t',NNQ=NNQ,Dt=Dt,Wein=Wein)
         pl.savefig(filename+'.pdf')
         pl.clf()
 
