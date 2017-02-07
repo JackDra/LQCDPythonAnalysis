@@ -19,7 +19,7 @@ from GraphDataNew import *
 ## tflow [ icfg , itflow ]
 ## topcharge [ icfg , itflow ]
 kappatopc,kappatflow = [],[]
-for ikappa in kappalist:    
+for ikappa in kappalist[0]:    
     print 'Reading kappa=', ikappa
     if Debug: print WeinDir.replace('Kud0'+str(kappa),ikappa.replace('k','Kud0'))
     filelist,topcharge,tflow = ReadTopAll(WeinDir.replace('Kud0'+str(kappa),ikappa.replace('k','Kud0')))
