@@ -1453,7 +1453,7 @@ def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,
     momdata = data[DictFlag][iMom]['Boots']
     momdataNN = data['cfun'][iMom]['Boots']
     for itflow,flowdata in momdata.iteritems():        
-        print itflow
+        if 't_flow0.0' == itflow: continue
         if untflowstr(itflow) == tflow:
             for (it,tdata),(itdump,tdataNN) in zip(flowdata.iteritems(),momdataNN.iteritems()):
                 if untstr(it) < AlphaTlist[-1] and untstr(it) > MassTVals[0] :
