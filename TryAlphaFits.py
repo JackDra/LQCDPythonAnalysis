@@ -22,9 +22,9 @@ from CheckXml import *
 
 
 
-def TryAlphaFitsFun(thisSetList,thisMomList):
+def TryAlphaFitsFun(thisSetList,thisMomList,Wein=False):
     # dataRF = { iset , imom , Info/ Boots: itflow , tsink } bs
-    dataRF = ReadAlphaSet(thisSetList,thisMomList)
+    dataRF = ReadAlphaSet(thisSetList,thisMomList,Wein=Wein)
     start = time.time()
     FitData = OrderedDict()
     for iset,setdata in dataRF.iteritems():
@@ -65,7 +65,7 @@ inputparams = []
 thisMomList = RunAvgMomList
 for iSet in feedin['set']:
     for imom in thisMomList:
-        inputparams.append(([iSet],[imom]))
+        inputparams.append(([iSet],[imom],feedin['Wein']))
 
 if len(inputparams) > 0:
     if DoMulticore and feedin['anaproc'] > 1 and len(inputparams) > 1:
@@ -88,7 +88,10 @@ else:
 # WipeSet(outputdir[0],RunGammaList,feedin['set'],filepref='Fits/')
 print 'Done Fits ' + ' '*50
 #FitData = { iset , ip , iflow , ifit  , Boot/Avg/Chi }
-topfitdir = outputdir[0] + 'Top/Alpha/Fits'
+if inputargs['Wein']:
+    topfitdir = outputdir[0] + 'Top/Alpha/Fits'
+else:
+    topfitdir = outputdir[0] + 'Wein/Alpha/Fits'
 mkdir_p(topfitdir)
 
 for iout in output:

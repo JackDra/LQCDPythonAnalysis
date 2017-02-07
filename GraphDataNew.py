@@ -688,7 +688,10 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False,Top=False):
         if MassDt == False:
             thiscol,thisshift = thiscolcyc.next(),thisshiftcyc.next()
             if Top:                
-                thistflow = 't_flow4.01'
+                if 'Wein' in Top:
+                    thistflow = 't_flow4.0'
+                else:
+                    thistflow = 't_flow4.01'
                 thistsink = data['RF'][iset][thistflow]['tVals'][-1]
                 PlotRF(data['RF'][iset][thistflow],thiscol,thissymcyc.next(),thisshift,LegLab(iset+thistflow.replace(legrem,'')))
                 if CheckDict(data,'Fits',iset,thistflow):
@@ -935,7 +938,7 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
         #     if keyset in dataset.keys(): dataset[keyset],thisFF
         #     print
 
-        if ('Proton' in keyset or 'Neutron' in keyset) and 't_flow4.01' not in keyset: continue
+        if ('Proton' in keyset or 'Neutron' in keyset) and 't_flow4.0' not in keyset: continue
         PorN = ''
         if 'Proton' in keyset: PorN = 'Proton'
         if 'Neutron' in keyset: PorN = 'Neutron'
@@ -1675,7 +1678,7 @@ def GraphWchitKappas(Wlist,flowlist):
     # chit = coeff*np.array(W2boot)**(0.25)
     # chit = GetBootStats(chit)
     # pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$W Boot$')
-    tflowindex = flowlist[0].tolist().index(4.01)
+    tflowindex = flowlist[0].tolist().index(4.0)
     chitKappa = []
     MpiList = [DefPionMass['1370000']*hbarc/thislatspace,DefPionMass['1375400']*hbarc/thislatspace]
     for iW in Wlist:
