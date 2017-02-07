@@ -1510,12 +1510,14 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False,Wein=False):
         pl.savefig(filename+'.pdf')
         pl.clf()
     for itflow in AlphaTflowList:
+        thisitflow = itflow
+        if Wein: thisitflow = itflow - 0.01
         thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
         for iset,setdata in data.iteritems():
             if CheckDict(setdata,DictFlag,imom,'Boots'):
                 # print 'plotting ', iset, imom
-                PlotTopChargeOvert(setdata,iset,imom,itflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt)
-        filename = CreateFile('','twopt',imom,thisValue+'OverFlow'+str(itflow),subdir=thissubdir)
+                PlotTopChargeOvert(setdata,iset,imom,thisitflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt)
+        filename = CreateFile('','twopt',imom,thisValue+'OverFlow'+str(thisitflow),subdir=thissubdir)
         SetTopAxies('t',NNQ=NNQ,Dt=Dt)
         pl.savefig(filename+'.pdf')
         pl.clf()
