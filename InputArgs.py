@@ -79,6 +79,7 @@ def InputParams(inputparams):
     feedout['FFcomb'] = CombFFList
     feedout['FFcombNS'] = CombNSFFList
     feedout['klist'] = kappalist
+    feedout['Wein'] = False
     feedout['DoCurr'] = True
     feedout['ffgraph'] = 'All'
     feedout['ForceTitle'] = False
@@ -111,6 +112,8 @@ def InputParams(inputparams):
             exit()
         elif '-NoCurr' in isys:
             feedout['DoCurr'] = False
+        elif '-Wein' in isys:
+            feedout['Wein'] = True
         elif '-g' in isys:
             feedout['gamma'] = isys.replace('-g=','').split(',')
         elif '-k' in isys:

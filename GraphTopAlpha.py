@@ -24,7 +24,7 @@ from GraphDataNew import *
 
 
 
-def ReadAndPlotDis(thisSetList,thisMomList):
+def ReadAndPlotDis(thisSetList,thisMomList,Wein=False):
     # thisAllSetList = thisSmearList+thisSetList
     # for isetlist,dump in thisSetPoFLists[:len(thisSetPoFLists)/2]:
     #     thisAllSetList += isetlist
@@ -33,11 +33,11 @@ def ReadAndPlotDis(thisSetList,thisMomList):
         datadict = {}
         for iset in iterSetList:
             datadict[iset] = OrderedDict()
-            datadict[iset] = ReadTopFile(outputdir[0],iset,thisMomList=[imom])
-            datadict[iset]['Fits'] = ReadAlphaFitFile(outputdir[0],iset,thisMomList=[imom])
+            datadict[iset] = ReadTopFile(outputdir[0],iset,thisMomList=[imom],Wein=Wein)
+            datadict[iset]['Fits'] = ReadAlphaFitFile(outputdir[0],iset,thisMomList=[imom],Wein=Wein)
         setstart = time.time()
-        PlotTopSetCharge(datadict,iterSetList,imom,feedin['ForceTitle'])
-        PlotTopSetCharge(datadict,iterSetList,imom,feedin['ForceTitle'],NNQ=True)
+        PlotTopSetCharge(datadict,iterSetList,imom,feedin['ForceTitle'],Wein=Wein)
+        PlotTopSetCharge(datadict,iterSetList,imom,feedin['ForceTitle'],NNQ=True,Wein=Wein)
         print 'Getting and plotting ' , imom, 'Took: ' , str(datetime.timedelta(seconds=(time.time()-setstart))) ,' h:m:s                      '
 
 
@@ -55,14 +55,14 @@ feedin['mom'] = GetAvgMomList(feedin['mom'])
 if DoMulticore and len(feedin['mom']) > 1  and feedin['anaproc'] > 1:
     inputparams = []
     for imom in feedin['mom']:
-        inputparams.append((feedin['set'],[imom]))
+        inputparams.append((feedin['set'],[imom],feedin['Wein']))
     makeContextFunctions(ReadAndPlotDis)
     thisPool = Pool(min(len(inputparams),feedin['anaproc']))
     thisPool.map(ReadAndPlotDis.mapper,inputparams)
     thisPool.close()
     thisPool.join()
 else:
-    ReadAndPlotDis(feedin['set'],feedin['mom'])
+    ReadAndPlotDis(feedin['set'],feedin['mom'],feedin['Wein'])
 
 
     

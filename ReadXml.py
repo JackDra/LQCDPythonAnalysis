@@ -117,31 +117,35 @@ def GetDPFitValue(SearchSet,iFF,thisCurr,thiskappa=str(kappa)):
     return thisDPpAvg,thisDPpStd
 
 
-def ReadTopFile(filedir,iset,thisMomList=RunMomList):
+def ReadTopFile(filedir,iset,thisMomList=RunMomList,Wein=False):
     dictout = OrderedDict()
+    if Wein:TopOrWein ='Wein'
+    else: TopOrWein = 'Top'
     dictout['RF'] = OrderedDict()
     dictout['NNQ'] = OrderedDict()
     dictout['cfun'] = OrderedDict()
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
-        readfile = filedir+'Top/Alpha/'+MakeMomDir(ip)+iset+ip
+        readfile = filedir+TopOrWein+'/Alpha/'+MakeMomDir(ip)+iset+ip
         if Debug: print 'Reading TopCharge :' ,readfile
         dictout['RF'][thismom] = ReadXmlAndPickle(readfile+'.xml')[0][ip]
-        thisreadfile = filedir+'Top/cfun/twopt/'+MakeMomDir(ip)+iset+'twopt'+ip
+        thisreadfile = filedir+TopOrWein+'/cfun/twopt/'+MakeMomDir(ip)+iset+'twopt'+ip
         dictout['cfun'][thismom] = ReadXmlAndPickle(thisreadfile+'.xml')[0][ip]
-        thisreadfile = readfile.replace('Top/Alpha/','Top/cfun/NNQ/')
+        thisreadfile = readfile.replace(TopOrWein+'/Alpha/',TopOrWein+'/cfun/NNQ/')
         # readfile = filedir+'Top/NNQ/'+MakeMomDir(ip)+iset+ip
         dictout['NNQ'][thismom] = ReadXmlAndPickle(thisreadfile+'.xml')[0][ip]
     return dictout
 
 
 ## dictout = { 'RF' , imom , Info/ Boots: itflow , tsink }  
-def ReadAlphaFile(filedir,iset,thisMomList=RunMomList,BSClass=False):
+def ReadAlphaFile(filedir,iset,thisMomList=RunMomList,BSClass=False,Wein=False):
     dictout = OrderedDict()
+    if Wein:TopOrWein ='Wein'
+    else: TopOrWein = 'Top'
     dictout['RF'] = OrderedDict()
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
-        readfile = filedir+'Top/Alpha/'+MakeMomDir(ip)+iset+ip
+        readfile = filedir+TopOrWein+'/Alpha/'+MakeMomDir(ip)+iset+ip
         if Debug: print 'Reading TopCharge :' ,readfile+'.xml'
         if os.path.isfile(readfile+'.xml'): dictout['RF'][thismom] = ReadXmlAndPickle(readfile+'.xml')[0][ip]
     return dictout
@@ -151,7 +155,7 @@ def ReadAlphaFitFile(filedir,iset,thisMomList=RunMomList,BSClass=False,givefile=
     dictout = OrderedDict()
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
-        readfile = filedir+'Top/Alpha/Fits/'+MakeMomDir(ip)+iset+ip
+        readfile = filedir+TopOrWein+'/Alpha/Fits/'+MakeMomDir(ip)+iset+ip
         if Debug: print 'Reading TopCharge Fits :' ,readfile+'.xml'
         if os.path.isfile(readfile+'.xml'): dictout[thismom] = ReadXmlAndPickle(readfile+'.xml')[0][ip]
     if givefile:
@@ -165,7 +169,7 @@ def ReadAlphaFitFile(filedir,iset,thisMomList=RunMomList,BSClass=False,givefile=
 def ReadRFFile(filedir,filename,thisMomList=RunMomList):
     renorm = GetRenorm(filename)
     dictout = {}
-    TopFile = 'Top' in filename.replace('Topk'+str(kappa),'')
+    TopFile = 'Top' in filename.replace('Topk'+str(kappa),'') or 'Wein' in filename.replace('Weink'+str(kappa),'')
     for thismom in thisMomList:
         ip = qstrTOqcond(thismom)
         readfile = filedir+MakeMomDir(ip)+filename.replace('.xml',ip+'.xml')
@@ -240,7 +244,7 @@ def ReadFitFile(filedir,filename,thisMomList=RunMomList):
             data = data[data.keys()[0]]
             if 'Boots' in data.keys():
                 bootdata = data['Boots']
-                if 'Top' in readfile.replace('Top'+kappalist[0],''):
+                if 'Top' in readfile.replace('Top'+kappalist[0],'') or 'Wein' in readfile.replace('Wein'+kappalist[0],''):
                     dictout[thismom] = OrderedDict()
                     for iflow,flowdata in bootdata.iteritems():
                         dictout[thismom][iflow] = OrderedDict()

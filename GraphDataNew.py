@@ -1490,19 +1490,22 @@ def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,
                     pl.plot(tvals,[dataavg,dataavg],color=thiscol)
                     pl.fill_between(tvals,[dataup,dataup],[datadown,datadown],color=thiscol,alpha=thisalpha,edgecolor='none')
 
-def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False):
+def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False,Wein=False):
     global ForceTitle    
     DictFlag,thisValue = 'RF','Alpha'
     if NNQ:  DictFlag,thisValue = 'NNQ','NNQ'
     Dt=2
     ForceTitle = FT
+    if Wein: thissubdir = 'Wein'
+    else: thissubdir = 'Top'
     for itsink in AlphaTlist:
         thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
         for iset,setdata in data.iteritems():
             if CheckDict(setdata,DictFlag,imom,'Boots'):
                 # print 'plotting ', iset, imom
                 PlotTopChargeOverFlow(setdata,iset,imom,itsink,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt)
-        filename = CreateFile('','twopt',imom,thisValue+'Overt'+str(itsink),subdir='Top')        
+
+        filename = CreateFile('','twopt',imom,thisValue+'Overt'+str(itsink),subdir=thissubdir)        
         SetTopAxies('flow',NNQ=NNQ,Dt=Dt)
         pl.savefig(filename+'.pdf')
         pl.clf()
@@ -1512,7 +1515,7 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False):
             if CheckDict(setdata,DictFlag,imom,'Boots'):
                 # print 'plotting ', iset, imom
                 PlotTopChargeOvert(setdata,iset,imom,itflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt)
-        filename = CreateFile('','twopt',imom,thisValue+'OverFlow'+str(itflow),subdir='Top')
+        filename = CreateFile('','twopt',imom,thisValue+'OverFlow'+str(itflow),subdir=thissubdir)
         SetTopAxies('t',NNQ=NNQ,Dt=Dt)
         pl.savefig(filename+'.pdf')
         pl.clf()
