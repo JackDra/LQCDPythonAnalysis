@@ -1,4 +1,4 @@
- #!/usr/bin/env python
+#!/usr/bin/env python
 
 from Params import *
 from FitParams import *
@@ -47,7 +47,7 @@ def PrintTopSetToFile(C3setTop,thisSetList,thisMomList, thisGammaList,tsink,this
         else:
             thegamma = thegamma+TopOrWein
         for iset,setdata in zip(thisSetList,gammadata):
-            print 'Printing ',TopOrWein' : ' , thegamma , iset , '                \r',
+            print 'Printing ',TopOrWein,' : ' , thegamma , iset , '                \r',
             calcflag = 'Ratio_Factor_'+TopOrWein
             tlist = range(tsource,int(tsink)+1)
             Print3ptTopToFile(np.rollaxis(np.array(setdata),1),gammadir,iset+thegamma,thisTopList,tlist,thisMomList,AddDict=AddDict)
