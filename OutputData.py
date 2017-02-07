@@ -53,8 +53,11 @@ def PrintTopSetToFile(C3setTop,thisSetList,thisMomList, thisGammaList,tsink,this
 ##topdataset [ iset , ttop, ip ,it ] bs1
 ##dataset [iset , ip , it ] bs1
 
-def PrintAlphaSetToFile(topdataset,dataset,thisSetList,thisMomList, thisTopList, AddDict={}):
-    topdir = outputdir[0] + 'Top/Alpha/'
+def PrintAlphaSetToFile(topdataset,dataset,thisSetList,thisMomList, thisTopList, AddDict={},Wein=False):
+    if Wein:
+        topdir = outputdir[0] + 'Wein/Alpha/'
+    else:        
+        topdir = outputdir[0] + 'Top/Alpha/'
     mkdir_p(topdir)
     mkdir_p(topdir.replace('Alpha/','cfun/NNQ/'))
     for iset,setdata,topsetdata in zip(thisSetList,dataset,topdataset):
@@ -66,6 +69,8 @@ def PrintAlphaSetToFile(topdataset,dataset,thisSetList,thisMomList, thisTopList,
 ##C3set [ igamma , iset , ip , it ] bs1
 
 def PrintCfunToFile(C3set,thisSetList,thisMomList, thisGammaList,AddDict={},Top=False):
+    if Top == 'Wein':
+        cfundir = outputdir[0] + 'Wein/cfun/'        
     if Top:
         cfundir = outputdir[0] + 'Top/cfun/'
     else:

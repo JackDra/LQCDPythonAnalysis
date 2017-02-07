@@ -108,9 +108,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         thisREvecTvarList = []
         thisPoFTvarList = []
         thisStateSet = [PickedState]
-    elif 'TwoPt' in RunType:
-        DoTwo = True
-    elif 'TopAlpha' in RunType:
+    elif 'TwoPt' in RunType or 'TopAlpha' in RunType or 'WeinAlpha' in RunType:
         DoTwo = True
     else:
         raise IOError('Choose CM , REvec , TSink or TwoPt along with Tsinks')
@@ -130,6 +128,13 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         # thisMomList = Get2ptSetMoms(outputdir[0],RunAvgMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
         thisMomList = Get2ptSetMoms(outputdir[0]+'/Top/',RunMomList,tvarlist=TwoTotDefTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList,tsrclist=PoFtsourceList)
         CreateTwoPtTop([qstrTOip(imom) for imom in DragpZstr(thisMomList)],DefiSmearList,DefjSmearList,feedin=feedin)
+        print 'Two Point Analysis Complete'
+    elif RunType == 'WeinAlpha':
+        print 'Weinberg Operator Analysis'
+        # Wipe2pt(outputdir[0],tvarlist=TwoPtDefTvarList,smlist=DefSmearList)
+        # thisMomList = Get2ptSetMoms(outputdir[0],RunAvgMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
+        thisMomList = Get2ptSetMoms(outputdir[0]+'/Wein/',RunMomList,tvarlist=TwoTotDefTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList,tsrclist=PoFtsourceList)
+        CreateTwoPtTop([qstrTOip(imom) for imom in DragpZstr(thisMomList)],DefiSmearList,DefjSmearList,feedin=feedin,Wein=True)
         print 'Two Point Analysis Complete'
     else:
         print 'Three Point Analysis '+Curr + ' ' + RunType + ' tsinks: ' + ' '.join(RunTSinkList)
@@ -217,10 +222,7 @@ with open( logdir+'LogAll.log.start','a') as f:
 with open( logdir+'LogAll.log.end','a') as f:
     f.write('\n')
 thisPool = False
-if CurrIn == 'TwoPt':
-    feedin = InputParams(sys.argv[2:])
-    RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe,feedin=feedin)
-elif CurrIn == 'TopAlpha':
+if CurrIn == 'TwoPt' or CurrIn == 'TopAlpha' or CurrIn == 'WeinAlpha':
     feedin = InputParams(sys.argv[2:])
     RunOffCorrs(False,CurrIn,CurrIn,WipeThisSet=DefWipe,feedin=feedin)
 else:

@@ -10,9 +10,14 @@ import time,datetime
 
 
 def ReadSetTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,
-                     thisTSinkList,directory,Flag,Interps=['nucleon'],thistsourceList=[tsource]):
+                     thisTSinkList,directory,Flag,Interps=['nucleon'],thistsourceList=[tsource],Wein=False):
     # if len(thisTSinkList) > 0:
     #     TestMomList(thisMomList)
+    if Wein:
+        TopReadDir = WeinDir
+    else:
+        TopReadDir = TCDir
+        
     thisfilelist = OrderedDict()
     f = open('./cfglistset.txt','w')
     
@@ -83,7 +88,7 @@ def ReadSetTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList
     #     print ''
     data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisiSmearList,thisjSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
     # print ''
-    cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist.keys()))
+    cfglistout,topcharge,tflow = ReadTopList(TopReadDir,StripSrc(thisfilelist.keys()))
     if not np.all([x==tflow[0] for x in tflow]):
         print 'warning, files had different flow times'
     thisTflowList = tflow[0]
@@ -100,7 +105,7 @@ def ReadSetTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList
 
 
 def ReadListTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,
-                      thisTSinkList,thisconflist,Flag,Interps=['nucleon'],thistsourceList=[tsource]):
+                      thisTSinkList,thisconflist,Flag,Interps=['nucleon'],thistsourceList=[tsource],Wein=False):
     thisfilelist = OrderedDict()
     f = open('./cfglistlist.txt','w')
     for iconf in thisconflist:
@@ -114,7 +119,7 @@ def ReadListTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaLis
     f.close()
     data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisiSmearList,thisjSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
     # print ''
-    cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist.keys()))
+    cfglistout,topcharge,tflow = ReadTopList(TopReadDir,StripSrc(thisfilelist.keys()))
     if not np.all([x==tflow[0] for x in tflow]):
         print 'warning, files had different flow times'
     thisTflowList = tflow[0]
@@ -137,7 +142,7 @@ def TestMomList(thisMomList):
         print "Must Read Zero Momentum value " + iqTOip(0)
 
         
-def ReadListAlpha(thisiSmearList,thisjSmearList,thisMomList,thisconflist,Interps=['nucleon'],thistsourceList=[tsource]):
+def ReadListAlpha(thisiSmearList,thisjSmearList,thisMomList,thisconflist,Interps=['nucleon'],thistsourceList=[tsource],Wein=False):
     thisfilelist = OrderedDict()
     f = open('./cfglistlist.txt','w')
     for iconf in thisconflist:
@@ -152,7 +157,7 @@ def ReadListAlpha(thisiSmearList,thisjSmearList,thisMomList,thisconflist,Interps
 
     
     print thisfilelist.keys()
-    cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist.keys()))
+    cfglistout,topcharge,tflow = ReadTopList(TopReadDir,StripSrc(thisfilelist.keys()))
     if not np.all([x==tflow[0] for x in tflow]):
         print 'warning, files had different flow times'
     thisTflowList = tflow[0]
@@ -165,7 +170,7 @@ def ReadListAlpha(thisiSmearList,thisjSmearList,thisMomList,thisconflist,Interps
 
 
 
-def ReadSetAlpha(thisiSmearList,thisjSmearList,thisMomList,directory,Interps=['nucleon'],thistsourceList=[tsource]):
+def ReadSetAlpha(thisiSmearList,thisjSmearList,thisMomList,directory,Interps=['nucleon'],thistsourceList=[tsource],Wein=False):
     # if len(thisTSinkList) > 0:
     #     TestMomList(thisMomList)
     thisfilelist = OrderedDict()
@@ -222,9 +227,12 @@ def ReadSetAlpha(thisiSmearList,thisjSmearList,thisMomList,directory,Interps=['n
                 print iifile
         print ''
         
-    cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist.keys()))
+    cfglistout,topcharge,tflow = ReadTopList(TopReadDir,StripSrc(thisfilelist.keys()))
     if len(tflow) == 0:
-        raise IOError('Topological charge data not found in ' + TCDir )
+        if Wein:
+            raise IOError('Weinerg operator data not found in ' + TopReadDir )
+        else:
+            raise IOError('Topological charge data not found in ' + TopReadDir )            
     if not np.all([x==tflow[0] for x in tflow]):
         print 'warning, files had different flow times'
     thisTflowList = tflow[0]

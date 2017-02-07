@@ -245,6 +245,7 @@ for ioutput in thisoutputdir:
         
         
 TCDir = datadir+'/topcharge/Kud0'+str(kappa)+'Ks0'+str(kappas)+'/PerGF/'
+WeinDir = datadir+'/weinopp/Kud0'+str(kappa)+'Ks0'+str(kappas)+'/PerGF/'
 logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
 momlistdir = datadir+'momdir/'
 pickledir = datadir+"pickledir/"

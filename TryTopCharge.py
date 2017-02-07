@@ -16,9 +16,13 @@ import time,datetime
 from MultiWrap import *
 from multiprocessing import Pool
 
-def CreateTwoPtTop(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':AnaProc}):
-    logfile = logdir+'LogTopCharge.log'
-    errfile = logdir+'LogTopCharge.log'
+def CreateTwoPtTop(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':AnaProc},Wein=False):
+    if Wein:
+        logfile = logdir+'LogWein2pt.log'
+        errfile = logdir+'LogWein2pt.log'
+    else:
+        logfile = logdir+'LogTopCharge.log'
+        errfile = logdir+'LogTopCharge.log'
     touch(logfile)
     touch(errfile)
     sys.stdout = open(logfile,'a',0)
@@ -26,9 +30,9 @@ def CreateTwoPtTop(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':
     # print 'Running ' + ipTOqstr(thisMomList[0]) + ' ' +  str(int((thisMomList[0]*100)/float(len(qvecSet))))+'%' 
 
     if 'ReadList' in ListOrSet:
-        [data2pt,dataTop,thisTopList,filelist] = ReadListAlpha(thisiSmearList,thisjSmearList,thisMomList,conflist,Interps=DefInterpList,thistsourceList=PoFtsourceList)
+        [data2pt,dataTop,thisTopList,filelist] = ReadListAlpha(thisiSmearList,thisjSmearList,thisMomList,conflist,Interps=DefInterpList,thistsourceList=PoFtsourceList,Wein=Wein)
     elif 'ReadSet' in ListOrSet:
-        [data2pt,dataTop,thisTopList,filelist] = ReadSetAlpha(thisiSmearList,thisjSmearList,thisMomList,dirread,Interps=DefInterpList,thistsourceList=PoFtsourceList)
+        [data2pt,dataTop,thisTopList,filelist] = ReadSetAlpha(thisiSmearList,thisjSmearList,thisMomList,dirread,Interps=DefInterpList,thistsourceList=PoFtsourceList,Wein=Wein)
 
     thisMomList = GetAvgMomListip(thisMomList)
     data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
@@ -94,8 +98,10 @@ def CreateTwoPtTop(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':
     SetList += CreateMassSet(thisiSmearList,thisjSmearList,StateSet,[],tsrclist=PoFtsourceList,flipord=True)
     if len(thisiSmearList) > 1 and len(thisiSmearList) == len(thisjSmearList) and  DoCM: SetList += CreateMassSet([],[],CMStateSet,thisCMTvarList,flipord=True)
     SetList += CreateMassSet([],[],StateSet,thisPoFTvarList,flipord=True)
-    PrintCfunToFile([C2out],SetList,thisMomList,['twopt'],AddDict=InfoDict,Top=True)
-
+    if Wein:
+        PrintCfunToFile([C2out],SetList,thisMomList,['twopt'],AddDict=InfoDict,Top='Wein')
+    else:
+        PrintCfunToFile([C2out],SetList,thisMomList,['twopt'],AddDict=InfoDict,Top=True)
 
     CMinputparams,PoFinputparams = [],[]    
     for itop,topdata in enumerate(dataTop):
@@ -146,7 +152,7 @@ def CreateTwoPtTop(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':
     SetList += CreateMassSet(thisiSmearList,thisjSmearList,StateSet,[],tsrclist=PoFtsourceList,flipord=True)
     if len(thisiSmearList) > 1 and len(thisiSmearList) == len(thisjSmearList) and  DoCM: SetList += CreateMassSet([],[],CMStateSet,thisCMTvarList,flipord=True)
     SetList += CreateMassSet([],[],StateSet,thisPoFTvarList,flipord=True)
-    PrintAlphaSetToFile(np.swapaxes(np.array(C2outTop),0,1),C2out,SetList,thisMomList,thisTopList,AddDict=InfoDict)
+    PrintAlphaSetToFile(np.swapaxes(np.array(C2outTop),0,1),C2out,SetList,thisMomList,thisTopList,AddDict=InfoDict,Wein=Wein)
 
     print 'Printing took ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
     # print 'Completed ' + ipTOqstr(thisMomList[0])
