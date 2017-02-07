@@ -34,5 +34,5 @@ for ikappa in kappalist:
     kappatflow.append(tflow[0])
     
 
-GraphWchitKappas(kappatopc,kappatflow)
+# GraphWchitKappas(kappatopc,kappatflow)
     
