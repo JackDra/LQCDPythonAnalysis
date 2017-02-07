@@ -31,6 +31,8 @@ def StripSrc(filelist):
 ## topcharge [ itflow ]
 
 def ReadTopCharge(thisfile):
+    if 'weinopp' in thisfile:
+        thisfile = thisfile.replace('q_flow','W_flow')
     if os.path.isfile(thisfile):
         if Debug: print 'Reading: ',thisfile
         toptout = np.loadtxt(thisfile)

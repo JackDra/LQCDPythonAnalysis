@@ -119,6 +119,10 @@ def ReadListTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaLis
     f.close()
     data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisiSmearList,thisjSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
     # print ''
+    if Wein:
+        TopReadDir = WeinDir
+    else:
+        TopReadDir = TCDir
     cfglistout,topcharge,tflow = ReadTopList(TopReadDir,StripSrc(thisfilelist.keys()))
     if not np.all([x==tflow[0] for x in tflow]):
         print 'warning, files had different flow times'
@@ -157,6 +161,10 @@ def ReadListAlpha(thisiSmearList,thisjSmearList,thisMomList,thisconflist,Interps
 
     
     print thisfilelist.keys()
+    if Wein:
+        TopReadDir = WeinDir
+    else:
+        TopReadDir = TCDir
     cfglistout,topcharge,tflow = ReadTopList(TopReadDir,StripSrc(thisfilelist.keys()))
     if not np.all([x==tflow[0] for x in tflow]):
         print 'warning, files had different flow times'
@@ -227,6 +235,10 @@ def ReadSetAlpha(thisiSmearList,thisjSmearList,thisMomList,directory,Interps=['n
                 print iifile
         print ''
         
+    if Wein:
+        TopReadDir = WeinDir
+    else:
+        TopReadDir = TCDir
     cfglistout,topcharge,tflow = ReadTopList(TopReadDir,StripSrc(thisfilelist.keys()))
     if len(tflow) == 0:
         if Wein:
