@@ -232,7 +232,8 @@ def SetRFAxies(thisGamma):
     pl.ylabel(RFylab)
     # if Debug: print 'Hardcoding yaxis limits',thisGamma, ylimDict.keys()
     if thisGamma not in ylimDict.keys():
-        pl.ylim(max(pl.ylim()[0],-5),min(pl.ylim()[1],5))
+        if 'Wein' not in thisGamma:
+            pl.ylim(max(pl.ylim()[0],-5),min(pl.ylim()[1],5))
     else:
         # pl.ylim(max(ylimDict[thisGamma][0],pl.ylim()[0]),min(ylimDict[thisGamma][1],pl.ylim()[1]))
         pl.ylim(*ylimDict[thisGamma])
