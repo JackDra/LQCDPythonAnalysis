@@ -1560,7 +1560,7 @@ def GraphWExp(Wlist,flowlist):
 
 def Graphchit(Qlist,flowlist):
     ## Hard coded here....
-    FormatChi = True
+    FormatChit = True
     flowlist = np.array(flowlist)
     thislatspace = 0.0907
     coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
