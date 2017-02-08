@@ -202,7 +202,7 @@ for iFFcomb in feedin['FFcomb']:
     if iFFcomb == '':
         for icurr in ElongateName(feedin['comb'],feedin['current']):
             print 'Looking in ', icurr
-            if 'ProtonVectorTop' in icurr:
+            if 'ProtonVectorTop' in icurr or 'ProtonVectorWein' in icurr:
                 thisCurrDict.append([GetCurrDict([icurr,icurr.replace('Proton','Neutron')]),feedin['ffgraph']])
             else:
                 thisCurrDict.append([GetCurrDict([icurr]),feedin['ffgraph']])
