@@ -169,6 +169,8 @@ def ReadAndPlotFF(thisCurrDict,DoList='All'):
             PlotFitMethSets(currdata,thiscurr,thisCurrDict[thiscurr])
             if 'ProtonVectorTop' in thiscurr:
                 PlotFitMethPN(currdata,datadict[thiscurr.replace('Proton','Neutron')],thiscurr,thisCurrDict[thiscurr])
+            if 'ProtonVectorWein' in thiscurr:
+                PlotFitMethPN(currdata,datadict[thiscurr.replace('Proton','Neutron')],thiscurr,thisCurrDict[thiscurr])
         if 'Collect' in DoList or 'All' in DoList:
             print 'Collecting ' , thiscurr ,'5/6 for Summary            '
             currPSL.append(PickFFAllSets(currdata,thiscurr,thisCurrDict[thiscurr]))
