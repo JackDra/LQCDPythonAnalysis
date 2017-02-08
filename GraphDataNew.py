@@ -1575,7 +1575,7 @@ def Graphchit(Qlist,flowlist):
     chit = GetBootStats(chit)
     # pl.errorbar(flowlist-0.02,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q^{2} Boot$')
     # pl.errorbar(flowlist[1:],Pullflag(chit,'Avg')[1:],Pullflag(chit,'Std')[1:],fmt='o')
-    pl.errorbar(flowlist[1:],Pullflag(chit,'Avg')[1:],Pullflag(chit,'Std')[1:],fmt='k.b-',ecolor='r')
+    pl.errorbar(flowlist[1:],Pullflag(chit,'Avg')[1:],Pullflag(chit,'Std')[1:],fmt='k.',ecolor='r')
 
     # Qavg = np.mean(np.array(Qlist)**2,axis=0)
     # Qstd = np.std(np.array(Qlist)**2,axis=0,ddof=1)
