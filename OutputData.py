@@ -15,18 +15,20 @@ from OutputXmlData import *
 
 def PrintTopCfunToFile(C3setTop,thisSetList,thisMomList, thisGammaList,thisTopList,AddDict={},Wein=False):
     if Wein:
+        TopOrWein = 'Wein'
         cfundir = outputdir[0] + 'Wein/cfun/'
     else:
+        TopOrWein = 'Top'
         cfundir = outputdir[0] + 'Top/cfun/'
         
     for thegamma,gammadata in zip(thisGammaList,C3setTop):
         gammadir = cfundir+CreateOppDir(thegamma)+'/'
         if 'cmplx' in thegamma:
-            thegamma = thegamma.replace('cmplx','Topcmplx')
+            thegamma = thegamma.replace('cmplx',TopOrWein+'cmplx')                
         else:
-            thegamma = thegamma+'Top'
+            thegamma = thegamma+TopOrWein
         for iset,setdata in zip(thisSetList,gammadata):
-            print 'Printing cfuns Top : ' , thegamma , iset , '                \r',
+            print 'Printing cfuns '+TopOrWein+' : ' , thegamma , iset , '                \r',
             Print3ptTopToFile(np.rollaxis(np.array(setdata),1),gammadir,iset+thegamma,thisTopList,range(nt),thisMomList,AddDict=AddDict,frmtflag='e')
 
 
