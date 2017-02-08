@@ -23,7 +23,7 @@ for ikappa in kappalist:
     print 'Reading kappa=', ikappa
     if Debug: print TCDir.replace('Kud0'+str(kappa),ikappa.replace('k','Kud0'))
     filelist,topcharge,tflow = ReadTopAll(TCDir.replace('Kud0'+str(kappa),ikappa.replace('k','Kud0')))
-    if ikappa == 'k'+kappa:
+    if ikappa == 'k'+str(kappa):
         print kappa , 'found'
         GraphQExp(topcharge,tflow[0])
         GraphQLines(topcharge,tflow[0],np.arange(0,200,33))
