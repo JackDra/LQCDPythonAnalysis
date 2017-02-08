@@ -173,6 +173,7 @@ def RenormFF(FF,Val,thisDS):
 CurrFFs = {'Scalar'   : ScalarFF,
            'Vector'   : VectorFF,
            'VectorTop': VectorFFTop,
+           'VectorWein': VectorFFTop,
            'VectorTopNoV': VectorFFTop,
            'PsScalar' : ScalarFF,
            'PsVector' : PsVectorFF,
