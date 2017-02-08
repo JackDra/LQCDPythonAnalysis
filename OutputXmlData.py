@@ -204,7 +204,7 @@ def PrintFitToFile(data,dataChi,iset,filedir,filename,thisMomList,thisCutList,mo
     for ipc,(ip,pdata,pdataChi) in enumerate(zip(xmlMomList,data,dataChi)):        
         datadict,outputfile = SetUpPDict(ip,filedir,filename)
         datadict[ip]['Info'] = mominfoRF[ipc]
-        if 'Top' in outputfile.replace('Top'+kappalist[0],''):
+        if 'Top' in outputfile.replace('Top'+kappalist[0],'') or 'Wein' in outputfile.replace('Wein'+kappalist[0],''):
             for iflow,flowdata,flowdataChi in zip(flowlist,pdata,pdataChi):
                 datadict[ip]['Boots'][iflow] = OrderedDict()
                 datadict[ip]['Values'][iflow] = OrderedDict()
