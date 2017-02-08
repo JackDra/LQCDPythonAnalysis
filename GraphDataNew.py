@@ -1560,6 +1560,7 @@ def GraphWExp(Wlist,flowlist):
 
 def Graphchit(Qlist,flowlist):
     ## Hard coded here....
+    FormatChi = True
     flowlist = np.array(flowlist)
     thislatspace = 0.0907
     coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
@@ -1574,10 +1575,12 @@ def Graphchit(Qlist,flowlist):
     chit = coeff*np.array(Q2boot)**(0.25)
     chit = GetBootStats(chit)
     # pl.errorbar(flowlist-0.02,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q^{2} Boot$')
-    # pl.errorbar(flowlist[1:],Pullflag(chit,'Avg')[1:],Pullflag(chit,'Std')[1:],fmt='o')
-    pl.plot(flowlist[1:],Pullflag(chit,'Avg')[1:],color='b')
-    pl.errorbar(flowlist[1:],Pullflag(chit,'Avg')[1:],Pullflag(chit,'Std')[1:],fmt='k.',ecolor='r')
-
+    # pl.errorbar(flowlist[1:] ,Pullflag(chit,'Avg')[1:],Pullflag(chit,'Std')[1:],fmt='o')
+    if FormatChit:
+        pl.plot(flowlist,Pullflag(chit,'Avg'),color='b')
+        pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='k.',ecolor='r')
+    else:
+        pl.errorbar(flowlist[1:],Pullflag(chit,'Avg')[1:],Pullflag(chit,'Std')[1:],fmt='o')
     # Qavg = np.mean(np.array(Qlist)**2,axis=0)
     # Qstd = np.std(np.array(Qlist)**2,axis=0,ddof=1)
     # chitAvg = coeff*Qavg**(0.25)
