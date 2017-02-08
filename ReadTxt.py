@@ -510,7 +510,7 @@ def SetRFDictToList(DictData,thisPrintRead=PrintRead):
                 infolistRF[-1].append([])
                 for iset,(thisset,setdata) in enumerate(momdata['RF'].iteritems()):
                     infolistRF[-1][imom].append(setdata['Info'])
-                    if 'Top' in thisgamma:
+                    if 'Top' in thisgamma or 'Wein' in thisgamma:
                         flowlist = []
                         dataoutRF[-1][imom].append([])
                         for icf,(iflow,flowdata) in enumerate(setdata.iteritems()):
