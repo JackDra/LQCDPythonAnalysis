@@ -41,6 +41,9 @@ def CreateFFWrap(thisMass,thesetmass,massfitr,theset,setdict,thisCurr,Rfac):
     if 'Top' in thisCurr:
         baseCurr = baseCurr+'Top'
         alphalist,alphainfo = ReadAlphaList(theset)
+    elif 'Wein' in thisCurr:
+        baseCurr = baseCurr+'Wein'
+        alphalist,alphainfo = ReadAlphaList(theset,'Wein')
     else:
         alphalist = [1.0]
         alphainfo = OrderedDict()
@@ -65,7 +68,7 @@ def CreateFFWrap(thisMass,thesetmass,massfitr,theset,setdict,thisCurr,Rfac):
         infodict['Mass']['Set'] = thesetmass
         infodict['Mass']['fit_range'] = massfitr
         infodict['alpha'] = alphainfo
-        if 'Vector' in thisCurr and 'Top' not in thisCurr and 'IsoVector' not in thisCurr and 'PsVector' not in thisCurr:
+        if 'Vector' in thisCurr and 'Top' not in thisCurr and 'Wein' not in thisCurr and 'IsoVector' not in thisCurr and 'PsVector' not in thisCurr:
             if ForceVecNorm: FF = RenormFF(FF,FF['qsqrd0']['Boot'][0].Avg,igf)
             PrintFFSet(FF,theset,thisMass,thesetmass,combCurr,infodict)
             NewFF = CombineVector(FF,thisMass)
@@ -83,7 +86,7 @@ def DoFF(inputlist):
     MassSetlist = []
     for iin in inputlist:
         thisMethodList,thisCurr,thisSetList,thisGammaList,thisMomList = iin
-        data,MassSet = ExtractValues(outputdir[0],thisGammaList,thisSetList,thisMethodList,thisMomList=thisMomList,TopRead='Top' in thisCurr)
+        data,MassSet = ExtractValues(outputdir[0],thisGammaList,thisSetList,thisMethodList,thisMomList=thisMomList,TopRead='Top' in thisCurr or 'Wein' in thisCurr)
         print 'data Collected:'
         for iCol in data.keys():
             print thisMethodList[0], thisCurr, iCol
