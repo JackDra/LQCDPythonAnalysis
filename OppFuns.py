@@ -37,6 +37,7 @@ def CreateOppDir(Opp):
         raise  IOError('Invalid Opp string '+Opp)
     if 'Run' in contents: iscmplx = 'cmplx'
     if 'Top' in contents: prefolder = 'Top/'
+    if 'Wein' in contents: prefolder = 'Wein/'
     return prefolder+'/'+igamma + '/' +DS+Proj + iscmplx + '/'
 
 def SetOpps(AllList):
@@ -62,6 +63,7 @@ def SetOpps(AllList):
             thisProjList = thisProjList.union([SplitOpps['Proj']])
         if 'Run' in contents: iscmplx = 'cmplx'
         if 'Top' in contents: TopRun=True
+        elif 'Wein' in contents: TopRun='Wein'
     return sorted(Extra),sorted(thisOppList),sorted(thisDSList),sorted(thisProjList),'real, '+iscmplx,TopRun
 
 def Wipe2pt(thisoutputdir,tvarlist=[],ismlist=[],jsmlist=[],thisMomList=RunMomList,tsrclist = PoFtsourceList):
@@ -235,6 +237,8 @@ def SplitOpp(All):
         outputDict['Run'] = 'cmplx'
     if 'Top' in All:
         outputDict['Top'] = 'Top'
+    if 'Wein' in All:
+        outputDict['Wein'] = 'Wein'
     return outputDict
 
 def PrintOpps(AllList):
@@ -243,10 +247,13 @@ def PrintOpps(AllList):
     print ''
     print 'Projectors: '+', '.join(thisProjS)
     # print 'DS: '+', '.join(thisDSS)
-    if TopRun:
-        print 'Run: ' +RunRS
-    else:
+    
+    if 'Wein' in TopRun:
+        print 'Run: ' +RunRS + ', WeinCharge '        
+    elif TopRun:
         print 'Run: ' +RunRS + ', TopCharge '        
+    else:
+        print 'Run: ' +RunRS
     print 'Extras: ' + ', '.join(Extra)
     print ''
 
@@ -288,6 +295,8 @@ def CreateGammaList(thislist,twopt=False):
             elif ig in DefCombGammaList:
                 GLout += [ig]
             elif ig in [(igamma+'Top').replace('cmplxTop','Topcmplx') for igamma in DefCombGammaList]:
+                GLout += [ig]
+            elif ig in [(igamma+'Wein').replace('cmplxWein','Weincmplx') for igamma in DefCombGammaList]:
                 GLout += [ig]
             elif ig in ['twopt','Mass']:
                 GLout += ['twopt']
