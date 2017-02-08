@@ -17,7 +17,7 @@ import time
 ##REMEBER deal with cmplx signals
 def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True,alphalist = [1.0]):
     thisdataout = {}
-    DoTop = 'Top' in iCurr
+    DoTop = 'Top' in iCurr or 'Wein' in iCurr
     baseCurr = iCurr.replace(gammaflag,'')
     Opps = CurrOpps[baseCurr]
     thisdataout = OrderedDict()
