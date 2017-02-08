@@ -111,6 +111,8 @@ DefMassPhys = DefMass[str(kappa)]*hbarcdivlat #GeV
          
 # kappalist = ['k'+str(kappa),'xsrc1k'+str(kappa),'nboot1kk'+str(kappa),'XAvgk'+str(kappa)]
 kappalist = [1370000,1375400]
+kappalist.insert(0, kappalist.pop(kappalist.index(kappa)))
+
 if kappa not in kappalist:
     print 'WARNING:, kappa in setup not in hardcoded kappalist in Params.py'
 kappalist = ['k'+str(ikappa) for ikappa in kappalist]
