@@ -250,7 +250,7 @@ def PrintOpps(AllList):
     
     if TopRun == True:
         print 'Run: ' +RunRS + ', TopCharge '        
-    elif 'Wein' in TopRun:
+    elif 'Wein' == TopRun:
         print 'Run: ' +RunRS + ', WeinCharge '        
     else:
         print 'Run: ' +RunRS
