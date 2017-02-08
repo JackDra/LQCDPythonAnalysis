@@ -83,11 +83,12 @@ def ReadAlphaSet(thisSetList,thisMomList,Wein=False):
     return dictout
 
 ## output = [iAvg,boot1,boot2,...,bootn]
-def ReadAlphaList(thisset):
+def ReadAlphaList(thisset,Wein=False):
     twoptset = ReduceTooMassSet([thisset])[0]
-    DictRead,thisfile = ReadAlphaFitFile(outputdir[0],twoptset,thisMomList=['q = 0 0 0'],givefile=True)
+    DictRead,thisfile = ReadAlphaFitFile(outputdir[0],twoptset,thisMomList=['q = 0 0 0'],givefile=True,Wein=Wein)
     outdict = [1.0]
     infodict = OrderedDict()
+    if Wein: WeinOrTop = 'Wein'
     if 'q = 0 0 0' not in DictRead.keys():
         raise IOError(' Alpha Fit File not read in properly for' + twoptset )
     for thisflow,flowdict in DictRead['q = 0 0 0']['Boots'].iteritems():
@@ -204,18 +205,13 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                                         datadictout[iSet+iMeth+icut+fitdict][igamma][imom] = thisdict[icut][ifit]
                                         datadictout[iSet+iMeth+icut+fitdict][igamma][imom]['Info'] = thisdict['Info']
                         elif 'Fits' in iMeth:
-                            if 'Top' in igamma:
-                                for iflow in FlowArgs:
+                            elif TopRead or 'Top' in igamma or 'Wein' in igamma:
+                                if 'Wein' in igamma: thisfa = WeinFlowArgs
+                                else: thisfa = FlowArgs
+                                for iflow in thisfa:
                                     if iflow not in thisdict.keys(): continue
                                     for icut in FitCutArgs:
                                         if icut not in thisdict[iflow].keys(): continue
-                                        datadictout = SetupDict(datadictout,igamma,iSet+iMeth+icut+iflow)
-                                        datadictout[iSet+iMeth+icut+iflow][igamma][imom] = thisdict[iflow][icut]
-                                        datadictout[iSet+iMeth+icut+iflow][igamma][imom]['Info'] = thisdict['Info']
-                            elif TopRead:
-                                for iflow in FlowArgs:
-                                    for icut in FitCutArgs:
-                                        if icut not in thisdict.keys(): continue
                                         datadictout = SetupDict(datadictout,igamma,iSet+iMeth+icut+iflow)
                                         datadictout[iSet+iMeth+icut+iflow][igamma][imom] = thisdict[icut]
                                         datadictout[iSet+iMeth+icut+iflow][igamma][imom]['Info'] = thisdict['Info']
