@@ -28,7 +28,9 @@ FlowArgs = ['t_flow4.01','t_flow5.01','t_flow6.01']
 WeinFlowArgs = ['t_flow4.0','t_flow5.0','t_flow6.0']
 
 AlphaFitRPick = 'fitr5-10'
-FitAlphaMinLeft,FitAlphaMaxLeft = 5,9
+WeinAlphaFitRPick = 'fitr2-5'
+
+FitAlphaMinLeft,FitAlphaMaxLeft = 2,9
 FitAlphaMinRight,FitAlphaMaxRight = 5,13
 FitAlphaList,FitAlphaArgs = [],[]
 for ifit in range(FitAlphaMinLeft,FitAlphaMaxLeft+1):
