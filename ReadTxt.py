@@ -88,21 +88,22 @@ def ReadAlphaList(thisset,Wein=False):
     DictRead,thisfile = ReadAlphaFitFile(outputdir[0],twoptset,thisMomList=['q = 0 0 0'],givefile=True,Wein=Wein)
     outdict = [1.0]
     infodict = OrderedDict()
+    WeinOrTop = 'Top'
     if Wein: WeinOrTop = 'Wein'
     if 'q = 0 0 0' not in DictRead.keys():
         raise IOError(' Alpha Fit File not read in properly for' + twoptset )
     for thisflow,flowdict in DictRead['q = 0 0 0']['Boots'].iteritems():
         if thisflow in thisset:
-            if AlphaFitRPick in flowdict.keys():
-                outdict = [flowdict[AlphaFitRPick].Avg] + np.array(flowdict[AlphaFitRPick].values).tolist()
-                thischi = DictRead['q = 0 0 0']['Values'][thisflow][AlphaFitRPick]['Chi']
+            if AlphaFitRPick[WeinOrTop] in flowdict.keys():
+                outdict = [flowdict[AlphaFitRPick[WeinOrTop]].Avg] + np.array(flowdict[AlphaFitRPick[WeinOrTop]].values).tolist()
+                thischi = DictRead['q = 0 0 0']['Values'][thisflow][AlphaFitRPick[WeinOrTop]]['Chi']
             else:
-                raise IOError(AlphaFitRPick+ ' not in alpha file ' + twoptset)
+                raise IOError(AlphaFitRPick[WeinOrTop]+ ' not in alpha file ' + twoptset)
     if outdict == [1.0]:
         raise IOError(thisset + ' does not contain the flow time in file ' )
     infodict['Avg'] = outdict[0]
     infodict['Std'] = np.std(outdict[1:])
-    infodict['fit_range'] = AlphaFitRPick
+    infodict['fit_range'] = AlphaFitRPick[WeinOrTop]
     infodict['Chi'] = thischi
     infodict['File'] = thisfile
     return outdict,infodict

@@ -1461,7 +1461,7 @@ def PlotTopChargeOverFlow(data,iSet,iMom,tsink,thiscol,thissym,thisshift,NNQ=Fal
     if NNQ:
         pl.errorbar(np.array(tflowlist)-0.5,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
         
-def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,Dt=2):
+def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,Dt=2,Wein=False):
     tflowlist,tlist,plotAvg,plotStd = [],[],[],[]
     plotAvgNN,plotStdNN = [],[]
     DictFlag,thisValue = 'RF','Alapha'
@@ -1493,15 +1493,17 @@ def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,
     pl.errorbar(tlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ tflow='+str(tflow)))
     if NNQ:
         pl.errorbar(np.array(tlist)-0.5,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
+    WeinOrTop = 'Top'
+    if Wein: WeinOrTop = 'Wein'
     if not NNQ and CheckDict(data,'Fits',iMom,'Boots'):
         momdataFit = data['Fits'][iMom]['Boots']
         tflowlist = [] 
         for itflow,flowfitdata in momdataFit.iteritems():
             if untflowstr(itflow) == tflow:
-                if AlphaFitRPick in flowfitdata.keys():                
-                    tvals = map(int,unxmlfitr(AlphaFitRPick))
-                    dataavg = flowfitdata[AlphaFitRPick].Avg
-                    datastd = flowfitdata[AlphaFitRPick].Std
+                if thisfitr in flowfitdata.keys():                
+                    tvals = map(int,unxmlfitr(AlphaFitRPick[WeinOrTop]))
+                    dataavg = flowfitdata[AlphaFitRPick[WeinOrTop]].Avg
+                    datastd = flowfitdata[AlphaFitRPick[WeinOrTop]].Std
                     dataup = dataavg+datastd
                     datadown = dataavg-datastd
                     pl.plot(tvals,[dataavg,dataavg],color=thiscol)
@@ -1533,7 +1535,7 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False,Wein=False):
         for iset,setdata in data.iteritems():
             if CheckDict(setdata,DictFlag,imom,'Boots'):
                 # print 'plotting ', iset, imom
-                PlotTopChargeOvert(setdata,iset,imom,thisitflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt)
+                PlotTopChargeOvert(setdata,iset,imom,thisitflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt,Wein=Wein)
         filename = CreateFile('','twopt',imom,thisValue+'OverFlow'+str(thisitflow),subdir=thissubdir)
         SetTopAxies('t',NNQ=NNQ,Dt=Dt,Wein=Wein)
         pl.savefig(filename+'.pdf')
