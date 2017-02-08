@@ -593,7 +593,9 @@ def PlotCol(data,thisSetList,thisflag,thisGamma,thisMom,TitlePref):
         thislegrem = 'state1'
     else:
         thislegrem = thisflag[0]
-    PlotRFSet(data,SiftAndSort(thisSetList,thisflag,nocm=False),legrem=thislegrem,Top='Top' in thisGamma or 'Wein' in thisGamma)
+    Top = 'Top' in thisGamma
+    if 'Wein' in thisGamma: Top = 'Wein'
+    PlotRFSet(data,SiftAndSort(thisSetList,thisflag,nocm=False),legrem=thislegrem,Top=Top )
     SetRFAxies(thisGamma)
     pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+'.pdf')
     pl.clf()
@@ -688,7 +690,7 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False,Top=False):
         if MassDt == False:
             thiscol,thisshift = thiscolcyc.next(),thisshiftcyc.next()
             if Top:                
-                if 'Wein' in Top:
+                if 'Wein' == Top:
                     thistflow = 't_flow4.0'
                 else:
                     thistflow = 't_flow4.01'
