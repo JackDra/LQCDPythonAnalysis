@@ -60,8 +60,8 @@ def VectorFF(opp,thisqvec,thisppvec,thismass,Rfac=True,PadF3=False,alpha=1.0):
 
 def VectorFFTop(opp,thisqvec,thisppvec,thismass,Rfac=True,alpha=1.0):
     thisp,thisq,thispp = Create4Mom(thisqvec,thisppvec,thismass)
-    if 'Top' in opp:
-        opp = opp.replace('Top','')
+    if 'Top' in opp or 'Wein' in opp:
+        opp = opp.replace('Top','').replace('Wein','')
 
         term1 = FFunTopCheck(opp,thisp,thispp,thismass,alpha,Rfac=Rfac)
         term2 = 0.0j
