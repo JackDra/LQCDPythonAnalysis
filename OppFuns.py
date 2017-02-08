@@ -248,10 +248,10 @@ def PrintOpps(AllList):
     print 'Projectors: '+', '.join(thisProjS)
     # print 'DS: '+', '.join(thisDSS)
     
-    if 'Wein' in TopRun:
-        print 'Run: ' +RunRS + ', WeinCharge '        
-    elif TopRun:
+    if TopRun == True:
         print 'Run: ' +RunRS + ', TopCharge '        
+    elif 'Wein' in TopRun:
+        print 'Run: ' +RunRS + ', WeinCharge '        
     else:
         print 'Run: ' +RunRS
     print 'Extras: ' + ', '.join(Extra)
