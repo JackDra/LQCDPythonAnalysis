@@ -374,7 +374,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
 def PlotAutoCorr(NNdata,NNQdata):
     mkdir_p('./montegraphs')
     auto_gamma = GammaAlpha_estimate(NNQdata,NNdata,Norm=True)
-    pl.plot(range(auto_gamma),auto_gamma)
+    pl.plot(auto_gamma)
     pl.ylabel(r'$ \tau_{int}$')
     pl.xlabel('W')
     pl.title('Integrated Autocorrelation function')
