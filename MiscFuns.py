@@ -66,9 +66,11 @@ def GammaAlpha_estimate(gQ,gN,Norm=True):
    fN = -gQAvg/(2*gNAvg**2)
 
    Gat = fQ**2 * GQQt + (fQ*fN * (GQNt + GNQt)) + fN**2 * GNNt
-
+   if Norm: Gat = np.array(Gat)/Gat[0]
+   
    CaW = [Gat[0] + 2*np.sum(Gat[1:W]) for W in range(1,len(Gat))]
-   if Norm: CaW = np.array(CaW) / (2*Gat[0])
+   CaW = np.array(CaW) / (2*Gat[0])
+   
    return np.array(CaW),Gat,gW(CaW)
 
 
