@@ -86,7 +86,9 @@ def DoFF(inputlist):
     MassSetlist = []
     for iin in inputlist:
         thisMethodList,thisCurr,thisSetList,thisGammaList,thisMomList = iin
-        data,MassSet = ExtractValues(outputdir[0],thisGammaList,thisSetList,thisMethodList,thisMomList=thisMomList,TopRead='Top' in thisCurr or 'Wein' in thisCurr)
+        thisTopRead = 'Top' in thisCurr
+        if 'Wein' in thisCurr: thisTopRead = 'Wein'
+        data,MassSet = ExtractValues(outputdir[0],thisGammaList,thisSetList,thisMethodList,thisMomList=thisMomList,TopRead=thisTopRead)
         print 'data Collected:'
         for iCol in data.keys():
             print thisMethodList[0], thisCurr, iCol

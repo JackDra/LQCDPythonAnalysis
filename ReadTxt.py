@@ -217,7 +217,7 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                                         datadictout[iSet+iMeth+icut+iflow][igamma][imom] = thisdict[iflow][icut]
                                         datadictout[iSet+iMeth+icut+iflow][igamma][imom]['Info'] = thisdict['Info']
                             elif TopRead:
-                                if 'Wein' in igamma: thisfa = WeinFlowArgs
+                                if 'Wein' == TopRead: thisfa = WeinFlowArgs
                                 else: thisfa = FlowArgs
                                 for iflow in thisfa:
                                     for icut in FitCutArgs:
