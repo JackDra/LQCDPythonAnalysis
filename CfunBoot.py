@@ -374,6 +374,9 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
 def PlotAutoCorr(NNdata,NNQdata):
     mkdir_p('./montegraphs')
     auto_gamma,Gfun,Wpick = GammaAlpha_estimate(NNQdata,NNdata,Norm=True)
+    if Wpick == -1:
+        print
+        print 'Optimal W not found'
     pl.plot(range(len(Gfun)),Gfun,'.')
     pl.axvline(Wpick, color='k', linestyle='--')
     pl.ylabel(r'$ \Gamma$')
