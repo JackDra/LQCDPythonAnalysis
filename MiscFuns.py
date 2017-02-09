@@ -59,7 +59,7 @@ def GammaAlpha_estimate(gQ,gN,Norm=True):
 
    CaW = [Gat[0] + 2*np.sum(Gat[1:W]) for W in range(1,len(Gat))]
    if Norm: CaW = np.array(CaW) / (2*Gat[0])
-   return np.array(CaW)
+   return np.array(CaW),Gat
 
 
 
