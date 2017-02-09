@@ -377,7 +377,7 @@ def PlotAutoCorr(NNdata,NNQdata):
     pl.plot(Gfun)
     pl.ylabel(r'$ \Gamma$')
     pl.xlabel('W')
-    pl.title('Autocorrelation of $ \alpha $')
+    pl.title('Autocorrelation of $ \\alpha $')
     pl.savefig('./montegraphs/AutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
     pl.clf()
     pl.plot(auto_gamma)
