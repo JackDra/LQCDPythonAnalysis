@@ -42,6 +42,7 @@ def autocorr(x,y):
 def gW(tauW):
     thisN = len(tauW)
     for iW,it in enumerate(tauW):
+        if iW == 0: continue
         val = np.exp(-iW/it)-it/np.sqrt(iW*thisN)
         if val < 0.0:
             return iW
