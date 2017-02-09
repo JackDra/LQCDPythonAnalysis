@@ -53,10 +53,7 @@ if kappa == 12:
 # Massyrange = 0.40,0.60
 # Massyrange = 0.40,0.61
 # Qsqrdxlim = -0.03,1
-if kappa == 1375400:
-    Qsqrdxlim = -0.03,0.8
-else:
-    Qsqrdxlim = -0.03,1.0
+Qsqrdxlim = -0.03,0.8
     
 ErrTVals = 1,21
 Erryrange = 0,3
