@@ -692,7 +692,7 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False,Top=False):
             thiscol,thisshift = thiscolcyc.next(),thisshiftcyc.next()
             if Top:                
                 if 'Wein' == Top:
-                    thistflow = 't_flow4.0'
+                    thistflow = 't_flow8.0'
                 else:
                     thistflow = 't_flow4.01'
                 thistsink = data['RF'][iset][thistflow]['tVals'][-1]
@@ -941,7 +941,7 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
         #     if keyset in dataset.keys(): dataset[keyset],thisFF
         #     print
 
-        if ('Proton' in keyset or 'Neutron' in keyset) and 't_flow4.0' not in keyset: continue
+        if ('Proton' in keyset or 'Neutron' in keyset) and 't_flow8.0' not in keyset: continue
         PorN = ''
         if 'Proton' in keyset: PorN = 'Proton'
         if 'Neutron' in keyset: PorN = 'Neutron'
