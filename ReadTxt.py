@@ -206,7 +206,7 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                                         datadictout[iSet+iMeth+icut+fitdict][igamma][imom] = thisdict[icut][ifit]
                                         datadictout[iSet+iMeth+icut+fitdict][igamma][imom]['Info'] = thisdict['Info']
                         elif 'Fits' in iMeth:
-                            if TopRead or 'Top' in igamma or 'Wein' in igamma:
+                            if 'Top' in igamma or 'Wein' in igamma:
                                 if 'Wein' in igamma: thisfa = WeinFlowArgs
                                 else: thisfa = FlowArgs
                                 for iflow in thisfa:
@@ -215,6 +215,13 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
                                         if icut not in thisdict[iflow].keys(): continue
                                         datadictout = SetupDict(datadictout,igamma,iSet+iMeth+icut+iflow)
                                         datadictout[iSet+iMeth+icut+iflow][igamma][imom] = thisdict[iflow][icut]
+                                        datadictout[iSet+iMeth+icut+iflow][igamma][imom]['Info'] = thisdict['Info']
+                            elif TopRead:
+                                for iflow in FlowArgs:
+                                    for icut in FitCutArgs:
+                                        if icut not in thisdict.keys(): continue
+                                        datadictout = SetupDict(datadictout,igamma,iSet+iMeth+icut+iflow)
+                                        datadictout[iSet+iMeth+icut+iflow][igamma][imom] = thisdict[icut]
                                         datadictout[iSet+iMeth+icut+iflow][igamma][imom]['Info'] = thisdict['Info']
                             else:
                                 for icut in FitCutArgs:
