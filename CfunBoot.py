@@ -373,14 +373,16 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
 ## auto_gamma = [ t_flow , t , W ] 
 def PlotAutoCorr(NNdata,NNQdata):
     mkdir_p('./montegraphs')
-    auto_gamma,Gfun = GammaAlpha_estimate(NNQdata,NNdata,Norm=True)
+    auto_gamma,Gfun,Wpick = GammaAlpha_estimate(NNQdata,NNdata,Norm=True)
     pl.plot(Gfun,fmt='.')
+    pl.axvline(Wpick, color='k', linestyle='--')
     pl.ylabel(r'$ \Gamma$')
     pl.xlabel('W')
     pl.title('Autocorrelation of $ \\alpha $')
     pl.savefig('./montegraphs/AutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
     pl.clf()
     pl.plot(auto_gamma,fmt='.')
+    pl.axvline(Wpick, color='k', linestyle='--')
     pl.ylabel(r'$ \tau_{int}$')
     pl.xlabel('W')
     pl.title('Integrated Autocorrelation function')

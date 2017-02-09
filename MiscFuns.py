@@ -39,6 +39,15 @@ def autocorr(x,y):
    return result
 
 
+def gW(tauW):
+    thisN = len(tauW)
+    for iW,it in enumerate(tauW):
+        val = np.exp(-iW/it)-it/np.sqrt(iw*thisN):
+        if val < 0.0:
+            return iW
+    return -1
+        
+
 def GammaAlpha_estimate(gQ,gN,Norm=True):
    gQ = np.array(gQ)
    gN = np.array(gN)
@@ -59,7 +68,7 @@ def GammaAlpha_estimate(gQ,gN,Norm=True):
 
    CaW = [Gat[0] + 2*np.sum(Gat[1:W]) for W in range(1,len(Gat))]
    if Norm: CaW = np.array(CaW) / (2*Gat[0])
-   return np.array(CaW),Gat
+   return np.array(CaW),Gat,gW(CaW)
 
 
 
