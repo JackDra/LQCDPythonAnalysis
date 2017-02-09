@@ -377,14 +377,14 @@ def PlotAutoCorr(NNdata,NNQdata):
     if Wpick == -1:
         print
         print 'Optimal W not found'
-    pl.plot(range(len(Gfun)),Gfun,'.')
+    pl.plot(range(len(Gfun)),Gfun,'.-')
     pl.axvline(Wpick, color='k', linestyle='--')
     pl.ylabel(r'$ \Gamma$')
     pl.xlabel('W')
     pl.title('Autocorrelation of $ \\alpha $')
     pl.savefig('./montegraphs/AutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
     pl.clf()
-    pl.plot(range(len(auto_gamma)),auto_gamma,'.')
+    pl.plot(range(len(auto_gamma)),auto_gamma,'.-')
     pl.axvline(Wpick, color='k', linestyle='--')
     pl.ylabel(r'$ \tau_{int}$')
     pl.xlabel('W')
