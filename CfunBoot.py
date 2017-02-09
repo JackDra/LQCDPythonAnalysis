@@ -357,10 +357,30 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         pl.legend()
         pl.savefig('./montegraphs/XSrcNNts'+str(MonteTime)+'.pdf')
         pl.clf()
+    if DoPlotAuto:
+        plotdata = np.array(tempdata)[:,0,MonteTime-1]
+        plotdataNNQ = np.array(tempdataTop)[:,MonteFlow,0,MonteTime-1]
+        PlotAutoCorr(plotdata,plotdataNNQ)
 
     return TCBdata,(Bdata,rlist),shiftlist
 
 
+
+##NNQdata [ icfg , t_flow , mom , t ] 
+##NNdata [ icfg , mom , t ] 
+##NNQre [ t_flow , mom , t , icfg ] 
+##NNre [  mom , t , icfg ]
+## auto_gamma = [ t_flow , t , W ] 
+def PlotAutoCorr(NNdata,NNQdata):
+    mkdir_p('./montegraphs')
+    auto_gamma = GammaAlpha_estimate(NNQdata,NNdata,Norm=True)
+    pl.plot(range(auto_gamma),auto_gamma)
+    pl.ylabel(r'$ \tau_{int}$')
+    pl.xlabel('W')
+    pl.title('Integrated Autocorrelation function')
+    pl.savefig('./montegraphs/AutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
+    pl.clf()
+    
 
 #dataout [ iflow, igamma , ip , it ]. bs
 def ReadAndBoot3ptTop(readfilelist,thisMomList,thisGammaList,thisDerGammaList,thisnboot,chargedata,chargecfglist,flowlist,printstr='',randlist=[]):

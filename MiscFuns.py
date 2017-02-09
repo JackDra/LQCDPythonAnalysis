@@ -39,7 +39,7 @@ def autocorr(x,y):
    return result
 
 
-def GammaAlpha_estimate(gQ,gN):
+def GammaAlpha_estimate(gQ,gN,Norm=False):
    gQ = np.array(gQ)
    gN = np.array(gN)
    glen = len(gQ)
@@ -58,7 +58,10 @@ def GammaAlpha_estimate(gQ,gN):
    Gat = fQ**2 * GQQt + (fQ*fN * (GQNt + GNQt)) + fN**2 * GNNt
 
    CaW = [Gat[0]] + [Gat[0] + 2*np.sum(Gat[1:W]) for W in range(1,len(Gat))]
+   if Norm: Caw = np.array(Caw) / (2*Caw[0])
    return np.array(CaW)/glen
+
+
 
 
 # def autocorr(x):
