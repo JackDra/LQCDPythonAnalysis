@@ -165,7 +165,6 @@ if PlotXSrcDep:
 else:
     NoXAvg = False ## Does each source separatly for each 
     
-PlotAutocorr = False ## In Dev
 MonteTime = 7
 MonteFlow = 4
 
