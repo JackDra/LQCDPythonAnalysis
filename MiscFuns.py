@@ -24,6 +24,8 @@ def CreateBootClass(data,thisnboot):
     return bootout
 
 
+
+### autocorrelation work taken from https://arxiv.org/pdf/hep-lat/0306017.pdf
 def autocorr(x,y):
    """
    http://stackoverflow.com/q/14297012/190597
@@ -41,6 +43,7 @@ def autocorr(x,y):
 
 def gW(tauW):
     thisN = len(tauW)
+    ## using auto fitting window method used from (52)
     for iW,it in enumerate(tauW):
         if iW == 0: continue
         val = np.exp(-iW/it)-it/np.sqrt(iW*thisN)
@@ -48,6 +51,12 @@ def gW(tauW):
             return iW
     return -1
         
+def VarTau(tau):
+    ## Using aproximate formula (42) from paper
+    ## starting from W = 1, (iW = W -1, need to add 1 to start from iW = 1)
+    N = len(tau)
+    return [4/N * (iW + 1.5 - itau) * itau**2 for iW,itau in enumerate(tau[1:])]
+
 
 def GammaAlpha_estimate(gQ,gN,Norm=True):
    gQ = np.array(gQ)
@@ -61,18 +70,21 @@ def GammaAlpha_estimate(gQ,gN,Norm=True):
    GQNt=autocorr(gQ,gN)
    GNNt=autocorr(gN,gN)
    
-   ##alpha function derivates wrt NNQ and NN
+   ##alpha function derivates wrt NNQ and NN for NNQ/NN
    fQ = gNAvg**(-1)
    fN = -gQAvg/(2*gNAvg**2)
-
+   
+   ## equation (33)
    Gat = fQ**2 * GQQt + (fQ*fN * (GQNt + GNQt)) + fN**2 * GNNt
+   
    if Norm: Gat = np.array(Gat)/Gat[0]
-   
-   CaW = [Gat[0] + 2*np.sum(Gat[1:W]) for W in range(1,len(Gat))]
-   CaW = np.array(CaW) / (2*Gat[0])
-   
-   return np.array(CaW),Gat,gW(CaW)
 
+   ## equation (35)
+   CaW = [Gat[0] + 2*np.sum(Gat[1:W]) for W in range(1,len(Gat))]
+   ## equation (41)
+   tau = np.array(CaW) / (2*Gat[0])
+   Wopp = gW(tau)
+   return np.array(tau),Gat,Wopp, VarTau(tau) 
 
 
 

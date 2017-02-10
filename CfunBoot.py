@@ -361,6 +361,13 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         plotdata = np.array(tempdata)[:,0,MonteTime-1]
         plotdataNNQ = np.array(tempdataTop)[:,MonteFlow,0,MonteTime-1]
         PlotAutoCorr(plotdata,plotdataNNQ)
+        ## WORK FROM HERE##
+        # plotdata = np.array(tempdata)[:,0,:]
+        # plotdataNNQ = np.array(tempdataTop)[:,MonteFlow,0,:]
+        # PlotAutoCorrOvert(plotdata,plotdataNNQ
+        # plotdata = np.array(tempdata)[:,0,MonteTime-1]
+        # plotdataNNQ = np.array(tempdataTop)[:,:,0,MonteTime-1]
+        # PlotAutoCorrOverFlow(plotdata,plotdataNNQ)
 
     return TCBdata,(Bdata,rlist),shiftlist
 
@@ -373,7 +380,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
 ## auto_gamma = [ t_flow , t , W ] 
 def PlotAutoCorr(NNdata,NNQdata):
     mkdir_p('./montegraphs')
-    auto_gamma,Gfun,Wpick = GammaAlpha_estimate(NNQdata,NNdata,Norm=True)
+    auto_gamma,Gfun,Wpick,auto_error = GammaAlpha_estimate(NNQdata,NNdata,Norm=True)
     if Wpick == -1:
         print
         print 'Optimal W not found'
@@ -385,7 +392,7 @@ def PlotAutoCorr(NNdata,NNQdata):
     pl.title('Autocorrelation of $ \\alpha $')
     pl.savefig('./montegraphs/AutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
     pl.clf()
-    pl.plot(range(len(auto_gamma)),auto_gamma,'.-')
+    pl.errorbar(range(len(auto_gamma)),auto_gamma,auto_error,'.-')
     pl.axvline(Wpick, color='k', linestyle='--')
     pl.ylabel(r'$ \tau_{int}$')
     pl.xlim(0,6)
