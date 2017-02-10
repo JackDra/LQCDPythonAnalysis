@@ -392,7 +392,10 @@ def PlotAutoCorr(NNdata,NNQdata):
     pl.title('Autocorrelation of $ \\alpha $')
     pl.savefig('./montegraphs/AutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
     pl.clf()
-    pl.errorbar(range(len(auto_gamma)),auto_gamma,auto_error,'.-')
+    if Debug:
+        for iW,(itau,itauerr) in enumerate(zip(auto_gamma,auto_error)):
+            print iW,itau,itauerr
+    pl.errorbar(range(len(auto_gamma)),auto_gamma,auto_error)
     pl.axvline(Wpick, color='k', linestyle='--')
     pl.ylabel(r'$ \tau_{int}$')
     pl.xlim(0,6)
