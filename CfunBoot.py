@@ -388,7 +388,7 @@ def PlotAutoCorr(NNdata,NNQdata):
     pl.axvline(Wpick, color='k', linestyle='--')
     pl.ylabel(r'$ \Gamma$')
     pl.xlabel('W')
-    pl.title('Autocorrelation of $ \\alpha $')
+    pl.title('Autocorrelation of $ \\alpha $ for nconf=' + str(len(NNdata)))
     pl.savefig('./montegraphs/AutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
     pl.clf()
     if Debug:
@@ -398,7 +398,7 @@ def PlotAutoCorr(NNdata,NNQdata):
     pl.axvline(Wpick, color='k', linestyle='--')
     pl.ylabel(r'$ \tau_{int}$')
     pl.xlabel('W')
-    pl.title('Integrated Autocorrelation function')
+    pl.title('Integrated Autocorrelation function for nconf=' + str(len(NNdata)))
     pl.savefig('./montegraphs/IntAutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
     pl.clf()
     
