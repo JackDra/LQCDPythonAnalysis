@@ -58,7 +58,7 @@ def VarTau(tau):
     return [0] + [4/N * (iW + 1.5 - itau) * itau**2 for iW,itau in enumerate(tau[1:])]
 
 
-def GammaAlpha_estimate(gQ,gN,Norm=True):
+def GammaAlpha_estimate(gQ,gN):
    gQ = np.array(gQ)
    gN = np.array(gN)
    glen = len(gQ)
@@ -77,14 +77,14 @@ def GammaAlpha_estimate(gQ,gN,Norm=True):
    ## equation (33)
    Gat = fQ**2 * GQQt + (fQ*fN * (GQNt + GNQt)) + fN**2 * GNNt
    
-   if Norm: Gat = np.array(Gat)/Gat[0]
+   # if Norm: Gat = np.array(Gat)/Gat[0]
 
    ## equation (35)
    CaW = [Gat[0] + 2*np.sum(Gat[1:W]) for W in range(1,len(Gat))]
    ## equation (41)
    tau = np.array(CaW) / (2*Gat[0])
    Wopp = gW(tau)
-   return np.array(tau),CaW,Gat,Wopp, np.array(VarTau(tau))
+   return np.array(tau),CaW/float(glen),Gat,Wopp, np.array(VarTau(tau))
 
 
 
