@@ -448,7 +448,7 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot):
         pl.xlabel(r'$t_{sep}$')
         pl.savefig('./montegraphs/Overts/IntAutoCorrflow'+str(MonteFlow)+'.pdf')
     pl.clf()
-    pl.errorbar(range(len(meanlist)),meanlist,alphaerr,label='Autocorr')
+    pl.errorbar(range(len(meanlist)),meanlist,alphaerr,fmt='.',label='Autocorr')
     AlphaBoot = GetBootStats(NNQboot/NNboot)
     pl.errorbar(np.arange(len(AlphaBoot))[:25]+thisshift,Pullflag(AlphaBoot,'Avg')[:25],Pullflag(AlphaBoot,'Std')[:25],fmt='.',label='Bootstrap')
     pl.ylabel(r'$ \alpha$')
