@@ -383,7 +383,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
 ## auto_gamma = [ W ] 
 def PlotAutoCorrDetailed(NNdata,NNQdata):
     mkdir_p('./montegraphs')
-    auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(NNQdata,NNdata,Norm=True)
+    auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(NNQdata,NNdata)
     if Wpick == -1:
         print
         print 'Optimal W not found'
@@ -420,14 +420,14 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot):
     if 'flow' in TorFlow:
         iNN = NNdata
         for iNNQ in np.rollaxis(np.array(NNQdata),1):
-            auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN,Norm=True)
+            auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
             taulist.append( auto_gamma[Wpick])
             tauerrlist.append(auto_error[Wpick])
             alphaerr.append(Cw)
             meanlist.append(np.mean(iNNQ)/np.mean(iNN))
     else:
         for iNN, iNNQ in zip(np.rollaxis(np.array(NNdata),1)[:25],np.rollaxis(np.array(NNQdata),1)[:25]):
-            auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN,Norm=True)
+            auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
             taulist.append( auto_gamma[Wpick])
             tauerrlist.append(auto_error[Wpick])
             alphaerr.append(Cw)
