@@ -362,13 +362,17 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         plotdataNNQ = np.array(tempdataTop)[:,MonteFlow,0,MonteTime-1]
         PlotAutoCorrDetailed(plotdata,plotdataNNQ)
 
+        bplotdata = np.array(Bdata)[0,:]
+        bplotdataNNQ = np.array(TCBdata)[MonteFlow,0,:]
         plotdata = np.array(tempdata)[:,0,:]
         plotdataNNQ = np.array(tempdataTop)[:,MonteFlow,0,:]
-        PlotAutoCorrOvert(plotdata,plotdataNNQ,'t')
+        PlotAutoCorr(plotdata,plotdataNNQ,'t')
 
+        bplotdata = np.array(Bdata)[0,MonteTime-1]
+        bplotdataNNQ = np.array(TCBdata)[:,0,MonteTime-1]
         plotdata = np.array(tempdata)[:,0,MonteTime-1]
         plotdataNNQ = np.array(tempdataTop)[:,:,0,MonteTime-1]
-        PlotAutoCorrOverFlow(plotdata,plotdataNNQ,'flow')
+        PlotAutoCorr(plotdata,plotdataNNQ,'flow')
 
     return TCBdata,(Bdata,rlist),shiftlist
 
@@ -410,12 +414,22 @@ def PlotAutoCorrDetailed(NNdata,NNQdata):
 def PlotAutoCorr(NNdata,NNQdata,TorFlow):
     mkdir_p('./montegraphs')
     meanlist,taulist,tauerrlist,alphaerr = [],[],[]
-    for iNN, iNNQ in zip(np.rollaxis(np.array(NNdata),1),np.rollaxis(np.array(NNQdata),1)):
-        auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(NNQdata,NNdata,Norm=True)
-        taulist.append( auto_gamma[Wpick])
-        tauerrlist.append(auto_error[Wpick])
-        alphaerr.append(Cw[Wpick])
-        meanlist.append(np.mean(iNNQ)/np.mean(iNN))
+    if 'flow' in TorFlow:
+        iNN = NNdata
+        for iNNQ in np.array(NNQdata):
+            auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN,Norm=True)
+            taulist.append( auto_gamma[Wpick])
+            tauerrlist.append(auto_error[Wpick])
+            alphaerr.append(Cw[Wpick])
+            meanlist.append(np.mean(iNNQ)/np.mean(iNN))
+    else:
+        for iNN, iNNQ in zip(np.rollaxis(np.array(NNdata),1),np.rollaxis(np.array(NNQdata),1)):
+            auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN,Norm=True)
+            taulist.append( auto_gamma[Wpick])
+            tauerrlist.append(auto_error[Wpick])
+            alphaerr.append(Cw[Wpick])
+            meanlist.append(np.mean(iNNQ)/np.mean(iNN))
+
         
     pl.errorbar(range(len(taulist)),taulist,taulisterr)
     pl.axhline(0.5, color='k', linestyle='--')
