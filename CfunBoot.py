@@ -384,21 +384,19 @@ def PlotAutoCorr(NNdata,NNQdata):
     if Wpick == -1:
         print
         print 'Optimal W not found'
-    pl.plot(range(len(Gfun)),Gfun,'.-')
+    pl.plot(range(len(Gfun[:2*Wpick+1])),Gfun[:2*Wpick+1],'.-')
     pl.axvline(Wpick, color='k', linestyle='--')
     pl.ylabel(r'$ \Gamma$')
     pl.xlabel('W')
-    pl.xlim(0,6)
     pl.title('Autocorrelation of $ \\alpha $')
     pl.savefig('./montegraphs/AutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
     pl.clf()
     if Debug:
         for iW,(itau,itauerr) in enumerate(zip(auto_gamma,auto_error)):
             print iW,itau,itauerr
-    pl.errorbar(range(len(auto_gamma)),auto_gamma,auto_error)
+    pl.errorbar(range(len(auto_gamma[:2*Wpick+1])),auto_gamma[:2*Wpick+1],auto_error[:2*Wpick+1])
     pl.axvline(Wpick, color='k', linestyle='--')
     pl.ylabel(r'$ \tau_{int}$')
-    pl.xlim(0,6)
     pl.xlabel('W')
     pl.title('Integrated Autocorrelation function')
     pl.savefig('./montegraphs/IntAutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
