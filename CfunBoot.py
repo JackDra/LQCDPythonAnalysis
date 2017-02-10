@@ -423,21 +423,23 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow):
     
     pl.title('$\\tau (\\alpha)$ for nconf=' + str(len(NNdata)))
     if 'flow' in TorFlow:
+        mkdir_p('./montegraphs/OverFlow/')
         pl.xlabel(r'$t_{flow}$')
-        pl.savefig('./montegraphs/IntAutoCorrts'+str(MonteTime)+'.pdf')
+        pl.savefig('./montegraphs/OverFlow/IntAutoCorrts'+str(MonteTime)+'.pdf')
     else:
+        mkdir_p('./montegraphs/Overts/')
         pl.xlabel(r'$t_{sep}$')
-        pl.savefig('./montegraphs/IntAutoCorrflow'+str(MonteFlow)+'.pdf')
+        pl.savefig('./montegraphs/Overts/IntAutoCorrflow'+str(MonteFlow)+'.pdf')
     pl.clf()
     pl.errorbar(range(len(meanlist)),meanlist,alphaerr)
     pl.ylabel(r'$ \alpha$')
     pl.title('$\\alpha$ for nconf=' + str(len(NNdata)))
     if 'flow' in TorFlow:
         pl.xlabel(r'$t_{flow}$')
-        pl.savefig('./montegraphs/AutoAlphats'+str(MonteTime)+'.pdf')
+        pl.savefig('./montegraphs/OverFlow/AutoAlphats'+str(MonteTime)+'.pdf')
     else:
         pl.xlabel(r'$t_{sep}$')
-        pl.savefig('./montegraphs/AutoAlphaflow'+str(MonteFlow)+'.pdf')
+        pl.savefig('./montegraphs/Overts/AutoAlphaflow'+str(MonteFlow)+'.pdf')
     pl.clf()
 
 
