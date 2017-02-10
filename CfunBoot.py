@@ -398,7 +398,7 @@ def PlotAutoCorrDetailed(NNdata,NNQdata):
     if Debug:
         for iW,(itau,itauerr) in enumerate(zip(auto_gamma,auto_error)):
             print iW,itau,itauerr
-    pl.errorbar(range(len(auto_gamma[:3*Wpick+1])),auto_gamma[:3*Wpick+1],auto_error[:3*Wpick+1],label='Error={:.2g}'.format(Cw[Wpick]))
+    pl.errorbar(range(len(auto_gamma[:3*Wpick+1])),auto_gamma[:3*Wpick+1],auto_error[:3*Wpick+1],label='Error={:.2g}'.format(Cw))
     pl.axvline(Wpick, color='k', linestyle='-')
     pl.axhline(0.5, color='k', linestyle='--')
     pl.ylabel(r'$ \tau_{int}$')
@@ -423,14 +423,14 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot):
             auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN,Norm=True)
             taulist.append( auto_gamma[Wpick])
             tauerrlist.append(auto_error[Wpick])
-            alphaerr.append(Cw[Wpick])
+            alphaerr.append(Cw)
             meanlist.append(np.mean(iNNQ)/np.mean(iNN))
     else:
         for iNN, iNNQ in zip(np.rollaxis(np.array(NNdata),1)[:25],np.rollaxis(np.array(NNQdata),1)[:25]):
             auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN,Norm=True)
             taulist.append( auto_gamma[Wpick])
             tauerrlist.append(auto_error[Wpick])
-            alphaerr.append(Cw[Wpick])
+            alphaerr.append(Cw)
             meanlist.append(np.mean(iNNQ)/np.mean(iNN))
 
         
