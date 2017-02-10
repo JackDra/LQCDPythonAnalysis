@@ -426,7 +426,7 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot):
             alphaerr.append(Cw[Wpick])
             meanlist.append(np.mean(iNNQ)/np.mean(iNN))
     else:
-        for iNN, iNNQ in zip(np.rollaxis(np.array(NNdata),1),np.rollaxis(np.array(NNQdata),1)):
+        for iNN, iNNQ in zip(np.rollaxis(np.array(NNdata),1)[:25],np.rollaxis(np.array(NNQdata),1)[:25]):
             auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN,Norm=True)
             taulist.append( auto_gamma[Wpick])
             tauerrlist.append(auto_error[Wpick])
