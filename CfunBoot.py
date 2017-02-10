@@ -434,7 +434,7 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot):
             meanlist.append(np.mean(iNNQ)/np.mean(iNN))
 
         
-    pl.errorbar(range(len(taulist)),taulist,tauerrlist)
+    pl.errorbar(range(len(taulist)),taulist,tauerrlist,fmt='.')
     pl.axhline(0.5, color='k', linestyle='--')
     pl.ylabel(r'$ \tau_{int}$')
     
@@ -450,7 +450,7 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot):
     pl.clf()
     pl.errorbar(range(len(meanlist)),meanlist,alphaerr,label='Autocorr')
     AlphaBoot = GetBootStats(NNQboot/NNboot)
-    pl.errorbar(np.arange(len(AlphaBoot))[:25]+thisshift,Pullflag(AlphaBoot,'Avg')[:25],Pullflag(AlphaBoot,'Std')[:25],label='Bootstrap')
+    pl.errorbar(np.arange(len(AlphaBoot))[:25]+thisshift,Pullflag(AlphaBoot,'Avg')[:25],Pullflag(AlphaBoot,'Std')[:25],fmt='.',label='Bootstrap')
     pl.ylabel(r'$ \alpha$')
     pl.legend()
     pl.title('$\\alpha$ for nconf=' + str(len(NNdata)))

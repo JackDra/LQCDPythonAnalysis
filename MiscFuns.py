@@ -84,7 +84,7 @@ def GammaAlpha_estimate(gQ,gN):
    ## equation (41)
    tau = np.array(CaW) / (2*Gat[0])
    Wopp = gW(tau)
-   return np.array(tau),np.abs(CaW[Wopp])/float(glen),Gat,Wopp, np.array(VarTau(tau))
+   return np.array(tau),np.sqrt(np.abs(CaW[Wopp])/float(glen)),Gat,Wopp, np.array(VarTau(tau))
 
 
 
