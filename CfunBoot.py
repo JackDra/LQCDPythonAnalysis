@@ -366,13 +366,13 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         bplotdataNNQ = np.array(TCBdata)[MonteFlow,0,:]
         plotdata = np.array(tempdata)[:,0,:]
         plotdataNNQ = np.array(tempdataTop)[:,MonteFlow,0,:]
-        PlotAutoCorr(plotdata,plotdataNNQ,'t')
+        PlotAutoCorr(plotdata,plotdataNNQ,'t',bplotdata,bplotdataNNQ)
 
         bplotdata = np.array(Bdata)[0,MonteTime-1]
         bplotdataNNQ = np.array(TCBdata)[:,0,MonteTime-1]
         plotdata = np.array(tempdata)[:,0,MonteTime-1]
         plotdataNNQ = np.array(tempdataTop)[:,:,0,MonteTime-1]
-        PlotAutoCorr(plotdata,plotdataNNQ,'flow')
+        PlotAutoCorr(plotdata,plotdataNNQ,'flow',bplotdata,bplotdataNNQ)
 
     return TCBdata,(Bdata,rlist),shiftlist
 
@@ -409,11 +409,14 @@ def PlotAutoCorrDetailed(NNdata,NNQdata):
     pl.clf()
 
 
-##NNQdata [ icfg, t ] 
-##NNdata [ icfg, t  ] 
-def PlotAutoCorr(NNdata,NNQdata,TorFlow):
+##NNQdata [ icfg, t/flow ] 
+##NNdata [ icfg, t/flow  ] 
+##NNQboot [ icfg, t/flow ] 
+##NNboot [ icfg, t/flow  ] 
+def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot):
     mkdir_p('./montegraphs')
     meanlist,taulist,tauerrlist,alphaerr = [],[],[],[]
+    thisshift = 0.1
     if 'flow' in TorFlow:
         iNN = NNdata
         for iNNQ in np.array(NNQdata):
@@ -431,7 +434,7 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow):
             meanlist.append(np.mean(iNNQ)/np.mean(iNN))
 
         
-    pl.errorbar(range(len(taulist)),taulist,taulisterr)
+    pl.errorbar(range(len(taulist)),taulist,tauerrlist)
     pl.axhline(0.5, color='k', linestyle='--')
     pl.ylabel(r'$ \tau_{int}$')
     
@@ -445,8 +448,10 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow):
         pl.xlabel(r'$t_{sep}$')
         pl.savefig('./montegraphs/Overts/IntAutoCorrflow'+str(MonteFlow)+'.pdf')
     pl.clf()
-    pl.errorbar(range(len(meanlist)),meanlist,alphaerr)
+    pl.errorbar(range(len(meanlist)),meanlist,alphaerr,label='Autocorr')
+    pl.errorbar(np.arange(len(NNboot))+thisshift,Pullflag(NNboot,'Avg'),Pullflag(NNboot,'Std'),label='Bootstrap')
     pl.ylabel(r'$ \alpha$')
+    pl.legend()
     pl.title('$\\alpha$ for nconf=' + str(len(NNdata)))
     if 'flow' in TorFlow:
         pl.xlabel(r'$t_{flow}$')
