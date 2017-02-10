@@ -88,6 +88,7 @@ def GammaAlpha_estimate(gQ,gN,Norm=True):
 
 
 
+
 # def autocorr(x):
 #    result = np.correlate(x, x, mode='full')
 #    return result[result.size/2:]

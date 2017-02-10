@@ -361,23 +361,22 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         plotdata = np.array(tempdata)[:,0,MonteTime-1]
         plotdataNNQ = np.array(tempdataTop)[:,MonteFlow,0,MonteTime-1]
         PlotAutoCorrDetailed(plotdata,plotdataNNQ)
-        ## WORK FROM HERE##
-        # plotdata = np.array(tempdata)[:,0,:]
-        # plotdataNNQ = np.array(tempdataTop)[:,MonteFlow,0,:]
-        # PlotAutoCorrOvert(plotdata,plotdataNNQ
-        # plotdata = np.array(tempdata)[:,0,MonteTime-1]
-        # plotdataNNQ = np.array(tempdataTop)[:,:,0,MonteTime-1]
-        # PlotAutoCorrOverFlow(plotdata,plotdataNNQ)
+
+        plotdata = np.array(tempdata)[:,0,:]
+        plotdataNNQ = np.array(tempdataTop)[:,MonteFlow,0,:]
+        PlotAutoCorrOvert(plotdata,plotdataNNQ,'t')
+
+        plotdata = np.array(tempdata)[:,0,MonteTime-1]
+        plotdataNNQ = np.array(tempdataTop)[:,:,0,MonteTime-1]
+        PlotAutoCorrOverFlow(plotdata,plotdataNNQ,'flow')
 
     return TCBdata,(Bdata,rlist),shiftlist
 
 
 
-##NNQdata [ icfg , t_flow , mom , t ] 
-##NNdata [ icfg , mom , t ] 
-##NNQre [ t_flow , mom , t , icfg ] 
-##NNre [  mom , t , icfg ]
-## auto_gamma = [ t_flow , t , W ] 
+##NNQdata [ icfg ] 
+##NNdata [ icfg  ] 
+## auto_gamma = [ W ] 
 def PlotAutoCorrDetailed(NNdata,NNQdata):
     mkdir_p('./montegraphs')
     auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(NNQdata,NNdata,Norm=True)
@@ -385,7 +384,8 @@ def PlotAutoCorrDetailed(NNdata,NNQdata):
         print
         print 'Optimal W not found'
     pl.plot(range(len(Gfun[:3*Wpick+1])),Gfun[:3*Wpick+1],'.-')
-    pl.axvline(Wpick, color='k', linestyle='--')
+    pl.axvline(Wpick, color='k', linestyle='-')
+    pl.axhline(0.0, color='k', linestyle='--')
     pl.ylabel(r'$ \Gamma$')
     pl.xlabel('W')
     pl.title('Autocorrelation of $ \\alpha $ for nconf=' + str(len(NNdata)))
@@ -395,13 +395,52 @@ def PlotAutoCorrDetailed(NNdata,NNQdata):
         for iW,(itau,itauerr) in enumerate(zip(auto_gamma,auto_error)):
             print iW,itau,itauerr
     pl.errorbar(range(len(auto_gamma[:3*Wpick+1])),auto_gamma[:3*Wpick+1],auto_error[:3*Wpick+1],label='Error={:.2g}'.format(Cw[Wpick]))
-    pl.axvline(Wpick, color='k', linestyle='--')
+    pl.axvline(Wpick, color='k', linestyle='-')
+    pl.axhline(0.5, color='k', linestyle='--')
     pl.ylabel(r'$ \tau_{int}$')
     pl.xlabel('W')
     pl.legend()
     pl.title('Integrated Autocorrelation function for nconf=' + str(len(NNdata)))
     pl.savefig('./montegraphs/IntAutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
     pl.clf()
+
+
+##NNQdata [ icfg, t ] 
+##NNdata [ icfg, t  ] 
+def PlotAutoCorr(NNdata,NNQdata,TorFlow):
+    mkdir_p('./montegraphs')
+    meanlist,taulist,tauerrlist,alphaerr = [],[],[]
+    for iNN, iNNQ in zip(np.rollaxis(np.array(NNdata),1),np.rollaxis(np.array(NNQdata),1)):
+        auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(NNQdata,NNdata,Norm=True)
+        taulist.append( auto_gamma[Wpick])
+        tauerrlist.append(auto_error[Wpick])
+        alphaerr.append(Cw[Wpick])
+        meanlist.append(np.mean(iNNQ)/np.mean(iNN))
+        
+    pl.errorbar(range(len(taulist)),taulist,taulisterr)
+    pl.axhline(0.5, color='k', linestyle='--')
+    pl.ylabel(r'$ \tau_{int}$')
+    
+    pl.title('$\\tau (\\alpha)$ for nconf=' + str(len(NNdata)))
+    if 'flow' in TorFlow:
+        pl.xlabel(r'$t_{flow}$')
+        pl.savefig('./montegraphs/IntAutoCorrts'+str(MonteTime)+'.pdf')
+    else:
+        pl.xlabel(r'$t_{sep}$')
+        pl.savefig('./montegraphs/IntAutoCorrflow'+str(MonteFlow)+'.pdf')
+    pl.clf()
+    pl.errorbar(range(len(meanlist)),meanlist,alphaerr)
+    pl.ylabel(r'$ \alpha$')
+    pl.title('$\\alpha$ for nconf=' + str(len(NNdata)))
+    if 'flow' in TorFlow:
+        pl.xlabel(r'$t_{flow}$')
+        pl.savefig('./montegraphs/AutoAlphats'+str(MonteTime)+'.pdf')
+    else:
+        pl.xlabel(r'$t_{sep}$')
+        pl.savefig('./montegraphs/AutoAlphaflow'+str(MonteFlow)+'.pdf')
+    pl.clf()
+
+
     
 
 #dataout [ iflow, igamma , ip , it ]. bs
