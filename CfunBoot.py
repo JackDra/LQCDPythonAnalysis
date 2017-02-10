@@ -384,7 +384,7 @@ def PlotAutoCorr(NNdata,NNQdata):
     if Wpick == -1:
         print
         print 'Optimal W not found'
-    pl.plot(range(len(Gfun[:2*Wpick+1])),Gfun[:2*Wpick+1],'.-')
+    pl.plot(range(len(Gfun[:3*Wpick+1])),Gfun[:3*Wpick+1],'.-')
     pl.axvline(Wpick, color='k', linestyle='--')
     pl.ylabel(r'$ \Gamma$')
     pl.xlabel('W')
@@ -394,7 +394,7 @@ def PlotAutoCorr(NNdata,NNQdata):
     if Debug:
         for iW,(itau,itauerr) in enumerate(zip(auto_gamma,auto_error)):
             print iW,itau,itauerr
-    pl.errorbar(range(len(auto_gamma[:2*Wpick+1])),auto_gamma[:2*Wpick+1],auto_error[:2*Wpick+1])
+    pl.errorbar(range(len(auto_gamma[:3*Wpick+1])),auto_gamma[:3*Wpick+1],auto_error[:3*Wpick+1])
     pl.axvline(Wpick, color='k', linestyle='--')
     pl.ylabel(r'$ \tau_{int}$')
     pl.xlabel('W')
