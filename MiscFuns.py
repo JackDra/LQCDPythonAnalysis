@@ -54,7 +54,7 @@ def gW(tauW):
 def VarTau(tau):
     ## Using aproximate formula (42) from paper
     ## starting from W = 1, (iW = W -1, need to add 1 to start from iW = 1)
-    N = len(tau)
+    N = float(len(tau))
     return [4/N * (iW + 1.5 - itau) * itau**2 for iW,itau in enumerate(tau[1:])]
 
 
