@@ -413,7 +413,7 @@ def PlotAutoCorrDetailed(NNdata,NNQdata):
 ##NNdata [ icfg, t  ] 
 def PlotAutoCorr(NNdata,NNQdata,TorFlow):
     mkdir_p('./montegraphs')
-    meanlist,taulist,tauerrlist,alphaerr = [],[],[]
+    meanlist,taulist,tauerrlist,alphaerr = [],[],[],[]
     if 'flow' in TorFlow:
         iNN = NNdata
         for iNNQ in np.array(NNQdata):
