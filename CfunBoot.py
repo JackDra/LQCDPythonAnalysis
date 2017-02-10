@@ -450,7 +450,7 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot):
     pl.clf()
     pl.errorbar(range(len(meanlist)),meanlist,alphaerr,label='Autocorr')
     AlphaBoot = GetBootStats(NNQboot/NNboot)
-    pl.errorbar(np.arange(len(NNboot))+thisshift,Pullflag(AlphaBoot,'Avg'),Pullflag(AlphaBoot,'Std'),label='Bootstrap')
+    pl.errorbar(np.arange(len(AlphaBoot))+thisshift,Pullflag(AlphaBoot,'Avg'),Pullflag(AlphaBoot,'Std'),label='Bootstrap')
     pl.ylabel(r'$ \alpha$')
     pl.legend()
     pl.title('$\\alpha$ for nconf=' + str(len(NNdata)))
