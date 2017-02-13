@@ -189,10 +189,10 @@ def TitleFix(string):
             .replace('g5','\\gamma_{5}')
             .replace('gA','g_{A}')
             .replace('  ',' ')
-            .replace(' ','\\ ')+r' m_{\pi} = '+GetMpi(kappa)+r'$')
+            .replace(' ','\\ ')+GetMpi(kappa)+r'$')
 
 def TitleFixFF(string,FF):
-    string = r' m_{\pi} = '+GetMpi(kappa) + string
+    string =  string + GetMpi(kappa)
     for iDS in DefDSList + CombList:
         string = string.replace(iDS,iDS+' ')
     string = string.replace('IsoVector','Iso-vector')
