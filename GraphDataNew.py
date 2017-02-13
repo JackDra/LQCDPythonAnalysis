@@ -271,10 +271,12 @@ def SetFFAxies(thisCurr):
     # else:
         # pl.ylim(max(pl.ylim()[0],-2),min(pl.ylim()[1],2))
     pl.xlim(*Qsqrdxlim)
+    nlegline = 1
+    if thisCurr in leglengthFFDict.keys(): nlegline = leglengthFFDict[thisCurr]
     if thisCurr not in leglocFFDict.keys():
-        pl.legend()
+        pl.legend(ncol=nlegline)
     else:
-        pl.legend(loc=leglocFFDict[thisCurr])
+        pl.legend(loc=leglocFFDict[thisCurr],ncol=nlegline)
     # pl.tight_layout()
 
 
