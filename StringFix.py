@@ -92,7 +92,6 @@ def SplitToDt(tvar):
 
 def ProperCM(thestring):
     thestring = thestring.replace('state1','')
-    print thestring
     if kappa == 1375400:
         if 'PoF0to1dt3' in thestring :
             return thestring.replace('PoF0to1dt3','ism16')
@@ -107,7 +106,6 @@ def ProperCM(thestring):
             return thestring.replace('PoF0to2dt3','ism32SPACEjsm64')
         if 'PoF0to4dt3' in thestring :
             return thestring.replace('PoF0to4dt3','ism64SPACEjsm64')        
-    print thestring
     thestring = thestring.replace('CM','CMSPACE')
     thestring = thestring.replace('REvec','CMSPACE')
     thestring = thestring.replace('PoF','PoFSPACE')
@@ -131,6 +129,7 @@ def FixTflow(thisstr):
 
 def LegLab(string,thisNoSm=False,thisNoTSink=False):
     thisstr = string
+    print thisstr
     if len(string) == 0: return ''
     thisstr = FixTflow(thisstr)
     if thisNoSm:
