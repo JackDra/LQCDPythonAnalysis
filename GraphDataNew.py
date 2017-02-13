@@ -1048,7 +1048,7 @@ def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
             pl.errorbar(qsqrdvals[1:],dataavg[1:],dataerr[1:],color=col,fmt=sym,label=lab)            
         else:
             pl.errorbar(qsqrdvals,dataavg,dataerr,color=col,fmt=sym,label=lab)
-    return qsqrdvals
+    return np.array(qsqrdvals)-shift
 
 def PlotRF(data,col,sym,shift,lab,MP=False,Log=False,alpha=1):
     if MP:
