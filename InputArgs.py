@@ -119,7 +119,7 @@ def InputParams(inputparams):
         elif '-k' in isys:
             feedout['klist'] = isys.replace('-k=','').split(',')
         elif '-FT' in isys:
-            feedout['ForceTitle'] = isys.replace('-FT=','')
+            feedout['ForceTitle'] = isys.replace('-FT=','').replace('_',' ')
         elif '-cut' in isys:
             feedout['cut'] = isys.replace('-cut=','').split(',')
             for icl in feedout['cut']:
