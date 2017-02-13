@@ -12,6 +12,7 @@ Qtcut = 5
 
 gi = ['g'+str(i) for i in [1,2,3,4]]
 giTop = ['g'+str(i)+'Top' for i in [1,2,3,4]]
+# giTop = ['g'+str(i)+'Top' for i in [4]]
 giWein = ['g'+str(i)+'Wein' for i in [1,2,3,4]]
 gig5 = ['g'+str(i)+'g5' for i in [1,2,3,4]]
 g5gi = ['g5g'+str(i) for i in [1,2,3,4]]

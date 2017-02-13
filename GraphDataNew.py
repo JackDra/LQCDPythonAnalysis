@@ -77,6 +77,9 @@ ylimDict = {'VectorP4giDi':[-0.4,-0.15],
             'NeutronP3g2':[-0.4,0.0], ## Tsink Var 
             'IsoVectorP4g4':[0.8,1.1]}
 
+leglocDict = {'ProtonP4g4':'upper left'}
+
+
 # ylimFFDict = {'ProtonGeGmFF1/F1divF2':[0.3,0.5],
 #               # 'NeutronGeGmFF2':[-1.2,-0.4],
 #               'ProtonVectorFF2':[0.4,1.2],
@@ -238,7 +241,10 @@ def SetRFAxies(thisGamma):
         # pl.ylim(max(ylimDict[thisGamma][0],pl.ylim()[0]),min(ylimDict[thisGamma][1],pl.ylim()[1]))
         pl.ylim(*ylimDict[thisGamma])
     SetxTicks()
-    pl.legend()
+    if thisGamma not in leglocDict.keys():
+        pl.legend()
+    else:
+        pl.legend(loc=leglocDict[thisGamma])
     pl.tight_layout()
     
 def SetFFAxies(thisCurr):
