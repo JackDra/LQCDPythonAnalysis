@@ -697,8 +697,10 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False,Top=False):
         iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
     for iset in iterSetList:
         print
+        print
         print iset
         print LegLab(iset)
+        print
         print 
         if not CheckDict(data,'RF',iset): continue
         if MassDt == False:
