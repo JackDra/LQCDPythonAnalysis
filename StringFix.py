@@ -106,9 +106,12 @@ def ProperCM(thestring):
             return thestring.replace('PoF0to2dt3','ism32SPACEjsm64')
         if 'PoF0to4dt3' in thestring :
             return thestring.replace('PoF0to4dt3','ism64SPACEjsm64')        
-    thestring = thestring.replace('CM','CMSPACE')
-    thestring = thestring.replace('REvec','CMSPACE')
-    thestring = thestring.replace('PoF','PoFSPACE')
+    # thestring = thestring.replace('CM','CMSPACE')
+    # thestring = thestring.replace('REvec','CMSPACE')
+    # thestring = thestring.replace('PoF','PoFSPACE')
+    thestring = thestring.replace('CM','')
+    thestring = thestring.replace('REvec','')
+    thestring = thestring.replace('PoF0','')
     toval = re.search('to.',thestring)
     try:
         toval = toval.group().replace('to','').replace('dt','')
