@@ -958,9 +958,8 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
         #     print
 
         if Debug:
-            print
+            print 
             print keyset
-            print dataset.keys()
             print 
         if ('Proton' in keyset or 'Neutron' in keyset):
             if FlowPlot[0] not in keyset and 'Top' in thisDSCurr: continue
@@ -970,6 +969,10 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
         if 'Neutron' in keyset: PorN = 'Neutron'
         keyset = keyset.replace('Proton','')
         keyset = keyset.replace('Neutron','')
+        if Debug:
+            print 
+            print keyset
+            print 
         if not CheckDict(dataset,keyset,thisFF): continue
         if dataset[keyset][thisFF] == False: continue        
         thiscol = thiscolcyc.next()
