@@ -117,6 +117,7 @@ def ProperCM(thestring):
         toval = toval.group().replace('to','').replace('dt','')
     except:
         return thestring
+    print toval
     if 'to'+toval in thestring:
         itosh = str(int(toval)-tsource)
         thestring = thestring.replace('to'+toval,'to'+itosh)
@@ -259,4 +260,4 @@ def LabToXaxis(thestring,col):
         stringout = NoCM(NoSm(stringout))
     stringout = ProperAll(stringout)
     stringout = stringout.replace('cut',r'SPACE\delta t=')
-    return r'$'+stringout.replace('SPACE','\ ')+'$'
+2    return r'$'+stringout.replace('SPACE','\ ')+'$'
