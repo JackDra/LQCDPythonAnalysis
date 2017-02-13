@@ -109,9 +109,9 @@ def ProperCM(thestring):
     # thestring = thestring.replace('CM','CMSPACE')
     # thestring = thestring.replace('REvec','CMSPACE')
     # thestring = thestring.replace('PoF','PoFSPACE')
-    thestring = thestring.replace('CM','')
-    thestring = thestring.replace('REvec','')
-    thestring = thestring.replace('PoF0','')
+    thestring = thestring.replace('CM','VarSPACE')
+    thestring = thestring.replace('REvec','VarSPACE')
+    thestring = thestring.replace('PoF0','VarSPACE')
     toval = re.search('to.',thestring)
     try:
         toval = toval.group().replace('to','').replace('dt','')
