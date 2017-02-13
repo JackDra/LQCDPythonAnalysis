@@ -94,6 +94,8 @@ leglocDict = {'ProtonP4g4':'upper left'}
 #               'NeutronGeGmFF1/F1divF2':[0.0,0.06]}
 ylimFFDict = {'ProtonVectorTopFF3':[-1,1],'NeutronVectorTopFF3':[-1,1],'PandNVectorTopFF3':[-1,1]}
 
+leglengthFFDict = {'ProtonVectorTopFF3':2,'NeutronVectorTopFF3':2,'PandNVectorTopFF3':1}
+
 leglocFFDict = {'NeutronVectorFF2':'upper left',
                 'NeutronGeGmFF1':'upper left',
                 'NeutronGeGmFF2':'lower right',
@@ -1021,7 +1023,6 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
         else:
             pl.errorbar([0.0+thisshift],[Avg[0]],[Err[0]],fmt='-',color=thiscol,label=LegVal)
             # pl.fill_between(fitqdata+thisshift,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
-
     
 def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
     qsqrdvals,dataavg,dataerr = [],[],[]
