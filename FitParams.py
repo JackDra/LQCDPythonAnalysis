@@ -24,7 +24,8 @@ ChiThreshold = 0.001
 # MassDtList = [2]
 
 FlowArgs = ['t_flow4.01','t_flow5.01','t_flow6.01']
-WeinFlowArgs = ['t_flow4.0','t_flow4.5','t_flow5.0','t_flow5.5','t_flow6.0','t_flow6.5','t_flow7.0','t_flow7.5','t_flow8.0','t_flow8.5']
+# WeinFlowArgs = ['t_flow4.0','t_flow4.5','t_flow5.0','t_flow5.5','t_flow6.0','t_flow6.5','t_flow7.0','t_flow7.5','t_flow8.0','t_flow8.5']
+WeinFlowArgs = ['t_flow4.0''t_flow5.0','t_flow6.0','t_flow7.0','t_flow8.0'] ## first element will be plotted for PandN
 FlowPlot = ['t_flow4.01','t_flow5.01','t_flow6.01'] ## first element will be plotted for PandN
 WeinFlowPlot = ['t_flow4.0''t_flow5.0','t_flow6.0','t_flow7.0','t_flow8.0'] ## first element will be plotted for PandN
 # WeinFlowArgs = ['t_flow4.0','t_flow5.0','t_flow6.0']
