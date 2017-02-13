@@ -87,7 +87,7 @@ def InputParams(inputparams):
     StillTitle = False
     for isys in inputparams:
         if isys[0] != '-':
-            if StillTitile:
+            if StillTitle:
                 feedout['ForceTitle'] += ' ' + isys
             else:
                 raise IOError("input arguments are specified with -, see -h for help")
