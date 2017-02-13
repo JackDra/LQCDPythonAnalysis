@@ -970,8 +970,10 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
             if 'FF3' in thisFF:
                 PlotDPFit(keyset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign,datf,thiskappa,thisPN=PorN)
         else:
-            # thisshift = 0.0
-            thisshift = thisshiftcycff.next()*0.5
+            if 'FF1' in thisFF and 'ProtonGeGm' in thisDSCurr:
+                thisshift = 0.0
+            else:
+                thisshift = thisshiftcycff.next()*0.5
             qrange = PlotFF(dataset[keyset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
             # if 'sm32' in thisset or 'CM' in thisset or 'TSF' in thisset or '12104' in str(thiskappa):
             PlotDPFit(keyset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign,datf,thiskappa,thisPN=PorN)
@@ -1015,9 +1017,9 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
     if Err[0] < 1.0 :
         if 'FF1' in thisFF and 'Neutron' in thisCurr: return
         if 'FF3' in thisFF:
-            pl.errorbar([0.0+thisshift],[Avg[1]],[Err[1]],fmt='--',color=thiscol,label=LegVal)
+            pl.errorbar([0.0+thisshift],[Avg[1]],[Err[1]],fmt='-',color=thiscol,label=LegVal)
         else:
-            pl.errorbar([0.0+thisshift],[Avg[0]],[Err[0]],fmt='--',color=thiscol,label=LegVal)
+            pl.errorbar([0.0+thisshift],[Avg[0]],[Err[0]],fmt='-',color=thiscol,label=LegVal)
             # pl.fill_between(fitqdata+thisshift,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
 
     
