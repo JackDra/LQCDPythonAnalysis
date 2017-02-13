@@ -94,7 +94,8 @@ leglocDict = {'ProtonP4g4':'upper left'}
 #               'NeutronGeGmFF1/F1divF2':[0.0,0.06]}
 ylimFFDict = {'ProtonVectorTopFF3':[-1,1],'NeutronVectorTopFF3':[-1,1],'PandNVectorTopFF3':[-1,1]}
 
-leglengthFFDict = {'ProtonVectorTopFF3':2,'NeutronVectorTopFF3':2,'PandNVectorTopFF3':1}
+leglengthFFDict = {'ProtonVectorTopFF3':2,'NeutronVectorTopFF3':2,'PandNVectorTopFF3':1,
+                   'ProtonVectorWeinFF3':2,'NeutronVectorWeinFF3':2,'PandNVectorWeinFF3':1}
 
 leglocFFDict = {'NeutronVectorFF2':'upper left',
                 'NeutronGeGmFF1':'upper left',
