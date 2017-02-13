@@ -30,11 +30,11 @@ DefPionMass['1375400'] = 0.18903 #Lat Units
 def GetMpi(kappa,Phys=True,MeV=False):
     if Phys:
         if MeV:
-            return r'm_{{\pi}}={:.3f} MeV '.format(DefPionMass[str(kappa)]*hbarcdivlat*1000)
+            return r'\quad m_{{\pi}}={:.3f} MeV '.format(DefPionMass[str(kappa)]*hbarcdivlat*1000)
         else:
-            return r'm_{{\pi}}={:.3f} GeV '.format(DefPionMass[str(kappa)]*hbarcdivlat)            
+            return r'\quad m_{{\pi}}={:.3f} GeV '.format(DefPionMass[str(kappa)]*hbarcdivlat)            
     else:
-        return r'm_{{\pi}}={:.3f} '.format(DefPionMass[str(kappa)])
+        return r'\quad m_{{\pi}}={:.3f} '.format(DefPionMass[str(kappa)])
 
 DiagPList = [[1, 1, 1, 2], [2, 2, 2, 4], [3, 3, 3, 6], [4, 4, 4, 8], [5, 5, 5, 10], [6, 6, 6, 12], [7, 7, 7, 14], [8, 8, 8, 16]]
 DiagPListtdiv = [[1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3], [4, 4, 4, 4], [5, 5, 5, 5], [6, 6, 6, 6], [7, 7, 7, 7], [8, 8, 8, 8]]
