@@ -260,4 +260,4 @@ def LabToXaxis(thestring,col):
         stringout = NoCM(NoSm(stringout))
     stringout = ProperAll(stringout)
     stringout = stringout.replace('cut',r'SPACE\delta t=')
-2    return r'$'+stringout.replace('SPACE','\ ')+'$'
+    return r'$'+stringout.replace('SPACE','\ ')+'$'
