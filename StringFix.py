@@ -222,6 +222,7 @@ def TitleFixFF(string,FF):
     elif 'GeGm' in string:
         string = string.replace(' GeGm','')
         string = string.replace('Vector Top','')
+        string = string.replace('Top','')
         FF = FF.replace('FF1','G_{E}')
         FF = FF.replace('FF2','G_{M}')
         return string+ ' $'+FF +'\ '+GetMpi(kappa) + '$'
