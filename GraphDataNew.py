@@ -983,7 +983,7 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
     Avg,Err = GetDPFitValue(thisset,thisFF,thisCurr.replace('PandN',thisPN),thiskappa=thiskappa)
     if len(Avg) == 0: return
     Avg,Err = np.array(Avg),np.array(Err)
-    fitqdata = np.arange(qrange[0]-thisshift,qrange[-1]+incr-thisshift,incr)
+    fitqdata = np.arange(qrange[0],qrange[-1]+incr,incr)
     thisFitFun = DPfitfun
     if '3' in thisFF: thisFitFun = LinearFitFun
     fitydataAvg = thisFitFun([fitqdata],Avg)
