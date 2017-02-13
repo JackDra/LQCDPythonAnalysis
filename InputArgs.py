@@ -93,7 +93,7 @@ def InputParams(inputparams):
                 raise IOError("input arguments are specified with -, see -h for help")
         else:
             StillTitle = False
-            elif '-h' in isys:
+            if '-h' in isys:
                 print 'commands are (with comma separated lists):'
                 print '-g= specifies gamma matricies, choose from:'
                 print 'Form is "projector""operator""real=blank, complex=cmplx"'
