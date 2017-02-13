@@ -167,8 +167,18 @@ def LegLabFF(string,thisNoSm=False,thisNoTSink=False):
         fitstr = cutTOfitr(cutstr,'13')
         thisstr = thisstr.replace(cutstr,fitstr)
     except:
+        if 'Proton' in thisstr:
+            return r'$Proton\ '+ProperAll(thisstr.replace('Proton','')).replace('SPACE','\ ')+'$'
+        elif 'Neutron' in thisstr:
+            return r'$Neutron\ '+ProperAll(thisstr.replace('Neutron','')).replace('SPACE','\ ')+'$'
+        else:
+            return r'$'+ProperAll(thisstr).replace('SPACE','\ ')+'$'
+    if 'Proton' in thisstr:
+        return r'$Proton\ '+ProperAll(thisstr.replace('Proton','')).replace('SPACE','\ ')+'$'
+    elif 'Neutron' in thisstr:
+        return r'$Neutron\ '+ProperAll(thisstr.replace('Neutron','')).replace('SPACE','\ ')+'$'
+    else:
         return r'$'+ProperAll(thisstr).replace('SPACE','\ ')+'$'
-    return r'$'+ProperAll(thisstr).replace('SPACE','\ ')+'$'
 
 def TitleFix(string):
     return (r'$'+string.replace('P4giDi','\\langle x \\rangle ')
