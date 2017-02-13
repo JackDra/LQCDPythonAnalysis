@@ -882,9 +882,9 @@ def PlotFFsPN(data,dataPN,DSCurr,thisSetList,CollName,FT):
         DatFile = CreateFFFile(CollName,DSCurr,thisFF)+'.dat'
         WipeFile(DatFile)
         graphparams = GetPlotItersff()
-        PlotFFSet(data,thisFF,['Proton'+iset for iset in thisSetList],thisCurr,DSCurr.replace('/',''),graphparams)
+        PlotFFSet(data,thisFF,['Proton'+iset for iset in thisSetList],thisCurr,DSCurr.replace('/',''),graphparams,PandNshift=0.0)
         graphparams[2] = GetPlotItersff()[2]
-        PlotFFSet(dataPN,thisFF,['Neutron'+iset for iset in thisSetList],thisCurr.replace('Proton','Neutron'),DSCurr.replace('/',''),graphparams)
+        PlotFFSet(dataPN,thisFF,['Neutron'+iset for iset in thisSetList],thisCurr.replace('Proton','Neutron'),DSCurr.replace('/',''),graphparams,PandNshift=0.01)
         SetFFAxies(thisDS+thisCurr+thisFF+thisFFComb)
         pl.savefig(DatFile.replace('.dat','.pdf'))
         pl.clf()
@@ -926,7 +926,7 @@ def SkipZeroFF(thisFF,thisset,thisCurr):
     else:
         return skipzero,False
         
-def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
+def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams,PandNshift=0):
     thissymcyc,thiscolcyc,thisshiftcycff = graphparams
     collist = []
     FixZ=False    
@@ -983,7 +983,7 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
             thisshift = thisshiftcycff.next()
             qrange = PlotFF(dataset[keyset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
             if 'FF3' in thisFF:
-                PlotDPFit(keyset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign,datf,thiskappa,thisPN=PorN)
+                PlotDPFit(keyset,thisFF,thisDSCurr,thiscol,qrange,thisshift+PandNshift,flipsign,datf,thiskappa,thisPN=PorN)
         else:
             if 'FF1' in thisFF and 'ProtonGeGm' in thisDSCurr:
                 thisshift = 0.0
