@@ -1616,7 +1616,7 @@ def Graphchit(Qlist,flowlist):
     # pl.ylim(0.14,0.3)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Qdata/'
-    pl.title(r'$ \chi_{t}^{1/4} = \frac{\hbar c}{aV^{1/4}} \langle Q^2 \rangle^{1/4} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{aV^{1/4}} \langle Q^2 \rangle^{1/4} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chit.pdf')
     pl.clf()
@@ -1646,11 +1646,11 @@ def GraphWchit(Wlist,flowlist):
     # pl.errorbar(flowlist+0.1,chitAvg,chitStd,fmt='o',label=r'$No Boot$')
     pl.xlim(flowlist[0]-0.02,flowlist[-1]+0.1)
     pl.xlabel(r'$ t_{flow} $')
-    pl.ylabel(r'$ \langle W^2 \rangle^{1/8} GeV$')
+    pl.ylabel(r'$ \frac{1}{\sqrt{aV^{1/4}}} \langle W^2 \rangle^{1/8} GeV$')
     # pl.ylim(0,0.4)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Wdata/'
-    pl.title(r'$\frac{\hbar c}{\sqrt{aV^{1/4}}} \langle W^2 \rangle^{1/8} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
+    pl.title(r'$\frac{1}{\sqrt{aV^{1/4}}} \langle W^2 \rangle^{1/8} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chit.pdf')
     pl.clf()
