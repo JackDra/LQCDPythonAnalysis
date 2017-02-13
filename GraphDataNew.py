@@ -884,7 +884,7 @@ def PlotFFsPN(data,dataPN,DSCurr,thisSetList,CollName,FT):
         graphparams = GetPlotItersff()
         PlotFFSet(data,thisFF,['Proton'+iset for iset in thisSetList],thisCurr,DSCurr.replace('/',''),graphparams,PandNshift=0.0)
         graphparams[2] = GetPlotItersff()[2]
-        PlotFFSet(dataPN,thisFF,['Neutron'+iset for iset in thisSetList],thisCurr.replace('Proton','Neutron'),DSCurr.replace('/',''),graphparams,PandNshift=0.01)
+        PlotFFSet(dataPN,thisFF,['Neutron'+iset for iset in thisSetList],thisCurr.replace('Proton','Neutron'),DSCurr.replace('/',''),graphparams,PandNshift=0.005)
         SetFFAxies(thisDS+thisCurr+thisFF+thisFFComb)
         pl.savefig(DatFile.replace('.dat','.pdf'))
         pl.clf()
