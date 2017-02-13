@@ -27,7 +27,7 @@ import BootTest as bt
 ##FORCE TITLE PARAMETER, SET TO FALSE TO USE NORMAL TITLES#
 
 ForceTitle = False
-TitleShift = 1.01
+TitleShift = 1.04
 # ForceTitle = '$g_{A}$ Variational Comparison'
 # ForceTitle = '$g_{A}$ Variational Parameter $t_{0}$ Comparison'
 # ForceTitle = '$g_{A}$ Summed Ratio Function Comparison'
