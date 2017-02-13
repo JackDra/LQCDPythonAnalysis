@@ -1625,7 +1625,7 @@ def GraphWchit(Wlist,flowlist):
     ## Hard coded here....
     flowlist = np.array(flowlist)
     thislatspace = 0.0907
-    coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
+    coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25))**(0.5))
 
     # Wboot,dump = bt.CreateBoot(Wlist,nboot,0)
     # W2boot = np.array(Wboot)**2
@@ -1634,7 +1634,7 @@ def GraphWchit(Wlist,flowlist):
     # pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$W Boot$')
 
     W2boot,dump = bt.CreateBoot(np.array(Wlist)**2,nboot,0)
-    chit = coeff*np.array(W2boot)**(0.25)
+    chit = coeff*np.array(W2boot)**(0.125)
     chit = GetBootStats(chit)
     # pl.errorbar(flowlist-0.02,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$W^{2} Boot$')
     pl.errorbar(flowlist[1:],Pullflag(chit,'Avg')[1:],Pullflag(chit,'Std')[1:],fmt='o')
