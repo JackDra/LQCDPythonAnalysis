@@ -604,7 +604,9 @@ def PlotCol(data,thisSetList,thisflag,thisGamma,thisMom,TitlePref):
     if 'Wein' in thisGamma: Top = 'Wein'
     PlotRFSet(data,SiftAndSort(thisSetList,thisflag,nocm=False),legrem=thislegrem,Top=Top )
     SetRFAxies(thisGamma)
-    pl.savefig(CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)+'.pdf')
+    thisfile = CreateFile(thisflag[0],thisGamma,thisMom,TitlePref)
+    if DEBUG: print 'printing: ' thisfile+'.pdf'
+    pl.savefig(thisfile+'.pdf')
     pl.clf()
 
 def PlotColTSF(data,data2pt,thisSetList,thisflag,thisGamma,thisMom,TitlePref,TSFcut,thisTSF):
