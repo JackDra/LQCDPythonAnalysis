@@ -12,6 +12,13 @@ def CutDupSet(SetList):
 
 
 
+def FlowOrderSetList(thisSetList):
+    output = []
+    for orderset in WeinFlowPlot:
+        for iset in thisSetList:
+            if orderset in iset:
+                output.append(iset)
+    return output
 ##data = [ igamma , ip , iset , it ]
 #dataout = [ itsink , istate , igamma , ip , it]
 

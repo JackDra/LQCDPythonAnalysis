@@ -856,6 +856,7 @@ def PlotFFs(data,DSCurr,thisSetList,CollName,FT):
     ForceTitle = FT
     if len(thisSetList) == 0: return
     thisDS,thisCurr,thisFFComb = SplitDSCurr(DSCurr)
+    thisSetList = FlowOrderSetList(thisSetList)
     for iFF in range(1,NoFFPars[thisCurr]+1):
         thisFF = 'FF'+str(iFF)
         if len(thisFFComb) > 1: thisFFComb = '/'+thisFFComb
