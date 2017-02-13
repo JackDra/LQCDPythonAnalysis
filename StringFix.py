@@ -203,7 +203,8 @@ def TitleFix(string):
 
 def TitleFixFF(string,FF):
     mpi =  GetMpi(kappa)
-    string =  string
+    if 'PandN' in string:
+        string = string.replace('PandN', 'Proton and Neutron' )
     for iDS in DefDSList + CombList:
         string = string.replace(iDS,iDS+' ')
     string = string.replace('IsoVector','Iso-vector')
@@ -220,6 +221,7 @@ def TitleFixFF(string,FF):
         return string.replace('F1divF2','').replace(' GeGm','')+ ' $G_{E}/G_{M}\ '+GetMpi(kappa) + '$'        
     elif 'GeGm' in string:
         string = string.replace(' GeGm','')
+        string = string.replace('VectorTop','')
         FF = FF.replace('FF1','G_{E}')
         FF = FF.replace('FF2','G_{M}')
         return string+ ' $'+FF +'\ '+GetMpi(kappa) + '$'
