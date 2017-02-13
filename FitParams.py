@@ -25,6 +25,8 @@ ChiThreshold = 0.001
 
 FlowArgs = ['t_flow4.01','t_flow5.01','t_flow6.01']
 WeinFlowArgs = ['t_flow4.0','t_flow4.5','t_flow5.0','t_flow5.5','t_flow6.0','t_flow6.5','t_flow7.0','t_flow7.5','t_flow8.0','t_flow8.5']
+FlowPlot = ['t_flow4.01','t_flow5.01','t_flow6.01']
+WeinFlowPlot = ['t_flow4.0''t_flow5.0','t_flow6.0','t_flow7.0','t_flow8.0']
 # WeinFlowArgs = ['t_flow4.0','t_flow5.0','t_flow6.0']
 
 AlphaFitRPick = {}
@@ -47,6 +49,7 @@ for ifit in range(FitAlphaMinLeft,FitAlphaMaxLeft+1):
 FitCutMinLeft,FitCutMaxLeft = 2,3
 FitCutMinRight,FitCutMaxRight = 5,7
 FitCutList,FitCutArgs = [],[]
+FitCutPlot = ['cut2-7']
 for icut in range(FitCutMinLeft,FitCutMaxLeft+1):
     for jcut in range(FitCutMinRight,FitCutMaxRight+1):
         if icut + jcut >= 10: continue

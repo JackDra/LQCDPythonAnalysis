@@ -947,9 +947,6 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
         datf.write('F_{3}(0) \n')
     # for thisset in SortMySet(thisSetFlag)[0]:
     for thisset in thisSetFlag:
-        ##Just to speed up, REMOVE AFTER##
-        if SpeedUpPlots:
-            if 'cut2-7' not in thisset: continue
         ##make legend formatting function
         thiskappa,keyset = SplitKappa(thisset)
         # if Debug:
