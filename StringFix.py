@@ -129,7 +129,6 @@ def FixTflow(thisstr):
 
 def LegLab(string,thisNoSm=False,thisNoTSink=False):
     thisstr = string
-    print thisstr
     if len(string) == 0: return ''
     thisstr = FixTflow(thisstr)
     if thisNoSm:
