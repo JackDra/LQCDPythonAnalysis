@@ -117,7 +117,9 @@ def ProperCM(thestring):
         toval = toval.group().replace('to','').replace('dt','')
     except:
         return thestring
+    print thestring
     print toval
+    print
     if 'to'+toval in thestring:
         itosh = str(int(toval)-tsource)
         thestring = thestring.replace('to'+toval,'to'+itosh)
