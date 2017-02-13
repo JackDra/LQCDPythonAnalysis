@@ -17,7 +17,9 @@ from CreateCombs import CreateDictOldCombs
 from CombParams import *
 
 DoDS = True
+print
 print sys.args[1:]
+print
 feedin = InputParams(sys.argv[1:] + ['-noprompt'])
     
 
