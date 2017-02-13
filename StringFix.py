@@ -112,15 +112,12 @@ def ProperCM(thestring):
     thestring = thestring.replace('CM','VarSPACE')
     thestring = thestring.replace('REvec','VarSPACE')
     thestring = thestring.replace('PoF0','VarSPACE')
-    toval = re.search('to.',thestring)
+    toval = re.search('to.',thestring.replace('Proton','').replace('Neutron',''))
     try:
         toval = toval.group().replace('to','').replace('dt','')
     except:
         return thestring
-    print thestring
-    print toval
-    print
-    if 'to'+toval in thestring:
+    if 'to'+toval in thestring :
         itosh = str(int(toval)-tsource)
         thestring = thestring.replace('to'+toval,'to'+itosh)
     thestring = thestring.replace('dt',r'\Delta t')        
