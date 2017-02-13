@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+!/usr/bin/env python
 
 from sets import Set
 import numpy as np
@@ -195,42 +195,43 @@ def TitleFix(string):
             .replace(' ','\\ ')+GetMpi(kappa)+r'$')
 
 def TitleFixFF(string,FF):
-    string =  string + GetMpi(kappa)
+    mpi =  GetMpi(kappa)
+    string =  string
     for iDS in DefDSList + CombList:
         string = string.replace(iDS,iDS+' ')
     string = string.replace('IsoVector','Iso-vector')
     if 'PsVector' in string:
         if 'FF1' in FF and 'PsVector' in string:
             string = string.replace('PsVector','Axial')
-            return string+ ' $G_{A}$'
+            return string+ r' $G_{A}\ '+GetMpi + '$'
         elif 'FF2' in FF:    
             string = string.replace('PsVector','Induced Pseudoscalar')
-            return string+ ' $G_{P}$'
+            return string+ ' $G_{P}\ '+GetMpi + '$'
     string = string.replace('PsScalar','Pseudo-scalar')
     string = string.replace('IsoScalar','Iso-scalar')
     if 'F1divF2' in string:
-        return string.replace('F1divF2','').replace(' GeGm','')+ ' $G_{E}/G_{M}$'        
+        return string.replace('F1divF2','').replace(' GeGm','')+ ' $G_{E}/G_{M}\ '+GetMpi + '$'        
     elif 'GeGm' in string:
         string = string.replace(' GeGm','')
         FF = FF.replace('FF1','G_{E}')
         FF = FF.replace('FF2','G_{M}')
-        return string+ ' $'+FF +'$'
+        return string+ ' $'+FF +'\ '+GetMpi + '$'
     elif 'Pseudo-scalar' in string:
         FF = FF.replace('FF1','G_{P}')
-        return string+ ' $'+FF +'$'
+        return string+ ' $'+FF +'\ '+GetMpi + '$'
     elif 'Scalar' in string:
         FF = FF.replace('FF1','G_{S}')
-        return string+ ' $'+FF +'$'
+        return string+ ' $'+FF +'\ '+GetMpi + '$'
     elif 'Tensor' in string:
         FF = FF.replace('FF1','H_{T}')
         FF = FF.replace('FF2','E_{T}')
         FF = FF.replace('FF3','E_{1T}')
-        return string+ ' $'+FF +'$'
+        return string+ ' $'+FF +'\ '+GetMpi + '$'
     elif 'Vector' in string:
         string = string.replace(' Vector','')
-        return string+ ' $'+FF.replace('FF','F_{')+'} $'
+        return string+ ' $'+FF.replace('FF','F_{')+'} \ '+GetMpi + '$'
     else:        
-        return string+ ' $'+FF.replace('FF','F_{')+'} $'
+        return string+ ' $'+FF.replace('FF','F_{')+'} \ '+GetMpi + '$'
         
 
 
