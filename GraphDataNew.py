@@ -317,9 +317,9 @@ def SetTopAxies(torflow,NNQ=False,Dt=2,Wein=False):
     else:
         pl.ylabel(r'$ \alpha $')
         if Wein:
-            pl.title(r'$\frac{\langle NNW \rangle }{\langle NN\rangle} = \alpha \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
+            pl.title(r'$\frac{\langle NNW \rangle }{\langle NN\rangle} = \alpha_{W} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
         else:
-            pl.title(r'$\frac{\langle NNQ \rangle }{\langle NN\rangle} = \alpha \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
+            pl.title(r'$\frac{\langle NNQ \rangle }{\langle NN\rangle} = \alpha_{W} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     
     
 
