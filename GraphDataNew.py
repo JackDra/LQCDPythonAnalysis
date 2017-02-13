@@ -981,7 +981,7 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams,PandNsh
         if ('IsoVectorPsVector' in thisDSCurr and 'FF2' in thisFF) or ('NeutronGeGm' in thisDSCurr and 'FF1' in thisFF) or 'F1divF2' in thisDSCurr or 'FF3' in thisFF:
         # if ('IsoVectorPsVector' in thisDSCurr) or ('NeutronGeGm' in thisDSCurr and 'FF1' in thisFF):
             thisshift = thisshiftcycff.next()
-            qrange = PlotFF(dataset[keyset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
+            qrange = PlotFF(dataset[keyset][thisFF],thiscol,thissymcyc.next(),thisshift+PandNshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
             if 'FF3' in thisFF:
                 PlotDPFit(keyset,thisFF,thisDSCurr,thiscol,qrange,thisshift+PandNshift,flipsign,datf,thiskappa,thisPN=PorN)
         else:
