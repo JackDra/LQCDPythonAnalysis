@@ -238,6 +238,8 @@ def TitleFixFF(string,FF):
     elif 'Vector' in string:
         string = string.replace(' VectorTop','')
         string = string.replace(' Vector Top','')
+        string = string.replace(' VectorWein','')
+        string = string.replace(' Vector Wein','')
         string = string.replace(' Vector','')
         return string+ ' $'+FF.replace('FF','F_{')+'} \ '+GetMpi(kappa) + '$'
     else:        
