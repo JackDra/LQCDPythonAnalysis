@@ -31,7 +31,7 @@ WeinFlowPlot = ['t_flow4.0''t_flow5.0','t_flow6.0','t_flow7.0','t_flow8.0'] ## f
 
 AlphaFitRPick = {}
 AlphaFitRPick['Top'] = 'fitr5-10'
-AlphaFitRPick['Wein'] = 'fitr5-10'
+AlphaFitRPick['Wein'] = 'fitr2-6'
 
 FitAlphaMinLeft,FitAlphaMaxLeft = 2,9
 FitAlphaMinRight,FitAlphaMaxRight = 5,13
