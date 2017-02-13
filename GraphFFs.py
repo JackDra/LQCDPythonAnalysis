@@ -62,9 +62,9 @@ def PlotFitMethSets(currdata,thiscurr,thisSetList):
         for icut in FitCutPlot:
             for iflow in FlowPlot:
                 PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit',icut,iflow),'Fit'+icut+iflow+'SetComp')
-        for iset in DefSetList:
-            for iflow in FlowPlot:
-                PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit',iset,iflow),'Fit'+iset+iflow+'CutComp')
+        # for iset in DefSetList:
+        #     for iflow in FlowPlot:
+        #         PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit',iset,iflow),'Fit'+iset+iflow+'CutComp')
     elif 'Wein' in thiscurr:
         for iset in DefSetList:
             for icut in FitCutPlot:
@@ -72,9 +72,9 @@ def PlotFitMethSets(currdata,thiscurr,thisSetList):
         for icut in FitCutPlot:
             for iflow in WeinFlowPlot:
                 PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit',icut,iflow),'Fit'+icut+iflow+'SetComp')
-        for iset in DefSetList:
-            for iflow in WeinFlowPlot:
-                PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit',iset,iflow),'Fit'+iset+iflow+'CutComp')
+        # for iset in DefSetList:
+        #     for iflow in WeinFlowPlot:
+        #         PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit',iset,iflow),'Fit'+iset+iflow+'CutComp')
     else:
         for iset in DefSetList:
             PlotFFWrap(currdata,thiscurr,FlagList(thisSetList,'Fit',iset),'Fit'+iset+'CutComp')
