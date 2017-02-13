@@ -957,8 +957,8 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams):
         #     print
 
         if ('Proton' in keyset or 'Neutron' in keyset):
-            if FlowPlot not in keyset and 'Top' in thisDSCurr: continue
-            if WeinFlowPlot not in keyset and 'Wein' in thisDSCurr: continue
+            if FlowPlot[0] not in keyset and 'Top' in thisDSCurr: continue
+            if WeinFlowPlot[0] not in keyset and 'Wein' in thisDSCurr: continue
         PorN = ''
         if 'Proton' in keyset: PorN = 'Proton'
         if 'Neutron' in keyset: PorN = 'Neutron'
