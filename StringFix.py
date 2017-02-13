@@ -200,35 +200,35 @@ def TitleFixFF(string,FF):
     if 'PsVector' in string:
         if 'FF1' in FF and 'PsVector' in string:
             string = string.replace('PsVector','Axial')
-            return string+ r' $G_{A}\ '+GetMpi + '$'
+            return string+ r' $G_{A}\ '+GetMpi(kappa) + '$'
         elif 'FF2' in FF:    
             string = string.replace('PsVector','Induced Pseudoscalar')
-            return string+ ' $G_{P}\ '+GetMpi + '$'
+            return string+ ' $G_{P}\ '+GetMpi(kappa) + '$'
     string = string.replace('PsScalar','Pseudo-scalar')
     string = string.replace('IsoScalar','Iso-scalar')
     if 'F1divF2' in string:
-        return string.replace('F1divF2','').replace(' GeGm','')+ ' $G_{E}/G_{M}\ '+GetMpi + '$'        
+        return string.replace('F1divF2','').replace(' GeGm','')+ ' $G_{E}/G_{M}\ '+GetMpi(kappa) + '$'        
     elif 'GeGm' in string:
         string = string.replace(' GeGm','')
         FF = FF.replace('FF1','G_{E}')
         FF = FF.replace('FF2','G_{M}')
-        return string+ ' $'+FF +'\ '+GetMpi + '$'
+        return string+ ' $'+FF +'\ '+GetMpi(kappa) + '$'
     elif 'Pseudo-scalar' in string:
         FF = FF.replace('FF1','G_{P}')
-        return string+ ' $'+FF +'\ '+GetMpi + '$'
+        return string+ ' $'+FF +'\ '+GetMpi(kappa) + '$'
     elif 'Scalar' in string:
         FF = FF.replace('FF1','G_{S}')
-        return string+ ' $'+FF +'\ '+GetMpi + '$'
+        return string+ ' $'+FF +'\ '+GetMpi(kappa) + '$'
     elif 'Tensor' in string:
         FF = FF.replace('FF1','H_{T}')
         FF = FF.replace('FF2','E_{T}')
         FF = FF.replace('FF3','E_{1T}')
-        return string+ ' $'+FF +'\ '+GetMpi + '$'
+        return string+ ' $'+FF +'\ '+GetMpi(kappa) + '$'
     elif 'Vector' in string:
         string = string.replace(' Vector','')
-        return string+ ' $'+FF.replace('FF','F_{')+'} \ '+GetMpi + '$'
+        return string+ ' $'+FF.replace('FF','F_{')+'} \ '+GetMpi(kappa) + '$'
     else:        
-        return string+ ' $'+FF.replace('FF','F_{')+'} \ '+GetMpi + '$'
+        return string+ ' $'+FF.replace('FF','F_{')+'} \ '+GetMpi(kappa) + '$'
         
 
 
