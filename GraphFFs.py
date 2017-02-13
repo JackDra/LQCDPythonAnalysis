@@ -168,8 +168,10 @@ def ReadAndPlotFF(thisCurrDict,DoList='All'):
             print 'Plotting ' , thiscurr ,'4/6 Fits            '
             PlotFitMethSets(currdata,thiscurr,thisCurrDict[thiscurr])
             if 'ProtonVectorTop' in thiscurr:
+                print 'Plotting PandN Top 4.5/6 Fits            '
                 PlotFitMethPN(currdata,datadict[thiscurr.replace('Proton','Neutron')],thiscurr,thisCurrDict[thiscurr])
             if 'ProtonVectorWein' in thiscurr:
+                print 'Plotting PandN Wein 4.5/6 Fits            '
                 PlotFitMethPN(currdata,datadict[thiscurr.replace('Proton','Neutron')],thiscurr,thisCurrDict[thiscurr])
         if 'Collect' in DoList or 'All' in DoList:
             print 'Collecting ' , thiscurr ,'5/6 for Summary            '
