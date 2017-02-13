@@ -223,5 +223,8 @@ def InputParams(inputparams):
                     feedout['ffgraph'] = 'All'
     if not SkipDefWipe: DefWipeWarning()
     if Debug: feedout['anaproc'] = 1
+    if feedout['ForceTitle'] != False:
+        if feedout['ForceTitle'][0] == '$':
+            feedout['ForceTitle'] = feedout['ForceTitle'].replace(' ','\ ')
     return feedout
 
