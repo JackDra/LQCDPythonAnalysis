@@ -718,12 +718,6 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False,Top=False):
             dataplot['Boot'] = MassFun(dataplot['Boot'],MassDt)
             # dataplot['tVals'] = dataplot['tVals'][:-MassDt] 
             # dataplot['tVals'] = dataplot['tVals'][MassDt:] 
-            print
-            print
-            print iset
-            print LegLab(iset)
-            print
-            print 
             PlotRF(dataplot,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset),MP=True)
 
 def PlotMassSet(data,massdata,thisSetList,thisMom,legrem='',MassDt = 1):
