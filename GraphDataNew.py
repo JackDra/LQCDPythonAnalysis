@@ -1613,7 +1613,7 @@ def Graphchit(Qlist,flowlist):
     pl.xlim(flowlist[0]-0.02,flowlist[-1]+0.1)
     pl.xlabel(r'$ t_{flow} $')
     pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
-    pl.ylim(0.14,0.3)
+    # pl.ylim(0.14,0.3)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Qdata/'
     pl.title(r'$ \chi_{t}^{1/4} = \frac{\hbar c}{aV^{1/4}} \langle Q^2 \rangle^{1/4} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
