@@ -205,7 +205,7 @@ def CreateMKFFFile(thisCol,thisCurr,thisFF):
 def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False,subdir=False):
     if 'twopt' in thisGamma:
         if 'Dt' in thisflag:
-            thistitle = thisGamma+' '+TitlePref+' $' + thisflag.replace('Dt','\Delta t=') + '$'
+            thistitle = thisGamma+' '+TitlePref+' $' + thisflag.replace('Dt','\Delta t=') + r'$'
         else:
             thistitle = thisGamma+' '+TitlePref+' '+thisflag
         thistitle = thistitle.replace('twopt ','')
@@ -311,15 +311,15 @@ def SetTopAxies(torflow,NNQ=False,Dt=2,Wein=False):
     if NNQ:
         pl.ylabel(r'$ Eff\ Mass $')
         if Wein:
-            pl.title(r'$ Eff\ Mass\ of\ \gamma_{5}P_{+}NNW\ and\ NN\ Dt='+str(Dt)+'\ '+GetMpi(kappa,Phys=True)+'$',y=TitleShift)
+            pl.title(r'$ Eff\ Mass\ of\ \gamma_{5}P_{+}NNW\ and\ NN\ Dt='+str(Dt)+'\ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
         else:
-            pl.title(r'$ Eff\ Mass\ of\ \gamma_{5}P_{+}NNQ\ and\ NN\ Dt='+str(Dt)+'\ '+GetMpi(kappa,Phys=True)+'$',y=TitleShift)
+            pl.title(r'$ Eff\ Mass\ of\ \gamma_{5}P_{+}NNQ\ and\ NN\ Dt='+str(Dt)+'\ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     else:
         pl.ylabel(r'$ \alpha $')
         if Wein:
-            pl.title(r'$\frac{\langle NNW \rangle }{\langle NN\rangle} = \alpha \ '+GetMpi(kappa,Phys=True)+'$',y=TitleShift)
+            pl.title(r'$\frac{\langle NNW \rangle }{\langle NN\rangle} = \alpha \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
         else:
-            pl.title(r'$\frac{\langle NNQ \rangle }{\langle NN\rangle} = \alpha \ '+GetMpi(kappa,Phys=True)+'$',y=TitleShift)
+            pl.title(r'$\frac{\langle NNQ \rangle }{\langle NN\rangle} = \alpha \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     
     
 
@@ -1009,10 +1009,10 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
         else:
             LegVal = '$\\langle r^2 \\rangle='+MakeValAndErr(Avg[2],Err[1])+'\ fm^{2}$'        
     elif 'FF2' in thisFF:
-        LegVal = '$\\mu='+MakeValAndErr(Avg[0],Err[0])+'$'        
+        LegVal = '$\\mu='+MakeValAndErr(Avg[0],Err[0])+r'$'        
         datf.write(MakeValAndErr(Avg[0],Err[0])+' \n')
     else:
-        LegVal = '$\\frac{F_{3}(0)}{2m_{N}}='+MakeValAndErr(Avg[1],Err[1])+'$'        
+        LegVal = '$\\frac{F_{3}(0)}{2m_{N}}='+MakeValAndErr(Avg[1],Err[1])+r'$'        
         datf.write(MakeValAndErr(Avg[1],Err[1])+' \n')
     # print 'DPFit flip sign', flipsign
     # if flipsign:
@@ -1564,7 +1564,7 @@ def GraphQExp(Qlist,flowlist):
     pl.xlabel(r'$ t_{flow} $')
     pl.ylabel(r'$ \langle Q \rangle $')
     thisdir = outputdir[0] + 'graphs/Qdata/'
-    pl.title(r'$ \langle Q \rangle \ '+GetMpi(kappa,Phys=True)+'$',y=TitleShift)
+    pl.title(r'$ \langle Q \rangle \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'QExp.pdf')
     pl.clf()
@@ -1575,7 +1575,7 @@ def GraphWExp(Wlist,flowlist):
     pl.xlabel(r'$ t_{flow} $')
     pl.ylabel(r'$ \langle W \rangle $')
     thisdir = outputdir[0] + 'graphs/Wdata/'
-    pl.title(r'$ \langle W \rangle \ '+GetMpi(kappa,Phys=True)+'$',y=TitleShift)
+    pl.title(r'$ \langle W \rangle \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'WExp.pdf')
     pl.clf()
@@ -1616,7 +1616,7 @@ def Graphchit(Qlist,flowlist):
     pl.ylim(0.14,0.3)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Qdata/'
-    pl.title(r'$ \chi_{t}^{1/4} = \frac{\hbar c}{aV^{1/4}} \langle Q^2 \rangle^{1/4} \ '+GetMpi(kappa,Phys=True)+'$',y=TitleShift)
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{\hbar c}{aV^{1/4}} \langle Q^2 \rangle^{1/4} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chit.pdf')
     pl.clf()
@@ -1650,7 +1650,7 @@ def GraphWchit(Wlist,flowlist):
     # pl.ylim(0,0.4)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Wdata/'
-    pl.title(r'$\frac{\hbar c}{\sqrt{aV^{1/4}}} \langle W^2 \rangle^{1/8} \ '+GetMpi(kappa,Phys=True)+'$',y=TitleShift)
+    pl.title(r'$\frac{\hbar c}{\sqrt{aV^{1/4}}} \langle W^2 \rangle^{1/8} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chit.pdf')
     pl.clf()
@@ -1691,7 +1691,7 @@ def GraphchitKappas(Qlist,flowlist):
     # pl.ylim(0,0.4)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Qdata/'
-    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{aV^{1/4}} \langle Q^2 \rangle^{1/4} \ '+GetMpi(kappa,Phys=True)+'$',y=TitleShift)
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{aV^{1/4}} \langle Q^2 \rangle^{1/4} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chitKappa.pdf')
     pl.clf()
@@ -1730,7 +1730,7 @@ def GraphWchitKappas(Wlist,flowlist):
     # pl.ylim(0,0.4)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Wdata/'
-    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{aV^{1/4}} \langle W^2 \rangle^{1/4} \ '+GetMpi(kappa,Phys=True)+'$',y=TitleShift)
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{aV^{1/4}} \langle W^2 \rangle^{1/4} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chitKappa.pdf')
     pl.clf()
@@ -1750,7 +1750,7 @@ def GraphQ2Hist(Qlist,thisflow):
     pl.xlabel(r'$\langle Q^2 \rangle $')
     pl.ylabel(r'$ N $')
     thisdir = outputdir[0] + 'graphs/Qdata/'
-    pl.title(r'$ Histogram\ \langle Q^2 \rangle \ '+GetMpi(kappa,Phys=True)+'$',y=TitleShift)
+    pl.title(r'$ Histogram\ \langle Q^2 \rangle \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'Q2Hist.pdf')
     pl.clf()
@@ -1765,7 +1765,7 @@ def GraphQLines(Qlist,flowlist,cfglist):
     pl.ylabel(r'$ Q $')
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Qdata/'
-    pl.title(r'$ Q \left( icfg \right) \ '+GetMpi(kappa,Phys=True)+'$',y=TitleShift)
+    pl.title(r'$ Q \left( icfg \right) \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     pl.tight_layout()
     mkdir_p(thisdir)
     pl.savefig(thisdir+'QLines.pdf')
@@ -1784,7 +1784,7 @@ def GraphW2Hist(Wlist,thisflow):
     pl.xlabel(r'$\langle W^2 \rangle $')
     pl.ylabel(r'$ N $')
     thisdir = outputdir[0] + 'graphs/Wdata/'
-    pl.title(r'$ Histogram\ \langle W^2 \rangle \ '+GetMpi(kappa,Phys=True)+'$',y=TitleShift)
+    pl.title(r'$ Histogram\ \langle W^2 \rangle \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'W2Hist.pdf')
     pl.clf()
@@ -1799,7 +1799,7 @@ def GraphWLines(Wlist,flowlist,cfglist):
     pl.ylabel(r'$ W $')
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Wdata/'
-    pl.title(r'$ W \left( icfg \right) \ '+GetMpi(kappa,Phys=True)+'$',y=TitleShift)
+    pl.title(r'$ W \left( icfg \right) \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     pl.tight_layout()
     mkdir_p(thisdir)
     pl.savefig(thisdir+'WLines.pdf')
