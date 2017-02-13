@@ -221,7 +221,7 @@ def TitleFixFF(string,FF):
         return string.replace('F1divF2','').replace(' GeGm','')+ ' $G_{E}/G_{M}\ '+GetMpi(kappa) + '$'        
     elif 'GeGm' in string:
         string = string.replace(' GeGm','')
-        string = string.replace('VectorTop','')
+        string = string.replace('Vector Top','')
         FF = FF.replace('FF1','G_{E}')
         FF = FF.replace('FF2','G_{M}')
         return string+ ' $'+FF +'\ '+GetMpi(kappa) + '$'
