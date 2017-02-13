@@ -696,12 +696,6 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False,Top=False):
     else:
         iterSetList = SortMySet(ReduceTooMassSet(thisSetList))[0]
     for iset in iterSetList:
-        print
-        print
-        print iset
-        print LegLab(iset)
-        print
-        print 
         if not CheckDict(data,'RF',iset): continue
         if MassDt == False:
             thiscol,thisshift = thiscolcyc.next(),thisshiftcyc.next()
@@ -724,6 +718,12 @@ def PlotRFSet(data,thisSetList,legrem='',MassDt = False,Top=False):
             dataplot['Boot'] = MassFun(dataplot['Boot'],MassDt)
             # dataplot['tVals'] = dataplot['tVals'][:-MassDt] 
             # dataplot['tVals'] = dataplot['tVals'][MassDt:] 
+            print
+            print
+            print iset
+            print LegLab(iset)
+            print
+            print 
             PlotRF(dataplot,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),LegLab(iset),MP=True)
 
 def PlotMassSet(data,massdata,thisSetList,thisMom,legrem='',MassDt = 1):
