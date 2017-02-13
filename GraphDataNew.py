@@ -27,6 +27,7 @@ import BootTest as bt
 ##FORCE TITLE PARAMETER, SET TO FALSE TO USE NORMAL TITLES#
 
 ForceTitle = False
+TitleShift = 1.04
 # ForceTitle = '$g_{A}$ Variational Comparison'
 # ForceTitle = '$g_{A}$ Variational Parameter $t_{0}$ Comparison'
 # ForceTitle = '$g_{A}$ Summed Ratio Function Comparison'
@@ -41,6 +42,7 @@ shiftsetff = [0]
 for ish in np.arange(1,shiftmax+1): shiftsetff += [-ish*shiftperff,ish*shiftperff]
 incr = 0.01
 thisalpha = 0.3
+
 
 # MassTVals = 16,33
 # MassTVals = 3,25
@@ -176,9 +178,9 @@ def CreateFFFile(thisCol,thisCurr,thisFF):
     # thistitle = thisCol
     thistitle = TitleFixFF(thisCurr.replace('/',' '),thisFF)
     if ForceTitle == False:
-        pl.title(thistitle)
+        pl.title(thistitle,y=TitleShift)
     else:
-        pl.title(ForceTitle)
+        pl.title(ForceTitle,y=TitleShift)
     thisdir = outputdir[0] + 'graphs/FormFactors/'+thisCurr + '/'
     mkdir_p(thisdir)
     thisfile = thisCol+thisCurr.replace('/','') + thisFF
@@ -188,9 +190,9 @@ def CreateFFFile(thisCol,thisCurr,thisFF):
 def CreateMKFFFile(thisCol,thisCurr,thisFF):
     thistitle = thisCol + TitleFixFF(thisCurr.replace('/',' '),thisFF)
     if ForceTitle == False:
-        pl.title(thistitle)
+        pl.title(thistitle,y=TitleShift)
     else:
-        pl.title(ForceTitle)
+        pl.title(ForceTitle,y=TitleShift)
     thisdir = outputdir[0].replace(str(kappa),'Comb') + 'graphs/FormFactors/'+thisCurr + '/'
     mkdir_p(thisdir)
     thisfile = thisCol+thisCurr.replace('/','') + thisFF
@@ -210,14 +212,14 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False,subdir=False):
     if 'q = 0 0 0' not in thisMom: thistitle += ' '+thisMom
     if ForceTitle == False:
         if thisfig == False:
-            pl.title(thistitle)
+            pl.title(thistitle,y=TitleShift)
         else:
             thisfig.suptitle(thistitle, fontsize=20)
     else:
         # pl.title(ForceTitle+'$' + thisflag.replace('Dt','\Delta t') + '$')
         if thisfig == False:
             if Debug: print 'title: ' , ForceTitle
-            pl.title(ForceTitle)
+            pl.title(ForceTitle,y=TitleShift)
         else:
             thisfig.suptitle(ForceTitle, fontsize=20)
     thisdir = outputdir[0] + 'graphs/'+CreateOppDir(thisGamma)
@@ -305,15 +307,15 @@ def SetTopAxies(torflow,NNQ=False,Dt=2,Wein=False):
     if NNQ:
         pl.ylabel(r'$ Eff\ Mass $')
         if Wein:
-            pl.title(r'$ Eff\ Mass\ of\ \gamma_{5}P_{+}NNW\ and\ NN\ Dt='+str(Dt)+'$')
+            pl.title(r'$ Eff\ Mass\ of\ \gamma_{5}P_{+}NNW\ and\ NN\ Dt='+str(Dt)+'$',y=TitleShift)
         else:
-            pl.title(r'$ Eff\ Mass\ of\ \gamma_{5}P_{+}NNQ\ and\ NN\ Dt='+str(Dt)+'$')
+            pl.title(r'$ Eff\ Mass\ of\ \gamma_{5}P_{+}NNQ\ and\ NN\ Dt='+str(Dt)+'$',y=TitleShift)
     else:
         pl.ylabel(r'$ \alpha $')
         if Wein:
-            pl.title(r'$\frac{\langle NNW \rangle }{\langle NN\rangle} = \alpha $',y=1.04)
+            pl.title(r'$\frac{\langle NNW \rangle }{\langle NN\rangle} = \alpha $',y=TitleShift)
         else:
-            pl.title(r'$\frac{\langle NNQ \rangle }{\langle NN\rangle} = \alpha $',y=1.04)
+            pl.title(r'$\frac{\langle NNQ \rangle }{\langle NN\rangle} = \alpha $',y=TitleShift)
     
     
 
@@ -1554,7 +1556,7 @@ def GraphQExp(Qlist,flowlist):
     pl.xlabel(r'$ t_{flow} $')
     pl.ylabel(r'$ \langle Q \rangle $')
     thisdir = outputdir[0] + 'graphs/Qdata/'
-    pl.title(r'$ \langle Q \rangle $')
+    pl.title(r'$ \langle Q \rangle $',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'QExp.pdf')
     pl.clf()
@@ -1565,7 +1567,7 @@ def GraphWExp(Wlist,flowlist):
     pl.xlabel(r'$ t_{flow} $')
     pl.ylabel(r'$ \langle W \rangle $')
     thisdir = outputdir[0] + 'graphs/Wdata/'
-    pl.title(r'$ \langle W \rangle $')
+    pl.title(r'$ \langle W \rangle $',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'WExp.pdf')
     pl.clf()
@@ -1606,7 +1608,7 @@ def Graphchit(Qlist,flowlist):
     pl.ylim(0.14,0.3)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Qdata/'
-    pl.title(r'$ \chi_{t}^{1/4} = \frac{\hbar c}{aV^{1/4}} \langle Q^2 \rangle^{1/4} $',y=1.04)
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{\hbar c}{aV^{1/4}} \langle Q^2 \rangle^{1/4} $',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chit.pdf')
     pl.clf()
@@ -1640,7 +1642,7 @@ def GraphWchit(Wlist,flowlist):
     # pl.ylim(0,0.4)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Wdata/'
-    pl.title(r'$ \chi_{t}^{1/4} = \frac{\hbar c}{aV^{1/4}} \langle W^2 \rangle^{1/4} $',y=1.04)
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{\hbar c}{aV^{1/4}} \langle W^2 \rangle^{1/4} $',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chit.pdf')
     pl.clf()
@@ -1681,7 +1683,7 @@ def GraphchitKappas(Qlist,flowlist):
     # pl.ylim(0,0.4)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Qdata/'
-    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{aV^{1/4}} \langle Q^2 \rangle^{1/4} $',y=1.04)
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{aV^{1/4}} \langle Q^2 \rangle^{1/4} $',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chitKappa.pdf')
     pl.clf()
@@ -1720,7 +1722,7 @@ def GraphWchitKappas(Wlist,flowlist):
     # pl.ylim(0,0.4)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Wdata/'
-    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{aV^{1/4}} \langle W^2 \rangle^{1/4} $',y=1.04)
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{aV^{1/4}} \langle W^2 \rangle^{1/4} $',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chitKappa.pdf')
     pl.clf()
