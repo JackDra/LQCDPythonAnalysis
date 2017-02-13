@@ -82,18 +82,18 @@ def ReadAndPlotDict(thisGammaList,thisMomList,thisSetList,thisMethodList,thisCom
                 # thisdatadict = datadict[igamma][imom]
                 if not CheckDict(combdatadict,icomb,igamma,imom): continue
                 thisdatadict = combdatadict[icomb][igamma][imom]
-                # if kappa == 12090:
-                progprint(0,time.time(),combgamma)
-                prevtime = time.time()
-                PlotTSinkData(thisdatadict,thisSetList,combgamma,imom,feedin['ForceTitle'])
-                progprint(1,prevtime,combgamma)
-                prevtime = time.time()
-                ###HANDLED UTILISING THE SETS PASSED IN -s=.....##
-                PlotTSinkData(thisdatadict,thisSetList,combgamma,imom,feedin['ForceTitle'],thissm='s')
-                progprint(2,prevtime,combgamma)
-                prevtime = time.time()
-                PlotTSinkData(thisdatadict,thisSetList,combgamma,imom,feedin['ForceTitle'],thissm='state1'+PoFTvarList[0])
-                progprint(2,prevtime,combgamma)
+                if kappa == 12090:
+                    progprint(0,time.time(),combgamma)
+                    prevtime = time.time()
+                    PlotTSinkData(thisdatadict,thisSetList,combgamma,imom,feedin['ForceTitle'])
+                    progprint(1,prevtime,combgamma)
+                    prevtime = time.time()
+                    ###HANDLED UTILISING THE SETS PASSED IN -s=.....##
+                    PlotTSinkData(thisdatadict,thisSetList,combgamma,imom,feedin['ForceTitle'],thissm='s')
+                    progprint(2,prevtime,combgamma)
+                    prevtime = time.time()
+                    PlotTSinkData(thisdatadict,thisSetList,combgamma,imom,feedin['ForceTitle'],thissm='state1'+PoFTvarList[0])
+                    progprint(2,prevtime,combgamma)
                 if 'SumMeth' in thisMethodList:
                     prevtime = time.time()
                     PlotTSinkSumData(thisdatadict,thisSetList,combgamma,imom,feedin['ForceTitle'])
