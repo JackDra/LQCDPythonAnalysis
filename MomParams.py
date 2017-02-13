@@ -31,7 +31,7 @@ def GetMpi(kappa,Phys=True):
     if Phys:
         return '{:.3f} GeV'.format(DefPionMass[str(kappa)]*hbarcdivlat)
     else:
-        return '{:.3f}'DefPionMass[str(kappa)]
+        return '{:.3f}'.format(DefPionMass[str(kappa)])
 
 DiagPList = [[1, 1, 1, 2], [2, 2, 2, 4], [3, 3, 3, 6], [4, 4, 4, 8], [5, 5, 5, 10], [6, 6, 6, 12], [7, 7, 7, 14], [8, 8, 8, 16]]
 DiagPListtdiv = [[1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3], [4, 4, 4, 4], [5, 5, 5, 5], [6, 6, 6, 6], [7, 7, 7, 7], [8, 8, 8, 8]]
