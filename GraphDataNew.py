@@ -1649,7 +1649,7 @@ def GraphWchit(Wlist,flowlist):
     taulist,tauerrlist,alphaerr,meanlist = [],[],[],[]
     print 'len(taulist)',len(flowlist)
     print 'len(Wlist)',len(Wlist)
-    for idata in np.array(Wlist)**2:
+    for idata in np.rollaxis(np.array(Wlist)**2,1):
         auto_gamma,Cw,Gfun,Wpick,auto_error = Gamma1D_est(idata)
         taulist.append( auto_gamma[Wpick])
         tauerrlist.append(auto_error[Wpick])
