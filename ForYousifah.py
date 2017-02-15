@@ -27,7 +27,7 @@ print 'Found ' , len(Totfilelist) , ' configurations'
 FileListIn = []
 
 def SplitCfgSrc(ifile):
-    isrc = re.search('xsrc.*_k',ifile).group().replace('_k','')
+    isrc = re.search('_xsrc.*_k',ifile).group().replace('_k','')
     icfg = re.search('-.-.*_xsrc',ifile).group().replace('_xsrc','')
     return isrc,icfg
 

@@ -370,7 +370,7 @@ class R2CChromaXMLFileList:
             TSRC_read = False
             datahold = []
             datag5hold = []
-            # print 'Reading ' ,thisfile.replace(xsrcList[0],xsrc)
+            print 'Reading ' ,thisfile
             with open(thisfile,'r') as f:
                 BarPart,InterpPart,InterpPartg5,ReadMom = False,False,False,False
                 for line in f:
