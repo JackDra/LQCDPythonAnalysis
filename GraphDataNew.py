@@ -1621,6 +1621,7 @@ def Graphchit(Qlist,flowlist):
 
 
             
+    thisdir = outputdir[0] + 'graphs/Qdata/'
     Q2boot,dump = bt.CreateBoot(np.array(Qlist)**2,nboot,0)
     pl.errorbar(range(len(taulist)),taulist,tauerrlist,fmt='.')
     pl.axhline(0.5, color='k', linestyle='--')
@@ -1656,7 +1657,6 @@ def Graphchit(Qlist,flowlist):
     pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
     # pl.ylim(0.14,0.3)
     pl.legend()
-    thisdir = outputdir[0] + 'graphs/Qdata/'
     pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{aV^{1/4}} \langle Q^2 \rangle^{1/4} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chit.pdf')
