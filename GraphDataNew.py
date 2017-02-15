@@ -1807,7 +1807,7 @@ def GraphchitKappasOverFlow(Qlist,flowlist,thiskappalist):
         Q2boot,dump = bt.CreateBoot(np.array(iQ)**2,nboot,0)
         chit = coeff*np.array(Q2boot)**(0.25)
         chit = GetBootStats(chit)
-        pl.errorbar(iflowlist[1:]+ishift,Pullflag(chit,'Avg')[1:],Pullflag(chit,'Std')[1:],fmt='o',label=GetMpi(ikappa))
+        pl.errorbar(iflowlist[1:]+ishift,Pullflag(chit,'Avg')[1:],Pullflag(chit,'Std')[1:],fmt='o',label=r'$'+GetMpi(ikappa)+'$')
 
     # Qavg = np.mean(np.array(Qlist)**2,axis=0)
     # Qstd = np.std(np.array(Qlist)**2,axis=0,ddof=1)
@@ -1818,7 +1818,7 @@ def GraphchitKappasOverFlow(Qlist,flowlist,thiskappalist):
     pl.xlabel(r'$ t_{flow} $')
     pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
     # pl.ylim(0,0.4)
-    pl.legend()
+    pl.legend(loc='center right')
     thisdir = outputdir[0] + 'graphs/Qdata/'
     pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{aV^{1/4}} \langle Q^2 \rangle^{1/4} $',y=TitleShift)
     mkdir_p(thisdir)
