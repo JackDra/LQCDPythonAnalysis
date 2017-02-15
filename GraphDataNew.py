@@ -1637,12 +1637,40 @@ def GraphWchit(Wlist,flowlist):
     flowlist = np.array(flowlist)
     thislatspace = 0.0907
     coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25))**(0.5))
-
+    thisshift = 0.01
+    
     # Wboot,dump = bt.CreateBoot(Wlist,nboot,0)
     # W2boot = np.array(Wboot)**2
     # chit = coeff*np.array(W2boot)**(0.25)
     # chit = GetBootStats(chit)
     # pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$W Boot$')
+    
+    for idata in np.array(Wlist)**2:
+        auto_gamma,Cw,Gfun,Wpick,auto_error = Gamma1D_est(idata)
+        taulist.append( auto_gamma[Wpick])
+        tauerrlist.append(auto_error[Wpick])
+        alphaerr.append(Cw)
+        meanlist.append(np.mean(idata))
+    
+    W2boot,dump = bt.CreateBoot(np.array(Wlist)**2,nboot,0)
+    pl.errorbar(range(len(taulist)),taulist,tauerrlist,fmt='.')
+    pl.axhline(0.5, color='k', linestyle='--')
+    pl.ylabel(r'$ \tau_{int}$')
+    
+    pl.title(r'$\tau (W^{2})$')
+    pl.xlabel(r'$t_{flow}$')
+    mkdir_p(thisdir)
+    pl.savefig(thisdir+'IntAutoCorrW2.pdf')
+    pl.clf()
+    pl.errorbar(range(len(meanlist)),meanlist,alphaerr,fmt='.',label='Autocorr')
+    pl.errorbar(np.arange(len(W2boot))+thisshift,Pullflag(W2Boot,'Avg')[:25],Pullflag(W2Boot,'Std'),fmt='.',label='Bootstrap')
+    pl.ylabel(r'$ \braket{W^{2}}$')
+    pl.legend()
+    pl.title(r'$\braket{W^{2}}$')
+    pl.xlabel(r'$t_{flow}$')
+    pl.savefig(thisdir+'AutoAlphaW2.pdf')
+    pl.clf()
+
 
     W2boot,dump = bt.CreateBoot(np.array(Wlist)**2,nboot,0)
     chit = coeff*np.array(W2boot)**(0.125)

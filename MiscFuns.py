@@ -87,6 +87,27 @@ def GammaAlpha_estimate(gQ,gN):
    return np.array(tau),np.sqrt(np.abs(CaW[Wopp])/float(glen)),Gat,Wopp, np.array(VarTau(tau))
 
 
+def Gamma1D_est(data):
+   data = np.array(data)
+   glen = len(data)
+   dataAvg = data.mean()
+   
+   GQQt=autocorr(data,data)
+   
+   ##alpha function derivates wrt NNQ and NN for NNQ/NN
+   fQ = 1
+   
+   ## equation (33)
+   Gat = GQQt   
+   # if Norm: Gat = np.array(Gat)/Gat[0]
+
+   ## equation (35)
+   CaW = [Gat[0] + 2*np.sum(Gat[1:W]) for W in range(1,len(Gat))]
+   ## equation (41)
+   tau = np.array(CaW) / (2*Gat[0])
+   Wopp = gW(tau)
+   return np.array(tau),np.sqrt(np.abs(CaW[Wopp])/float(glen)),Gat,Wopp, np.array(VarTau(tau))
+    
 
 
 # def autocorr(x):
