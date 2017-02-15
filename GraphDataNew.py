@@ -1665,6 +1665,7 @@ def GraphWchit(Wlist,flowlist):
     pl.savefig(thisdir+'IntAutoCorrW2.pdf')
     pl.clf()
     pl.errorbar(range(len(meanlist)),meanlist,alphaerr,fmt='.',label='Autocorr')
+    W2boot,dump = bt.CreateBoot(np.array(Wlist)**2,nboot,0)
     pl.errorbar(np.arange(len(W2boot))+thisshift,Pullflag(W2Boot,'Avg')[:25],Pullflag(W2Boot,'Std'),fmt='.',label='Bootstrap')
     pl.ylabel(r'$ \braket{W^{2}}$')
     pl.legend()
@@ -1673,8 +1674,6 @@ def GraphWchit(Wlist,flowlist):
     pl.savefig(thisdir+'AutoAlphaW2.pdf')
     pl.clf()
 
-
-    W2boot,dump = bt.CreateBoot(np.array(Wlist)**2,nboot,0)
     chit = coeff*np.array(W2boot)**(0.125)
     chit = GetBootStats(chit)
     # pl.errorbar(flowlist-0.02,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$W^{2} Boot$')
