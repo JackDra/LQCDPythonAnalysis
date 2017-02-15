@@ -31,7 +31,7 @@ def SplitCfgSrc(ifile):
     icfg = re.search('-.-.*_xsrc',ifile).group().replace('_xsrc','')
     return isrc,icfg
 
-FileListIn,FileListOut,FileListOut = OrderedDict(),[],[]
+FileListIn,FileListOut,FileListOutg5 = OrderedDict(),[],[]
 for ifile in Totfilelist:
     isrc,icfg = SplitCfgSrc(ifile)
     if icfg not in FileListIn.keys():        
