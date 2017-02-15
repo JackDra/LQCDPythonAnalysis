@@ -1801,14 +1801,12 @@ def GraphchitKappasOverFlow(Qlist,flowlist,thiskappalist):
     # chit = coeff*np.array(Q2boot)**(0.25)
     # chit = GetBootStats(chit)
     # pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q Boot$')
-    tflowindex = flowlist[0].tolist().index(4.01)
     chitKappa = []
-    thisshiftlist = [0,0.1]
+    thisshiftlist = [0,0.05]
     for iQ,ishift,ikappa in zip(Qlist,thisshiftlist,thiskappalist):
         Q2boot,dump = bt.CreateBoot(np.array(iQ)**2,nboot,0)
         chit = coeff*np.array(Q2boot)**(0.25)
         chit = GetBootStats(chit)
-        Mpi = DefPionMass[str(ikappa)]*hbarcdivlat
         pl.errorbar(flowlist+ishift,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=GetMpi(ikappa))
 
     # Qavg = np.mean(np.array(Qlist)**2,axis=0)
