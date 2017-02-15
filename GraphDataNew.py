@@ -1611,6 +1611,36 @@ def Graphchit(Qlist,flowlist):
     chit = GetBootStats(chit)
     # pl.errorbar(flowlist-0.02,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q^{2} Boot$')
     # pl.errorbar(flowlist[1:] ,Pullflag(chit,'Avg')[1:],Pullflag(chit,'Std')[1:],fmt='o')
+    taulist,tauerrlist,alphaerr,meanlist = [],[],[],[]
+    for iflow,idata in zip(flowlist,np.rollaxis(np.array(Qlist)**2,1)):
+        auto_gamma,Cw,Gfun,Wpick,auto_error = Gamma1D_est(idata)
+        taulist.append( auto_gamma[Wpick])
+        tauerrlist.append(auto_error[Wpick])
+        alphaerr.append(Cw)
+        meanlist.append(np.mean(idata))
+
+
+            
+    Q2boot,dump = bt.CreateBoot(np.array(Qlist)**2,nboot,0)
+    pl.errorbar(range(len(taulist)),taulist,tauerrlist,fmt='.')
+    pl.axhline(0.5, color='k', linestyle='--')
+    pl.ylabel(r'$ \tau_{int}$')
+    
+    pl.title(r'$\tau (Q^{2})$')
+    pl.xlabel(r'$t_{flow}$')
+    mkdir_p(thisdir)
+    pl.savefig(thisdir+'IntAutoCorrQ2.pdf')
+    pl.clf()
+    pl.errorbar(flowlist[1:],meanlist[1:],alphaerr[1:],fmt='.',label='Autocorr')
+    pl.errorbar(flowlist[1:]+thisshift,Pullflag(Q2boot,'Avg')[1:],Pullflag(Q2boot,'Std')[1:],fmt='.',label='Bootstrap')
+    pl.ylabel(r'$<Q^{2}>$')
+    pl.legend()
+    pl.title(r'$<Q^{2}>$')
+    pl.xlabel(r'$t_{flow}$')
+    pl.savefig(thisdir+'AutoAlphaQ2.pdf')
+    pl.clf()
+
+
     if FormatChit:
         pl.plot(flowlist,Pullflag(chit,'Avg'),color='b')
         pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='k.',ecolor='r')
@@ -1639,7 +1669,7 @@ def GraphWchit(Wlist,flowlist):
     thisdir = outputdir[0] + 'graphs/Wdata/'
     coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25))**(0.5))
     thisshift = 0.05
-    
+    flowpick = 6.0
     # Wboot,dump = bt.CreateBoot(Wlist,nboot,0)
     # W2boot = np.array(Wboot)**2
     # chit = coeff*np.array(W2boot)**(0.25)
@@ -1647,13 +1677,42 @@ def GraphWchit(Wlist,flowlist):
     # pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$W Boot$')
     
     taulist,tauerrlist,alphaerr,meanlist = [],[],[],[]
-    for idata in np.rollaxis(np.array(Wlist)**2,1):
+    for iflow,idata in zip(flowlist,np.rollaxis(np.array(Wlist)**2,1)):
         auto_gamma,Cw,Gfun,Wpick,auto_error = Gamma1D_est(idata)
         taulist.append( auto_gamma[Wpick])
         tauerrlist.append(auto_error[Wpick])
         alphaerr.append(Cw)
         meanlist.append(np.mean(idata))
-    
+
+        # TODO
+        #     if iflow == flowpick:
+    #         PGfun = Gfun
+            
+
+
+
+    # pl.plot(range(len(Gfun[:3*Wpick+1])),Gfun[:3*Wpick+1],'.-')
+    # pl.axvline(Wpick, color='k', linestyle='-')
+    # pl.axhline(0.0, color='k', linestyle='--')
+    # pl.ylabel(r'$ \Gamma$')
+    # pl.xlabel('W')
+    # pl.title('Autocorrelation of $ \\alpha $ for nconf=' + str(len(NNdata)))
+    # pl.savefig('./montegraphs/AutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
+    # pl.clf()
+    # if Debug:
+    #     for iW,(itau,itauerr) in enumerate(zip(auto_gamma,auto_error)):
+    #         print iW,itau,itauerr
+    # pl.errorbar(range(len(auto_gamma[:3*Wpick+1])),auto_gamma[:3*Wpick+1],auto_error[:3*Wpick+1],label='Error={:.2g}'.format(Cw))
+    # pl.axvline(Wpick, color='k', linestyle='-')
+    # pl.axhline(0.5, color='k', linestyle='--')
+    # pl.ylabel(r'$ \tau_{int}$')
+    # pl.xlabel('W')
+    # pl.legend()
+    # pl.title('Integrated Autocorrelation function for nconf=' + str(len(NNdata)))
+    # pl.savefig('./montegraphs/IntAutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
+    # pl.clf()
+
+            
     W2boot,dump = bt.CreateBoot(np.array(Wlist)**2,nboot,0)
     pl.errorbar(range(len(taulist)),taulist,tauerrlist,fmt='.')
     pl.axhline(0.5, color='k', linestyle='--')
@@ -1665,7 +1724,6 @@ def GraphWchit(Wlist,flowlist):
     pl.savefig(thisdir+'IntAutoCorrW2.pdf')
     pl.clf()
     pl.errorbar(flowlist[1:],meanlist[1:],alphaerr[1:],fmt='.',label='Autocorr')
-    W2boot,dump = bt.CreateBoot(np.array(Wlist)**2,nboot,0)
     pl.errorbar(flowlist[1:]+thisshift,Pullflag(W2boot,'Avg')[1:],Pullflag(W2boot,'Std')[1:],fmt='.',label='Bootstrap')
     pl.ylabel(r'$<W^{2}>$')
     pl.legend()
