@@ -1638,7 +1638,7 @@ def GraphWchit(Wlist,flowlist):
     thislatspace = 0.0907
     thisdir = outputdir[0] + 'graphs/Wdata/'
     coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25))**(0.5))
-    thisshift = 0.01
+    thisshift = 0.05
     
     # Wboot,dump = bt.CreateBoot(Wlist,nboot,0)
     # W2boot = np.array(Wboot)**2
