@@ -1803,7 +1803,7 @@ def GraphchitKappasOverFlow(Qlist,flowlist,thiskappalist):
     # pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q Boot$')
     chitKappa = []
     thisshiftlist = [0,0.05]
-    for iQ,ishift,ikappa in zip(Qlist,thisshiftlist,thiskappalist):
+    for ishift,iQ,ikappa in zip(Qlist,thisshiftlist,thiskappalist):
         Q2boot,dump = bt.CreateBoot(np.array(iQ)**2,nboot,0)
         chit = coeff*np.array(Q2boot)**(0.25)
         chit = GetBootStats(chit)
