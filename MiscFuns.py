@@ -36,7 +36,7 @@ def autocorr(x,y):
    x = x-x.mean()
    y = y-y.mean()
    r = np.correlate(x, y, mode = 'full')[-n:]
-   # assert np.allclose(r, np.array([(x[:n-k]*x[-(n-k):]).sum() for k in range(n)]))
+   assert np.allclose(r, np.array([(x[:n-k]*x[-(n-k):]).sum() for k in range(n)]))
    result = r/np.arange(n, 0, -1)
    return result
 
