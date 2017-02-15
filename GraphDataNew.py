@@ -1636,6 +1636,7 @@ def GraphWchit(Wlist,flowlist):
     ## Hard coded here....
     flowlist = np.array(flowlist)
     thislatspace = 0.0907
+    thisdir = outputdir[0] + 'graphs/Wdata/'
     coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25))**(0.5))
     thisshift = 0.01
     
@@ -1689,7 +1690,6 @@ def GraphWchit(Wlist,flowlist):
     pl.ylabel(r'$ \frac{1}{\sqrt{aV^{1/4}}} \langle W^2 \rangle^{1/8} GeV$')
     # pl.ylim(0,0.4)
     pl.legend()
-    thisdir = outputdir[0] + 'graphs/Wdata/'
     pl.title(r'$\frac{1}{\sqrt{aV^{1/4}}} \langle W^2 \rangle^{1/8} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chit.pdf')
