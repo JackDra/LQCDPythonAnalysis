@@ -45,7 +45,6 @@ for ifile in Totfilelist:
 for cfgFileOut,cfgFileOutg5,(icfg,cfgFileListIn) in zip(FileListOut,FileListOutg5,FileListIn.iteritems()):
     print 'Reading and Writing Config' , icfg
     data = R2CChromaXMLFileList(cfgFileListIn,[0],Dog5=True)
-    print data.data[0]
     R2CCOut(data.data[0],cfgFileOut)
     R2CCOut(data.datag5[0],cfgFileOutg5)
 
