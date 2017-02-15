@@ -37,11 +37,12 @@ for ifile in Totfilelist:
     if icfg not in FileListIn.keys():        
         FileListIn[icfg] = []
         FileListOut.append(ifile.replace(cfundir,cfunOutdir).replace(isrc,''))
+        FileListOutg5.append(ifile.replace(cfundir,cfunOutdirg5).replace(isrc,''))
     FileListIn[icfg].append(ifile)
     
 
 
-for cfgFileOut,(icfg,cfgFileListIn) in zip(FileListOut,FileListIn.iteritems()):
+for cfgFileOut,cfgFileOutg5,(icfg,cfgFileListIn) in zip(FileListOut,FileListOutg5,FileListIn.iteritems()):
     print 'Reading and Writing Config' , icfg
     data = R2CChromaXMLFileList(cfgFileListIn,[0],Dog5=True)
     R2CCOut(data.data[0],cfgFileOut)
