@@ -1645,6 +1645,7 @@ def GraphWchit(Wlist,flowlist):
     # chit = GetBootStats(chit)
     # pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$W Boot$')
     
+    taulist,tauerrlist,alphaerr,meanlist = [],[],[],[]
     for idata in np.array(Wlist)**2:
         auto_gamma,Cw,Gfun,Wpick,auto_error = Gamma1D_est(idata)
         taulist.append( auto_gamma[Wpick])
