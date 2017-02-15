@@ -17,6 +17,9 @@ cfundir = '/mnt/research/lqcd/CfunAnalysis/cfunPChroma/Kud01370000Ks01364000/two
 cfunOutdir = '/mnt/research/lqcd/CfunAnalysis/cfunForAhmed/Kud01370000Ks01364000/twoptRandT/twoptsm64si64/'
 cfunOutdirg5 = '/mnt/research/lqcd/CfunAnalysis/cfunForAhmed/Kud01370000Ks01364000/twoptRandT/twoptsm64si64g5/'
 
+mkdir_p(cfunOutdir)
+mkdir_p(cfunOutdirg5)
+
 Totfilelist = glob.glob(cfundir+'*')
 
 print 'Found ' , len(Totfilelist) , ' configurations'
