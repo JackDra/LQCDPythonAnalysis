@@ -24,6 +24,19 @@ def CreateBootClass(data,thisnboot):
     return bootout
 
 
+def MyCorrelate(x,y,Norm=True,MinAvg=True):
+    if MinAvg:
+        x = x-np.mean(x)
+        y = y-np.mean(y)
+    listout = []
+    for it in range(len(x)):
+        listout.append(0.0)
+        for index in range(len(x)):
+            if it+index < len(x):
+                listout[-1] = listout[-1] + x[index]*y[index+it]
+        if Norm: listout[-1] = listout[-1]/(len(x)-it)
+    return np.array(listout)
+
 
 ### autocorrelation work taken from https://arxiv.org/pdf/hep-lat/0306017.pdf
 def autocorr(x,y):
@@ -72,7 +85,7 @@ def GammaAlpha_estimate(gQ,gN):
    
    ##alpha function derivates wrt NNQ and NN for NNQ/NN
    fQ = gNAvg**(-1)
-   fN = -gQAvg/(2*gNAvg**2)
+   fN = -gQAvg/(gNAvg**2)
    
    ## equation (33)
    Gat = fQ**2 * GQQt + (fQ*fN * (GQNt + GNQt)) + fN**2 * GNNt

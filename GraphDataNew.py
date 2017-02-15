@@ -1696,7 +1696,7 @@ def GraphWchit(Wlist,flowlist):
     pl.axhline(0.0, color='k', linestyle='--')
     pl.ylabel(r'$ \Gamma$')
     pl.xlabel('W')
-    pl.title('Autocorrelation of $ \\alpha t_{flow}='+str(flowpick)+'$' )
+    pl.title('Autocorrelation of $ \\alpha\\ t_{flow}='+str(flowpick)+'$' )
     pl.savefig(thisdir+'AutoCorrW2Flow'+str(flowpick)+'.pdf')
     pl.clf()
     pl.errorbar(range(len(Pag[:3*Wpick+1])),Pag[:3*Wpick+1],Pagerr[:3*Wpick+1],label='Error={:.2g}'.format(PCw))
@@ -1705,7 +1705,7 @@ def GraphWchit(Wlist,flowlist):
     pl.ylabel(r'$ \tau_{int}$')
     pl.xlabel('W')
     pl.legend()
-    pl.title('Integrated Autocorrelation function of $ \\alpha t_{flow}='+str(flowpick)+'$' )
+    pl.title('Integrated Autocorrelation function of $ \\alpha\\ t_{flow}='+str(flowpick)+'$' )
     pl.savefig(thisdir+'IntAutoCorrW2Flow'+str(flowpick)+'.pdf')
     pl.clf()
 
