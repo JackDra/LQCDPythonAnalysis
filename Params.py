@@ -294,7 +294,7 @@ PoFTsrcstrList = ['tsrc'+itsrc for itsrc in PoFtsourceList]
 # note: dim of StateSet < dim of SmearSet
 GammaSet = ['I','g1','g2','g3','g4','g1g2','g1g3','g1g4','g2g3','g2g4','g3g4','g1g5','g2g5','g3g5','g4g5','g5']
 GammaConsSet = ['Consg1','Consg2','Consg3','Consg4']
-tflowlist = map(float,np.arange(0,1000,50)) ## indicies of flows to read
+tflowlist = map(float,np.arange(0,1000,20)) ## indicies of flows to read
 # tflowlist = map(float,np.arange(0,1000))
 
 if DoCmplx:
