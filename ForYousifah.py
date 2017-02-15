@@ -10,7 +10,7 @@ from collections import OrderedDict
 def R2CCOut(data,thisfile):
     with open(thisfile,'w') as f:
         for it,idata in enumerate(data):
-            f.write('{:5d} {:10.20e}  \n'.format(it,idata))
+            f.write('{:5d}    {:10.20e}  \n'.format(it,idata))
 
 
 cfundir = '/mnt/research/lqcd/CfunAnalysis/cfunPChroma/Kud01370000Ks01364000/twoptRandT/twoptsm64si64/'
