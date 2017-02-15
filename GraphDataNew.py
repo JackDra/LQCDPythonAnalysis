@@ -1666,7 +1666,7 @@ def GraphWchit(Wlist,flowlist):
     pl.clf()
     pl.errorbar(range(len(meanlist)),meanlist,alphaerr,fmt='.',label='Autocorr')
     W2boot,dump = bt.CreateBoot(np.array(Wlist)**2,nboot,0)
-    pl.errorbar(np.arange(len(W2boot))+thisshift,Pullflag(W2Boot,'Avg')[:25],Pullflag(W2Boot,'Std'),fmt='.',label='Bootstrap')
+    pl.errorbar(np.arange(len(W2boot))+thisshift,Pullflag(W2boot,'Avg')[:25],Pullflag(W2boot,'Std'),fmt='.',label='Bootstrap')
     pl.ylabel(r'$ \braket{W^{2}}$')
     pl.legend()
     pl.title(r'$\braket{W^{2}}$')
