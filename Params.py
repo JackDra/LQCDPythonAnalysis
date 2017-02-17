@@ -156,10 +156,10 @@ NoSFRfacScale = False # Turn on to only scale the R function by sqrt((Epp+m)(Ep+
 ReadPoF2pt = True # Create PoF using already calculated eigenvectors. This is used if the statistics or solver method has changed.
 DeCorrPoF = False ## used for debugging the pencil of function method (decorrelation problem) !!!!!DEPRECIATED, LEAVE FALSE!!!!!
 TimeInv = False ## uses time invariance to calculate the Pencil of Function method/ Oposed to calculating [tsource,tsource-1,...,tsource-PoFShifts]
-DoCM = False ## does correlation matrix result ( no PoF) 
+DoCM = True ## does correlation matrix result ( no PoF) 
 PlotMonte = False ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
 PlotXSrcDep = False ## Plots value and error over number of sources per gauge field
-DoPlotAuto = True ## Plots autocorrelation function for alpha
+DoPlotAuto = False ## Plots autocorrelation function for alpha
 
 if PlotXSrcDep:
     NoXAvg = True ## Does each source separatly for each 
@@ -217,7 +217,7 @@ if TimeInv:
     CfunConfigCheck = True # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
 else:
     CfunConfigCheck = False # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
-CfunConfigCheck = True # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
+CfunConfigCheck = False # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
 
 
 if Debug: print 'nconfs saved is: ' , RunNconfs
