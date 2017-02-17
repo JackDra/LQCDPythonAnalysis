@@ -42,7 +42,7 @@ def CreateTwoPt(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':Ana
     C2out = FlattenSmearWithTsrc(data2pt).tolist()
     ## C2out = [ t_src*ism*ism , ip , it ] 
     
-    if len(thisiSmearList) == len(thisjSmearList): print 'Warning: source and sink smearing lists are different sizes, CM analysis skipped'
+    if len(thisiSmearList) != len(thisjSmearList): print 'Warning: source and sink smearing lists are different sizes, CM analysis skipped'
     start = time.time()
     CMinputparams,PoFinputparams = [],[]
     makeContextFunctions(CreatePoF2ptCfuns)
