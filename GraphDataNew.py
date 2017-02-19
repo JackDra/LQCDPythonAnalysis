@@ -1818,7 +1818,7 @@ def GraphchitKappasOverFlow(Qlist,flowlist,thiskappalist):
     pl.xlabel(r'$ t_{flow} $')
     pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
     # pl.ylim(0,0.4)
-    # pl.legend(loc='center right')
+    pl.legend()
     thisdir = outputdir[0] + 'graphs/Qdata/'
     pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{aV^{1/4}} \langle Q^2 \rangle^{1/4} $',y=TitleShift)
     mkdir_p(thisdir)
