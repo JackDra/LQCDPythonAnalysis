@@ -92,10 +92,10 @@ leglocDict = {'ProtonP4g4':'upper left'}
 #               'NeutronTensorFF2':[2.0,0.45],
 #               'NeutronTensorFF3':[-0.2,-1],
 #               'NeutronGeGmFF1/F1divF2':[0.0,0.06]}
-ylimFFDict = {'ProtonVectorTopFF3':[-0.15,0.25],'NeutronVectorTopFF3':[-0.15,0.25],'PandNVectorTopFF3':[-0.15,0.25],
-              'ProtonVectorWeinFF3':[-20,15]}
-# ylimFFDict = {'ProtonVectorTopFF3':[-0.05,0.45],'NeutronVectorTopFF3':[-0.3,0],'PandNVectorTopFF3':[-.4,.4],
+# ylimFFDict = {'ProtonVectorTopFF3':[-0.15,0.25],'NeutronVectorTopFF3':[-0.15,0.25],'PandNVectorTopFF3':[-0.15,0.25],
 #               'ProtonVectorWeinFF3':[-20,15]}
+ylimFFDict = {'ProtonVectorTopFF3':[-0.05,0.45],'NeutronVectorTopFF3':[-0.3,0],'PandNVectorTopFF3':[-.4,.4],
+              'ProtonVectorWeinFF3':[-20,15]}
 
 leglengthFFDict = {'ProtonVectorTopFF3':2,'NeutronVectorTopFF3':2,'PandNVectorTopFF3':2,
                    'ProtonVectorWeinFF3':2,'NeutronVectorWeinFF3':2,'PandNVectorWeinFF3':2}
@@ -107,8 +107,8 @@ leglocFFDict = {'NeutronVectorFF2':'upper left',
                 'IsoVectorPsVectorFF2':'upper right',
                 'NeutronGeGmFF1/F1divF2':'upper left',
                 'ProtonTensorFF3':'upper left',
-                # 'NeutronVectorTopFF3':'lower right',
-                'NeutronVectorTopFF3':'upper right',
+                'NeutronVectorTopFF3':'lower right',
+                # 'NeutronVectorTopFF3':'upper right',
                 'NeutronTensorFF1':'upper left',
                 'NeutronTensorFF2':'upper left'}
 
