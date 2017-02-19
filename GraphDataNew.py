@@ -307,7 +307,7 @@ def SetTopAxies(torflow,NNQ=False,Dt=2,Wein=False):
         SetxTicks()
     elif torflow == 'flow':
         pl.xlabel(r'$t_{flow}$')        
-        pl.xlim(-0.01,10)
+        pl.xlim(-0.1,10)
     pl.legend()
     pl.tight_layout()
     if NNQ:
