@@ -317,10 +317,11 @@ def SetTopAxies(torflow,NNQ=False,Dt=2,Wein=False):
         else:
             pl.title(r'$ Eff\ Mass\ of\ \gamma_{5}P_{+}NNQ\ and\ NN\ Dt='+str(Dt)+'\ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     else:
-        pl.ylabel(r'$ \alpha $')
         if Wein:
+            pl.ylabel(r'$ \alpha_{W} $')
             pl.title(r'$\frac{\langle NNW \rangle }{\langle NN\rangle} = \alpha_{W} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
         else:
+            pl.ylabel(r'$ \alpha_{Q} $')
             pl.title(r'$\frac{\langle NNQ \rangle }{\langle NN\rangle} = \alpha_{Q} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     
     
