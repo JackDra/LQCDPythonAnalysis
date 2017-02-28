@@ -205,6 +205,10 @@ def CreateMassSet(thisiSmearL,thisjSmearL,thisStateList,thisTvarList,tsrclist = 
     return SortMySet(SetGraph,massset=True)[0]
 
 
+def CreateOverDetTvarSet(thisStateList,thisTvar):
+    return ['state'+istate+thisTvar for istate in thisStateList]
+
+
 ## dataCM [ istate , todt ]
 ## data [ ism ]
 ## dataout = [ (istatetodt / ismism) ]

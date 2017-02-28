@@ -70,18 +70,21 @@ def FormatToDictAvgStdChi(String):
 
 def LREVecToFormat(iLE,iRE,iEM,DoPoF):
     if DoPoF:
-        SmPoFList = []
+        jSmPoFList = []
+        iSmPoFList = []
         for iPoF in ['PoF'+str(ishift) for ishift in range(PoFShifts+1)]:
-            SmPoFList += [ism+'_'+iPoF for ism in DefSmList]
+            iSmPoFList += [ism+'_'+iPoF for ism in DefiSmList]
+            jSmPoFList += [jsm+'_'+iPoF for jsm in DefjSmList]
     else:
-        SmPoFList = DefSmList
+        iSmPoFList = DefiSmList
+        jSmPoFList = DefjSmList
     dictout = OrderedDict()
     dictout['Emass'] = '{0:20.10f}'.format(iEM)
     dictout['Left_Evec'] = OrderedDict()
     dictout['Right_Evec'] = OrderedDict()
-    for eLE,thiskey in zip(iLE,SmPoFList):
+    for eLE,thiskey in zip(iLE,iSmPoFList):
         dictout['Left_Evec'][thiskey] = '{0:20.10f}'.format(eLE)
-    for eRE,thiskey in zip(iRE,SmPoFList):
+    for eRE,thiskey in zip(iRE,jSmPoFList):
         dictout['Right_Evec'][thiskey] = '{0:20.10f}'.format(eRE)
     return dictout
         

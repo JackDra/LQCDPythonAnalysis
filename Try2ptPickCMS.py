@@ -7,10 +7,11 @@ import sys
 from Params import *
 from ReadCMCfuns import ReadSet,ReadList
 from CMSTech import CreateCM2ptCfuns,CreatePoF2ptCfuns,PreptwoptCorr
+from OverCMTech import *
 from OutputData import PrintSetToFile,PrintCfunToFile
 from OutputXmlData import PrintLREvecMassToFile
 from CreateCombs import CreategiDi
-from SetLists import CreateMassSet
+from SetLists import CreateMassSet,CreateOverDetTvarSet
 from MiscFuns import *
 import time,datetime
 from MultiWrap import *
@@ -96,3 +97,56 @@ def CreateTwoPt(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':Ana
     PrintSetToFile([C2out],SetList,thisMomList,['Mass'],0,AddDict=InfoDict)
     print 'Printing took ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
     # print 'Completed ' + ipTOqstr(thisMomList[0])
+
+
+def CreateTwoPtOverDet(thisMomList,thisiSmearList,thisjSmearList,thistorange,feedin= {'anaproc':AnaProc}):
+    logfile = logdir+'LogTwoPt.log'
+    errfile = logdir+'LogTwoPt.log'
+    touch(logfile)
+    touch(errfile)
+    sys.stdout = open(logfile,'a',0)
+    sys.stderr = open(errfile,'a',0)
+    # print 'Running ' + ipTOqstr(thisMomList[0]) + ' ' +  str(int((thisMomList[0]*100)/float(len(qvecSet))))+'%' 
+
+    if 'ReadList' in ListOrSet:
+        [data2pt,data3pt,filelist] = ReadList(thisiSmearList,thisjSmearList,thisMomList,{},{},[],[],
+                                              conflist,[],Interps=DefInterpList,thistsourceList=PoFtsourceList)
+    elif 'ReadSet' in ListOrSet:
+        [data2pt,data3pt,filelist] = ReadSet(thisiSmearList,thisjSmearList,thisMomList,{},{},[],[],
+                                             dirread,[],Interps=DefInterpList,thistsourceList=PoFtsourceList)
+
+    thisMomList = GetAvgMomListip(thisMomList)
+    data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
+    ncon = np.size(filelist)
+    InfoDict = {'nconfig':ncon}
+    print 'ncon = ' + str(ncon)
+    # print 'nboot = ' + str(nboot)
+    ## data2pt = [ t_src, ism , jsm , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+    C2out = FlattenSmearWithTsrc(data2pt).tolist()
+    ## C2out = [ t_src*ism*jsm , ip , it ] 
+    
+    if len(thisiSmearList) != len(thisjSmearList): print 'Warning: source and sink smearing lists are different sizes, CM analysis skipped'
+    start = time.time()
+    thistvar = 'to'+'-'.join(map(str,thistorange))+'dt'+str(OverDetdt)
+    print 'Starting Overdetumined Eigenvalue problem for '+ thistvar
+    [CMdata2pt,LEvec,REvec,Emass] = CreateOvdet2ptCfun(data2pt,thistorange,OverDetdt,thisMomList)
+    
+    
+    ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+    C2out += CMdata2pt.tolist()
+    PrintLREvecMassToFile(LEvec,REvec,Emass,thisMomList,thistvar,AddDict=InfoDict,DoPoF=False)
+
+
+    print 'CMTech Total Time Taken: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
+    start = time.time()
+    print 'Printing to file \r',
+
+    SetList = []
+    SetList += CreateMassSet(thisiSmearList,thisjSmearList,StateSet,[],tsrclist=PoFtsourceList,flipord=True)
+    SetList += CreateOverDetTvarSet(StateSet,thistvar)
+    PrintCfunToFile([C2out],SetList,thisMomList,['twopt'],AddDict=InfoDict)
+    PrintSetToFile([C2out],SetList,thisMomList,['Mass'],0,AddDict=InfoDict)
+    print 'Printing took ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
+    # print 'Completed ' + ipTOqstr(thisMomList[0])
+
+    

@@ -6,7 +6,7 @@ import numpy as np
 import sys
 from Params import *
 from SetLists import *
-from Try2ptPickCMS import CreateTwoPt
+from Try2ptPickCMS import CreateTwoPt,CreateTwoPtOverDet
 from TryTopCharge import CreateTwoPtTop
 from TryTop3pt import CreateRFTop
 from Try3ptPickCMS import CreateRF
@@ -123,7 +123,10 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         Wipe2pt(outputdir[0],tvarlist=TwoPtDefTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList)
         # thisMomList = Get2ptSetMoms(outputdir[0],RunAvgMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
         thisMomList = Get2ptSetMoms(outputdir[0],RunMomList,tvarlist=TwoTotDefTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList,tsrclist=PoFtsourceList)
-        CreateTwoPt([qstrTOip(imom) for imom in DragpZstr(thisMomList)],DefiSmearList,DefjSmearList,feedin=feedin)
+        if OverDetRun:
+            CreateTwoPtOverDet([qstrTOip(imom) for imom in DragpZstr(thisMomList)],DefiSmearList,DefjSmearList,OverDet_torange,feedin=feedin)
+        else:
+            CreateTwoPt([qstrTOip(imom) for imom in DragpZstr(thisMomList)],DefiSmearList,DefjSmearList,feedin=feedin)
         print 'Two Point Analysis Complete'
     elif RunType == 'TopAlpha':
         print 'Topological Charge Analysis'
