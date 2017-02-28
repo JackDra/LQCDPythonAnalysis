@@ -37,6 +37,9 @@ def ReadAndPlotMass(thisMomList,thisSetList,thisMethodList):
     thiskappalist = []
     for ioutput,ikappa in zip(outputdir,kappalist):
         hold = ReadSetFitRFDict(ioutput,thisSetList,['twopt'],thisMethodList,thisMomList=thisMomList)
+        if Debug:
+            print hold.keys(), 'twopt'
+            print hold['twopt'].keys(), 'q = 0 0 0'
         if CheckDict(hold,'twopt','q = 0 0 0'):
             datadictlist.append(hold)
             # thiskappalist.append(ikappa.replace('k'+str(ikappa),''))
