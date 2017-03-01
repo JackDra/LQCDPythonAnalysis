@@ -8,8 +8,8 @@ import numpy.random as npr
 
 Scale = 0.01
 A = np.arange(16).reshape(4,4)
-# B = np.eye(*A.shape)
-B = np.roll(np.arange(16),5).reshape(4,4)[::-1]
+B = np.eye(*A.shape)
+# B = np.roll(np.arange(16),5).reshape(4,4)[::-1]
 randlist1,randlist2 = npr.rand(*A.shape)*Scale,npr.rand(*A.shape)*Scale
 A = np.bmat([[A+randlist1],[A+randlist2]])
 # A = np.bmat([[A+randlist1],[A+randlist1]])
@@ -17,7 +17,7 @@ B = np.bmat([[B],[B]])
 
 Asq = A[:A.shape[1],:]
 Bsq = B[:B.shape[1],:]
-Iter = 100
+Iter = 100000
 
 
 
@@ -30,8 +30,8 @@ print 'Bsq=',Bsq
 print
 print 'Niter=',Iter
 
-# Evals,REvec,Dump = OverdetEigen(A,B,Iter)
-Evals,REvec,Dump = OverdetEigen(Asq,Bsq,Iter)
+Evals,REvec,Dump = OverdetEigen(A,B,Iter)
+# Evals,REvec,Dump = OverdetEigen(Asq,Bsq,Iter)
 Evals2,REvec2 = eig(Asq,Bsq)
 ##DEBUG WOKRING HERE, FIxed inverted eigenvalues...
 print

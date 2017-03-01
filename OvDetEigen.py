@@ -74,7 +74,7 @@ def GetQZ(R11,R12):
 
 
 ## Ax = Bx l
-def OverdetEigen(A,B,Niter):
+def OverdetEigen(A,B,Niter,Tol=OverdetTol):
     R11,R12,R22 = GetRs(np.matrix(A),np.matrix(B))
     R0,R,Z = GetQZ(R11,R12)
     E = R22*Z
@@ -132,15 +132,28 @@ def OverdetEigen(A,B,Niter):
                 # print vtildk
                 # print
             except:
+                print
+                print 'istate',istate,' iters =',iiter , ' Failed inversion'
                 iterlist.append(iiter)
-                continue
+                break
             vtild,kappa = np.array(vtildk[:-1]),vtildk[-1]
             vi = np.matrix(vtild/np.linalg.norm(vtild))
             # nexteval = EvalOut[istate] + (((R*vi.T).H *(Rmin1*vi.T))/((R*vi.T).H *(R*vi.T)))
+            preveval = deepcopy(nexteval)
             nexteval = nexteval + (((R*vi.T).H *(Rmin1*vi.T))/((R*vi.T).H *(R*vi.T)))
             nexteval = nexteval[0,0]
             # print 'Nexteval',nexteval
             EvalOut[istate] = nexteval
+            # print 'Evals'
+            # print preveval
+            # print nexteval
+            # print np.abs(preveval-nexteval)
+            # print Tol
+            # print 
+            if np.abs(preveval-nexteval) < Tol:
+                print
+                print 'istate',istate,' iters =',iiter 
+                break
         # EvalOut[istate] = EvalOut[istate] + (((R*vi.T).H *(Rmin1*vi.T))/complex(((R*vi.T).H *(R*vi.T))))
         # print 
         # print 'BLAH'

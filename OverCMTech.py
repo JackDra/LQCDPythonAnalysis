@@ -24,17 +24,17 @@ def CreateLREvesOvDet(Cfunto,Cfuntodt,thisdt):
     if VarMethodMethod == 'AxBxlSolve' or VarMethodMethod == 'Regular':
         Evals,REvec,Dump = OverdetEigen(Cfuntodt,Cfunto,OverDetIter)
         Evals2,REvec2 = eig(Cfuntodt[:Cfuntodt.shape[1],:],b=Cfunto[:Cfunto.shape[1],:])
-        ##DEBUG WOKRING HERE, FIxed inverted eigenvalues...
-        # print 'Overdet'
-        # print Cfunto
-        # print Cfuntodt
-        # print -np.log(Evals)/thisdt
-        # print REvec
-        # print 'reg'
-        # print Cfunto[:Cfunto.shape[1],:]
-        # print Cfuntodt[:Cfuntodt.shape[1],:]
-        # print -np.log(Evals2)/thisdt
-        # print REvec2
+        ## DEBUG WOKRING HERE, FIxed inverted eigenvalues...
+        print 'Overdet'
+        print Cfunto
+        print Cfuntodt
+        print -np.log(Evals)/thisdt
+        print REvec
+        print 'reg'
+        print Cfunto[:Cfunto.shape[1],:]
+        print Cfuntodt[:Cfuntodt.shape[1],:]
+        print -np.log(Evals2)/thisdt
+        print REvec2
         LEvec = REvec ## Assume both left and right eigenvalues are equal (maybe think about turning Symmetrise on?)
     else:
         raise LookupError('VarMethodMethod Must be AxBxlSolve or Regular for Over Detumined eigenvalue problem: ' + VarMethodMethod)

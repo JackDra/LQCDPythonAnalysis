@@ -162,7 +162,8 @@ DoCM = True ## does correlation matrix result ( no PoF)
 OverDetRun = True # Runs an overdeturmined eigenvalue problem using a range of to values.
 OverDet_torange = (2,6) ## range of to values to perfomr overdeturmined eigenvalue problem over.
 OverDetdt = 3 ## delta t value to use in the overdetumined eigenvalue problem
-OverDetIter = 100000 ## number of iterations performed in the overdeturmined eigenvalue problem
+OverDetIter = 10000 ## number of iterations performed in the overdeturmined eigenvalue problem
+OverdetTol = 10**-5
 # OverDetIter = 0
 
 PlotMonte = False ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
