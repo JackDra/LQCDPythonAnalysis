@@ -13,6 +13,9 @@ import operator as opp
 from ReadTxt import ReadLREM
 import time
 
+
+rollindex=1
+
 ## qr factorisation of (B,A)
 def QRAppend(A,B):
     return qr(np.bmat([B,A]),mode='r')[0]
@@ -34,6 +37,7 @@ def GetRs(A,B):
     # print Rbot
     R11,R12 = Rtop[:,:ndim],Rtop[:,ndim:]
     R21,R22 = Rbot[:,:ndim],Rbot[:,ndim:]
+    # print
     # print 'R11'
     # print R11
     # print 
@@ -53,7 +57,7 @@ def GetRs(A,B):
     
 
 def GetQZ(R11,R12):
-    R,R0,Q,Z = qz(R12,R11)
+    R0,R,Q,Z = qz(R12,R11)
     # print 'R'
     # print R
     # print 
@@ -72,37 +76,82 @@ def GetQZ(R11,R12):
 ## Ax = Bx l
 def OverdetEigen(A,B,Niter):
     R11,R12,R22 = GetRs(np.matrix(A),np.matrix(B))
-    R,R0,Z = GetQZ(R11,R12)
+    R0,R,Z = GetQZ(R11,R12)
     E = R22*Z
     C = E.getH()*E
+    # Eval,Evec = eig(R12,b=R11)
     Eval,Evec = eig(R0,b=R)
-    EvalOut,EvecOut = Eval,Evec
+    Evec = np.rollaxis(Evec,rollindex)
+    # print
+    # print 'Z*Evec'
+    # print Z*np.matrix(Evec)[:,0]
+    # EvalOut,EvecOut = Eval,Evec
     # print
     # print 'Initial eval/evec'
+    # print Eval
+    # print Evec
     iterlist = []
-    for istate,(sEval,sEvec) in enumerate(zip(Eval,Evec)):        
+    # for istate,(sEval,sEvec) in enumerate(zip(Eval,Evec)):        
+    EvalOut = []
+    EvecOut = []
+    for istate,(sEval,sEvec) in enumerate(zip(Eval,Evec)): 
         smEvec = np.matrix(sEvec)
         iiter = 0
         # print 'eval #'+str(istate+1)+': ', sEval
         # print 'evec #'+str(istate+1)+': ', sEvec
         # print 
+        vi = deepcopy(smEvec)
+        nexteval = sEval
+        EvalOut.append(sEval)
         for iiter in range(Niter):
             Rmin1 = R0-(sEval*R)
+            # minloc = np.argmin(Rmin1)
+            # minloc = minloc/(Rmin1.shape[0]-1),minloc%(Rmin1.shape[1]-1)
+            # Rmin1[minloc] = Rmin1[minloc] + np.max(Rmin1) ##create S matrix to remove singularities
+            # Rmin1 = R12-(sEval*R11)
+            # print
+            # print 'C'
+            # print C
             ydata = np.bmat([[-C*smEvec.T],[smEvec*smEvec.H]])
             xdata = np.bmat([[Rmin1.H*Rmin1,smEvec.T],[smEvec.H.T,np.matrix([[0]])]])
             try:
+                # print 
+                # print 'solve data'
+                # print 'x'
+                # print xdata[0]
+                # print xdata[1]
+                # print xdata[2]
+                # print xdata[3]
+                # print xdata[4]
+                # print 'y'
+                # print ydata
                 vtildk = solve(xdata,ydata)[:,0]
+                # print
+                # print 'eh?'
+                # print smEvec
+                # print vtildk
+                # print
             except:
                 iterlist.append(iiter)
                 continue
             vtild,kappa = np.array(vtildk[:-1]),vtildk[-1]
-            EvecOut[istate] = vtild/np.sqrt(vtild.dot(vtild))
-            vi = np.matrix(EvecOut[istate])
-            nexteval = EvalOut[istate] + (((R*vi.T).H *(Rmin1*vi.T))/((R*vi.T).H *(R*vi.T)))
-            EvalOut[istate] = nexteval[0,0]
-            # EvalOut[istate] = EvalOut[istate] + (((R*vi.T).H *(Rmin1*vi.T))/complex(((R*vi.T).H *(R*vi.T))))
+            vi = np.matrix(vtild/np.linalg.norm(vtild))
+            # nexteval = EvalOut[istate] + (((R*vi.T).H *(Rmin1*vi.T))/((R*vi.T).H *(R*vi.T)))
+            nexteval = nexteval + (((R*vi.T).H *(Rmin1*vi.T))/((R*vi.T).H *(R*vi.T)))
+            nexteval = nexteval[0,0]
+            # print 'Nexteval',nexteval
+            EvalOut[istate] = nexteval
+        # EvalOut[istate] = EvalOut[istate] + (((R*vi.T).H *(Rmin1*vi.T))/complex(((R*vi.T).H *(R*vi.T))))
+        # print 
+        # print 'BLAH'
+        # print Z
+        # print vi.T
+        # print np.array(Z*vi.T)[:,0]
+        EvecOut.append(np.array(Z*vi.T)[:,0])
         iterlist.append(iiter)
-    return EvalOut,EvecOut,iterlist
+    # for ival,ivec in zip(EvalOut,EvecOut):
+        
+    return np.array(EvalOut),np.rollaxis(np.array(EvecOut),1),iterlist
 
             
             

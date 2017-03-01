@@ -147,7 +147,7 @@ DoMulticore = True # Runs multicore wherever implemented
 DoContentsCheck = False # True makes sure the xml file has the correct momenta first field, turn off for more performance
 OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
 DoNorm = False # normalises the 2 point function (see CMSTech.py)
-DoSym = True # symmetrises the 2 point function (see CMSTech.py)
+DoSym = False # symmetrises the 2 point function (see CMSTech.py)
 # VarMethodMethod = 'Regular' # for solving the Variational method, different ways of doing it/
 # VarMethodMethod = 'Symmetriceigh' ## Symmetic matrix construction WITH symmetric solver
 # VarMethodMethod = 'Symmetric' ## Symmetic matrix construction WITHOUT symmetric solver
@@ -162,8 +162,8 @@ DoCM = True ## does correlation matrix result ( no PoF)
 OverDetRun = True # Runs an overdeturmined eigenvalue problem using a range of to values.
 OverDet_torange = (3,6) ## range of to values to perfomr overdeturmined eigenvalue problem over.
 OverDetdt = 3 ## delta t value to use in the overdetumined eigenvalue problem
-OverDetIter = 10000 ## number of iterations performed in the overdeturmined eigenvalue problem
-
+# OverDetIter = 10000 ## number of iterations performed in the overdeturmined eigenvalue problem
+OverDetIter = 0
 
 PlotMonte = False ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
 PlotXSrcDep = False ## Plots value and error over number of sources per gauge field
@@ -386,7 +386,10 @@ DefdtList = range(1,8)
 DeftodtPicked = [(3,3)]
 # DeftodtPicked = [(1,1)]
 # DeftodtPicked = [(18,2)]
-DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
+if OverDetRun:
+    DefTvarPicked = ['PoF'+str(PoFShifts)+'to'+'-'.join(map(str,OverDet_torange))+'dt'+str(OverDetdt)]
+else:
+    DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
 
 # DeftodtPicked = Elongate(DeftoList,DefdtList)
 # DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
@@ -411,6 +414,11 @@ for ito in DeftoList:
         TwoTotDefTvarList.append('PoF'+str(PoFShifts)+'to'+str(ito)+'dt'+str(idt))
         TwoTotDefTvarList.append('REvecto'+str(ito)+'dt'+str(idt))
 
+if OverDetRun:
+    DefTvarList += DefTvarPicked
+    TwoTotDefTvarList += DefTvarPicked
+    
+        
 TwoTotDefTvarList += DefTvarList
 DefTvarto16 = []
 DefTvarto17 = []
@@ -430,6 +438,8 @@ if OnlySelVar:
 else:
     AnatodtList = DeftodtList
     AnaTvarList = DefTvarList
+    
+    
     
 # DefSmearList = ['16']
 if kappa == 1375400:

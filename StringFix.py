@@ -112,13 +112,22 @@ def ProperCM(thestring):
     thestring = thestring.replace('CM','VarSPACE')
     thestring = thestring.replace('REvec','VarSPACE')
     thestring = thestring.replace('PoF0','VarSPACE')
-    toval = re.search('to.',thestring.replace('Proton','').replace('Neutron',''))
+    if OverDetRun:
+        toval = re.search('to.-.',thestring.replace('Proton','').replace('Neutron',''))
+    else:
+        toval = re.search('to.',thestring.replace('Proton','').replace('Neutron',''))
     try:
         toval = toval.group().replace('to','').replace('dt','')
     except:
         return thestring
     if 'to'+toval in thestring :
-        itosh = str(int(toval)-tsource)
+        if OverDetRun:
+            if '-' in toval:
+                itosh = '-'.join(map(str,np.array(map(int,toval.split('-')))-tsource))
+            else:
+                itosh = str(int(toval)-tsource)
+        else:
+            itosh = str(int(toval)-tsource)
         thestring = thestring.replace('to'+toval,'to'+itosh)
     thestring = thestring.replace('dt',r'\Delta t')        
     thestring = thestring.replace('to','SPACEt_{0}')    

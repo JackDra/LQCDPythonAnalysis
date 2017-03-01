@@ -127,7 +127,7 @@ def CreateTwoPtOverDet(thisMomList,thisiSmearList,thisjSmearList,thistorange,fee
     
     if len(thisiSmearList) != len(thisjSmearList): print 'Warning: source and sink smearing lists are different sizes, CM analysis skipped'
     start = time.time()
-    thistvar = 'to'+'-'.join(map(str,thistorange))+'dt'+str(OverDetdt)
+    thistvar = DefTvarPicked[0]
     print 'Starting Overdetumined Eigenvalue problem for '+ thistvar
     [CMdata2pt,LEvec,REvec,Emass] = CreateOvdet2ptCfun(data2pt,thistorange,OverDetdt,thisMomList)
     

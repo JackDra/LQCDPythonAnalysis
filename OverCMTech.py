@@ -21,17 +21,25 @@ from OvDetEigen import OverdetEigen
 
 # Mat*Evec = Mat2 * Evals * Evec
 def CreateLREvesOvDet(Cfunto,Cfuntodt,thisdt):    
-    if VarMethodMethod == 'AxBxlSolve':
-        ## got dimensions wrong, take transpose
-        # Evals,REvec,Dump = OverdetEigen(Cfunto,Cfuntodt,OverDetIter)
-        print np.matrix(Cfunto.T)
-        print np.matrix(Cfuntodt.T)
-        Evals,REvec,Dump = OverdetEigen(Cfunto.T,Cfuntodt.T,OverDetIter)
+    if VarMethodMethod == 'AxBxlSolve' or VarMethodMethod == 'Regular':
+        Evals,REvec,Dump = OverdetEigen(Cfuntodt,Cfunto,OverDetIter)
+        Evals2,REvec2 = eig(Cfuntodt[:Cfuntodt.shape[1],:],b=Cfunto[:Cfunto.shape[1],:])
+        ##DEBUG WOKRING HERE, FIxed inverted eigenvalues...
+        # print 'Overdet'
+        # print Cfunto
+        # print Cfuntodt
+        # print -np.log(Evals)/thisdt
+        # print REvec
+        # print 'reg'
+        # print Cfunto[:Cfunto.shape[1],:]
+        # print Cfuntodt[:Cfuntodt.shape[1],:]
+        # print -np.log(Evals2)/thisdt
+        # print REvec2
         LEvec = REvec ## Assume both left and right eigenvalues are equal (maybe think about turning Symmetrise on?)
     else:
-        raise LookupError('VarMethodMethod Must be AxBxlSolve for Over Detumined eigenvalue problem: ' + VarMethodMethod)
-    print 'Evals:'
-    print Evals
+        raise LookupError('VarMethodMethod Must be AxBxlSolve or Regular for Over Detumined eigenvalue problem: ' + VarMethodMethod)
+    # print 'Evals:'
+    # print Evals
     return sortEvec(Evals,LEvec,REvec,thisdt)
 
 
@@ -46,15 +54,22 @@ def GetTvarOvdet(Cfunin,thistovals,thisdt,thisPoFShifts=PoFShifts):
     
     if thisPoFShifts > 0:  raise IOError('Code not implemented for thisPoFShift > 0 yet')
     for thisto in range(thistomin,thistomax+1):
+        thistomat = np.matrix(Pullflag(Cfun[0,:,:,thisto-PoFDelta],'Avg'))
+        thistodtmat = np.matrix(Pullflag(Cfun[0,:,:,thisto+thisdt-PoFDelta],'Avg'))
         if len(Cfuntomat) == 0:
-            Cfuntomat = np.matrix(Pullflag(Cfun[0,:,:,thisto-PoFDelta],'Avg'))
-            Cfuntodtmat = np.matrix(Pullflag(Cfun[0,:,:,thisto+thisdt-PoFDelta],'Avg'))
+            if VarMethodMethod == 'AxBxlSolve':
+                Cfuntomat = thistomat
+                Cfuntodtmat = thistodtmat
+            elif VarMethodMethod == 'Regular':
+                Cfuntomat = thistomat* inv(thistodtmat)
+                Cfuntodtmat = np.eye(*thistomat.shape)
         else:
-            Cfuntomat = np.bmat([Cfuntomat,Pullflag(Cfun[0,:,:,thisto-PoFDelta],'Avg')])
-            Cfuntodtmat = np.bmat([Cfuntodtmat,Pullflag(Cfun[0,:,:,thisto+thisdt-PoFDelta],'Avg')])
-            # Cfuntomat = np.bmat([[Cfuntomat],Pullflag(Cfun[-1,:,:,thisto-PoFDelta],'Avg')])
-            # Cfuntodtmat = np.bmat([[Cfuntomat],Pullflag(Cfun[-1,:,:,thisto+thisdt-PoFDelta],'Avg')])
-                
+            if VarMethodMethod == 'AxBxlSolve':
+                Cfuntomat = np.bmat([[Cfuntomat],[thistomat]])
+                Cfuntodtmat = np.bmat([[Cfuntodtmat],[thistodtmat]])
+            elif VarMethodMethod == 'Regular':
+                Cfuntomat = np.bmat([[Cfuntomat],[thistomat* inv(thistodtmat)]])
+                Cfuntodtmat = np.bmat([[Cfuntodtmat],[np.eye(*thistomat.shape)]])
     # Cfuntoout,Cfuntodtout = CreatePoFMatrixtodt(Cfuntomat,Cfuntodtmat,thisPoFShifts=PoFShifts)
     [Emass,LEvec,REvec] = CreateLREvesOvDet(Cfuntomat,Cfuntodtmat,thisdt)
     return Emass,LEvec,REvec
