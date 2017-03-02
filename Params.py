@@ -160,7 +160,7 @@ DoCM = True ## does correlation matrix result ( no PoF)
 
 ##Parameters for overdeturmined eigevalue problem
 OverDetRun = True # Runs an overdeturmined eigenvalue problem using a range of to values.
-OverDet_torange = (3,7) ## range of to values to perfomr overdeturmined eigenvalue problem over.
+OverDet_torange = (5,9) ## range of to values to perfomr overdeturmined eigenvalue problem over.
 OverDetdt = 2 ## delta t value to use in the overdetumined eigenvalue problem
 OverDetIter = 10000 ## number of iterations performed in the overdeturmined eigenvalue problem
 OverdetTol = 10**-5
