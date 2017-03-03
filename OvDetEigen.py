@@ -151,8 +151,8 @@ def OverdetEigen(A,B,Niter,Tol=OverdetTol):
             # print Tol
             # print 
             if np.abs(preveval-nexteval) < Tol:
-                print
-                print 'istate',istate,' iters =',iiter 
+                # print
+                # print 'istate',istate,' iters =',iiter 
                 break
         # EvalOut[istate] = EvalOut[istate] + (((R*vi.T).H *(Rmin1*vi.T))/complex(((R*vi.T).H *(R*vi.T))))
         # print 

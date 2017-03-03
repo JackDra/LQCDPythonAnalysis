@@ -99,7 +99,7 @@ def CreateTwoPt(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':Ana
     # print 'Completed ' + ipTOqstr(thisMomList[0])
 
 
-def CreateTwoPtOverDet(thisMomList,thisiSmearList,thisjSmearList,thistorange,feedin= {'anaproc':AnaProc}):
+def CreateTwoPtOverDet(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':AnaProc}):
     logfile = logdir+'LogTwoPt.log'
     errfile = logdir+'LogTwoPt.log'
     touch(logfile)
@@ -124,17 +124,41 @@ def CreateTwoPtOverDet(thisMomList,thisiSmearList,thisjSmearList,thistorange,fee
     ## data2pt = [ t_src, ism , jsm , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     C2out = FlattenSmearWithTsrc(data2pt).tolist()
     ## C2out = [ t_src*ism*jsm , ip , it ] 
+
+    makeContextFunctions(CreatePoF2ptCfuns)
+    for thistvar,(itomin,itomax,idt) in zip(DefTvarPicked,OverDettodtlist):
+        PoFinputparams.append(data2pt,(itomin,itomax),idt,thisMomList)
+
+    ##TO DO WORKING FROM HERE DEBUG BLAHHHH##
+    if DoMulticore and feedin['anaproc'] > 1:
+        thisPool = Pool(min(len(PoFinputparams),feedin['anaproc']))
+        outputPoF = thisPool.map(CreatePoF2ptCfuns.mapper,PoFinputparams)
+        thisPool.close()
+        thisPool.join()
+    else:
+        outputPoF,outputCM = [],[]
+        for iin in PoFinputparams: outputPoF.append(CreatePoF2ptCfuns.mapper(iin))
+    
+    
+    thisPoFTvarList = ['PoF'+str(PoFShifts)+iTvar for iTvar in TwoPtDefTvarList]
+        
+    for iout,iTvar in zip(outputPoF,thisPoFTvarList):
+        [CMdata2pt,LEvec,REvec,Emass] = iout
+        ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+        C2out += CMdata2pt.tolist()
+        PrintLREvecMassToFile(LEvec,REvec,Emass,thisMomList,iTvar,AddDict=InfoDict,DoPoF=True)
+
+
     
     if len(thisiSmearList) != len(thisjSmearList): print 'Warning: source and sink smearing lists are different sizes, CM analysis skipped'
     start = time.time()
-    thistvar = DefTvarPicked[0]
-    print 'Starting Overdetumined Eigenvalue problem for '+ thistvar
-    [CMdata2pt,LEvec,REvec,Emass] = CreateOvdet2ptCfun(data2pt,thistorange,OverDetdt,thisMomList)
-    
-    
-    ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-    C2out += CMdata2pt.tolist()
-    PrintLREvecMassToFile(LEvec,REvec,Emass,thisMomList,thistvar,AddDict=InfoDict,DoPoF=False)
+    for thistvar,(itomin,itomax,idt) in zip(DefTvarPicked,OverDettodtlist):
+        print 'Starting Overdetumined Eigenvalue problem for '+ thistvar
+        if Debug: print 'Check actual todt params: to',itomin,'-',itomax,'dt',idt 
+        [CMdata2pt,LEvec,REvec,Emass] = CreateOvdet2ptCfun(data2pt,(itomin,itomax),idt,thisMomList)
+        ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
+        C2out += CMdata2pt.tolist()
+        PrintLREvecMassToFile(LEvec,REvec,Emass,thisMomList,thistvar,AddDict=InfoDict,DoPoF=False)
 
 
     print 'CMTech Total Time Taken: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
@@ -143,7 +167,7 @@ def CreateTwoPtOverDet(thisMomList,thisiSmearList,thisjSmearList,thistorange,fee
 
     SetList = []
     SetList += CreateMassSet(thisiSmearList,thisjSmearList,StateSet,[],tsrclist=PoFtsourceList,flipord=True)
-    SetList += CreateOverDetTvarSet(StateSet,thistvar)
+    SetList += CreateOverDetTvarSet(StateSet,DefTvarPicked)
     PrintCfunToFile([C2out],SetList,thisMomList,['twopt'],AddDict=InfoDict)
     PrintSetToFile([C2out],SetList,thisMomList,['Mass'],0,AddDict=InfoDict)
     print 'Printing took ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '

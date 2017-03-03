@@ -159,11 +159,20 @@ TimeInv = False ## uses time invariance to calculate the Pencil of Function meth
 DoCM = True ## does correlation matrix result ( no PoF) 
 
 ##Parameters for overdeturmined eigevalue problem
-OverDetRun = True # Runs an overdeturmined eigenvalue problem using a range of to values.
-OverDet_torange = (5,7) ## range of to values to perfomr overdeturmined eigenvalue problem over.
-OverDetdt = 3 ## delta t value to use in the overdetumined eigenvalue problem
-OverDetIter = 10000 ## number of iterations performed in the overdeturmined eigenvalue problem
-OverdetTol = 10**-5
+OverDetRun = False # Runs an overdeturmined eigenvalue problem using a range of to values.
+OD_tomin,OD_tomax = 3,9
+OverDet_torange = []  ## range of to values to perfomr overdeturmined eigenvalue problem over.
+for itmin in xrange(OD_tomin,OD_tomax+1):
+    for itmax in xrange(OD_tomin,OD_tomax+1):
+        if itmax > itmin+1:
+            OverDet_torange.append((itmin,itmax))
+
+OverDetdt = range(2,5+1) ## delta t value to use in the overdetumined eigenvalue problem
+OverDettodtlist = []
+for idt in OverDetdt:
+    OverDettodtlist += [(itomin,itomax,idt) for itomin,itomax in OverDet_torange]
+OverDetIter = 1000 ## number of iterations performed in the overdeturmined eigenvalue problem
+OverdetTol = 10**-7
 # OverDetIter = 0
 
 PlotMonte = False ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
@@ -388,7 +397,7 @@ DeftodtPicked = [(3,3)]
 # DeftodtPicked = [(1,1)]
 # DeftodtPicked = [(18,2)]
 if OverDetRun:
-    DefTvarPicked = ['PoF'+str(PoFShifts)+'to'+'-'.join(map(str,OverDet_torange))+'dt'+str(OverDetdt)]
+    DefTvarPicked = ['PoF'+str(PoFShifts)+'to'+str(itomin)+'-'+str(itomax)+'dt'+str(idt) for itomin,itomax,idt in OverDettodtlist]
 else:
     DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
 
@@ -443,10 +452,10 @@ else:
     
     
 # DefSmearList = ['16']
-if kappa == 1375400:
-    DefiSmearList = ['16','32','64']
-else:
-    DefiSmearList = ['64']
+# if kappa == 1375400:
+#     DefiSmearList = ['16','32','64']
+# else:
+DefiSmearList = ['64']
 # DefjSmearList = ['64']
 DefjSmearList = ['16','32','64']
 # DefSmearList = ['8','16','32','64','128','256']
