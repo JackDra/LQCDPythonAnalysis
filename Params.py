@@ -231,10 +231,10 @@ elif MesOrBar == 'Baryon':
 if DoCons: RepWithCons = False
 
 ## Currenlty, not using Time Invariance in the Pencil of Function Analysis is only properly implemented and tested for 2-point correlation analysis
-if TimeInv:
-    CfunConfigCheck = True # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
-else:
-    CfunConfigCheck = False # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
+# if TimeInv:
+#     CfunConfigCheck = True # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
+# else:
+#     CfunConfigCheck = False # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
 CfunConfigCheck = False # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
 
 
