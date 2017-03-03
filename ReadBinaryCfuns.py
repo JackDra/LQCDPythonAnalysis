@@ -429,14 +429,18 @@ class R2CChromaXMLFileList:
                 self.data = np.rollaxis(np.array(datahold),0,1)
                 datalen = 1
             else:
-                self.data += np.rollaxis(np.array(datahold),0,1)
+                rolldata = np.rollaxis(np.array(datahold),0,1)
+                if self.data.shape != rolldata.shape: raise IOError('error with '+thisfile)
+                self.data += rolldata
                 datalen += 1
             if Dog5:
                 if len(self.datag5) == 0:                    
                     datag5len = 1
                     self.datag5 = np.rollaxis(np.array(datag5hold),0,1)
                 else:
-                    self.datag5 += np.rollaxis(np.array(datag5hold),0,1)
+                    rolldatag5 = np.rollaxis(np.array(datag5hold),0,1)
+                    if self.datag5.shape != rolldatag5.shape: raise IOError('error with '+thisfile)
+                    self.datag5 += rolldatag5
                     datag5len += 1
         if datalen != datag5len and Dog5: print 'Warning!, datag5len not equal to datalen'
         self.data = self.data/float(datalen)

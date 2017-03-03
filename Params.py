@@ -19,41 +19,6 @@ except:
 # DefMassVal = {'22-31' : {'Avg':DefMass,'Std': 0.0028592256 ,'Chi': 0.4851841332}}
 
 
-# THISMACHINE = socket.gethostname()
-
-# if 'erwin' in THISMACHINE:
-#     scriptdir = "/home/accounts/jdragos/scripts/LQCDPythonAnalysis/"
-#     datadir = '/raid/jdragos/data/'
-#     AnaProc = 60 # number of max processors (computer specific)
-# elif 'henley' in THISMACHINE:
-#     datadir = '/home/henley/jdragos/PHD/ErwinBackup/'
-#     scriptdir = datadir + "LQCDPythonAnalysis/"
-#     AnaProc = 10 # number of max processors (computer specific)
-# elif 'JackLappyUbu' in THISMACHINE:
-    # datadir = '/home/jackdra/PHD/DataAnalysis/'
-    # scriptdir = datadir + "LQCDPythonAnalysis/"
-    # AnaProc = 10 # number of max processors (computer specific)
-# else:
-#     raise EnvironmentError('Machine not recongnised: \n'+THISMACHINE+'\nplease add to Params.py')
-
-# ## kappa values, pick your kappa
-# kappa = 12090
-# # kappa = 12104
-# # ListOrSet = 'ReadList'
-# ListOrSet = 'ReadSet'
-
-# ## PoF is pencil of function method, you can set VarPref to what you want, and set PoFShifts to 0 if you want regular variational method
-# if kappa == 12104:
-#     PoFShifts = 1
-#     PoFOrSum = 'PoF'
-#     VarPref = PoFOrSum+str(PoFShifts)
-# elif kappa == 12090:
-#     VarPref = 'sum'
-#     PoFOrSum = VarPref
-#     PoFShifts = 0
-# PoFShifts = 1
-# PoFOrSum = 'PoF'
-# VarPref = PoFOrSum+str(PoFShifts)
 
 
 if not os.path.isfile('./setup.cfg'): raise EnvironmentError('Please Run Setup.py to create setup.cfg')
@@ -264,12 +229,12 @@ for ioutput in thisoutputdir:
         outputdir.append(ioutput)
         
         
-TCDir = datadir+'/topcharge/Kud0'+str(kappa)+'Ks0'+str(kappas)+'/PerGF/'
-WeinDir = datadir+'/weinopp/Kud0'+str(kappa)+'Ks0'+str(kappas)+'/PerGF/'
-logdir = scriptdir+'../logdir/k'+str(kappa)+'/'
-momlistdir = datadir+'momdir/'
-pickledir = datadir+"pickledir/"
-REvecDir = scriptdir+'REvecSave/k'+str(kappa)+'/'
+TCDir = ''.join([datadir,'/topcharge/Kud0',str(kappa),'Ks0',str(kappas),'/PerGF/'])
+WeinDir = ''.join([datadir,'/weinopp/Kud0',str(kappa),'Ks0',str(kappas),'/PerGF/'])
+logdir = ''.join([scriptdir,'../logdir/k',str(kappa),'/'])
+momlistdir = ''.join([datadir,'momdir/'])
+pickledir = ''.join([datadir,"pickledir/"])
+REvecDir = ''.join([scriptdir,'REvecSave/k',str(kappa),'/'])
 RunMomList = qvecSet 
 RunAvgMomList = qvecAvgSet
 # For Debuggin, only use zero momenta
@@ -339,7 +304,7 @@ else:
                 '-a-003310_xsrc102']
                 
                 
-filelist = dirread+"/@/"+FileStruct+"*"
+filelist = ''.join([dirread,"/@/",FileStruct,"*"])
             
 nsrc = 200
 xsrcList = ['xsrc'+str(ix)+'_' for ix in range(1,nsrc+1)]
