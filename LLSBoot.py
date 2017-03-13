@@ -18,8 +18,8 @@ def LSCreate(Fun):
     def LSFun(par,val):
         xval = np.array(val[:-2])
         ## DEBUG THIS THING IS FINIKY, WITH SOME OTHER FITTING STUFF
-        # if len(xval) == 1:
-        #     xval = xval[0]
+        if len(xval) == 1:
+            xval = xval[0]
         yval = np.array(val[-2])
         errval = np.array(val[-1])
         # print 'LS values'
@@ -127,10 +127,11 @@ def LSFit(parlen,xdata,yerr,fitfun,ydata,derfun=None,iGuess = None):
         print LSDerfitfun.__name__
         print LSfitfun.__name__
         print np.array(iGuess)        
-        print np.array(data)
+        print data[0]
+        print data[1]
+        print data[2]
         print LSfitfun(iGuess,data[0])
         print LSDerfitfun(iGuess,data[0])
-        print data[1]
     if ForceNoDer:
         x,covar, infodict, mesg, ier=leastsq(LSfitfun,np.array(iGuess),args=np.array(data), maxfev=MI, xtol=LSPrec, full_output=1)
     else:
