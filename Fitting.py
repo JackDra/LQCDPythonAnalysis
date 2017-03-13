@@ -143,7 +143,7 @@ def MomTSSetFit(TSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,thi
             C3mom = C3pt[thisigamma][imom]
             Boot2ptMom = Boot2pt[imom2pt]
             inputparams.append((Boot2ptMom,Boot2ptZ,C3mom,this3ptCutList,thisTSinkList,thisSmList))
-    if thisDoMulticore:
+    if thisDoMulticore :
         output3pt = thisPool.map(smfitwrap.mapper,inputparams)
     else:
         output3pt = []
