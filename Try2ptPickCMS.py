@@ -56,7 +56,7 @@ def CreateTwoPt(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':Ana
             PoFinputparams.append((data2pt,itodt,thisMomList,DefPoFTvarRef))
 
 
-        if DoMulticore and feedin['anaproc'] > 1:
+        if DoMulticore and feedin['anaproc'] > 1 :
             thisPool = Pool(min(len(CMinputparams),feedin['anaproc']))
             outputPoF = thisPool.map(CreatePoF2ptCfuns.mapper,PoFinputparams)
             if DoCM and len(thisiSmearList) > 1:

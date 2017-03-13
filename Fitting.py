@@ -104,7 +104,7 @@ def FitMassSet(Massin,tmin,tmax):
 
 
 def MomTSSetFit(TSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2ptFitRvec):
-    thisDoMulticore = False
+    thisDoMulticore = not Debug
     def smfitwrap(thisBoot2ptmom,thisBoot2ptZ,C3mom,this3ptCutList,thisTSinkList,thisSmList):
         def GetTsinkInSm(C3,funsm,funSetList):
             C3out = []
@@ -260,7 +260,7 @@ def TwoStateFitMom3pt(fitBoot2pt,C3pt,this3ptCutList,thisTSinkList):
 #___2pt = [ ip , istate/ism  , params ]
 #___3pt = [ igamma , ip , iset , i3cut , params ]
 
-def OneStateSet2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec):
+def OneStateSet2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec,thisnproc):
     def sm2ptwrap(C2ptmom,thisSmList,this2ptFitR):
         Bootthis2pt,Avgthis2pt,Chithis2pt = [],[],[]
         if len(thisSmList) != len(C2ptmom):
@@ -282,7 +282,7 @@ def OneStateSet2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec):
     start = time.time()
     inputparams = [(C2pt[imom],thisSmList,this2ptFitR) for imom in xrange(len(thisGammaMomList['twopt']))]
     makeContextFunctions(sm2ptwrap)
-    if DoMulticore:
+    if DoMulticore and thisnproc > 1:
         thisPool = Pool(min(len(thisGammaMomList['twopt']),AnaProc))
         output = thisPool.map(sm2ptwrap.mapper,inputparams)
     else:
@@ -300,7 +300,7 @@ def OneStateSet2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec):
 
 
 def OneStateSetFit(OSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,this2ptFitRvec):
-    thisDoMulticore = False
+    thisDoMulticore = not Debug
     def sm3ptwrap(thisBoot2ptmom,thisBoot2ptZ,C3mom,this3ptCutList,thisSetList,thisSML):
         def SplitIset(thisiset,thisSML):
             # thisiset = thisiset.replace('REvec','CM')
