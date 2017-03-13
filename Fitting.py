@@ -170,7 +170,7 @@ def MomTSSetFit(TSF2ptarray,C3pt,this3ptCutList,thisSetList,thisGammaMomList,thi
     return [Boot3pt,Avg3pt,Chi3pt]
 
 
-def MomTSSetFit2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec):
+def MomTSSetFit2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec,thisnproc):
     this2ptFitR,perdone = this2ptFitRvec
     Boot2pt,Avg2pt,Chi2pt = [],[],[]
     start = time.time()
@@ -178,7 +178,7 @@ def MomTSSetFit2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec):
     thisnsm = len(thisSmList)
     thisTSinkList = [int(its.replace('tsink','')) for its in thisTSinkList]
     inputparams = [FitSMList(C2pt[imom],this2ptFitR,thisnsm) + (thisnsm,) for imom in xrange(len(thisGammaMomList['twopt']))]
-    if DoMulticore:
+    if DoMulticore and thisnproc > 1:
         makeContextFunctions(TwoStateFit2pt)
         thisPool = Pool(min(len(thisGammaMomList['twopt']),AnaProc))
         output = thisPool.map(TwoStateFit2pt.mapper,inputparams)
@@ -189,7 +189,7 @@ def MomTSSetFit2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec):
         Boot2pt.append(output[imom][0])
         Avg2pt.append(output[imom][1])
         Chi2pt.append(output[imom][2])
-    if DoMulticore:
+    if DoMulticore and thisnproc > 1:
         thisPool.close()
         thisPool.join()
     print 'fit range ' , this2ptFitR , ' ' , perdone, '% took:  ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                    '
@@ -292,7 +292,7 @@ def OneStateSet2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec,thisnproc):
         Boot2pt.append(output[imom][0])
         Avg2pt.append(output[imom][1])
         Chi2pt.append(output[imom][2])
-    if DoMulticore:
+    if DoMulticore and thisnproc > 1:
         thisPool.close()
         thisPool.join()
     print 'fit range ' , this2ptFitR , ' ' , perdone, '% took:  ',str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s                    '
