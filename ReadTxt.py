@@ -451,7 +451,7 @@ def ReadCfunsDict(thisindir,thisSetList,thisGammaList,thisMomList=RunMomList,thi
         if thisgamma == 'twopt':
             gammadirin = thisindir+'cfun/twopt/'
             DataDict[thisgamma] = MakeMethodsDict(gammadirin,'twopt.xml',
-                                                        ['RF'],thisSetList,thisMomList=thisMomList,
+                                                  ['RF'],thisSetList,thisMomList=thisMomList,
                                                   thisPrintRead=thisPrintRead)
         else:
             gammadirin = thisindir+'cfun/'+CreateOppDir(thisgamma)+'/'
@@ -477,7 +477,7 @@ def SetRFDictToList(DictData,thisPrintRead=PrintRead):
     for igamma,(thisgamma,gammadata) in enumerate(DictData.iteritems()):
         if thisPrintRead: print 'Converting DictToList ' + thisgamma+ '          \r',
         gammalistout[thisgamma] = []
-        if thisgamma == 'twopt':
+        if 'twopt' in thisgamma:
             for imom,(thismom,momdata) in enumerate(gammadata.iteritems()):
                 gammalistout[thisgamma].append(thismom)
                 dataout2pt.append([])
