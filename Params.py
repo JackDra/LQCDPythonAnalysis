@@ -420,9 +420,9 @@ else:
 # if kappa == 1375400:
 #     DefiSmearList = ['16','32','64']
 # else:
-# DefiSmearList = ['64']
+DefiSmearList = ['64']
 # DefiSmearList = ['16','32','64']
-DefjSmearList = ['64']
+# DefjSmearList = ['64']
 DefjSmearList = ['16','32','64']
 # DefSmearList = ['8','16','32','64','128','256']
 # DefSmearList = ['64','128']
