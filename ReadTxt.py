@@ -484,28 +484,11 @@ def SetRFDictToList(DictData,thisPrintRead=PrintRead):
                 infolist2pt.append([])
                 for iset,setdata in enumerate(momdata['RF'].itervalues()):
                     infolist2pt[imom].append(setdata['Info'])
-                    if 'Top' in thisgamma or 'Alpha' in thisgamma:
-                        if 'Boot' in setdata.keys():
-                            dataout2pt[imom].append([])
-                            flowlist = []
-                            for icf,(iflow,flowdata) in enumerate(setdata['Boot'].iteritems()):
-                                dataout2pt[imom][icf].append(flowdata['Boot'])
-                                flowlist.append(iflow)
-                                BorA = BAswitch(BorA)
-                        else:
-                            dataout2pt[imom].append(setdata['Boot'])
-                            BorA = BAswitch(BorA)
+                    if 'Boot' in setdata.keys():
+                        dataout2pt[imom].append(setdata['Boot'])
                     elif 'Avg' in setdata.keys():
-                        if 'Top' in thisgamma or 'Alpha' in thisgamma:
-                            dataout2pt[imom].append([])
-                            flowlist = []
-                            for icf,(iflow,flowdata) in enumerate(setdata['Boot'].iteritems()):
-                                dataout2pt[imom][icf].append([flowdata['Avg'],flowdata['Std']])
-                                flowlist.append(iflow)
-                                BorA = BAswitch(BorA)
-                        else:
-                            dataout2pt[imom].append()
-                            BorA = BAswitch(BorA)
+                        dataout2pt[imom].append([setdata['Avg'],setdata['Std']])
+                    BorA = BAswitch(BorA)
                             
         else:
             dataoutRF.append([])
@@ -524,16 +507,13 @@ def SetRFDictToList(DictData,thisPrintRead=PrintRead):
                             flowlist.append(iflow)
                             if 'Boot' in flowdata.keys():
                                 dataoutRF[-1][imom][iset].append(flowdata['Boot'])
-                                BorA = BAswitch(BorA)
                             elif 'Avg' in flowdata.keys():
                                 dataoutRF[-1][imom][iset].append([flowdata['Avg'],flowdata['Std']])
-                                BorA = BAswitch(BorA)
                     elif 'Boot' in setdata.keys():
                         dataoutRF[-1][imom].append(setdata['Boot'])
-                        BorA = BAswitch(BorA)
                     else:
                         dataoutRF[-1][imom].append([setdata['Avg'],setdata['Std']])
-                        BorA = BAswitch(BorA)
+                    BorA = BAswitch(BorA)
     if 'twopt' in gammalistout.keys():
         if 'q = 0 0 0' in gammalistout['twopt']:
             dataout2pt.insert(0, dataout2pt.pop(gammalistout['twopt'].index('q = 0 0 0')))
