@@ -123,14 +123,14 @@ def LSFit(parlen,xdata,yerr,fitfun,ydata,derfun=None,iGuess = None):
     data = CreateArgs(xdata,ydata,yerr)
     LSfitfun,LSDerfitfun,iGuess = GetLSFuns(fitfun,derfun,iGuess,parlen)
     # if isinstance(ydata[0],complex):iGuess = map(complex,iGuess)
-    # if Debug:
-    #     print LSDerfitfun.__name__
-    #     print LSfitfun.__name__
-    #     print np.array(iGuess)        
-    #     print np.array(data)
-    #     print LSfitfun(iGuess,data[0])
-    #     print LSDerfitfun(iGuess,data[0])
-    #     print data[1]
+    if Debug:
+        print LSDerfitfun.__name__
+        print LSfitfun.__name__
+        print np.array(iGuess)        
+        print np.array(data)
+        print LSfitfun(iGuess,data[0])
+        print LSDerfitfun(iGuess,data[0])
+        print data[1]
     if ForceNoDer:
         x,covar, infodict, mesg, ier=leastsq(LSfitfun,np.array(iGuess),args=np.array(data), maxfev=MI, xtol=LSPrec, full_output=1)
     else:
