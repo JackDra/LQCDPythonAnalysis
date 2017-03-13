@@ -367,7 +367,7 @@ def SetChiAxies():
     # pl.xlim(11,20)
     # pl.ylim(-12,-8)
     # SetxTicks()
-    pl.legend(loc='bottom right')
+    pl.legend(loc='lower right')
     pl.tight_layout()
 
 Stacked = False
@@ -408,7 +408,7 @@ def SetAlphaAxies():
     # pl.xlim(11,20)
     # pl.ylim(-12,-8)
     # SetxTicks()
-    pl.legend(loc='bottom right')
+    pl.legend(loc='lower right')
     pl.tight_layout()
 
 
