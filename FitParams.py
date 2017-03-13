@@ -106,53 +106,77 @@ OSFCutPicked = 'cut5'
 OSFfitvals = {'sm16': [9,21],'sm32': [8,19], 'sm64': [7,21] , 'sm128':[28,35],
               PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[4,9],PickedStateStr+'CM':[5,21]}
 
+OSFfitvals['ism64jsm16'] = [7,21]
+OSFfitvals['ism64jsm32'] = [7,21]
+OSFfitvals['ism64jsm64'] = [7,21]
+
 OSFfitvals100 = {'sm16': [9,21],'sm32': [8,19], 'sm64': [7,21] , 'sm128':[28,35],
                  PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[4,9],PickedStateStr+'CM':[5,21]}
+
+OSFfitvals100['ism64jsm16'] = [7,21]
+OSFfitvals100['ism64jsm32'] = [7,21]
+OSFfitvals100['ism64jsm64'] = [7,21]
 
 OSFfitvals110 = {'sm16': [9,21],'sm32': [8,19], 'sm64': [7,21] , 'sm128':[28,35],
                  PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[4,9],PickedStateStr+'CM':[5,21]}
 
+OSFfitvals110['ism64jsm16'] = [7,21]
+OSFfitvals110['ism64jsm32'] = [7,21]
+OSFfitvals110['ism64jsm64'] = [7,21]
+
 OSFfitvals111 = {'sm16': [9,21],'sm32': [8,19], 'sm64': [7,21] , 'sm128':[28,35],
                  PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[4,9],PickedStateStr+'CM':[5,15]}
+
+OSFfitvals111['ism64jsm16'] = [7,21]
+OSFfitvals111['ism64jsm32'] = [7,21]
+OSFfitvals111['ism64jsm64'] = [7,21]
 
 OSFfitvals200 = {'sm16': [9,21],'sm32': [8,19], 'sm64': [7,21] , 'sm128':[28,35],
                  PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[4,9],PickedStateStr+'CM':[5,15]}
 
+OSFfitvals200['ism64jsm16'] = [7,21]
+OSFfitvals200['ism64jsm32'] = [7,21]
+OSFfitvals200['ism64jsm64'] = [7,21]
 
-OSFfitr = {'sm32':str(OSFfitvals['sm32'][0])+'-'+str(OSFfitvals['sm32'][1]),
-           'sm64':str(OSFfitvals['sm64'][0])+'-'+str(OSFfitvals['sm64'][1]),
-           'sm16':str(OSFfitvals['sm16'][0])+'-'+str(OSFfitvals['sm16'][1]),
-           PickedStateStr+'REvec':str(OSFfitvals[PickedStateStr+'REvec'][0])+'-'+str(OSFfitvals[PickedStateStr+'REvec'][1]),
-           PickedStateStr+'CM':str(OSFfitvals[PickedStateStr+'CM'][0])+'-'+str(OSFfitvals[PickedStateStr+'CM'][1]),
-           PickedStateStr+'PoF'+str(PoFShifts):str(OSFfitvals[PickedStateStr+'PoF'+str(PoFShifts)][0])+'-'+str(OSFfitvals[PickedStateStr+'PoF'+str(PoFShifts)][1])}
+OSFfitr = {}
+OSFfitr100 = {}
+OSFfitr110 = {}
+OSFfitr111 = {}
+OSFfitr200 = {}
+for ikey,ival in OSFfitvals.iteritems():
+    OSFfitr[ikey] = str(ival[0])+'-'+str(ival[1])
+    OSFfitr100[ikey] = str(OSFfitvals100[ikey][0])+'-'+str(OSFfitvals100[ikey][1])
+    OSFfitr110[ikey] = str(OSFfitvals110[ikey][0])+'-'+str(OSFfitvals110[ikey][1])
+    OSFfitr111[ikey] = str(OSFfitvals111[ikey][0])+'-'+str(OSFfitvals111[ikey][1])
+    OSFfitr200[ikey] = str(OSFfitvals200[ikey][0])+'-'+str(OSFfitvals200[ikey][1])
 
-OSFfitr100 = {'sm32':str(OSFfitvals100['sm32'][0])+'-'+str(OSFfitvals100['sm32'][1]),
-              'sm64':str(OSFfitvals100['sm64'][0])+'-'+str(OSFfitvals100['sm64'][1]),
-              'sm16':str(OSFfitvals100['sm16'][0])+'-'+str(OSFfitvals100['sm16'][1]),
-              PickedStateStr+'REvec':str(OSFfitvals100[PickedStateStr+'REvec'][0])+'-'+str(OSFfitvals100[PickedStateStr+'REvec'][1]),
-              PickedStateStr+'CM':str(OSFfitvals100[PickedStateStr+'CM'][0])+'-'+str(OSFfitvals100[PickedStateStr+'CM'][1]),
-              PickedStateStr+'PoF'+str(PoFShifts):str(OSFfitvals100[PickedStateStr+'PoF'+str(PoFShifts)][0])+'-'+str(OSFfitvals100[PickedStateStr+'PoF'+str(PoFShifts)][1])}
+# OSFfitr100 = {'sm32':str(OSFfitvals100['sm32'][0])+'-'+str(OSFfitvals100['sm32'][1]),
+#               'sm64':str(OSFfitvals100['sm64'][0])+'-'+str(OSFfitvals100['sm64'][1]),
+#               'sm16':str(OSFfitvals100['sm16'][0])+'-'+str(OSFfitvals100['sm16'][1]),
+#               PickedStateStr+'REvec':str(OSFfitvals100[PickedStateStr+'REvec'][0])+'-'+str(OSFfitvals100[PickedStateStr+'REvec'][1]),
+#               PickedStateStr+'CM':str(OSFfitvals100[PickedStateStr+'CM'][0])+'-'+str(OSFfitvals100[PickedStateStr+'CM'][1]),
+#               PickedStateStr+'PoF'+str(PoFShifts):str(OSFfitvals100[PickedStateStr+'PoF'+str(PoFShifts)][0])+'-'+str(OSFfitvals100[PickedStateStr+'PoF'+str(PoFShifts)][1])}
 
-OSFfitr110 = {'sm32':str(OSFfitvals110['sm32'][0])+'-'+str(OSFfitvals110['sm32'][1]),
-              'sm64':str(OSFfitvals110['sm64'][0])+'-'+str(OSFfitvals110['sm64'][1]),
-              'sm16':str(OSFfitvals110['sm16'][0])+'-'+str(OSFfitvals110['sm16'][1]),
-              PickedStateStr+'REvec':str(OSFfitvals110[PickedStateStr+'REvec'][0])+'-'+str(OSFfitvals110[PickedStateStr+'REvec'][1]),
-              PickedStateStr+'CM':str(OSFfitvals110[PickedStateStr+'CM'][0])+'-'+str(OSFfitvals110[PickedStateStr+'CM'][1]),
-              PickedStateStr+'PoF'+str(PoFShifts):str(OSFfitvals110[PickedStateStr+'PoF'+str(PoFShifts)][0])+'-'+str(OSFfitvals110[PickedStateStr+'PoF'+str(PoFShifts)][1])}
+# OSFfitr110 = {'sm32':str(OSFfitvals110['sm32'][0])+'-'+str(OSFfitvals110['sm32'][1]),
+#               'sm64':str(OSFfitvals110['sm64'][0])+'-'+str(OSFfitvals110['sm64'][1]),
+#               'sm16':str(OSFfitvals110['sm16'][0])+'-'+str(OSFfitvals110['sm16'][1]),
+#               PickedStateStr+'REvec':str(OSFfitvals110[PickedStateStr+'REvec'][0])+'-'+str(OSFfitvals110[PickedStateStr+'REvec'][1]),
+#               PickedStateStr+'CM':str(OSFfitvals110[PickedStateStr+'CM'][0])+'-'+str(OSFfitvals110[PickedStateStr+'CM'][1]),
+#               PickedStateStr+'PoF'+str(PoFShifts):str(OSFfitvals110[PickedStateStr+'PoF'+str(PoFShifts)][0])+'-'+str(OSFfitvals110[PickedStateStr+'PoF'+str(PoFShifts)][1])}
 
-OSFfitr111 = {'sm32':str(OSFfitvals111['sm32'][0])+'-'+str(OSFfitvals111['sm32'][1]),
-              'sm64':str(OSFfitvals111['sm64'][0])+'-'+str(OSFfitvals111['sm64'][1]),
-              'sm16':str(OSFfitvals111['sm16'][0])+'-'+str(OSFfitvals111['sm16'][1]),
-              PickedStateStr+'REvec':str(OSFfitvals111[PickedStateStr+'REvec'][0])+'-'+str(OSFfitvals111[PickedStateStr+'REvec'][1]),
-              PickedStateStr+'CM':str(OSFfitvals111[PickedStateStr+'CM'][0])+'-'+str(OSFfitvals111[PickedStateStr+'CM'][1]),
-              PickedStateStr+'PoF'+str(PoFShifts):str(OSFfitvals111[PickedStateStr+'PoF'+str(PoFShifts)][0])+'-'+str(OSFfitvals111[PickedStateStr+'PoF'+str(PoFShifts)][1])}
+# OSFfitr111 = {'sm32':str(OSFfitvals111['sm32'][0])+'-'+str(OSFfitvals111['sm32'][1]),
+#               'sm64':str(OSFfitvals111['sm64'][0])+'-'+str(OSFfitvals111['sm64'][1]),
+#               'sm16':str(OSFfitvals111['sm16'][0])+'-'+str(OSFfitvals111['sm16'][1]),
+#               PickedStateStr+'REvec':str(OSFfitvals111[PickedStateStr+'REvec'][0])+'-'+str(OSFfitvals111[PickedStateStr+'REvec'][1]),
+#               PickedStateStr+'CM':str(OSFfitvals111[PickedStateStr+'CM'][0])+'-'+str(OSFfitvals111[PickedStateStr+'CM'][1]),
+#               PickedStateStr+'PoF'+str(PoFShifts):str(OSFfitvals111[PickedStateStr+'PoF'+str(PoFShifts)][0])+'-'+str(OSFfitvals111[PickedStateStr+'PoF'+str(PoFShifts)][1])}
 
-OSFfitr200 = {'sm32':str(OSFfitvals200['sm32'][0])+'-'+str(OSFfitvals200['sm32'][1]),
-              'sm64':str(OSFfitvals200['sm64'][0])+'-'+str(OSFfitvals200['sm64'][1]),
-              'sm16':str(OSFfitvals200['sm16'][0])+'-'+str(OSFfitvals200['sm16'][1]),
-              PickedStateStr+'REvec':str(OSFfitvals200[PickedStateStr+'REvec'][0])+'-'+str(OSFfitvals200[PickedStateStr+'REvec'][1]),
-              PickedStateStr+'CM':str(OSFfitvals200[PickedStateStr+'CM'][0])+'-'+str(OSFfitvals200[PickedStateStr+'CM'][1]),
-              PickedStateStr+'PoF'+str(PoFShifts):str(OSFfitvals200[PickedStateStr+'PoF'+str(PoFShifts)][0])+'-'+str(OSFfitvals200[PickedStateStr+'PoF'+str(PoFShifts)][1])}
+# OSFfitr200 = {'sm32':str(OSFfitvals200['sm32'][0])+'-'+str(OSFfitvals200['sm32'][1]),
+#               'sm64':str(OSFfitvals200['sm64'][0])+'-'+str(OSFfitvals200['sm64'][1]),
+#               'sm16':str(OSFfitvals200['sm16'][0])+'-'+str(OSFfitvals200['sm16'][1]),
+#               PickedStateStr+'REvec':str(OSFfitvals200[PickedStateStr+'REvec'][0])+'-'+str(OSFfitvals200[PickedStateStr+'REvec'][1]),
+#               PickedStateStr+'CM':str(OSFfitvals200[PickedStateStr+'CM'][0])+'-'+str(OSFfitvals200[PickedStateStr+'CM'][1]),
+#               PickedStateStr+'PoF'+str(PoFShifts):str(OSFfitvals200[PickedStateStr+'PoF'+str(PoFShifts)][0])+'-'+str(OSFfitvals200[PickedStateStr+'PoF'+str(PoFShifts)][1])}
 
 OSFfitrMom = {'q = 0 0 0':OSFfitr,
               'q = 1 0 0':OSFfitr100,
