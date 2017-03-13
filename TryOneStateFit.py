@@ -174,7 +174,7 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList,thisMomList):
 
 picklefile2pt = pickledir+'tempOSF'+twoptoutfile+'fittwopt.p'
 twoptSL = ReduceTooMassSet(ReadSetList)
-if os.path.isfile(picklefile2pt):
+if os.path.isfile(picklefile2pt) and (not DefWipe):
     print '2 point picked file found, reading in'
     with open( picklefile2pt, "rb" ) as pfile:
         OSF2ptarray,twoptGammaMomList = pickle.load( pfile )
