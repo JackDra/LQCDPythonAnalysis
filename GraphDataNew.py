@@ -47,7 +47,7 @@ thisalpha = 0.3
 # MassTVals = 16,33
 # MassTVals = 3,25
 MassTVals = 1,21
-Massyrange = .5,1
+Massyrange = .5,0.7
 if kappa == 12:
     MassTVals = 0,8
     Massyrange = 0,3
