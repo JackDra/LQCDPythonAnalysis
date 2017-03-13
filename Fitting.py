@@ -45,7 +45,7 @@ def FitSMList(data,fitr,nsm):
     tsmdata = [[],[]]
     dataout = []
     for it in tdata:
-        for ism in range(nsm):
+        for ism in xrange(nsm):
             tsmdata[0].append(it)
             tsmdata[1].append(ism)
             dataout.append(data[ism][it+tsource-1])
@@ -177,7 +177,7 @@ def MomTSSetFit2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec):
     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
     thisnsm = len(thisSmList)
     thisTSinkList = [int(its.replace('tsink','')) for its in thisTSinkList]
-    inputparams = [FitSMList(C2pt[imom],this2ptFitR,thisnsm) + (thisnsm,) for imom in range(len(thisGammaMomList['twopt']))]
+    inputparams = [FitSMList(C2pt[imom],this2ptFitR,thisnsm) + (thisnsm,) for imom in xrange(len(thisGammaMomList['twopt']))]
     if DoMulticore:
         makeContextFunctions(TwoStateFit2pt)
         thisPool = Pool(min(len(thisGammaMomList['twopt']),AnaProc))
@@ -280,7 +280,7 @@ def OneStateSet2pt(C2pt,thisSetList,thisGammaMomList,this2ptFitRvec):
     thisTSinkList,thisSmList = GetTsinkSmLists(thisSetList)
     Boot2pt,Avg2pt,Chi2pt = [],[],[]
     start = time.time()
-    inputparams = [(C2pt[imom],thisSmList,this2ptFitR) for imom in range(len(thisGammaMomList['twopt']))]
+    inputparams = [(C2pt[imom],thisSmList,this2ptFitR) for imom in xrange(len(thisGammaMomList['twopt']))]
     makeContextFunctions(sm2ptwrap)
     if DoMulticore:
         thisPool = Pool(min(len(thisGammaMomList['twopt']),AnaProc))

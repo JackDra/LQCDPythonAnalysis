@@ -103,7 +103,7 @@ def OverdetEigen(A,B,Niter,Tol=OverdetTol):
         vi = deepcopy(smEvec)
         nexteval = sEval
         EvalOut.append(sEval)
-        for iiter in range(Niter):
+        for iiter in xrange(Niter):
             Rmin1 = R0-(sEval*R)
             # minloc = np.argmin(Rmin1)
             # minloc = minloc/(Rmin1.shape[0]-1),minloc%(Rmin1.shape[1]-1)

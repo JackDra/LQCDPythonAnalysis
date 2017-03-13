@@ -303,16 +303,16 @@ def CapGamma(*Vals):
         return simplify((outVals[0]*outVals[1] - outVals[1]*outVals[0])/(2.))
     if len(Vals) == 3:
         output = ZeroMat4
-        for ii in range(3):
-            for ij in range(3):
-                for ik in range(3):
+        for ii in xrange(3):
+            for ij in xrange(3):
+                for ik in xrange(3):
                     output += LeviCivita(ii,ij,ik)*outVals[ii]*outVals[ij]*outVals[ik]
         return simplify(output/(3.*2.))
     if len(Vals) == 4:
         output = ZeroMat4
-        for ii in range(4):
-            for ij in range(4):
-                for ik in range(4):
-                    for il in range(4):
+        for ii in xrange(4):
+            for ij in xrange(4):
+                for ik in xrange(4):
+                    for il in xrange(4):
                         output += LeviCivita(ii,ij,ik,il)*outVals[ii]*outVals[ij]*outVals[ik]*outVals[il]
         return simplify(output/(4.*3.*2.))

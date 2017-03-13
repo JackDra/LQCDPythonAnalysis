@@ -121,15 +121,15 @@ def CreateDoubleBoot(RawData1,RawData2,nboot,confidence,ifold=0,bin=1):
         tmpboot=BootStrap1(nboot,confidence)
         if it==0 or ifold==0:
             if ifold==3:
-                tmpboot.Import([RawData2[iconf][it] for iconf in range(nconf)])
+                tmpboot.Import([RawData2[iconf][it] for iconf in xrange(nconf)])
             else:
-                tmpboot.Import([RawData1[iconf][it] for iconf in range(nconf)])
+                tmpboot.Import([RawData1[iconf][it] for iconf in xrange(nconf)])
         elif it!=0 and ifold==1:
-            tmpboot.Import([0.5*(RawData1[iconf][it]+RawData2[iconf][nt-it]) for iconf in range(nconf)])
+            tmpboot.Import([0.5*(RawData1[iconf][it]+RawData2[iconf][nt-it]) for iconf in xrange(nconf)])
         elif it!=0 and ifold==2:
-            tmpboot.Import([0.5*(RawData1[iconf][it]-RawData2[iconf][nt-it]) for iconf in range(nconf)])
+            tmpboot.Import([0.5*(RawData1[iconf][it]-RawData2[iconf][nt-it]) for iconf in xrange(nconf)])
         elif it!=0 and ifold==3:
-            tmpboot.Import([RawData2[iconf][nt-it] for iconf in range(nconf)])
+            tmpboot.Import([RawData2[iconf][nt-it] for iconf in xrange(nconf)])
         bootlist.append(tmpboot)
         bootlist[-1].Stats()
     return bootlist
@@ -183,10 +183,10 @@ class BootStrap1:
             self.Avg=average(multiply(tmpdata,tmpweight))/sum(tmpweight)
         else:
             self.Avg=average(tmpdata)
-        for iboot in range(self.nboot):
+        for iboot in xrange(self.nboot):
             rint=locranint(0,self.nconf-1,self.nconf)
 #            tmp=0.0
-#            for iconf in range(self.nconf):
+#            for iconf in xrange(self.nconf):
 #                rint=locranint(0,self.nconf-1)
 #                tmp+=tmpdata[rint]/self.nconf
 #            self.values[iboot]=tmp
@@ -201,7 +201,7 @@ class BootStrap1:
     def Create(self,mean,stdev):
         self.Avg=mean
         self.Std=stdev
-#        for iboot in range(self.nboot):
+#        for iboot in xrange(self.nboot):
 #            self.values[iboot]=random.gauss(mean,stdev)
         self.values=random.normal(mean,stdev,self.nboot)
     def Constant(self,const):
@@ -306,19 +306,19 @@ class BootStrap1:
         try:
             real=float(fac)
             result.Avg=self.Avg+real
-            for iboot in range(self.nboot):
+            for iboot in xrange(self.nboot):
                 result.values[iboot]=self.values[iboot]+real            
         except:
             try:
                 real=complex(fac)
                 result.Avg=self.Avg+real
-                for iboot in range(self.nboot):
+                for iboot in xrange(self.nboot):
                     result.values[iboot]=self.values[iboot]+real            
             except:
                 try:
                     tnboot=fac.nboot
                     result.Avg=self.Avg+fac.Avg
-                    for iboot in range(self.nboot):
+                    for iboot in xrange(self.nboot):
                         result.values[iboot]=self.values[iboot]+fac.values[iboot]
                 except:
                     assert 1==0
@@ -327,13 +327,13 @@ class BootStrap1:
     def __radd__(self,real=float(1)):
         result=BootStrap1(self.nboot, self.confidence)
         result.Avg=self.Avg+real
-        for iboot in range(self.nboot):
+        for iboot in xrange(self.nboot):
             result.values[iboot]=self.values[iboot]+real
         return result
     def __iadd__(self,real=float(1)):
         result=BootStrap1(self.nboot, self.confidence)
         result.Avg=self.Avg+real
-        for iboot in range(self.nboot):
+        for iboot in xrange(self.nboot):
             result.values[iboot]=self.values[iboot]+real
         return result
     def __sub__(self,fac):
@@ -341,13 +341,13 @@ class BootStrap1:
         try:
             real=float(fac)
             result.Avg=self.Avg-real
-            for iboot in range(self.nboot):
+            for iboot in xrange(self.nboot):
                 result.values[iboot]=self.values[iboot]-real            
         except:
             try:
                 tnboot=fac.nboot
                 result.Avg=self.Avg-fac.Avg
-                for iboot in range(self.nboot):
+                for iboot in xrange(self.nboot):
                     result.values[iboot]=self.values[iboot]-fac.values[iboot]
             except:
                 assert 1==0
@@ -356,31 +356,31 @@ class BootStrap1:
     def __rsub__(self,real=float(1)):
         result=BootStrap1(self.nboot, self.confidence)
         result.Avg=real-self.Avg
-        for iboot in range(self.nboot):
+        for iboot in xrange(self.nboot):
             result.values[iboot]=real-self.values[iboot]
         return result
     def __isub__(self,real=float(1)):
         result=BootStrap1(self.nboot, self.confidence)
         result.Avg=self.Avg-real
-        for iboot in range(self.nboot):
+        for iboot in xrange(self.nboot):
             result.values[iboot]=self.values[iboot]-real
         return result
     def __pow__(self,real):
         result=BootStrap1(self.nboot, self.confidence)
         result.Avg=self.Avg**real
-#        for iboot in range(self.nboot):
+#        for iboot in xrange(self.nboot):
         result.values=self.values**real
         return result
     def exp(self,real):
         result=BootStrap1(self.nboot, self.confidence)
         result.Avg=exp(self.Avg*real)
-        for iboot in range(self.nboot):
+        for iboot in xrange(self.nboot):
             result.values[iboot]=exp(self.values[iboot]*real)
         return result
     def log(self):
         result=BootStrap1(self.nboot, self.confidence)
         result.Avg=log(self.Avg)
-        for iboot in range(self.nboot):
+        for iboot in xrange(self.nboot):
             result.values[iboot]=log(self.values[iboot])
         return result
     def __abs__(self):
@@ -415,13 +415,13 @@ class BootStrap2:
 #
 # Note: These changes haven't been tested!
 #
-#        for iconf in range(self.nconf):
+#        for iconf in xrange(self.nconf):
 #            self.Avg+=data[iconf]/self.nconf
         self.Avg=average(data,axis=0)
-        for iboot in range(self.nboot):
+        for iboot in xrange(self.nboot):
             rint=locranint(0,self.nconf-1,self.nconf)
 #            tmp=zeros((self.ndim))
-#            for iconf in range(self.nconf):
+#            for iconf in xrange(self.nconf):
 #                rint=random.randint(0,self.nconf-1)
 #                tmp+=data[rint]/self.nconf
 #            self.values[iboot]=tmp
@@ -431,7 +431,7 @@ class BootStrap2:
         omit=(100-self.confidence)/2
         ilo=(omit*self.nboot)/100
         ihi=(self.nboot-1-(omit*self.nboot)/100)
-        for it in range(self.ndim):
+        for it in xrange(self.ndim):
             self.Std[it]=(tmp[ihi][it]-tmp[ilo][it])/2
         return
     def write(self,file):
@@ -483,7 +483,7 @@ class BootStrap2:
     def FitInit(self,xin,xinerr,xinmin,xinmax,fitflg):
         self.__x=array('f')
         self.__xerr=array('f')
-        for ix in range(xinmin,xinmax+1):
+        for ix in xrange(xinmin,xinmax+1):
             self.__x.append(xin[ix])
             self.__xerr.append(xinerr[ix])
         self.ndat=len(self.__x)
@@ -508,7 +508,7 @@ class BootStrap2:
     def Fit(self):
         fitparams=[]
         fitt = TF1( "fitt", self.fitfnc.fnc, self.__xmin, self.__xmax,self.fitfnc.npar)
-        for ipar in range(self.fitfnc.npar):
+        for ipar in xrange(self.fitfnc.npar):
             fitt.SetParameter( ipar,self.fitfnc.initpar[ipar])
             tmpboot=BootStrap1(self.nboot,self.confidence)
             fitparams.append(tmpboot)
@@ -523,7 +523,7 @@ class BootStrap2:
 # Access elements of correlation matrix
         self.vij=[]
         fitter = TVirtualFitter.GetFitter()
-        for ires in range(self.fitfnc.npar):
+        for ires in xrange(self.fitfnc.npar):
             fitparams[ires].Avg=results[ires]
             mres=ires+1
             while mres<self.fitfnc.npar:
@@ -532,9 +532,9 @@ class BootStrap2:
             
         self.chi2ndf=fitt.GetChisquare()/fitt.GetNDF()        
 # Fit for each bootstrap ensemble
-        for iboot in range(self.nboot):
+        for iboot in xrange(self.nboot):
             tmpy=array('f')
-            for idim in range(self.ndim):
+            for idim in xrange(self.ndim):
                 tmpy.append(self.values[iboot][idim])
 # Initialise the graph
             gra = TGraphErrors(self.ndat, self.__x, tmpy, self.__xerr, self.Std)
@@ -542,8 +542,8 @@ class BootStrap2:
             gra.Fit(fitt,"R")
 # Access the fit resuts
             results=fitt.GetParameters()
-            for ires in range(self.fitfnc.npar):
+            for ires in xrange(self.fitfnc.npar):
                 fitparams[ires].values[iboot]=results[ires]
-        for ires in range(self.fitfnc.npar):
+        for ires in xrange(self.fitfnc.npar):
             fitparams[ires].Stats()
         return fitparams

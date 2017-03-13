@@ -863,7 +863,7 @@ def PlotFFs(data,DSCurr,thisSetList,CollName,FT):
     if len(thisSetList) == 0: return
     thisDS,thisCurr,thisFFComb = SplitDSCurr(DSCurr)
     thisSetList = FlowOrderSetList(thisSetList)
-    for iFF in range(1,NoFFPars[thisCurr]+1):
+    for iFF in xrange(1,NoFFPars[thisCurr]+1):
         thisFF = 'FF'+str(iFF)
         if len(thisFFComb) > 1: thisFFComb = '/'+thisFFComb
         DatFile = CreateFFFile(CollName,DSCurr,thisFF)+'.dat'
@@ -882,7 +882,7 @@ def PlotFFsPN(data,dataPN,DSCurr,thisSetList,CollName,FT):
     thisDS,thisCurr,thisFFComb = SplitDSCurr(DSCurr)
     thisDS = thisDS.replace('Proton','PandN')
     DSCurr = DSCurr.replace('Proton','PandN')
-    for iFF in range(1,NoFFPars[thisCurr]+1):
+    for iFF in xrange(1,NoFFPars[thisCurr]+1):
         thisFF = 'FF'+str(iFF)
         if len(thisFFComb) > 1: thisFFComb = '/'+thisFFComb
         DatFile = CreateFFFile(CollName,DSCurr,thisFF)+'.dat'
@@ -903,7 +903,7 @@ def PlotMKFFs(kdata,DSCurr,thisSetList,CollName,FT):
     if len(thisSetList) == 0: return
     thisDS,thisCurr,thisFFComb = SplitDSCurr(DSCurr)
     if len(thisFFComb) > 1: thisFFComb = '/'+thisFFComb
-    for iFF in range(1,NoFFPars[thisCurr]+1):
+    for iFF in xrange(1,NoFFPars[thisCurr]+1):
         thisFF = 'FF'+str(iFF)
         DatFile = CreateMKFFFile(CollName,DSCurr,thisFF)+'.dat'
         WipeFile(DatFile)

@@ -84,7 +84,7 @@ def CheckCurrentSets(thisCurrDict):
             else:
                 if sorted(currset) != sorted(thisCurrDict[singcurr]):
                     if Debug:
-                        for icount in range(len(currset)):
+                        for icount in xrange(len(currset)):
                             print currset[icount], thisCurrDict[singcurr][icount],currset[icount] ==  thisCurrDict[singcurr][icount]
                     raise LookupError(singcurr +' has different set list as ' + icurr)
                 else:
@@ -96,7 +96,7 @@ def CheckCurrentSets(thisCurrDict):
             else:
                 if sorted(currset) != sorted(thisCurrDict[doubcurr]):
                     if Debug:
-                        for icount in range(len(currset)):
+                        for icount in xrange(len(currset)):
                             print currset[icount], thisCurrDict[doubcurr][icount],currset[icount] ==  thisCurrDict[doubcurr][icount]
                     raise LookupError(doubcurr +' has different set list as ' + icurr)
                 else:

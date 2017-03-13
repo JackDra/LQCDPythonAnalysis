@@ -288,7 +288,7 @@ else:
 filelist = dirread+"/@/"+FileStruct+"*"
             
 nsrc = 200
-xsrcList = ['xsrc'+str(ix)+'_' for ix in range(1,nsrc+1)]
+xsrcList = ['xsrc'+str(ix)+'_' for ix in xrange(1,nsrc+1)]
 
 SourceList = ['']
 
@@ -543,8 +543,8 @@ TSinkStrDictList = {'REvec' : REvecTSinkStrList,
 if len(PoFTSinkList) > 0:
     TSinkDictList['PoF'] = PoFTSinkList+range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)
     TSinkDictList['PoFRead'] = PoFTSinkList+range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)
-    TSinkStrDictList['PoF'] = PoFTSinkStrList+['tsink'+str(its) for its in range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)]
-    TSinkStrDictList['PoFRead'] = PoFTSinkStrList+['tsink'+str(its) for its in range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)]
+    TSinkStrDictList['PoF'] = PoFTSinkStrList+['tsink'+str(its) for its in xrange(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)]
+    TSinkStrDictList['PoFRead'] = PoFTSinkStrList+['tsink'+str(its) for its in xrange(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)]
 
 
 SmearDictList = {'PoF' : PoFFlagList,

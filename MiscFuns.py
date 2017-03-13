@@ -29,9 +29,9 @@ def MyCorrelate(x,y,Norm=True,MinAvg=True):
         x = x-np.mean(x)
         y = y-np.mean(y)
     listout = []
-    for it in range(len(x)):
+    for it in xrange(len(x)):
         listout.append(0.0)
-        for index in range(len(x)):
+        for index in xrange(len(x)):
             if it+index < len(x):
                 listout[-1] = listout[-1] + x[index]*y[index+it]
         if Norm: listout[-1] = listout[-1]/(len(x)-it)
@@ -49,7 +49,7 @@ def autocorr(x,y):
    x = x-x.mean()
    y = y-y.mean()
    r = np.correlate(x, y, mode = 'full')[-n:]
-   # assert np.allclose(r, np.array([(x[:n-k]*x[-(n-k):]).sum() for k in range(n)]))
+   # assert np.allclose(r, np.array([(x[:n-k]*x[-(n-k):]).sum() for k in xrange(n)]))
    result = r/np.arange(n, 0, -1)
    return result
 
@@ -93,7 +93,7 @@ def GammaAlpha_estimate(gQ,gN):
    # if Norm: Gat = np.array(Gat)/Gat[0]
 
    ## equation (35)
-   CaW = [Gat[0] + 2*np.sum(Gat[1:W]) for W in range(1,len(Gat))]
+   CaW = [Gat[0] + 2*np.sum(Gat[1:W]) for W in xrange(1,len(Gat))]
    ## equation (41)
    tau = np.array(CaW) / (2*Gat[0])
    Wopp = gW(tau)
@@ -115,7 +115,7 @@ def Gamma1D_est(data):
    # if Norm: Gat = np.array(Gat)/Gat[0]
 
    ## equation (35)
-   CaW = [Gat[0] + 2*np.sum(Gat[1:W]) for W in range(1,len(Gat))]
+   CaW = [Gat[0] + 2*np.sum(Gat[1:W]) for W in xrange(1,len(Gat))]
    ## equation (41)
    tau = np.array(CaW) / (2*Gat[0])
    Wopp = gW(tau)
@@ -179,7 +179,7 @@ def DelDubs(listin):
 
 def chunks(l, n):
    n = max(1, n)
-   return [l[i:i + n] for i in range(0, len(l), n)]
+   return [l[i:i + n] for i in xrange(0, len(l), n)]
 
 def BootNdimDict(dictin):
    if isinstance(dictin,dict):

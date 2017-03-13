@@ -196,14 +196,13 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
     buffindex = []
     ci = np.array([0])
     Ctolen = len(Cfunto)
-    for cutindex in range(1,Ctolen):
-        
+    for cutindex in xrange(1,Ctolen):        
         ci = np.append(ci,cutindex)
         if 'Symmetric' in VarMethodMethod:
             ShalfInv = inv(sqrtm(Simto[ci[:,None],ci]))
             ThisMat = ShalfInv.dot(Simtodt[ci[:,None],ci].dot(ShalfInv))
-            # for iindex in range(len(ThisMat)):
-            #     for jindex in range(len(ThisMat)):
+            # for iindex in xrange(len(ThisMat)):
+            #     for jindex in xrange(len(ThisMat)):
             #         print iindex, jindex, ThisMat[iindex][jindex], ThisMat[jindex][iindex]
             if 'eigh' in VarMethodMethod:
                 thiseig,thisevec = eigh(ThisMat)
@@ -225,7 +224,7 @@ def CreateLREves(Cfunto,Cfuntodt,thisdt,masscutoff):
     # Simto = Cfunto
     # Simtodt = Cfuntodt
     # buffindex = []
-    # for cutindex in range(len(Cfunto)-1):
+    # for cutindex in xrange(len(Cfunto)-1):
     #     thiseig = eigvals(Simtodt,b=Simto)
     #     posdef = eigvals(Simto)
     #     if all(-np.log(abs(thiseig))/float(thisdt) > masscutoff) and all(posdef > 0):
@@ -469,7 +468,7 @@ def CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,printout=True,DoPoF=True,tod
             if DoPoF:
                 # Emasshold,LEvechold,REvechold = GetTvarREvesPoF(Cfuns2pt[:,:,ip],todtvals,ipTOE(thisp,VarMassCutoff))
                 Emasshold,LEvechold,REvechold = GetTvarREvesPoF(Cfuns2pt[:,:,:,ip],todtvals,ipTOE(thisp,VarMassCutoff))
-                # for istate in range(len(Emasshold)):
+                # for istate in xrange(len(Emasshold)):
                 #     print ' '.join(map(str,LEvechold[istate])) , Emasshold[istate]
             else:
                 Emasshold,LEvechold,REvechold = GetTvarREves(Cfuns2pt[:,:,ip],todtvals,ipTOE(thisp,VarMassCutoff))

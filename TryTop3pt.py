@@ -73,7 +73,7 @@ def CreateRFTop(RunType,thisTSinkList,thisiSmearList,thisjSmearList,thisPrefList
     # print np.array(data3pt).shape
     # print np.array(data3ptTop).shape
     # if Debug:
-    # for it in range(0,15):
+    # for it in xrange(0,15):
     #     # RF = data3pt[0][0][0][0][0][0][it]/data2pt[0][0][-1][0][15]
     #     # RF.Stats()
     #     print
@@ -137,10 +137,10 @@ def CreateRFTop(RunType,thisTSinkList,thisiSmearList,thisjSmearList,thisPrefList
                 CMdata3ptTop.append(CreateREPoFCfuns(np.array(flow3pt),data2pt,itodt,thisMomList,todtvalsLeft = DefPoFTvarRef)[-1])
             
             # if Debug:
-            # for it in range(0,15):
+            # for it in xrange(0,15):
             #     print
             #     print 'it',it, 'c3ptAvg',data3ptset[0][0][0][it].Avg, 'c2ptAvg',data2ptset[0][0][it].Avg
-            #     for iboot in range(0,10):
+            #     for iboot in xrange(0,10):
             #         print 'it',it, 'c3pt',data3ptset[0][0][0][it].values[iboot], 'c2pt',data2ptset[0][0][it].values[iboot]
             data2ptset += CMdata2pt.tolist()
             data3ptset += CMdata3pt.tolist()

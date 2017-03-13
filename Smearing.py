@@ -15,7 +15,7 @@ def SweepsToRMS(alpha,Nsmears,LatDim=ndim[:-1]):
    Smat[sDim[0],sDim[1],sDim[2]] = np.float64(1.0)
    cofone = np.float64(1.0-alpha)
    coftwo = np.float64(alpha/6.0)
-   for ism in range(1,Nsmears+1):
+   for ism in xrange(1,Nsmears+1):
       # print Smat[sDim[0],sDim[1],sDim[2]]
       # print Smat[sDim[0]+1,sDim[1],sDim[2]]
       # print Smat[sDim[0],sDim[1]+1,sDim[2]]
@@ -32,9 +32,9 @@ def SweepsToRMS(alpha,Nsmears,LatDim=ndim[:-1]):
                         np.roll(Smat,-1,1) +
                         np.roll(Smat,-1,2)))
    SqrRad = np.float64(0.0)
-   for ix in range(1,LatDim[0]):
-      for iy in range(1,LatDim[1]):
-         for iz in range(1,LatDim[2]):
+   for ix in xrange(1,LatDim[0]):
+      for iy in xrange(1,LatDim[1]):
+         for iz in xrange(1,LatDim[2]):
             SqrRad += Smat[ix,iy,iz]**2 * ((ix-sDim[0])**2+(iy-sDim[1])**2+(iz-sDim[2])**2)
    RMS = np.sqrt(SqrRad / np.sum(Smat**2))
 

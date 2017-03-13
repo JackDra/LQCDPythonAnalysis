@@ -136,7 +136,7 @@ OverDetdt = range(2,5+1) ## delta t value to use in the overdetumined eigenvalue
 OverDettodtlist = []
 for idt in OverDetdt:
     OverDettodtlist += [(itomin,itomax,idt) for itomin,itomax in OverDet_torange]
-OverDetIter = 1000 ## number of iterations performed in the overdeturmined eigenvalue problem
+OverDetIter = 100 ## number of iterations performed in the overdeturmined eigenvalue problem
 OverdetTol = 10**-7
 # OverDetIter = 0
 
@@ -307,7 +307,7 @@ else:
 filelist = ''.join([dirread,"/@/",FileStruct,"*"])
             
 nsrc = 200
-xsrcList = ['xsrc'+str(ix)+'_' for ix in range(1,nsrc+1)]
+xsrcList = ['xsrc'+str(ix)+'_' for ix in xrange(1,nsrc+1)]
 
 SourceList = ['']
 
@@ -421,6 +421,7 @@ else:
 #     DefiSmearList = ['16','32','64']
 # else:
 DefiSmearList = ['64']
+# DefiSmearList = ['16','32','64']
 # DefjSmearList = ['64']
 DefjSmearList = ['16','32','64']
 # DefSmearList = ['8','16','32','64','128','256']
@@ -576,8 +577,8 @@ TSinkStrDictList = {'REvec' : REvecTSinkStrList,
 if len(PoFTSinkList) > 0:
     TSinkDictList['PoF'] = PoFTSinkList+range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)
     TSinkDictList['PoFRead'] = PoFTSinkList+range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)
-    TSinkStrDictList['PoF'] = PoFTSinkStrList+['tsink'+str(its) for its in range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)]
-    TSinkStrDictList['PoFRead'] = PoFTSinkStrList+['tsink'+str(its) for its in range(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)]
+    TSinkStrDictList['PoF'] = PoFTSinkStrList+['tsink'+str(its) for its in xrange(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)]
+    TSinkStrDictList['PoFRead'] = PoFTSinkStrList+['tsink'+str(its) for its in xrange(PoFTSinkList[-1]+1,PoFTSinkList[-1]+1+PoFShifts)]
 
 
 SmearDictList = {'PoF' : PoFFlagList,

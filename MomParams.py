@@ -53,9 +53,9 @@ def GetQsqrd(nqsqrd,Mass,Phys=True):
 
 def makeqlist(thisMaxqsqrd):
     qlist = np.array([])
-    for iq1 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
-        for iq2 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
-            for iq3 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
+    for iq1 in xrange(-thisMaxqsqrd,thisMaxqsqrd+1):
+        for iq2 in xrange(-thisMaxqsqrd,thisMaxqsqrd+1):
+            for iq3 in xrange(-thisMaxqsqrd,thisMaxqsqrd+1):
                 if iq1**2 + iq2**2 + iq3**2 > thisMaxqsqrd: continue
                 qlist = np.append(qlist,'q = ' + str(iq1) + ' ' + str(iq2) + ' ' + str(iq3))
     return qlist
@@ -63,9 +63,9 @@ def makeqlist(thisMaxqsqrd):
 def Avgqlist(thisMaxqsqrd):
     qlist = np.array([])
     qsqrdlist = []
-    for iq1 in range(thisMaxqsqrd+1):
-        for iq2 in range(thisMaxqsqrd+1):
-            for iq3 in range(thisMaxqsqrd+1):
+    for iq1 in xrange(thisMaxqsqrd+1):
+        for iq2 in xrange(thisMaxqsqrd+1):
+            for iq3 in xrange(thisMaxqsqrd+1):
                 if iq1**2 + iq2**2 + iq3**2 > thisMaxqsqrd: continue
                 if iq1**2 + iq2**2 + iq3**2 in qsqrdlist: continue
                 qsqrdlist.append(iq1**2 + iq2**2 + iq3**2)
@@ -76,9 +76,9 @@ def Avgqlist(thisMaxqsqrd):
 
 def Chromaqlist(thisMaxqsqrd):
     qlist = np.array([])
-    for iq1 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
-        for iq2 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
-            for iq3 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
+    for iq1 in xrange(-thisMaxqsqrd,thisMaxqsqrd+1):
+        for iq2 in xrange(-thisMaxqsqrd,thisMaxqsqrd+1):
+            for iq3 in xrange(-thisMaxqsqrd,thisMaxqsqrd+1):
                 if iq1**2 + iq2**2 + iq3**2 > thisMaxqsqrd: continue
                 qlist = np.append(qlist,'q = ' + str(iq3) + ' ' + str(iq2) + ' ' + str(iq1))
     return qlist
@@ -336,10 +336,10 @@ def OutputSMOMPairs(filename):
 
 def makeq4list(thisMinqsqrd,thisMaxqsqrd):
     qlist = []
-    for iq1 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
-        for iq2 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
-            for iq3 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
-                for iq4 in range(-thisMaxqsqrd,thisMaxqsqrd+1):
+    for iq1 in xrange(-thisMaxqsqrd,thisMaxqsqrd+1):
+        for iq2 in xrange(-thisMaxqsqrd,thisMaxqsqrd+1):
+            for iq3 in xrange(-thisMaxqsqrd,thisMaxqsqrd+1):
+                for iq4 in xrange(-thisMaxqsqrd,thisMaxqsqrd+1):
                     if iq1**2 + iq2**2 + iq3**2 +  iq4**2 > thisMaxqsqrd: continue
                     if iq1**2 + iq2**2 + iq3**2 +  iq4**2 < thisMinqsqrd : continue
                     qlist.append([iq1,iq2,iq3,iq4])

@@ -20,7 +20,7 @@ def BootSet3pt(data,thisMomList,thisGammaList,nboot,printstr='',randlist=[]):
         dataout.append([])
         for ip,imom in enumerate(thisMomList):
             # print 'Booting '+printstr+igamma+' {}%               \r'.format(int((ip*100)/float(len(thisMomList)))),
-            # for it in range(16):
+            # for it in xrange(16):
             #     print 'pie3pt'
             #     for idata in np.array(data)[:,ig,ip,:]:
             #         print it,idata[it]
@@ -60,7 +60,7 @@ def BootSet3ptTC(data,thisMomList,thisGammaList,nboot,tflowlist,printstr='',rand
             dataout[ig].append([])
             for ip,imom in enumerate(thisMomList):
                 # print 'Booting '+printstr+igamma+' {}%               \r'.format(int((ip*100)/float(len(thisMomList)))),
-                # for it in range(16):
+                # for it in xrange(16):
                 #     print 'pie3pt'
                 #     for idata in np.array(data)[:,ig,ip,:]:
                 #         print it,idata[it]
@@ -283,7 +283,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         bootxsrcNNQ,bootxsrcNNQerr = [],[]
         bootxsrc,bootxsrcerr = [],[]
         xlist = []
-        for iXSrc in range(1,XSrcLen+1):
+        for iXSrc in xrange(1,XSrcLen+1):
             yavg,yerr,yavgNNQ,yerrNNQ = [],[],[],[]
             xlist.append(iXSrc)
             for ic,(icfg,iread) in enumerate(readfilelist.iteritems()):

@@ -27,9 +27,9 @@ def CreateFF(data,mass,iCurr,gammaflag='',Rfac=True,alphalist = [1.0]):
         iqs = 'qsqrd'+str(iqsqrd)
         thisdataout['qsqrd'+str(iqsqrd)] = {}
         datavals,FFcoeff = [],[]
-        for ica in range(len(alphalist)):
+        for ica in xrange(len(alphalist)):
             FFcoeff.append([])
-            for iff in range(NoFFPars[baseCurr]):
+            for iff in xrange(NoFFPars[baseCurr]):
                 FFcoeff[ica].append([])
         opplist = []
         for iopp in Opps:                    

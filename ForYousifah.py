@@ -59,7 +59,7 @@ for cfgFileOut,cfgFileOutg5,(icfg,cfgFileListIn) in zip(FileListOut,FileListOutg
 ###     f = open(thisfile,'rb')
 ###     # with open(thisfile,'rb') as f:
 ###     ip,iploc = 0,qstrTOip('q = 0 0 0')
-###     for it in range(nt):
+###     for it in xrange(nt):
 ###         ##11 + 22 projected spin component ns = 4 works
 ###         try:
 ###             loc = SeekIncSize*2*(ns**2)*(it + iploc*nt)

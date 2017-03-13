@@ -188,9 +188,9 @@ def FitBoots(ydatain,xdatain,FitFun,DoW='T',MI=MaxIters,parlen=1,tBooted=False,t
             inputdata = [(parlen,xdatain,ydataStd,FitFun,iy) for iy in ydatavals]
         fitdatavals = FitPool.map(LSFit.mapper,inputdata)
         FitPool.close()
-        for iy in range(len(fitdatavals[0][0])):
+        for iy in xrange(len(fitdatavals[0][0])):
             fitdata.append(BootStrap1(thisnboot,0))
-            for iboot in range(thisnboot):
+            for iboot in xrange(thisnboot):
                 fitdata[iy].values[iboot] = fitdatavals[iboot][0][iy]
     else:
         fitdatavals = []
@@ -204,9 +204,9 @@ def FitBoots(ydatain,xdatain,FitFun,DoW='T',MI=MaxIters,parlen=1,tBooted=False,t
             fitdatavals.append([])
             for iy,iyd in enumerate(tempboot[0]):
                 fitdatavals[iboot].append(iyd)
-        for iy in range(len(fitdatavals[0])):
+        for iy in xrange(len(fitdatavals[0])):
             fitdata.append(BootStrap1(thisnboot,0))
-            for iboot in range(thisnboot):
+            for iboot in xrange(thisnboot):
                 fitdata[iy].values[iboot] = fitdatavals[iboot][iy]
     GetBootStats(fitdata)
     # if Debug: print 'fit total took: ' , GetTimeStr(time.time()-totstart)
@@ -233,16 +233,16 @@ def FitBoots(ydatain,xdatain,FitFun,DoW='T',MI=MaxIters,parlen=1,tBooted=False,t
 #         # thisFunWrap = MakeWrap(LSFit,(parlen,xdatain,ydataStd))
 #         # makeContextFunctionsNo2(thisFunWrap)
 #         FitPool = Pool(processes=AnaProc)
-#         # inputargs = [[[FunBootList[iboot][0].mapper,FunBootList[iboot][1].mapper],ydatavals[iboot]] for iboot in range(nboot)]
-#         inputargs = [[parlen,xdatain,ydataStd,FunBootList[iboot],ydatavals[iboot]] for iboot in range(nboot)]
-#         # inputargs = [[FunAvg,ydatavals[iboot]] for iboot in range(nboot)]
+#         # inputargs = [[[FunBootList[iboot][0].mapper,FunBootList[iboot][1].mapper],ydatavals[iboot]] for iboot in xrange(nboot)]
+#         inputargs = [[parlen,xdatain,ydataStd,FunBootList[iboot],ydatavals[iboot]] for iboot in xrange(nboot)]
+#         # inputargs = [[FunAvg,ydatavals[iboot]] for iboot in xrange(nboot)]
 #         # fitdatavals = FitPool.map(thisFunWrap.mapper,inputargs)
 #         makeContextFunctions(LSFit)
 #         fitdatavals = FitPool.map(LSFit.mapper,inputargs)
 #         FitPool.close()
-#         for iy in range(len(fitdatavals[0][0])):
+#         for iy in xrange(len(fitdatavals[0][0])):
 #             fitdata.append(BootStrap1(nboot,0))
-#             for iboot in range(nboot):
+#             for iboot in xrange(nboot):
 #                 fitdata[iy].values[iboot] = fitdatavals[iboot][0][iy]
 #     else:
 #         fitdatavals = []
@@ -251,9 +251,9 @@ def FitBoots(ydatain,xdatain,FitFun,DoW='T',MI=MaxIters,parlen=1,tBooted=False,t
 #             fitdatavals.append([])
 #             for iy,iyd in enumerate(tempboot[0]):
 #                 fitdatavals[iboot].append(iyd)
-#         for iy in range(len(fitdatavals[0])):
+#         for iy in xrange(len(fitdatavals[0])):
 #             fitdata.append(BootStrap1(nboot,0))
-#             for iboot in range(nboot):
+#             for iboot in xrange(nboot):
 #                 fitdata[iy].values[iboot] = fitdatavals[iboot][iy]
 #     GetBootStats(fitdata)
 #     # fitdataChi = CalcChiSqrdPDF(C3FitFun,fitdataAvg,xdatain,ydataAvg,ydataStd)

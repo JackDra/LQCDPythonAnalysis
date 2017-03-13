@@ -37,8 +37,8 @@ AlphaFitRPick['Wein'] = 'fitr2-6'
 FitAlphaMinLeft,FitAlphaMaxLeft = 2,9
 FitAlphaMinRight,FitAlphaMaxRight = 5,13
 FitAlphaList,FitAlphaArgs = [],[]
-for ifit in range(FitAlphaMinLeft,FitAlphaMaxLeft+1):
-    for jfit in range(FitAlphaMinRight,FitAlphaMaxRight+1):
+for ifit in xrange(FitAlphaMinLeft,FitAlphaMaxLeft+1):
+    for jfit in xrange(FitAlphaMinRight,FitAlphaMaxRight+1):
         if ifit+4 > jfit: continue
         FitAlphaList.append([ifit,jfit])
         FitAlphaArgs.append('fitr'+str(ifit)+'-'+str(jfit))
@@ -51,8 +51,8 @@ FitCutMinLeft,FitCutMaxLeft = 2,3
 FitCutMinRight,FitCutMaxRight = 5,7
 FitCutList,FitCutArgs = [],[]
 FitCutPlot = ['cut2-7']
-for icut in range(FitCutMinLeft,FitCutMaxLeft+1):
-    for jcut in range(FitCutMinRight,FitCutMaxRight+1):
+for icut in xrange(FitCutMinLeft,FitCutMaxLeft+1):
+    for jcut in xrange(FitCutMinRight,FitCutMaxRight+1):
         if icut + jcut >= 10: continue
         FitCutList.append([icut,jcut])
         FitCutArgs.append('cut'+str(icut)+'-'+str(jcut))
@@ -88,8 +88,8 @@ SumFitRSrip = [ifitr.replace('fit sl ','') for ifitr in SumFitRList]
 
 def CreateFitList(thisTwoMin,thisTwoMinMax,thisTwoMax,thisTwoMaxMax,this3ptCutMin,this3ptCutMax):
     this2ptList = []
-    for fmin in range(thisTwoMin,thisTwoMinMax+1):
-        for fmax in range(thisTwoMax,thisTwoMaxMax+1):
+    for fmin in xrange(thisTwoMin,thisTwoMinMax+1):
+        for fmax in xrange(thisTwoMax,thisTwoMaxMax+1):
             if fmin+4 < fmax:
                 this2ptList.append((fmin,fmax))
     return this2ptList
@@ -213,7 +213,7 @@ def FitDefGuess(Fun,Len=1):
         return [0]
     elif Fun.__name__ == 'C2TwoStateFitFunCM':
         output = []
-        for i in range(Len):
+        for i in xrange(Len):
             output.append(3.1861104305e-06)
             output.append(4)
         return output+[np.log(.45),np.log(0.3385347963)]

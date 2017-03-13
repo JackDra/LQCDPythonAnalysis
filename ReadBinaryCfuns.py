@@ -179,7 +179,7 @@ class ReadFSDerCfunPick:
             self.data.append([])
             for ip,iploc in enumerate(thisMomList):         
                 self.data[igd].append([])
-                for it in range(nt):
+                for it in xrange(nt):
                     loc = 2*SeekIncSize*(igdloc + iploc*DGBSize + it*DGBSize*nmom)
                     if cmplxflag: loc += SeekIncSize
                     f.seek(loc)
@@ -205,7 +205,7 @@ class ReadFSCfunPick:
             self.data.append([])
             for ip,iploc in enumerate(thisMomList):      
                 self.data[igamma].append([])
-                for it in range(nt):
+                for it in xrange(nt):
                     loc = 2*SeekIncSize*(igammaloc + iploc*GBSize + it*GBSize*nmom)
                     if cmplxflag: loc += SeekIncSize
                     f.seek(loc)
@@ -229,7 +229,7 @@ class Read2ptCfunPick:
         self.tshiftlist = [0]*len(thisxsrcList)
         for ip,iploc in enumerate(thisMomList):
             self.data.append([])
-            for it in range(nt):
+            for it in xrange(nt):
         ##11 + 22 projected spin component ns = 4 works
                 loc = SeekIncSize*2*(ns**2)*(it + iploc*nt)
                 f.seek(loc)
@@ -495,7 +495,7 @@ class NaNCfunError(Exception):
 #             self.data.append([])
 #             for ip,iploc in enumerate(thisMomList):         
 #                 self.data[igd].append([])
-#                 for it in range(nt):
+#                 for it in xrange(nt):
 #                     loc = igdloc*2 + iploc*DGBSize*2 + it*DGBSize*nmom*2
 #                     if cmplxflag: loc += 1
 #                     self.data[igd][ip].append(tmpdata[loc])
@@ -524,7 +524,7 @@ class NaNCfunError(Exception):
 #             self.data.append([])
 #             for ip,iploc in enumerate(thisMomList):      
 #                 self.data[igamma].append([])
-#                 for it in range(nt):
+#                 for it in xrange(nt):
 #                     loc = igammaloc*2 + iploc*GBSize*2 + it*GBSize*nmom*2
 #                     if cmplxflag: loc += 1
 #                     self.data[igamma][ip].append(tmpdata[loc])
@@ -543,7 +543,7 @@ class NaNCfunError(Exception):
 #         tmpdata.byteswap()
 #         for ip,iploc in enumerate(thisMomList):
 #             self.data.append([])
-#             for it in range(nt):
+#             for it in xrange(nt):
 #         ##11 + 22 projected spin component ns = 4 works
 #                 loc = it*2*ns**2 + iploc*nt*2*ns**2
 #                 self.data[ip].append(tmpdata[loc]+tmpdata[loc+10])

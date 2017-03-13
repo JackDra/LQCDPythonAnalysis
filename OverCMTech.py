@@ -7,7 +7,6 @@ from scipy.linalg import eigh,eig
 from Params import *
 from copy import deepcopy
 import operator as opp
-from ReadTxt import ReadLREM
 import time
 from CMSTech import *
 from OvDetEigen import OverdetEigen
@@ -24,7 +23,6 @@ def CreateLREvesOvDet(Cfunto,Cfuntodt,thisdt):
     if VarMethodMethod == 'AxBxlSolve' or VarMethodMethod == 'Regular':
         Evals,REvec,Dump = OverdetEigen(Cfuntodt,Cfunto,OverDetIter)
         # Evals2,REvec2 = eig(Cfuntodt[:Cfuntodt.shape[1],:],b=Cfunto[:Cfunto.shape[1],:])
-        # ## DEBUG WOKRING HERE, FIxed inverted eigenvalues...
         # print 'Overdet'
         # print Cfunto
         # print Cfuntodt
@@ -53,7 +51,7 @@ def GetTvarOvdet(Cfunin,thistovals,thisdt,thisPoFShifts=PoFShifts):
     Cfuntomat,Cfuntodtmat = [],[]
     
     if thisPoFShifts > 0:  raise IOError('Code not implemented for thisPoFShift > 0 yet')
-    for thisto in range(thistomin,thistomax+1):
+    for thisto in xrange(thistomin,thistomax+1):
         thistomat = np.matrix(Pullflag(Cfun[0,:,:,thisto-PoFDelta],'Avg'))
         thistodtmat = np.matrix(Pullflag(Cfun[0,:,:,thisto+thisdt-PoFDelta],'Avg'))
         if len(Cfuntomat) == 0:

@@ -48,7 +48,7 @@ def FormatToDictAvgStd(String):
 
 
 def MomToFormat(mom,frmtflag='f'):
-    thisfmt = ' '.join(['{'+str(imom)+':20.10'+frmtflag+'} ' for imom in range(len(mom))])
+    thisfmt = ' '.join(['{'+str(imom)+':20.10'+frmtflag+'} ' for imom in xrange(len(mom))])
     return (thisfmt).format(*mom)
 
 def AvgStdChiToFormat(Avg,Std,Chi,frmtflag='f'):
@@ -72,7 +72,7 @@ def LREVecToFormat(iLE,iRE,iEM,DoPoF):
     if DoPoF:
         jSmPoFList = []
         iSmPoFList = []
-        for iPoF in ['PoF'+str(ishift) for ishift in range(PoFShifts+1)]:
+        for iPoF in ['PoF'+str(ishift) for ishift in xrange(PoFShifts+1)]:
             iSmPoFList += [ism+'_'+iPoF for ism in DefiSmList]
             jSmPoFList += [jsm+'_'+iPoF for jsm in DefjSmList]
     else:

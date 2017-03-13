@@ -16,7 +16,7 @@ from copy import deepcopy
 #         RFOut.append([])
 #         for ip,datap in enumerate(datagamma):
 #             RFOut[igamma].append([])
-#             for it in range(tsource-1,tsink):
+#             for it in xrange(tsource-1,tsink):
 #                 RFOut[igamma][ip].append(datap[it]*SqrtMomFac[ip][it-tsource+1])
 #                 RFOut[igamma][ip][it-tsource+1].Stats()
 #     return [RFOut,SqrtMomFac]
@@ -31,17 +31,17 @@ def CalcSqrtFac(data2ptz,data2ptp,thistsink):
         thistsrc = tsource-1
     two = data2ptz[inttsink-1]*data2ptp[inttsink-1]
     NegSQRTRatFac = False
-    for ict in range(len(two.values)):
+    for ict in xrange(len(two.values)):
         if two.values[ict] < 0.0:
             NegSQRTRatFac = True
             two.values[ict] = abs(two.values[ict])
     two = two**(0.5)
-    for it in range(thistsrc,inttsink): 
+    for it in xrange(thistsrc,inttsink): 
         tflip = inttsink-it+tsource-2
         one = data2ptz[it]/data2ptp[it]
         three = data2ptp[tflip]/data2ptz[tflip]
         inter = one*three
-        for ict in range(len(inter.values)):
+        for ict in xrange(len(inter.values)):
             if inter.values[ict] < 0.0:
                 NegSQRTRatFac = True
                 inter.values[ict] = abs(inter.values[ict])
@@ -55,7 +55,7 @@ def CalcSqrtFac(data2ptz,data2ptp,thistsink):
 # def DivSqrtFac(data2pt,thistsink):
 #     SqrtFac = []
 #     inttsink = int(thistsink)
-#     for it in range(tsource-1,inttsink): 
+#     for it in xrange(tsource-1,inttsink): 
 #         SqrtFac.append(data2pt[inttsink-1])
 #     return [SqrtFac,False]
 
