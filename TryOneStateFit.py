@@ -105,7 +105,7 @@ def DoOSF(thisSetList,thisGammaList,OSF2ptarray,twoptGammaMomList,thisMomList):
     # print 'Running ' + thisGammaList[0] + ' ' + thisMomList[0]
     totstart = time.time()
     mprint( 'Reading Data')
-    [data3pt,dump,thisGammaMomList,BorA,infolistRF,infolist2pt] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=thisMomList)
+    [data3pt,dump,thisGammaMomList,BorA,infolistRF,infolist2pt,dump] = ReadCfunsnp(thisGammaList,thisSetList,thisMomList=thisMomList)
     thisMom = qstrTOqcond(thisMomList[0])
     thisGammaMomList['twopt'] = twoptGammaMomList['twopt']
     thisGammaList = thisGammaMomList.keys()
@@ -181,7 +181,7 @@ if os.path.isfile(picklefile2pt):
     print '2 point picked file read in'        
 else:
     print 'Reading and fitting 2 point correlator data'
-    [dump,data2pt,twoptGammaMomList,dump3,dump4,infolist2pt] = ReadCfunsnp(['twopt'],ReadSetList,thisMomList=GetAvgMomList(feedin['mom']))
+    [dump,data2pt,twoptGammaMomList,dump3,dump4,infolist2pt,dump5] = ReadCfunsnp(['twopt'],ReadSetList,thisMomList=GetAvgMomList(feedin['mom']))
     ## data2pt = [ ip , iset2pt , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     OSF2ptarray = []
     OneFit2pt = []

@@ -129,19 +129,20 @@ def CreateTwoPtOverDet(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anapr
     C2out = FlattenSmearWithTsrc(data2pt).tolist()
     ## C2out = [ t_src*ism*jsm , ip , it ] 
 
-    makeContextFunctions(CreatePoF2ptCfuns)
+    start = time.time()
+    makeContextFunctions(CreateOvdet2ptCfun)
+    PoFinputparams = []
     for thistvar,(itomin,itomax,idt) in zip(DefTvarPicked,OverDettodtlist):
-        PoFinputparams.append(data2pt,(itomin,itomax),idt,thisMomList)
+        PoFinputparams.append((data2pt,(itomin,itomax),idt,thisMomList))
 
-    ##TO DO WORKING FROM HERE DEBUG BLAHHHH##
     if DoMulticore and feedin['anaproc'] > 1:
         thisPool = Pool(min(len(PoFinputparams),feedin['anaproc']))
-        outputPoF = thisPool.map(CreatePoF2ptCfuns.mapper,PoFinputparams)
+        outputPoF = thisPool.map(CreateOvdet2ptCfun.mapper,PoFinputparams)
         thisPool.close()
         thisPool.join()
     else:
-        outputPoF,outputCM = [],[]
-        for iin in PoFinputparams: outputPoF.append(CreatePoF2ptCfuns.mapper(iin))
+        outputPoF = []
+        for iin in PoFinputparams: outputPoF.append(CreateOvdet2ptCfun.mapper(iin))
     
     
     thisPoFTvarList = ['PoF'+str(PoFShifts)+iTvar for iTvar in TwoPtDefTvarList]
@@ -155,14 +156,6 @@ def CreateTwoPtOverDet(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anapr
 
     
     if len(thisiSmearList) != len(thisjSmearList): print 'Warning: source and sink smearing lists are different sizes, CM analysis skipped'
-    start = time.time()
-    for thistvar,(itomin,itomax,idt) in zip(DefTvarPicked,OverDettodtlist):
-        print 'Starting Overdetumined Eigenvalue problem for '+ thistvar
-        if Debug: print 'Check actual todt params: to',itomin,'-',itomax,'dt',idt 
-        [CMdata2pt,LEvec,REvec,Emass] = CreateOvdet2ptCfun(data2pt,(itomin,itomax),idt,thisMomList)
-        ## CMdata2pt [ istate , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
-        C2out += CMdata2pt.tolist()
-        PrintLREvecMassToFile(LEvec,REvec,Emass,thisMomList,thistvar,AddDict=InfoDict,DoPoF=False)
 
 
     print 'CMTech Total Time Taken: ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
