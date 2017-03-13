@@ -36,9 +36,7 @@ def CreateTwoPtTop(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':
 
     thisMomList = GetAvgMomListip(thisMomList)
     data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
-    ncon = np.size(filelist)
-    InfoDict = {'nconfig':ncon}
-    print 'ncon = ' + str(ncon)
+    InfoDict = GetInfoFromFilelist(filelist)
     # print 'nboot = ' + str(nboot)
     ## data2pt = [ t_src, ism , jsm , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     ## dataTop = [ t_flow, t_src, ism , jsm , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)

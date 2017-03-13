@@ -63,8 +63,7 @@ def CreateRF(RunType,thisTSinkList,thisiSmearList,thisjSmearList,thisPrefList,th
             [data2pt,data3pt,filelist] = ReadSet(thisiSmearList,thisjSmearList,thisMomList,thisPGList,thisPDList,
                                                  thisDSList,thisTSinkList,dirread,thisPrefList)
     print 'Read Complete'
-    print 'ncon=',len(filelist)
-    InfoDict = {'nconfig':len(filelist)}
+    InfoDict = GetInfoFromFilelist(filelist)
     ## data2pt = [ tsource, ism , jsm , ip ,  it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     ##data3pt = [ tsink, tsource, ism , jsm , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     # if Debug:

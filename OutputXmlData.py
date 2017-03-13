@@ -23,11 +23,14 @@ import os
 ## listin = [ism] {'Info': {'nconfig':###}}
 ## dictout = {'Info': {'nconfig':###}}
 def CombineSetInfo(listin):
-    nconf = listin[0]['nconfig']
-    if len(listin) > 1:
-        for ismlist in listin[1:]:
-            nconf = min(ismlist['nconfig'],nconf)
-    return {'nconfig':nconf}
+    outdict = OrderedDict()
+    for ikey in listin[0].iterkeys():
+        thisval = listin[0][ikey]
+        if len(listin) > 1:
+            for ismlist in listin[1:]:
+                thisval = min(ismlist[ikey],thisval)
+        outdict[ikey] = thisval
+    return outdict
 
 def WriteXml(thisfile,outputdict):
     if Debug: print 'Writing to: ' , thisfile

@@ -41,10 +41,10 @@ def ReadXmlAndPickle(filein):
     if len(firstkey) > 0:
         xmldata[firstkey[0]]['Boots'] = ReadPickleBoot(bootfile)
         if 'Info' not in xmldata[firstkey[0]].keys():
-            xmldata[firstkey[0]]['Info'] = {'nconfig':-1}
+            xmldata[firstkey[0]]['Info'] = CreateDefaultInfodict()
         else:
-            if not ('nconfig' in xmldata[firstkey[0]]['Info'].keys() or any(['qsqrd' in ixm for ixm in xmldata[firstkey[0]]['Info'].keys()])):
-                xmldata[firstkey[0]]['Info'] = {'nconfig':-1}
+            # if not ('nconfig' in xmldata[firstkey[0]]['Info'].keys() or any(['qsqrd' in ixm for ixm in xmldata[firstkey[0]]['Info'].keys()])):
+            #     xmldata[firstkey[0]]['Info'] = CreateDefaultInfodict()
     return xmldata,bootfile
 
 def CheckNconfFile(filein):
@@ -57,8 +57,8 @@ def CheckNconfFile(filein):
             strpline = line.strip()
             if '</Info>' in strpline:
                 return Nconf
-            elif '<nconfig>' in strpline and '</nconfig>' in strpline:
-                thisNconf = int(strpline.replace('<nconfig>','').replace('</nconfig>',''))
+            elif '<nMeasure>' in strpline and '</nMeasure>' in strpline:
+                thisNconf = int(strpline.replace('<nMeasure>','').replace('</nMeasure>',''))
                 if thisNconf > 0: Nconf = min(Nconf,thisNconf)
     if Nconf > 10e10 or Nconf < 0:
         return 'Dep'

@@ -3,6 +3,26 @@
 import xmltodict
 from collections import OrderedDict
 from Params import *
+import numpy as np
+
+def GetInfoFromFilelist(filedict):
+    outputdict = OrderedDict()
+    dictout['nconfig'] = len(filedict.keys())
+    lenths = []
+    for ikey,cfglist in filedict.iteritems():
+        lenths.append(len(cfglist))
+    dictout['nsrcAvg'] = np.mean(lenths)
+    dictout['nMeasure'] = np.sum(lenths)
+    return dictout
+
+def CreateDefaultInfodict():
+    dictout = OrderedDict()
+    dictout['nconfig'] = -1
+    dictout['nsrcAvg'] = -1
+    dictout['nMeasure'] = -1
+    return dictout
+    
+    
 
 def tflowstr(it):
     return 't_flow'+str(it)

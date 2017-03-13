@@ -16,6 +16,7 @@ from MiscFuns import *
 import time,datetime
 from MultiWrap import *
 from multiprocessing import Pool
+from XmlFormatting import GetInfoFromFilelist
 
 def CreateTwoPt(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':AnaProc}):
     logfile = logdir+'LogTwoPt.log'
@@ -35,9 +36,7 @@ def CreateTwoPt(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':Ana
 
     thisMomList = GetAvgMomListip(thisMomList)
     data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
-    ncon = np.size(filelist)
-    InfoDict = {'nconfig':ncon}
-    print 'ncon = ' + str(ncon)
+    InfoDict = GetInfoFromFilelist(filelist)
     # print 'nboot = ' + str(nboot)
     ## data2pt = [ t_src, ism , jsm , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     C2out = FlattenSmearWithTsrc(data2pt).tolist()
@@ -121,9 +120,7 @@ def CreateTwoPtOverDet(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anapr
 
     thisMomList = GetAvgMomListip(thisMomList)
     data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
-    ncon = np.size(filelist)
-    InfoDict = {'nconfig':ncon}
-    print 'ncon = ' + str(ncon)
+    InfoDict = GetInfoFromFilelist(filelist)
     # print 'nboot = ' + str(nboot)
     ## data2pt = [ t_src, ism , jsm , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     C2out = FlattenSmearWithTsrc(data2pt).tolist()
