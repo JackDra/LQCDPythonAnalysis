@@ -477,6 +477,9 @@ def SetRFDictToList(DictData,thisPrintRead=PrintRead):
     for igamma,(thisgamma,gammadata) in enumerate(DictData.iteritems()):
         if thisPrintRead: print 'Converting DictToList ' + thisgamma+ '          \r',
         gammalistout[thisgamma] = []
+        print
+        print thisgamma
+        print
         if 'twopt' in thisgamma:
             for imom,(thismom,momdata) in enumerate(gammadata.iteritems()):
                 gammalistout[thisgamma].append(thismom)
