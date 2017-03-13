@@ -6,7 +6,7 @@ from Params import *
 import numpy as np
 
 def GetInfoFromFilelist(filedict):
-    outputdict = OrderedDict()
+    dictout = OrderedDict()
     dictout['nconfig'] = len(filedict.keys())
     lenths = []
     for ikey,cfglist in filedict.iteritems():
