@@ -189,7 +189,7 @@ else:
     start = time.time()
     for icf,ifit2pt in enumerate(thisFitOSFR):
         perdone = (icf+1)/float(len(thisFitOSFR))
-        OSF2ptarray.append(OneStateSet2pt(data2pt,ReadSetList,twoptGammaMomList,[ifit2pt,int(perdone*100)]))
+        OSF2ptarray.append(OneStateSet2pt(data2pt,ReadSetList,twoptGammaMomList,[ifit2pt,int(perdone*100)],feedin['anaproc']))
         OneFit2pt.append(OSF2ptarray[-1][0])
         OneFit2ptChi.append(OSF2ptarray[-1][2])
         timeleft = (time.time()-start)*((1-perdone)/perdone)
