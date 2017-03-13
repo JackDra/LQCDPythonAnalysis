@@ -124,7 +124,7 @@ TimeInv = False ## uses time invariance to calculate the Pencil of Function meth
 DoCM = True ## does correlation matrix result ( no PoF) 
 
 ##Parameters for overdeturmined eigevalue problem
-OverDetRun = True # Runs an overdeturmined eigenvalue problem using a range of to values.
+OverDetRun = False # Runs an overdeturmined eigenvalue problem using a range of to values.
 OD_tomin,OD_tomax = 3,9
 OverDet_torange = []  ## range of to values to perfomr overdeturmined eigenvalue problem over.
 for itmin in xrange(OD_tomin,OD_tomax+1):
@@ -421,8 +421,8 @@ else:
 #     DefiSmearList = ['16','32','64']
 # else:
 # DefiSmearList = ['64']
-DefiSmearList = ['16','32','64']
-# DefjSmearList = ['64']
+# DefiSmearList = ['16','32','64']
+DefjSmearList = ['64']
 DefjSmearList = ['16','32','64']
 # DefSmearList = ['8','16','32','64','128','256']
 # DefSmearList = ['64','128']
