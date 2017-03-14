@@ -28,7 +28,7 @@ for ikappa in kappalist:
         GraphQExp(topcharge,tflow[0])
         GraphQLines(topcharge,tflow[0],np.arange(0,200,33))
         Graphchit(topcharge,tflow[0])
-        GraphQ2Hist(topcharge,tflow[0].tolist().index(3.01))
+        # GraphQ2Hist(topcharge,tflow[0].tolist().index(3.01))
 
 
     kappatopc.append(topcharge)
