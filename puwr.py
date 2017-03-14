@@ -251,13 +251,13 @@ def tauint(data, f, full_output = False,plot=False):
         tplt.set_xlabel(r'$W$')
         plt.errorbar(range(xmax)[::step], tint[:xmax:step], 
                      dtint[:xmax:step], fmt="o", color='b')
-        plt.axvline(W+0.1, color='r')
+        plt.axvline(W+0.02, color='r')
         Gplt = fig.add_subplot(212)
         Gplt.set_ylabel(r'$\Gamma$')
         Gplt.set_xlabel('$W$')
         plt.errorbar(range(xmax)[::step], G[:xmax:step], 
                      fmt="o", color='b')
-        plt.axvline(W+1.1, color='r')
+        plt.axvline(W+1.02, color='r')
         plt.savefig(plot+'.pdf')
         plt.clf()
     # except NameError: # no matplotlib
