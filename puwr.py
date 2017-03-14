@@ -243,19 +243,19 @@ def tauint(data, f, full_output = False,plot=False):
     # make a plot
     # try:
     if plot != False:
-        xmax = int(W*1.3)
+        xmax = int(W*3.3)
         step = int(np.ceil(W/20)) or 1
         fig = plt.figure(1)
         tplt = fig.add_subplot(211)
         tplt.set_ylabel(r'$\tau_{\mathrm{int}}$')
         tplt.set_xlabel(r'$W$')
-        plt.errorbar(range(xmax+1)[::step], tint[:xmax+1:step], 
-                     dtint[:xmax+1:step], fmt="o", color='b')
+        plt.errorbar(range(xmax)[::step], tint[:xmax:step], 
+                     dtint[:xmax:step], fmt="o", color='b')
         plt.axvline(W, color='r')
         Gplt = fig.add_subplot(212)
         Gplt.set_ylabel(r'$\Gamma$')
         Gplt.set_xlabel('$W$')
-        plt.errorbar(range(xmax+1)[::step], G[:xmax+1:step], 
+        plt.errorbar(range(xmax)[::step], G[:xmax:step], 
                      fmt="o", color='b')
         plt.axvline(W+1, color='r')
         plt.savefig(plot+'.pdf')
