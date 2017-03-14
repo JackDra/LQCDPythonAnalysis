@@ -384,30 +384,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
 ## auto_gamma = [ W ] 
 def PlotAutoCorrDetailed(NNdata,NNQdata):
     mkdir_p('./montegraphs')
-    auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(NNQdata,NNdata)
-    if Wpick == -1:
-        print
-        print 'Optimal W not found'
-    pl.plot(range(len(Gfun[:3*Wpick+1])),Gfun[:3*Wpick+1],'.-')
-    pl.axvline(Wpick, color='k', linestyle='-')
-    pl.axhline(0.0, color='k', linestyle='--')
-    pl.ylabel(r'$ \Gamma$')
-    pl.xlabel('W')
-    pl.title('Autocorrelation of $ \\alpha $ for nconf=' + str(len(NNdata)))
-    pl.savefig('./montegraphs/AutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
-    pl.clf()
-    if Debug:
-        for iW,(itau,itauerr) in enumerate(zip(auto_gamma,auto_error)):
-            print iW,itau,itauerr
-    pl.errorbar(range(len(auto_gamma[:3*Wpick+1])),auto_gamma[:3*Wpick+1],auto_error[:3*Wpick+1],label='Error={:.2g}'.format(Cw))
-    pl.axvline(Wpick, color='k', linestyle='-')
-    pl.axhline(0.5, color='k', linestyle='--')
-    pl.ylabel(r'$ \tau_{int}$')
-    pl.xlabel('W')
-    pl.legend()
-    pl.title('Integrated Autocorrelation function for nconf=' + str(len(NNdata)))
-    pl.savefig('./montegraphs/IntAutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
-    pl.clf()
+    tauint([[NNQdata],[NNdata]], Ratio, False,'./montegraphs/AutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
 
 
 ##NNQdata [ icfg, t/flow ] 
@@ -420,7 +397,7 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot):
     thisshift = 0.1
     if 'flow' in TorFlow:
         iNN = NNdata
-        for iNNQ in np.rollaxis(np.array(NNQdata),1):
+        for ifl,iNNQ in enumerate(np.rollaxis(np.array(NNQdata),1)):
             mean, err, tint, dtint, G, W = tauint([[iNNQ],[iNN]], Ratio, True)
             # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
             taulist.append( tint)
