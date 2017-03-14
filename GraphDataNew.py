@@ -1626,6 +1626,7 @@ def Graphchit(Qlist,flowlist):
         # tauerrlist.append(auto_error[Wpick])
         # alphaerr.append(Cw)
         # meanlist.append(np.mean(idata))
+        print itflow,flowpick
         if int(iflow) == flowpick:
             mean, err, tint, dtint, G, W = tauint([[idata]], 0, True,thisdir+'AutoCorrQ2Flow'+str(flowpick))
         else:
