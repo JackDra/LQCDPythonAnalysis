@@ -15,6 +15,7 @@ from MiscFuns import *
 import time,datetime
 from MultiWrap import *
 from multiprocessing import Pool
+from XmlFormatting import GetInfoFromFilelist
 
 def CreateTwoPtTop(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':AnaProc},Wein=False):
     if Wein:
