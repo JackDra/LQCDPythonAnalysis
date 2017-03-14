@@ -1616,6 +1616,7 @@ def Graphchit(Qlist,flowlist):
     Q2boot,dump = bt.CreateBoot(np.array(Qlist)**2,nboot,0)
     chit = coeff*np.array(Q2boot)**(0.25)
     chit = GetBootStats(chit)
+    flowpick = 4.01
     # pl.errorbar(flowlist-0.02,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q^{2} Boot$')
     # pl.errorbar(flowlist[1:] ,Pullflag(chit,'Avg')[1:],Pullflag(chit,'Std')[1:],fmt='o')
     taulist,tauerrlist,alphaerr,meanlist = [],[],[],[]
@@ -1625,9 +1626,12 @@ def Graphchit(Qlist,flowlist):
         # tauerrlist.append(auto_error[Wpick])
         # alphaerr.append(Cw)
         # meanlist.append(np.mean(idata))
-        
-        mean, err, tint, dtint, G, W = tauint([[idata]], 0, True)
-        # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
+        if int(iflow) == flowpick:
+            mean, err, tint, dtint, G, W = tauint([[idata]], 0, True,thisdir+'AutoCorrQ2Flow'+str(flowpick))
+        else:
+            mean, err, tint, dtint, G, W = tauint([[idata]], 0, True)
+            
+            # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
         taulist.append( tint)
         tauerrlist.append(dtint)
         alphaerr.append(err)
