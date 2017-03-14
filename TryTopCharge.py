@@ -65,18 +65,23 @@ def CreateTwoPtTop(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':
             CMinputparams.append((data2pt[0],itodt,thisMomList))
 
 
-    if DoMulticore and feedin['anaproc'] > 1 and len(PoFinputparams) > 1 and len(CMinputparams) > 1:
-        thisPool = Pool(min(len(CMinputparams),feedin['anaproc']))
+    if DoMulticore and feedin['anaproc'] > 1 and len(PoFinputparams) > 1:
+        thisPool = Pool(min(len(PoFinputparams),feedin['anaproc']))
         outputPoF = thisPool.map(CreatePoF2ptCfuns.mapper,PoFinputparams)
-        if thisDoCM:
-            outputCM = thisPool.map(CreateCM2ptCfuns.mapper,CMinputparams)
         thisPool.close()
         thisPool.join()
     else:
-        outputPoF,outputCM = [],[]
+        outputPoF = []
         for iin in PoFinputparams: outputPoF.append(CreatePoF2ptCfuns.mapper(iin))
-        if thisDoCM:
-            for iin in CMinputparams: outputCM.append(CreateCM2ptCfuns.mapper(iin))
+
+    if DoMulticore and feedin['anaproc'] > 1 and len(CMinputparams) > 1 and thisDoCM:
+        thisPool = Pool(min(len(CMinputparams),feedin['anaproc']))
+        outputCM = thisPool.map(CreateCM2ptCfuns.mapper,CMinputparams)
+        thisPool.close()
+        thisPool.join()
+    elif thisDoCM:
+        outputCM = []
+        for iin in CMinputparams: outputCM.append(CreateCM2ptCfuns.mapper(iin))
 
     thisPoFTvarList = PoFTvarPicked
     if thisDoCM:
@@ -115,18 +120,22 @@ def CreateTwoPtTop(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':
                 CMinputparams.append((topdata[0],itodt,thisMomList))
 
             
-    if DoMulticore and feedin['anaproc'] > 1:
-        thisPool = Pool(min(len(CMinputparams),feedin['anaproc']))
+    if DoMulticore and feedin['anaproc'] > 1 and len(PoFinputparams) > 1:
+        thisPool = Pool(min(len(PoFinputparams),feedin['anaproc']))
         outputPoFTop = thisPool.map(CreatePoF2ptCfuns.mapper,PoFinputparams)
-        if thisDoCM:
-            outputCMTop = thisPool.map(CreateCM2ptCfuns.mapper,CMinputparams)
         thisPool.close()
         thisPool.join()
     else:
-        outputPoFTop,outputCMTop = [],[]
+        outputPoFTop = []
         for iin in PoFinputparams: outputPoFTop.append(CreatePoF2ptCfuns.mapper(iin))
-        if thisDoCM:
-            for iin in CMinputparams: outputCMTop.append(CreateCM2ptCfuns.mapper(iin))
+    if DoMulticore and feedin['anaproc'] > 1 and len(CMinputparams) > 1 and thisDoCM:
+        thisPool = Pool(min(len(CMinputparams),feedin['anaproc']))
+        outputCMTop = thisPool.map(CreateCM2ptCfuns.mapper,CMinputparams)
+        thisPool.close()
+        thisPool.join()
+    elif thisDoCM:
+        outputCMTop = []
+        for iin in CMinputparams: outputCMTop.append(CreateCM2ptCfuns.mapper(iin))
             
     
     if thisDoCM:
