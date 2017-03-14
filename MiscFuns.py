@@ -14,11 +14,6 @@ from copy import deepcopy
 
 
 def stripends(string,prepost):
-    print string
-    print prepost
-    print string.replace(prepost[0],'')
-    print string.replace(prepost[0],'').replace(prepost[1],'')
-    print 
     return string.replace(prepost[0],'').replace(prepost[1],'')
 
 def filesort(filelist,prepost):
