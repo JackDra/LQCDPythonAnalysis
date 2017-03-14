@@ -27,10 +27,7 @@ which may be more suitable in your case.
 
 import numpy as np
 from scipy import signal
-try:
-    import matplotlib.pyplot as plt
-except:
-    pass
+import matplotlib.pyplot as plt
 
 def means(data):
     r"""Calculate per-observable means::
@@ -244,28 +241,28 @@ def tauint(data, f, full_output = False,plot=False):
     dtint = tint * 2 * \
         np.sqrt((np.arange(len(tint)) -  tint + .5)/d.N)
     # make a plot
-    try:
-        if plots != False:
-            xmax = int(W*1.3)
-            step = int(np.ceil(W/20)) or 1
-            fig = plt.figure(1)
-            tplt = fig.add_subplot(211)
-            tplt.set_ylabel(r'$\tau_{\mathrm{int}}$')
-            tplt.set_xlabel(r'$W$')
-            plt.errorbar(range(xmax)[::step], tint[:xmax:step], 
-                         dtint[:xmax:step], fmt="o", color='b')
-            plt.axvline(W, color='r')
-            Gplt = fig.add_subplot(212)
-            Gplt.set_ylabel(r'$\Gamma$')
-            Gplt.set_xlabel('$W$')
-            plt.errorbar(range(xmax)[::step], G[:xmax:step], 
-                         fmt="o", color='b')
-            plt.axvline(W+1, color='r')
-            print 'saving',plots+'.pdf'
-            plt.savefig(plots+'.pdf')
-            plt.clf()
-    except NameError: # no matplotlib
-        pass
+    # try:
+    if plots != False:
+        xmax = int(W*1.3)
+        step = int(np.ceil(W/20)) or 1
+        fig = plt.figure(1)
+        tplt = fig.add_subplot(211)
+        tplt.set_ylabel(r'$\tau_{\mathrm{int}}$')
+        tplt.set_xlabel(r'$W$')
+        plt.errorbar(range(xmax)[::step], tint[:xmax:step], 
+                     dtint[:xmax:step], fmt="o", color='b')
+        plt.axvline(W, color='r')
+        Gplt = fig.add_subplot(212)
+        Gplt.set_ylabel(r'$\Gamma$')
+        Gplt.set_xlabel('$W$')
+        plt.errorbar(range(xmax)[::step], G[:xmax:step], 
+                     fmt="o", color='b')
+        plt.axvline(W+1, color='r')
+        print 'saving',plots+'.pdf'
+        plt.savefig(plots+'.pdf')
+        plt.clf()
+    # except NameError: # no matplotlib
+    #     pass
 
     if not full_output:
         return means, \
