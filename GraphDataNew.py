@@ -1707,29 +1707,29 @@ def GraphWchit(Wlist,flowlist):
         # tauerrlist.append(auto_error[Wpick])
         # alphaerr.append(Cw)
         # meanlist.append(np.mean(idata))
-        if iflow == flowpick:
-            PGfun = 
-            PWpick = Wpick
-            Pag = auto_gamma
-            Pagerr = auto_error
-            PCw = Cw
-    # pl.plot(range(len(PGfun[:3*PWpick+1])),Gfun[:3*PWpick+1],'.-')
-    pl.axvline(PWpick, color='k', linestyle='-')
-    pl.axhline(0.0, color='k', linestyle='--')
-    pl.ylabel(r'$ \Gamma$')
-    pl.xlabel('W')
-    pl.title('Autocorrelation of $ \\alpha\\ t_{flow}='+str(flowpick)+'$' )
-    pl.savefig(thisdir+'AutoCorrW2Flow'+str(flowpick)+'.pdf')
-    pl.clf()
-    pl.errorbar(range(len(Pag[:3*Wpick+1])),Pag[:3*Wpick+1],Pagerr[:3*Wpick+1],label='Error={:.2g}'.format(PCw))
-    pl.axvline(PWpick, color='k', linestyle='-')
-    pl.axhline(0.5, color='k', linestyle='--')
-    pl.ylabel(r'$ \tau_{int}$')
-    pl.xlabel('W')
-    pl.legend()
-    pl.title('Integrated Autocorrelation function of $ \\alpha\\ t_{flow}='+str(flowpick)+'$' )
-    pl.savefig(thisdir+'IntAutoCorrW2Flow'+str(flowpick)+'.pdf')
-    pl.clf()
+    #     if iflow == flowpick:
+    #         PGfun = 
+    #         PWpick = Wpick
+    #         Pag = auto_gamma
+    #         Pagerr = auto_error
+    #         PCw = Cw
+    # # pl.plot(range(len(PGfun[:3*PWpick+1])),Gfun[:3*PWpick+1],'.-')
+    # pl.axvline(PWpick, color='k', linestyle='-')
+    # pl.axhline(0.0, color='k', linestyle='--')
+    # pl.ylabel(r'$ \Gamma$')
+    # pl.xlabel('W')
+    # pl.title('Autocorrelation of $ \\alpha\\ t_{flow}='+str(flowpick)+'$' )
+    # pl.savefig(thisdir+'AutoCorrW2Flow'+str(flowpick)+'.pdf')
+    # pl.clf()
+    # pl.errorbar(range(len(Pag[:3*Wpick+1])),Pag[:3*Wpick+1],Pagerr[:3*Wpick+1],label='Error={:.2g}'.format(PCw))
+    # pl.axvline(PWpick, color='k', linestyle='-')
+    # pl.axhline(0.5, color='k', linestyle='--')
+    # pl.ylabel(r'$ \tau_{int}$')
+    # pl.xlabel('W')
+    # pl.legend()
+    # pl.title('Integrated Autocorrelation function of $ \\alpha\\ t_{flow}='+str(flowpick)+'$' )
+    # pl.savefig(thisdir+'IntAutoCorrW2Flow'+str(flowpick)+'.pdf')
+    # pl.clf()
 
             
     W2boot,dump = bt.CreateBoot(np.array(Wlist)**2,nboot,0)
