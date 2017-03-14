@@ -69,7 +69,6 @@ def ReadTopAll(thisdir):
         filelist = thesefiles
         thisroot = root
     for ifile in filesort(filelist,[filelist[0][:-8],'.out']):
-        print thisroot+ifile
         thistflow,thistcharge = ReadTopCharge(thisroot+ifile)
         cfglistout.append(ifile)
         tflow.append(thistflow)
