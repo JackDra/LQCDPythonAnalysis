@@ -1625,7 +1625,7 @@ def Graphchit(Qlist,flowlist):
         # tauerrlist.append(auto_error[Wpick])
         # alphaerr.append(Cw)
         # meanlist.append(np.mean(idata))
-        mean, err, tint, dtint, G, W = tauint([[[idata]]], 0, True)
+        mean, err, tint, dtint, G, W = tauint([[idata]], 0, True)
         # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
         taulist.append( tint)
         tauerrlist.append(dtint)
