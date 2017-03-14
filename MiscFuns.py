@@ -13,6 +13,15 @@ import time,datetime
 from copy import deepcopy
 
 
+def stripends(string,prepost):
+    return string.replace(prepost[0],'').replace(prepost[1],'')
+
+def filesort(filelist,prepost):
+    numberlist = [ stripends(ifile,prepost) for ifile in filelist]
+    return [x for (y,x) in sorted(zip(filelist,numberlist))]
+
+    
+    
 #tdata = { itsink , iboot }
 #dataout = { itsink } bs
 def CreateBootClass(data,thisnboot):
