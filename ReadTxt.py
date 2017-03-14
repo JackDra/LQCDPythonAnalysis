@@ -35,7 +35,7 @@ def ReadTopCharge(thisfile):
         thisfile = thisfile.replace('q_flow','W_flow')
     if os.path.isfile(thisfile):
         if Debug: print 'Reading: ',thisfile
-        tflow,topcharge = np.loadtxt(thisfile)[:,tflowlist]
+        tflow,topcharge = np.rollaxis(np.loadtxt(thisfile),1)[:,tflowlist]
         return tflow,topcharge
     else:
         return [],[]
