@@ -18,7 +18,7 @@ def stripends(string,prepost):
 
 def filesort(filelist,prepost):
     numberlist = [ stripends(ifile,prepost) for ifile in filelist]
-    
+    print numberlist
     return [x for (y,x) in sorted(zip(numberlist,filelist))]
 
     
