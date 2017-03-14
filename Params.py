@@ -150,7 +150,7 @@ else:
     NoXAvg = False ## Does each source separatly for each 
     
 MonteTime = 7
-MonteFlow = 4
+MonteFlow = 400
 
 if 'XAvg' in ListOrSet:
     XAvg = True ## averages over source position locatinos before bootstrapping
