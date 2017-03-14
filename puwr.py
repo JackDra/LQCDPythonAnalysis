@@ -316,7 +316,10 @@ def idf(n):
     return lambda *a : a[n]
 
 if __name__ == "__main__":
-    mean, err, tint, dtint, G, W = tauint(correlated_data(), 0, True)
+    corrdata = correlated_data()
+    print "corrdata = ",corrdata
+    print "shape = ",np.array(corrdata).shape
+    mean, err, tint, dtint, G, W = tauint(corrdata, 0, True)
     print " mean =", mean
     print "error =", err
     print " tint = {0} +/- {1}".format(tint, dtint)

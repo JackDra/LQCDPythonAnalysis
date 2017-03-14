@@ -5,10 +5,11 @@ import BootTest as bt
 from Params import *
 from MiscFuns import *
 from ReadBinaryCfuns import *
-from FitFunctions import CreateOORFF,OORNFFDer
+from FitFunctions import CreateOORFF,OORNFFDer,Ratio
 from LLSBoot import LSFit
 from StringFix import GetCfgNumb
 import matplotlib.pyplot as pl
+from puwr import tauint
 
 ##NB CreateBoot take array [ iconf , it ]
 
@@ -420,18 +421,24 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot):
     if 'flow' in TorFlow:
         iNN = NNdata
         for iNNQ in np.rollaxis(np.array(NNQdata),1):
-            auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
-            taulist.append( auto_gamma[Wpick])
-            tauerrlist.append(auto_error[Wpick])
-            alphaerr.append(Cw)
-            meanlist.append(np.mean(iNNQ)/np.mean(iNN))
+            mean, err, tint, dtint, G, W = tauint([[iNNQ],[iNN]], Ratio, True)
+            # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
+            taulist.append( tint)
+            tauerrlist.append(dtint)
+            alphaerr.append(err)
+            meanlist.append(mean)
     else:
         for iNN, iNNQ in zip(np.rollaxis(np.array(NNdata),1)[:25],np.rollaxis(np.array(NNQdata),1)[:25]):
-            auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
-            taulist.append( auto_gamma[Wpick])
-            tauerrlist.append(auto_error[Wpick])
-            alphaerr.append(Cw)
-            meanlist.append(np.mean(iNNQ)/np.mean(iNN))
+            mean, err, tint, dtint, G, W = tauint([[iNNQ],[iNN]], Ratio, True)
+            taulist.append( tint)
+            tauerrlist.append(dtint)
+            alphaerr.append(err)
+            meanlist.append(mean)
+            # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
+            # taulist.append( auto_gamma[Wpick])
+            # tauerrlist.append(auto_error[Wpick])
+            # alphaerr.append(Cw)
+            # meanlist.append(np.mean(iNNQ)/np.mean(iNN))
 
         
     pl.errorbar(range(len(taulist)),taulist,tauerrlist,fmt='.')

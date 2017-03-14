@@ -23,6 +23,9 @@ def makexunit(xin):
 def ChiDistribution(dof,chi):
     return (np.exp(-chi/2.)*(chi**((dof/2.) - 1)))/(gamma(dof/2.)*2**(dof/2.))
 
+def Ratio(a,b):
+    return a/b
+
 def IntChiDist(dof,alpha,chiList):
     # chiList = np.append(chiList,chiList[-1]*10)
     # if alpha == 0.5:
