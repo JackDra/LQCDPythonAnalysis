@@ -1619,11 +1619,22 @@ def Graphchit(Qlist,flowlist):
     # pl.errorbar(flowlist[1:] ,Pullflag(chit,'Avg')[1:],Pullflag(chit,'Std')[1:],fmt='o')
     taulist,tauerrlist,alphaerr,meanlist = [],[],[],[]
     for iflow,idata in zip(flowlist,np.rollaxis(np.array(Qlist)**2,1)):
-        auto_gamma,Cw,Gfun,Wpick,auto_error = Gamma1D_est(idata)
-        taulist.append( auto_gamma[Wpick])
-        tauerrlist.append(auto_error[Wpick])
-        alphaerr.append(Cw)
-        meanlist.append(np.mean(idata))
+        # auto_gamma,Cw,Gfun,Wpick,auto_error = Gamma1D_est(idata)
+        # taulist.append( auto_gamma[Wpick])
+        # tauerrlist.append(auto_error[Wpick])
+        # alphaerr.append(Cw)
+        # meanlist.append(np.mean(idata))
+        mean, err, tint, dtint, G, W = tauint([[[idata]]], 0, True)
+        # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
+        taulist.append( tint)
+        tauerrlist.append(dtint)
+        alphaerr.append(err)
+        meanlist.append(mean)
+        # auto_gamma,Cw,Gfun,Wpick,auto_error = Gamma1D_est(idata)
+        # taulist.append( auto_gamma[Wpick])
+        # tauerrlist.append(auto_error[Wpick])
+        # alphaerr.append(Cw)
+        # meanlist.append(np.mean(idata))
 
 
             
