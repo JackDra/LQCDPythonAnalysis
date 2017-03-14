@@ -1619,6 +1619,7 @@ def Graphchit(Qlist,flowlist):
     flowpick = 4.01
     # pl.errorbar(flowlist-0.02,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q^{2} Boot$')
     # pl.errorbar(flowlist[1:] ,Pullflag(chit,'Avg')[1:],Pullflag(chit,'Std')[1:],fmt='o')
+    thisdir = outputdir[0] + 'graphs/Qdata/'
     taulist,tauerrlist,alphaerr,meanlist = [],[],[],[]
     for iflow,idata in zip(flowlist,np.rollaxis(np.array(Qlist)**2,1)):
         # auto_gamma,Cw,Gfun,Wpick,auto_error = Gamma1D_est(idata)
@@ -1626,10 +1627,7 @@ def Graphchit(Qlist,flowlist):
         # tauerrlist.append(auto_error[Wpick])
         # alphaerr.append(Cw)
         # meanlist.append(np.mean(idata))
-        print iflow, flowpick, iflow == flowpick
         if iflow == flowpick:
-            print
-            print 'plotting'
             mean, err, tint, dtint, G, W = tauint([[idata]], 0, True,thisdir+'AutoCorrQ2Flow'+str(flowpick))
         else:
             mean, err, tint, dtint, G, W = tauint([[idata]], 0, True)
@@ -1647,7 +1645,6 @@ def Graphchit(Qlist,flowlist):
 
 
             
-    thisdir = outputdir[0] + 'graphs/Qdata/'
     Q2boot,dump = bt.CreateBoot(np.array(Qlist)**2,nboot,0)
     pl.errorbar(range(len(taulist)),taulist,tauerrlist,fmt='.')
     pl.axhline(0.5, color='k', linestyle='--')
