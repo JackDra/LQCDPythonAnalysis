@@ -1621,7 +1621,7 @@ def Graphchit(Qlist,flowlist):
     # pl.errorbar(flowlist[1:] ,Pullflag(chit,'Avg')[1:],Pullflag(chit,'Std')[1:],fmt='o')
     thisdir = outputdir[0] + 'graphs/Qdata/'
     taulist,tauerrlist,alphaerr,meanlist = [],[],[],[]
-    print np.aray(Qlist).shape
+    print np.array(Qlist).shape
     for iflow,idata in zip(flowlist,np.rollaxis(np.array(Qlist)**2,1)):
         # auto_gamma,Cw,Gfun,Wpick,auto_error = Gamma1D_est(idata)
         # taulist.append( auto_gamma[Wpick])
