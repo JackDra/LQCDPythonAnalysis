@@ -242,7 +242,7 @@ def tauint(data, f, full_output = False,plot=False):
         np.sqrt((np.arange(len(tint)) -  tint + .5)/d.N)
     # make a plot
     # try:
-    if plots != False:
+    if plot != False:
         xmax = int(W*1.3)
         step = int(np.ceil(W/20)) or 1
         fig = plt.figure(1)
@@ -258,8 +258,8 @@ def tauint(data, f, full_output = False,plot=False):
         plt.errorbar(range(xmax)[::step], G[:xmax:step], 
                      fmt="o", color='b')
         plt.axvline(W+1, color='r')
-        print 'saving',plots+'.pdf'
-        plt.savefig(plots+'.pdf')
+        print 'saving',plot+'.pdf'
+        plt.savefig(plot+'.pdf')
         plt.clf()
     # except NameError: # no matplotlib
     #     pass
