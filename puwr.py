@@ -255,7 +255,7 @@ def tauint(data, f, full_output = False,plot=False):
         Gplt = fig.add_subplot(212)
         Gplt.set_ylabel(r'$\Gamma$')
         Gplt.set_xlabel('$W$')
-        plt.errorbar(range(xmax)[::step], G[:xmax:step], 
+        plt.errorbar(range(xmax)[::step], G[:xmax:step]/G[0], 
                      fmt="o", color='b')
         plt.axvline(W+1.02, color='r')
         plt.savefig(plot+'.pdf')
