@@ -243,7 +243,7 @@ def tauint(data, f, full_output = False,plot=False):
     # make a plot
     # try:
     if plot != False:
-        xmax = int(W*3.3)
+        xmax = int(W*1.3)*4
         step = int(np.ceil(W/20)) or 1
         fig = plt.figure(1)
         tplt = fig.add_subplot(211)
