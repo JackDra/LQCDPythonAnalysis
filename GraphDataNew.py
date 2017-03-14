@@ -1696,18 +1696,24 @@ def GraphWchit(Wlist,flowlist):
     
     taulist,tauerrlist,alphaerr,meanlist = [],[],[],[]
     for iflow,idata in zip(flowlist,np.rollaxis(np.array(Wlist)**2,1)):
-        auto_gamma,Cw,Gfun,Wpick,auto_error = Gamma1D_est(idata)
-        taulist.append( auto_gamma[Wpick])
-        tauerrlist.append(auto_error[Wpick])
-        alphaerr.append(Cw)
-        meanlist.append(np.mean(idata))
+        mean, err, tint, dtint, G, W = tauint([[idata]], 0, True)
+        # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
+        taulist.append( tint)
+        tauerrlist.append(dtint)
+        alphaerr.append(err)
+        meanlist.append(mean)
+        # auto_gamma,Cw,Gfun,Wpick,auto_error = Gamma1D_est(idata)
+        # taulist.append( auto_gamma[Wpick])
+        # tauerrlist.append(auto_error[Wpick])
+        # alphaerr.append(Cw)
+        # meanlist.append(np.mean(idata))
         if iflow == flowpick:
-            PGfun = Gfun
+            PGfun = 
             PWpick = Wpick
             Pag = auto_gamma
             Pagerr = auto_error
             PCw = Cw
-    pl.plot(range(len(PGfun[:3*PWpick+1])),Gfun[:3*PWpick+1],'.-')
+    # pl.plot(range(len(PGfun[:3*PWpick+1])),Gfun[:3*PWpick+1],'.-')
     pl.axvline(PWpick, color='k', linestyle='-')
     pl.axhline(0.0, color='k', linestyle='--')
     pl.ylabel(r'$ \Gamma$')
