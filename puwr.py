@@ -203,7 +203,7 @@ def gamma(data, f):
     return Gtil * np.array([1./(d.d.N - d.d.R*t) 
                             for t in range(len(Gtil))]), d.d, om
 
-def tauint(data, f, full_output = False, plots=False):
+def tauint(data, f, full_output = False, plots=True):
     r"""Estimate the autocorrelation time of data as presented in
     [1]_.
 
