@@ -192,7 +192,9 @@ elif MesOrBar == 'Baryon':
         print 'INg5 set to ' , INg5
     else:
         INg5 = '17' ## 0 is Pp*g5 , 1 is g5 , 17 is g5*Pp 
-    
+
+
+        
 if DoCons: RepWithCons = False
 
 ## Currenlty, not using Time Invariance in the Pencil of Function Analysis is only properly implemented and tested for 2-point correlation analysis
@@ -201,7 +203,8 @@ if DoCons: RepWithCons = False
 # else:
 #     CfunConfigCheck = False # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
 CfunConfigCheck = False # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
-
+if 'LStats' in ListOrSet:
+    CfunConfigCheck = True
 
 if Debug: print 'nconfs saved is: ' , RunNconfs
 
