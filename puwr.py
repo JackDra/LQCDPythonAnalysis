@@ -261,6 +261,7 @@ def tauint(data, f, full_output = False,plot=False):
             plt.errorbar(range(xmax)[::step], G[:xmax:step], 
                          fmt="o", color='b')
             plt.axvline(W+1, color='r')
+            print 'saving',plots+'.pdf'
             plt.savefig(plots+'.pdf')
             plt.clf()
     except NameError: # no matplotlib
