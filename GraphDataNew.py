@@ -1622,13 +1622,14 @@ def Graphchit(Qlist,flowlist):
     thisdir = outputdir[0] + 'graphs/Qdata/'
     taulist,tauerrlist,alphaerr,meanlist = [],[],[],[]
     for iflow,idata in zip(flowlist,np.rollaxis(np.array(Qlist)**2,1)):
-        idata.shape
         # auto_gamma,Cw,Gfun,Wpick,auto_error = Gamma1D_est(idata)
         # taulist.append( auto_gamma[Wpick])
         # tauerrlist.append(auto_error[Wpick])
         # alphaerr.append(Cw)
         # meanlist.append(np.mean(idata))
         if iflow == flowpick:
+            print iflow
+            print idata.shape
             mean, err, tint, dtint, G, W = tauint([[idata]], 0, True,thisdir+'AutoCorrQ2Flow'+str(flowpick))
         else:
             mean, err, tint, dtint, G, W = tauint([[idata]], 0, True)
