@@ -203,7 +203,7 @@ def gamma(data, f):
     return Gtil * np.array([1./(d.d.N - d.d.R*t) 
                             for t in range(len(Gtil))]), d.d, om
 
-def tauint(data, f, full_output = False, plots=True):
+def tauint(data, f, full_output = False,plot=False):
     r"""Estimate the autocorrelation time of data as presented in
     [1]_.
 
@@ -245,7 +245,7 @@ def tauint(data, f, full_output = False, plots=True):
         np.sqrt((np.arange(len(tint)) -  tint + .5)/d.N)
     # make a plot
     try:
-        if plots:
+        if plots != False:
             xmax = int(W*1.3)
             step = int(np.ceil(W/20)) or 1
             fig = plt.figure(1)
@@ -261,7 +261,8 @@ def tauint(data, f, full_output = False, plots=True):
             plt.errorbar(range(xmax)[::step], G[:xmax:step], 
                          fmt="o", color='b')
             plt.axvline(W+1, color='r')
-            plt.show()
+            plt.savefig(plots+'.pdf')
+            plt.clf()
     except NameError: # no matplotlib
         pass
 

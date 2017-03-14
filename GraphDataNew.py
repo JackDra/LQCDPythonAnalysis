@@ -1625,6 +1625,7 @@ def Graphchit(Qlist,flowlist):
         # tauerrlist.append(auto_error[Wpick])
         # alphaerr.append(Cw)
         # meanlist.append(np.mean(idata))
+        
         mean, err, tint, dtint, G, W = tauint([[idata]], 0, True)
         # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
         taulist.append( tint)
@@ -1696,8 +1697,11 @@ def GraphWchit(Wlist,flowlist):
     
     taulist,tauerrlist,alphaerr,meanlist = [],[],[],[]
     for iflow,idata in zip(flowlist,np.rollaxis(np.array(Wlist)**2,1)):
-        mean, err, tint, dtint, G, W = tauint([[idata]], 0, True)
-        # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
+        if iflow == flowpick:
+            mean, err, tint, dtint, G, W = tauint([[idata]], 0, True)
+        else:
+            mean, err, tint, dtint, G, W = tauint([[idata]], 0, True,thisdir+'AutoCorrW2Flow'+str(flowpick))
+            # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
         taulist.append( tint)
         tauerrlist.append(dtint)
         alphaerr.append(err)
@@ -1707,7 +1711,6 @@ def GraphWchit(Wlist,flowlist):
         # tauerrlist.append(auto_error[Wpick])
         # alphaerr.append(Cw)
         # meanlist.append(np.mean(idata))
-    #     if iflow == flowpick:
     #         PGfun = 
     #         PWpick = Wpick
     #         Pag = auto_gamma
@@ -1719,7 +1722,7 @@ def GraphWchit(Wlist,flowlist):
     # pl.ylabel(r'$ \Gamma$')
     # pl.xlabel('W')
     # pl.title('Autocorrelation of $ \\alpha\\ t_{flow}='+str(flowpick)+'$' )
-    # pl.savefig(thisdir+'AutoCorrW2Flow'+str(flowpick)+'.pdf')
+    # pl.savefig(+'.pdf')
     # pl.clf()
     # pl.errorbar(range(len(Pag[:3*Wpick+1])),Pag[:3*Wpick+1],Pagerr[:3*Wpick+1],label='Error={:.2g}'.format(PCw))
     # pl.axvline(PWpick, color='k', linestyle='-')
