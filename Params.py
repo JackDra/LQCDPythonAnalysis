@@ -140,6 +140,11 @@ OverDetIter = 100 ## number of iterations performed in the overdeturmined eigenv
 OverdetTol = 10**-7
 # OverDetIter = 0
 
+# tflowlist = map(int,np.arange(0,1000,20)) ## indicies of flows to read
+tflowlist = map(int,np.arange(0,100)) + map(int,np.arange(101,1000,5))
+# tflowlist = [400]
+
+
 PlotMonte = False ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
 PlotXSrcDep = False ## Plots value and error over number of sources per gauge field
 DoPlotAuto = True ## Plots autocorrelation function for alpha
@@ -150,7 +155,7 @@ else:
     NoXAvg = False ## Does each source separatly for each 
     
 MonteTime = 7
-MonteFlow = 400
+MonteFlow = tflowlist.index(400)
 
 if 'XAvg' in ListOrSet:
     XAvg = True ## averages over source position locatinos before bootstrapping
@@ -280,9 +285,6 @@ PoFTsrcstrList = ['tsrc'+itsrc for itsrc in PoFtsourceList]
 # note: dim of StateSet < dim of SmearSet
 GammaSet = ['I','g1','g2','g3','g4','g1g2','g1g3','g1g4','g2g3','g2g4','g3g4','g1g5','g2g5','g3g5','g4g5','g5']
 GammaConsSet = ['Consg1','Consg2','Consg3','Consg4']
-# tflowlist = map(int,np.arange(0,1000,20)) ## indicies of flows to read
-tflowlist = map(int,np.arange(0,100)) + map(int,np.arange(101,1000,5))
-# tflowlist = [400]
 
 if DoCmplx:
     AllGammaSet = GammaSet + [igamma+'cmplx' for igamma in GammaSet]
