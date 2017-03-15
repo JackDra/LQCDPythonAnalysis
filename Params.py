@@ -281,7 +281,7 @@ PoFTsrcstrList = ['tsrc'+itsrc for itsrc in PoFtsourceList]
 GammaSet = ['I','g1','g2','g3','g4','g1g2','g1g3','g1g4','g2g3','g2g4','g3g4','g1g5','g2g5','g3g5','g4g5','g5']
 GammaConsSet = ['Consg1','Consg2','Consg3','Consg4']
 # tflowlist = map(int,np.arange(0,1000,20)) ## indicies of flows to read
-tflowlist = map(int,np.arange(0,1000))
+tflowlist = map(int,np.arange(0,100)) + map(int,np.arange(101,1000,5)
 # tflowlist = [400]
 
 if DoCmplx:
