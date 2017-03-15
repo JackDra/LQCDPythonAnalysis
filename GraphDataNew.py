@@ -1705,7 +1705,7 @@ def GraphWchit(Wlist,flowlist):
         if iflow == flowpick:
             mean, err, tint, dtint = uWerrMine([idata], ff.eyeFun,ff.eyeFunDer)
         else:
-            mean, err, tint, dtint = uWerrMine([idata], ff.eyeFun,ff.eyeFunDer,thisdir+'AutoCorrW2Flow'+str(flowpick))
+            mean, err, tint, dtint = uWerrMine([idata], ff.eyeFun,ff.eyeFunDer,plot=thisdir+'AutoCorrW2Flow'+str(flowpick))
             # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
         taulist.append( tint)
         tauerrlist.append(dtint)
