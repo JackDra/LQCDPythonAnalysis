@@ -384,7 +384,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
 ## auto_gamma = [ W ] 
 def PlotAutoCorrDetailed(NNdata,NNQdata):
     mkdir_p('./montegraphs')
-    uWerrMine([[NNQdata],[NNdata]], Ratio, RatioDer, plot='./montegraphs/AutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
+    uWerrMine([NNQdata,NNdata], Ratio, RatioDer, plot='./montegraphs/AutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
 
 
 ##NNQdata [ icfg, t/flow ] 
@@ -398,7 +398,7 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot,flowlist=[]):
     if 'flow' in TorFlow:
         iNN = NNdata
         for ifl,iNNQ in enumerate(np.rollaxis(np.array(NNQdata),1)):
-            thismean, err, tint, dtint = uWerrMine([[iNNQ],[iNN]], Ratio, RatioDer)
+            thismean, err, tint, dtint = uWerrMine([iNNQ,iNN], Ratio, RatioDer)
             # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
             taulist.append( tint)
             tauerrlist.append(dtint)
@@ -406,7 +406,7 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot,flowlist=[]):
             meanlist.append(thismean)
     else:
         for iNN, iNNQ in zip(np.rollaxis(np.array(NNdata),1)[:25],np.rollaxis(np.array(NNQdata),1)[:25]):
-            thismean, err, tint, dtint = uWerrMine([[iNNQ],[iNN]], Ratio, RatioDer)
+            thismean, err, tint, dtint = uWerrMine([iNNQ,iNN], Ratio, RatioDer)
             # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
             taulist.append( tint)
             tauerrlist.append(dtint)
