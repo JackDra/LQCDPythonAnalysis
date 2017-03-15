@@ -23,6 +23,9 @@ def autocorr(x,y):
    http://stackoverflow.com/q/14297012/190597
    http://en.wikipedia.org/wiki/Autocorrelation#Estimation
    """
+   x = np.array(x)
+   y = np.array(y)
+   
    n = len(x)
    # variance = x.var()
    x = x-x.mean()
@@ -64,6 +67,7 @@ def uWerrMine(data,fun,funder,AllOut=False,plot=False):
     
     G_ab = []
     for adat in data:
+        print adat
         G_ab.append([ autocorr(adat,bdat) for bdat in data])
 
     ##alpha function derivates (w.r.t variables)
