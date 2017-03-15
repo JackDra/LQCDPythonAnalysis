@@ -5,11 +5,11 @@ import BootTest as bt
 from Params import *
 from MiscFuns import *
 from ReadBinaryCfuns import *
-from FitFunctions import CreateOORFF,OORNFFDer,Ratio
+from FitFunctions import CreateOORFF,OORNFFDer,Ratio,RatioDer
 from LLSBoot import LSFit
 from StringFix import GetCfgNumb
 import matplotlib.pyplot as pl
-from puwr import tauint
+from AutoCorr import uWerrMine
 
 ##NB CreateBoot take array [ iconf , it ]
 
@@ -384,7 +384,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
 ## auto_gamma = [ W ] 
 def PlotAutoCorrDetailed(NNdata,NNQdata):
     mkdir_p('./montegraphs')
-    tauint([[NNQdata],[NNdata]], Ratio, False,'./montegraphs/AutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
+    uWerrMine([[NNQdata],[NNdata]], Ratio, RatioDer, plot='./montegraphs/AutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
 
 
 ##NNQdata [ icfg, t/flow ] 
@@ -398,7 +398,7 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot,flowlist=[]):
     if 'flow' in TorFlow:
         iNN = NNdata
         for ifl,iNNQ in enumerate(np.rollaxis(np.array(NNQdata),1)):
-            thismean, err, tint, dtint, G, W = tauint([[iNNQ,iNN]], Ratio, True)
+            thismean, err, tint, dtint = uWerrMine([[iNNQ],[iNN]], Ratio, RatioDer)
             # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
             taulist.append( tint)
             tauerrlist.append(dtint)
@@ -406,16 +406,12 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot,flowlist=[]):
             meanlist.append(thismean)
     else:
         for iNN, iNNQ in zip(np.rollaxis(np.array(NNdata),1)[:25],np.rollaxis(np.array(NNQdata),1)[:25]):
-            thismean, err, tint, dtint, G, W = tauint([[iNNQ],[iNN]], Ratio, True)
+            thismean, err, tint, dtint = uWerrMine([[iNNQ],[iNN]], Ratio, RatioDer)
+            # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
             taulist.append( tint)
             tauerrlist.append(dtint)
             alphaerr.append(err)
             meanlist.append(thismean)
-            # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
-            # taulist.append( auto_gamma[Wpick])
-            # tauerrlist.append(auto_error[Wpick])
-            # alphaerr.append(Cw)
-            # meanlist.append(np.mean(iNNQ)/np.mean(iNN))
 
         
 

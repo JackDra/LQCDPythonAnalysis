@@ -43,6 +43,9 @@ def means(data):
       where :math:`i` labels the measurements, :math:`r` the replica
       and :math:`\alpha` the observables.
     """
+    # print 'pie'
+    # print data
+    # print np.array([np.mean(np.hstack(i)) for i in data])
     return np.array([np.mean(np.hstack(i)) for i in data])
 
 class DataSanityCheckFail(Exception):
@@ -160,8 +163,12 @@ class DataProject:
         # calculate the derivatives
         df = [deriv(f, alpha, h) for alpha, h in enumerate(self.h)]
         fa = [dfi(*self.m) for dfi in df]
+        # print 'snout'
+        # for obs, falpha in zip(self.data, fa):
+        #     for rep in obs:                
+        #         print np.array(rep)*falpha
         # calculate a_f
-        return np.sum( np.array( [rep * falpha for rep in obs] )
+        return np.sum( np.array( [np.array(rep) * falpha for rep in obs] )
                           for obs, falpha in zip (self.data, fa) )
 
 def gamma(data, f):
@@ -193,7 +200,6 @@ def gamma(data, f):
     af = d.project(f)
     # calculate the mean of the projected data
     # note we now have only one observable, a_f
-    print af
     om = means([af,])[0]
     Gtil = np.sum( signal.fftconvolve(rep - om, 
                                       rep[::-1] - om)[len(rep)-1::-1]

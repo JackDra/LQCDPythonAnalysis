@@ -23,8 +23,19 @@ def makexunit(xin):
 def ChiDistribution(dof,chi):
     return (np.exp(-chi/2.)*(chi**((dof/2.) - 1)))/(gamma(dof/2.)*2**(dof/2.))
 
-def Ratio(a,b):
-    return a/b
+def Ratio(*a):
+    return a[0]*a[1]
+    # return a[1]
+
+def RatioDer(*a):
+    return [1/a[1],-a[0]/(a[1]**2)]
+
+def eyeFun(*a):
+    return a[0]
+
+def eyeFunDer(*a):
+    return [1.]
+
 
 def IntChiDist(dof,alpha,chiList):
     # chiList = np.append(chiList,chiList[-1]*10)
