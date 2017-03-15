@@ -398,7 +398,7 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot,flowlist=[]):
     if 'flow' in TorFlow:
         iNN = NNdata
         for ifl,iNNQ in enumerate(np.rollaxis(np.array(NNQdata),1)):
-            thismean, err, tint, dtint, G, W = tauint([[iNNQ],[iNN]], Ratio, True)
+            thismean, err, tint, dtint, G, W = tauint([[iNNQ,iNN]], Ratio, True)
             # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
             taulist.append( tint)
             tauerrlist.append(dtint)
