@@ -100,13 +100,15 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
         Gplt= fig.add_subplot(211)
         Gplt.set_ylabel(r'$\Gamma$')
         Gplt.set_xlabel('$W$')
-        pl.errorbar(range(xmax+1)[::step], Gat[:xmax:step]/Gat[0],
+        Gatplot = Gat[:xmax:step]/Gat[0]
+        pl.errorbar(range(Gatplot), Gatplot,
                      fmt="o", color='b')
         pl.axvline(Wopt+thisshift, color='r')
         tplt = fig.add_subplot(212)
         tplt.set_ylabel(r'$\tau_{\mathrm{int}}$')
         tplt.set_xlabel(r'$W$')
-        pl.errorbar(range(xmax+1)[::step], tauint[:xmax:step],
+        tauintplot = tauint[:xmax:step]
+        pl.errorbar(range(tauintplot), tauintplot,
                      dtauint[:xmax:step], fmt="o", color='b')
         pl.axvline(Wopt+thisshift, color='r')
         if plot == True:
