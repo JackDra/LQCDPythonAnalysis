@@ -398,19 +398,19 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot):
     if 'flow' in TorFlow:
         iNN = NNdata
         for ifl,iNNQ in enumerate(np.rollaxis(np.array(NNQdata),1)):
-            mean, err, tint, dtint, G, W = tauint([[iNNQ],[iNN]], Ratio, True)
+            thismean, err, tint, dtint, G, W = tauint([[iNNQ],[iNN]], Ratio, True)
             # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
             taulist.append( tint)
             tauerrlist.append(dtint)
             alphaerr.append(err)
-            meanlist.append(mean)
+            meanlist.append(thismean)
     else:
         for iNN, iNNQ in zip(np.rollaxis(np.array(NNdata),1)[:25],np.rollaxis(np.array(NNQdata),1)[:25]):
-            mean, err, tint, dtint, G, W = tauint([[iNNQ],[iNN]], Ratio, True)
+            thismean, err, tint, dtint, G, W = tauint([[iNNQ],[iNN]], Ratio, True)
             taulist.append( tint)
             tauerrlist.append(dtint)
             alphaerr.append(err)
-            meanlist.append(mean)
+            meanlist.append(thismean)
             # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
             # taulist.append( auto_gamma[Wpick])
             # tauerrlist.append(auto_error[Wpick])
@@ -432,6 +432,8 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot):
         pl.xlabel(r'$t_{sep}$')
         pl.savefig('./montegraphs/Overts/IntAutoCorrflow'+str(MonteFlow)+'.pdf')
     pl.clf()
+    for ic,im,ime in enumerate(zip(meanlist,alphaerr))):
+        print ic,im,ime
     pl.errorbar(range(len(meanlist)),meanlist,alphaerr,fmt='.',label='Autocorr')
     AlphaBoot = GetBootStats(NNQboot/NNboot)
     pl.errorbar(np.arange(len(AlphaBoot))[:25]+thisshift,Pullflag(AlphaBoot,'Avg')[:25],Pullflag(AlphaBoot,'Std')[:25],fmt='.',label='Bootstrap')
