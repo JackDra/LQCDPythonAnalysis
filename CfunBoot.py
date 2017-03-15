@@ -436,7 +436,7 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot,flowlist=[]):
         pl.xlabel(r'$t_{sep}$')
         pl.savefig('./montegraphs/Overts/IntAutoCorrflow'+str(MonteFlow)+'.pdf')
     pl.clf()
-    for ic,im,ime in enumerate(zip(meanlist,alphaerr))):
+    for ic,(im,ime) in enumerate(zip(meanlist,alphaerr)):
         print ic,im,ime
     pl.errorbar(range(len(meanlist)),meanlist,alphaerr,fmt='.',label='Autocorr')
     AlphaBoot = GetBootStats(NNQboot/NNboot)
