@@ -1629,9 +1629,9 @@ def Graphchit(Qlist,flowlist):
         # meanlist.append(np.mean(idata))
         if iflow == flowpick:
             # mean, err, tint, dtint, G, W = tauint([[idata**2]], 0, True,thisdir+'AutoCorrQ2Flow'+str(flowpick))
-            mean, err, tint, dtint = uWerrMine([[idata**2]], ff.eyeFun,ff.eyeFunDer,plot=thisdir+'AutoCorrQ2Flow'+str(flowpick))
+            mean, err, tint, dtint = uWerrMine([idata**2], ff.eyeFun,ff.eyeFunDer,plot=thisdir+'AutoCorrQ2Flow'+str(flowpick))
         else:
-            mean, err, tint, dtint = uWerrMine([[idata**2]], ff.eyeFun,ff.eyeFunDer)
+            mean, err, tint, dtint = uWerrMine([idata**2], ff.eyeFun,ff.eyeFunDer)
             
             # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
         taulist.append( tint)
@@ -1703,9 +1703,9 @@ def GraphWchit(Wlist,flowlist):
     taulist,tauerrlist,alphaerr,meanlist = [],[],[],[]
     for iflow,idata in zip(flowlist,np.rollaxis(np.array(Wlist)**2,1)):
         if iflow == flowpick:
-            mean, err, tint, dtint = uWerrMine([[idata]], ff.eyeFun,ff.eyeFunDer)
+            mean, err, tint, dtint = uWerrMine([idata], ff.eyeFun,ff.eyeFunDer)
         else:
-            mean, err, tint, dtint = uWerrMine([[idata]], ff.eyeFun,ff.eyeFunDer,thisdir+'AutoCorrW2Flow'+str(flowpick))
+            mean, err, tint, dtint = uWerrMine([idata], ff.eyeFun,ff.eyeFunDer,thisdir+'AutoCorrW2Flow'+str(flowpick))
             # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
         taulist.append( tint)
         tauerrlist.append(dtint)

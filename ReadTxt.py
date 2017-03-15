@@ -68,6 +68,7 @@ def ReadTopAll(thisdir):
     for root, thedir, thesefiles in os.walk(thisdir):
         filelist = thesefiles
         thisroot = root
+    if len(filelist) == 0: raise IOError('No files in directory ' + thisdir)
     for ifile in filesort(filelist,[filelist[0][:-8],'.out']):
         thistflow,thistcharge = ReadTopCharge(thisroot+ifile)
         cfglistout.append(ifile)

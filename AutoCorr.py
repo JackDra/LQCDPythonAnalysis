@@ -67,7 +67,6 @@ def uWerrMine(data,fun,funder,AllOut=False,plot=False):
     
     G_ab = []
     for adat in data:
-        print adat
         G_ab.append([ autocorr(adat,bdat) for bdat in data])
 
     ##alpha function derivates (w.r.t variables)
