@@ -82,7 +82,7 @@ def uWerrMine(data,fun,funder,AllOut=False,plot=False):
     Gat = [np.sum(f_ab * G_ab_t) for G_ab_t in np.rollaxis(np.array(G_ab),-1) ]
     
     ## equation (35)
-    CaW = BiasCorrect(np.array([Gat[0] + 2*np.sum(Gat[1:W]) for W in xrange(1,len(Gat))]),range(1,len(Gat)),glen)
+    CaW = BiasCorrect(np.array([Gat[0] + 2*np.sum(Gat[1:W]) for W in xrange(1,len(Gat))]),np.arange(1,len(Gat)),glen)
     ## equation (41)
     tauint = np.array(CaW) / (2*Gat[0])
     tau = Sparam/np.log((2*tauint+1)/(2*tauint-1))
