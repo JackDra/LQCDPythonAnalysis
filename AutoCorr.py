@@ -85,6 +85,9 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
     CaW = BiasCorrect(np.array([Gat[0] + 2*np.sum(Gat[1:W]) for W in xrange(1,len(Gat))]),np.arange(1,len(Gat)),glen)
     ## equation (41)
     tauint = np.array(CaW) / (2*Gat[0])
+    tauintpass = tauint
+    if tauint <= 0.5:
+        tauintpass = myeps
     tau = Sparam/np.log((2*tauint+1)/(2*tauint-1))
     Wopt = gW(tau)
     dtauint = VarTau(tauint)
