@@ -24,6 +24,9 @@ def ChiDistribution(dof,chi):
     return (np.exp(-chi/2.)*(chi**((dof/2.) - 1)))/(gamma(dof/2.)*2**(dof/2.))
 
 def Ratio(a,b):
+    print a
+    print b
+    print a/b
     return a/b
 
 def IntChiDist(dof,alpha,chiList):
