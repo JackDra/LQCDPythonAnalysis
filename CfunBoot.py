@@ -373,7 +373,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         bplotdataNNQ = np.array(TCBdata)[:,0,MonteTime-1]
         plotdata = np.array(tempdata)[:,0,MonteTime-1]
         plotdataNNQ = np.array(tempdataTop)[:,:,0,MonteTime-1]
-        PlotAutoCorr(plotdata,plotdataNNQ,'flow',bplotdata,bplotdataNNQ)
+        PlotAutoCorr(plotdata,plotdataNNQ,'flow',bplotdata,bplotdataNNQ,flowlist=flowlist)
 
     return TCBdata,(Bdata,rlist),shiftlist
 
@@ -391,7 +391,7 @@ def PlotAutoCorrDetailed(NNdata,NNQdata):
 ##NNdata [ icfg, t/flow  ] 
 ##NNQboot [ icfg, t/flow ] 
 ##NNboot [ icfg, t/flow  ] 
-def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot):
+def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot,flowlist=[]):
     mkdir_p('./montegraphs')
     meanlist,taulist,tauerrlist,alphaerr = [],[],[],[]
     thisshift = 0.1
@@ -418,7 +418,11 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot):
             # meanlist.append(np.mean(iNNQ)/np.mean(iNN))
 
         
-    pl.errorbar(range(len(taulist)),taulist,tauerrlist,fmt='.')
+
+    if 'flow' in TorFlow:
+        pl.errorbar(flowlist,taulist,tauerrlist,fmt='.')
+    else:
+        pl.errorbar(range(len(taulist)),taulist,tauerrlist,fmt='.')
     pl.axhline(0.5, color='k', linestyle='--')
     pl.ylabel(r'$ \tau_{int}$')
     
