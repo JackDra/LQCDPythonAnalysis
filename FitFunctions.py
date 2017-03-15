@@ -24,7 +24,7 @@ def ChiDistribution(dof,chi):
     return (np.exp(-chi/2.)*(chi**((dof/2.) - 1)))/(gamma(dof/2.)*2**(dof/2.))
 
 def Ratio(*a):
-    return a[0]*a[1]
+    return a[0]/a[1]
     # return a[1]
 
 def RatioDer(*a):

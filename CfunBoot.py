@@ -384,7 +384,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
 ## auto_gamma = [ W ] 
 def PlotAutoCorrDetailed(NNdata,NNQdata):
     mkdir_p('./montegraphs')
-    uWerrMine([NNQdata,NNdata], Ratio, RatioDer, plot='./montegraphs/AutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime)+'.pdf')
+    uWerrMine([NNQdata,NNdata], Ratio, RatioDer, plot='./montegraphs/AutoCorrflow'+str(MonteFlow)+'ts'+str(MonteTime))
 
 
 ##NNQdata [ icfg, t/flow ] 
