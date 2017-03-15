@@ -52,6 +52,8 @@ def VarTau(tau):
     N = float(len(tau))
     return [0] + [4/N * (iW + 1.5 - itau) * itau**2 for iW,itau in enumerate(tau[1:])]
 
+def BiasCorrect(CfW,W,N):
+    return CfW*(1+(2W+1)/N)
 
 #data = [ variable , monte time ]
 #fun(variables) output is value
@@ -80,7 +82,7 @@ def uWerrMine(data,fun,funder,AllOut=False,plot=False):
     Gat = [np.sum(f_ab * G_ab_t) for G_ab_t in np.rollaxis(np.array(G_ab),-1) ]
     
     ## equation (35)
-    CaW = [Gat[0] + 2*np.sum(Gat[1:W]) for W in xrange(1,len(Gat))]
+    CaW = BiasCorrect(np.array([Gat[0] + 2*np.sum(Gat[1:W]) for W in xrange(1,len(Gat))]),range(1,len(Gat)),glen)
     ## equation (41)
     tau = np.array(CaW) / (2*Gat[0])
     Wopt = gW(tau)
