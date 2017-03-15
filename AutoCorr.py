@@ -88,7 +88,7 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
     tauintpass = tauint
     for it,itauint in enumerate(tauint):
         if itauint <= 0.5:
-            tauintpass[it] = myeps
+            tauintpass[it] = 0.000001
     tau = Sparam/np.log((2*tauint+1)/(2*tauint-1))
     Wopt = gW(tau)
     dtauint = VarTau(tauint)
