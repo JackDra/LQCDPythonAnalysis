@@ -84,9 +84,10 @@ def uWerrMine(data,fun,funder,AllOut=False,plot=False):
     ## equation (35)
     CaW = BiasCorrect(np.array([Gat[0] + 2*np.sum(Gat[1:W]) for W in xrange(1,len(Gat))]),range(1,len(Gat)),glen)
     ## equation (41)
-    tau = np.array(CaW) / (2*Gat[0])
+    tauint = np.array(CaW) / (2*Gat[0])
+    tau = Sparam/np.log((2*tauint+1)/(2*tauint-1))
     Wopt = gW(tau)
-    dtau = VarTau(tau)
+    dtauint = VarTau(tauint)
     if plot != False:
         xmax = int(Wopt*2)
         step = int(np.ceil(Wopt/20)) or 1
@@ -101,8 +102,8 @@ def uWerrMine(data,fun,funder,AllOut=False,plot=False):
         tplt = fig.add_subplot(212)
         tplt.set_ylabel(r'$\tau_{\mathrm{int}}$')
         tplt.set_xlabel(r'$W$')
-        pl.errorbar(range(xmax)[::step], tau[:xmax:step],
-                     dtau[:xmax:step], fmt="o", color='b')
+        pl.errorbar(range(xmax)[::step], tauint[:xmax:step],
+                     dtauint[:xmax:step], fmt="o", color='b')
         pl.axvline(Wopt+thisshift, color='r')
         if plot == True:
             pl.show()
@@ -111,9 +112,9 @@ def uWerrMine(data,fun,funder,AllOut=False,plot=False):
             pl.clf()
         
     if AllOut:
-        return fun(*avgdata),np.sqrt(np.abs(CaW)/float(glen)),tau,dtau,Gat,Wopt
+        return fun(*avgdata),np.sqrt(np.abs(CaW)/float(glen)),tauint,dtauint,Gat,Wopt
     else:
-        return fun(*avgdata),np.sqrt(np.abs(CaW[Wopt])/float(glen)),tau[Wopt],dtau[Wopt]
+        return fun(*avgdata),np.sqrt(np.abs(CaW[Wopt])/float(glen)),tauint[Wopt],dtauint[Wopt]
     
     
 # def GammaAlpha_estimate(gQ,gN):
