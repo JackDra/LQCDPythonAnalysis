@@ -53,7 +53,7 @@ def VarTau(tau):
     return [0] + [4/N * (iW + 1.5 - itau) * itau**2 for iW,itau in enumerate(tau[1:])]
 
 def BiasCorrect(CfW,W,N):
-    return CfW*(1+(2W+1)/N)
+    return CfW*(1+(2*W+1)/N)
 
 #data = [ variable , monte time ]
 #fun(variables) output is value
