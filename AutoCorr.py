@@ -102,7 +102,7 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
         Gplt.set_xlabel('$W$')
         pl.errorbar(range(xmax)[::step], Gat[:xmax:step]/Gat[0],
                      fmt="o", color='b')
-        pl.axvline(Wopt+1+thisshift, color='r')
+        pl.axvline(Wopt+thisshift, color='r')
         tplt = fig.add_subplot(212)
         tplt.set_ylabel(r'$\tau_{\mathrm{int}}$')
         tplt.set_xlabel(r'$W$')
