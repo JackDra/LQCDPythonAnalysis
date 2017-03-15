@@ -193,6 +193,7 @@ def gamma(data, f):
     af = d.project(f)
     # calculate the mean of the projected data
     # note we now have only one observable, a_f
+    print af
     om = means([af,])[0]
     Gtil = np.sum( signal.fftconvolve(rep - om, 
                                       rep[::-1] - om)[len(rep)-1::-1]
