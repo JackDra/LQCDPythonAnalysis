@@ -62,7 +62,7 @@ def BiasCorrect(CfW,W,N):
 ## average, error[Woptimal], tau[Woptimal], tauerr[Woptimal]
 ## AllOut = True
 ## average, error(W), tau(W), tauerr(W), Gat(W), Wopt
-def uWerrMine(data,fun,funder,AllOut=False,plot=False):
+def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
     data = np.array(data)
     glen = len(data[0])
     avgdata = [idata.mean() for idata in data]
