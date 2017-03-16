@@ -86,11 +86,13 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
 
     ## (35)
     CFW = np.array([nuF]+[nuF + 2*np.sum(GFt[1:W]) for W in xrange(1,len(GFt))])
-    
 
+    ## Bias corrections (49)
+    CFW = BiasCorrect(CFW,np.arange(len(CFW)),glen)
+    
     ## equation (41)
-    # tauint = CFW / (2*nuF)
-    tauint = CFW 
+    tauint = CFW / (2*nuF)
+
 
     
     ## From Paper
@@ -111,9 +113,6 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
 
     ## (52)
     Wopt = gW(np.array(tau),glen)
-
-    ## Bias corrections (49)
-    CFW = BiasCorrect(CFW,np.arange(len(CFW)),glen)
 
     ## (42)
     dtauint = VarTau(tauint,glen)
