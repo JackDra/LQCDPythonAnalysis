@@ -139,7 +139,8 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
         tplt = fig.add_subplot(212)
         tplt.set_ylabel(r'$\tau_{\mathrm{int}}$')
         tplt.set_xlabel(r'$W$')
-        tauintplot = tauint[:xmax:step]
+        # tauintplot = tauint[:xmax:step]
+        tauintplot = CFW[:xmax:step]
         pl.errorbar(range(len(tauintplot)), tauintplot,
                      dtauint[:xmax:step], fmt="o", color='b')
         pl.axvline(Wopt+thisshift, color='r')
