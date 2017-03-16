@@ -104,12 +104,13 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
 
     
     ## From Paper
-    tauintpass = deepcopy(tauint)
+    tau = []
     for it,itauint in enumerate(tauint):
         if itauint <= 0.5:
-            tauintpass[it] = 0.00000001
-    ## (51) 
-    tau = Sparam/np.log((2*tauintpass+1)/(2*tauintpass-1))
+            tau.append(0.00000001)
+        else:
+            ## (51) 
+            tau.append(Sparam/np.log((2*itauint+1)/(2*itauint-1)))
 
     # ## From Matlab
     # tau = []
