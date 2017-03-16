@@ -89,7 +89,7 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
     
 
     ## equation (41)
-    tauint = np.array(CFW) / (2*nuF)
+    tauint = CFW / (2*nuF)
 
     
     ## From Paper
@@ -125,7 +125,8 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
         Gplt= fig.add_subplot(211)
         Gplt.set_ylabel(r'$\Gamma$')
         Gplt.set_xlabel('$W$')
-        GFtplot = GFt[:xmax:step]/GFt[0]
+        # GFtplot = GFt[:xmax:step]/GFt[0]
+        GFtplot = GFt[:xmax:step]
         pl.errorbar(range(len(GFtplot)), GFtplot,fmt="o", color='b')
         pl.axvline(Wopt+thisshift, color='r')
         tplt = fig.add_subplot(212)
