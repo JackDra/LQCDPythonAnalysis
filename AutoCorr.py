@@ -89,8 +89,8 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
     ## (35)
     CFW = np.array([GFt[0]]+[GFt[0] + 2*np.sum(GFt[1:W+1]) for W in xrange(1,len(GFt))])
 
-    ## Bias corrections (49)
-    CFW = BiasCorrect(CFW,glen)
+    # ## Bias corrections (49)
+    # CFW = BiasCorrect(CFW,glen)
 
 
     ## (34)
