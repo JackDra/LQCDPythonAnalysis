@@ -71,8 +71,8 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
     ## (31) matrix of autocorrelations w.r.t ab= variables
     G_ab_t = []
     for adat in data:
-        # G_ab_t.append([ autocorr(adat,bdat) for bdat in data])
-        G_ab_t.append([ MyCorrelate(adat,bdat) for bdat in data])
+        G_ab_t.append([ autocorr(adat,bdat) for bdat in data])
+        # G_ab_t.append([ MyCorrelate(adat,bdat) for bdat in data])
 
         
     ## (33) alpha function derivates (w.r.t variables)
