@@ -102,7 +102,7 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
     Wopt = gW(np.array(tau))
     dtauint = VarTau(tauint)
     if plot != False:
-        xmax = int(Wopt*2)
+        xmax = int(Wopt*3)
         step = int(np.ceil(Wopt/20)) or 1
         thisshift = xmax*0.002
         fig = pl.figure(1)
