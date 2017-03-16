@@ -112,7 +112,7 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
     Wopt = gW(np.array(tau),glen)
 
     ## Bias corrections (49)
-    CFW = BiasCorrect(CFW,np.arange(1,len(CFW)),glen)
+    CFW = BiasCorrect(CFW,np.arange(len(CFW)),glen)
 
     ## (42)
     dtauint = VarTau(tauint,glen)
