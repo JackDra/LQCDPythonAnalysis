@@ -44,7 +44,7 @@ def gW(tauW,thisN):
         val = np.exp(-iW/it)-it/np.sqrt(iW*thisN)
         if val < 0.0:
             return iW
-    return -1
+    return float('NaN')
         
 def VarTau(tau,N):
     ## Using aproximate formula (42) from paper
