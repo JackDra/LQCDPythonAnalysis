@@ -36,8 +36,7 @@ def autocorr(x,y):
    return result
 
 
-def gW(tauW):
-    thisN = len(tauW)
+def gW(tauW,thisN):
     ## using auto fitting window method used from (52)
     for iW,it in enumerate(tauW):
         if iW == 0: continue
@@ -46,14 +45,13 @@ def gW(tauW):
             return iW
     return -1
         
-def VarTau(tau):
+def VarTau(tau,N):
     ## Using aproximate formula (42) from paper
-    ## starting from W = 1, (iW = W -1, need to add 1 to start from iW = 1)
-    N = float(len(tau))
-    return [0] + [4/N * (iW + 1.5 - itau) * itau**2 for iW,itau in enumerate(tau[1:])]
+    return [4/N * (iW + 1.5 - itau) * itau**2 for iW,itau in enumerate(tau)]
 
 def BiasCorrect(CfW,W,N):
-    return CfW*(1+(2*W+1)/N)
+    ## Bias corrections using (49)
+    return CfW*(1+(((2*W)+1)/N))
 
 #data = [ variable , monte time ]
 #fun(variables) output is value
@@ -61,46 +59,64 @@ def BiasCorrect(CfW,W,N):
 ## AllOut = False
 ## average, error[Woptimal], tau[Woptimal], tauerr[Woptimal]
 ## AllOut = True
-## average, error(W), tau(W), tauerr(W), Gat(W), Wopt
+## average, error(W), tau(W), tauerr(W), GFt(W), Wopt
 def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
     data = np.array(data)
     glen = len(data[0])
     avgdata = [idata.mean() for idata in data]
-    
-    G_ab = []
-    for adat in data:
-        G_ab.append([ autocorr(adat,bdat) for bdat in data])
 
-    ##alpha function derivates (w.r.t variables)
+    ## (31) matrix of autocorrelations w.r.t ab= variables
+    G_ab_t = []
+    for adat in data:
+        G_ab_t.append([ autocorr(adat,bdat) for bdat in data])
+
+        
+    ## (33) alpha function derivates (w.r.t variables)
     f_a = np.array(funder(*avgdata))
     f_ab = []
     for if_a in f_a:
         f_ab.append([if_b*if_a for if_b in f_a])
     f_ab = np.array(f_ab)
 
-    ## equation (33)
-    Gat = [np.sum(f_ab * G_ab_t) for G_ab_t in np.rollaxis(np.array(G_ab),-1) ]
+    ## (33)
+    GFt = [np.sum(f_ab * G_ab) for G_ab in np.rollaxis(np.array(G_ab_t),-1) ]
+
+    ## (34)
+    nuF = GFt[0]
+
+    ## (35)
+    CFW = np.array([nuF]+[nuF + 2*np.sum(GFt[1:W]) for W in xrange(1,len(GFt))])
     
-    ## equation (35)
-    CaW = BiasCorrect(np.array([Gat[0] + 2*np.sum(Gat[1:W]) for W in xrange(1,len(Gat))]),np.arange(1,len(Gat)),glen)
+
     ## equation (41)
-    tauint = np.array(CaW) / (2*Gat[0])
-    # tauintpass = tauint
-    # for it,itauint in enumerate(tauint):
-    #     if itauint <= 0.5:
-    #         tauintpass[it] = 0.000001
-    ## From Paper
-    # tau = Sparam/np.log((2*tauintpass+1)/(2*tauintpass-1))
-    ## From Matlab
-    tau = []
-    for iGat in Gat:
-        if iGat <= 0.0:
-            tau.append(0.0000001)
-        else:
-            tau.append(Sparam/np.log((iGat+1)/iGat))
+    tauint = np.array(CFW) / (2*nuF)
+
     
-    Wopt = gW(np.array(tau))
-    dtauint = VarTau(tauint)
+    ## From Paper
+    tauintpass = tauint
+    for it,itauint in enumerate(tauint):
+        if itauint <= 0.5:
+            tauintpass[it] = 0.00000001
+    ## (51) 
+    tau = Sparam/np.log((2*tauintpass+1)/(2*tauintpass-1))
+
+    # ## From Matlab
+    # tau = []
+    # for iGFt in GFt:
+    #     if iGFt <= 0.0:
+    #         tau.append(0.0000001)
+    #     else:
+    #         tau.append(Sparam/np.log((iGFt+1)/iGFt))
+
+    ## (52)
+    Wopt = gW(np.array(tau),glen)
+
+    ## Bias corrections (49)
+    CFW = BiasCorrect(CFW,np.arange(1,len(CFW)),glen)
+
+    ## (42)
+    dtauint = VarTau(tauint,glen)
+
     if plot != False:
         xmax = int(Wopt*3)
         step = int(np.ceil(Wopt/20)) or 1
@@ -109,8 +125,8 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
         Gplt= fig.add_subplot(211)
         Gplt.set_ylabel(r'$\Gamma$')
         Gplt.set_xlabel('$W$')
-        Gatplot = Gat[:xmax:step]/Gat[0]
-        pl.errorbar(range(len(Gatplot)), Gatplot,fmt="o", color='b')
+        GFtplot = GFt[:xmax:step]/GFt[0]
+        pl.errorbar(range(len(GFtplot)), GFtplot,fmt="o", color='b')
         pl.axvline(Wopt+thisshift, color='r')
         tplt = fig.add_subplot(212)
         tplt.set_ylabel(r'$\tau_{\mathrm{int}}$')
@@ -126,9 +142,9 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
             pl.clf()
         
     if AllOut:
-        return fun(*avgdata),np.sqrt(np.abs(CaW)/float(glen)),tauint,dtauint,Gat,Wopt
+        return fun(*avgdata),np.sqrt(np.abs(CFW)/float(glen)),tauint,dtauint,GFt,Wopt
     else:
-        return fun(*avgdata),np.sqrt(np.abs(CaW[Wopt])/float(glen)),tauint[Wopt],dtauint[Wopt]
+        return fun(*avgdata),np.sqrt(np.abs(CFW[Wopt])/float(glen)),tauint[Wopt],dtauint[Wopt]
     
     
 # def GammaAlpha_estimate(gQ,gN):
