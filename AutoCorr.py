@@ -85,12 +85,21 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
     CaW = BiasCorrect(np.array([Gat[0] + 2*np.sum(Gat[1:W]) for W in xrange(1,len(Gat))]),np.arange(1,len(Gat)),glen)
     ## equation (41)
     tauint = np.array(CaW) / (2*Gat[0])
-    tauintpass = tauint
-    for it,itauint in enumerate(tauint):
-        if itauint <= 0.5:
-            tauintpass[it] = 0.000001
-    tau = Sparam/np.log((2*tauintpass+1)/(2*tauintpass-1))
-    Wopt = gW(tau)
+    # tauintpass = tauint
+    # for it,itauint in enumerate(tauint):
+    #     if itauint <= 0.5:
+    #         tauintpass[it] = 0.000001
+    ## From Paper
+    # tau = Sparam/np.log((2*tauintpass+1)/(2*tauintpass-1))
+    ## From Matlab
+    tau = []
+    for iGat in Gatpass:
+        if iGat <= 0.0:
+            tau.append(0.0000001)
+        else:
+            tau.append(Sparam/np.log((iGat+1)/iGat))
+    
+    Wopt = gW(np.array(tau))
     dtauint = VarTau(tauint)
     if plot != False:
         xmax = int(Wopt*2)
