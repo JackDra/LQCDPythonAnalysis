@@ -3,18 +3,18 @@
 import numpy as np
 import matplotlib.pyplot as pl
 
-# def MyCorrelate(x,y,Norm=True,MinAvg=True):
-#     if MinAvg:
-#         x = x-np.mean(x)
-#         y = y-np.mean(y)
-#     listout = []
-#     for it in xrange(len(x)):
-#         listout.append(0.0)
-#         for index in xrange(len(x)):
-#             if it+index < len(x):
-#                 listout[-1] = listout[-1] + x[index]*y[index+it]
-#         if Norm: listout[-1] = listout[-1]/(len(x)-it)
-#     return np.array(listout)
+def MyCorrelate(x,y,Norm=True,MinAvg=True):
+    if MinAvg:
+        x = x-np.mean(x)
+        y = y-np.mean(y)
+    listout = []
+    for it in xrange(len(x)):
+        listout.append(0.0)
+        for index in xrange(len(x)):
+            if it+index < len(x):
+                listout[-1] = listout[-1] + x[index]*y[index+it]
+        if Norm: listout[-1] = listout[-1]/(len(x)-it)
+    return np.array(listout)
 
 
 ### autocorrelation work taken from https://arxiv.org/pdf/hep-lat/0306017.pdf
@@ -71,7 +71,8 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
     ## (31) matrix of autocorrelations w.r.t ab= variables
     G_ab_t = []
     for adat in data:
-        G_ab_t.append([ autocorr(adat,bdat) for bdat in data])
+        # G_ab_t.append([ autocorr(adat,bdat) for bdat in data])
+        G_ab_t.append([ MyCorrelate(adat,bdat) for bdat in data])
 
         
     ## (33) alpha function derivates (w.r.t variables)
