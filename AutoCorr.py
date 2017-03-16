@@ -90,8 +90,8 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
     ## (35)
     CFW = np.array([GFt[0]]+[GFt[0] + 2*np.sum(GFt[1:W+1]) for W in xrange(1,len(GFt))])
 
-    # ## Bias corrections (49)
-    # CFW = BiasCorrect(CFW,glen)
+    ## Bias corrections (49)
+    CFW = BiasCorrect(CFW,glen)
 
 
     ## (34)
@@ -104,20 +104,20 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
 
     
     ## From Paper
-    tauintpass = deepcopy(tauint)
-    for it,itauint in enumerate(tauint):
-        if itauint <= 0.5:
-            tauintpass[it] = 0.00000001
-    ## (51) 
-    tau = Sparam/np.log((2*tauintpass+1)/(2*tauintpass-1))
+    # tauintpass = deepcopy(tauint)
+    # for it,itauint in enumerate(tauint):
+    #     if itauint <= 0.5:
+    #         tauintpass[it] = 0.00000001
+    # ## (51) 
+    # tau = Sparam/np.log((2*tauintpass+1)/(2*tauintpass-1))
 
     # ## From Matlab
-    # tau = []
-    # for iGFt in GFt:
-    #     if iGFt <= 0.0:
-    #         tau.append(0.0000001)
-    #     else:
-    #         tau.append(Sparam/np.log((iGFt+1)/iGFt))
+    tau = []
+    for iGFt in GFt:
+        if iGFt <= 0.0:
+            tau.append(0.0000001)
+        else:
+            tau.append(Sparam/np.log((iGFt+1)/iGFt))
 
     ## (52)
     Wopt = gW(np.array(tau),glen)
