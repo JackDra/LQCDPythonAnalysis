@@ -49,8 +49,9 @@ def VarTau(tau,N):
     ## Using aproximate formula (42) from paper
     return [4/N * (iW + 1.5 - itau) * itau**2 for iW,itau in enumerate(tau)]
 
-def BiasCorrect(CfW,W,N):
+def BiasCorrect(CfW,N):
     ## Bias corrections using (49)
+    W = np.arange(len(CfW))
     return CfW*(1+((2*W+1)/float(N)))
     # ## Testing
     # return CfW
@@ -85,14 +86,16 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
     ## (33)
     GFt = [np.sum(f_ab * G_ab) for G_ab in np.rollaxis(np.array(G_ab_t),-1) ]
 
-    ## (34)
-    nuF = GFt[0]
-
     ## (35)
-    CFW = np.array([nuF]+[nuF + 2*np.sum(GFt[1:W+1]) for W in xrange(1,len(GFt))])
+    CFW = np.array([GFt[0]]+[GFt[0] + 2*np.sum(GFt[1:W+1]) for W in xrange(1,len(GFt))])
 
     ## Bias corrections (49)
-    CFW = BiasCorrect(CFW,np.arange(len(CFW)),glen)
+    CFW = BiasCorrect(CFW,glen)
+
+
+    ## (34)
+    nuF = CFW[0]
+
     
     ## equation (41)
     tauint = CFW / (2*nuF)
