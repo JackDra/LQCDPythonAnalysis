@@ -93,7 +93,7 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
     # tau = Sparam/np.log((2*tauintpass+1)/(2*tauintpass-1))
     ## From Matlab
     tau = []
-    for iGat in Gatpass:
+    for iGat in Gat:
         if iGat <= 0.0:
             tau.append(0.0000001)
         else:
