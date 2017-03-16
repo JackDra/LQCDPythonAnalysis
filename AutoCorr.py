@@ -2,6 +2,7 @@
 
 import numpy as np
 import matplotlib.pyplot as pl
+from copy import deepcopy
 
 def MyCorrelate(x,y,Norm=True,MinAvg=True):
     if MinAvg:
@@ -103,7 +104,7 @@ def uWerrMine(data,fun,funder,Sparam=1.5,AllOut=False,plot=False):
 
     
     ## From Paper
-    tauintpass = tauint
+    tauintpass = deepcopy(tauint)
     for it,itauint in enumerate(tauint):
         if itauint <= 0.5:
             tauintpass[it] = 0.00000001
