@@ -363,10 +363,10 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         plotdataNNQ = np.array(tempdataTop)[:,MonteFlow,0,MonteTime-1]
         PlotAutoCorrDetailed(plotdata,plotdataNNQ)
 
-        bplotdata = np.array(Bdata)[0,:]
-        bplotdataNNQ = np.array(TCBdata)[MonteFlow,0,:]
-        plotdata = np.array(tempdata)[:,0,:]
-        plotdataNNQ = np.array(tempdataTop)[:,MonteFlow,0,:]
+        bplotdata = np.array(Bdata)[0,:25]
+        bplotdataNNQ = np.array(TCBdata)[MonteFlow,0,:25]
+        plotdata = np.array(tempdata)[:,0,:25]
+        plotdataNNQ = np.array(tempdataTop)[:,MonteFlow,0,:25]
         PlotAutoCorr(plotdata,plotdataNNQ,'t',bplotdata,bplotdataNNQ)
 
         bplotdata = np.array(Bdata)[0,MonteTime-1]
@@ -405,7 +405,7 @@ def PlotAutoCorr(NNdata,NNQdata,TorFlow,NNboot,NNQboot,flowlist=[]):
             alphaerr.append(err)
             meanlist.append(thismean)
     else:
-        for iNN, iNNQ in zip(np.rollaxis(np.array(NNdata),1)[:25],np.rollaxis(np.array(NNQdata),1)[:25]):
+        for iNN, iNNQ in zip(np.rollaxis(np.array(NNdata),1),np.rollaxis(np.array(NNQdata),1)):
             thismean, err, tint, dtint = uWerrMine([iNNQ,iNN], Ratio, RatioDer)
             # auto_gamma,Cw,Gfun,Wpick,auto_error = GammaAlpha_estimate(iNNQ,iNN)
             taulist.append( tint)
