@@ -51,7 +51,7 @@ def VarTau(tau,N):
 
 def BiasCorrect(CfW,W,N):
     ## Bias corrections using (49)
-    return CfW*(1+(((2*W)+1)/N))
+    return CfW*(1+((2*W+1)/float(N)))
 
 #data = [ variable , monte time ]
 #fun(variables) output is value
