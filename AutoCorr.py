@@ -47,7 +47,7 @@ def gW(tauW,thisN):
         
 def VarTau(tau,N):
     ## Using aproximate formula (42) from paper
-    return [4/N * (iW + 1.5 - itau) * itau**2 for iW,itau in enumerate(tau)]
+    return [4/N * (iW + 0.5 - itau) * itau**2 for iW,itau in enumerate(tau)]
 
 def BiasCorrect(CfW,N):
     ## Bias corrections using (49)
