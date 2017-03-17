@@ -149,18 +149,15 @@ PlotMonte = False ## Plots montecarlo time history of NNQ at time slice MonteTim
 PlotXSrcDep = False ## Plots value and error over number of sources per gauge field
 DoPlotAuto = False ## Plots autocorrelation function for alpha
 
-if PlotXSrcDep:
-    NoXAvg = True ## Does each source separatly for each 
+if PlotXSrcDep or 'XAvg' in ListOrSet:
+    XAvg = True
 else:
-    NoXAvg = False ## Does each source separatly for each 
+    XAvg = False
+NoXAvg = not XAvg ## Does each source separatly for each 
     
 MonteTime = 7
 MonteFlow = tflowlist.index(400)
 
-if 'XAvg' in ListOrSet:
-    XAvg = True ## averages over source position locatinos before bootstrapping
-else:
-    XAvg = False
 ExactXSrcNumber = False ## makes it so there are the same number of sources for each configuration (hardwired to the first configuration found)
 ForceXSrcLen = False ## forces so that any more sorce locations after XSrcLen are ignored
 XSrcLen = 15
@@ -194,7 +191,7 @@ elif MesOrBar == 'Baryon':
     InterpNumb = '9' ## Proton
     if 'BarN' in ListOrSet:
         INg5 = ListOrSet.split('BarN')[-1]
-        print 'INg5 set to ' , INg5
+        # print 'INg5 set to ' , INg5
     else:
         INg5 = '17' ## 0 is Pp*g5 , 1 is g5 , 17 is g5*Pp 
 
@@ -270,8 +267,8 @@ elif 'ReadSet' in ListOrSet:
             nboot = 20
         else:
             nboot = 200
-##DEBUGGING:
-print nboot , ListOrSet, XAvg
+
+print 'Boot Size =', nboot , ', Folder Location:', ListOrSet, ', AverageX =',XAvg
 # tsource = 17
 tsource = 0
 if TimeInv:
