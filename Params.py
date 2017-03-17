@@ -163,7 +163,7 @@ ForceXSrcLen = True ## forces so that any more sorce locations after XSrcLen are
 XSrcLen = 20
 
 ForceMinXSrcLen = True ## only calculates with a minumum of MinXSRCLen of sources per gauge field
-MinXSrcLen = 15
+MinXSrcLen = 20
 ##DEBUG toggles (True/False):
 # Debug = True # for debugging, toggles alot of print statements on
 # DEBUGPoF = True ## Temp debug parameter to test PoF (REMOVE ONCE DONE)
