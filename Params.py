@@ -147,7 +147,7 @@ tflowlist = map(int,np.arange(0,99,5)) + map(int,np.arange(100,1000,20))
 
 PlotMonte = False ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
 PlotXSrcDep = False ## Plots value and error over number of sources per gauge field
-DoPlotAuto = True ## Plots autocorrelation function for alpha
+DoPlotAuto = False ## Plots autocorrelation function for alpha
 
 if PlotXSrcDep:
     NoXAvg = True ## Does each source separatly for each 
