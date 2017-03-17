@@ -253,7 +253,7 @@ mkdir_p(logdir)
 mkdir_p(REvecDir)
 mkdir_p(momlistdir)
 ndim = [nx,nx,nx,nt]
-latspace = 0.074 ## in fm
+# latspace = 0.074 ## in fm
 ns = 4
 
 

@@ -13,6 +13,7 @@ import time,datetime
 from copy import deepcopy
 
 
+
 def stripends(string,prepost):
     return string.replace(prepost[0],'').replace(prepost[1],'')
 

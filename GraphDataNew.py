@@ -140,6 +140,9 @@ FFxlab = r'$ Q^{2} (GeV)^{2}$'
 
 DatFile = False
 
+def TflowToPhys(tflowlist):
+    return [np.sqrt(8*iflow)*latspace for iflow in tflowlist] ## in fermi
+
 def AppendFFDat(xdata,ydata,yerr):
     global DatFile
     if DatFile == False: raise IOError("DatFile not defined yet")
@@ -310,7 +313,7 @@ def SetTopAxies(torflow,NNQ=False,Dt=2,Wein=False):
         pl.xlim(MassTVals[0],AlphaTlist[-1])
         SetxTicks()
     elif torflow == 'flow':
-        pl.xlabel(r'$t_{flow}$')        
+        pl.xlabel(r'$\sqrt{8t_{flow}} fm$')        
         pl.xlim(-0.1,10)
     pl.legend()
     pl.tight_layout()
@@ -1489,9 +1492,9 @@ def PlotTopChargeOverFlow(data,iSet,iMom,tsink,thiscol,thissym,thisshift,NNQ=Fal
                     plotAvg.append(np.mean(tdata))
                     plotStd.append(np.std(tdata))
     if len(plotAvg) == 0: return
-    pl.errorbar(tflowlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ tsink='+str(tsink)))
+    pl.errorbar(TflowToPhys(tflowlist),plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ tsink='+str(tsink)))
     if NNQ:
-        pl.errorbar(np.array(tflowlist)-0.5,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
+        pl.errorbar(np.array(TflowToPhys(tflowlist))-0.25,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
         
 def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,Dt=2,Wein=False):
     tflowlist,tlist,plotAvg,plotStd = [],[],[],[]
