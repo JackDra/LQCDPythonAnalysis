@@ -114,6 +114,7 @@ def InputParams(inputparams):
                 print "-noprompt does not display any prompts (for long runs)"
                 print "-NoCurr ignores all Current calculations (vector, isovector etc..)"
                 print "-FT= forces the title for all graphs"
+                print "-Wein replaces topological charge Q with weinburg operator W"
                 print 
                 exit()
             elif '-NoCurr' in isys:
