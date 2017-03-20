@@ -145,9 +145,9 @@ tflowlist = map(int,np.arange(0,99,5)) + map(int,np.arange(100,1000,20))
 # tflowlist = [400]
 
 
-PlotMonte = False ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
-PlotXSrcDep = False ## Plots value and error over number of sources per gauge field
-DoPlotAuto = False ## Plots autocorrelation function for alpha
+PlotMonte = True ## Plots montecarlo time history of NNQ at time slice MonteTime and flowtime MonteFlow
+PlotXSrcDep = True ## Plots value and error over number of sources per gauge field
+DoPlotAuto = True ## Plots autocorrelation function for alpha
 
 if PlotXSrcDep or 'XAvg' in ListOrSet:
     XAvg = True
@@ -163,7 +163,7 @@ ForceXSrcLen = False ## forces so that any more sorce locations after XSrcLen ar
 XSrcLen = 20
 
 ForceMinXSrcLen = True ## only calculates with a minumum of MinXSRCLen of sources per gauge field
-MinXSrcLen = 10
+MinXSrcLen = 20
 ##DEBUG toggles (True/False):
 # Debug = True # for debugging, toggles alot of print statements on
 # DEBUGPoF = True ## Temp debug parameter to test PoF (REMOVE ONCE DONE)
