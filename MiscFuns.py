@@ -42,10 +42,10 @@ def filesortCfuns(filelist):
     if len(cfglist) == 0:
         return []
     else:
-        if Debug:
-            print 'cfgs'
-            for (x,y,z) in sorted(zip(filelist,cfglist,srclist),key=lambda elem : (elem[1],elem[2]) ):
-                print x
+        # if Debug:
+        #     print 'cfgs'
+        #     for (x,y,z) in sorted(zip(filelist,cfglist,srclist),key=lambda elem : (elem[1],elem[2]) ):
+        #         print x
         return [x for (x,y,z) in sorted(zip(filelist,cfglist,srclist),key=lambda elem : (elem[1],elem[2]) )]
 
     
