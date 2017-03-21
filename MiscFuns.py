@@ -31,14 +31,15 @@ def filesort(filelist,prepost):
 def filesortCfuns(filelist):
     cfglist,srclist = [],[]
     for ifile in filelist:
-        try:
-            cfgnumb = re.findall('-00...._xsrc',ifile)[0].replace('-00','').replace('_xsrc','')
-            srcnumb = re.findall('_xsrc.*_k',ifile)[0].replace('_xsrc','').replace('_k','')
-        except:
-            raise IOError('ERROR, cannot sort this file: ' + ifile)
+        if '.2cf' not in ifile or '.3cf' not in ifile: continue
+        cfgnumb = re.findall('-00...._xsrc',ifile)[0].replace('-00','').replace('_xsrc','')
+        srcnumb = re.findall('_xsrc.*_k',ifile)[0].replace('_xsrc','').replace('_k','')
         cfglist.append(int(cfgnumb))
         srclist.append(int(srcnumb))
-    return [x for (x,y,z) in sorted(zip(filelist,cfglist,srclist),key=lambda elem : (elem[1],elem[2]) )]
+    if len(cfglist) == 0:
+        return []
+    else:
+        return [x for (x,y,z) in sorted(zip(filelist,cfglist,srclist),key=lambda elem : (elem[1],elem[2]) )]
 
     
 #tdata = { itsink , iboot }
