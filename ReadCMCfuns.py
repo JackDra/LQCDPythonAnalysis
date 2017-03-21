@@ -27,6 +27,7 @@ def ReadSetTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList
     for isource in SourceList:
         print 'reading directory: ' , directory+'/'+isource
         for (dirname,dirs,files) in walk(directory+'/'+isource):
+            if 'Temp' in dirname: continue
             for ifile in filesortCfuns(files):
                 if CfunConfigCheck:
                     # ## FOR DEBUGGING
@@ -189,6 +190,7 @@ def ReadSetAlpha(thisiSmearList,thisjSmearList,thisMomList,directory,Interps=['n
     for isource in SourceList:
         print 'reading directory: ' , directory+'/'+isource
         for (dirname,dirs,files) in walk(directory+'/'+isource):
+            if 'Temp' in dirname: continue
             for ifile in filesortCfuns(files):
                 if fileend2pt not in ifile or ".metadata" in ifile: continue
                 # ## FOR DEBUGGING
@@ -292,6 +294,7 @@ def ReadSet(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,thisProj
     for isource in SourceList:
         print 'reading directory: ' , directory+'/'+isource
         for (dirname,dirs,files) in walk(directory+'/'+isource):
+            if 'Temp' in dirname: continue
             for ifile in filesortCfuns(files):
                 if fileend2pt not in ifile or ".metadata" in ifile: continue
                 if 'xsrc' in ListOrSet:
