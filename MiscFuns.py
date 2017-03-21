@@ -4,7 +4,7 @@ import numpy as np
 from BootTest import BootStrap1
 import operator as op
 import functools as ft
-import os, errno
+import os, errno, re
 import sys
 from copy import deepcopy
 from collections import OrderedDict
@@ -17,11 +17,26 @@ from copy import deepcopy
 def stripends(string,prepost):
     return string.replace(prepost[0],'').replace(prepost[1],'')
 
+
+## prepost = [ ignore pre string , ignore post string]
+## e.g. adsgagteawt_cfg100_asdgadgas
+## prepost = [adsgagteawt_cfg , _asdgadgas]
 def filesort(filelist,prepost):
     numberlist = [ stripends(ifile,prepost) for ifile in filelist]
     return [x for (y,x) in sorted(zip(numberlist,filelist))]
 
-    
+
+
+
+def filesortCfuns(filelist):
+    cfglist,srclist = [],[]
+    for ifile in filelist:
+        cfgnumb = re.findall('-00...._xsrc',ifile)[0].replace('-00','').replace('_xsrc','')
+        srcnumb = re.findall('_xsrc.*_k',ifile)[0].replace('_xsrc','').replace('_k','')
+        cfglist.append(int(cfgnumb))
+        srclist.append(int(srcnumb))
+    return [x for (x,y,z) in sorted(zip(filelist,cfglist,srclist),key=lambda elem : (elem[1],elem[2]) )]
+
     
 #tdata = { itsink , iboot }
 #dataout = { itsink } bs
