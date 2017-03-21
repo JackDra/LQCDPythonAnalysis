@@ -428,8 +428,8 @@ else:
 # else:
 DefiSmearList = ['64']
 # DefiSmearList = ['16','32','64']
-# DefjSmearList = ['64']
-DefjSmearList = ['16','32','64']
+DefjSmearList = ['64']
+# DefjSmearList = ['16','32','64']
 # DefSmearList = ['8','16','32','64','128','256']
 # DefSmearList = ['64','128']
 # DefSmearList = ['32','64']
