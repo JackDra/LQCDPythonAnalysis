@@ -31,7 +31,7 @@ def filesort(filelist,prepost):
 def filesortCfuns(filelist):
     cfglist,srclist = [],[]
     for ifile in filelist:
-        if '.2cf' not in ifile or '.3cf' not in ifile: continue
+        if '.2cf' not in ifile and '.3cf' not in ifile: continue
         try:
             cfgnumb = re.findall('-00...._xsrc',ifile)[0].replace('-00','').replace('_xsrc','')
             srcnumb = re.findall('_xsrc.*_k',ifile)[0].replace('_xsrc','').replace('_k','')
