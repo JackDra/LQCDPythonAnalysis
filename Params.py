@@ -153,6 +153,9 @@ if PlotXSrcDep or 'XAvg' in ListOrSet:
     XAvg = True
 else:
     XAvg = False
+
+if PlotXSrcDep:
+    XAvg = False
 NoXAvg = not XAvg ## Does each source separatly for each 
     
 MonteTime = 7
