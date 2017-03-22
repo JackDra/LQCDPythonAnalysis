@@ -247,8 +247,8 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         upb = [valb+errb,valb+errb]
         downb = [valb-errb,valb-errb]
         pl.fill_between([xcfglist[0],xcfglist[-1]],upb,downb,alpha=0.7,color='green',edgecolor='none')
-        val = np.mean(yavgNNQ)*10**10
-        err = np.std(yavgNNQ)*10**10
+        val = np.mean(yavgNNQ)
+        err = np.std(yavgNNQ)
         up = [val+err,val+err]
         down = [val-err,val-err]
         pl.fill_between([xcfglist[0],xcfglist[-1]],up,down,alpha=0.5,color='red',edgecolor='none')
@@ -270,8 +270,8 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         
         # pl.scatter(map(GetCfgNumb,xlist),yavg)
         pl.fill_between([xcfglist[0],xcfglist[-1]],upb,downb,alpha=0.7,color='green',edgecolor='none')
-        val = np.mean(yavg)*10**10
-        err = np.std(yavg)*10**10
+        val = np.mean(yavg)
+        err = np.std(yavg)
         up = [val+err,val+err]
         down = [val-err,val-err]
         pl.fill_between([xcfglist[0],xcfglist[-1]],up,down,alpha=0.5,color='red',edgecolor='none')
