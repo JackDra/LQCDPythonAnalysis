@@ -171,7 +171,7 @@ ForceNConf = False
 NConfLen = 100
 
 ForceMinXSrcLen = True ## only calculates with a minumum of MinXSRCLen of sources per gauge field
-MinXSrcLen = 50
+MinXSrcLen = 20
 ##DEBUG toggles (True/False):
 # Debug = True # for debugging, toggles alot of print statements on
 # DEBUGPoF = True ## Temp debug parameter to test PoF (REMOVE ONCE DONE)
@@ -274,7 +274,7 @@ elif 'ReadSet' in ListOrSet:
         if 'JackLappy' in socket.gethostname():
             nboot = 20
         else:
-            nboot = 200
+            nboot = 400
 
 print 'Boot Size =', nboot , ', Folder Location:', ListOrSet, ', AverageX =',XAvg
 # tsource = 17
