@@ -236,9 +236,9 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
                 yavg.append(np.mean(plotdata[ic*len(iread):(ic+1)*len(iread)]))
                 yerr.append(np.std(plotdata[ic*len(iread):(ic+1)*len(iread)]))
             else:
-                yavgNNQ.append(plotdataNNQ[ic])
+                yavgNNQ.append(plotdataNNQ[ic]*10**10)
                 yerrNNQ.append(0.0)
-                yavg.append(plotdata[ic])
+                yavg.append(plotdata[ic]*10**10)
                 yerr.append(0.0)
         # pl.scatter(map(GetCfgNumb,xlist),plotdataNNQ)
         pl.fill_between([2500,4500],[bplotdataNNQ.Avg+bplotdataNNQ.Std,bplotdataNNQ.Avg+bplotdataNNQ.Std],
@@ -248,9 +248,9 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         # pl.ylim(np.min(np.array(yavgNNQ)-np.array(yerrNNQ)),np.max(np.array(yavgNNQ)+np.array(yerrNNQ)))
         # pl.ylim(-2.5*10**-10,2.5*10**-10)
         # pl.ylim(np.min(plotdataNNQ),np.max(plotdataNNQ))
-        pl.ylabel('C2')
+        pl.ylabel(r'$C_{2} \times 10^{10}$')
         pl.xlabel('icfg')
-        pl.title('Monte Carlo time dependence of NNQ')
+        pl.title(r'Monte Carlo time dependence of NNQ $\times 10^{10}$')
         pl.savefig('./montegraphs/MonteNNQflow'+str(MonteFlow)+'ts'+str(MonteTime)+'INg5'+INg5+'.pdf')
         pl.clf()
 
@@ -265,9 +265,9 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         # pl.ylim(np.min(np.array(yavg)-np.array(yerr)),np.max(np.array(yavg)+np.array(yerr)))
         # pl.ylim(0*10**-10,3*10**-10)
         # pl.ylim(np.min(plotdata),np.max(plotdata))
-        pl.ylabel('C2')
+        pl.ylabel(r'$C_{2} \times 10^{10}$')
         pl.xlabel('icfg')
-        pl.title('Monte Carlo time dependence of NN')
+        pl.title(r'Monte Carlo time dependence of NN $\times 10^{10}$')
         pl.savefig('./montegraphs/MonteNNts'+str(MonteTime)+'.pdf')
         pl.clf()
     if PlotXSrcDep:
