@@ -241,9 +241,12 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
                 yavg.append(plotdata[ic]*10**10)
                 yerr.append(0.0)
         # pl.scatter(map(GetCfgNumb,xlist),plotdataNNQ)
-        pl.fill_between([2500,4500],[bplotdataNNQ.Avg*10**10+bplotdataNNQ.Std,bplotdataNNQ.Avg*10**10+bplotdataNNQ.Std],
-                        [bplotdataNNQ.Avg*10**10-bplotdataNNQ.Std,bplotdataNNQ.Avg*10**10-bplotdataNNQ.Std],alpha=0.7,color='green',edgecolor='none')
-        pl.fill_between([2500,4500],np.mean(plotdataNNQ)*10**10-np.std(plotdataNNQ),np.mean(plotdataNNQ)*10**10+np.std(plotdataNNQ),alpha=0.5,color='red',edgecolor='none')
+        val = bplotdataNNQ.Avg*10**10
+        err = bplotdataNNQ.Std*10**10
+        up = [val+err,val+err]
+        down = [val-err,val-err]
+        pl.fill_between([xcfglist[0],xcfglist[-1]],up,down,alpha=0.7,color='green',edgecolor='none')
+        pl.fill_between([xcfglist[0],xcfglist[-1]],np.mean(plotdata)*10**10-np.std(plotdata),np.mean(plotdata)*10**10+np.std(plotdata),alpha=0.5,color='red',edgecolor='none')
         pl.errorbar(map(GetCfgNumb,xlist),yavgNNQ,yerrNNQ,fmt='o')
         # pl.ylim(np.min(np.array(yavgNNQ)-np.array(yerrNNQ)),np.max(np.array(yavgNNQ)+np.array(yerrNNQ)))
         # pl.ylim(-2.5*10**-10,2.5*10**-10)
@@ -256,19 +259,14 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
 
         # pl.scatter(map(GetCfgNumb,xlist),plotdata)
         val = bplotdata.Avg*10**10
-        err = bplotdata.Std
+        err = bplotdata.Std*10**10
         up = [val+err,val+err]
         down = [val-err,val-err]
         xcfglist = map(GetCfgNumb,xlist)
-        print
-        print 'Mean is' , val
-        print 'Mean Of List', np.mean(yavg)
-        print 'up, down' , up , down
-        print 'xcfglist bounds ' , [xcfglist[0],xcfglist[-1]]
         # pl.scatter(map(GetCfgNumb,xlist),yavg)
         pl.fill_between([xcfglist[0],xcfglist[-1]],up,down,alpha=0.7,color='green',edgecolor='none')
         pl.fill_between([xcfglist[0],xcfglist[-1]],np.mean(plotdata)*10**10-np.std(plotdata),np.mean(plotdata)*10**10+np.std(plotdata),alpha=0.5,color='red',edgecolor='none')
-        # pl.errorbar(map(GetCfgNumb,xlist),yavg,yerr,fmt='o')
+        pl.errorbar(map(GetCfgNumb,xlist),yavg,yerr,fmt='o')
         # pl.ylim(np.min(np.array(yavg)-np.array(yerr)),np.max(np.array(yavg)+np.array(yerr)))
         # pl.ylim(0*10**-10,3*10**-10)
         # pl.ylim(np.min(plotdata),np.max(plotdata))
