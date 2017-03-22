@@ -362,11 +362,12 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         plotdata = np.array(tempdata)[:,0,MonteTime-1]
         plotdataNNQ = np.array(tempdataTop)[:,MonteFlow,0,MonteTime-1]
         PlotAutoCorrDetailed(plotdata,plotdataNNQ)
-
-        bplotdata = np.array(Bdata)[0,:25]
-        bplotdataNNQ = np.array(TCBdata)[MonteFlow,0,:25]
-        plotdata = np.array(tempdata)[:,0,:25]
-        plotdataNNQ = np.array(tempdataTop)[:,MonteFlow,0,:25]
+        
+        TimePlot = 10
+        bplotdata = np.array(Bdata)[0,:TimePlot]
+        bplotdataNNQ = np.array(TCBdata)[MonteFlow,0,:TimePlot]
+        plotdata = np.array(tempdata)[:,0,:TimePlot]
+        plotdataNNQ = np.array(tempdataTop)[:,MonteFlow,0,:TimePlot]
         PlotAutoCorr(plotdata,plotdataNNQ,'t',bplotdata,bplotdataNNQ)
 
         bplotdata = np.array(Bdata)[0,MonteTime-1]
