@@ -164,14 +164,14 @@ MonteTime = 7
 MonteFlow = tflowlist.index(400)
 
 ExactXSrcNumber = False ## makes it so there are the same number of sources for each configuration (hardwired to the first configuration found)
-ForceXSrcLen = True ## forces so that any more sorce locations after XSrcLen are ignored
+ForceXSrcLen = False ## forces so that any more sorce locations after XSrcLen are ignored
 XSrcLen = 20
 
-ForceNConf = True
+ForceNConf = False
 NConfLen = 100
 
 ForceMinXSrcLen = True ## only calculates with a minumum of MinXSRCLen of sources per gauge field
-MinXSrcLen = 20
+MinXSrcLen = 10
 ##DEBUG toggles (True/False):
 # Debug = True # for debugging, toggles alot of print statements on
 # DEBUGPoF = True ## Temp debug parameter to test PoF (REMOVE ONCE DONE)
