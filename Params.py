@@ -199,7 +199,7 @@ elif MesOrBar == 'Baryon':
     InterpNumb = '9' ## Proton
     if 'BarN' in ListOrSet:
         INg5 = ListOrSet.split('BarN')[-1]
-        # print 'INg5 set to ' , INg5
+        print 'INg5 set to ' , INg5
     else:
         INg5 = '17' ## 0 is Pp*g5 , 1 is g5 , 17 is g5*Pp 
 
