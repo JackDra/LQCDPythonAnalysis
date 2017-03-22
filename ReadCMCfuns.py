@@ -8,6 +8,21 @@ from ReadTxt import *
 from MiscFuns import *
 import time,datetime
 
+def DoForceChecks(thisfilelist):
+    if ExactXSrcNumber:
+        maxlen = np.max([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
+        for ikey in thisfilelist.iterkeys():
+            if len(thisfilelist[ikey]) != maxlen:
+                del thisfilelist[ikey]
+    if ForceMinXSrcLen:
+        for ikey in thisfilelist.iterkeys():
+            if len(thisfilelist[ikey]) < MinXSrcLen:
+                del thisfilelist[ikey]
+    if ForceNConf:
+        for inum,ikey in enumerate(thisfilelist.iterkeys()):
+            if inum < NConfLen:
+                del thisfilelist[ikey]
+    return thisfilelist
 
 def ReadSetTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,thisProjDerList,thisDSList,
                      thisTSinkList,directory,Flag,Interps=['nucleon'],thistsourceList=[tsource],Wein=False):
@@ -61,21 +76,7 @@ def ReadSetTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList
                             thisfilelist[prefnosrc].append(directory+'/'+isource+'/@/'+fileprefix)
                         f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
     f.close()
-    if ExactXSrcNumber:
-        maxlen = np.max([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
-        for ikey in thisfilelist.iterkeys():
-            if len(thisfilelist[ikey]) != maxlen:
-                del thisfilelist[ikey]
-    if ForceMinXSrcLen:
-        for ikey in thisfilelist.iterkeys():
-            if len(thisfilelist[ikey]) < MinXSrcLen:
-                del thisfilelist[ikey]
-    if ForceNConf:
-        HoldFL = OrderedDict()
-        for inum,(ikey,ival) in enumerate(thisfilelist.iteritems()):
-            if inum < NConfLen:
-                HoldFL[ikey] = ival
-        thisfilelist = HoldFL
+    thisfilelist = DoForceChecks(thisfilelist)
     print 'number of configs = ' , len(thisfilelist.keys())
     print 'average number of sources per cfg = ' ,np.mean([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
     print 'total number of measurements = ' , np.sum([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
@@ -223,15 +224,8 @@ def ReadSetAlpha(thisiSmearList,thisjSmearList,thisMomList,directory,Interps=['n
                             thisfilelist[prefnosrc].append(directory+'/'+isource+'/@/'+fileprefix)
                         f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
     f.close()
-    if ExactXSrcNumber:
-        maxlen = np.max([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
-        for ikey in thisfilelist.iterkeys():
-            if len(thisfilelist[ikey]) != maxlen:
-                del thisfilelist[ikey]
-    if ForceMinXSrcLen:
-        for ikey in thisfilelist.iterkeys():
-            if len(thisfilelist[ikey]) < MinXSrcLen:
-                del thisfilelist[ikey]
+    thisfilelist = DoForceChecks(thisfilelist)
+
     print 'number of configs = ' , len(thisfilelist.keys())
     print 'average number of sources per cfg = ' ,np.mean([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
     print 'total number of measurements = ' , np.sum([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
@@ -328,15 +322,7 @@ def ReadSet(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,thisProj
                             thisfilelist[prefnosrc].append(directory+'/'+isource+'/@/'+fileprefix)
                         f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
     f.close()
-    if ExactXSrcNumber:
-        maxlen = np.max([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
-        for ikey in thisfilelist.iterkeys():
-            if len(thisfilelist[ikey]) != maxlen:
-                del thisfilelist[ikey]
-    if ForceMinXSrcLen:
-        for ikey in thisfilelist.iterkeys():
-            if len(thisfilelist[ikey]) < MinXSrcLen:
-                del thisfilelist[ikey]
+    thisfilelist = DoForceChecks(thisfilelist)
     print 'number of configs = ' , len(thisfilelist.keys())
     print 'average number of sources per cfg = ' ,np.mean([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
     print 'total number of measurements = ' , np.sum([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
