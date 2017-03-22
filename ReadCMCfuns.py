@@ -70,6 +70,12 @@ def ReadSetTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList
         for ikey in thisfilelist.iterkeys():
             if len(thisfilelist[ikey]) < MinXSrcLen:
                 del thisfilelist[ikey]
+    if ForceNConf:
+        HoldFL = OrderedDict()
+        for inum,(ikey,ival) in enumerate(thisfilelist.iteritems()):
+            if inum < NConfLen:
+                HoldFL[ikey] = ival
+        thisfilelist = HoldFL
     print 'number of configs = ' , len(thisfilelist.keys())
     print 'average number of sources per cfg = ' ,np.mean([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
     print 'total number of measurements = ' , np.sum([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
