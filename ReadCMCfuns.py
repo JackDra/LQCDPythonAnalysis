@@ -20,7 +20,7 @@ def DoForceChecks(thisfilelist):
                 del thisfilelist[ikey]
     if ForceNConf:
         for inum,ikey in enumerate(thisfilelist.iterkeys()):
-            if inum < NConfLen:
+            if inum > NConfLen:
                 del thisfilelist[ikey]
     return thisfilelist
 
