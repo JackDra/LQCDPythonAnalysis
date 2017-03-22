@@ -261,6 +261,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         down = [val-err,val-err]
         print
         print 'Mean is' , val
+        print 'up, down' , up , down
         pl.fill_between([2500,4500],up,down,alpha=0.7,color='green',edgecolor='none')
         pl.fill_between([2500,4500],np.mean(plotdata)*10**10-np.std(plotdata),np.mean(plotdata)*10**10+np.std(plotdata),alpha=0.5,color='red',edgecolor='none')
         pl.errorbar(map(GetCfgNumb,xlist),yavg,yerr,fmt='o')
