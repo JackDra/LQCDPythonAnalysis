@@ -168,7 +168,7 @@ ForceXSrcLen = True ## forces so that any more sorce locations after XSrcLen are
 XSrcLen = 2
 
 ForceNConf = True
-NConfLen = 100
+NConfLen = 5
 
 ForceMinXSrcLen = True ## only calculates with a minumum of MinXSRCLen of sources per gauge field
 MinXSrcLen = 2
