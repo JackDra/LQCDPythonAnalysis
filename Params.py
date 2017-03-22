@@ -274,7 +274,7 @@ elif 'ReadSet' in ListOrSet:
         if 'JackLappy' in socket.gethostname():
             nboot = 20
         else:
-            nboot = 200
+            nboot = 2
 
 print 'Boot Size =', nboot , ', Folder Location:', ListOrSet, ', AverageX =',XAvg
 # tsource = 17
