@@ -247,7 +247,11 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         up = [val+err,val+err]
         down = [val-err,val-err]
         pl.fill_between([xcfglist[0],xcfglist[-1]],up,down,alpha=0.7,color='green',edgecolor='none')
-        pl.fill_between([xcfglist[0],xcfglist[-1]],np.mean(plotdata)*10**10-np.std(plotdata),np.mean(plotdata)*10**10+np.std(plotdata),alpha=0.5,color='red',edgecolor='none')
+        val = np.mean(yavgNNQ)*10**10
+        err = np.std(yavgNNQ)*10**10
+        up = [val+err,val+err]
+        down = [val-err,val-err]
+        pl.fill_between([xcfglist[0],xcfglist[-1]],up,down,alpha=0.5,color='red',edgecolor='none')
         pl.errorbar(map(GetCfgNumb,xlist),yavgNNQ,yerrNNQ,fmt='o')
         # pl.ylim(np.min(np.array(yavgNNQ)-np.array(yerrNNQ)),np.max(np.array(yavgNNQ)+np.array(yerrNNQ)))
         # pl.ylim(-2.5*10**-10,2.5*10**-10)
@@ -263,9 +267,14 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         err = bplotdata.Std*10**10
         up = [val+err,val+err]
         down = [val-err,val-err]
+        
         # pl.scatter(map(GetCfgNumb,xlist),yavg)
         pl.fill_between([xcfglist[0],xcfglist[-1]],up,down,alpha=0.7,color='green',edgecolor='none')
-        pl.fill_between([xcfglist[0],xcfglist[-1]],np.mean(plotdata)*10**10-np.std(plotdata),np.mean(plotdata)*10**10+np.std(plotdata),alpha=0.5,color='red',edgecolor='none')
+        val = np.mean(yavg)*10**10
+        err = np.std(yavg)*10**10
+        up = [val+err,val+err]
+        down = [val-err,val-err]
+        pl.fill_between([xcfglist[0],xcfglist[-1]],up,down,alpha=0.5,color='red',edgecolor='none')
         pl.errorbar(map(GetCfgNumb,xlist),yavg,yerr,fmt='o')
         # pl.ylim(np.min(np.array(yavg)-np.array(yerr)),np.max(np.array(yavg)+np.array(yerr)))
         # pl.ylim(0*10**-10,3*10**-10)
