@@ -1648,8 +1648,9 @@ def Graphchit(Qlist,flowlist):
         # meanlist.append(np.mean(idata))
 
 
-            
-    Q2boot,dump = bt.CreateBoot(np.array(Qlist)**2,nboot,0)
+    
+
+        
     pl.errorbar(range(len(taulist)),taulist,tauerrlist,fmt='.')
     pl.axhline(0.5, color='k', linestyle='--')
     pl.ylabel(r'$ \tau_{int}$')

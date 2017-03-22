@@ -252,7 +252,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         up = [val+err,val+err]
         down = [val-err,val-err]
         pl.fill_between([xcfglist[0],xcfglist[-1]],up,down,alpha=0.5,color='red',edgecolor='none')
-        pl.errorbar(map(GetCfgNumb,xlist),yavgNNQ,yerrNNQ,fmt='o')
+        pl.errorbar(map(GetCfgNumb,xlist),yavgNNQ,yerrNNQ)
         # pl.ylim(np.min(np.array(yavgNNQ)-np.array(yerrNNQ)),np.max(np.array(yavgNNQ)+np.array(yerrNNQ)))
         # pl.ylim(-2.5*10**-10,2.5*10**-10)
         # pl.ylim(np.min(plotdataNNQ),np.max(plotdataNNQ))
@@ -275,7 +275,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         up = [val+err,val+err]
         down = [val-err,val-err]
         pl.fill_between([xcfglist[0],xcfglist[-1]],up,down,alpha=0.5,color='red',edgecolor='none')
-        pl.errorbar(map(GetCfgNumb,xlist),yavg,yerr,fmt='o')
+        pl.errorbar(map(GetCfgNumb,xlist),yavg,yerr)
         # pl.ylim(np.min(np.array(yavg)-np.array(yerr)),np.max(np.array(yavg)+np.array(yerr)))
         # pl.ylim(0*10**-10,3*10**-10)
         # pl.ylim(np.min(plotdata),np.max(plotdata))
