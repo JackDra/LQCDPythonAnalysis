@@ -242,11 +242,11 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
                 yerr.append(0.0)
         # pl.scatter(map(GetCfgNumb,xlist),plotdataNNQ)
         xcfglist = map(GetCfgNumb,xlist)
-        val = bplotdataNNQ.Avg*10**10
-        err = bplotdataNNQ.Std*10**10
-        up = [val+err,val+err]
-        down = [val-err,val-err]
-        pl.fill_between([xcfglist[0],xcfglist[-1]],up,down,alpha=0.7,color='green',edgecolor='none')
+        valb = bplotdataNNQ.Avg*10**10
+        errb = bplotdataNNQ.Std*10**10
+        upb = [valb+errb,valb+errb]
+        downb = [valb-errb,valb-errb]
+        pl.fill_between([xcfglist[0],xcfglist[-1]],upb,downb,alpha=0.7,color='green',edgecolor='none')
         val = np.mean(yavgNNQ)*10**10
         err = np.std(yavgNNQ)*10**10
         up = [val+err,val+err]
@@ -263,13 +263,13 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         pl.clf()
 
         # pl.scatter(map(GetCfgNumb,xlist),plotdata)
-        val = bplotdata.Avg*10**10
-        err = bplotdata.Std*10**10
-        up = [val+err,val+err]
-        down = [val-err,val-err]
+        valb = bplotdata.Avg*10**10
+        errb = bplotdata.Std*10**10
+        upb = [valb+errb,valb+errb]
+        downb = [valb-errb,valb-errb]
         
         # pl.scatter(map(GetCfgNumb,xlist),yavg)
-        pl.fill_between([xcfglist[0],xcfglist[-1]],up,down,alpha=0.7,color='green',edgecolor='none')
+        pl.fill_between([xcfglist[0],xcfglist[-1]],upb,downb,alpha=0.7,color='green',edgecolor='none')
         val = np.mean(yavg)*10**10
         err = np.std(yavg)*10**10
         up = [val+err,val+err]
