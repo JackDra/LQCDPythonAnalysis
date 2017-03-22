@@ -267,7 +267,8 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         print 'xcfglist bounds ' , [xcfglist[0],xcfglist[-1]]
         pl.fill_between([xcfglist[0],xcfglist[-1]],up,down,alpha=0.7,color='green',edgecolor='none')
         pl.fill_between([xcfglist[0],xcfglist[-1]],np.mean(plotdata)*10**10-np.std(plotdata),np.mean(plotdata)*10**10+np.std(plotdata),alpha=0.5,color='red',edgecolor='none')
-        pl.errorbar(map(GetCfgNumb,xlist),yavg,yerr,fmt='o')
+        # pl.errorbar(map(GetCfgNumb,xlist),yavg,yerr,fmt='o')
+        pl.scatter(map(GetCfgNumb,xlist),yavg)
         # pl.ylim(np.min(np.array(yavg)-np.array(yerr)),np.max(np.array(yavg)+np.array(yerr)))
         # pl.ylim(0*10**-10,3*10**-10)
         # pl.ylim(np.min(plotdata),np.max(plotdata))
