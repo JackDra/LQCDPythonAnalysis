@@ -262,6 +262,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         xcfglist = map(GetCfgNumb,xlist)
         print
         print 'Mean is' , val
+        print 'Mean Of List', np.mean(yavg)
         print 'up, down' , up , down
         print 'xcfglist bounds ' , [xcfglist[0],xcfglist[-1]]
         pl.fill_between([xcfglist[0],xcfglist[-1]],up,down,alpha=0.7,color='green',edgecolor='none')
