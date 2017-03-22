@@ -167,7 +167,7 @@ ExactXSrcNumber = False ## makes it so there are the same number of sources for 
 ForceXSrcLen = True ## forces so that any more sorce locations after XSrcLen are ignored
 XSrcLen = 20
 
-ForceNConf = False
+ForceNConf = True
 NConfLen = 100
 
 ForceMinXSrcLen = True ## only calculates with a minumum of MinXSRCLen of sources per gauge field
