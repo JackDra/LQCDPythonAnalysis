@@ -149,10 +149,12 @@ PlotMonte = True ## Plots montecarlo time history of NNQ at time slice MonteTime
 PlotXSrcDep = False ## Plots value and error over number of sources per gauge field
 DoPlotAuto = True ## Plots autocorrelation function for alpha
 
-if PlotXSrcDep or 'XAvg' in ListOrSet:
-    XAvg = True
-else:
-    XAvg = False
+# if PlotXSrcDep or 'XAvg' in ListOrSet:
+#     XAvg = True
+# else:
+#     XAvg = False
+
+XAvg = True ## Always use XAvg, faster and correct anyway
 
 if PlotXSrcDep:
     XAvg = False
