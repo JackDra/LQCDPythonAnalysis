@@ -171,7 +171,7 @@ ForceNConf = False
 NConfLen = 100
 
 ForceMinXSrcLen = True ## only calculates with a minumum of MinXSRCLen of sources per gauge field
-MinXSrcLen = 20
+MinXSrcLen = 30
 ##DEBUG toggles (True/False):
 # Debug = True # for debugging, toggles alot of print statements on
 # DEBUGPoF = True ## Temp debug parameter to test PoF (REMOVE ONCE DONE)
