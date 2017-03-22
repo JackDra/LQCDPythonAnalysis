@@ -259,11 +259,13 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
         err = bplotdata.Std
         up = [val+err,val+err]
         down = [val-err,val-err]
+        xcfglist = map(GetCfgNumb,xlist)
         print
         print 'Mean is' , val
         print 'up, down' , up , down
-        pl.fill_between([2500,4500],up,down,alpha=0.7,color='green',edgecolor='none')
-        pl.fill_between([2500,4500],np.mean(plotdata)*10**10-np.std(plotdata),np.mean(plotdata)*10**10+np.std(plotdata),alpha=0.5,color='red',edgecolor='none')
+        print 'xcfglist bounds ' , [xcfglist[0],xcfglist[-1]]
+        pl.fill_between([xcfglist[0],xcfglist[-1]],up,down,alpha=0.7,color='green',edgecolor='none')
+        pl.fill_between([xcfglist[0],xcfglist[-1]],np.mean(plotdata)*10**10-np.std(plotdata),np.mean(plotdata)*10**10+np.std(plotdata),alpha=0.5,color='red',edgecolor='none')
         pl.errorbar(map(GetCfgNumb,xlist),yavg,yerr,fmt='o')
         # pl.ylim(np.min(np.array(yavg)-np.array(yerr)),np.max(np.array(yavg)+np.array(yerr)))
         # pl.ylim(0*10**-10,3*10**-10)
