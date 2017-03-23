@@ -67,10 +67,11 @@ def CreateTwoPt(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':Ana
         outputCM = thisPool.map(CreateCM2ptCfuns.mapper,CMinputparams)
         thisPool.close()
         thisPool.join()
-    else:
+    elif thisDoCM:
         outputCM = [CreateCM2ptCfuns.mapper(iin) for iin in CMinputparams]
-
-            
+    else:
+        outputCM = []
+        
 
     # thisPoFTvarList = ['PoF'+str(PoFShifts)+iTvar for iTvar in TwoPtDefTvarList]
     thisPoFTvarList = PoFTvarPicked
