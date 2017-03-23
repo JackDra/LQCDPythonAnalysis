@@ -35,11 +35,13 @@ def TryFitsFun(thisGammaList,thisSetList,thisReadMomList,thisTSinkList,thischunk
     start = time.time()
     FitDataBoot,FitDataAvg,FitDataChi = [],[],[]
     for igamma,(thisgamma,thismomlist) in enumerate(thisGammaMomList.iteritems()):
+        if Debug: print 'thisgamma', thisgamma
         FitDataBoot.append([])
         FitDataAvg.append([])
         FitDataChi.append([])
         for imom,thismom in enumerate(thismomlist):
             # print 'Fitting ' , thisgamma , thismom , '       \r',
+            if Debug: print '     thismom', thismom
             start = time.time()
             FitDataBoot[igamma].append([])
             FitDataAvg[igamma].append([])
