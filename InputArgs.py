@@ -155,6 +155,8 @@ def InputParams(inputparams):
                     for imom in momhold:
                         if 'zmom' in imom:
                             feedout['mom'] += ['q = 0 0 0']
+                        elif 'Avgmom' in imom:
+                            feedout['mom'] += RunAvgMomList
                         else:
                             feedout['mom'] += [' '.join(imom.replace('q','q=')).replace('- ','-')]
                     for ipl in feedout['mom']:            
