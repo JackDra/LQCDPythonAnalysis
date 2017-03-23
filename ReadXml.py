@@ -8,6 +8,7 @@ from BootTest import BootStrap1
 from Params import *
 from FitParams import *
 import cPickle as pickle
+import warnings
 
 
 def ReadPickleBoot(filein):
@@ -192,7 +193,8 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
                         dictout[thismom][iflow]['Valserr'] = []
                         for bootlist in flowdata.itervalues():
                             dictout[thismom][iflow]['Boot'].append(BootStrap1(nboot,0))
-                            dictout[thismom][iflow]['Boot'][-1].values = np.array([iboot*renorm for iboot in bootlist])
+                            if any(np.isnan(bootlist)): warnings.warn('Warning: NaN found in a file, please dont run this set: '+ readfile)
+                            dictout[thismom][iflow]['Boot'][-1].values = np.array([iboot*renorm for iboot in bootlist])                            
                             dictout[thismom][iflow]['Boot'][-1].Stats()
                             dictout[thismom][iflow]['Vals'].append(dictout[thismom][iflow]['Boot'][-1].Avg)
                             dictout[thismom][iflow]['Valserr'].append(dictout[thismom][iflow]['Boot'][-1].Std)
@@ -204,6 +206,7 @@ def ReadRFFile(filedir,filename,thisMomList=RunMomList):
                     dictout[thismom]['Valserr'] = []
                     for bootlist in bootdata.itervalues():
                         dictout[thismom]['Boot'].append(BootStrap1(nboot,0))
+                        if any(np.isnan(bootlist)): warnings.warn('Warning: NaN found in a file, please dont run this set: '+ readfile)
                         dictout[thismom]['Boot'][-1].values = np.array([iboot*renorm for iboot in bootlist])
                         dictout[thismom]['Boot'][-1].Stats()
                         dictout[thismom]['Vals'].append(dictout[thismom]['Boot'][-1].Avg)
