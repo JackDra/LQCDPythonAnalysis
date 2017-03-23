@@ -125,8 +125,8 @@ def CreateRF(RunType,thisTSinkList,thisiSmearList,thisjSmearList,thisPrefList,th
         data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
         data3ptset,data2ptset = [],[]
         start = time.time()
+        print 'Creating PoF CM Tech ' 
         for itodt,iTvar in zip(DefPoFVarList,PoFTvarList):
-            print 'Creating PoF CM Tech ' , iTvar
             thisstart = time.time()
             [CMdata2pt,CMdata3pt] = CreateREPoFCfuns(np.array(data3pt),data2pt,itodt,thisMomList,todtvalsLeft = DefPoFTvarRef)
             # if Debug:

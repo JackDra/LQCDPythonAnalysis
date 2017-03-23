@@ -80,8 +80,7 @@ def CreateTwoPtTop(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':
         thisPool.close()
         thisPool.join()
     elif thisDoCM:
-        outputCM = []
-        for iin in CMinputparams: outputCM.append(CreateCM2ptCfuns.mapper(iin))
+        outputCM = [CreateCM2ptCfuns.mapper(iin) for iin in CMinputparams]
 
     thisPoFTvarList = PoFTvarPicked
     if thisDoCM:
