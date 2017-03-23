@@ -308,11 +308,21 @@ def ProjectCorrPoF2pt(LEvec,Cfun,REvec,thisPoFShifts=PoFShifts):
     ##DEBUG##
     CMCfun = []
     for istate,(stateRE,stateLE) in enumerate(zip(REvec,LEvec)):
-        CMCfun.append(np.dot(stateRE,np.dot(stateLE,CfunExt)))
+        if len(stateRE) == 1 and len(stateLE) == 1:
+            CMCfun.append(CfunExt[0][0])
+        elif len(stateRE) == 1:
+            CMCfun.append(np.dot(stateLE,CfunExt)[0])
+        elif len(stateLE) == 1:
+            CMCfun.append(np.dot(stateRE,CfunExt[0]))
+        else:
+            CMCfun.append(np.dot(stateRE,np.dot(stateLE,CfunExt)))
         for it,itCM in enumerate(CMCfun[istate]):
             CMCfun[istate][it].Stats()
             # print 'istate',istate, 'it',it, 'values',CMCfun[istate][it].Avg, CMCfun[istate][it].Std
     if Debug:
+        print 'REvec', np.array(REvec[0])
+        print 'LEvec',np.array(LEvec[0])
+        print 'CfunExt',np.array(Pullflag(CfunExt,'Avg'))[:,:,5]
         print 'TwoPoint Run:'
         for ic,(iRE,iCfun) in enumerate(zip(REvec[0],np.dot(LEvec[0],CfunExt))):
             iCfun[5].Stats()
@@ -337,7 +347,10 @@ def ProjectREvecCorrPoF(Cfun,REvec):
     CMCfun = []
     CfunExt = CreateREvecProjPoFMatrix(Cfun)
     for istate,stateRE in enumerate(REvec):
-        CMCfun.append(np.dot(stateRE,CfunExt))
+        if len(stateRE) == 1:
+            CMCfun.append(CfunExt[0])
+        else:
+            CMCfun.append(np.dot(stateRE,CfunExt))
         for it,itCM in enumerate(CMCfun[istate]):
             CMCfun[istate][it].Stats()
             # print istate, it, CMCfun[istate][it].Avg, CMCfun[istate][it].Std
