@@ -50,6 +50,7 @@ def CreateTwoPt(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':Ana
     makeContextFunctions(CreateCM2ptCfuns)
     for icount,itodt in enumerate(DeftodtList):
         CMinputparams.append((data2pt[0],itodt,thisMomList))
+    for itodt in DefPoFVarPicked:
         PoFinputparams.append((data2pt,itodt,thisMomList,DefPoFTvarRef))
 
 
@@ -71,7 +72,8 @@ def CreateTwoPt(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':Ana
 
             
 
-    thisPoFTvarList = ['PoF'+str(PoFShifts)+iTvar for iTvar in TwoPtDefTvarList]
+    # thisPoFTvarList = ['PoF'+str(PoFShifts)+iTvar for iTvar in TwoPtDefTvarList]
+    thisPoFTvarList = PoFTvarPicked
     if thisDoCM:
         thisCMTvarList = ['CM'+iTvar for iTvar in TwoPtDefTvarList]
         for iout,iTvar in zip(outputCM,thisCMTvarList):

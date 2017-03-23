@@ -385,7 +385,7 @@ DefdtList = range(1,8)
 ##MUST BE IN SORTING ORDER##
 # DeftodtPicked = [(18,2),(20,2)]
 # DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
-DeftodtPicked = [(3,3),(1,3),(2,3),(4,3)]
+DeftodtPicked = [(3,3)]
 # DeftodtPicked = [(1,1)]
 # DeftodtPicked = [(18,2)]
 if OverDetRun:
