@@ -110,7 +110,7 @@ ForcePos = False ## Forces all non-form factor graphs to be positive
 MultiCoreFitting = False # Multicore for Boot Fitting, not needed in current build
 DoMulticore = True # Runs multicore wherever implemented
 DoContentsCheck = False # True makes sure the xml file has the correct momenta first field, turn off for more performance
-OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
+OnlySelVar = False # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
 DoNorm = False # normalises the 2 point function (see CMSTech.py)
 DoSym = False # symmetrises the 2 point function (see CMSTech.py)
 # VarMethodMethod = 'Regular' # for solving the Variational method, different ways of doing it/
@@ -125,6 +125,9 @@ DoCM = True ## does correlation matrix result ( no PoF)
 
 ##Parameters for overdeturmined eigevalue problem
 OverDetRun = False # Runs an overdeturmined eigenvalue problem using a range of to values.
+
+if OverDetRun: OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
+
 OD_tomin,OD_tomax = 3,9
 OverDet_torange = []  ## range of to values to perfomr overdeturmined eigenvalue problem over.
 for itmin in xrange(OD_tomin,OD_tomax+1):
