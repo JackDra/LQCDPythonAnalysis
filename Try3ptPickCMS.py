@@ -11,6 +11,7 @@ from OutputData import PrintSetToFile,PrintCfunToFile
 from CreateCombs import CreategiDi, CreateDS
 from Fitting import FitRFSet
 from SetLists import CreateREvecSet,CreateMassSet
+from XmlFormatting import GetInfoFromFilelist
 from MiscFuns import touch
 import copy
 
@@ -62,8 +63,9 @@ def CreateRF(RunType,thisTSinkList,thisiSmearList,thisjSmearList,thisPrefList,th
         else:
             [data2pt,data3pt,filelist] = ReadSet(thisiSmearList,thisjSmearList,thisMomList,thisPGList,thisPDList,
                                                  thisDSList,thisTSinkList,dirread,thisPrefList)
-    print 'Read Complete'
+    print 'Read complete'
     InfoDict = GetInfoFromFilelist(filelist)
+    print 'Info Dictionary creation complete'
     ## data2pt = [ tsource, ism , jsm , ip ,  it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     ##data3pt = [ tsink, tsource, ism , jsm , igamma , ip , it ] = bootstrap1 class (.Avg, .Std, .values, .nboot)
     # if Debug:

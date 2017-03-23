@@ -12,6 +12,7 @@ from OutputData import PrintSetToFile,PrintCfunToFile,PrintTopSetToFile,PrintTop
 from CreateCombs import CreategiDi, CreateDS
 from Fitting import FitRFSet
 from SetLists import CreateREvecSet,CreateMassSet
+from XmlFormatting import GetInfoFromFilelist
 from MiscFuns import touch
 import copy
 
