@@ -110,7 +110,7 @@ ForcePos = False ## Forces all non-form factor graphs to be positive
 MultiCoreFitting = False # Multicore for Boot Fitting, not needed in current build
 DoMulticore = True # Runs multicore wherever implemented
 DoContentsCheck = False # True makes sure the xml file has the correct momenta first field, turn off for more performance
-OnlySelVar = False # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
+OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
 DoNorm = False # normalises the 2 point function (see CMSTech.py)
 DoSym = False # symmetrises the 2 point function (see CMSTech.py)
 # VarMethodMethod = 'Regular' # for solving the Variational method, different ways of doing it/
@@ -126,7 +126,6 @@ DoCM = True ## does correlation matrix result ( no PoF)
 ##Parameters for overdeturmined eigevalue problem
 OverDetRun = False # Runs an overdeturmined eigenvalue problem using a range of to values.
 
-if OverDetRun: OnlySelVar = True # Selects "ThePickedSumVar" (see below) variable for all the method calculations instead of all
 
 OD_tomin,OD_tomax = 3,9
 OverDet_torange = []  ## range of to values to perfomr overdeturmined eigenvalue problem over.
@@ -386,7 +385,7 @@ DefdtList = range(1,8)
 ##MUST BE IN SORTING ORDER##
 # DeftodtPicked = [(18,2),(20,2)]
 # DefTvarPicked = ['CMto'+str(iDeftodtPicked[0])+'dt'+str(iDeftodtPicked[1]) for iDeftodtPicked in DeftodtPicked]
-DeftodtPicked = [(3,3)]
+DeftodtPicked = [(3,3),(1,3),(2,3),(4,3)]
 # DeftodtPicked = [(1,1)]
 # DeftodtPicked = [(18,2)]
 if OverDetRun:
