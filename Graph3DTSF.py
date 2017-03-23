@@ -60,7 +60,7 @@ if 'erwin' in THISMACHINE:
                 for ipar in StateParList['Two']['C3']:
                     pars3pt.append(data3pt[ipar][TSFfitr][thisTSFcut]['Avg'])
                 def RFFun(thistsink,thistau):
-                    return ff.C3TSFLineFun(pars2pt+pars3pt,thistau,thistsink)/ff.C2TSFLineFun(thistsink,pars2pt)
+                    return ff.C3TSFLineFun(pars2pt+pars3pt,thistau,thistsink)/ff.C2TSFLineFun(np.array([thistsink]),pars2pt)
                 mintsink,maxtsink = 10.0,26.0
                 thistsink = np.arange(mintsink,maxtsink+thisres,thisres)
                 tsinkmesh,taumesh,RFplot = [],[],[]

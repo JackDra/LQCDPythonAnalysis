@@ -345,7 +345,7 @@ def ReadSetFitRFDict(thisindir,thisSetList,thisGammaList,thisMethodList,thisMomL
                                 for itvar in DefTvarPicked:
                                     if itvar in fitrkey: fitrkey = PickedStateStr+itvar
                                 pars2pt.append(datadict['twopt'][twoptmom][iSF][twoptiset][ipar][OSFfitr[CreateOSFfitKey(fitrkey)[0]]]['Boot'])
-                            data2ptZ =  ff.C2OneStateFitFunNoExp(GetintTSink(iset)-tsource,pars2pt)
+                            data2ptZ =  ff.C2OneStateFitFunNoExp(np.array([GetintTSink(iset)-tsource]),pars2pt)
                         elif 'TSF' in iSF:
                             if not all([iState in datadict['twopt'][twoptmom][iSF][twoptiset].keys() for iState in StateParList['Two']['C2']]): continue
                             for ipar in StateParList['Two']['C2']:

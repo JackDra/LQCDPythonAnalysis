@@ -380,7 +380,7 @@ def OneStateFit2pt(data2pt,fitr):
     if Debug:
         for idata,it in zip(fitdata2pt,tdata2pt):
             print it,idata.Avg
-    fitBoot2pt,fitAvg2pt,fitAvg2ptChi = FitBoots(fitdata2pt,tdata2pt,C2OneStateFitFun)
+    fitBoot2pt,fitAvg2pt,fitAvg2ptChi = FitBoots(fitdata2pt,np.array([tdata2pt]),C2OneStateFitFun)
     return [fitBoot2pt,fitAvg2pt,fitAvg2ptChi[0]]
 
 

@@ -5,6 +5,16 @@ from scipy.special import gamma
 import scipy.integrate as integrate
 from MiscFuns import VecDelta
 
+## MESSAGE OF WARNING:
+## all functions used for fitting must have form:
+## f(x,p), where:
+## x is an array of independant variables
+## p is an array of fit parameters to extract
+
+## look at functions below to see
+
+## When implementing deriviatives, please amend appropreate functions to take advantage.
+
 #def CalcChiSqrdPDF(funct,params,datax,datayAvg,datayStd):
 #     if len(datayAvg)-len(params) == 0:
 #         return 0
@@ -146,19 +156,19 @@ def TestTwoVarFFDer(x,p):
 
 def C2OneStateFitFun(t,p):    
     A0,Ep = p[0],np.exp(p[1])
-    return A0*np.exp(-Ep*t)
+    return A0*np.exp(-Ep*t[0])
 
 def C2OneStateFitFunNoExp(t,p):    
     A0,Ep = p[0],p[1]
     try:
-        return A0*np.exp(Ep*(-t) )
+        return A0*np.exp(Ep*(-t[0]) )
     except:
-        return A0*(Ep*(-t)).exp(1)
+        return A0*(Ep*(-t[0])).exp(1)
 
 
 def C2OSFFDer(t,p):
     A0,Ep = p[0],np.exp(p[1])
-    return [np.exp(-Ep*t),-t*Ep*A0*np.exp(-Ep*t)]
+    return [np.exp(-Ep*t),-t[0]*Ep*A0*np.exp(-Ep*t[0])]
 
 def C3OneStateFitFun(tf,p):
     FitA0 = tf[2]
@@ -200,9 +210,9 @@ def C2TwoStateFitFunCMNoExp(t,p):
 def C2TSFLineFun(t,p):
     Am,Amp,m,dm = p[0],p[1],p[2],p[3] 
     try:
-        return Am*(np.exp(-m*t) + Amp*np.exp(-(m+dm)*t))
+        return Am*(np.exp(-m*t[0]) + Amp*np.exp(-(m+dm)*t[0]))
     except:
-        return Am*((m*(-t)).exp(1) + Amp*((m+dm)*(-t)).exp(1))
+        return Am*((m*(-t[0])).exp(1) + Amp*((m+dm)*(-t[0])).exp(1))
         
 
 def C2TSFFCMDer(t,p):
