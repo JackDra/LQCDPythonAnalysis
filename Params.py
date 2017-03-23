@@ -175,7 +175,7 @@ MinXSrcLen = 20
 
 if Debug:
     ForceXSrcLen = True ## forces so that any more sorce locations after XSrcLen are ignored
-    XSrcLen = 5
+    XSrcLen = 10
     
     ForceNConf = True
     NConfLen = 10
