@@ -168,7 +168,7 @@ def C2OneStateFitFunNoExp(t,p):
 
 def C2OSFFDer(t,p):
     A0,Ep = p[0],np.exp(p[1])
-    return [np.exp(-Ep*t),-t[0]*Ep*A0*np.exp(-Ep*t[0])]
+    return [np.exp(-Ep*t[0]),-t[0]*Ep*A0*np.exp(-Ep*t[0])]
 
 def C3OneStateFitFun(tf,p):
     FitA0 = tf[2]

@@ -448,7 +448,7 @@ def PlotTSinkSFData(data,data2pt,thisSetList,thisGamma,thisMom,FT,thisSF='TSFTsi
         for icut in OSFCutList:
             PlotColOSF(data,data2pt,thisSetList,[thissm],thisGamma,thisMom,thisSF+' Comparison ',icut,thisSF)
         
-def PlotCMData(data,thisSetList,thisGamma,thisMom,FT,thistsink='tsink29'):
+def PlotCMData(data,thisSetList,thisGamma,thisMom,FT,thistsink=CMTSinkStrList[0]):
     global ForceTitle
     ForceTitle = FT
     PlotCol(data,thisSetList,[thistsink,'PoF'],thisGamma,thisMom,'Variational Comparison ')
@@ -598,13 +598,13 @@ def PlotMassSFData(data,massdata,thisSetList,thisMom,FT,thisSF='SFCM'):
         
 
         
-def PlotCMOSFData(data,data2pt,thisSetList,thisGamma,thisMom,FT,thistsink='tsink29',thisSF='OSFCM'):
+def PlotCMOSFData(data,data2pt,thisSetList,thisGamma,thisMom,FT,thistsink=CMTSinkStrList[0],thisSF='OSFCM'):
     global ForceTitle
     ForceTitle = FT
     for icut in OSFCutList:
         PlotColOSF(data,data2pt,thisSetList,[thistsink,'PoF','CM'],thisGamma,thisMom,thisSF+' Comparison ',icut,thisSF)
         
-def PlotCMTSFData(data,data2pt,thisSetList,thisGamma,thisMom,FT,thistsink='tsink29',thisSF='TSFCM'):
+def PlotCMTSFData(data,data2pt,thisSetList,thisGamma,thisMom,FT,thistsink=CMTSinkStrList[0],thisSF='TSFCM'):
     global ForceTitle
     ForceTitle = FT
     for icut in TSFCutList:

@@ -89,10 +89,11 @@ def DoFF(inputlist):
         thisTopRead = 'Top' in thisCurr
         if 'Wein' in thisCurr: thisTopRead = 'Wein'
         data,MassSet = ExtractValues(outputdir[0],thisGammaList,thisSetList,thisMethodList,thisMomList=thisMomList,TopRead=thisTopRead)
-        print 'data Collected:'
-        for iCol in data.keys():
-            print thisMethodList[0], thisCurr, iCol
-        print ''
+        if len(data.keys()) > 0:
+            print 'data Collected:'
+            for iCol in data.keys():
+                print thisMethodList[0], thisCurr, iCol
+            print ''
         datalist.append(data)
         MassSetlist.append(MassSet)
     if len(data.keys()) == 0: return
