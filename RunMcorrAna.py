@@ -168,6 +168,8 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
             else:
                 for iProj,iGammaList in DictCurrOpps[Curr].iteritems():
                     for icg,igamma in enumerate(iGammaList):
+                        sys.stdout = sys.__stdout__
+                        sys.stderr = sys.__stderr__
                         PiOpp = 'P'+iProj[-1]+igamma
                         gammalist = ['doub'+PiOpp,'sing'+PiOpp]
                         gammalistcmplx = ['doub'+PiOpp+'cmplx','sing'+PiOpp+'cmplx']

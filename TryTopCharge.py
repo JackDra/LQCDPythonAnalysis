@@ -165,4 +165,7 @@ def CreateTwoPtTop(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':
     PrintAlphaSetToFile(np.swapaxes(np.array(C2outTop),0,1),C2out,SetList,thisMomList,thisTopList,AddDict=InfoDict,Wein=Wein)
 
     print 'Printing took ' , str(datetime.timedelta(seconds=time.time()-start)) , ' h:m:s  '
+    print 'Finished '+ RunType + ' tsink='+str(thisTSinkList[0]) + ' '+iglog + '                       '
+    sys.stdout = open(logfileend,'a',0)
+    print 'Finished '+ RunType + ' tsink='+str(thisTSinkList[0]) + ' '+iglog
     # print 'Completed ' + ipTOqstr(thisMomList[0])
