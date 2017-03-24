@@ -1069,6 +1069,7 @@ def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
         AppendFFDat(qsqrdvals,dataavg,dataerr)
         if SkipZero and len(qsqrdvals) > 1:
             pl.errorbar(qsqrdvals[1:],dataavg[1:],dataerr[1:],color=col,fmt=sym,label=lab)
+        if Debug: print 'Plotting ',lab
         elif FixZ != False:
             pl.plot([0],[FixZ],sym,color=col)            
             pl.errorbar(qsqrdvals[1:],dataavg[1:],dataerr[1:],color=col,fmt=sym,label=lab)            

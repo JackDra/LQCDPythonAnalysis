@@ -22,6 +22,7 @@ qunitPhys = qunit*hbarcdivlat
 DefMass = {}
 DefMass['1370000'] = 0.7277 #Lat Units
 DefMass['1375400'] = 0.5554004119 #Lat Units
+# DefMass['1375400'] = 0.5706924523 #Lat Units Higher Stats (modify Params.py to higher stats results too)
 
 DefPionMass = {}
 DefPionMass['1370000'] = 0.32242 #Lat Units 
