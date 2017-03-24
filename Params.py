@@ -143,7 +143,7 @@ OverdetTol = 10**-7
 # OverDetIter = 0
 
 # tflowlist = map(int,np.arange(0,1000,20)) ## indicies of flows to read
-tflowlist = map(int,np.arange(0,99,5)) + map(int,np.arange(100,1000,20))
+tflowlist = map(int,np.arange(0,99,10)) + map(int,np.arange(100,1000,40))
 # tflowlist = [400]
 
 

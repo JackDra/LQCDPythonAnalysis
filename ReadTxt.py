@@ -283,6 +283,8 @@ def Get3SM(thisoutputdir,thisGammaList,MomListIn,setlist):
     xmlMomList = map(qstrTOqcond,MomListIn)
     for igamma in thisGammaList:
         thisdir = thisoutputdir+CreateOppDir(igamma)
+        if 'cfun' in thisdir:
+            thisdir = thisdir.replace('cfun/Top','Top/cfun')
         for iset in setlist:
             for ip in xmlMomList:
                 ifile = thisdir+MakeMomDir(ip)+iset+igamma+ip+'.xml'

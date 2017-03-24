@@ -97,6 +97,8 @@ def WipeSet(thisoutputdir,thisGammaList,setlist,thisMomList=RunMomList,filepref=
     xmlMomList = map(qstrTOqcond,thisMomList)
     for igamma in thisGammaList:
         thisdir = thisoutputdir+CreateOppDir(igamma)
+        if 'cfun' in thisdir:
+            thisdir = thisdir.replace('cfun/Top','Top/cfun')
         for iset in setlist:
             for ip in xmlMomList:
                 ifile = thisdir+MakeMomDir(ip)+filepref+iset+igamma+ip+'.xml'

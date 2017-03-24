@@ -71,6 +71,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         thisjSmearList = DefjSmearList
         wipeiSL = thisiSmearList
         wipejSL = thisjSmearList
+        wipeSSL = []
         thisPrefList = ['cm' for s in thisTSinkList]
         thisTvarList = AnaTvarList
         thisREvecTvarList = []
@@ -82,6 +83,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         thisjSmearList = DefjSmearList
         wipeiSL = []
         wipejSL = []
+        wipeSSL = []
         thisPrefList = ['REvec' for s in thisTSinkList]
         thisTvarList = []
         thisREvecTvarList = REvecTvarList
@@ -93,6 +95,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         thisjSmearList = DefjSmearList
         wipeiSL = []
         wipejSL = []
+        wipeSSL = []
         thisPrefList = ['PoF' for s in thisTSinkList]
         thisTvarList = []
         thisREvecTvarList = []
@@ -101,8 +104,9 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
     elif 'TSink' in RunType:
         thisTSinkList = RunTSinkList
         thisSmearList = ['32']
-        wipeiSL = thisiSmearList
-        wipejSL = thisjSmearList
+        wipeiSL = []
+        wipejSL = []
+        wipeSSL = SingSmearList
         thisPrefList = []
         for itsink in thisTSinkList:
             if itsink == '29': thisPrefList.append('cm')
@@ -150,11 +154,17 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
                 iPrefList = [thisPrefList[it]]*len(itsinkList)
             else:
                 itsinkList,iPrefList = [int(itsink)],[thisPrefList[it]]
-            thisSetList,this2ptSetList,dump = CreateSet(thisiSmearL=wipeiSL,thisjSmearL=wipejSL,thisCMTSinkL=[str(itsink)]
+            thisSetList,this2ptSetList,dump = CreateSet(thisiSmearL=wipeiSL,thisjSmearL=wipejSL,thisSingSmearL=wipeSSL,thisCMTSinkL=[str(itsink)]
                                                         ,thisStateL=thisStateSet,
                                                         thisTvarL=thisTvarList,thisTSinkL=[str(itsink)],
                                                         thisREvecTvarL=thisREvecTvarList,thisREvecTSinkL=[str(itsink)],
                                                         thisPoFTvarL=thisPoFTvarList,thisPoFTSinkL=[str(itsink)])
+            if Debug:
+                print
+                print 'SetList:'
+                for iset in thisSetList:
+                    print iset
+                print
             if 'giDi' in Curr:
                 if DoTop: print 'Warning, giDi not implemented with topological charge'
                 if WipeThisSet:
@@ -171,17 +181,18 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
                         sys.stdout = sys.__stdout__
                         sys.stderr = sys.__stderr__
                         PiOpp = 'P'+iProj[-1]+igamma
+                        if DoTop == 'Wein':
+                            PiOpp += 'Wein'
+                        elif DoTop :
+                            PiOpp += 'Top'
                         gammalist = ['doub'+PiOpp,'sing'+PiOpp]
                         gammalistcmplx = ['doub'+PiOpp+'cmplx','sing'+PiOpp+'cmplx']
-                        outpost = ''
-                        if DoTop == 'Wein': outpost = 'Wein/'
-                        elif DoTop : outpost = 'Top/'
                         if WipeThisSet:
                             wipegammalist = gammalist + gammalistcmplx
-                            WipeSet(outputdir[0]+outpost,wipegammalist,thisSetList)
-                            WipeSet(outputdir[0]+outpost+'cfun/',wipegammalist,thisSetList)
-                        MomDone = Get3ptSetMoms(outputdir[0]+outpost,gammalist,RunMomList,thisSetList) 
-                        MomDoneCmplx = Get3ptSetMoms(outputdir[0]+outpost,gammalistcmplx,RunMomList,thisSetList) 
+                            WipeSet(outputdir[0],wipegammalist,thisSetList)
+                            WipeSet(outputdir[0]+'cfun/',wipegammalist,thisSetList)    
+                        MomDone = Get3ptSetMoms(outputdir[0],gammalist,RunMomList,thisSetList) 
+                        MomDoneCmplx = Get3ptSetMoms(outputdir[0],gammalistcmplx,RunMomList,thisSetList) 
                         runmomlist,runmomlistcmplx = [],[]
                         for iq in RunMomList:
                             iqvec = np.array(qstrTOqvec(iq))*qunit
