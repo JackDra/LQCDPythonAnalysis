@@ -108,7 +108,7 @@ def PlotFitMethPN(currdata,Ncurrdata,thiscurr,thisSetList):
         for iset in DefSetList:
             PlotFFWrapPN(currdata,Ncurrdata,thiscurr,FlagList(thisSetList,'Fit',iset),'Fit'+iset+'CutComp')
         for icut in FitCutPlot:
-            PlotFFWrapPN(currdata,Ncurrdata,thiscurr,FlagList(thisSetList,'Fit',icut),'Fit'+icut+'CutComp')
+            PlotFFWrapPN(currdata,Ncurrdata,thiscurr,FlagList(thisSetList,'Fit',icut),'Fit'+icut+'SetComp')
 
 
 def PickFFAllSets(currdata,thiscurr,thisSetList):

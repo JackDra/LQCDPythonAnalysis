@@ -873,6 +873,7 @@ def PlotFFs(data,DSCurr,thisSetList,CollName,FT):
         DatFile = CreateFFFile(CollName,DSCurr,thisFF)+'.dat'
         WipeFile(DatFile)
         graphparams = GetPlotItersff()
+        if Debug: print 'Running PlotFFSet for ', iFF
         PlotFFSet(data,thisFF,thisSetList,thisCurr,DSCurr.replace('/',''),graphparams)
         SetFFAxies(thisDS+thisCurr+thisFF+thisFFComb)
         pl.savefig(DatFile.replace('.dat','.pdf'))
