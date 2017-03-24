@@ -466,7 +466,7 @@ def GetTvarREvesPoF(Cfunin,thistodtvals,masscut,thisPoFShifts=PoFShifts):
 # R/L Evecs [ ip , istate , ival ]
 # Emass [ ip , istate ]
 
-def CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,printout=True,DoPoF=True,todtvalsLeft=False):
+def CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,todtvalsLeft=False,printout=True,DoPoF=True):
     if todtvalsLeft == False: todtvalsLeft = todtvals
     start = time.time()
     Cfuns2pt = np.array(Cfuns2pt)

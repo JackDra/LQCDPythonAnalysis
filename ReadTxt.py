@@ -132,16 +132,33 @@ def ReadLREM(todtval,thisMomList,filepref,NoWar=False):
                 LEvec[-1].append([])
                 REvec[-1].append([])
                 # for leflag,levec in data['Left_Evec'].iteritems():
-                for thissm in DefjSmList:
-                    if thissm not in data[imomCond]['Values'][thisstate]['Left_Evec'].keys():
-                        LEvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Left_Evec'][thissm.replace('jsm','sm')]))
-                    else:
-                        LEvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Left_Evec'][thissm]))
-                for thissm in DefiSmList:
-                    if thissm not in data[imomCond]['Values'][thisstate]['Right_Evec'].keys():
-                        REvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Right_Evec'][thissm.replace('ism','sm')]))
-                    else:
-                        REvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Right_Evec'][thissm]))
+
+                if 'Source_Evec' in data[imomCond]['Values'][thisstate]:
+                    for thissm in DefjSmList:
+                        if thissm not in data[imomCond]['Values'][thisstate]['Source_Evec'].keys():
+                            LEvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Source_Evec'][thissm.replace('jsm','sm')]))
+                        else:
+                            LEvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Source_Evec'][thissm]))
+                    for thissm in DefiSmList:
+                        if thissm not in data[imomCond]['Values'][thisstate]['Sink_Evec'].keys():
+                            REvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Sink_Evec'][thissm.replace('ism','sm')]))
+                        else:
+                            REvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Sink_Evec'][thissm]))
+                    
+                
+                ## Legacy, Left ==  jsm == Source
+                ##         Right == ism == Sink
+                else:
+                    for thissm in DefjSmList:
+                        if thissm not in data[imomCond]['Values'][thisstate]['Left_Evec'].keys():
+                            LEvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Left_Evec'][thissm.replace('jsm','sm')]))
+                        else:
+                            LEvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Left_Evec'][thissm]))
+                    for thissm in DefiSmList:
+                        if thissm not in data[imomCond]['Values'][thisstate]['Right_Evec'].keys():
+                            REvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Right_Evec'][thissm.replace('ism','sm')]))
+                        else:
+                            REvec[-1][-1].append(float(data[imomCond]['Values'][thisstate]['Right_Evec'][thissm]))
         else:
             if not NoWar:
                 print 'warning, weight file not found', filename

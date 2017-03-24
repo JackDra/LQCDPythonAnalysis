@@ -100,12 +100,12 @@ def LREVecToFormat(iLE,iRE,iEM,DoPoF):
         jSmPoFList = DefjSmList
     dictout = OrderedDict()
     dictout['Emass'] = '{0:20.10f}'.format(iEM)
-    dictout['Left_Evec'] = OrderedDict()
-    dictout['Right_Evec'] = OrderedDict()
-    for eLE,thiskey in zip(iLE,iSmPoFList):
-        dictout['Left_Evec'][thiskey] = '{0:20.10f}'.format(eLE)
-    for eRE,thiskey in zip(iRE,jSmPoFList):
-        dictout['Right_Evec'][thiskey] = '{0:20.10f}'.format(eRE)
+    dictout['Source_Evec'] = OrderedDict()
+    dictout['Sink_Evec'] = OrderedDict()
+    for eLE,thiskey in zip(iLE,jSmPoFList):
+        dictout['Source_Evec'][thiskey] = '{0:20.10f}'.format(eLE)
+    for eRE,thiskey in zip(iRE,iSmPoFList):
+        dictout['Sink_Evec'][thiskey] = '{0:20.10f}'.format(eRE)
     return dictout
         
     
