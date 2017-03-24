@@ -960,6 +960,7 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams,PandNsh
     else:
         datf.write('F_{3}(0) \n')
     # for thisset in SortMySet(thisSetFlag)[0]:
+    if Debug: print thisSetFlag
     for thisset in thisSetFlag:
         ##make legend formatting function
         thiskappa,keyset = SplitKappa(thisset)
