@@ -264,7 +264,7 @@ def Get2ptSetMoms(thisoutputdir,MomListIn,tvarlist=[],ismlist=[],jsmlist=[],tsrc
                     ifile = thisdir+itvar+'LREM'+ip+'.xml'
                     if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
                 for istate in GetStateSet(itvar):
-                    ifile = thisdir+MakeMomDir(ip)+'state'+istate+itvar+iflag.replace('cfun/','')+ip+'.xml'
+                    ifile = thisdir+'state'+istate+itvar+iflag.replace('cfun/','')+ip+'.xml'
                     if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
             for its in tsrclist:
                 for ism in ismlist:
@@ -273,7 +273,7 @@ def Get2ptSetMoms(thisoutputdir,MomListIn,tvarlist=[],ismlist=[],jsmlist=[],tsrc
                         if 'tsrc' not in ts: ts = 'tsrc'+ts
                         if 'ism' not in ismstr: ismstr = 'ism'+ismstr
                         if 'jsm' not in jsmstr: jsmstr = 'jsm'+jsmstr
-                        ifile = thisdir+MakeMomDir(ip)+ts+ismstr+jsmstr+iflag.replace('cfun/','')+ip+'.xml'
+                        ifile = thisdir+ts+ismstr+jsmstr+iflag.replace('cfun/','')+ip+'.xml'
                         if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
     return OrderMomList(momlist)
 
