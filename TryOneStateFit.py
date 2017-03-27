@@ -243,8 +243,8 @@ if len(inputparams) > 0:
         for iin in inputparams: DoOSF(*iin)
 else:
     print 'nothing to calculate'
-print 'removing pickled 2pt file'
-if os.path.isfile(picklefile2pt): os.remove(picklefile2pt)
+# print 'removing pickled 2pt file'
+# if os.path.isfile(picklefile2pt): os.remove(picklefile2pt)
 print 'all finished'
 
 print 'total time: ', GetTimeStr(time.time() - RunStart)
