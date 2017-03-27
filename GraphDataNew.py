@@ -1018,8 +1018,8 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
     thisFitFun = DPfitfun
     if '3' in thisFF: thisFitFun = LinearFitFun
     fitydataAvg = thisFitFun([fitqdata],Avg)
-    fitydataup = np.array([max(iy1,iy2) for iy1,iy2 in zip(thisFitFun([fitqdata],Avg+Err),thisFitFun([fitqdata],np.array([Avg[0]-Err[0],Avg[1]+Err[1]])))])
     Avg,Err = np.array(Avg),np.array(Err)
+    fitydataup = np.array([max(iy1,iy2) for iy1,iy2 in zip(thisFitFun([fitqdata],Avg+Err),thisFitFun([fitqdata],np.array([Avg[0]-Err[0],Avg[1]+Err[1]])))])
     fitydatadown = np.array([min(iy1,iy2) for iy1,iy2 in zip(thisFitFun([fitqdata],Avg-Err),thisFitFun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])))])
     # fitydatadown = np.array([np.min(iy1,iy2) for iy1,iy2 in zip(thisFitFun([fitqdata],Avg-Err),thisFitFun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])))])
     # if Debug: print Avg[1], Err[1]
@@ -1073,7 +1073,7 @@ def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
         AppendFFDat(qsqrdvals,dataavg,dataerr)
         if SkipZero and len(qsqrdvals) > 1:
             pl.errorbar(qsqrdvals[1:],dataavg[1:],dataerr[1:],color=col,fmt=sym,label=lab)
-        if Debug: print 'Plotting ',lab
+            if Debug: print 'Plotting ',lab
         elif FixZ != False:
             pl.plot([0],[FixZ],sym,color=col)            
             pl.errorbar(qsqrdvals[1:],dataavg[1:],dataerr[1:],color=col,fmt=sym,label=lab)            
