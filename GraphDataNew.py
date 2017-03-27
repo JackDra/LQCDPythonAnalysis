@@ -1045,7 +1045,7 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
     #     pl.fill_between(fitqdata+thisshift,-np.array(fitydataup),-np.array(fitydatadown),color=thiscol,alpha=thisalpha,edgecolor='none')
     # else:
     if flipsign:
-        fitydataAvg = -np.array(fitydataAvg).tolist()
+        fitydataAvg = -np.array(fitydataAvg)
         Avg = -Avg
     pl.plot(fitqdata+thisshift,fitydataAvg,color=thiscol)
     if Err[0] < 1.0 :
