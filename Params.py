@@ -99,7 +99,13 @@ PsVectorNorm = 1 # normalisation for Pseudo Vector current
 TensorNorm = 1 # normalisation for Tensor Current
 MomFracNorm = 1 # normalisation for Momentum Fraction
 
-F3Div2M = True ## Reads in F3 for VectorTop with dividing by the mass
+ExpMagMomProton = 2.792847 ## taken from pdg http://pdg.lbl.gov/2014/tables/rpp2014-tab-baryons-N.pdf
+
+ExpCRad_muon = 0.8408
+ExpCRad_electron = 0.877
+
+
+F3Div2M = True ## Reads in F3 for VectorTop with dividing by the physical mass and multiplying by hbarc in GeV*fm (final result in fm) 
 
 # ScalarNorm = 0.6822 # normalisation for Scalar current
 # PsScalarNorm = 0.4948 # normalisation for Pseudo Scalar current
