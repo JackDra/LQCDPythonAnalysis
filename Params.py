@@ -189,8 +189,8 @@ MinXSrcLen = 20
 
 if 'XSrc' in ListOrSet: ## XSrc001 or XSrc010 or XSrc100 etc...
     thisxsrc = int(re.search('XSrc...',ListOrSet).group().replace('XSrc',''))
-    ForceXSrcLen,ForceMinXSrcLen = thisxsrc,thisxsrc
     ForceMinXSrcLen,ForceXSrcLen = True,True
+    XSrcLen,MinXSrcLen = thisxsrc,thisxsrc
 
 if 'Nconf' in ListOrSet: ## Nconf0001 or ... or Nconf1000 etc..
     thisnconf = int(re.search('Nconf....',ListOrSet).group().replace('Nconf',''))
