@@ -192,8 +192,8 @@ if 'XSrc' in ListOrSet: ## XSrc001 or XSrc010 or XSrc100 etc...
     ForceXSrcLen,ForceMinXSrcLen = thisxsrc,thisxsrc
     ForceMinXSrcLen,ForceXSrcLen = True,True
 
-if 'Nconf' in ListOrSet: ## Nconf00001 or ... or Nconf1000 etc..
-    thisnconf = int(re.search('Nconf...',ListOrSet).group().replace('Nconf',''))
+if 'Nconf' in ListOrSet: ## Nconf0001 or ... or Nconf1000 etc..
+    thisnconf = int(re.search('Nconf....',ListOrSet).group().replace('Nconf',''))
     ForceNConf = True
     NConfLen = thisnconf
 
