@@ -1014,12 +1014,12 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
     if Debug: print thisset,thisFF
     Avg,Err = GetDPFitValue(thisset,thisFF,thisCurr.replace('PandN',thisPN),thiskappa=thiskappa)
     if len(Avg) == 0: return
+
     Avg,Err = np.array(Avg),np.array(Err)
     fitqdata = np.arange(qrange[0],qrange[-1]+incr,incr)
     thisFitFun = DPfitfun
     if '3' in thisFF: thisFitFun = LinearFitFun
     fitydataAvg = thisFitFun([fitqdata],Avg)
-    Avg,Err = np.array(Avg),np.array(Err)
     fitydataup = np.array([max(iy1,iy2) for iy1,iy2 in zip(thisFitFun([fitqdata],Avg+Err),thisFitFun([fitqdata],np.array([Avg[0]-Err[0],Avg[1]+Err[1]])))])
     fitydatadown = np.array([min(iy1,iy2) for iy1,iy2 in zip(thisFitFun([fitqdata],Avg-Err),thisFitFun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])))])
     # fitydatadown = np.array([np.min(iy1,iy2) for iy1,iy2 in zip(thisFitFun([fitqdata],Avg-Err),thisFitFun([fitqdata],np.array([Avg[0]+Err[0],Avg[1]-Err[1]])))])
@@ -1038,11 +1038,15 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
     else:
         LegVal = '$\\frac{F_{3}(0)}{2m_{N}}='+MakeValAndErr(Avg[1],Err[1])+r' fm$'        
         datf.write(MakeValAndErr(Avg[1],Err[1])+' \n')
+
     # print 'DPFit flip sign', flipsign
     # if flipsign:
     #     pl.plot(fitqdata+thisshift,-np.array(fitydataAvg),label=LegVal,color=thiscol)
     #     pl.fill_between(fitqdata+thisshift,-np.array(fitydataup),-np.array(fitydatadown),color=thiscol,alpha=thisalpha,edgecolor='none')
     # else:
+    if flipsign:
+        fitydataAvg = -np.array(fitydataAvg).tolist()
+        Avg = -Avg
     pl.plot(fitqdata+thisshift,fitydataAvg,color=thiscol)
     if Err[0] < 1.0 :
         if 'FF1' in thisFF and 'Neutron' in thisCurr: return
