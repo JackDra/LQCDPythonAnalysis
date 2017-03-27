@@ -187,6 +187,17 @@ ForceMinXSrcLen = True ## only calculates with a minumum of MinXSRCLen of source
 MinXSrcLen = 20
 
 
+if 'XSrc' in ListOrSet: ## XSrc001 or XSrc010 or XSrc100 etc...
+    thisxsrc = int(re.search('XSrc...',ifile).group().replace('XSrc',''))
+    ForceXSrcLen,ForceMinXSrcLen = thisxsrc,thisxsrc
+    ForceMinXSrcLen,ForceXSrcLen = True,True
+
+if 'Nconf' in ListOrSet: ## Nconf00001 or ... or Nconf1000 etc..
+    thisnconf = int(re.search('Nconf...',ifile).group().replace('Nconf',''))
+    ForceNConf = True
+    NConfLen = thisnconf
+
+    
 if Debug:
     ForceXSrcLen = True ## forces so that any more sorce locations after XSrcLen are ignored
     XSrcLen = 10
