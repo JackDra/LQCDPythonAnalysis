@@ -253,6 +253,8 @@ def ExtractValues(thisindir,thisGammaList,thisSetList,thisMethodList,thisMomList
     return datadictout,datamassout
 
 
+
+
 def Get2ptSetMoms(thisoutputdir,MomListIn,tvarlist=[],ismlist=[],jsmlist=[],tsrclist=[]):
     momlist = set([])
     xmlMomList = map(qstrTOqcond,MomListIn)
@@ -276,6 +278,57 @@ def Get2ptSetMoms(thisoutputdir,MomListIn,tvarlist=[],ismlist=[],jsmlist=[],tsrc
                         ifile = thisdir+ts+ismstr+jsmstr+iflag.replace('cfun/','')+ip+'.xml'
                         if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
     return OrderMomList(momlist)
+
+def Get2ptSetMoms(thisoutputdir,MomListIn,tvarlist=[],ismlist=[],jsmlist=[],tsrclist=[]):
+    momlist = set([])
+    xmlMomList = map(qstrTOqcond,MomListIn)
+    for iflag in ['cfun/twopt','Mass']:
+        for ip in xmlMomList:
+            thisdir = thisoutputdir+iflag+MakeMomDir(ip)
+            for itvar in tvarlist:
+                if iflag == 'Mass':
+                    ifile = thisdir+itvar+'LREM'+ip+'.xml'
+                    print ifile, CheckMomFile(ifile)
+                    if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
+                for istate in GetStateSet(itvar):
+                    ifile = thisdir+'state'+istate+itvar+iflag.replace('cfun/','')+ip+'.xml'
+                    print ifile, CheckMomFile(ifile)
+                    if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
+            for its in tsrclist:
+                for ism in ismlist:
+                    for jsm in jsmlist:
+                        ts,ismstr,jsmstr = str(its),str(ism),str(jsm)
+                        if 'tsrc' not in ts: ts = 'tsrc'+ts
+                        if 'ism' not in ismstr: ismstr = 'ism'+ismstr
+                        if 'jsm' not in jsmstr: jsmstr = 'jsm'+jsmstr
+                        ifile = thisdir+ts+ismstr+jsmstr+iflag.replace('cfun/','')+ip+'.xml'
+                        print ifile, CheckMomFile(ifile)
+                        if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
+    return OrderMomList(momlist)
+
+
+def GetTopSetMoms(thisoutputdir,MomListIn,tvarlist=[],ismlist=[],jsmlist=[],tsrclist=[]):
+    momlist = set([])
+    xmlMomList = map(qstrTOqcond,MomListIn)
+    for iflag in ['cfun/twopt','cfun/NNQ','Alpha']:
+        flagrep = iflag.replace('twopt','')
+        for ip in xmlMomList:
+            thisdir = thisoutputdir+iflag+MakeMomDir(ip)
+            for itvar in tvarlist:
+                for istate in GetStateSet(itvar):
+                    ifile = thisdir+'state'+istate+itvar+iflag.replace(flagrep,'')+ip+'.xml'
+                    if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
+            for its in tsrclist:
+                for ism in ismlist:
+                    for jsm in jsmlist:
+                        ts,ismstr,jsmstr = str(its),str(ism),str(jsm)
+                        if 'tsrc' not in ts: ts = 'tsrc'+ts
+                        if 'ism' not in ismstr: ismstr = 'ism'+ismstr
+                        if 'jsm' not in jsmstr: jsmstr = 'jsm'+jsmstr
+                        ifile = thisdir+ts+ismstr+jsmstr+iflag.replace(flagrep,'')+ip+'.xml'
+                        if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
+    return OrderMomList(momlist)
+
 
 
 def Get3SM(thisoutputdir,thisGammaList,MomListIn,setlist):

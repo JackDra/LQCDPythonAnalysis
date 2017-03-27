@@ -16,7 +16,7 @@ from MiscFuns import *
 from MomParams import *
 from FFParams import *
 from FFFuns import *
-from ReadTxt import Get3ptSetMoms,Get2ptSetMoms
+from ReadTxt import Get3ptSetMoms,Get2ptSetMoms,GetTopSetMoms
 from InputArgs import InputParams
 import copy
 from multiprocessing import Pool
@@ -137,7 +137,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         print 'Topological Charge Analysis'
         # Wipe2pt(outputdir[0],tvarlist=TwoPtDefTvarList,smlist=DefSmearList)
         # thisMomList = Get2ptSetMoms(outputdir[0],RunAvgMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
-        thisMomList = Get2ptSetMoms(outputdir[0]+'/Top/',RunAvgMomList,tvarlist=PoFTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList,tsrclist=PoFtsourceList)
+        thisMomList = GetTopSetMoms(outputdir[0]+'/Top/',RunAvgMomList,tvarlist=PoFTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList,tsrclist=PoFtsourceList)
         if len(thisMomList) == 0 and not DefWipe:
             print 'Already Done, (if you want to overwrite, set DefWipe to True and rerun)'
         else:
@@ -147,7 +147,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         print 'Weinberg Operator Analysis'
         # Wipe2pt(outputdir[0],tvarlist=TwoPtDefTvarList,smlist=DefSmearList)
         # thisMomList = Get2ptSetMoms(outputdir[0],RunAvgMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
-        thisMomList = Get2ptSetMoms(outputdir[0]+'/Wein/',RunAvgMomList,tvarlist=PoFTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList,tsrclist=PoFtsourceList)
+        thisMomList = GetTopSetMoms(outputdir[0]+'/Wein/',RunAvgMomList,tvarlist=PoFTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList,tsrclist=PoFtsourceList)
         if len(thisMomList) == 0 and not DefWipe:
             print 'Already Done, (if you want to overwrite, set DefWipe to True and rerun)'
         else:
