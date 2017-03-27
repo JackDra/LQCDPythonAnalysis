@@ -452,7 +452,8 @@ def PlotTSinkSFData(data,data2pt,thisSetList,thisGamma,thisMom,FT,thisSF='TSFTsi
 def PlotCMData(data,thisSetList,thisGamma,thisMom,FT,thistsink=CMTSinkStrList[0]):
     global ForceTitle
     ForceTitle = FT
-    PlotCol(data,thisSetList,[thistsink,'PoF'],thisGamma,thisMom,'Variational Comparison ')
+    # PlotCol(data,thisSetList,[thistsink,'PoF'],thisGamma,thisMom,'Variational Comparison ')
+    PlotCol(data,thisSetList,[thistsink,'PoF'],thisGamma,thisMom,'Var Comp ')
 
 
 def PlotMassData(data,massdata,thisSetList,thisMom,FT,TitleFlag=''):
