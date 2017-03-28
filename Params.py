@@ -181,6 +181,7 @@ ExactXSrcNumber = False ## makes it so there are the same number of sources for 
 ForceXSrcLen = False ## forces so that any more sorce locations after XSrcLen are ignored
 XSrcLen = 50
 
+FlipConfs = False
 ForceNConf = False
 NConfLen = 100
 ForceMinXSrcLen = True ## only calculates with a minumum of MinXSRCLen of sources per gauge field
@@ -197,6 +198,8 @@ if 'Nconf' in ListOrSet: ## Nconf0001 or ... or Nconf1000 etc..
     ForceNConf = True
     NConfLen = thisnconf
 
+if 'FlipConfs' in ListOrSet:
+    FlipConfs = True
     
 if Debug:
     ForceXSrcLen = True ## forces so that any more sorce locations after XSrcLen are ignored

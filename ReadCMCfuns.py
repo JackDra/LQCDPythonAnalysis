@@ -9,6 +9,7 @@ from MiscFuns import *
 import time,datetime
 
 def DoForceChecks(thisfilelist):
+    if FlipConfs: OrderedDict(reversed(list(thisfilelist.items())))
     if ExactXSrcNumber:
         maxlen = np.max([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
         for ikey in thisfilelist.iterkeys():
