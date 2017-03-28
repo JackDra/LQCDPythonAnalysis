@@ -54,7 +54,7 @@ def PlotTopCharge(data,iSet,iMom):
     return tlist,tflowlist,plotAvg,plotUp,plotDown
     # ax.errorbar(np.array(plotlist),Pullflag(plotdata,'Avg'),Pullflag(plotdata,'Std'),color=thiscolor,label=LegLab(iSet+'\ '+qstrTOqcond(iMom)))
     
-def PlotTopSetCharge(data,thisSetList,thisMomList,FT):
+def thisPlotTopSetCharge(data,thisSetList,thisMomList,FT):
     # global ax
     ForceTitle = FT
     thiscolcyc = itertools.cycle([ '#000080','#B22222','#00B800','#8B008B', '#0000FF','#FF0000','#000000','#32CD32','#FF0066'])
@@ -103,7 +103,7 @@ def ReadAndPlotDis(thisSetList,thisMomList):
     for iset in iterSetList:
         datadict = ReadTopFile(outputdir[0],iset,thisMomList=thisMomList)
         setstart = time.time()
-        thiscol,tlist,tflowlist,plotAvg,plotUp,plotDown = PlotTopSetCharge([datadict],[iset],thisMomList,feedin['ForceTitle'])
+        thiscol,tlist,tflowlist,plotAvg,plotUp,plotDown = thisPlotTopSetCharge([datadict],[iset],thisMomList,feedin['ForceTitle'])
         print 'Getting ' , iset, 'Took: ' , str(datetime.timedelta(seconds=(time.time()-setstart))) ,' h:m:s                      '
         thiscollist.append(thiscol[0])
         thistlist.append(tlist[0])

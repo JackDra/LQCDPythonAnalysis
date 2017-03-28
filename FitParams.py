@@ -45,17 +45,18 @@ for ifit in xrange(FitAlphaMinLeft,FitAlphaMaxLeft+1):
 
 
 
-# FitCutMinLeft,FitCutMaxLeft = 2,3
-# FitCutMinRight,FitCutMaxRight = 4,9
 FitCutMinLeft,FitCutMaxLeft = 2,3
-FitCutMinRight,FitCutMaxRight = 5,7
+FitCutMinRight,FitCutMaxRight = 4,9
+# FitCutMinLeft,FitCutMaxLeft = 2,3
+# FitCutMinRight,FitCutMaxRight = 5,7
 FitCutList,FitCutArgs = [],[]
-FitCutPlot = ['cut2-7']
 for icut in xrange(FitCutMinLeft,FitCutMaxLeft+1):
     for jcut in xrange(FitCutMinRight,FitCutMaxRight+1):
         if icut + jcut >= 10: continue
         FitCutList.append([icut,jcut])
         FitCutArgs.append('cut'+str(icut)+'-'+str(jcut))
+# FitCutPlot = ['cut2-7']
+FitCutPlot = FitCutArgs
 ##TryFits.py
 FitCutPicked =  {'tsink26sm32':'cut6-6',
                  'tsink26'+PickedStateStr+'REvec':'cut4-4',

@@ -316,6 +316,9 @@ def SetTopAxies(torflow,NNQ=False,Dt=2,Wein=False):
     elif torflow == 'flow':
         pl.xlabel(r'$\sqrt{8t_{flow}} fm$')        
         # pl.xlim(-0.1,10)
+    elif torflow == 'Mpi':
+        pl.xlabel(r'$m_{\pi} (GeV)$')
+        pl.xlim(0,pl.xlim()[-1])
     pl.legend()
     pl.tight_layout()
     if NNQ:
@@ -1474,7 +1477,7 @@ def PlotSetHistDist(data,thisSetList,thisSF,iThresh,thisMom,Zmom=False):
                 
 
 
-def PlotTopChargeOverFlow(data,iSet,iMom,tsink,thiscol,thissym,thisshift,NNQ=False,Dt=2):
+def PlotTopChargeOverFlow(data,iSet,iMom,tsink,thiscol,thissym,thisshift,NNQ=False,Dt=1):
     tflowlist,tlist,plotAvg,plotStd = [],[],[],[]
     plotAvgNN,plotStdNN = [],[]
     DictFlag,thisValue = 'RF','Alapha'
@@ -1506,7 +1509,7 @@ def PlotTopChargeOverFlow(data,iSet,iMom,tsink,thiscol,thissym,thisshift,NNQ=Fal
     if NNQ:
         pl.errorbar(np.array(TflowToPhys(tflowlist))-0.25,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
         
-def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,Dt=2,Wein=False):
+def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,Dt=1,Wein=False):
     tflowlist,tlist,plotAvg,plotStd = [],[],[],[]
     plotAvgNN,plotStdNN = [],[]
     DictFlag,thisValue = 'RF','Alapha'
@@ -1553,22 +1556,25 @@ def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,
                     datadown = dataavg-datastd
                     pl.plot(tvals,[dataavg,dataavg],color=thiscol)
                     pl.fill_between(tvals,[dataup,dataup],[datadown,datadown],color=thiscol,alpha=thisalpha,edgecolor='none')
-
+                    
 def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False,Wein=False):
     global ForceTitle    
     DictFlag,thisValue = 'RF','Alpha'
     if NNQ:  DictFlag,thisValue = 'NNQ','NNQ'
-    Dt=2
+    Dt=1
     ForceTitle = FT
     if Wein: thissubdir = 'Wein'
     else: thissubdir = 'Top'
     for itsink in AlphaTlist:
         thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
         for iset,setdata in data.iteritems():
-            if CheckDict(setdata,DictFlag,imom,'Boots'):
-                # print 'plotting ', iset, imom
-                PlotTopChargeOverFlow(setdata,iset,imom,itsink,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt)
-
+            for ikappa,kappadata in setdata.iteritems():
+                if CheckDict(kappadata,DictFlag,imom,'Boots'):
+                    thisset = iset
+                    if len(setdata.keys()) > 1: thisset += '\ '+GetMpi(ikappa,Phys=True)
+                    # print 'plotting ', iset, imom
+                    PlotTopChargeOverFlow(kappadata,thisset,imom,itsink,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt)
+                
         filename = CreateFile('','twopt',imom,thisValue+'Overt'+str(itsink),subdir=thissubdir)        
         SetTopAxies('flow',NNQ=NNQ,Dt=Dt,Wein=Wein)
         pl.savefig(filename+'.pdf')
@@ -1578,15 +1584,62 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False,Wein=False):
         if Wein: thisitflow = itflow - 0.01
         thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
         for iset,setdata in data.iteritems():
-            if CheckDict(setdata,DictFlag,imom,'Boots'):
-                # print 'plotting ', iset, imom
-                PlotTopChargeOvert(setdata,iset,imom,thisitflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt,Wein=Wein)
+            for ikappa,kappadata in setdata.iteritems():
+                if CheckDict(kappadata,DictFlag,imom,'Boots'):
+                    # print 'plotting ', iset, imom
+                    thisset = iset
+                    if len(setdata.keys()) > 1: thisset += '\ '+GetMpi(ikappa,Phys=True)
+                    PlotTopChargeOvert(kappadata,thisset,imom,thisitflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt,Wein=Wein)
         filename = CreateFile('','twopt',imom,thisValue+'OverFlow'+str(thisitflow),subdir=thissubdir)
         SetTopAxies('t',NNQ=NNQ,Dt=Dt,Wein=Wein)
         pl.savefig(filename+'.pdf')
         pl.clf()
 
 
+        
+def PlotTopChargeOverMpi(data,iSet,iMom,tflow,thiscol,thissym,thisshift,Wein=False):
+    MpiList,plotAvg,plotStd = [],[],[]
+    DictFlag,thisValue = 'RF','Alapha'
+    tflow = untflowstr(tflow)
+    WeinOrTop = 'Top'
+    if Wein: WeinOrTop = 'Wein'
+    for ikappa,kappadata in data.iteritems():
+        if not CheckDict(kappadata,iMom,'Boots'): continue
+        momdata = kappadata[iMom]['Boots']
+        for itflow,flowdata in momdata.iteritems():        
+            if 't_flow0.0' == itflow: continue
+            if untflowstr(itflow) == tflow:
+                if AlphaFitRPick[WeinOrTop] in flowdata.keys():                
+                    MpiList.append(GetMpiNoForm(ikappa))
+                    plotAvg.append(flowdata[AlphaFitRPick[WeinOrTop]].Avg)
+                    plotStd.append(flowdata[AlphaFitRPick[WeinOrTop]].Std)
+    pl.errorbar(np.array(MpiList)+thisshift*0.1,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ '+tflowstr(tflow)))
+
+                  
+## WORKING ##
+def PlotTopChargeOverKappa(data,thisSetList,imom,FT,Wein=False):
+    global ForceTitle    
+    DictFlag,thisValue = 'RF','Alpha'
+    ForceTitle = FT
+    if Wein:
+        thissubdir = 'Wein'
+        thisFlowPlot = WeinFlowPlot
+    else:
+        thissubdir = 'Top'
+        thisFlowPlot = FlowPlot
+    thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
+    for iflow in thisFlowPlot:
+        for iset,setdata in data.iteritems():
+            thisset = iset
+            # print 'plotting ', iset, imom, iflow
+            PlotTopChargeOverMpi(setdata['Fits'],thisset,imom,iflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next())
+
+    filename = CreateFile('','twopt',imom,thisValue+'OverKappa',subdir=thissubdir) 
+    SetTopAxies('Mpi',Wein=Wein)
+    pl.savefig(filename+'.pdf')
+    pl.clf()
+
+        
 def GraphQExp(Qlist,flowlist):
     pl.errorbar(flowlist,np.mean(Qlist,axis=0),np.std(Qlist,axis=0),fmt='o')
     pl.xlim(flowlist[0]-0.1,flowlist[-1]+0.1)

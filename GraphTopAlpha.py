@@ -33,11 +33,12 @@ def ReadAndPlotDis(thisSetList,thisMomList,Wein=False):
         datadict = {}
         for iset in iterSetList:
             datadict[iset] = OrderedDict()
-            datadict[iset] = ReadTopFile(outputdir[0],iset,thisMomList=[imom],Wein=Wein)
-            datadict[iset]['Fits'] = ReadAlphaFitFile(outputdir[0],iset,thisMomList=[imom],Wein=Wein)
+            datadict[iset] = ReadTopFileKappas(kappalist,outputdir,iset,thisMomList=[imom],Wein=Wein)
+            datadict[iset]['Fits'] = ReadAlphaFitFileKappas(kappalist,outputdir,iset,thisMomList=[imom],Wein=Wein)
         setstart = time.time()
         PlotTopSetCharge(datadict,iterSetList,imom,feedin['ForceTitle'],Wein=Wein)
         PlotTopSetCharge(datadict,iterSetList,imom,feedin['ForceTitle'],NNQ=True,Wein=Wein)
+        PlotTopChargeOverKappa(datadict,iterSetList,imom,feedin['ForceTitle'],Wein=Wein)
         print 'Getting and plotting ' , imom, 'Took: ' , str(datetime.timedelta(seconds=(time.time()-setstart))) ,' h:m:s                      '
 
 

@@ -92,17 +92,18 @@ kappaflags = [ik.replace('k'+str(kappa),'') for ik in kappalist]
 ScalarNorm = 1 # normalisation for Scalar current
 PsScalarNorm = 1 # normalisation for Pseudo Scalar current
 if kappa == 1375400:
+    PsVectorNorm = 0.873 # normalisation for Pseudo Vector current taken from below
     VectorNorm = 0.736862 # normalisation for Vector Current from arXiv:1006.1164v2 beta = 1.9, Iwasaki gauge action, clover term Csw=1.715
 elif kappa == 1370000:
     VectorNorm = 0.757504 # taken as 1/G_E(Q^2), TODO take above paper and extrapolate to kappa = 0.13754
-PsVectorNorm = 1 # normalisation for Pseudo Vector current
+    PsVectorNorm = 1.0 # as above
 TensorNorm = 1 # normalisation for Tensor Current
 MomFracNorm = 1 # normalisation for Momentum Fraction
 
 ExpMagMomProton = 2.792847 ## taken from pdg http://pdg.lbl.gov/2014/tables/rpp2014-tab-baryons-N.pdf
 
-ExpCRad_muon = 0.8408
-ExpCRad_electron = 0.877
+ExpCRad_muon = 0.8408 ## fm i think (check pdg)
+ExpCRad_electron = 0.877 ## in fm i think
 
 
 F3Div2M = True ## Reads in F3 for VectorTop with dividing by the physical mass and multiplying by hbarc in GeV*fm (final result in fm) 
@@ -173,7 +174,9 @@ XAvg = True ## Always use XAvg, faster and correct anyway
 if PlotXSrcDep:
     XAvg = False
 NoXAvg = not XAvg ## Does each source separatly for each 
-    
+
+
+
 MonteTime = 7
 MonteFlow = tflowlist.index(400)
 
@@ -186,6 +189,8 @@ ForceNConf = False
 NConfLen = 100
 ForceMinXSrcLen = True ## only calculates with a minumum of MinXSRCLen of sources per gauge field
 MinXSrcLen = 20
+
+if 'JackLappy' in socket.gethostname():MinXSrcLen = 5
 
 
 if 'XSrc' in ListOrSet: ## XSrc001 or XSrc010 or XSrc100 etc...
@@ -264,9 +269,9 @@ if kappa == 12:
     nt = 8
     nx = 4
 else:
-    kappas = 1364000
+    kappas = 1364000 
     if 'JackLappy' in socket.gethostname():
-        dirread = datadir+'/cfunsg5/Kud0'+str(kappa)+'Ks0'+str(kappas)
+       dirread = datadir+'/cfunsg5/Kud0'+str(kappa)+'Ks0'+str(kappas)
     else:
         dirread = datadir+'/cfunPChroma/Kud0'+str(kappa)+'Ks0'+str(kappas)
     nt = 64

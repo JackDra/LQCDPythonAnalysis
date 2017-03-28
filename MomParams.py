@@ -28,6 +28,17 @@ DefPionMass = {}
 DefPionMass['1370000'] = 0.32242 #Lat Units 
 DefPionMass['1375400'] = 0.18903 #Lat Units 
 
+def GetMpiNoForm(kappa,Phys=True,MeV=False):
+    kappa = str(kappa).replace('k','')
+    if Phys:
+        if MeV:
+            return DefPionMass[str(kappa)]*hbarcdivlat*1000
+        else:
+            return DefPionMass[str(kappa)]*hbarcdivlat
+    else:
+        return DefPionMass[str(kappa)]
+
+    
 def GetMpi(kappa,Phys=True,MeV=False):
     kappa = str(kappa).replace('k','')
     if Phys:
