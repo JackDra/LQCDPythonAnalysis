@@ -1862,10 +1862,12 @@ def GraphchitKappas(Qlist,flowlist):
     # pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q Boot$')
     tflowindex = flowlist[0].tolist().index(4.01)
     chitKappa = []
-    MpiList = [DefPionMass['1370000']*hbarc/thislatspace,DefPionMass['1375400']*hbarc/thislatspace]
-    for iQ in Qlist:
+    # MpiList = [DefPionMass['1370000']*hbarc/thislatspace,DefPionMass['1375400']*hbarc/thislatspace]
+    MpiList = []
+    for icQ,iQ in enumerate(Qlist):
         Q2boot,dump = bt.CreateBoot(np.array(iQ)**2,nboot,0)
         chit = coeff*np.array(Q2boot)**(0.25)
+        MpiList.append(GetMpiNoForm(kappalist[icQ]))
         chit = GetBootStats(chit)
         chitKappa.append(chit[tflowindex])
     # pl.errorbar(flowlist-0.02,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q^{2} Boot$')
@@ -1937,10 +1939,12 @@ def GraphWchitKappas(Wlist,flowlist):
     # pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$W Boot$')
     tflowindex = flowlist[0].tolist().index(4.0)
     chitKappa = []
-    MpiList = [DefPionMass['1370000']*hbarc/thislatspace,DefPionMass['1375400']*hbarc/thislatspace]
+    # MpiList = [DefPionMass['1370000']*hbarc/thislatspace,DefPionMass['1375400']*hbarc/thislatspace]
+    MpiList = []
     for iW in Wlist:
         W2boot,dump = bt.CreateBoot(np.array(iW)**2,nboot,0)
         chit = coeff*np.array(W2boot)**(0.25)
+        MpiList.append(GetMpiNoForm(kappalist[icQ]))
         chit = GetBootStats(chit)
         chitKappa.append(chit[tflowindex])
     # pl.errorbar(flowlist-0.02,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$W^{2} Boot$')
