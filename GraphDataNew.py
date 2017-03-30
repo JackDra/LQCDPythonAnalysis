@@ -1618,7 +1618,6 @@ def PlotTopChargeOverMpi(data,iSet,iMom,tflow,thiscol,thissym,thisshift,Wein=Fal
     pl.errorbar(np.array(MpiList)+thisshift*0.1,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ '+tflowstr(tflow)))
 
                   
-## WORKING ##
 def PlotTopChargeOverKappa(data,thisSetList,imom,FT,Wein=False):
     global ForceTitle    
     DictFlag,thisValue = 'RF','Alpha'
@@ -1884,7 +1883,7 @@ def GraphchitKappas(Qlist,flowlist):
     # pl.ylim(0,0.4)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Qdata/'
-    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle Q^2 \rangle^{1/4} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle Q^2 \rangle^{1/4} $',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chitKappa.pdf')
     pl.clf()
@@ -1959,7 +1958,7 @@ def GraphWchitKappas(Wlist,flowlist):
     # pl.ylim(0,0.4)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Wdata/'
-    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle W^2 \rangle^{1/4} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle W^2 \rangle^{1/4} $',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chitKappa.pdf')
     pl.clf()
