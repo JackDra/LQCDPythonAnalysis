@@ -1986,9 +1986,9 @@ def GraphQ2Hist(Qlist,thisflow):
 def GraphQLines(Qlist,flowlist,cfglist):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     for icfg in cfglist:
-        pl.plot(flowlist,Qlist[icfg],color=thiscolcyc.next(),label='Q cfg='+str(icfg))
-    pl.xlim(flowlist[0]-0.1,flowlist[-1]+0.1)
-    pl.xlabel(r'$ t_{flow} $')
+        pl.plot(TflowToPhys(flowlist),Qlist[icfg],color=thiscolcyc.next(),label='Q cfg='+str(icfg))
+    pl.xlim(TflowToPhys([flowlist[0]-0.1])[0],TflowToPhys([flowlist[-1]+0.1])[0])
+    pl.xlabel(r'$ \sqrt{8t_{f}} fm$')
     pl.ylabel(r'$ Q $')
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Qdata/'
@@ -2020,9 +2020,9 @@ def GraphW2Hist(Wlist,thisflow):
 def GraphWLines(Wlist,flowlist,cfglist):
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     for icfg in cfglist:
-        pl.plot(flowlist,Wlist[icfg],color=thiscolcyc.next(),label='W cfg='+str(icfg))
-    pl.xlim(flowlist[0]-0.1,flowlist[-1]+0.1)
-    pl.xlabel(r'$ t_{flow} $')
+        pl.plot(TflowToPhys(flowlist),Wlist[icfg],color=thiscolcyc.next(),label='W cfg='+str(icfg))
+    pl.xlim(TflowToPhys([flowlist[0]-0.1])[0],TflowToPhys([flowlist[-1]+0.1])[0])
+    pl.xlabel(r'$ \sqrt{8t_{f}} fm$')
     pl.ylabel(r'$ W $')
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Wdata/'
