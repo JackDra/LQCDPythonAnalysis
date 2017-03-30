@@ -1837,7 +1837,7 @@ def GraphWchit(Wlist,flowlist):
     # chitAvg = coeff*Wavg**(0.25)
     # chitStd = coeff*0.25*Wstd*Wavg**(0.25-1)
     # pl.errorbar(flowlist+0.1,chitAvg,chitStd,fmt='o',label=r'$No Boot$')
-    pl.xlim(TflowToPhys([flowlist[0]-0.02])[0],TflowToPhys([flowlist[-1]+0.1])[0])
+    pl.xlim(TflowToPhys([flowlist[1]-0.02])[0],TflowToPhys([flowlist[-1]+0.1])[0])
     pl.xlabel(r'$ \sqrt{8t_{f}} fm$')
     pl.ylabel(r'$ \frac{1}{V^{1/8}} \langle W^2 \rangle^{1/8} GeV$')
     # pl.ylim(0,0.4)
