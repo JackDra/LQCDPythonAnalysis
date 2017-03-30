@@ -1642,7 +1642,7 @@ def PlotTopChargeOverKappa(data,thisSetList,imom,FT,Wein=False):
         
 def GraphQExp(Qlist,flowlist):
     pl.errorbar(TflowToPhys(flowlist),np.mean(Qlist,axis=0),np.std(Qlist,axis=0),fmt='o')
-    pl.xlim(TflowToPhys(flowlist[0]-0.1),TflowToPhys(flowlist[-1]+0.1))
+    pl.xlim(TflowToPhys([flowlist[0]-0.1])[0],TflowToPhys([flowlist[-1]+0.1])[0])
     pl.xlabel(r'$ \sqrt{8t_{f}} fm$')
     pl.ylabel(r'$ \langle Q \rangle $')
     thisdir = outputdir[0] + 'graphs/Qdata/'
@@ -1653,7 +1653,7 @@ def GraphQExp(Qlist,flowlist):
 
 def GraphWExp(Wlist,flowlist):
     pl.errorbar(TflowToPhys(flowlist),np.mean(Wlist,axis=0),np.std(Wlist,axis=0),fmt='o')
-    pl.xlim(TflowToPhys(flowlist[0]-0.1),TflowToPhys(flowlist[-1]+0.1))
+    pl.xlim(TflowToPhys([flowlist[0]-0.1])[0],TflowToPhys([flowlist[-1]+0.1])[0])
     pl.xlabel(r'$ \sqrt{8t_{f}} fm$')
     pl.ylabel(r'$ \langle W \rangle $')
     thisdir = outputdir[0] + 'graphs/Wdata/'
