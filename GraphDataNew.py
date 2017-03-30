@@ -308,7 +308,7 @@ def SetDispAxies():
 
 AlphaTflowList = np.arange(0.01,10,1)
 AlphaTlist = np.arange(3,15)
-def SetTopAxies(torflow,NNQ=False,Dt=2,Wein=False):
+def SetTopAxies(torflow,NNQ=False,Dt=2,Wein=False,MpiTitle=True):
     if torflow == 't':
         pl.xlabel(r'$t$')
         pl.xlim(MassTVals[0],AlphaTlist[-1])
@@ -321,19 +321,21 @@ def SetTopAxies(torflow,NNQ=False,Dt=2,Wein=False):
         pl.xlim(0,pl.xlim()[-1])
     pl.legend()
     pl.tight_layout()
+    if MpiTitle: thisMpi = '\ '+GetMpi(kappa,Phys=True)
+    else: thisMpi = ''
     if NNQ:
         pl.ylabel(r'$ Eff\ Mass $')
         if Wein:
-            pl.title(r'$ Eff\ Mass\ of\ \gamma_{5}P_{+}NNW\ and\ NN\ Dt='+str(Dt)+'\ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
+            pl.title(r'$ Eff\ Mass\ of\ \gamma_{5}P_{+}NNW\ and\ NN\ Dt='+str(Dt)+thisMpi+r'$',y=TitleShift)
         else:
-            pl.title(r'$ Eff\ Mass\ of\ \gamma_{5}P_{+}NNQ\ and\ NN\ Dt='+str(Dt)+'\ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
+            pl.title(r'$ Eff\ Mass\ of\ \gamma_{5}P_{+}NNQ\ and\ NN\ Dt='+str(Dt)+thisMpi+r'$',y=TitleShift)
     else:
         if Wein:
             pl.ylabel(r'$ \alpha_{W} $')
-            pl.title(r'$\frac{\langle NNW \rangle }{\langle NN\rangle} = \alpha_{W} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
+            pl.title(r'$\frac{\langle NNW \rangle }{\langle NN\rangle} = \alpha_{W} '+thisMpi+r'$',y=TitleShift)
         else:
             pl.ylabel(r'$ \alpha_{Q} $')
-            pl.title(r'$\frac{\langle NNQ \rangle }{\langle NN\rangle} = \alpha_{Q} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
+            pl.title(r'$\frac{\langle NNQ \rangle }{\langle NN\rangle} = \alpha_{Q} '+thisMpi+r'$',y=TitleShift)
     
     
 
@@ -1635,7 +1637,7 @@ def PlotTopChargeOverKappa(data,thisSetList,imom,FT,Wein=False):
             PlotTopChargeOverMpi(setdata['Fits'],thisset,imom,iflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next())
 
     filename = CreateFile('','twopt',imom,thisValue+'OverKappa',subdir=thissubdir) 
-    SetTopAxies('Mpi',Wein=Wein)
+    SetTopAxies('Mpi',Wein=Wein,MpiTitle=False)
     pl.savefig(filename+'.pdf')
     pl.clf()
 
