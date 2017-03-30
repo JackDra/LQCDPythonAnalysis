@@ -314,7 +314,7 @@ def SetTopAxies(torflow,NNQ=False,Dt=2,Wein=False):
         pl.xlim(MassTVals[0],AlphaTlist[-1])
         SetxTicks()
     elif torflow == 'flow':
-        pl.xlabel(r'$\sqrt{8t_{flow}} fm$')        
+        pl.xlabel(r'$\sqrt{8t_{f}} fm$')        
         # pl.xlim(-0.1,10)
     elif torflow == 'Mpi':
         pl.xlabel(r'$m_{\pi} (GeV)$')
@@ -1492,8 +1492,8 @@ def PlotTopChargeOverFlow(data,iSet,iMom,tsink,thiscol,thissym,thisshift,NNQ=Fal
                 # tlist.append(untstr(it))
                 if NNQ:
                     if untstr(it) +Dt <= len(flowdata.keys()):
-                        EffMass = np.log(np.array(tdata)/np.array(flowdata['t'+str(untstr(it)+Dt)]))/float(Dt)
-                        EffMassNN = np.log(tdataNN/momdataNN['t'+str(untstr(it)+Dt)])/float(Dt)
+                        EffMass = np.log(np.abs(np.array(tdata)/np.array(flowdata['t'+str(untstr(it)+Dt)])))/float(Dt)
+                        EffMassNN = np.log(np.abs(tdataNN/momdataNN['t'+str(untstr(it)+Dt)]))/float(Dt)
                     else:
                         EffMass = 1.0
                         EffMassNN = 1.0
@@ -1641,9 +1641,9 @@ def PlotTopChargeOverKappa(data,thisSetList,imom,FT,Wein=False):
 
         
 def GraphQExp(Qlist,flowlist):
-    pl.errorbar(flowlist,np.mean(Qlist,axis=0),np.std(Qlist,axis=0),fmt='o')
-    pl.xlim(flowlist[0]-0.1,flowlist[-1]+0.1)
-    pl.xlabel(r'$ t_{flow} $')
+    pl.errorbar(TflowToPhys(flowlist),np.mean(Qlist,axis=0),np.std(Qlist,axis=0),fmt='o')
+    pl.xlim(TflowToPhys(flowlist[0]-0.1),TflowToPhys(flowlist[-1]+0.1))
+    pl.xlabel(r'$ \sqrt{8t_{f}} fm$')
     pl.ylabel(r'$ \langle Q \rangle $')
     thisdir = outputdir[0] + 'graphs/Qdata/'
     pl.title(r'$ \langle Q \rangle \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
@@ -1652,9 +1652,9 @@ def GraphQExp(Qlist,flowlist):
     pl.clf()
 
 def GraphWExp(Wlist,flowlist):
-    pl.errorbar(flowlist,np.mean(Wlist,axis=0),np.std(Wlist,axis=0),fmt='o')
-    pl.xlim(flowlist[0]-0.1,flowlist[-1]+0.1)
-    pl.xlabel(r'$ t_{flow} $')
+    pl.errorbar(TflowToPhys(flowlist),np.mean(Wlist,axis=0),np.std(Wlist,axis=0),fmt='o')
+    pl.xlim(TflowToPhys(flowlist[0]-0.1),TflowToPhys(flowlist[-1]+0.1))
+    pl.xlabel(r'$ \sqrt{8t_{f}} fm$')
     pl.ylabel(r'$ \langle W \rangle $')
     thisdir = outputdir[0] + 'graphs/Wdata/'
     pl.title(r'$ \langle W \rangle \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
@@ -1723,12 +1723,12 @@ def Graphchit(Qlist,flowlist):
     mkdir_p(thisdir)
     pl.savefig(thisdir+'IntAutoCorrQ2.pdf')
     pl.clf()
-    pl.errorbar(flowlist[1:],meanlist[1:],alphaerr[1:],fmt='.',label='Autocorr')
-    pl.errorbar(flowlist[1:]+thisshift,Pullflag(Q2boot,'Avg')[1:],Pullflag(Q2boot,'Std')[1:],fmt='.',label='Bootstrap')
+    pl.errorbar(TflowToPhys(flowlist[1:]),meanlist[1:],alphaerr[1:],fmt='.',label='Autocorr')
+    pl.errorbar(TflowToPhys(flowlist[1:]+thisshift),Pullflag(Q2boot,'Avg')[1:],Pullflag(Q2boot,'Std')[1:],fmt='.',label='Bootstrap')
     pl.ylabel(r'$<Q^{2}>$')
     pl.legend()
     pl.title(r'$<Q^{2}>$')
-    pl.xlabel(r'$t_{flow}$')
+    pl.xlabel(r'$\sqrt{8t_{f}} fm$')
     pl.savefig(thisdir+'AutoAlphaQ2.pdf')
     pl.clf()
 
@@ -1744,7 +1744,7 @@ def Graphchit(Qlist,flowlist):
     # chitStd = coeff*0.25*Qstd*Qavg**(0.25-1)
     # pl.errorbar(flowlist+0.1,chitAvg,chitStd,fmt='o',label=r'$No Boot$')
     pl.xlim(flowlist[0]-0.02,flowlist[-1]+0.1)
-    pl.xlabel(r'$ t_{flow} $')
+    pl.xlabel(r'$ \sqrt{8t_{f}} fm$')
     pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
     # pl.ylim(0.14,0.3)
     pl.legend()
@@ -1817,19 +1817,19 @@ def GraphWchit(Wlist,flowlist):
     mkdir_p(thisdir)
     pl.savefig(thisdir+'IntAutoCorrW2.pdf')
     pl.clf()
-    pl.errorbar(flowlist[1:],meanlist[1:],alphaerr[1:],fmt='.',label='Autocorr')
-    pl.errorbar(flowlist[1:]+thisshift,Pullflag(W2boot,'Avg')[1:],Pullflag(W2boot,'Std')[1:],fmt='.',label='Bootstrap')
+    pl.errorbar(TflowToPhys(flowlist[1:]),meanlist[1:],alphaerr[1:],fmt='.',label='Autocorr')
+    pl.errorbar(TflowToPhys(flowlist[1:]+thisshift),Pullflag(W2boot,'Avg')[1:],Pullflag(W2boot,'Std')[1:],fmt='.',label='Bootstrap')
     pl.ylabel(r'$<W^{2}>$')
     pl.legend()
     pl.title(r'$<W^{2}>$')
-    pl.xlabel(r'$t_{flow}$')
+    pl.xlabel(r'$\sqrt{8t_{f}} fm$')
     pl.savefig(thisdir+'AutoAlphaW2.pdf')
     pl.clf()
 
     chit = coeff*np.array(W2boot)**(0.125)
     chit = GetBootStats(chit)
     # pl.errorbar(flowlist-0.02,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$W^{2} Boot$')
-    pl.errorbar(flowlist[1:],Pullflag(chit,'Avg')[1:],Pullflag(chit,'Std')[1:],fmt='o')
+    pl.errorbar(TflowToPhys(flowlist[1:]),Pullflag(chit,'Avg')[1:],Pullflag(chit,'Std')[1:],fmt='o')
 
     # Wavg = np.mean(np.array(Wlist)**2,axis=0)
     # Wstd = np.std(np.array(Wlist)**2,axis=0,ddof=1)
@@ -1837,7 +1837,7 @@ def GraphWchit(Wlist,flowlist):
     # chitStd = coeff*0.25*Wstd*Wavg**(0.25-1)
     # pl.errorbar(flowlist+0.1,chitAvg,chitStd,fmt='o',label=r'$No Boot$')
     pl.xlim(flowlist[0]-0.02,flowlist[-1]+0.1)
-    pl.xlabel(r'$ t_{flow} $')
+    pl.xlabel(r'$ \sqrt{8t_{f}} fm$')
     pl.ylabel(r'$ \frac{1}{V^{1/8}} \langle W^2 \rangle^{1/8} GeV$')
     # pl.ylim(0,0.4)
     pl.legend()
@@ -1904,7 +1904,7 @@ def GraphchitKappasOverFlow(Qlist,flowlist,thiskappalist):
         Q2boot,dump = bt.CreateBoot(np.array(iQ)**2,nboot,0)
         chit = coeff*np.array(Q2boot)**(0.25)
         chit = GetBootStats(chit)
-        pl.errorbar(iflowlist+ishift,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$'+GetMpi(ikappa)+'$')
+        pl.errorbar(TflowToPhys(iflowlist+ishift),Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$'+GetMpi(ikappa)+'$')
 
     # Qavg = np.mean(np.array(Qlist)**2,axis=0)
     # Qstd = np.std(np.array(Qlist)**2,axis=0,ddof=1)
@@ -1912,7 +1912,7 @@ def GraphchitKappasOverFlow(Qlist,flowlist,thiskappalist):
     # chitStd = coeff*0.25*Qstd*Qavg**(0.25-1)
     # pl.errorbar(flowlist+0.1,chitAvg,chitStd,fmt='o',label=r'$No Boot$')
     pl.xlim(0,pl.xlim()[1])
-    pl.xlabel(r'$ t_{flow} $')
+    pl.xlabel(r'$ \sqrt{8t_{f}} fm$')
     pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
     # pl.ylim(0,0.4)
     pl.legend()
