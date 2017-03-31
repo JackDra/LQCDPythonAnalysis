@@ -1312,6 +1312,8 @@ def PlotTSFMassLine(data2pt,col,smear,thisdt):
 
 def PlotOSFMassValue(data,col,smear,thisdt,MomScale='q = 0 0 0'):
     smearindex,deltashift = CreateOSFfitKey(smear)
+    units = ''
+    if PhysMassPlot: units = r'\ GeV$'
     if Debug:
         print data.keys(), 'm0'
         print OSFfitr.keys(), smearindex, smear
@@ -1335,17 +1337,21 @@ def PlotOSFMassValue(data,col,smear,thisdt,MomScale='q = 0 0 0'):
         if Debug: print 'OSF',smear, 'not found'
         return
     tdata = [OSFfitvals[smearindex][0]-tsource,OSFfitvals[smearindex][1]-tsource]
-    pl.fill_between(tdata,[datadown,datadown],[dataup,dataup],facecolor=col,edgecolor='none',alpha=thisalpha)
+    thislab = '$M_{N}='+MakeValAndErr(dataval,datastd)+units
+    pl.fill_between(tdata,[datadown,datadown],[dataup,dataup],facecolor=col,edgecolor='none',alpha=thisalpha,label=thislab)
     pl.plot(tdata,[dataval,dataval],color=col)
 
 def PlotTSFMassValue(data,thisdt):
     databoot = data['m0'][TSFfitr]['Boot']
+    units = ''
     if PhysMassPlot:
+        units = r'\ GeV$'
         databoot = databoot*hbarcdivlat
         databoot.Stats()
+    thislab = '$M_{N}='+MakeValAndErr(dataval,databoot.Std)+units
     dataval = abs(databoot.Avg)
     dataup,datadown = dataval+databoot.Std,dataval-databoot.Std
-    pl.fill_between([TSFfitvals[0]-tsource ,TSFfitvals[1]-tsource],[datadown,datadown],[dataup,dataup],facecolor='k',edgecolor='none',alpha=thisalpha)
+    pl.fill_between([TSFfitvals[0]-tsource ,TSFfitvals[1]-tsource],[datadown,datadown],[dataup,dataup],facecolor='k',edgecolor='none',alpha=thisalpha,label=thislab)
 
 
 def PlotOSFLog(data,col,smear,norm,thisshift,DoPoFS):
@@ -1361,8 +1367,11 @@ def PlotOSFLog(data,col,smear,norm,thisshift,DoPoFS):
         linedata.append(np.log((parAm*(parm0*(-it)).exp(1))/norm))
     GetBootStats(linedata)
     dataAvg,dataErr = np.array(Pullflag(linedata,'Avg')),np.array(Pullflag(linedata,'Std'))
+    units = ''
     if PhysMassPlot:
+        units = r'\ GeV$'
         dataAvg,dataErr = dataAvg*hbarcdivlat,dataErr*hbarcdivlat
+    thislab = '$M_{N}='+MakeValAndErr(dataAvg,dataErr)+units
     dataup = dataAvg+dataErr
     datadown = dataAvg-dataErr
     pl.fill_between(tdata-DoPoFS+thisshift,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
@@ -1384,8 +1393,11 @@ def PlotTSFLog(data,col,smear,norm,thisshift,DoPoFS):
         linedata.append(np.log((parAm*(((parm0*(-it)).exp(1)) + parAmp*((parm0+parDm)*(-it)).exp(1)))/norm))
     GetBootStats(linedata)
     dataAvg,dataErr = np.array(Pullflag(linedata,'Avg')),np.array(Pullflag(linedata,'Std'))
+    units = ''
     if PhysMassPlot:
+        units = r'\ GeV$'
         dataAvg,dataErr = dataAvg*hbarcdivlat,dataErr*hbarcdivlat
+    thislab = '$M_{N}='+MakeValAndErr(dataAvg,dataErr)+units
     dataup = dataAvg+dataErr
     datadown = dataAvg-dataErr
     pl.fill_between(tdata-DoPoFS+thisshift,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
