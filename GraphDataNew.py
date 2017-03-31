@@ -1305,7 +1305,9 @@ def PlotTSFMassLine(data2pt,col,smear,thisdt):
     tdata = np.arange(TSFfitvals[0]-tsource,TSFfitvals[1]+incr-tsource,incr)
     fit2pt = ff.C2TSFLineFun(tdata,pars2pt)
     fit2ptdt = ff.C2TSFLineFun(tdata+thisdt,pars2pt)
-    pl.plot(tdata,map(abs,np.log(fit2ptdt/fit2pt)/thisdt),color=col)
+    effline = map(abs,np.log(fit2ptdt/fit2pt)/thisdt)
+    if PhysMassPlot: effline = np.array(effline)*hbarcdivlat
+    pl.plot(tdata,effline,color=col)
 
 
 def PlotOSFMassValue(data,col,smear,thisdt,MomScale='q = 0 0 0'):
@@ -1318,11 +1320,17 @@ def PlotOSFMassValue(data,col,smear,thisdt,MomScale='q = 0 0 0'):
     if CheckDict(data,'m0',OSFfitr[smearindex],'Boot'): 
         databoot = data['m0'][OSFfitr[smearindex]]['Boot']
         databoot = ScaledEffMass(MomScale,[databoot])[0]
+        if PhysMassPlot:
+            databoot = databoot*hbarcdivlat
+            databoot.Stats()
         dataval = abs(databoot.Avg)
         dataup,datadown = dataval+databoot.Std,dataval-databoot.Std
     elif CheckDict(data,'m0',OSFfitr[smearindex],'Avg') and CheckDict(data,'m0',OSFfitr[smearindex],'Std'):
         dataval = data['m0'][OSFfitr[smearindex]]['Avg']
-        dataup,datadown = dataval+data['m0'][OSFfitr[smearindex]]['Std'],dataval-data['m0'][OSFfitr[smearindex]]['Std']
+        datastd = data['m0'][OSFfitr[smearindex]]['Std']
+        if PhysMassPlot:
+            dataval,datastd = dataval*hbarcdivlat,datastd*hbarcdivlat
+        dataup,datadown = dataval+datastd,dataval-datastd
     else:
         if Debug: print 'OSF',smear, 'not found'
         return
@@ -1332,6 +1340,9 @@ def PlotOSFMassValue(data,col,smear,thisdt,MomScale='q = 0 0 0'):
 
 def PlotTSFMassValue(data,thisdt):
     databoot = data['m0'][TSFfitr]['Boot']
+    if PhysMassPlot:
+        databoot = databoot*hbarcdivlat
+        databoot.Stats()
     dataval = abs(databoot.Avg)
     dataup,datadown = dataval+databoot.Std,dataval-databoot.Std
     pl.fill_between([TSFfitvals[0]-tsource ,TSFfitvals[1]-tsource],[datadown,datadown],[dataup,dataup],facecolor='k',edgecolor='none',alpha=thisalpha)
@@ -1350,6 +1361,8 @@ def PlotOSFLog(data,col,smear,norm,thisshift,DoPoFS):
         linedata.append(np.log((parAm*(parm0*(-it)).exp(1))/norm))
     GetBootStats(linedata)
     dataAvg,dataErr = np.array(Pullflag(linedata,'Avg')),np.array(Pullflag(linedata,'Std'))
+    if PhysMassPlot:
+        dataAvg,dataErr = dataAvg*hbarcdivlat,dataErr*hbarcdivlat
     dataup = dataAvg+dataErr
     datadown = dataAvg-dataErr
     pl.fill_between(tdata-DoPoFS+thisshift,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
@@ -1371,6 +1384,8 @@ def PlotTSFLog(data,col,smear,norm,thisshift,DoPoFS):
         linedata.append(np.log((parAm*(((parm0*(-it)).exp(1)) + parAmp*((parm0+parDm)*(-it)).exp(1)))/norm))
     GetBootStats(linedata)
     dataAvg,dataErr = np.array(Pullflag(linedata,'Avg')),np.array(Pullflag(linedata,'Std'))
+    if PhysMassPlot:
+        dataAvg,dataErr = dataAvg*hbarcdivlat,dataErr*hbarcdivlat
     dataup = dataAvg+dataErr
     datadown = dataAvg-dataErr
     pl.fill_between(tdata-DoPoFS+thisshift,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha)
