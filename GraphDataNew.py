@@ -51,7 +51,7 @@ MassTVals = 1,21
 if kappa == 1375400:
     Massyrange = .5,0.7
 elif kappa == 1370000:
-    Massyrange = .6,0.8
+    Massyrange = .6,0.9
 else:
     Massyrange = 0,3
     
