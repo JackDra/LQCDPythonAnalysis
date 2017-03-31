@@ -105,35 +105,35 @@ OneStateParList = {'C2':['Am','m0'] , 'C3':['B00']}
 OSFCutList = ['cut4','cut5','cut6']
 OSFCutPicked = 'cut5'
 OSFfitvals = {'sm16': [9,21],'sm32': [8,19], 'sm64': [7,21] , 'sm128':[28,35],
-              PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[4,9],PickedStateStr+'CM':[5,21]}
+              PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[11,21],PickedStateStr+'CM':[5,21]}
 
 OSFfitvals['ism64jsm16'] = [11,21]
 OSFfitvals['ism64jsm32'] = [11,21]
 OSFfitvals['ism64jsm64'] = [11,21]
 
 OSFfitvals100 = {'sm16': [9,21],'sm32': [8,19], 'sm64': [7,21] , 'sm128':[28,35],
-                 PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[4,9],PickedStateStr+'CM':[5,21]}
+                 PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[11,21],PickedStateStr+'CM':[5,21]}
 
 OSFfitvals100['ism64jsm16'] = [11,21]
 OSFfitvals100['ism64jsm32'] = [11,21]
 OSFfitvals100['ism64jsm64'] = [11,21]
 
 OSFfitvals110 = {'sm16': [9,21],'sm32': [8,19], 'sm64': [7,21] , 'sm128':[28,35],
-                 PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[4,9],PickedStateStr+'CM':[5,21]}
+                 PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[11,21],PickedStateStr+'CM':[5,21]}
 
 OSFfitvals110['ism64jsm16'] = [11,21]
 OSFfitvals110['ism64jsm32'] = [11,21]
 OSFfitvals110['ism64jsm64'] = [11,21]
 
 OSFfitvals111 = {'sm16': [9,21],'sm32': [8,19], 'sm64': [7,21] , 'sm128':[28,35],
-                 PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[4,9],PickedStateStr+'CM':[5,15]}
+                 PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[11,21],PickedStateStr+'CM':[5,15]}
 
 OSFfitvals111['ism64jsm16'] = [11,21]
 OSFfitvals111['ism64jsm32'] = [11,21]
 OSFfitvals111['ism64jsm64'] = [11,21]
 
 OSFfitvals200 = {'sm16': [9,21],'sm32': [8,19], 'sm64': [7,21] , 'sm128':[28,35],
-                 PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[4,9],PickedStateStr+'CM':[5,15]}
+                 PickedStateStr+'REvec':[25,35],PickedStateStr+'PoF'+str(PoFShifts):[11,21],PickedStateStr+'CM':[5,15]}
 
 OSFfitvals200['ism64jsm16'] = [11,21]
 OSFfitvals200['ism64jsm32'] = [11,21]
