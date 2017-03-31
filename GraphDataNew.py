@@ -1326,6 +1326,7 @@ def PlotOSFMassValue(data,col,smear,thisdt,MomScale='q = 0 0 0'):
             databoot = databoot*hbarcdivlat
             databoot.Stats()
         dataval = abs(databoot.Avg)
+        datastd = databoot.Std
         dataup,datadown = dataval+databoot.Std,dataval-databoot.Std
     elif CheckDict(data,'m0',OSFfitr[smearindex],'Avg') and CheckDict(data,'m0',OSFfitr[smearindex],'Std'):
         dataval = data['m0'][OSFfitr[smearindex]]['Avg']
