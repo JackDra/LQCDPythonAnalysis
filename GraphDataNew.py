@@ -1401,7 +1401,7 @@ def PlotTSFLog(data,col,smear,norm,thisshift,DoPoFS):
     thislab = '$M_{N}='+MakeValAndErr(dataAvg,dataErr)+units
     dataup = dataAvg+dataErr
     datadown = dataAvg-dataErr
-    pl.fill_between(tdata-DoPoFS+thisshift,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha,thislab)
+    pl.fill_between(tdata-DoPoFS+thisshift,datadown,dataup,facecolor=col,edgecolor='none',alpha=thisalpha,label=thislab)
     pl.plot(tdata-DoPoFS+thisshift,dataAvg,color=col)
 
 
