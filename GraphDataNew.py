@@ -217,6 +217,7 @@ def CreateMKFFFile(thisCol,thisCurr,thisFF):
 
 
 def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False,subdir=False):
+    thisMpi = '\ '+GetMpi(kappa,Phys=True)
     if 'twopt' in thisGamma:
         if 'Dt' in thisflag:
             thistitle = thisGamma+' '+TitlePref+' $' + thisflag.replace('Dt','\Delta t=') + r'$'
@@ -228,13 +229,13 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False,subdir=False):
     if 'q = 0 0 0' not in thisMom: thistitle += ' '+thisMom
     if ForceTitle == False:
         if thisfig == False:
-            pl.title(thistitle,y=TitleShift)
+            pl.title(thistitle+thisMpi,y=TitleShift)
         else:
             thisfig.suptitle(thistitle, fontsize=20)
     else:
         # pl.title(ForceTitle+'$' + thisflag.replace('Dt','\Delta t') + '$')
         if thisfig == False:
-            if Debug: print 'title: ' , ForceTitle
+            if Debug: print 'title: ' , ForceTitle+thisMpi
             pl.title(ForceTitle,y=TitleShift)
         else:
             thisfig.suptitle(ForceTitle, fontsize=20)
