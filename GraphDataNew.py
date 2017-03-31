@@ -1312,7 +1312,7 @@ def PlotTSFMassLine(data2pt,col,smear,thisdt):
 
 def PlotOSFMassValue(data,col,smear,thisdt,MomScale='q = 0 0 0'):
     smearindex,deltashift = CreateOSFfitKey(smear)
-    units = ''
+    units = '$'
     if PhysMassPlot: units = r'\ GeV$'
     if Debug:
         print data.keys(), 'm0'
@@ -1339,12 +1339,12 @@ def PlotOSFMassValue(data,col,smear,thisdt,MomScale='q = 0 0 0'):
         return
     tdata = [OSFfitvals[smearindex][0]-tsource,OSFfitvals[smearindex][1]-tsource]
     thislab = '$M_{N}='+MakeValAndErr(dataval,datastd)+units
-    pl.fill_between(tdata,[datadown,datadown],[dataup,dataup],facecolor=col,edgecolor='none',alpha=thisalpha,label=thislab)
-    pl.plot(tdata,[dataval,dataval],color=col)
+    pl.fill_between(tdata,[datadown,datadown],[dataup,dataup],facecolor=col,edgecolor='none',alpha=thisalpha)
+    pl.plot(tdata,[dataval,dataval],color=col,label=thislab)
 
 def PlotTSFMassValue(data,thisdt):
     databoot = data['m0'][TSFfitr]['Boot']
-    units = ''
+    units = '$'
     if PhysMassPlot:
         units = r'\ GeV$'
         databoot = databoot*hbarcdivlat
@@ -1368,7 +1368,7 @@ def PlotOSFLog(data,col,smear,norm,thisshift,DoPoFS):
         linedata.append(np.log((parAm*(parm0*(-it)).exp(1))/norm))
     GetBootStats(linedata)
     dataAvg,dataErr = np.array(Pullflag(linedata,'Avg')),np.array(Pullflag(linedata,'Std'))
-    units = ''
+    units = '$'
     if PhysMassPlot:
         units = r'\ GeV$'
         dataAvg,dataErr = dataAvg*hbarcdivlat,dataErr*hbarcdivlat
@@ -1394,7 +1394,7 @@ def PlotTSFLog(data,col,smear,norm,thisshift,DoPoFS):
         linedata.append(np.log((parAm*(((parm0*(-it)).exp(1)) + parAmp*((parm0+parDm)*(-it)).exp(1)))/norm))
     GetBootStats(linedata)
     dataAvg,dataErr = np.array(Pullflag(linedata,'Avg')),np.array(Pullflag(linedata,'Std'))
-    units = ''
+    units = '$'
     if PhysMassPlot:
         units = r'\ GeV$'
         dataAvg,dataErr = dataAvg*hbarcdivlat,dataErr*hbarcdivlat
