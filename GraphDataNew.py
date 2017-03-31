@@ -235,7 +235,7 @@ def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False,subdir=False):
     else:
         # pl.title(ForceTitle+'$' + thisflag.replace('Dt','\Delta t') + '$')
         if thisfig == False:
-            if Debug: print 'title: ' , ForceTitle+thisMpi
+            if Debug: print 'title: ' , ForceTitle
             pl.title(ForceTitle,y=TitleShift)
         else:
             thisfig.suptitle(ForceTitle, fontsize=20)
