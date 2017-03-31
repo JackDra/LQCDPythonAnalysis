@@ -217,7 +217,7 @@ def CreateMKFFFile(thisCol,thisCurr,thisFF):
 
 
 def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False,subdir=False):
-    thisMpi = '\ '+GetMpi(kappa,Phys=True)
+    thisMpi = '$\ '+GetMpi(kappa,Phys=True)+'$'
     if 'twopt' in thisGamma:
         if 'Dt' in thisflag:
             thistitle = thisGamma+' '+TitlePref+' $' + thisflag.replace('Dt','\Delta t=') + r'$'
