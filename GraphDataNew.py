@@ -297,9 +297,13 @@ def SetFFAxies(thisCurr):
 
 def SetMassAxies():
     pl.xlabel(r'$t$')
-    pl.ylabel(r'$aM_{N}$')
+    if PhysMassPlot:
+        pl.ylabel(r'$M_{N} GeV$')
+        pl.ylim(Massyrange[0]*hbarcdivlat,Massyrange[1]*hbarcdivlat)
+    else:
+        pl.ylabel(r'$aM_{N}$')
+        pl.ylim(Massyrange)
     pl.xlim(MassTVals)
-    pl.ylim(Massyrange)
     SetxTicks()
     pl.legend()
     pl.tight_layout()
@@ -1098,6 +1102,9 @@ def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
 
 def PlotRF(data,col,sym,shift,lab,MP=False,Log=False,alpha=1):
     if MP:
+        if PhysMassPlot and not Log:
+            data['Boot'] = [idata*hbarcdivlat for idata in data['Boot']]
+            GetBootStats(data['Boot'])
         if 'PoF' in lab and not Log:
             tvals = np.array(data['tVals'])+1+(PoFShifts*PoFDelta) + shift
         else:
