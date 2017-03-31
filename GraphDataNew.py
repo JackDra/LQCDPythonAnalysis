@@ -48,12 +48,14 @@ thisalpha = 0.3
 # MassTVals = 16,33
 # MassTVals = 3,25
 MassTVals = 1,21
-if kappa == 1375400:
-    Massyrange = .5,0.7
-elif kappa == 1370000:
-    Massyrange = .6,0.9
-else:
-    Massyrange = 0,3
+Massyrange = .5,0.9
+
+# if kappa == 1375400:
+#     Massyrange = .5,0.7
+# elif kappa == 1370000:
+#     Massyrange = .6,0.9
+# else:
+#     Massyrange = 0,3
     
 # Massyrange = 0.40,0.60
 # Massyrange = 0.40,0.61
