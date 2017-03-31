@@ -229,6 +229,7 @@ RepWithCons = False # TEMPORARY, overrides vector current with Conserved vector 
 DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
 MakeGraphDat = True # Creates a .dat file of the values plotted for the corresponding graph (where implemented)
 PhysicalUnits = True # uses lattice momenta or physical momenta
+PlotMassPhys = PhysicalUnits # plots effective mass in physical units.... just linked it to PhysicalUnits
 ForceNoDer = False # Forces the fitting LLSBoot to use manual derivaive calculation
 # MesOrBar = 'Meson' ## selects meson or baryon to read
 MesOrBar = 'Baryon'
