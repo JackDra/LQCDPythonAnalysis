@@ -102,7 +102,7 @@ leglocDict = {'ProtonP4g4':'upper left'}
 # ylimFFDict = {'ProtonVectorTopFF3':[-0.05,0.35],'NeutronVectorTopFF3':[-0.25,0],'PandNVectorTopFF3':[-.2,.3],
 #               'ProtonVectorWeinFF3':[-20,15]}
 ylimFFDict = {'ProtonGeGmFF1':[0.4,1.1],
-              'ProtonGeGmFF2':[1.0,1.6]}
+              'ProtonGeGmFF2':[1.0,2.6]}
 
 leglengthFFDict = {'ProtonVectorTopFF3':2,'NeutronVectorTopFF3':2,'PandNVectorTopFF3':2,
                    'ProtonVectorWeinFF3':2,'NeutronVectorWeinFF3':2,'PandNVectorWeinFF3':1}
