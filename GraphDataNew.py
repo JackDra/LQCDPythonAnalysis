@@ -1594,7 +1594,6 @@ def PlotTopChargeOvert(data,fitdata,iSet,iMom,tflow,thiscol,thissym,thisshift,NN
         tflowlist = [] 
         for itflow,flowfitdata in momdataFit.iteritems():
             if untflowstr(itflow) == tflow:
-                if Debug: print flowfitdata.keys(), AlphaFitRPick[WeinOrTop]
                 if AlphaFitRPick[WeinOrTop] in flowfitdata.keys():
                     tvals = map(int,unxmlfitr(AlphaFitRPick[WeinOrTop]))
                     dataavg = flowfitdata[AlphaFitRPick[WeinOrTop]].Avg
