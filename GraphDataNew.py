@@ -2041,12 +2041,12 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         
         pl.errorbar(TflowToPhys(iflowlist+ishift),Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',color=thiscol,label=r'$'+GetMpi(ikappa)+r'\quad ncfg='+str(thisncfg)+'$')
         
-        chitdivlog = Pullflag(chit,'Avg')/np.log(np.array(iflowlist))
-        chitdivlogErr = Pullflag(chit,'Std')/np.log(np.array(iflowlist))
-        # chitdivlog = Pullflag(chit,'Avg')/TflowToPhys(iflowlist)
-        # chitdivlogErr = Pullflag(chit,'Std')/TflowToPhys(iflowlist)
-        # chitdivlog = Pullflag(chit,'Avg')/np.log(iflowlist)
-        # chitdivlogErr = Pullflag(chit,'Std')/np.log(iflowlist)
+        # chitdivlog = Pullflag(chit,'Avg')/np.log(np.array(iflowlist))
+        # chitdivlogErr = Pullflag(chit,'Std')/np.log(np.array(iflowlist))
+        # chitdivlog = Pullflag(chit,'Avg')/np.log(TflowToPhys(iflowlist))
+        # chitdivlogErr = Pullflag(chit,'Std')/np.log(TflowToPhys(iflowlist))
+        chitdivlog = Pullflag(chit,'Avg')/np.log(np.array(TflowToPhys(iflowlist))+2)
+        chitdivlogErr = Pullflag(chit,'Std')/np.log(np.array(TflowToPhys(iflowlist))+2)
         pl.errorbar(TflowToPhys(iflowlist+ishift),chitdivlog,chitdivlogErr,fmt='o',color=thiscol,alpha=0.5,label=r'$ \chi / log(\sqrt{8t_{f}})$')
 
     # Qavg = np.mean(np.array(Wlist)**2,axis=0)
