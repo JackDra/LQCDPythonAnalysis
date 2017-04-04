@@ -1556,7 +1556,7 @@ def PlotTopChargeOverFlow(data,iSet,iMom,tsink,thiscol,thissym,thisshift,NNQ=Fal
                     plotAvg.append(np.mean(tdata))
                     plotStd.append(np.std(tdata))
     if len(plotAvg) == 0: return
-    pl.errorbar(TflowToPhys(tflowlist),plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ tsink='+str(tsink)))
+    pl.errorbar(TflowToPhys(tflowlist),plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ t='+str(tsink)))
     if NNQ:
         pl.errorbar(np.array(TflowToPhys(tflowlist))-0.25,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
         
