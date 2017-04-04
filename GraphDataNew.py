@@ -149,8 +149,13 @@ FFxlab = r'$ Q^{2} (GeV)^{2}$'
 DatFile = False
 
 def TflowToPhys(tflowlist):
-    return [np.sqrt(8*iflow)*latspace for iflow in tflowlist] ## in fermi
-
+    if isinstance(tflowlist, list):
+        return [np.sqrt(8*iflow)*latspace for iflow in tflowlist] ## in fermi
+    elif isinstance(tflowlist,str):
+        return np.sqrt(8*float(tflowlist))*latspace
+    else:
+        return np.sqrt(8*tflowlist)*latspace
+        
 def AppendFFDat(xdata,ydata,yerr):
     global DatFile
     if DatFile == False: raise IOError("DatFile not defined yet")
@@ -1584,7 +1589,7 @@ def PlotTopChargeOvert(data,fitdata,iSet,iMom,tflow,thiscol,thissym,thisshift,NN
                         plotAvg.append(np.mean(tdata))
                         plotStd.append(np.std(tdata))
     if len(plotAvg) == 0: return
-    pl.errorbar(tlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ tflow='+str(tflow)))
+    pl.errorbar(tlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ \sqrt{8t_{f}}='+TflowToPhys(str(tflow))))
     if NNQ:
         pl.errorbar(np.array(tlist)-0.5,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
     WeinOrTop = 'Top'
