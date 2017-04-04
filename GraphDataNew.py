@@ -1638,8 +1638,8 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False,Wein=False):
                     # print 'plotting ', iset, imom
                     thisset = iset
                     if MultKappa: thisset += '\ '+GetMpi(ikappa,Phys=True)
-                    if CheckDict(setdat,'Fits',ikappa):
-                        fitdata = setdat['Fits'][ikappa]
+                    if CheckDict(setdata,'Fits',ikappa):
+                        fitdata = setdata['Fits'][ikappa]
                     else:
                         fitdata = {}
                     PlotTopChargeOvert(kappadata,fitdata,thisset,imom,thisitflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt,Wein=Wein)
