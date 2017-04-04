@@ -1623,12 +1623,12 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False,Wein=False):
             for ikappa,kappadata in setdata.iteritems():
                 if CheckDict(kappadata,DictFlag,imom,'Boots'):
                     thisset = iset
-                    if len(setdata.keys()) > 1: thisset += '\ '+GetMpi(ikappa,Phys=True)
+                    if MultKappa: thisset += '\ '+GetMpi(ikappa,Phys=True)
                     # print 'plotting ', iset, imom
                     PlotTopChargeOverFlow(kappadata,thisset,imom,itsink,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt)
                 
         filename = CreateFile('','twopt',imom,thisValue+'Overt'+str(itsink),subdir=thissubdir,NoMpi=MultKappa)        
-        SetTopAxies('flow',NNQ=NNQ,Dt=Dt,Wein=Wein)
+        SetTopAxies('flow',NNQ=NNQ,Dt=Dt,Wein=Wein,MpiTitle=not MultKappa)
         pl.savefig(filename+'.pdf')
         pl.clf()
     for itflow in AlphaTflowList:
@@ -1645,7 +1645,7 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False,Wein=False):
                     PlotTopChargeOvert(kappadata,thisset,imom,thisitflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt,Wein=Wein)
         filename = CreateFile('','twopt',imom,thisValue+'OverFlow'+str(thisitflow),subdir=thissubdir,NoMpi= MultKappa)
     
-        SetTopAxies('t',NNQ=NNQ,Dt=Dt,Wein=Wein)
+        SetTopAxies('t',NNQ=NNQ,Dt=Dt,Wein=Wein,MpiTitle=not MultKappa)
         pl.savefig(filename+'.pdf')
         pl.clf()
 
