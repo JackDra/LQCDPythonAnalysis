@@ -2006,7 +2006,7 @@ def GraphWchitKappas(Wlist,flowlist):
     # chitStd = coeff*0.25*Wstd*Wavg**(0.25-1)
     # pl.errorbar(flowlist+0.1,chitAvg,chitStd,fmt='o',label=r'$No Boot$')
     pl.xlim(0,pl.xlim()[1])
-    pl.ylim(0,pl.ylim()[1])
+    pl.ylim(0,pl.ylim()[1]*1.2)
     pl.xlabel(r'$ m_{\pi} GeV $')
     pl.ylabel(r'$\chi_{t}^{1/8} GeV$')
     # pl.ylim(0,0.4)
