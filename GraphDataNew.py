@@ -1589,6 +1589,10 @@ def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,
         pl.errorbar(np.array(tlist)-0.5,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
     WeinOrTop = 'Top'
     if Wein: WeinOrTop = 'Wein'
+    if Debug:
+        print data.keys(), 'Fits'
+        print data['Fits'].keys(), iMom
+        print data['Fits'][iMom].keys(), 'Boots'
     if not NNQ and CheckDict(data,'Fits',iMom,'Boots'):
         momdataFit = data['Fits'][iMom]['Boots']
         tflowlist = [] 
