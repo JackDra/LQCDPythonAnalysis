@@ -2017,7 +2017,43 @@ def GraphWchitKappas(Wlist,flowlist):
     pl.clf()
 
     
+def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
+    ## Hard coded here....
+    flowlist = np.array(flowlist)
+    thislatspace = 0.0907
+    coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
+    
+    # Qboot,dump = bt.CreateBoot(Wlist,nboot,0)
+    # Q2boot = np.array(Qboot)**2
+    # chit = coeff*np.array(Q2boot)**(0.25)
+    # chit = GetBootStats(chit)
+    # pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q Boot$')
+    chitKappa = []
+    thisshiftlist = [0,0.05]
+    for iflowlist,iW,ishift,ikappa in zip(flowlist,Wlist,thisshiftlist,thiskappalist):
+        W2boot,dump = bt.CreateBoot(np.array(iW)**2,nboot,0)
+        chit = coeff*np.array(W2boot)**(0.25)
+        chit = GetBootStats(chit)
+        pl.errorbar(TflowToPhys(iflowlist+ishift),Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$'+GetMpi(ikappa)+'$')
 
+    # Qavg = np.mean(np.array(Wlist)**2,axis=0)
+    # Qstd = np.std(np.array(Wlist)**2,axis=0,ddof=1)
+    # chitAvg = coeff*Qavg**(0.25)
+    # chitStd = coeff*0.25*Qstd*Qavg**(0.25-1)
+    # pl.errorbar(flowlist+0.1,chitAvg,chitStd,fmt='o',label=r'$No Boot$')
+    pl.xlim(0,pl.xlim()[1])
+    pl.xlabel(r'$ \sqrt{8t_{f}} fm$')
+    pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
+    # pl.ylim(0,0.4)
+    pl.legend()
+    thisdir = outputdir[0] + 'graphs/Qdata/'
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle W^2 \rangle^{1/4} $',y=TitleShift)
+    mkdir_p(thisdir)
+    pl.savefig(thisdir+'chitKappaOverFlow.pdf')
+    pl.clf()
+
+
+    
     
 def GraphQ2Hist(Qlist,thisflow):
     ## Hard coded here....
