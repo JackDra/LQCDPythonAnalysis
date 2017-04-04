@@ -57,7 +57,7 @@ def ReadTopList(thisdir,thiscfglist):
                     thistflow,thistcharge = ReadTopCharge(root+ifile)
                     if icfg in cfglistout:
                         print 'warning, duplicate file in directory for config', icfg
-                    else:
+                    elif len(thistflow) != 0:
                         cfglistout.append(icfg)
                         tflow.append(thistflow)
                         topcharge.append(thistcharge)
@@ -76,9 +76,10 @@ def ReadTopAll(thisdir):
     if len(filelist) == 0: raise IOError('No files in directory ' + thisdir)
     for ifile in filesort(filelist,[filelist[0][:-8],'.out']):
         thistflow,thistcharge = ReadTopCharge(thisroot+ifile)
-        cfglistout.append(ifile)
-        tflow.append(thistflow)
-        topcharge.append(thistcharge)
+        if len(thistflow) != 0:
+            cfglistout.append(ifile)
+            tflow.append(thistflow)
+            topcharge.append(thistcharge)
     return cfglistout,topcharge,tflow
 
 ## dictout = { iset , imom , Info/ Boots: itflow , tsink }
