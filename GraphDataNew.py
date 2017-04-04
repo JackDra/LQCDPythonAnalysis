@@ -1991,10 +1991,10 @@ def GraphWchitKappas(Wlist,flowlist):
     chitKappa = []
     # MpiList = [DefPionMass['1370000']*hbarc/thislatspace,DefPionMass['1375400']*hbarc/thislatspace]
     MpiList = []
-    for iW in Wlist:
+    for icW,iW in enumerate(Wlist):
         W2boot,dump = bt.CreateBoot(np.array(iW)**2,nboot,0)
         chit = coeff*np.array(W2boot)**(0.25)
-        MpiList.append(GetMpiNoForm(kappalist[icQ]))
+        MpiList.append(GetMpiNoForm(kappalist[icW]))
         chit = GetBootStats(chit)
         chitKappa.append(chit[tflowindex])
     # pl.errorbar(flowlist-0.02,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$W^{2} Boot$')
