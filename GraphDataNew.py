@@ -1698,6 +1698,7 @@ def GraphQExp(Qlist,flowlist):
 def GraphWExp(Wlist,flowlist):
     if Debug:
         print 'Printing WExpt'
+        print len(TflowToPhys(flowlist)), len(np.mean(Wlist,axis=0))
         for itflow,iW,iWerr in zip(TflowToPhys(flowlist),np.mean(Wlist,axis=0),np.std(Wlist,axis=0)):
             print itflow,iW,iWerr
             
