@@ -2041,7 +2041,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         pl.errorbar(TflowToPhys(iflowlist+ishift),Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$'+GetMpi(ikappa)+r'\quad ncfg='+str(thisncfg)+'$')
         
         chitdivlog = Pullflag(chit,'Avg')/np.log(TflowToPhys(iflowlist))
-        chitdivlogErr = Pullflag(chit,'Err')/np.log(TflowToPhys(iflowlist))
+        chitdivlogErr = Pullflag(chit,'Std')/np.log(TflowToPhys(iflowlist))
         pl.errorbar(TflowToPhys(iflowlist+ishift),chitdivlog,chitdivlogErr,fmt='o',alpha=0.5,label=r'$ \chi / log(\sqrt{8t_{f}})$')
 
     # Qavg = np.mean(np.array(Wlist)**2,axis=0)
