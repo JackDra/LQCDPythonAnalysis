@@ -30,7 +30,7 @@ for ikappa in kappalist:
             print 'topcharge shape',np.array(topcharge).shape
             print 'tflow shape',np.array(tflow).shape
         GraphWExp(topcharge,tflow[0])
-        GraphWLines(topcharge,tflow[0],np.arange(0,200,33))
+        GraphWLines(topcharge,tflow[0],np.arange(0,len(topcharge,33))
         GraphWchit(topcharge,tflow[0])
         # GraphQ2Hist(topcharge,tflow[0].tolist().index(3.01))
 
