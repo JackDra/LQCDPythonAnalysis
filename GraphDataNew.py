@@ -1589,7 +1589,7 @@ def PlotTopChargeOvert(data,fitdata,iSet,iMom,tflow,thiscol,thissym,thisshift,NN
                         plotAvg.append(np.mean(tdata))
                         plotStd.append(np.std(tdata))
     if len(plotAvg) == 0: return
-    pl.errorbar(tlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ \sqrt{8t_{f}}='+str(TflowToPhys(tflow))))x
+    pl.errorbar(tlist,plotAvg,plotStd,color=thiscol,fmt=thissym,label=LegLab(iSet+'\ \sqrt{8t_{f}}='+str(TflowToPhys(tflow))))
     if NNQ:
         pl.errorbar(np.array(tlist)-0.5,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
     WeinOrTop = 'Top'
