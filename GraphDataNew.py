@@ -1555,7 +1555,7 @@ def PlotTopChargeOverFlow(data,iSet,iMom,tsink,thiscol,thissym,thisshift,NNQ=Fal
     if NNQ:
         pl.errorbar(np.array(TflowToPhys(tflowlist))-0.25,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
         
-def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,Dt=1,Wein=False):
+def PlotTopChargeOvert(data,fitdata,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,Dt=1,Wein=False):
     tflowlist,tlist,plotAvg,plotStd = [],[],[],[]
     plotAvgNN,plotStdNN = [],[]
     DictFlag,thisValue = 'RF','Alapha'
@@ -1589,12 +1589,8 @@ def PlotTopChargeOvert(data,iSet,iMom,tflow,thiscol,thissym,thisshift,NNQ=False,
         pl.errorbar(np.array(tlist)-0.5,plotAvgNN,plotStdNN,color=thiscol,fmt=thissym,label=LegLab(iSet+' NN'),alpha=0.6)
     WeinOrTop = 'Top'
     if Wein: WeinOrTop = 'Wein'
-    if Debug:
-        print data.keys(), 'Fits'
-        print data['Fits'].keys(), iMom
-        print data['Fits'][iMom].keys(), 'Boots'
-    if not NNQ and CheckDict(data,'Fits',iMom,'Boots'):
-        momdataFit = data['Fits'][iMom]['Boots']
+    if not NNQ and CheckDict(fitdata,iMom,'Boots'):
+        momdataFit = fitdata[iMom]['Boots']
         tflowlist = [] 
         for itflow,flowfitdata in momdataFit.iteritems():
             if untflowstr(itflow) == tflow:
@@ -1642,7 +1638,11 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False,Wein=False):
                     # print 'plotting ', iset, imom
                     thisset = iset
                     if MultKappa: thisset += '\ '+GetMpi(ikappa,Phys=True)
-                    PlotTopChargeOvert(kappadata,thisset,imom,thisitflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt,Wein=Wein)
+                    if CheckDict(setdat,'Fits',ikappa):
+                        fitdata = setdat['Fits'][ikappa]
+                    else:
+                        fitdata = {}
+                    PlotTopChargeOvert(kappadata,fitdata,thisset,imom,thisitflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt,Wein=Wein)
         filename = CreateFile('','twopt',imom,thisValue+'OverFlow'+str(thisitflow),subdir=thissubdir,NoMpi= MultKappa)
     
         SetTopAxies('t',NNQ=NNQ,Dt=Dt,Wein=Wein,MpiTitle=not MultKappa)
