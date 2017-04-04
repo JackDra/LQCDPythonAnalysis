@@ -155,7 +155,7 @@ OverDetIter = 100 ## number of iterations performed in the overdeturmined eigenv
 OverdetTol = 10**-7
 # OverDetIter = 0
 
-tflowlist = map(int,np.arange(0,1000,100)) ## indicies of flows to read
+tflowlist = map(int,np.arange(0,1000,10)) ## indicies of flows to read
 # tflowlist = map(int,np.arange(0,99,10)) + map(int,np.arange(100,1000,50))
 # tflowlist = [400]
 
