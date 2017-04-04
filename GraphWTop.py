@@ -24,6 +24,7 @@ for ikappa in kappalist:
     print 'Reading kappa=', ikappa
     if Debug: print WeinDir.replace('Kud0'+str(kappa),ikappa.replace('k','Kud0'))
     filelist,topcharge,tflow = ReadTopAll(WeinDir.replace('Kud0'+str(kappa),ikappa.replace('k','Kud0')))
+    print 'Number of Configurations found: ',len(filelist)
     if ikappa == 'k'+str(kappa):
         print kappa , 'found'
         if Debug:
