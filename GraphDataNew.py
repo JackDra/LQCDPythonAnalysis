@@ -2024,7 +2024,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
     flowlist = np.array(flowlist)
     thislatspace = 0.0907
     coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25))**(0.5))
-    
+    thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     # Qboot,dump = bt.CreateBoot(Wlist,nboot,0)
     # Q2boot = np.array(Qboot)**2
     # chit = coeff*np.array(Q2boot)**(0.25)
@@ -2033,16 +2033,19 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
     chitKappa = []
     thisshiftlist = [0,0.05]
     for iflowlist,iW,ishift,ikappa in zip(flowlist,Wlist,thisshiftlist,thiskappalist):
+        thiscol = thiscolcyc.next()
         thisncfg = np.array(iW).shape[0]
         W2boot,dump = bt.CreateBoot(np.array(iW)**2,nboot,0)
         chit = coeff*np.array(W2boot)**(0.125)
         chit = GetBootStats(chit)
         
-        pl.errorbar(TflowToPhys(iflowlist+ishift),Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$'+GetMpi(ikappa)+r'\quad ncfg='+str(thisncfg)+'$')
+        pl.errorbar(TflowToPhys(iflowlist+ishift),Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',color=thiscol,label=r'$'+GetMpi(ikappa)+r'\quad ncfg='+str(thisncfg)+'$')
         
-        chitdivlog = Pullflag(chit,'Avg')/np.log(TflowToPhys(iflowlist))
-        chitdivlogErr = Pullflag(chit,'Std')/np.log(TflowToPhys(iflowlist))
-        pl.errorbar(TflowToPhys(iflowlist+ishift),chitdivlog,chitdivlogErr,fmt='o',alpha=0.5,label=r'$ \chi / log(\sqrt{8t_{f}})$')
+        # chitdivlog = Pullflag(chit,'Avg')/np.log(TflowToPhys(iflowlist))
+        # chitdivlogErr = Pullflag(chit,'Std')/np.log(TflowToPhys(iflowlist))
+        chitdivlog = Pullflag(chit,'Avg')/np.log(iflowlist)
+        chitdivlogErr = Pullflag(chit,'Std')/np.log(iflowlist)
+        pl.errorbar(TflowToPhys(iflowlist+ishift),chitdivlog,chitdivlogErr,fmt='o',color=thiscol,alpha=0.5,label=r'$ \chi / log(\sqrt{8t_{f}})$')
 
     # Qavg = np.mean(np.array(Wlist)**2,axis=0)
     # Qstd = np.std(np.array(Wlist)**2,axis=0,ddof=1)
