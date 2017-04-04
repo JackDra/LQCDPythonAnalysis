@@ -2047,9 +2047,12 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         # chitdivlogErr = Pullflag(chit,'Std')/np.log(TflowToPhys(iflowlist))
         # chitdivlog = Pullflag(chit,'Avg')/np.log(np.array(TflowToPhys(iflowlist))+2)
         # chitdivlogErr = Pullflag(chit,'Std')/np.log(np.array(TflowToPhys(iflowlist))+2)
+        chitdivlog = Pullflag(chit,'Avg')/np.log(np.array(TflowToPhys(iflowlist))+2)
+        chitdivlogErr = Pullflag(chit,'Std')/np.log(np.array(TflowToPhys(iflowlist))+2)
+        pl.errorbar(TflowToPhys(iflowlist+ishift),chitdivlog,chitdivlogErr,fmt='o',color=thiscol,alpha=0.5,label=r'$ \chi / log(\sqrt{8t_{f}})$')
         chitdivlog = Pullflag(chit,'Avg')*np.log(np.array(TflowToPhys(iflowlist))+2)
         chitdivlogErr = Pullflag(chit,'Std')*np.log(np.array(TflowToPhys(iflowlist))+2)
-        pl.errorbar(TflowToPhys(iflowlist+ishift),chitdivlog,chitdivlogErr,fmt='o',color=thiscol,alpha=0.5,label=r'$ \chi / log(\sqrt{8t_{f}})$')
+        pl.errorbar(TflowToPhys(iflowlist+ishift),chitdivlog,chitdivlogErr,fmt='s',color=thiscol,alpha=0.5,label=r'$ \chi * log(\sqrt{8t_{f}})$')
 
     # Qavg = np.mean(np.array(Wlist)**2,axis=0)
     # Qstd = np.std(np.array(Wlist)**2,axis=0,ddof=1)
