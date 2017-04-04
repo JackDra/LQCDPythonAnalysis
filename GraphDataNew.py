@@ -1696,6 +1696,11 @@ def GraphQExp(Qlist,flowlist):
     pl.clf()
 
 def GraphWExp(Wlist,flowlist):
+    if Debug:
+        print 'Printing WExpt'
+        for itflow,iW,iWerr in zip(TflowToPhys(flowlist),np.mean(Wlist,axis=0),np.std(Wlist,axis=0)):
+            print itflow,iW,iWerr
+            
     pl.errorbar(TflowToPhys(flowlist),np.mean(Wlist,axis=0),np.std(Wlist,axis=0),fmt='o')
     pl.xlim(TflowToPhys([flowlist[0]-0.1])[0],TflowToPhys([flowlist[-1]+0.1])[0])
     pl.xlabel(r'$ \sqrt{8t_{f}} fm$')
