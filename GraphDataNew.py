@@ -219,8 +219,9 @@ def CreateMKFFFile(thisCol,thisCurr,thisFF):
 
 
 
-def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False,subdir=False):
+def CreateFile(thisflag,thisGamma,thisMom,TitlePref,thisfig=False,subdir=False,NoMpi=False):
     thisMpi = '$\ '+GetMpi(kappa,Phys=True)+'$'
+    if NoMpi: thisMpi = ''
     if 'twopt' in thisGamma:
         if 'Dt' in thisflag:
             thistitle = thisGamma+' '+TitlePref+' $' + thisflag.replace('Dt','\Delta t=') + r'$'
@@ -1616,7 +1617,7 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False,Wein=False):
             for ikappa,kappadata in setdata.iteritems():
                 if CheckDict(kappadata,DictFlag,imom,'Boots'):
                     thisset = iset
-                    if len(setdata.keys()) == 1: thisset += '\ '+GetMpi(ikappa,Phys=True)
+                    if len(setdata.keys()) > 1: thisset += '\ '+GetMpi(ikappa,Phys=True)
                     # print 'plotting ', iset, imom
                     PlotTopChargeOverFlow(kappadata,thisset,imom,itsink,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt)
                 
@@ -1633,7 +1634,7 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False,Wein=False):
                 if CheckDict(kappadata,DictFlag,imom,'Boots'):
                     # print 'plotting ', iset, imom
                     thisset = iset
-                    if len(setdata.keys()) == 1: thisset += '\ '+GetMpi(ikappa,Phys=True)
+                    if len(setdata.keys()) > 1: thisset += '\ '+GetMpi(ikappa,Phys=True)
                     PlotTopChargeOvert(kappadata,thisset,imom,thisitflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt,Wein=Wein)
         filename = CreateFile('','twopt',imom,thisValue+'OverFlow'+str(thisitflow),subdir=thissubdir)
         SetTopAxies('t',NNQ=NNQ,Dt=Dt,Wein=Wein)
