@@ -1958,7 +1958,7 @@ def GraphchitKappasOverFlow(Qlist,flowlist,thiskappalist):
         Q2boot,dump = bt.CreateBoot(np.array(iQ)**2,nboot,0)
         chit = coeff*np.array(Q2boot)**(0.25)
         chit = GetBootStats(chit)
-        pl.errorbar(TflowToPhys(iflowlist+ishift),Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$'+GetMpi(ikappa)+'$ ncfg='+str(thisncfg))
+        pl.errorbar(TflowToPhys(iflowlist+ishift),Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$'+GetMpi(ikappa)+r'\quad ncfg='+str(thisncfg)+'$')
 
     # Qavg = np.mean(np.array(Qlist)**2,axis=0)
     # Qstd = np.std(np.array(Qlist)**2,axis=0,ddof=1)
@@ -2037,7 +2037,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         W2boot,dump = bt.CreateBoot(np.array(iW)**2,nboot,0)
         chit = coeff*np.array(W2boot)**(0.125)
         chit = GetBootStats(chit)
-        pl.errorbar(TflowToPhys(iflowlist+ishift),Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$'+GetMpi(ikappa)+'$ ncfg='+str(thisncfg))
+        pl.errorbar(TflowToPhys(iflowlist+ishift),Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$'+GetMpi(ikappa)+r'\quad ncfg='+str(thisncfg)+'$')
 
     # Qavg = np.mean(np.array(Wlist)**2,axis=0)
     # Qstd = np.std(np.array(Wlist)**2,axis=0,ddof=1)
