@@ -1615,6 +1615,7 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False,Wein=False):
     for itsink in AlphaTlist:
         thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
         for iset,setdata in data.iteritems():
+            MultKappa = len(setdata.keys()) > 1
             for ikappa,kappadata in setdata.iteritems():
                 if CheckDict(kappadata,DictFlag,imom,'Boots'):
                     thisset = iset
@@ -1622,7 +1623,7 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False,Wein=False):
                     # print 'plotting ', iset, imom
                     PlotTopChargeOverFlow(kappadata,thisset,imom,itsink,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt)
                 
-        filename = CreateFile('','twopt',imom,thisValue+'Overt'+str(itsink),subdir=thissubdir)        
+        filename = CreateFile('','twopt',imom,thisValue+'Overt'+str(itsink),subdir=thissubdir,NoMpi=MultKappa)        
         SetTopAxies('flow',NNQ=NNQ,Dt=Dt,Wein=Wein)
         pl.savefig(filename+'.pdf')
         pl.clf()
@@ -1631,13 +1632,15 @@ def PlotTopSetCharge(data,thisSetList,imom,FT,NNQ=False,Wein=False):
         if Wein: thisitflow = itflow - 0.01
         thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
         for iset,setdata in data.iteritems():
+            MultKappa = len(setdata.keys()) > 1
             for ikappa,kappadata in setdata.iteritems():
                 if CheckDict(kappadata,DictFlag,imom,'Boots'):
                     # print 'plotting ', iset, imom
                     thisset = iset
-                    if len(setdata.keys()) > 1: thisset += '\ '+GetMpi(ikappa,Phys=True)
+                    if MultKappa: thisset += '\ '+GetMpi(ikappa,Phys=True)
                     PlotTopChargeOvert(kappadata,thisset,imom,thisitflow,thiscolcyc.next(),thissymcyc.next(),thisshiftcyc.next(),NNQ=NNQ,Dt=Dt,Wein=Wein)
-        filename = CreateFile('','twopt',imom,thisValue+'OverFlow'+str(thisitflow),subdir=thissubdir)
+        filename = CreateFile('','twopt',imom,thisValue+'OverFlow'+str(thisitflow),subdir=thissubdir,NoMpi= MultKappa)
+    
         SetTopAxies('t',NNQ=NNQ,Dt=Dt,Wein=Wein)
         pl.savefig(filename+'.pdf')
         pl.clf()
