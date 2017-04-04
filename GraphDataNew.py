@@ -2033,7 +2033,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
     chitKappa = []
     thisshiftlist = [0,0.05]
     for iflowlist,iW,ishift,ikappa in zip(flowlist,Wlist,thisshiftlist,thiskappalist):
-        thisncfg = np.array(iW).shape[1]
+        thisncfg = np.array(iW).shape[0]
         W2boot,dump = bt.CreateBoot(np.array(iW)**2,nboot,0)
         chit = coeff*np.array(W2boot)**(0.125)
         chit = GetBootStats(chit)
