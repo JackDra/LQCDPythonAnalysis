@@ -1980,7 +1980,7 @@ def GraphWchitKappas(Wlist,flowlist):
     ## Hard coded here....
     flowlist = np.array(flowlist)
     thislatspace = 0.0907
-    coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
+    coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25))**(0.5))
 
     # Wboot,dump = bt.CreateBoot(Wlist,nboot,0)
     # W2boot = np.array(Wboot)**2
@@ -1993,7 +1993,7 @@ def GraphWchitKappas(Wlist,flowlist):
     MpiList = []
     for icW,iW in enumerate(Wlist):
         W2boot,dump = bt.CreateBoot(np.array(iW)**2,nboot,0)
-        chit = coeff*np.array(W2boot)**(0.25)
+        chit = coeff*np.array(W2boot)**(0.125)
         MpiList.append(GetMpiNoForm(kappalist[icW]))
         chit = GetBootStats(chit)
         chitKappa.append(chit[tflowindex])
@@ -2008,11 +2008,11 @@ def GraphWchitKappas(Wlist,flowlist):
     pl.xlim(0,pl.xlim()[1])
     pl.ylim(0,0.22)
     pl.xlabel(r'$ m_{\pi} GeV $')
-    pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
+    pl.ylabel(r'$\chi_{t}^{1/8} GeV$')
     # pl.ylim(0,0.4)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Wdata/'
-    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle W^2 \rangle^{1/4} $',y=TitleShift)
+    pl.title(r'$ \chi_{t}^{1/8} = \frac{1}{V^{1/8}} \langle W^2 \rangle^{1/8} $',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chitKappa.pdf')
     pl.clf()
@@ -2022,7 +2022,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
     ## Hard coded here....
     flowlist = np.array(flowlist)
     thislatspace = 0.0907
-    coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25)))
+    coeff = (hbarc/(thislatspace*nx**(0.75)*nt**(0.25))**(0.5))
     
     # Qboot,dump = bt.CreateBoot(Wlist,nboot,0)
     # Q2boot = np.array(Qboot)**2
@@ -2033,7 +2033,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
     thisshiftlist = [0,0.05]
     for iflowlist,iW,ishift,ikappa in zip(flowlist,Wlist,thisshiftlist,thiskappalist):
         W2boot,dump = bt.CreateBoot(np.array(iW)**2,nboot,0)
-        chit = coeff*np.array(W2boot)**(0.25)
+        chit = coeff*np.array(W2boot)**(0.125)
         chit = GetBootStats(chit)
         pl.errorbar(TflowToPhys(iflowlist+ishift),Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$'+GetMpi(ikappa)+'$')
 
@@ -2044,11 +2044,11 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
     # pl.errorbar(flowlist+0.1,chitAvg,chitStd,fmt='o',label=r'$No Boot$')
     pl.xlim(0,pl.xlim()[1])
     pl.xlabel(r'$ \sqrt{8t_{f}} fm$')
-    pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
+    pl.ylabel(r'$\chi_{t}^{1/8} GeV$')
     # pl.ylim(0,0.4)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Qdata/'
-    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle W^2 \rangle^{1/4} $',y=TitleShift)
+    pl.title(r'$ \chi_{t}^{1/8} = \frac{1}{V^{1/8}} \langle W^2 \rangle^{1/8} $',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chitKappaOverFlow.pdf')
     pl.clf()
