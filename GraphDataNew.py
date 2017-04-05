@@ -102,7 +102,7 @@ leglocDict = {'ProtonP4g4':'upper left'}
 # ylimFFDict = {'ProtonVectorTopFF3':[-0.05,0.35],'NeutronVectorTopFF3':[-0.25,0],'PandNVectorTopFF3':[-.2,.3],
 #               'ProtonVectorWeinFF3':[-20,15]}
 ylimFFDict = {'ProtonGeGmFF1':[0.4,1.1],
-              'ProtonGeGmFF2':[1.0,2.8],
+              'ProtonGeGmFF2':[1.0,2.9],
               'NeutronGeGmFF1':[-0.002,0.018],
               'NeutronGeGmFF2':[-2.0,-0.7]}
 
@@ -180,9 +180,9 @@ def PlotExp(flag,thiscolcyc):
         pl.plot(xvals,yvals,color=thiscol,label=r'MOHR 12, 2010 CODATA $e p$ data $\langle r^2 \rangle='+MakeValAndErr(*ExpValues['CRad_electron'])+'\ fm^{2}$')
         pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
     if 'NeutronMagMom' in flag:
-        pl.errorbar([0.0],[ExpValues['MagMomNeutron'][0]],[ExpValues['MagMomNeutron'][1]],color=thiscolcyc.next(),label='2010 CODATA, $\mu_{n}='+MakeValAndErr(*ExpValues['MagMomNeutron'])+'$')
+        pl.errorbar([0.0],[ExpValues['MagMomNeutron'][0]],[ExpValues['MagMomNeutron'][1]],fmt='x',color=thiscolcyc.next(),label='2010 CODATA, $\mu_{n}='+MakeValAndErr(*ExpValues['MagMomNeutron'])+'$')
     if 'ProtonMagMom' in flag:
-        pl.errorbar([0.0],[ExpValues['MagMomProton'][0]],[ExpValues['MagMomProton'][1]],color=thiscolcyc.next(),label='2010 CODATA, $\mu_{p}='+MakeValAndErr(*ExpValues['MagMomProton'])+'$')
+        pl.errorbar([0.0],[ExpValues['MagMomProton'][0]],[ExpValues['MagMomProton'][1]],fmt='x',color=thiscolcyc.next(),label='2010 CODATA, $\mu_{p}='+MakeValAndErr(*ExpValues['MagMomProton'])+'$')
         
 def TflowToPhys(tflowlist):
     if isinstance(tflowlist, list):
