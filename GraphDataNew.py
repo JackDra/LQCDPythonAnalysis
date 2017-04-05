@@ -1010,10 +1010,6 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams,PandNsh
         #     if keyset in dataset.keys(): dataset[keyset],thisFF
         #     print
 
-        if Debug:
-            print 
-            print keyset
-            print 
         if ('Proton' in keyset or 'Neutron' in keyset):
             if FlowPlot[0] not in keyset and 'Top' in thisDSCurr: continue
             if WeinFlowPlot[0] not in keyset and 'Wein' in thisDSCurr: continue
@@ -1022,10 +1018,6 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams,PandNsh
         if 'Neutron' in keyset: PorN = 'Neutron'
         keyset = keyset.replace('Proton','')
         keyset = keyset.replace('Neutron','')
-        if Debug:
-            print 
-            print keyset
-            print 
         if not CheckDict(dataset,keyset,thisFF): continue
         if dataset[keyset][thisFF] == False: continue        
         thiscol = thiscolcyc.next()
@@ -1046,19 +1038,19 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams,PandNsh
             # if 'sm32' in thisset or 'CM' in thisset or 'TSF' in thisset or '12104' in str(thiskappa):
             PlotDPFit(keyset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign,datf,thiskappa,thisPN=PorN)
     if 'FF1' in thisFF :
-        if 'ProtonGeGm' in thisCurr:
+        if 'ProtonGeGm' in thisDSCurr:
             PlotExp('ChargeRadius',thiscolcyc)
-        elif 'ProtonIsoVector' in thisCurr:
+        elif 'ProtonIsoVector' in thisDSCurr:
             PlotExp('AxialChargeRadius',thiscolcyc)
-    elif 'FF2' in thisFF and 'GeGm' in thisCurr:
-        if 'Neutron' in thisCurr:
+    elif 'FF2' in thisFF and 'GeGm' in thisDSCurr:
+        if 'Neutron' in thisDSCurr:
             PlotExp('NeutronMagMom',thiscolcyc)
-        elif 'Proton' in thisCurr:
+        elif 'Proton' in thisDSCurr:
             PlotExp('ProtonMagMom',thiscolcyc)
-    if 'FF3' in thisFF and 'Top' in thisCurr:
-        if 'Neutron' in thisCurr:
+    if 'FF3' in thisFF and 'Top' in thisDSCurr:
+        if 'Neutron' in thisDSCurr:
             PlotExp('ProtonEDM',thiscolcyc)
-        elif 'Proton' in thisCurr:
+        elif 'Proton' in thisDSCurr:
             PlotExp('NeutronEDM',thiscolcyc)
     datf.close()
     return collist
