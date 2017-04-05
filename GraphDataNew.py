@@ -2059,6 +2059,8 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         GetBootStats(ydataboot)
         Nearmin,Nearmax = xdata[find_nearest(xdata,FitWchiMinMax[0])],xdata[find_nearest(xdata,FitWchiMinMax[1])]
         fitxdata,fitydata = xdata[Nearmin:Nearmax],ydataboot[Nearmin:Nearmax]
+        print 'fitydata.shape' , fitydata.shape
+        print 'fitxdata.shape' ,  fitxdata.shape
         [fitBoot,fitAvg,fitChi] = FitBoots(fitydata,np.array([fitxdata]),ParmDivX)
 
         ydataAvg,ydataErr = Pullflag(chit,'Avg'),Pullflag(chit,'Std')        
