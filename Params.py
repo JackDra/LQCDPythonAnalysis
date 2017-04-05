@@ -110,7 +110,7 @@ ExpValues['MagMomNeutron'] = [-1.91304272,0.00000045] ## taken from pdg http://p
 
 ExpValues['CRad_muon'] = np.array([0.84087**2,0.00055]) ## fm ^2
 ExpValues['CRad_electron'] = np.array([0.8775**2,0.0051 ])## fm ^2
-ExpValues['NeutronCRad'] = np.array([-(0.1161**2),0.0022]) ## fm ^2
+ExpValues['NeutronCRad'] = np.array([0.1161**2,0.0022]) ## fm ^2
 
 
 
