@@ -2057,7 +2057,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         xdata = TflowToPhys(iflowlist)
         ydataboot = chit*SF
         GetBootStats(ydataboot)
-        Nearmin,Nearmax = xdata[find_nearest(xdata,FitWchiMinMax[0])],xdata[find_nearest(xdata,FitWchiMinMax[1])]
+        Nearmin,Nearmax = find_nearest(xdata,FitWchiMinMax[0]),find_nearest(xdata,FitWchiMinMax[1])
         print 'Nmm',Nearmin,Nearmax
         fitxdata,fitydata = xdata[Nearmin:Nearmax],ydataboot[Nearmin:Nearmax]
         print 'fitydata.shape' , fitydata.shape
