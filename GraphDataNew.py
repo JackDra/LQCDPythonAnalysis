@@ -2068,7 +2068,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         fityAvg,fityStd = Pullflag(fityplot,'Avg'),Pullflag(fityplot,'Std')
         fityup,fitydown = fityAvg+fityStd,fityAvg-fityStd
         pl.plot(fitxdata+ishift,Pullflag(fityplot,'Avg'),color=thiscol)
-        pl.fill_between(fitxdata+ishift,fityup,fitydown,color=thiscol,alpha=thisalpha,edgecolor='none')
+        pl.fill_between(fitxdata+ishift,fityup,fitydown,color=thiscol,alpha=thisalpha,edgecolor='none',label=r'$A/\sqrt{8t_{f}} \ , \ A = ' + MakeValAndErr(fitBoot[0].Avg,fitBoot[0].Std))
 
         
         # chitdivlog = Pullflag(chit,'Avg')/np.log(np.array(iflowlist))
