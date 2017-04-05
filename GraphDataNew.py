@@ -2060,15 +2060,12 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         Nearmin,Nearmax = find_nearest(xdata,FitWchiMinMax[0]),find_nearest(xdata,FitWchiMinMax[1])
         fitxdata,fitydata = xdata[Nearmin:Nearmax],ydataboot[Nearmin:Nearmax]
 
-        print 'pie'
-        for ix, iy in zip(fitxdata, fitydata):
-            print ix, iy.Avg , ParmDivX([1.0],[iy]).Avg
         [fitBoot,fitAvg,fitChi] = FitBoots(np.array(fitydata),np.array([fitxdata]),ParmDivX)
 
         ydataAvg,ydataErr = Pullflag(chit,'Avg'),Pullflag(chit,'Std')        
         pl.errorbar(xdata+ishift,ydataAvg,ydataErr,fmt='o',color=thiscol,label=r'$'+GetMpi(ikappa)+r'\quad ncfg='+str(thisncfg)+'$')
 
-        fityplot = ParmDivX(fitBoot,np.array([fitxdata]))
+        fityplot = ParmDivX(np.array(fitBoot),np.array([fitxdata]))
         fityAvg,fityStd = Pullflag(fityplot,'Avg'),Pullflag(fityplot,'Std')
         fityup,fitydown = fityAvg+fityStd,fityAvg-fityStd
         pl.plot(fitxdata+ishift,Pullflag(fityplot,'Avg'),color=thiscol)
