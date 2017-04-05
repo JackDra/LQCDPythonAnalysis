@@ -201,9 +201,9 @@ def PlotExp(flag,thiscolcyc):
         pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
     if 'MRadNeutron' in flag:
         xvals = np.array([0,0.1])
-        yvals = ExpValues['MagMomNeutron'][0]-CRadConv*ExpValues['MRadNeutron'][0]*xvals*ExpValues['MagMomNeutron'][0]
-        yup,ydown = (ExpValues['MagMomNeutron'][0]-CRadConv*np.sum(ExpValues['MRadNeutron'])*xvals*ExpValues['MagMomNeutron'][0],
-                     ExpValues['MagMomNeutron'][0]-CRadConv*(ExpValues['MRadNeutron'][0]-ExpValues['MRadNeutron'][1])*xvals*ExpValues['MagMomNeutron'][0])
+        yvals = ExpValues['MagMomNeutron'][0]-CRadConv*ExpValues['MRadNeutron'][0]*xvals*np.abs(ExpValues['MagMomNeutron'][0])
+        yup,ydown = (ExpValues['MagMomNeutron'][0]-CRadConv*np.sum(ExpValues['MRadNeutron'])*xvals*np.abs(ExpValues['MagMomNeutron'][0]),
+                     ExpValues['MagMomNeutron'][0]-CRadConv*(ExpValues['MRadNeutron'][0]-ExpValues['MRadNeutron'][1])*xvals*np.abs(ExpValues['MagMomNeutron'][0]))
         thiscol = thiscolcyc.next()
         thisleg = r'BELUSHKIN 07 Dispersion Analysis $\langle r_{\mu}^2 \rangle='+MakeValAndErr(*np.abs(ExpValues['MRadNeutron']))+'\ fm^{2}$'
         pl.plot(xvals,yvals,color=thiscol,label=thisleg)
