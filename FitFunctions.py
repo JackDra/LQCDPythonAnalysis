@@ -86,7 +86,7 @@ def ChitFitFun(x,p):
 
 def ChitFitFunDer(x,p):
     InvLog = np.log(x[0])**(-1)
-    return [InvLog,InvLog*(x[0]**-1),makeunit(x[0])]
+    return [InvLog,InvLog*(x[0]**-1),makexunit(x[0])]
 
 
 def ParmDivXP(x,p):

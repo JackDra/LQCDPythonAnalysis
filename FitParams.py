@@ -18,7 +18,7 @@ def GetCut(thisset,thisdict):
     return False
 
 
-FitWchiMinMax = [0.1,0.4]
+FitWchiMinMax = [0.1,0.7]
 
 MassDtList = range(1,5)
 DoFList = range(3,17)
