@@ -293,7 +293,7 @@ def SetFFAxies(thisCurr):
     if thisCurr in ylimFFDict.keys():
         pl.ylim(ylimFFDict[thisCurr])
     else:
-        pl.ylim(pl.ylim()[0],pl.ylim()[1]*1.1)
+        pl.ylim(pl.ylim()[0],pl.ylim()[1]*1.2)
     pl.xlim(*Qsqrdxlim)
     nlegline = 1
     if thisCurr in leglengthFFDict.keys(): nlegline = leglengthFFDict[thisCurr]
