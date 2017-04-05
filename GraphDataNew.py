@@ -4,9 +4,8 @@ import matplotlib
 matplotlib.use('PDF') # Must be before importing matplotlib.pyplot or pylab!
 import matplotlib.pyplot as pl
 from Params import *
-from FitFunctions import DPfitfun,DPfitfun2,AlphaVsChiDOF
-from FitFunctions import LinearFitFun
-from FitFunctions import DPfitfunOnePar,ChiDistribution
+from FitFunctions import *
+from LLSBoot import FitBoots
 import numpy as np
 from BootTest import BootStrap1
 # import pylab as pl
@@ -24,6 +23,7 @@ from CombParams import *
 from FFParams import Qtcut,GetCharRad
 import BootTest as bt
 from AutoCorr import uWerrMine
+
 
 ##FORCE TITLE PARAMETER, SET TO FALSE TO USE NORMAL TITLES#
 
