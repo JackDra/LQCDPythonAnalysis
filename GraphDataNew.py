@@ -185,14 +185,14 @@ def PlotExp(flag,thiscolcyc):
         pl.errorbar([0.0],[ExpValues['MagMomProton'][0]],[ExpValues['MagMomProton'][1]],fmt='x',color=thiscolcyc.next(),label='2010 CODATA, $\mu_{p}='+MakeValAndErr(*ExpValues['MagMomProton'])+'$')
     if 'MRadProton' in flag:
         xvals = np.array([0,0.2])
-        yvals = 1-ExpValues['MRadProton'][0]*xvals
+        yvals = ExpValues['MagMomProton'][0]-ExpValues['MRadProton'][0]*xvals
         yup,ydown = 1-np.sum(ExpValues['MRadProton'])*xvals,1-(ExpValues['MRadProton'][0]-ExpValues['MRadProton'][1])*xvals
         thiscol = thiscolcyc.next()
         pl.plot(xvals,yvals,color=thiscol,label=r'BELUSHKIN 07 Dispersion Analysis $\langle r_{\mu}^2 \rangle='+MakeValAndErr(*ExpValues['MRadProton'])+'\ fm^{2}$')
         pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
     if 'MRadNeutron' in flag:
         xvals = np.array([0,0.2])
-        yvals = 1-ExpValues['MRadNeutron'][0]*xvals
+        yvals = ExpValues['MagMomProton'][0]-ExpValues['MRadNeutron'][0]*xvals
         yup,ydown = 1-np.sum(ExpValues['MRadNeutron'])*xvals,1-(ExpValues['MRadNeutron'][0]-ExpValues['MRadNeutron'][1])*xvals
         thiscol = thiscolcyc.next()
         pl.plot(xvals,yvals,color=thiscol,label=r'BELUSHKIN 07 Dispersion Analysis $\langle r_{\mu}^2 \rangle='+MakeValAndErr(*ExpValues['MRadNeutron'])+'\ fm^{2}$')
