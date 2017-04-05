@@ -192,7 +192,7 @@ def PlotExp(flag,thiscolcyc):
         pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
     if 'MRadNeutron' in flag:
         xvals = np.array([0,0.2])
-        yvals = ExpValues['MagMomProton'][0]-ExpValues['MRadNeutron'][0]*xvals
+        yvals = ExpValues['MagMomNeutron'][0]-ExpValues['MRadNeutron'][0]*xvals
         yup,ydown = 1-np.sum(ExpValues['MRadNeutron'])*xvals,1-(ExpValues['MRadNeutron'][0]-ExpValues['MRadNeutron'][1])*xvals
         thiscol = thiscolcyc.next()
         pl.plot(xvals,yvals,color=thiscol,label=r'BELUSHKIN 07 Dispersion Analysis $\langle r_{\mu}^2 \rangle='+MakeValAndErr(*ExpValues['MRadNeutron'])+'\ fm^{2}$')
