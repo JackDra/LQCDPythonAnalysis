@@ -108,24 +108,24 @@ ExpValues['MagMomNeutron'] = [-1.91304272,0.00000045] ## taken from pdg http://p
 
 
 
-# ExpValues['CRad_muon'] = np.array([0.84087**2,0.00055]) ## fm ^2
-# ExpValues['CRad_electron'] = np.array([0.8775**2,0.0051 ])## fm ^2
-# ExpValues['NeutronCRad'] = np.array([0.1161**2,0.0022]) ## fm ^2
-# ExpValues['MRadProton'] = np.array([0.777**2,0.023]) ## fm^2 ep -> ep form factor
-# ExpValues['MRadNeutron'] = np.array([-(0.862**2),0.009]) ## fm^2 Dispersion analysis
+ExpValues['CRad_muon'] = np.array([0.84087**2,0.00055]) ## fm ^2
+ExpValues['CRad_electron'] = np.array([0.8775**2,0.0051 ])## fm ^2
+ExpValues['NeutronCRad'] = np.array([0.1161**2,0.0022]) ## fm ^2
+ExpValues['MRadProton'] = np.array([0.777**2,0.023]) ## fm^2 ep -> ep form factor
+ExpValues['MRadNeutron'] = np.array([-(0.862**2),0.009]) ## fm^2 Dispersion analysis
 
-# ExpValues['CRad_muon'][1] = np.abs(2*ExpValues['CRad_muon'][0]*ExpValues['CRad_muon'][1])
-# ExpValues['NeutronCRad'][1] = np.abs(2*ExpValues['NeutronCRad'][0]*ExpValues['NeutronCRad'][1])
-# ExpValues['CRad_electron'][1] = np.abs(2*ExpValues['CRad_electron'][0]*ExpValues['CRad_electron'][1])
-# ExpValues['MRadProton'][1] = np.abs(2*ExpValues['MRadProton'][0]*ExpValues['MRadProton'][1])
-# ExpValues['MRadNeutron'][1] = np.abs(2*ExpValues['MRadNeutron'][0]*ExpValues['MRadNeutron'][1])
+ExpValues['CRad_muon'][1] = np.abs(2*ExpValues['CRad_muon'][0]*ExpValues['CRad_muon'][1])
+ExpValues['NeutronCRad'][1] = np.abs(2*ExpValues['NeutronCRad'][0]*ExpValues['NeutronCRad'][1])
+ExpValues['CRad_electron'][1] = np.abs(2*ExpValues['CRad_electron'][0]*ExpValues['CRad_electron'][1])
+ExpValues['MRadProton'][1] = np.abs(2*ExpValues['MRadProton'][0]*ExpValues['MRadProton'][1])
+ExpValues['MRadNeutron'][1] = np.abs(2*ExpValues['MRadNeutron'][0]*ExpValues['MRadNeutron'][1])
 
 
-ExpValues['CRad_muon'] = np.array([0.84087,0.00055]) ## fm 
-ExpValues['CRad_electron'] = np.array([0.8775,0.0051 ])## fm 
-ExpValues['NeutronCRad'] = np.array([0.1161,0.0022]) ## fm 
-ExpValues['MRadProton'] = np.array([0.777,0.023]) ## fm ep -> ep form factor
-ExpValues['MRadNeutron'] = np.array([-(0.862),0.009]) ## fm Dispersion analysis
+# ExpValues['CRad_muon'] = np.array([0.84087,0.00055]) ## fm 
+# ExpValues['CRad_electron'] = np.array([0.8775,0.0051 ])## fm 
+# ExpValues['NeutronCRad'] = np.array([0.1161,0.0022]) ## fm 
+# ExpValues['MRadProton'] = np.array([0.777,0.023]) ## fm ep -> ep form factor
+# ExpValues['MRadNeutron'] = np.array([-(0.862),0.009]) ## fm Dispersion analysis
 
 ExpValues['NeutronEDM'] = 3.6*10**-26 # e cm bound, (95% CL) from  https://arxiv.org/pdf/1509.04411.pdf
 ExpValues['ProtonEDM'] = .54*10**-23# e cm bound, Uses 199Hg atom EDM
