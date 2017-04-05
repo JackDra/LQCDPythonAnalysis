@@ -183,6 +183,32 @@ def PlotExp(flag,thiscolcyc):
         pl.errorbar([0.0],[ExpValues['MagMomNeutron'][0]],[ExpValues['MagMomNeutron'][1]],fmt='x',color=thiscolcyc.next(),label='2010 CODATA, $\mu_{n}='+MakeValAndErr(*ExpValues['MagMomNeutron'])+'$')
     if 'ProtonMagMom' in flag:
         pl.errorbar([0.0],[ExpValues['MagMomProton'][0]],[ExpValues['MagMomProton'][1]],fmt='x',color=thiscolcyc.next(),label='2010 CODATA, $\mu_{p}='+MakeValAndErr(*ExpValues['MagMomProton'])+'$')
+    if 'MRadProton' in flag:
+        xvals = np.array([0,0.2])
+        yvals = 1-ExpValues['MRadProton'][0]*xvals
+        yup,ydown = 1-np.sum(ExpValues['MRadProton'])*xvals,1-(ExpValues['MRadProton'][0]-ExpValues['MRadProton'][1])*xvals
+        thiscol = thiscolcyc.next()
+        pl.plot(xvals,yvals,color=thiscol,label=r'BELUSHKIN 07 Dispersion Analysis $\langle r_{\mu}^2 \rangle='+MakeValAndErr(*ExpValues['MRadProton'])+'\ fm^{2}$')
+        pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
+    if 'MRadNeutron' in flag:
+        xvals = np.array([0,0.2])
+        yvals = 1-ExpValues['MRadNeutron'][0]*xvals
+        yup,ydown = 1-np.sum(ExpValues['MRadNeutron'])*xvals,1-(ExpValues['MRadNeutron'][0]-ExpValues['MRadNeutron'][1])*xvals
+        thiscol = thiscolcyc.next()
+        pl.plot(xvals,yvals,color=thiscol,label=r'BELUSHKIN 07 Dispersion Analysis $\langle r_{\mu}^2 \rangle='+MakeValAndErr(*ExpValues['MRadNeutron'])+'\ fm^{2}$')
+        pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
+    if 'ProtonEDM' in flag or 'PandNEDM' in flag:
+        thiscol = thiscolcyc.next()
+        thislab = r'$ d_{p} \le {:0.2e} \theta fm$'.format(ExpValues['ProtonEDMtfm'])
+        pl.fill_between([-100,100],[ExpValues['ProtonEDMtfm']],[-ExpValues['ProtonEDMtfm']],color=thiscol,alpha=thisalpha,edgecolor='none')
+    if 'NeutronEDM' in flag or 'PandNEDM' in flag:
+        thiscol = thiscolcyc.next()
+        thislab = r'$ d_{n} \le {:0.2e} \theta fm$'.format(ExpValues['NeutronEDMtfm'])
+        pl.fill_between([-1,10],[ExpValues['NeutronEDMtfm']],[-ExpValues['NeutronEDMtfm']],color=thiscol,alpha=thisalpha,edgecolor='none')
+
+
+
+
         
 def TflowToPhys(tflowlist):
     if isinstance(tflowlist, list):
@@ -1066,13 +1092,17 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams,PandNsh
     elif 'FF2' in thisFF and 'GeGm' in thisDSCurr:
         if 'Neutron' in thisDSCurr:
             PlotExp('NeutronMagMom',thiscolcyc)
+            PlotExp('MRadNeutron',thiscolcyc)
         elif 'Proton' in thisDSCurr:
             PlotExp('ProtonMagMom',thiscolcyc)
+            PlotExp('MRadProton',thiscolcyc)
     if 'FF3' in thisFF and 'Top' in thisDSCurr:
         if 'Neutron' in thisDSCurr:
             PlotExp('ProtonEDM',thiscolcyc)
         elif 'Proton' in thisDSCurr:
             PlotExp('NeutronEDM',thiscolcyc)
+        elif 'PandN' in thisDSCurr:
+            PlotExp('PandNEDM',thiscolcyc)
     datf.close()
     return collist
 

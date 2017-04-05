@@ -101,7 +101,7 @@ TensorNorm = 1 # normalisation for Tensor Current
 MomFracNorm = 1 # normalisation for Momentum Fraction
 
 
-## Experemental value dicionary [value,err]
+## Experemental value dicionary [value,err] #############
 ExpValues = {}
 ExpValues['MagMomProton'] = [2.792847356,0.000000023] ## taken from pdg http://pdg.ge.infn.it/2014/listings/rpp2014-list-p.pdf
 ExpValues['MagMomNeutron'] = [-1.91304272,0.00000045] ## taken from pdg http://pdg.ge.infn.it/2014/listings/rpp2014-list-n.pdf
@@ -111,11 +111,23 @@ ExpValues['MagMomNeutron'] = [-1.91304272,0.00000045] ## taken from pdg http://p
 ExpValues['CRad_muon'] = np.array([0.84087**2,0.00055]) ## fm ^2
 ExpValues['CRad_electron'] = np.array([0.8775**2,0.0051 ])## fm ^2
 
-ExpValues['MRad'] = np.array([0.777**2,0.023]) ## fm^2 ep -> ep form factor
+ExpValues['MRadProton'] = np.array([0.777**2,0.023]) ## fm^2 ep -> ep form factor
+ExpValues['MRadNeutron'] = np.array([0.862**2,0.009]) ## fm^2 Dispersion analysis
+
+ExpValues['NeutronEDM'] = 3.6*10**-26 # e cm bound, (95% CL) from  https://arxiv.org/pdf/1509.04411.pdf
+ExpValues['ProtonEDM'] = .54*10**-23# e cm bound, Uses 199Hg atom EDM
+
+ExpValues['Theta'] =  2.5*10**-10 ## from chi PT https://arxiv.org/pdf/0911.3981.pdf  (Might have some stuff for SU(3) 
+
+ExpValues['NeutronEDMtfm'] = ExpValues['NeutronEDM']*cm_to_fm*ExpValues['Theta'] # theta fm  
+ExpValues['ProtonEDMtfm'] =  ExpValues['ProtonEDM']*cm_to_fm*ExpValues['Theta'] # theta fm 
 
 ExpValues['CRad_muon'][1] = 2*ExpValues['CRad_muon'][0]*ExpValues['CRad_muon'][1]
 ExpValues['CRad_electron'][1] = 2*ExpValues['CRad_electron'][0]*ExpValues['CRad_electron'][1]
-ExpValues['MRad'][1] = 2*ExpValues['MRad'][0]*ExpValues['MRad'][1]
+ExpValues['MRadProton'][1] = 2*ExpValues['MRadProton'][0]*ExpValues['MRadProton'][1]
+ExpValues['MRadNeutron'][1] = 2*ExpValues['MRadNeutron'][0]*ExpValues['MRadNeutron'][1]
+
+#############################################################
 
 F3Div2M = True ## Reads in F3 for VectorTop with dividing by the physical mass and multiplying by hbarc in GeV*fm (final result in fm) 
 

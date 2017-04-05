@@ -13,6 +13,7 @@ Maxqsqrd = np.max(np.array(MomSqrdSet).astype(int))
 nxyz = 32
 qunit = (2.0*np.pi)/float(nxyz)
 hbarc = 0.1973269718 ## In GeV * fermi
+cm_to_fm = 10**14
 # latspace = 0.074 ## In fermi
 latspace = 0.0907 ## In fermi
 
