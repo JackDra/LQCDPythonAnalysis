@@ -2058,10 +2058,11 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         ydataboot = chit*SF
         GetBootStats(ydataboot)
         Nearmin,Nearmax = find_nearest(xdata,FitWchiMinMax[0]),find_nearest(xdata,FitWchiMinMax[1])
-        print 'Nmm',Nearmin,Nearmax
         fitxdata,fitydata = xdata[Nearmin:Nearmax],ydataboot[Nearmin:Nearmax]
-        print 'fitydata.shape' , fitydata.shape
-        print 'fitxdata.shape' ,  fitxdata.shape
+
+        print 'pie'
+        for ix, iy in zip(fitydata, fitxdata):
+            print ix, iy , ParmDivX(1.0,iy)
         [fitBoot,fitAvg,fitChi] = FitBoots(np.array(fitydata),np.array([fitxdata]),ParmDivX)
 
         ydataAvg,ydataErr = Pullflag(chit,'Avg'),Pullflag(chit,'Std')        
