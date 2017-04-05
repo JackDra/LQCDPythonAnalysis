@@ -2047,6 +2047,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
     chitKappa = []
     thisshiftlist = [0,0.05]
     for iflowlist,iW,ishift,ikappa in zip(flowlist,Wlist,thisshiftlist,thiskappalist):
+        thisshift = ishift*0.1
         thiscol = thiscolcyc.next()
         thisncfg = np.array(iW).shape[0]
         W2boot,dump = bt.CreateBoot(np.array(iW)**2,nboot,0)
@@ -2063,14 +2064,14 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         [fitBoot,fitAvg,fitChi] = FitBoots(np.array(fitydata),np.array([fitxdata]),ParmDivX)
 
         ydataAvg,ydataErr = Pullflag(ydataboot,'Avg'),Pullflag(ydataboot,'Std')        
-        pl.errorbar(xdata+ishift,ydataAvg,ydataErr,fmt='o',color=thiscol,label=r'$'+GetMpi(ikappa)+r'\quad ncfg='+str(thisncfg)+'$')
+        pl.errorbar(xdata+thisshift,ydataAvg,ydataErr,fmt='o',color=thiscol,label=r'$'+GetMpi(ikappa)+r'\quad ncfg='+str(thisncfg)+'$')
 
         fityplot = ParmDivX(np.array(fitBoot),np.array([fitxdata]))
         fityplot = GetBootStats(fityplot)
         fityAvg,fityStd = np.array(Pullflag(fityplot,'Avg')),np.array(Pullflag(fityplot,'Std'))
         fityup,fitydown = fityAvg+fityStd,fityAvg-fityStd
-        pl.plot(fitxdata+ishift,fityAvg,color=thiscol)
-        pl.fill_between(fitxdata+ishift,fityup,fitydown,color=thiscol,alpha=thisalpha,edgecolor='none',label=r'$A/\sqrt{8t_{f}} \ , \ A = ' + MakeValAndErr(fitBoot[0].Avg,fitBoot[0].Std))
+        pl.plot(fitxdata+thisshift,fityAvg,color=thiscol,label=r'$A/\sqrt{8t_{f}} \ , \ A = ' + MakeValAndErr(fitBoot[0].Avg,fitBoot[0].Std))
+        pl.fill_between(fitxdata+thisshift,fityup,fitydown,color=thiscol,alpha=thisalpha,edgecolor='none')
 
         
         # chitdivlog = Pullflag(chit,'Avg')/np.log(np.array(iflowlist))
