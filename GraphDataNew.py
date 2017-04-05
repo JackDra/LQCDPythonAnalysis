@@ -2051,26 +2051,29 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         thiscol = thiscolcyc.next()
         thisncfg = np.array(iW).shape[0]
         W2boot,dump = bt.CreateBoot(np.array(iW)**2,nboot,0)
-        SF = np.log(np.array(TflowToPhys(iflowlist)))
+        # SF = np.log(np.array(TflowToPhys(iflowlist)))
         # SF = np.log(np.array(TflowToPhys(iflowlist))+2)
         chit = coeff*np.array(W2boot)**(0.125)
         xdata = TflowToPhys(iflowlist)
-        ydataboot = chit*SF
+        # ydataboot = chit*SF
+        ydataboot = chit
         ydataboot = GetBootStats(ydataboot)
         Nearmin,Nearmax = find_nearest(xdata,FitWchiMinMax[0]),find_nearest(xdata,FitWchiMinMax[1])
         fitxdata,fitydata = np.array(xdata[Nearmin:Nearmax]),ydataboot[Nearmin:Nearmax]
-
-        [fitBoot,fitAvg,fitChi] = FitBoots(np.array(fitydata),np.array([fitxdata]),ParmDivXP)
+        thisfitfun = ChitFitFun
+        
+        [fitBoot,fitAvg,fitChi] = FitBoots(np.array(fitydata),np.array([fitxdata]),thisfitfun)
 
         ydataAvg,ydataErr = Pullflag(ydataboot,'Avg'),Pullflag(ydataboot,'Std')        
         pl.errorbar(xdata+thisshift,ydataAvg,ydataErr,fmt='o',color=thiscol,label=r'$'+GetMpi(ikappa)+r'\quad ncfg='+str(thisncfg)+'$')
 
         fityplot = []
-        for iboot1,iboot2 in zip(fitBoot[0].values,fitBoot[1].values):
-            fityplot.append(ParmDivXP(np.array([fitxdata]),[iboot1,iboot2]))
+        for ibootlist in np.swapaxes(Pullflag(fitBoot,'values'),0,1):
+            fityplot.append(thisfitfun(np.array([fitxdata]),ibootlist))
         fityAvg,fityStd = np.mean(fityplot,axis=0),np.std(fityplot,axis=0)
         fityup,fitydown = fityAvg+fityStd,fityAvg-fityStd
-        thislab = r'$'+MakeValAndErr(fitBoot[1].Avg,fitBoot[1].Std)+r' + \frac{'+MakeValAndErr(fitBoot[0].Avg,fitBoot[0].Std)+r'}{\sqrt{8t_{f}}}$'
+        # thislab = r'$'+MakeValAndErr(fitBoot[1].Avg,fitBoot[1].Std)+r' + \frac{'+MakeValAndErr(fitBoot[0].Avg,fitBoot[0].Std)+r'}{\sqrt{8t_{f}}}$'
+        thislab = r'$'+' '.join(['A_{'+str(icp)+'} = '+MakeValAndErr(iboot.Avg,iboot.Std) for icb,iboot in enumerate(fitBoot)])+r' + $'
         pl.plot(fitxdata+thisshift,fityAvg,color=thiscol,label=thislab)
         pl.fill_between(fitxdata+thisshift,fityup,fitydown,color=thiscol,alpha=thisalpha,edgecolor='none')
 

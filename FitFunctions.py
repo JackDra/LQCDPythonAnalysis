@@ -80,6 +80,15 @@ def ParmDivXDer(x,p):
     return [x[0]**(-1)]
 
 
+def ChiFitFun(x,p):
+    InvLog = np.log(x[0])**(-1)
+    return p[0] * InvLog + p[1]*InvLog*(x[0]**-1) + p[2]
+
+def ChiFitFunDer(x,p):
+    InvLog = np.log(x[0])**(-1)
+    return [InvLog,InvLog*(x[0]**-1),makeunit(x[0])]
+
+
 def ParmDivXP(x,p):
     return p[0] * (x[0]**(-1)) + p[1]
 
