@@ -2062,7 +2062,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         fitxdata,fitydata = xdata[Nearmin:Nearmax],ydataboot[Nearmin:Nearmax]
         print 'fitydata.shape' , fitydata.shape
         print 'fitxdata.shape' ,  fitxdata.shape
-        [fitBoot,fitAvg,fitChi] = FitBoots(fitydata,np.array([fitxdata]),ParmDivX)
+        [fitBoot,fitAvg,fitChi] = FitBoots(np.array(fitydata),np.array([fitxdata]),ParmDivX)
 
         ydataAvg,ydataErr = Pullflag(chit,'Avg'),Pullflag(chit,'Std')        
         pl.errorbar(xdata+ishift,ydataAvg,ydataErr,fmt='o',color=thiscol,label=r'$'+GetMpi(ikappa)+r'\quad ncfg='+str(thisncfg)+'$')
