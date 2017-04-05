@@ -108,11 +108,14 @@ ExpValues['MagMomNeutron'] = [-1.91304272,0.00000045] ## taken from pdg http://p
 
 
 
-ExpValues['CRad_muon'] = np.array([0.84087,0.00055])**2 ## fm ^2
-ExpValues['CRad_electron'] = np.array([0.8775,0.0051 ])**2## fm ^2
+ExpValues['CRad_muon'] = np.array([0.84087**2,0.00055]) ## fm ^2
+ExpValues['CRad_electron'] = np.array([0.8775**2,0.0051 ])## fm ^2
 
-ExpValues['MRad'] = np.array([0.777,0.023])**2 ## fm^2 ep -> ep form factor
+ExpValues['MRad'] = np.array([0.777**2,0.023]) ## fm^2 ep -> ep form factor
 
+ExpValues['CRad_muon'][1] = 2*ExpValues['CRad_muon'][0]*ExpValues['CRad_muon'][1]
+ExpValues['CRad_electron'][1] = 2*ExpValues['CRad_electron'][0]*ExpValues['CRad_electron'][1]
+ExpValues['MRad'][1] = 2*ExpValues['MRad'][0]*ExpValues['MRad'][1]
 
 F3Div2M = True ## Reads in F3 for VectorTop with dividing by the physical mass and multiplying by hbarc in GeV*fm (final result in fm) 
 
