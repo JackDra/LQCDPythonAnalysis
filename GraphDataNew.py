@@ -204,9 +204,6 @@ def PlotExp(flag,thiscolcyc):
         yup,ydown = (ExpValues['MagMomNeutron'][0]-np.sum(ExpValues['MRadNeutron'])*xvals,
                      ExpValues['MagMomNeutron'][0]-(ExpValues['MRadNeutron'][0]-ExpValues['MRadNeutron'][1])*xvals)
         thiscol = thiscolcyc.next()
-        print 
-        print ExpValues['MRadNeutron']
-        print 
         thisleg = r'BELUSHKIN 07 Dispersion Analysis $\langle r_{\mu}^2 \rangle='+MakeValAndErr(*np.abs(ExpValues['MRadNeutron']))+'\ fm^{2}$'
         pl.plot(xvals,yvals,color=thiscol,label=thisleg)
         pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
@@ -1106,6 +1103,8 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams,PandNsh
             PlotExp('ChargeRadius',thiscolcyc)
         elif 'ProtonIsoVector' in thisDSCurr:
             PlotExp('AxialChargeRadius',thiscolcyc)
+        elif 'NeutronGeGm' in thisDSCurr:
+            PlotExp('NeutronCRad',thiscolcyc)            
     elif 'FF2' in thisFF and 'GeGm' in thisDSCurr:
         if 'Neutron' in thisDSCurr:
             PlotExp('NeutronMagMom',thiscolcyc)
