@@ -2056,7 +2056,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         SF = np.log(100*np.array(TflowToPhys(iflowlist)))
         xdata = TflowToPhys(iflowlist)
         ydataboot = chit*SF
-        GetBootStats(ydataboot)
+        ydataboot = GetBootStats(ydataboot)
         Nearmin,Nearmax = find_nearest(xdata,FitWchiMinMax[0]),find_nearest(xdata,FitWchiMinMax[1])
         fitxdata,fitydata = xdata[Nearmin:Nearmax],ydataboot[Nearmin:Nearmax]
 
@@ -2066,7 +2066,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         pl.errorbar(xdata+ishift,ydataAvg,ydataErr,fmt='o',color=thiscol,label=r'$'+GetMpi(ikappa)+r'\quad ncfg='+str(thisncfg)+'$')
 
         fityplot = ParmDivX(np.array(fitBoot),np.array([fitxdata]))
-        GetBootStats(fityplot)
+        fityplot = GetBootStats(fityplot)
         fityAvg,fityStd = np.array(Pullflag(fityplot,'Avg')),np.array(Pullflag(fityplot,'Std'))
         fityup,fitydown = fityAvg+fityStd,fityAvg-fityStd
         pl.plot(fitxdata+ishift,fityAvg,color=thiscol)
