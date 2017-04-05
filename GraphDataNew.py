@@ -2051,8 +2051,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         W2boot,dump = bt.CreateBoot(np.array(iW)**2,nboot,0)
         chit = coeff*np.array(W2boot)**(0.125)
         chit = GetBootStats(chit)
-        # SF = np.log(np.array(TflowToPhys(iflowlist))+2)
-        SF = np.log(np.array(TflowToPhys(iflowlist))*100)
+        SF = np.log(np.array(TflowToPhys(iflowlist)**4))
         pl.errorbar(TflowToPhys(iflowlist+ishift),Pullflag(chit,'Avg')*SF,Pullflag(chit,'Std')*SF,fmt='o',color=thiscol,label=r'$'+GetMpi(ikappa)+r'\quad ncfg='+str(thisncfg)+'$')
         
         # chitdivlog = Pullflag(chit,'Avg')/np.log(np.array(iflowlist))
