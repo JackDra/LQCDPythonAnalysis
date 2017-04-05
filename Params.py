@@ -125,11 +125,11 @@ ExpValues['Theta'] =  2.5*10**-10 ## from chi PT https://arxiv.org/pdf/0911.3981
 ExpValues['NeutronEDMtfm'] = ExpValues['NeutronEDM']*cm_to_fm/ExpValues['Theta'] # theta fm  
 ExpValues['ProtonEDMtfm'] =  ExpValues['ProtonEDM']*cm_to_fm/ExpValues['Theta'] # theta fm 
 
-ExpValues['CRad_muon'][1] = 2*ExpValues['CRad_muon'][0]*ExpValues['CRad_muon'][1]
-ExpValues['NeutronCRad'][1] = 2*ExpValues['NeutronCRad'][0]*ExpValues['NeutronCRad'][1]
-ExpValues['CRad_electron'][1] = 2*ExpValues['CRad_electron'][0]*ExpValues['CRad_electron'][1]
-ExpValues['MRadProton'][1] = 2*ExpValues['MRadProton'][0]*ExpValues['MRadProton'][1]
-ExpValues['MRadNeutron'][1] = 2*ExpValues['MRadNeutron'][0]*ExpValues['MRadNeutron'][1]
+ExpValues['CRad_muon'][1] = np.abs(2*ExpValues['CRad_muon'][0]*ExpValues['CRad_muon'][1])
+ExpValues['NeutronCRad'][1] = np.abs(2*ExpValues['NeutronCRad'][0]*ExpValues['NeutronCRad'][1])
+ExpValues['CRad_electron'][1] = np.abs(2*ExpValues['CRad_electron'][0]*ExpValues['CRad_electron'][1])
+ExpValues['MRadProton'][1] = np.abs(2*ExpValues['MRadProton'][0]*ExpValues['MRadProton'][1])
+ExpValues['MRadNeutron'][1] = np.abs(2*ExpValues['MRadNeutron'][0]*ExpValues['MRadNeutron'][1])
 
 #############################################################
 
