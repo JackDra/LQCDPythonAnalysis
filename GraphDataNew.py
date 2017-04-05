@@ -1105,7 +1105,7 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams,PandNsh
             PlotExp('ProtonEDM',thiscolcyc)
         elif 'Proton' in thisDSCurr:
             PlotExp('NeutronEDM',thiscolcyc)
-        elif 'PandN' in thisDSCurr:
+        elif 'PandN' in thisDSCurr and PandNshift == 0.0:
             PlotExp('PandNEDM',thiscolcyc)
     datf.close()
     return collist
