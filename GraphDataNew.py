@@ -2051,7 +2051,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         thiscol = thiscolcyc.next()
         thisncfg = np.array(iW).shape[0]
         W2boot,dump = bt.CreateBoot(np.array(iW)**2,nboot,0)
-        SF = np.log(np.array(TflowToPhys(iflowlist)))
+        SF = np.log(np.array(TflowToPhys(iflowlist)))**(-1)
         # SF = np.log(np.array(TflowToPhys(iflowlist))+2)
         chit = coeff*np.array(W2boot)**(0.125)
         xdata = TflowToPhys(iflowlist)
