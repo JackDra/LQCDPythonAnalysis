@@ -2058,7 +2058,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         ydataboot = chit*SF
         ydataboot = GetBootStats(ydataboot)
         Nearmin,Nearmax = find_nearest(xdata,FitWchiMinMax[0]),find_nearest(xdata,FitWchiMinMax[1])
-        fitxdata,fitydata = xdata[Nearmin:Nearmax],ydataboot[Nearmin:Nearmax]
+        fitxdata,fitydata = 100*np.array(xdata[Nearmin:Nearmax]),ydataboot[Nearmin:Nearmax]
 
         [fitBoot,fitAvg,fitChi] = FitBoots(np.array(fitydata),np.array([fitxdata]),ParmDivX)
 
@@ -2068,10 +2068,9 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         fityplot = ParmDivX(np.array(fitBoot),np.array([fitxdata]))
         fityplot = GetBootStats(fityplot)
         fityAvg,fityStd = np.array(Pullflag(fityplot,'Avg')),np.array(Pullflag(fityplot,'Std'))
-        print fityAvg,fityStd,fitChi
         fityup,fitydown = fityAvg+fityStd,fityAvg-fityStd
-        pl.plot(fitxdata+thisshift,fityAvg,color=thiscol,label=r'$A/\sqrt{8t_{f}} \ , \ A = ' + MakeValAndErr(fitBoot[0].Avg,fitBoot[0].Std)+'$')
-        pl.fill_between(fitxdata+thisshift,fityup,fitydown,color=thiscol,alpha=thisalpha,edgecolor='none')
+        pl.plot(fitxdata/100.+thisshift,fityAvg,color=thiscol,label=r'$A/\sqrt{8t_{f}} \ , \ A = ' + MakeValAndErr(fitBoot[0].Avg,fitBoot[0].Std)+'$')
+        pl.fill_between(fitxdata/100.+thisshift,fityup,fitydown,color=thiscol,alpha=thisalpha,edgecolor='none')
 
         
         # chitdivlog = Pullflag(chit,'Avg')/np.log(np.array(iflowlist))
