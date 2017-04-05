@@ -81,12 +81,12 @@ def ParmDivXDer(x,p):
 
 
 def ChitFitFun(x,p):
-    InvLog = np.log(x[0])**(-1)
-    return p[0] * InvLog + p[1]*InvLog*(x[0]**-1) + p[2]
+    Denom = (x[0]*(np.log(x[0])+p[2]))**(-1)
+    return (p[0] *t[0] + p[1])*Denom
 
 def ChitFitFunDer(x,p):
-    InvLog = np.log(x[0])**(-1)
-    return [InvLog,InvLog*(x[0]**-1),makexunit(x[0])]
+    Denom = (x[0]*(np.log(x[0])+p[2]))**(-1)
+    return [Denom*x[0],Denom,-x[0]*(Denom**2)]
 
 
 def ParmDivXP(x,p):
