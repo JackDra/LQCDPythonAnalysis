@@ -100,10 +100,18 @@ elif kappa == 1370000:
 TensorNorm = 1 # normalisation for Tensor Current
 MomFracNorm = 1 # normalisation for Momentum Fraction
 
-ExpMagMomProton = 2.792847 ## taken from pdg http://pdg.lbl.gov/2014/tables/rpp2014-tab-baryons-N.pdf
 
-ExpCRad_muon = 0.8408 ## fm i think (check pdg)
-ExpCRad_electron = 0.877 ## in fm i think
+## Experemental value dicionary [value,err]
+ExpValues = {}
+ExpValues['MagMomProton'] = [2.792847356,0.000000023] ## taken from pdg http://pdg.ge.infn.it/2014/listings/rpp2014-list-p.pdf
+ExpValues['MagMomNeutron'] = [−1.91304272,0.00000045] ## taken from pdg http://pdg.ge.infn.it/2014/listings/rpp2014-list-n.pdf
+
+
+
+ExpValues['CRad_muon'] = np.array([0.84087,0.00055])**2 ## fm ^2
+ExpValues['CRad_electron'] = np.array([0.8775,0.0051 ])**2## fm ^2
+
+ExpValues['MRad'] = np.array([0.777,0.023])**2 ## fm^2 ep -> ep form factor
 
 
 F3Div2M = True ## Reads in F3 for VectorTop with dividing by the physical mass and multiplying by hbarc in GeV*fm (final result in fm) 

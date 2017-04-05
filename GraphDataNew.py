@@ -148,6 +148,36 @@ FFxlab = r'$ Q^{2} (GeV)^{2}$'
 
 DatFile = False
 
+
+    if 'FF1' in thisFF :
+        if 'ProtonGeGm' in thisCurr:
+            PlotExp('ChargeRadius')
+        elif 'ProtonIsoVector' in thisCuff:
+            PlotExp('AxialChargeRadius')
+    elif 'FF2' in thisFF and 'GeGm' in thisCurr:
+        if 'Neutron' in thisCurr:
+            PlotExp('NeutronMagMom')
+        elif 'Proton' in thisCurr:
+            PlotExp('ProtonMagMom')
+    if 'FF3' in thisFF and 'Top' in thisCurr:
+        if 'Neutron' in thisCurr:
+            PlotExp('ProtonEDM')
+        elif 'Proton' in thisCurr:
+            PlotExp('NeutronEDM')
+
+
+def PlotExp(flag,thiscolcyc):
+    if 'ChargeRadius' in flag:
+        xvals = np.array([0,0.2])
+        yvals = 1-ExpValues['CRad_muon'][0]*xvals
+        yup,ydown = 1-np.sum(ExpValues['CRad_muon'])*xvals,1-(ExpValues['CRad_muon'][0]-ExpValues['CRad_muon'][1])*xvals
+        pl.plot(xvals,yvals,color=thiscolcyc.next(),label=r'ANTOGNINI 13, $\mu p-atom$ Lamb shift $\langle r^2 \rangle='+MakeValAndErr(*ExpValues['CRad_muon'])+'\ fm^{2}$')
+        pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
+        yvals = 1-ExpValues['CRad_electron'][0]*xvals
+        yup,ydown = 1-np.sum(ExpValues['CRad_electron'])*xvals,1-(ExpValues['CRad_electron'][0]-ExpValues['CRad_electron'][1])*xvals
+        pl.plot(xvals,yvals,color=thiscolcyc.next(),label=r'MOHR 12, 2010 CODATA $e p$ data $\langle r^2 \rangle='+MakeValAndErr(*ExpValues['CRad_electron'])+'\ fm^{2}$')
+        pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
+
 def TflowToPhys(tflowlist):
     if isinstance(tflowlist, list):
         return [np.sqrt(8*iflow)*latspace for iflow in tflowlist] ## in fermi
@@ -1030,6 +1060,21 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams,PandNsh
             qrange = PlotFF(dataset[keyset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
             # if 'sm32' in thisset or 'CM' in thisset or 'TSF' in thisset or '12104' in str(thiskappa):
             PlotDPFit(keyset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign,datf,thiskappa,thisPN=PorN)
+    if 'FF1' in thisFF :
+        if 'ProtonGeGm' in thisCurr:
+            PlotExp('ChargeRadius',thiscolcyc)
+        elif 'ProtonIsoVector' in thisCuff:
+            PlotExp('AxialChargeRadius',thiscolcyc)
+    elif 'FF2' in thisFF and 'GeGm' in thisCurr:
+        if 'Neutron' in thisCurr:
+            PlotExp('NeutronMagMom',thiscolcyc)
+        elif 'Proton' in thisCurr:
+            PlotExp('ProtonMagMom',thiscolcyc)
+    if 'FF3' in thisFF and 'Top' in thisCurr:
+        if 'Neutron' in thisCurr:
+            PlotExp('ProtonEDM',thiscolcyc)
+        elif 'Proton' in thisCurr:
+            PlotExp('NeutronEDM',thiscolcyc)
     datf.close()
     return collist
 
@@ -1049,10 +1094,11 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
     # if Debug: print Avg[1], Err[1]
     # if GetCharRad(Avg[1]) > 10 or Err[1]> 10: return
     ## Displays charge radius for FF1, and magnetic moment for FF2
+            
     if 'FF1' in thisFF:
         datf.write(MakeValAndErr(Avg[2],Err[1])+' \n')
         if 'PsVector' in thisCurr:
-            LegVal = '$\\langle r_{A}^2 \\rangle='+MakeValAndErr(Avg[2],Err[1])+'\ fm^{2}$'        
+            LegVal = '$\\langle r_{A}^2 \\rangle='+MakeValAndErr(Avg[2],Err[1])+'\ fm^{2}$'
         else:
             LegVal = '$\\langle r^2 \\rangle='+MakeValAndErr(Avg[2],Err[1])+'\ fm^{2}$'        
     elif 'FF2' in thisFF:
