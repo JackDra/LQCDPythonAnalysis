@@ -149,6 +149,21 @@ FFxlab = r'$ Q^{2} (GeV)^{2}$'
 DatFile = False
 
 
+    # if 'FF1' in thisFF :
+    #     if 'ProtonGeGm' in thisDSCurr:
+    #         PlotExp('ChargeRadius',thiscolcyc)
+    #     elif 'ProtonIsoVector' in thisDSCurr:
+    #         PlotExp('AxialChargeRadius',thiscolcyc)
+    # elif 'FF2' in thisFF and 'GeGm' in thisDSCurr:
+    #     if 'Neutron' in thisDSCurr:
+    #         PlotExp('NeutronMagMom',thiscolcyc)
+    #     elif 'Proton' in thisDSCurr:
+    #         PlotExp('ProtonMagMom',thiscolcyc)
+    # if 'FF3' in thisFF and 'Top' in thisDSCurr:
+    #     if 'Neutron' in thisDSCurr:
+    #         PlotExp('ProtonEDM',thiscolcyc)
+    #     elif 'Proton' in thisDSCurr:
+    #         PlotExp('NeutronEDM',thiscolcyc)
 
 
 def PlotExp(flag,thiscolcyc):
@@ -164,7 +179,9 @@ def PlotExp(flag,thiscolcyc):
         yup,ydown = 1-np.sum(ExpValues['CRad_electron'])*xvals,1-(ExpValues['CRad_electron'][0]-ExpValues['CRad_electron'][1])*xvals
         pl.plot(xvals,yvals,color=thiscol,label=r'MOHR 12, 2010 CODATA $e p$ data $\langle r^2 \rangle='+MakeValAndErr(*ExpValues['CRad_electron'])+'\ fm^{2}$')
         pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
-
+    if 'NeutronMagMom' in flag:
+        pl.errorbar([0.0],[ExpValues['MagMomNeutron'][0]],[ExpValues['MagMomNeutron'][1]],color=thiscolcyc.next(),label='2010 CODATA, $\mu='+MakeValAndErr(*ExpValues['CRad_electron'])+'$')
+        
 def TflowToPhys(tflowlist):
     if isinstance(tflowlist, list):
         return [np.sqrt(8*iflow)*latspace for iflow in tflowlist] ## in fermi
