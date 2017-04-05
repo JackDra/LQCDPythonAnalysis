@@ -2096,7 +2096,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
     pl.xlim(0,pl.xlim()[1])
     pl.xlabel(r'$ \sqrt{8t_{f}} fm$')
     # pl.ylabel(r'$\frac{\chi_{t}^{1/8}}{ log\left(100*\sqrt{8t_{f}}\right)} GeV$')
-    pl.ylabel(r'$\frac{\chi_{t}^{1/8}}{ log\left(\sqrt{8t_{f}}\right)} GeV$')
+    pl.ylabel(r'$\chi_{t}^{1/8} log\left(\sqrt{8t_{f}}\right) GeV$')
     # pl.ylim(0,0.4)
     # pl.legend()
     pl.legend(loc='lower right')
