@@ -2060,14 +2060,14 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         Nearmin,Nearmax = find_nearest(xdata,FitWchiMinMax[0]),find_nearest(xdata,FitWchiMinMax[1])
         fitxdata,fitydata = np.array(xdata[Nearmin:Nearmax]),ydataboot[Nearmin:Nearmax]
 
-        [fitBoot,fitAvg,fitChi] = FitBoots(np.array(fitydata),np.array([fitxdata]),ParmDivX)
+        [fitBoot,fitAvg,fitChi] = FitBoots(np.array(fitydata),np.array([fitxdata]),ParmDivXP)
 
         ydataAvg,ydataErr = Pullflag(ydataboot,'Avg'),Pullflag(ydataboot,'Std')        
         pl.errorbar(xdata+thisshift,ydataAvg,ydataErr,fmt='o',color=thiscol,label=r'$'+GetMpi(ikappa)+r'\quad ncfg='+str(thisncfg)+'$')
 
         fityplot = []
-        for iboot in fitBoot[0].values:
-            fityplot.append(ParmDivX(np.array([fitxdata]),[iboot]))
+        for iboot1,iboot2 in zip(fitBoot[0].values,fitBoot[1].values):
+            fityplot.append(ParmDivXP(np.array([fitxdata]),[iboot1,iboot2]))
         fityAvg,fityStd = np.mean(fityplot,axis=0),np.std(fityplot,axis=0)
         fityup,fitydown = fityAvg+fityStd,fityAvg-fityStd
         pl.plot(fitxdata+thisshift,fityAvg,color=thiscol,label=r'$A/\sqrt{8t_{f}} \ , \ A = ' + MakeValAndErr(fitBoot[0].Avg,fitBoot[0].Std)+'$')

@@ -84,6 +84,8 @@ def DerOfFun(Fun,Len=1):
         return DPfitfunOneParDer
     elif Fun.__name__ == 'ParmDivX':
         return ParmDivXDer
+    elif Fun.__name__ == 'ParmDivXP':
+        return ParmDivXPDer
     elif Fun.__name__ == 'DPfitfun2':
         return DPfitfun2Der
     elif Fun.__name__ == 'DPfitfun':

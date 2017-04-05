@@ -219,6 +219,9 @@ def FitDefGuess(Fun,Len=1):
     if Fun.__name__ == 'ParmDivX':
         return [1.0]
         # return [-1,-1.6]
+    if Fun.__name__ == 'ParmDivXP':
+        return [-1.0,1.5]
+        # return [-1,-1.6]
     if Fun.__name__ == 'DPfitfun2':
         return [2.7,0.6]
     if Fun.__name__ == 'FormFactorO1':
