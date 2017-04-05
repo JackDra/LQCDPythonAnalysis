@@ -2061,8 +2061,8 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         fitxdata,fitydata = xdata[Nearmin:Nearmax],ydataboot[Nearmin:Nearmax]
 
         print 'pie'
-        for ix, iy in zip(fitydata, fitxdata):
-            print ix, iy , ParmDivX(1.0,iy)
+        for ix, iy in zip(fitxdata, fitydata):
+            print ix, iy.Avg , ParmDivX(1.0,iy).Avg
         [fitBoot,fitAvg,fitChi] = FitBoots(np.array(fitydata),np.array([fitxdata]),ParmDivX)
 
         ydataAvg,ydataErr = Pullflag(chit,'Avg'),Pullflag(chit,'Std')        
