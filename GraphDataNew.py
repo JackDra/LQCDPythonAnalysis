@@ -2102,8 +2102,8 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
     # pl.ylabel(r'$\chi_{t}^{1/8} log\left(\sqrt{8t_{f}}\right) GeV$')
     pl.ylabel(r'$\chi_{t}^{1/8} GeV$')
     # pl.ylim(0,0.4)
-    # pl.legend()
-    pl.legend(loc='lower right')
+    pl.legend()
+    # pl.legend(loc='lower right')
     thisdir = outputdir[0] + 'graphs/Wdata/'
     pl.title(r'$ \chi_{t}^{1/8} = \frac{1}{V^{1/8}} \langle W^2 \rangle^{1/8} $',y=TitleShift)
     mkdir_p(thisdir)
