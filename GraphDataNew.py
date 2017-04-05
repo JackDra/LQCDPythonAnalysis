@@ -200,11 +200,13 @@ def PlotExp(flag,thiscolcyc):
     if 'ProtonEDM' in flag or 'PandNEDM' in flag:
         thiscol = thiscolcyc.next()
         thislab = r'$ d_{p} \le '+r'{:0.2e} \theta fm$'.format(ExpValues['ProtonEDMtfm'])
-        pl.fill_between([-100,100],[ExpValues['ProtonEDMtfm']],[-ExpValues['ProtonEDMtfm']],color=thiscol,alpha=thisalpha,edgecolor='none')
+        yval = np.array([ExpValues['ProtonEDMtfm'],ExpValues['ProtonEDMtfm']])
+        pl.fill_between([-100,100],yval,-yval,color=thiscol,alpha=thisalpha,edgecolor='none')
     if 'NeutronEDM' in flag or 'PandNEDM' in flag:
         thiscol = thiscolcyc.next()
         thislab = r'$ d_{n} \le '+r'{:0.2e} \theta fm$'.format(ExpValues['NeutronEDMtfm'])
-        pl.fill_between([-1,10],[ExpValues['NeutronEDMtfm']],[-ExpValues['NeutronEDMtfm']],color=thiscol,alpha=thisalpha,edgecolor='none')
+        yval = np.array([ExpValues['NeutronEDMtfm'],ExpValues['NeutronEDMtfm']])
+        pl.fill_between([-1,10],yval,-yval,color=thiscol,alpha=thisalpha,edgecolor='none')
 
 
 
