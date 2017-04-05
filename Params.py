@@ -104,7 +104,7 @@ MomFracNorm = 1 # normalisation for Momentum Fraction
 ## Experemental value dicionary [value,err]
 ExpValues = {}
 ExpValues['MagMomProton'] = [2.792847356,0.000000023] ## taken from pdg http://pdg.ge.infn.it/2014/listings/rpp2014-list-p.pdf
-ExpValues['MagMomNeutron'] = [−1.91304272,0.00000045] ## taken from pdg http://pdg.ge.infn.it/2014/listings/rpp2014-list-n.pdf
+ExpValues['MagMomNeutron'] = [-1.91304272,0.00000045] ## taken from pdg http://pdg.ge.infn.it/2014/listings/rpp2014-list-n.pdf
 
 
 
