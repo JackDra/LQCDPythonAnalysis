@@ -211,7 +211,7 @@ def PlotExp(flag,thiscolcyc):
     #     pl.fill_between([-100,100],yval,-yval,color=thiscol,alpha=thisalpha,edgecolor='none')
     if 'NeutronEDM' in flag or 'PandNEDM' in flag:
         thiscol = thiscolcyc.next()
-        thislab = r'$ d_{n} < '+r'{:0.2e} \theta fm$'.format(ExpValues['NeutronEDMtfm'])
+        thislab = r'$ d_{n} < '+r'{:0.2e}\ \theta fm$'.format(ExpValues['NeutronEDMtfm'])
         yval = np.array([ExpValues['NeutronEDMtfm'],ExpValues['NeutronEDMtfm']])
         pl.plot([0.0],[0.0],color=thiscol,label=thislab)
         pl.fill_between([-0.05,0.05],yval,-yval,color=thiscol,alpha=thisalpha,edgecolor='none')
@@ -1143,7 +1143,7 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
         LegVal = '$\\mu='+MakeValAndErr(Avg[0],Err[0])+r'$'        
         datf.write(MakeValAndErr(Avg[0],Err[0])+' \n')
     else:
-        LegVal = '$\\frac{F_{3}(0)}{2m_{N}}='+MakeValAndErr(Avg[1],Err[1])+r' \theta fm$'        
+        LegVal = '$\\frac{F_{3}(0)}{2m_{N}}='+MakeValAndErr(Avg[1],Err[1])+r'\ \theta fm$'        
         datf.write(MakeValAndErr(Avg[1],Err[1])+' \n')
 
     # print 'DPFit flip sign', flipsign
