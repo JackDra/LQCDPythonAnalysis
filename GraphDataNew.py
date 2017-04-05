@@ -165,7 +165,7 @@ DatFile = False
     #     elif 'Proton' in thisDSCurr:
     #         PlotExp('NeutronEDM',thiscolcyc)
 
-CRadConv = 1/(12*hbarc**2)
+CRadConv = 1/(6*hbarc**2)
     
 def PlotExp(flag,thiscolcyc):
     if 'ChargeRadius' in flag:
