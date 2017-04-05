@@ -2070,7 +2070,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         print fitBoot[0].Avg
         print
         for ix in fitxdata:
-            print ix , fitBoot[0].Avg/ix , ParmDivX(np.array(fitBoot),np.array([ix]))
+            print ix , fitBoot[0].Avg/ix , ParmDivX(np.array(fitBoot),np.array([ix])).Avg
             fityplot.append(ParmDivX(np.array(fitBoot),np.array([ix])))
         fityplot = GetBootStats(np.array(fityplot))
         fityAvg,fityStd = np.array(Pullflag(fityplot,'Avg')),np.array(Pullflag(fityplot,'Std'))
