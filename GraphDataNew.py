@@ -2062,7 +2062,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
 
         print 'pie'
         for ix, iy in zip(fitxdata, fitydata):
-            print ix, iy.Avg , ParmDivX(1.0,iy).Avg
+            print ix, iy.Avg , ParmDivX([1.0],[iy]).Avg
         [fitBoot,fitAvg,fitChi] = FitBoots(np.array(fitydata),np.array([fitxdata]),ParmDivX)
 
         ydataAvg,ydataErr = Pullflag(chit,'Avg'),Pullflag(chit,'Std')        
