@@ -122,8 +122,8 @@ ExpValues['ProtonEDM'] = .54*10**-23# e cm bound, Uses 199Hg atom EDM
 
 ExpValues['Theta'] =  2.5*10**-10 ## from chi PT https://arxiv.org/pdf/0911.3981.pdf  (Might have some stuff for SU(3) 
 
-ExpValues['NeutronEDMtfm'] = ExpValues['NeutronEDM']*cm_to_fm*ExpValues['Theta'] # theta fm  
-ExpValues['ProtonEDMtfm'] =  ExpValues['ProtonEDM']*cm_to_fm*ExpValues['Theta'] # theta fm 
+ExpValues['NeutronEDMtfm'] = ExpValues['NeutronEDM']*cm_to_fm/ExpValues['Theta'] # theta fm  
+ExpValues['ProtonEDMtfm'] =  ExpValues['ProtonEDM']*cm_to_fm/ExpValues['Theta'] # theta fm 
 
 ExpValues['CRad_muon'][1] = 2*ExpValues['CRad_muon'][0]*ExpValues['CRad_muon'][1]
 ExpValues['NeutronCRad'][1] = 2*ExpValues['NeutronCRad'][0]*ExpValues['NeutronCRad'][1]
