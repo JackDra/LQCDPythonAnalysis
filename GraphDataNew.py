@@ -214,7 +214,7 @@ def PlotExp(flag,thiscolcyc):
         thislab = r'$ d_{n} < '+r'{:0.2e} \theta fm$'.format(ExpValues['NeutronEDMtfm'])
         yval = np.array([ExpValues['NeutronEDMtfm'],ExpValues['NeutronEDMtfm']])
         pl.plot([0.0],[0.0],color=thiscol,label=thislab)
-        pl.fill_between([-1,10],yval,-yval,color=thiscol,alpha=thisalpha,edgecolor='none')
+        pl.fill_between([-0.05,0.05],yval,-yval,color=thiscol,alpha=thisalpha,edgecolor='none')
 
 
 
