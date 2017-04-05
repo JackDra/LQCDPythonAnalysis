@@ -84,7 +84,7 @@ def ParmDivXP(x,p):
     return p[0] * (x[0]**(-1)) + p[1]
 
 def ParmDivXPDer(x,p):
-    return [x[0]**(-1),1.0]
+    return [x[0]**(-1),makexunit(x[0])]
 
 def DPfitfun(x,p):
     return p[0]/((1+(x[0]/p[1]))**2)
