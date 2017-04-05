@@ -156,11 +156,13 @@ def PlotExp(flag,thiscolcyc):
         xvals = np.array([0,0.2])
         yvals = 1-ExpValues['CRad_muon'][0]*xvals
         yup,ydown = 1-np.sum(ExpValues['CRad_muon'])*xvals,1-(ExpValues['CRad_muon'][0]-ExpValues['CRad_muon'][1])*xvals
-        pl.plot(xvals,yvals,color=thiscolcyc.next(),label=r'ANTOGNINI 13, $\mu p-atom$ Lamb shift $\langle r^2 \rangle='+MakeValAndErr(*ExpValues['CRad_muon'])+'\ fm^{2}$')
+        thiscol = thiscolcyc.next()
+        pl.plot(xvals,yvals,color=thiscol,label=r'ANTOGNINI 13, $\mu p-atom$ Lamb shift $\langle r^2 \rangle='+MakeValAndErr(*ExpValues['CRad_muon'])+'\ fm^{2}$')
         pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
+        thiscol = thiscolcyc.next()
         yvals = 1-ExpValues['CRad_electron'][0]*xvals
         yup,ydown = 1-np.sum(ExpValues['CRad_electron'])*xvals,1-(ExpValues['CRad_electron'][0]-ExpValues['CRad_electron'][1])*xvals
-        pl.plot(xvals,yvals,color=thiscolcyc.next(),label=r'MOHR 12, 2010 CODATA $e p$ data $\langle r^2 \rangle='+MakeValAndErr(*ExpValues['CRad_electron'])+'\ fm^{2}$')
+        pl.plot(xvals,yvals,color=thiscol,label=r'MOHR 12, 2010 CODATA $e p$ data $\langle r^2 \rangle='+MakeValAndErr(*ExpValues['CRad_electron'])+'\ fm^{2}$')
         pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
 
 def TflowToPhys(tflowlist):
