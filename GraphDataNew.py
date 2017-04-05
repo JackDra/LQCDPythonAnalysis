@@ -2069,8 +2069,9 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         fityplot = ParmDivX(np.array(fitBoot),np.array([fitxdata]))
         fityplot = GetBootStats(fityplot)
         fityAvg,fityStd = np.array(Pullflag(fityplot,'Avg')),np.array(Pullflag(fityplot,'Std'))
+        print fityAvg,fityStd,fitChi
         fityup,fitydown = fityAvg+fityStd,fityAvg-fityStd
-        pl.plot(fitxdata+thisshift,fityAvg,color=thiscol,label=r'$A/\sqrt{8t_{f}} \ , \ A = ' + MakeValAndErr(fitBoot[0].Avg,fitBoot[0].Std))
+        pl.plot(fitxdata+thisshift,fityAvg,color=thiscol,label=r'$A/\sqrt{8t_{f}} \ , \ A = ' + MakeValAndErr(fitBoot[0].Avg,fitBoot[0].Std)+'$')
         pl.fill_between(fitxdata+thisshift,fityup,fitydown,color=thiscol,alpha=thisalpha,edgecolor='none')
 
         
