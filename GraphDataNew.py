@@ -197,12 +197,12 @@ def PlotExp(flag,thiscolcyc):
         thiscol = thiscolcyc.next()
         pl.plot(xvals,yvals,color=thiscol,label=r'BELUSHKIN 07 Dispersion Analysis $\langle r_{\mu}^2 \rangle='+MakeValAndErr(*ExpValues['MRadNeutron'])+'\ fm^{2}$')
         pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
-    if 'ProtonEDM' in flag or 'PandNEDM' in flag:
-        thiscol = thiscolcyc.next()
-        thislab = r'$ d_{p} < '+r'{:0.2e} \theta fm$'.format(ExpValues['ProtonEDMtfm'])
-        yval = np.array([ExpValues['ProtonEDMtfm'],ExpValues['ProtonEDMtfm']])
-        pl.plot([0.0],[0.0],color=thiscol,label=thislab)
-        pl.fill_between([-100,100],yval,-yval,color=thiscol,alpha=thisalpha,edgecolor='none')
+    # if 'ProtonEDM' in flag or 'PandNEDM' in flag:
+    #     thiscol = thiscolcyc.next()
+    #     thislab = r'$ d_{p} < '+r'{:0.2e} \theta fm$'.format(ExpValues['ProtonEDMtfm'])
+    #     yval = np.array([ExpValues['ProtonEDMtfm'],ExpValues['ProtonEDMtfm']])
+    #     pl.plot([0.0],[0.0],color=thiscol,label=thislab)
+    #     pl.fill_between([-100,100],yval,-yval,color=thiscol,alpha=thisalpha,edgecolor='none')
     if 'NeutronEDM' in flag or 'PandNEDM' in flag:
         thiscol = thiscolcyc.next()
         thislab = r'$ d_{n} < '+r'{:0.2e} \theta fm$'.format(ExpValues['NeutronEDMtfm'])
