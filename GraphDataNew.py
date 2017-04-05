@@ -2065,8 +2065,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         ydataAvg,ydataErr = Pullflag(chit,'Avg'),Pullflag(chit,'Std')        
         pl.errorbar(xdata+ishift,ydataAvg,ydataErr,fmt='o',color=thiscol,label=r'$'+GetMpi(ikappa)+r'\quad ncfg='+str(thisncfg)+'$')
 
-        print 'fb',np.array(fitBoot).shape
-        print 'xdata',np.array([fitxdata]).shape
+        print fitBoot[0].Avg
         fityplot = ParmDivX(np.array(fitBoot),np.array([fitxdata]))
         fityAvg,fityStd = Pullflag(fityplot,'Avg'),Pullflag(fityplot,'Std')
         fityup,fitydown = fityAvg+fityStd,fityAvg-fityStd
