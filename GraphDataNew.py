@@ -169,20 +169,20 @@ DatFile = False
 def PlotExp(flag,thiscolcyc):
     if 'ChargeRadius' in flag:
         xvals = np.array([0,0.2])
-        yvals = 1-ExpValues['CRad_muon'][0]*xvals
-        yup,ydown = 1-np.sum(ExpValues['CRad_muon'])*xvals,1-(ExpValues['CRad_muon'][0]-ExpValues['CRad_muon'][1])*xvals
+        yvals = 1-6*ExpValues['CRad_muon'][0]*xvals
+        yup,ydown = 1-6*np.sum(ExpValues['CRad_muon'])*xvals,1-6*(ExpValues['CRad_muon'][0]-ExpValues['CRad_muon'][1])*xvals
         thiscol = thiscolcyc.next()
         pl.plot(xvals,yvals,color=thiscol,label=r'ANTOGNINI 13, $\mu p-atom$ Lamb shift $\langle r^2 \rangle='+MakeValAndErr(*np.abs(ExpValues['CRad_muon']))+'\ fm^{2}$')
         pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
         thiscol = thiscolcyc.next()
-        yvals = 1-ExpValues['CRad_electron'][0]*xvals
-        yup,ydown = 1-np.sum(ExpValues['CRad_electron'])*xvals,1-(ExpValues['CRad_electron'][0]-ExpValues['CRad_electron'][1])*xvals
+        yvals = 1-6*ExpValues['CRad_electron'][0]*xvals
+        yup,ydown = 1-6*np.sum(ExpValues['CRad_electron'])*xvals,1-6*(ExpValues['CRad_electron'][0]-ExpValues['CRad_electron'][1])*xvals
         pl.plot(xvals,yvals,color=thiscol,label=r'MOHR 12, 2010 CODATA $e p$ data $\langle r^2 \rangle='+MakeValAndErr(*np.abs(ExpValues['CRad_electron']))+'\ fm^{2}$')
         pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
     if 'NeutronCRad' in flag:
         xvals = np.array([0,0.2])
-        yvals = ExpValues['NeutronCRad'][0]*xvals
-        yup,ydown = np.sum(ExpValues['NeutronCRad'])*xvals,(ExpValues['NeutronCRad'][0]-ExpValues['NeutronCRad'][1])*xvals
+        yvals = 6*ExpValues['NeutronCRad'][0]*xvals
+        yup,ydown = 6*np.sum(ExpValues['NeutronCRad'])*xvals,6*(ExpValues['NeutronCRad'][0]-ExpValues['NeutronCRad'][1])*xvals
         thiscol = thiscolcyc.next()
         pl.plot(xvals,yvals,color=thiscol,label=r'$ne$ scattering , pdg average $\langle r_{n}^2 \rangle='+MakeValAndErr(*np.abs(ExpValues['NeutronCRad']))+'\ fm^{2}$')
         pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
@@ -192,17 +192,17 @@ def PlotExp(flag,thiscolcyc):
         pl.errorbar([0.0],[ExpValues['MagMomProton'][0]],[ExpValues['MagMomProton'][1]],fmt='x',color=thiscolcyc.next(),label='2010 CODATA, $\mu_{p}='+MakeValAndErr(*ExpValues['MagMomProton'])+'$')
     if 'MRadProton' in flag:
         xvals = np.array([0,0.2])
-        yvals = ExpValues['MagMomProton'][0]-ExpValues['MRadProton'][0]*xvals
-        yup,ydown = (ExpValues['MagMomProton'][0]-np.sum(ExpValues['MRadProton'])*xvals,
-                     ExpValues['MagMomProton'][0]-(ExpValues['MRadProton'][0]-ExpValues['MRadProton'][1])*xvals)
+        yvals = ExpValues['MagMomProton'][0]-6*ExpValues['MRadProton'][0]*xvals
+        yup,ydown = (ExpValues['MagMomProton'][0]-6*np.sum(ExpValues['MRadProton'])*xvals,
+                     ExpValues['MagMomProton'][0]-6*(ExpValues['MRadProton'][0]-ExpValues['MRadProton'][1])*xvals)
         thiscol = thiscolcyc.next()
         pl.plot(xvals,yvals,color=thiscol,label=r'BELUSHKIN 07 Dispersion Analysis $\langle r_{\mu}^2 \rangle='+MakeValAndErr(*np.abs(ExpValues['MRadProton']))+'\ fm^{2}$')
         pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
     if 'MRadNeutron' in flag:
         xvals = np.array([0,0.2])
-        yvals = ExpValues['MagMomNeutron'][0]-ExpValues['MRadNeutron'][0]*xvals
-        yup,ydown = (ExpValues['MagMomNeutron'][0]-np.sum(ExpValues['MRadNeutron'])*xvals,
-                     ExpValues['MagMomNeutron'][0]-(ExpValues['MRadNeutron'][0]-ExpValues['MRadNeutron'][1])*xvals)
+        yvals = ExpValues['MagMomNeutron'][0]-6*ExpValues['MRadNeutron'][0]*xvals
+        yup,ydown = (ExpValues['MagMomNeutron'][0]-6*np.sum(ExpValues['MRadNeutron'])*xvals,
+                     ExpValues['MagMomNeutron'][0]-6*(ExpValues['MRadNeutron'][0]-ExpValues['MRadNeutron'][1])*xvals)
         thiscol = thiscolcyc.next()
         thisleg = r'BELUSHKIN 07 Dispersion Analysis $\langle r_{\mu}^2 \rangle='+MakeValAndErr(*np.abs(ExpValues['MRadNeutron']))+'\ fm^{2}$'
         pl.plot(xvals,yvals,color=thiscol,label=thisleg)
