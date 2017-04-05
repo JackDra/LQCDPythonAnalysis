@@ -2105,7 +2105,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
     pl.legend()
     # pl.legend(loc='lower right')
     thisdir = outputdir[0] + 'graphs/Wdata/'
-    pl.title(r'$ \chi_{t}^{1/8} = \frac{1}{V^{1/8}} \langle W^2 \rangle^{1/8} $',y=TitleShift)
+    pl.title(r'$ \chi_{t}^{1/8} = \frac{1}{V^{1/8}} \langle W^2 \rangle^{1/8} \quad \chi_{t,fit}^{1/8} = \frac{A_{0}t_{f}^{\'} + A_{0}}{t_{f}^{\'}log\left(t_{f}^{\'}) + A_{2}\right)}$',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chitKappaOverFlow.pdf')
     pl.clf()
