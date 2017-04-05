@@ -2051,9 +2051,9 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         thiscol = thiscolcyc.next()
         thisncfg = np.array(iW).shape[0]
         W2boot,dump = bt.CreateBoot(np.array(iW)**2,nboot,0)
-        SF = np.log(100*np.array(TflowToPhys(iflowlist)))
+        # SF = np.log(100*np.array(TflowToPhys(iflowlist)))
+        SF = np.log(np.array(TflowToPhys(iflowlist))+2)
         chit = coeff*np.array(W2boot)**(0.125)
-        # SF = np.log(np.array(TflowToPhys(iflowlist)))
         xdata = TflowToPhys(iflowlist)
         ydataboot = chit*SF
         ydataboot = GetBootStats(ydataboot)
@@ -2095,7 +2095,8 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
     # pl.errorbar(flowlist+0.1,chitAvg,chitStd,fmt='o',label=r'$No Boot$')
     pl.xlim(0,pl.xlim()[1])
     pl.xlabel(r'$ \sqrt{8t_{f}} fm$')
-    pl.ylabel(r'$\frac{\chi_{t}^{1/8}}{ log\left(100*\sqrt{8t_{f}}\right)} GeV$')
+    # pl.ylabel(r'$\frac{\chi_{t}^{1/8}}{ log\left(100*\sqrt{8t_{f}}\right)} GeV$')
+    pl.ylabel(r'$\frac{\chi_{t}^{1/8}}{ log\left(\sqrt{8t_{f}}+2\right)} GeV$')
     # pl.ylim(0,0.4)
     pl.legend(loc='lower right')
     thisdir = outputdir[0] + 'graphs/Wdata/'
