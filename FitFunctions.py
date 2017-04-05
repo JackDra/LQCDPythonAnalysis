@@ -74,6 +74,9 @@ def CreateFFO(thislen):
     return FormFactorO, FormFactorODer
 
 def ParmDivX(x,p):
+    print 'x,p'
+    print x
+    print p
     return p[0]/x[0]
 
 def ParmDivXDer(x,p):
