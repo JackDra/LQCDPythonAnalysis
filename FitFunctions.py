@@ -74,10 +74,10 @@ def CreateFFO(thislen):
     return FormFactorO, FormFactorODer
 
 def ParmDivX(x,p):
-    return p[0] * x[0]**(-1)
+    return p[0] * (x[0]**-1)
 
 def ParmDivXDer(x,p):
-    return [-p[0]*(x[0]**-2)]
+    return [x[0]**-1]
 
 def DPfitfun(x,p):
     return p[0]/((1+(x[0]/p[1]))**2)
