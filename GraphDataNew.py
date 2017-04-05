@@ -149,21 +149,6 @@ FFxlab = r'$ Q^{2} (GeV)^{2}$'
 DatFile = False
 
 
-    if 'FF1' in thisFF :
-        if 'ProtonGeGm' in thisCurr:
-            PlotExp('ChargeRadius')
-        elif 'ProtonIsoVector' in thisCuff:
-            PlotExp('AxialChargeRadius')
-    elif 'FF2' in thisFF and 'GeGm' in thisCurr:
-        if 'Neutron' in thisCurr:
-            PlotExp('NeutronMagMom')
-        elif 'Proton' in thisCurr:
-            PlotExp('ProtonMagMom')
-    if 'FF3' in thisFF and 'Top' in thisCurr:
-        if 'Neutron' in thisCurr:
-            PlotExp('ProtonEDM')
-        elif 'Proton' in thisCurr:
-            PlotExp('NeutronEDM')
 
 
 def PlotExp(flag,thiscolcyc):
