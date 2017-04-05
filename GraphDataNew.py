@@ -2075,7 +2075,7 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
     # pl.errorbar(flowlist+0.1,chitAvg,chitStd,fmt='o',label=r'$No Boot$')
     pl.xlim(0,pl.xlim()[1])
     pl.xlabel(r'$ \sqrt{8t_{f}} fm$')
-    pl.ylabel(r'$\frac{\chi_{t}^{1/8}}{ log\left(\sqrt{8t_{f}}+2\right)} GeV$')
+    pl.ylabel(r'$\frac{\chi_{t}^{1/8}}{ log\left(100*\sqrt{8t_{f}}\right)} GeV$')
     # pl.ylim(0,0.4)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Wdata/'
