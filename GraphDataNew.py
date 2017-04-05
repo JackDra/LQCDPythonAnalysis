@@ -180,7 +180,9 @@ def PlotExp(flag,thiscolcyc):
         pl.plot(xvals,yvals,color=thiscol,label=r'MOHR 12, 2010 CODATA $e p$ data $\langle r^2 \rangle='+MakeValAndErr(*ExpValues['CRad_electron'])+'\ fm^{2}$')
         pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
     if 'NeutronMagMom' in flag:
-        pl.errorbar([0.0],[ExpValues['MagMomNeutron'][0]],[ExpValues['MagMomNeutron'][1]],color=thiscolcyc.next(),label='2010 CODATA, $\mu='+MakeValAndErr(*ExpValues['CRad_electron'])+'$')
+        pl.errorbar([0.0],[ExpValues['MagMomNeutron'][0]],[ExpValues['MagMomNeutron'][1]],color=thiscolcyc.next(),label='2010 CODATA, $\mu='+MakeValAndErr(*ExpValues['MagMomNeutron'])+'$')
+    if 'ProtonMagMom' in flag:
+        pl.errorbar([0.0],[ExpValues['MagMomProton'][0]],[ExpValues['MagMomProton'][1]],color=thiscolcyc.next(),label='2010 CODATA, $\mu='+MakeValAndErr(*ExpValues['MagMomProton'])+'$')
         
 def TflowToPhys(tflowlist):
     if isinstance(tflowlist, list):
