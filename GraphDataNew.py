@@ -179,6 +179,13 @@ def PlotExp(flag,thiscolcyc):
         yup,ydown = 1-np.sum(ExpValues['CRad_electron'])*xvals,1-(ExpValues['CRad_electron'][0]-ExpValues['CRad_electron'][1])*xvals
         pl.plot(xvals,yvals,color=thiscol,label=r'MOHR 12, 2010 CODATA $e p$ data $\langle r^2 \rangle='+MakeValAndErr(*ExpValues['CRad_electron'])+'\ fm^{2}$')
         pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
+    if 'NeutronCRad' in flag:
+        xvals = np.array([0,0.2])
+        yvals = ExpValues['NeutronCRad'][0]*xvals
+        yup,ydown = np.sum(ExpValues['NeutronCRad'])*xvals,(ExpValues['NeutronCRad'][0]-ExpValues['NeutronCRad'][1])*xvals
+        thiscol = thiscolcyc.next()
+        pl.plot(xvals,yvals,color=thiscol,label=r'$ne$ scattering , pdg average $\langle r_{n}^2 \rangle='+MakeValAndErr(*ExpValues['NeutronCRad'])+'\ fm^{2}$')
+        pl.fill_between(xvals,yup,ydown,color=thiscol,alpha=thisalpha,edgecolor='none')
     if 'NeutronMagMom' in flag:
         pl.errorbar([0.0],[ExpValues['MagMomNeutron'][0]],[ExpValues['MagMomNeutron'][1]],fmt='x',color=thiscolcyc.next(),label='2010 CODATA, $\mu_{n}='+MakeValAndErr(*ExpValues['MagMomNeutron'])+'$')
     if 'ProtonMagMom' in flag:
