@@ -18,6 +18,8 @@ def GetCut(thisset,thisdict):
     return False
 
 
+FitWchiMinMax = [0.1,0.4]
+
 MassDtList = range(1,5)
 DoFList = range(3,17)
 ChiThreshold = 0.001
@@ -214,6 +216,9 @@ def FitDefGuess(Fun,Len=1):
     if Fun.__name__ == 'DPfitfunOnePar':
         return [1.6]
         # return [-1,-1.6]
+    if Fun.__name__ == 'ParmDivX':
+        return [1.0]
+        # return [-1,-1.6]
     if Fun.__name__ == 'DPfitfun2':
         return [2.7,0.6]
     if Fun.__name__ == 'FormFactorO1':
@@ -287,4 +292,6 @@ for fmax,fmin in itertools.product(FitMassMax,FitMassMin):
     if fmin+2 < fmax:
         FitMassList.append((fmin,fmax))
 ##
+
+
 

@@ -14,6 +14,10 @@ from copy import deepcopy
 
 
 
+def find_nearest(array,value):
+    idx = (np.abs(array-value)).argmin()
+    return array[idx]
+
 def stripends(string,prepost):
     return string.replace(prepost[0],'').replace(prepost[1],'')
 

@@ -73,6 +73,12 @@ def CreateFFO(thislen):
         return np.array(x[:thislen]).tolist()
     return FormFactorO, FormFactorODer
 
+def ParmDivX(x,p):
+    return p[0]/x[0]
+
+def ParmDivXDer(x,p):
+    return [-p[0]/(x[0]**2)]
+
 def DPfitfun(x,p):
     return p[0]/((1+(x[0]/p[1]))**2)
 

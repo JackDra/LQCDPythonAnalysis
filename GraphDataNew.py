@@ -1971,6 +1971,7 @@ def GraphchitKappasOverFlow(Qlist,flowlist,thiskappalist):
         Q2boot,dump = bt.CreateBoot(np.array(iQ)**2,nboot,0)
         chit = coeff*np.array(Q2boot)**(0.25)
         chit = GetBootStats(chit)
+        
         pl.errorbar(TflowToPhys(iflowlist+ishift),Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$'+GetMpi(ikappa)+r'\quad ncfg='+str(thisncfg)+'$')
 
     # Qavg = np.mean(np.array(Qlist)**2,axis=0)
@@ -2053,7 +2054,22 @@ def GraphWchitKappasOverFlow(Wlist,flowlist,thiskappalist):
         chit = GetBootStats(chit)
         # SF = np.log(np.array(TflowToPhys(iflowlist)))
         SF = np.log(100*np.array(TflowToPhys(iflowlist)))
-        pl.errorbar(TflowToPhys(iflowlist+ishift),Pullflag(chit,'Avg')*SF,Pullflag(chit,'Std')*SF,fmt='o',color=thiscol,label=r'$'+GetMpi(ikappa)+r'\quad ncfg='+str(thisncfg)+'$')
+        xdata = TflowToPhys(iflowlist)
+        ydataboot = chit*SF
+        ydataboot.Stats()
+        Nearmin,Nearmax = xdata[find_nearest(xdata,FitWchiMinMax[0])],xdata[find_nearest(xdata,FitWchiMinMax[1])]
+        fitxdata,fitydata = xdata[Nearmin:Nearmax],ydata[Nearmin:Nearmax]
+        [fitBoot,fitAvg,fitChi] = FitBoots(fitydata,np.array([fitxdata]),ParmDivX)
+
+        ydataAvg,ydataErr = Pullflag(chit,'Avg'),Pullflag(chit,'Std')        
+        pl.errorbar(xdata+ishift,ydataAvg,ydataErr,fmt='o',color=thiscol,label=r'$'+GetMpi(ikappa)+r'\quad ncfg='+str(thisncfg)+'$')
+
+        fityplot = ParmDivX(fitBoot,np.array([fitxdata]))
+        fityAvg,fityStd = Pullflag(fityplot,'Avg'),Pullflag(fityplot,'Std')
+        fityup,fitydown = fityAvg+fityStd,fityAvg-fityStd
+        pl.plot(fitxdata+ishift,Pullflag(fityplot,'Avg'),color=thiscol)
+        pl.fill_between(fitxdata+ishift,fityup,fitydown,color=thiscol,alpha=thisalpha,edgecolor='none')
+
         
         # chitdivlog = Pullflag(chit,'Avg')/np.log(np.array(iflowlist))
         # chitdivlogErr = Pullflag(chit,'Std')/np.log(np.array(iflowlist))

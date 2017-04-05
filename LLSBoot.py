@@ -82,6 +82,8 @@ def DerOfFun(Fun,Len=1):
         return CreateFFO(Len)[1]
     elif Fun.__name__ == 'DPfitfunOnePar':
         return DPfitfunOneParDer
+    elif Fun.__name__ == 'ParmDivX':
+        return ParmDivXDer
     elif Fun.__name__ == 'DPfitfun2':
         return DPfitfun2Der
     elif Fun.__name__ == 'DPfitfun':
