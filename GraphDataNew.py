@@ -1048,7 +1048,7 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams,PandNsh
     if 'FF1' in thisFF :
         if 'ProtonGeGm' in thisCurr:
             PlotExp('ChargeRadius',thiscolcyc)
-        elif 'ProtonIsoVector' in thisCuff:
+        elif 'ProtonIsoVector' in thisCurr:
             PlotExp('AxialChargeRadius',thiscolcyc)
     elif 'FF2' in thisFF and 'GeGm' in thisCurr:
         if 'Neutron' in thisCurr:
