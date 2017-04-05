@@ -82,7 +82,7 @@ def ParmDivXDer(x,p):
 
 def ChitFitFun(x,p):
     Denom = (x[0]*(np.log(x[0])+p[2]))**(-1)
-    return (p[0] *t[0] + p[1])*Denom
+    return (p[0] *x[0] + p[1])*Denom
 
 def ChitFitFunDer(x,p):
     Denom = (x[0]*(np.log(x[0])+p[2]))**(-1)
