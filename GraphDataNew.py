@@ -280,7 +280,7 @@ def SetFFAxies(thisCurr):
     currnumb = thisCurr[-1]
     pl.xlabel(FFxlab)
     if currnumb == '3':
-        pl.ylabel(FFylab.replace('F','\\hbar c \\frac{F_{'+currnumb+'}').replace(') $',')}{2m_{N,phys}} (fm) $'))
+        pl.ylabel(FFylab.replace('F','\\frac{F_{'+currnumb+'}').replace(') $',')}{2m_{N,phys}} (fm) $'))
     else:
         if 'GeGm' in thisCurr:
             if currnumb == '1':
@@ -292,8 +292,8 @@ def SetFFAxies(thisCurr):
             pl.ylabel(FFylab.replace('F','F_{'+currnumb+'}'))
     if thisCurr in ylimFFDict.keys():
         pl.ylim(ylimFFDict[thisCurr])
-    # else:
-        # pl.ylim(max(pl.ylim()[0],-2),min(pl.ylim()[1],2))
+    else:
+        pl.ylim(pl.ylim()[0],pl.ylim()[1]*1.1)
     pl.xlim(*Qsqrdxlim)
     nlegline = 1
     if thisCurr in leglengthFFDict.keys(): nlegline = leglengthFFDict[thisCurr]
