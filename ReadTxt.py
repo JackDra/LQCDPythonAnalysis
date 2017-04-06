@@ -50,6 +50,7 @@ def ReadTopCharge(thisfile):
 ## topcharge [ icfg , itflow ]
 def ReadTopList(thisdir,thiscfglist,OnlyCheck=False):
     cfglistout,tflow,topcharge = [],[],[]
+    if Debug: print 'walking ' , thisdir
     for root, thedir, thesefiles in os.walk(thisdir):
         for icfg in thiscfglist:
             for ifile in thesefiles:
