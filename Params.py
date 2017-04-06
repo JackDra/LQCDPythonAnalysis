@@ -102,6 +102,9 @@ MomFracNorm = 1 # normalisation for Momentum Fraction
 
 
 ## Experemental value dicionary [value,err] #############
+
+r0Scale = [0.472,0.005]## Sommer scale value from arXiv:hep-lat/0103011
+
 ExpValues = {}
 ExpValues['MagMomProton'] = [2.792847356,0.000000023] ## taken from pdg http://pdg.ge.infn.it/2014/listings/rpp2014-list-p.pdf
 ExpValues['MagMomNeutron'] = [-1.91304272,0.00000045] ## taken from pdg http://pdg.ge.infn.it/2014/listings/rpp2014-list-n.pdf
@@ -128,7 +131,7 @@ ExpValues['MRadNeutron'][1] = np.abs(2*ExpValues['MRadNeutron'][0]*ExpValues['MR
 # ExpValues['MRadNeutron'] = np.array([-(0.862),0.009]) ## fm Dispersion analysis
 
 ExpValues['NeutronEDM'] = 3.6*10**-26 # e cm bound, (95% CL) from  https://arxiv.org/pdf/1509.04411.pdf
-ExpValues['ProtonEDM'] = .54*10**-23# e cm bound, Uses 199Hg atom EDM
+ExpValues['ProtonEDM'] = 0.54*10**-23# e cm bound, Uses 199Hg atom EDM
 
 ExpValues['Theta'] =  2.5*10**-10 ## from chi PT https://arxiv.org/pdf/0911.3981.pdf  (Might have some stuff for SU(3) 
 

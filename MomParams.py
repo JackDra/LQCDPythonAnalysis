@@ -39,6 +39,12 @@ def GetMpiNoForm(kappa,Phys=True,MeV=False):
     else:
         return DefPionMass[str(kappa)]
 
+
+def GetMpiSom(kappa,r0Scale):
+    kappa = str(kappa).replace('k','')
+    return DefPionMass[str(kappa)]*r0Scale[0]/latspace
+
+
     
 def GetMpi(kappa,Phys=True,MeV=False):
     kappa = str(kappa).replace('k','')
