@@ -103,7 +103,7 @@ MomFracNorm = 1 # normalisation for Momentum Fraction
 
 ## Experemental value dicionary [value,err] #############
 
-r0Scale = [0.472,0.005]## Sommer scale value from arXiv:hep-lat/0103011
+r0Som = [0.472,0.005]## Sommer scale value from arXiv:hep-lat/0103011
 
 ExpValues = {}
 ExpValues['MagMomProton'] = [2.792847356,0.000000023] ## taken from pdg http://pdg.ge.infn.it/2014/listings/rpp2014-list-p.pdf
