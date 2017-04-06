@@ -10,36 +10,37 @@ import time,datetime
 
 def RemoveCfgs(thisfilelist,newcfglist):
     filelistout = OrderedDict()
-    print newcfglist
     for icfg in newcfglist:
         for ioldcfg,icfgvalues in thisfilelist.iteritems():
+            print icfg, ioldcfglist
             if icfg in ioldcfg:
                 filelistout[ioldcfg] = icfgvalues
     return filelistout
 
 
 def ReadAndCheckTop(thisWein,thisfilelist):
+    thiscfglist = StripSrc(thisfilelist.keys())
     if thisWein:
-        cfglistout,topcharge,tflow = ReadTopList(WeinDir,thisfilelist.keys())
+        cfglistout,topcharge,tflow = ReadTopList(WeinDir,thiscfglist)
         thisfilelist = RemoveCfgs(thisfilelist,cfglistout)
         if QoppConfigCheck:
-            cfglistout,dump,dump2 = ReadTopList(TCDir,thisfilelist.keys(),OnlyCheck=True)
+            cfglistout,dump,dump2 = ReadTopList(TCDir,thiscfglist,OnlyCheck=True)
             thisfilelist = RemoveCfgs(thisfilelist,cfglistout)                
     else:
-        cfglistout,topcharge,tflow = ReadTopList(TCDir,thisfilelist.keys())
+        cfglistout,topcharge,tflow = ReadTopList(TCDir,thiscfglist)
         thisfilelist = RemoveCfgs(thisfilelist,cfglistout)
         if WoppConfigCheck:
-            cfglistout,dump,dump2 = ReadTopList(WeinDir,thisfilelist.keys(),OnlyCheck=True)
+            cfglistout,dump,dump2 = ReadTopList(WeinDir,thiscfglist,OnlyCheck=True)
             thisfilelist = RemoveCfgs(thisfilelist,cfglistout)
     return thisfilelist,topcharge,tflow
 
 
 def CheckTop(thisfilelist):
     if WoppConfigCheck:
-        cfglistout,topcharge,tflow = ReadTopList(WeinDir,thisfilelist.keys(),OnlyCheck=True)
+        cfglistout,topcharge,tflow = ReadTopList(WeinDir,thiscfglist,OnlyCheck=True)
         thisfilelist = RemoveCfgs(thisfilelist,cfglistout)
     if QoppConfigCheck:
-        cfglistout,topcharge,tflow = ReadTopList(TCDir,thisfilelist.keys(),OnlyCheck=True)
+        cfglistout,topcharge,tflow = ReadTopList(TCDir,thiscfglist,OnlyCheck=True)
         thisfilelist = RemoveCfgs(thisfilelist,cfglistout)                
     return thisfilelist
 
