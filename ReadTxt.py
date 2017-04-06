@@ -75,6 +75,8 @@ def ReadTopList(thisdir,thiscfglist,OnlyCheck=False):
                 if icfg in ifile:
                     if not OnlyCheck:
                         thistflow,thistcharge = ReadTopCharge(root+ifile)
+                    else:
+                        thistflow = [1]
                     if icfg in cfglistout:
                         print 'warning, duplicate file in directory for config', icfg
                     elif len(thistflow) != 0:
