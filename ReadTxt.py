@@ -54,7 +54,11 @@ def ReadTopList(thisdir,thiscfglist,OnlyCheck=False):
     for root, thedir, thesefiles in os.walk(thisdir):
         if Debug: print 'Found:'
         if Debug: print thesefiles
-        for icfg in thiscfglist:
+        if Debug: print 'Comparing against:'
+        if Debug: print thiscfglist
+        if Debug: print 
+        
+        for icfg in thiscfglist:            
             for ifile in thesefiles:
                 if Debug: 'checking ',icfg,ifile
                 if icfg in ifile:
