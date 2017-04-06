@@ -35,13 +35,15 @@ def ReadAndCheckTop(thisWein,thisfilelist):
 
 def CheckTop(thisfilelist):
     if WoppConfigCheck:
-        if Debug: print 'Doing Wopp check'
+        print 'Doing Wopp check'
         cfglistout,topcharge,tflow = ReadTopList(WeinDir,StripSrc(thisfilelist.keys()),OnlyCheck=True)
         thisfilelist = RemoveCfgs(thisfilelist,cfglistout)
+        print 'now at ', len(thisfilelist.keys()) , ' cfgs'
     if QoppConfigCheck:
-        if Debug: print 'Doing Qopp check'
+        print 'Doing Qopp check'
         cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist.keys()),OnlyCheck=True)
         thisfilelist = RemoveCfgs(thisfilelist,cfglistout)                
+        print 'now at ', len(thisfilelist.keys()) , ' cfgs'
     return thisfilelist
 
 

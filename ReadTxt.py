@@ -62,7 +62,6 @@ def ReadTopList(thisdir,thiscfglist,OnlyCheck=False):
                 # print 'checking ',icfg,ifile
                 if icfg in ifile:
                     if OnlyCheck:
-                        print ifile, ' found for config ', icfg
                         cfglistout.append(icfg)
                     else:
                         thistflow,thistcharge = ReadTopCharge(root+ifile)
@@ -72,7 +71,6 @@ def ReadTopList(thisdir,thiscfglist,OnlyCheck=False):
                             cfglistout.append(icfg)
                             tflow.append(thistflow)
                             topcharge.append(thistcharge)
-    print 'found ' , len(cfglistout) , ' files'
     return cfglistout,topcharge,tflow
 
 
