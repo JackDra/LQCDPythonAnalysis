@@ -52,11 +52,11 @@ def ReadTopList(thisdir,thiscfglist,OnlyCheck=False):
     cfglistout,tflow,topcharge = [],[],[]
     if Debug: print 'walking ' , thisdir
     for root, thedir, thesefiles in os.walk(thisdir):
-        if Debug: print 'Found:'
-        if Debug: print thesefiles
-        if Debug: print 'Comparing against:'
-        if Debug: print thiscfglist
-        if Debug: print 
+        print 'Found:'
+        print thesefiles
+        print 'Comparing against:'
+        print thiscfglist
+        print 
         
         for icfg in thiscfglist:            
             for ifile in thesefiles:
