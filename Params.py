@@ -261,7 +261,7 @@ DoCmplx = True # reads complex opperator values as well as real values, should b
 DoCons = False # reads Conserved vector current NOT IMPLEMENTED YET, USING BELOW UNTILL I GET AROUDN TO IT. ONLY WORKS WITH CHROMA
 RepWithCons = False # TEMPORARY, overrides vector current with Conserved vector current ONLY WORKS WITH CHROMA
 
-DefWipe = True # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
+DefWipe = False # Wipes sets before running RunMcorr, only doing if debugging, if working, should be False
 MakeGraphDat = True # Creates a .dat file of the values plotted for the corresponding graph (where implemented)
 PhysicalUnits = True # uses lattice momenta or physical momenta
 PhysMassPlot = PhysicalUnits # plots effective mass in physical units.... just linked it to PhysicalUnits
