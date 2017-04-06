@@ -72,6 +72,7 @@ def ReadTopList(thisdir,thiscfglist,OnlyCheck=False):
                             cfglistout.append(icfg)
                             tflow.append(thistflow)
                             topcharge.append(thistcharge)
+    print 'found ' , len(cfglistout) , ' files'
     return cfglistout,topcharge,tflow
 
 
