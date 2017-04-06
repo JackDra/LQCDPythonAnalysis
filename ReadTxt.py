@@ -53,6 +53,7 @@ def ReadTopList(thisdir,thiscfglist,OnlyCheck=False):
     for root, thedir, thesefiles in os.walk(thisdir):
         for icfg in thiscfglist:
             for ifile in thesefiles:
+                if Debug: 'checking ',icfg,ifile
                 if icfg in ifile:
                     if OnlyCheck:
                         if Debug: ifile, ' found for config ', icfg
