@@ -52,6 +52,8 @@ def ReadTopList(thisdir,thiscfglist,OnlyCheck=False):
     cfglistout,tflow,topcharge = [],[],[]
     if Debug: print 'walking ' , thisdir
     for root, thedir, thesefiles in os.walk(thisdir):
+        if Debug: print 'Found:'
+        if Debug: print thesefiles
         for icfg in thiscfglist:
             for ifile in thesefiles:
                 if Debug: 'checking ',icfg,ifile
