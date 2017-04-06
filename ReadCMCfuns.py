@@ -10,12 +10,10 @@ import time,datetime
 
 def RemoveCfgs(thisfilelist,newcfglist):
     filelistout = OrderedDict()
-    for ioldcfg in thisfilelist.iterkeys():
-        print ioldcfg
     for icfg in newcfglist:
-        print icfg
         for ioldcfg,icfgvalues in thisfilelist.iteritems():
             if icfg in ioldcfg:
+                print icfg,ioldcfg
                 filelistout[ioldcfg] = icfgvalues
     return filelistout
 
