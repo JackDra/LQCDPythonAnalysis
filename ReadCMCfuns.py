@@ -36,6 +36,7 @@ def ReadAndCheckTop(thisWein,thisfilelist):
 
 
 def CheckTop(thisfilelist):
+    thiscfglist = StripSrc(thisfilelist.keys())
     if WoppConfigCheck:
         cfglistout,topcharge,tflow = ReadTopList(WeinDir,thiscfglist,OnlyCheck=True)
         thisfilelist = RemoveCfgs(thisfilelist,cfglistout)
