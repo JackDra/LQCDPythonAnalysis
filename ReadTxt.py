@@ -59,8 +59,8 @@ def ReadTopList(thisdir,thiscfglist,OnlyCheck=False):
         # print         
         for icfg in thiscfglist:            
             for ifile in thesefiles:
-                # print 'checking ',icfg,ifile
                 if icfg in ifile:
+                    print 'found ',icfg,ifile
                     if OnlyCheck:
                         cfglistout.append(icfg)
                     else:
