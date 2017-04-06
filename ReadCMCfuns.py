@@ -35,9 +35,11 @@ def ReadAndCheckTop(thisWein,thisfilelist):
 
 def CheckTop(thisfilelist):
     if WoppConfigCheck:
+        if Debug: print 'Doing Wopp check'
         cfglistout,topcharge,tflow = ReadTopList(WeinDir,StripSrc(thisfilelist.keys()),OnlyCheck=True)
         thisfilelist = RemoveCfgs(thisfilelist,cfglistout)
     if QoppConfigCheck:
+        if Debug: print 'Doing Qopp check'
         cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist.keys()),OnlyCheck=True)
         thisfilelist = RemoveCfgs(thisfilelist,cfglistout)                
     return thisfilelist
@@ -252,7 +254,6 @@ def ReadSetAlpha(thisiSmearList,thisjSmearList,thisMomList,directory,Interps=['n
                         f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
     f.close()
     thisfilelist = DoForceChecks(thisfilelist)
-
     thisfilelist,topcharge,tflow = ReadAndCheckTop(Wein,thisfilelist)
     print 'number of configs = ' , len(thisfilelist.keys())
     print 'average number of sources per cfg = ' ,np.mean([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
@@ -295,9 +296,9 @@ def ReadList(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,thisPro
             thisfilelist[prefnosrc].append(ifile)
         f.write(ifile+'\n')
     f.close()
+    thisfilelist = CheckTop(thisfilelist)
     data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisiSmearList,thisjSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
     # print ''
-    thisfilelist = CheckTop(thisfilelist)
     data3pt = []
     for iFlag,itsink in zip(Flag,thisTSinkList):
         data3pt.append(Read3ptSet(thisfilelist,thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,
