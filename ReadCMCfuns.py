@@ -347,11 +347,11 @@ def ReadSet(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,thisProj
                         f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
     f.close()
     thisfilelist = DoForceChecks(thisfilelist)
+    thisfilelist = CheckTop(thisfilelist)
     print 'number of configs = ' , len(thisfilelist.keys())
     print 'average number of sources per cfg = ' ,np.mean([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
     print 'total number of measurements = ' , np.sum([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
     print ''
-    thisfilelist = CheckTop(thisfilelist)
     if len(thisfilelist.keys()) == 0: raise IOError('No Configurations Found')
     if ShowConfNum:
         for ifile in thisfilelist.itervalues():
