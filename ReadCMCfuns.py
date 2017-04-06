@@ -37,6 +37,7 @@ def CheckTop(thisfilelist):
     if WoppConfigCheck:
         print 'Doing Wopp check'
         cfglistout,topcharge,tflow = ReadTopList(WeinDir,StripSrc(thisfilelist.keys()),OnlyCheck=True)
+        print 'cfglistout len is ', len(cfglistout)
         thisfilelist = RemoveCfgs(thisfilelist,cfglistout)
         print 'now at ', len(thisfilelist.keys()) , ' cfgs'
     if QoppConfigCheck:
