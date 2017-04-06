@@ -55,6 +55,7 @@ def ReadTopList(thisdir,thiscfglist,OnlyCheck=False):
             for ifile in thesefiles:
                 if icfg in ifile:
                     if OnlyCheck:
+                        if Debug: ifile, ' found for config ', icfg
                         cfglistout.append(icfg)
                     else:
                         thistflow,thistcharge = ReadTopCharge(root+ifile)
