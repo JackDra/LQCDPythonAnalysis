@@ -12,8 +12,7 @@ def RemoveCfgs(thisfilelist,newcfglist):
     filelistout = OrderedDict()
     for icfg in newcfglist:
         for ioldcfg,icfgvalues in thisfilelist.iteritems():
-            if icfg in ioldcfg:
-                print icfg,ioldcfg
+            if '-'+icfg in ioldcfg:
                 filelistout[ioldcfg] = icfgvalues
     return filelistout
 
