@@ -67,6 +67,27 @@ def ReadTopList(thisdir,thiscfglist):
 ## cfglistout [ icfg ]
 ## tflow [ icfg , itflow ]
 ## topcharge [ icfg , itflow ]
+def ReadTopList(thisdir,thiscfglist,OnlyCheck=False):
+    cfglistout,tflow,topcharge = [],[],[]
+    for root, thedir, thesefiles in os.walk(thisdir):
+        for icfg in thiscfglist:
+            for ifile in thesefiles:
+                if icfg in ifile:
+                    if not OnlyCheck:
+                        thistflow,thistcharge = ReadTopCharge(root+ifile)
+                    if icfg in cfglistout:
+                        print 'warning, duplicate file in directory for config', icfg
+                    elif len(thistflow) != 0:
+                        cfglistout.append(icfg)
+                        if not OnlyCheck:
+                            tflow.append(thistflow)
+                            topcharge.append(thistcharge)
+    return cfglistout,topcharge,tflow
+
+
+## cfglistout [ icfg ]
+## tflow [ icfg , itflow ]
+## topcharge [ icfg , itflow ]
 def ReadTopAll(thisdir):
     cfglistout,tflow,topcharge = [],[],[]
     filelist = []

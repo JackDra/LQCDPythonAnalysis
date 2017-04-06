@@ -8,6 +8,41 @@ from ReadTxt import *
 from MiscFuns import *
 import time,datetime
 
+def RemoveCfgs(thisfilelist,newcfglist):
+    filelistout = OrderedDict()
+    for icfg in newcfglist:
+        for ioldcfg,icfgvalues in newcfglist.iteritems():
+            if icfg in ioldcfg:
+                filelistout[ioldcfg] = icfgvalues
+    return filelistout
+
+
+def ReadAndCheckTop(thisWein,thisfilelist):
+    if thisWein:
+        cfglistout,topcharge,tflow = ReadTopList(WeinDir,StripSrc(thisfilelist.keys()))
+        thisfilelist = RemoveCfgs(thisfilelist,cfglistout)
+        if QoppConfigCheck:
+            cfglistout,dump,dump2 = ReadTopList(TCDir,StripSrc(thisfilelist.keys()),OnlyCheck=True)
+            thisfilelist = RemoveCfgs(thisfilelist,cfglistout)                
+    else:
+        cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist.keys()))
+        thisfilelist = RemoveCfgs(thisfilelist,cfglistout)
+        if WoppConfigCheck:
+            cfglistout,dump,dump2 = ReadTopList(WeinDir,StripSrc(thisfilelist.keys()),OnlyCheck=True)
+            thisfilelist = RemoveCfgs(thisfilelist,cfglistout)
+    return thisfilelist,topcharge,tflow
+
+
+def CheckTop(thisfilelist):
+    if WoppConfigCheck:
+        cfglistout,topcharge,tflow = ReadTopList(WeinDir,StripSrc(thisfilelist.keys()),OnlyCheck=True)
+        thisfilelist = RemoveCfgs(thisfilelist,cfglistout)
+    if QoppConfigCheck:
+        cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist.keys()),OnlyCheck=True)
+        thisfilelist = RemoveCfgs(thisfilelist,cfglistout)                
+    return thisfilelist
+
+
 def DoForceChecks(thisfilelist):
     if FlipConfs: thisfilelist = OrderedDict(reversed(list(thisfilelist.items())))
     if ExactXSrcNumber:
@@ -29,10 +64,6 @@ def ReadSetTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList
                      thisTSinkList,directory,Flag,Interps=['nucleon'],thistsourceList=[tsource],Wein=False):
     # if len(thisTSinkList) > 0:
     #     TestMomList(thisMomList)
-    if Wein:
-        TopReadDir = WeinDir
-    else:
-        TopReadDir = TCDir
         
     thisfilelist = OrderedDict()
     f = open('./cfglistset.txt','w')
@@ -78,6 +109,7 @@ def ReadSetTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList
                         f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
     f.close()
     thisfilelist = DoForceChecks(thisfilelist)
+    thisfilelist,topcharge,tflow = ReadAndCheckTop(Wein,thisfilelist)
     print 'number of configs = ' , len(thisfilelist.keys())
     print 'average number of sources per cfg = ' ,np.mean([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
     print 'total number of measurements = ' , np.sum([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
@@ -97,7 +129,9 @@ def ReadSetTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList
     #     print ''
     data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisiSmearList,thisjSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
     # print ''
-    cfglistout,topcharge,tflow = ReadTopList(TopReadDir,StripSrc(thisfilelist.keys()))
+    #thisfilelist = { icfg: [isrc] }
+    #newcfglist = [icfg]
+    
     if not np.all([x==tflow[0] for x in tflow]):
         print 'warning, files had different flow times'
     thisTflowList = tflow[0]
@@ -126,13 +160,9 @@ def ReadListTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaLis
             thisfilelist[prefnosrc].append(ifile)
         f.write(ifile+'\n')
     f.close()
+    thisfilelist,topcharge,tflow = ReadAndCheckTop(Wein,thisfilelist)
     data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisiSmearList,thisjSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
     # print ''
-    if Wein:
-        TopReadDir = WeinDir
-    else:
-        TopReadDir = TCDir
-    cfglistout,topcharge,tflow = ReadTopList(TopReadDir,StripSrc(thisfilelist.keys()))
     if not np.all([x==tflow[0] for x in tflow]):
         print 'warning, files had different flow times'
     thisTflowList = tflow[0]
@@ -169,12 +199,8 @@ def ReadListAlpha(thisiSmearList,thisjSmearList,thisMomList,thisconflist,Interps
     f.close()
 
     
+    thisfilelist,topcharge,tflow = ReadAndCheckTop(Wein,thisfilelist)
     print thisfilelist.keys()
-    if Wein:
-        TopReadDir = WeinDir
-    else:
-        TopReadDir = TCDir
-    cfglistout,topcharge,tflow = ReadTopList(TopReadDir,StripSrc(thisfilelist.keys()))
     if not np.all([x==tflow[0] for x in tflow]):
         print 'warning, files had different flow times'
     thisTflowList = tflow[0]
@@ -227,6 +253,7 @@ def ReadSetAlpha(thisiSmearList,thisjSmearList,thisMomList,directory,Interps=['n
     f.close()
     thisfilelist = DoForceChecks(thisfilelist)
 
+    thisfilelist,topcharge,tflow = ReadAndCheckTop(Wein,thisfilelist)
     print 'number of configs = ' , len(thisfilelist.keys())
     print 'average number of sources per cfg = ' ,np.mean([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
     print 'total number of measurements = ' , np.sum([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
@@ -238,11 +265,6 @@ def ReadSetAlpha(thisiSmearList,thisjSmearList,thisMomList,directory,Interps=['n
                 print iifile
         print ''
         
-    if Wein:
-        TopReadDir = WeinDir
-    else:
-        TopReadDir = TCDir
-    cfglistout,topcharge,tflow = ReadTopList(TopReadDir,StripSrc(thisfilelist.keys()))
     if len(tflow) == 0:
         if Wein:
             raise IOError('Weinerg operator data not found in ' + TopReadDir )
@@ -275,6 +297,7 @@ def ReadList(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,thisPro
     f.close()
     data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisiSmearList,thisjSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
     # print ''
+    thisfilelist = CheckTop(thisfilelist)
     data3pt = []
     for iFlag,itsink in zip(Flag,thisTSinkList):
         data3pt.append(Read3ptSet(thisfilelist,thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,
@@ -328,6 +351,7 @@ def ReadSet(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList,thisProj
     print 'average number of sources per cfg = ' ,np.mean([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
     print 'total number of measurements = ' , np.sum([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
     print ''
+    thisfilelist = CheckTop(thisfilelist)
     if len(thisfilelist.keys()) == 0: raise IOError('No Configurations Found')
     if ShowConfNum:
         for ifile in thisfilelist.itervalues():

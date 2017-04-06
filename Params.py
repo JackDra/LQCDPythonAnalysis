@@ -293,6 +293,8 @@ if DoCons: RepWithCons = False
 # else:
 #     CfunConfigCheck = False # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
 CfunConfigCheck = True # Checks all two and three point correlators before running (turn to False if doing 2-pt corr analysis)
+QoppConfigCheck = True # Checks if the corresponding Q operator exist
+WoppConfigCheck = True # Checks if the corresponding weinberg operator exist
 if 'LStats' in ListOrSet:
     CfunConfigCheck = False
 

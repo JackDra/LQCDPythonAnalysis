@@ -18,7 +18,7 @@ cm_to_fm = 10**14
 latspace = 0.0907 ## In fermi
 
 hbarcdivlat = hbarc/latspace
-qunitPhys = qunit*hbarcdivlat
+qunitPhys = qunit*hbarcdivlat ## GeV
 
 DefMass = {}
 DefMass['1370000'] = 0.7277 #Lat Units
