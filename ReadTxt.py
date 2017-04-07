@@ -33,8 +33,8 @@ def StripSrc(filelist):
 def ReadTopCharge(thisfile):
     if 'weinopp' in thisfile:
         thisfile = thisfile.replace('q_flow','W_flow')
-    if Debug: print 'Reading: ',thisfile
     if os.path.isfile(thisfile):
+        if Debug: print 'Reading: ',thisfile
         data = np.rollaxis(np.loadtxt(thisfile),1)
         if data.shape[1] < tflowlist[-1]:
             print 'file: ',thisfile,' does not have all flows'
@@ -43,6 +43,7 @@ def ReadTopCharge(thisfile):
             tflow,topcharge = data[:,tflowlist]
             return tflow,topcharge
     else:
+        if Debug: print 'File not found : ', thisfile
         return [],[]
 
 ## cfglistout [ icfg ]
