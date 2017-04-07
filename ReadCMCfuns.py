@@ -18,19 +18,19 @@ def RemoveCfgs(thisfilelist,newcfglist):
 
 
 def ReadAndCheckTop(thisWein,thisfilelist):
-    thiscfglist = StripSrc(thisfilelist.keys())
     if thisWein:
-        cfglistout,topcharge,tflow = ReadTopList(WeinDir,thiscfglist)
+        cfglistout,topcharge,tflow = ReadTopList(WeinDir,StripSrc(thisfilelist.keys()))
         thisfilelist = RemoveCfgs(thisfilelist,cfglistout)
         if QoppConfigCheck:
-            cfglistout,dump,dump2 = ReadTopList(TCDir,thiscfglist,OnlyCheck=True)
+            cfglistout,dump,dump2 = ReadTopList(TCDir,StripSrc(thisfilelist.keys()),OnlyCheck=True)
             thisfilelist = RemoveCfgs(thisfilelist,cfglistout)                
     else:
-        cfglistout,topcharge,tflow = ReadTopList(TCDir,thiscfglist)
+        cfglistout,topcharge,tflow = ReadTopList(TCDir,StripSrc(thisfilelist.keys()))
         thisfilelist = RemoveCfgs(thisfilelist,cfglistout)
         if WoppConfigCheck:
-            cfglistout,dump,dump2 = ReadTopList(WeinDir,thiscfglist,OnlyCheck=True)
+            cfglistout,dump,dump2 = ReadTopList(WeinDir,StripSrc(thisfilelist.keys()),OnlyCheck=True)
             thisfilelist = RemoveCfgs(thisfilelist,cfglistout)
+    print 
     return thisfilelist,topcharge,tflow,cfglistout
 
 
