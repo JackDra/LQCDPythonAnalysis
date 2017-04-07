@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+02#!/usr/bin/env python
 from array import array
 import numpy as np
 import BootTest as bt
@@ -199,6 +199,7 @@ def ReadAndBoot2ptTop(readfilelist,thisMomList,thisnboot,chargedata,chargecfglis
                     data = R2CChromaXMLFileList(ifileList,thisMomList,Dog5=True)
                     tempdataTop.append([])
                     tempdata.append(data.data)
+                    print np.len(chargedata), chargeindex
                     for iflowdata in chargedata[chargeindex]:
                         tempdataTop[-1].append(np.array(data.datag5)*iflowdata)
                         # tempdataTop[-1].append(np.array(data.datag5))
