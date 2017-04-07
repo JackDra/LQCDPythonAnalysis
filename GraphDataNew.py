@@ -1161,12 +1161,12 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
         fitydataAvg = -np.array(fitydataAvg)
         Avg = -Avg
     pl.plot(fitqdata+thisshift,fitydataAvg,color=thiscol)
-    if Err[0] < 1.0 :
-        if 'FF1' in thisFF and 'Neutron' in thisCurr: return
-        if 'FF3' in thisFF:
-            pl.errorbar([0.0+thisshift],[Avg[1]],[Err[1]],fmt='-',color=thiscol,label=LegVal)
-        else:
-            pl.errorbar([0.0+thisshift],[Avg[0]],[Err[0]],fmt='-',color=thiscol,label=LegVal)
+    # if Err[0] < 1.0 :
+    if 'FF1' in thisFF and 'Neutron' in thisCurr: return
+    if 'FF3' in thisFF:
+        pl.errorbar([0.0+thisshift],[Avg[1]],[Err[1]],fmt='-',color=thiscol,label=LegVal)
+    else:
+        pl.errorbar([0.0+thisshift],[Avg[0]],[Err[0]],fmt='-',color=thiscol,label=LegVal)
             # pl.fill_between(fitqdata+thisshift,fitydataup,fitydatadown,color=thiscol,alpha=thisalpha,edgecolor='none')
     
 def PlotFF(data,col,sym,shift,lab,SkipZero,FlipSign,FixZ=False):
