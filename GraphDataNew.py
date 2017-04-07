@@ -40,7 +40,7 @@ shiftsetff = [0]
 for ish in np.arange(1,shiftmax+1): shiftsetff += [-ish*shiftperff,ish*shiftperff]
 incr = 0.01
 thisalpha = 0.3
-
+ScaleLegSpace = 1.15
 
 # MassTVals = 16,33
 # MassTVals = 3,25
@@ -413,6 +413,7 @@ def SetTopAxies(torflow,NNQ=False,Dt=2,Wein=False,MpiTitle=True):
     elif torflow == 'Mpi':
         pl.xlabel(r'$m_{\pi} (GeV)$')
         pl.xlim(0,pl.xlim()[-1])
+    pl.xlim(pl.xlim()[0],pl.xlim()[1]*ScaleLegSpace)
     pl.legend()
     pl.tight_layout()
     if MpiTitle: thisMpi = '\ '+GetMpi(kappa,Phys=True)
