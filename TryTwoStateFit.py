@@ -1,7 +1,7 @@
 #!/usr/bin/env python
+from Params import *
 import numpy as np
 import sys
-from Params import *
 from FitParams import *
 from Fitting import MomTSSetFit,MomTSSetFit2pt
 from ReadTxt import ReadCfunsnp

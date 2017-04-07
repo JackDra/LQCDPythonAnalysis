@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-import numpy as np
 from Params import *
+import numpy as np
 from MiscFuns import *
 from ReadTxt import ExtractValues,ReadAlphaList
 from SetLists import *

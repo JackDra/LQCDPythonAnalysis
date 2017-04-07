@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-import numpy as np
 from Params import *
+import numpy as np
 from MiscFuns import *
 from FitFunctions import DPfitfun,DPfitfunDer
 from FitFunctions import DPfitfunOnePar,DPfitfunOneParDer

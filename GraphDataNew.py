@@ -118,8 +118,8 @@ leglocFFDict = {'NeutronVectorFF2':'upper left',
                 'NeutronTensorFF1':'upper left',
                 'NeutronTensorFF2':'upper left'}
 
-params = {'legend.fontsize': 15,
-          'legend.linewidth': 2,
+params = {'legend.fontsize': 10,
+          'legend.linewidth': 1,
           'legend.numpoints': 1,
           'axes.labelsize' : 20,
           'figure.autolayout': True,

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
+from Params import *
 
 from OppFuns import CreateGammaList,WipeSet
-from Params import *
 import numpy as np
 from BootTest import BootStrap1
 from ReadTxt import *

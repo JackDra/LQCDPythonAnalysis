@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
+from Params import *
 import xmltodict
 from collections import OrderedDict
-from Params import *
 import numpy as np
 
 def GetInfoFromFilelist(filedict):
