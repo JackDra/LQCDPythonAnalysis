@@ -488,6 +488,7 @@ def ReadAndBoot3ptTop(readfilelist,thisMomList,thisGammaList,thisDerGammaList,th
                         data = ReadFSCfunPickCHROMA(ifileList,thisMomList,thisGammaList)
                         tempdata.append(data.data)
                         tempdataTop.append([])
+                        print np.len(chargedata) , chargeindex
                         for iflowdata in chargedata[chargeindex]:
                             tempdataTop[-1].append(np.array(data.data)*iflowdata)
                     if len(thisDerGammaList) > 0:
