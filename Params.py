@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+import matplotlib
+matplotlib.use('PDF') # Must be before importing matplotlib.pyplot or pylab!
+import matplotlib.pyplot as pl
 import numpy as np
 from MomParams import *
 from MiscFuns import *

@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
+from GraphDataNew import *
 from Params import *
 import numpy as np
 from ReadTxt import *
 from MiscFuns import *
 from FitParams import *
 from StringFix import *
-from GraphDataNew import *
 from SetLists import CutDupSet
 from ReadDir import *
 from FFParams import *

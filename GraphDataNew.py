@@ -1,8 +1,5 @@
 #!/usr/bin/env python
 
-import matplotlib
-matplotlib.use('PDF') # Must be before importing matplotlib.pyplot or pylab!
-import matplotlib.pyplot as pl
 from Params import *
 from FitFunctions import *
 from LLSBoot import FitBoots

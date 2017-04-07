@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from GraphDataNew import *
 from Params import *
 import numpy as np
 from ReadXml import *
@@ -13,7 +14,6 @@ from multiprocessing import Pool
 from InputArgs import *
 from CreateCombs import CreateDictOldCombs
 from CombParams import *
-from GraphDataNew import *
 
 ## cfglistout [ icfg ]
 ## tflow [ icfg , itflow ]
