@@ -31,7 +31,7 @@ def ReadAndCheckTop(thisWein,thisfilelist):
         if WoppConfigCheck:
             cfglistout,dump,dump2 = ReadTopList(WeinDir,thiscfglist,OnlyCheck=True)
             thisfilelist = RemoveCfgs(thisfilelist,cfglistout)
-    return thisfilelist,topcharge,tflow
+    return thisfilelist,topcharge,tflow,cfglistout
 
 
 def CheckTop(thisfilelist):
@@ -111,7 +111,7 @@ def ReadSetTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaList
                         f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
     f.close()
     thisfilelist = DoForceChecks(thisfilelist)
-    thisfilelist,topcharge,tflow = ReadAndCheckTop(Wein,thisfilelist)
+    thisfilelist,topcharge,tflow,cfglistout = ReadAndCheckTop(Wein,thisfilelist)
     print 'number of configs = ' , len(thisfilelist.keys())
     print 'average number of sources per cfg = ' ,np.mean([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
     print 'total number of measurements = ' , np.sum([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
@@ -162,7 +162,7 @@ def ReadListTopCharge(thisiSmearList,thisjSmearList,thisMomList,thisProjGammaLis
             thisfilelist[prefnosrc].append(ifile)
         f.write(ifile+'\n')
     f.close()
-    thisfilelist,topcharge,tflow = ReadAndCheckTop(Wein,thisfilelist)
+    thisfilelist,topcharge,tflow,cfglistout = ReadAndCheckTop(Wein,thisfilelist)
     data2pt,randlist,shiftlist = Read2ptSet(thisfilelist,thisiSmearList,thisjSmearList,GetAvgMomListip(thisMomList),Interps,tsourceList=thistsourceList)
     # print ''
     if not np.all([x==tflow[0] for x in tflow]):
@@ -201,7 +201,7 @@ def ReadListAlpha(thisiSmearList,thisjSmearList,thisMomList,thisconflist,Interps
     f.close()
 
     
-    thisfilelist,topcharge,tflow = ReadAndCheckTop(Wein,thisfilelist)
+    thisfilelist,topcharge,tflow,cfglistout = ReadAndCheckTop(Wein,thisfilelist)
     print thisfilelist.keys()
     if not np.all([x==tflow[0] for x in tflow]):
         print 'warning, files had different flow times'
@@ -254,7 +254,7 @@ def ReadSetAlpha(thisiSmearList,thisjSmearList,thisMomList,directory,Interps=['n
                         f.write(directory+'/'+isource+'/@/'+fileprefix+'\n')
     f.close()
     thisfilelist = DoForceChecks(thisfilelist)
-    thisfilelist,topcharge,tflow = ReadAndCheckTop(Wein,thisfilelist)
+    thisfilelist,topcharge,tflow,cfglistout = ReadAndCheckTop(Wein,thisfilelist)
     print 'number of configs = ' , len(thisfilelist.keys())
     print 'average number of sources per cfg = ' ,np.mean([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
     print 'total number of measurements = ' , np.sum([len(ifilelist) for ifilelist in thisfilelist.itervalues()])
