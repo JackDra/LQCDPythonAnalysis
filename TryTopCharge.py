@@ -18,6 +18,7 @@ from multiprocessing import Pool
 from XmlFormatting import GetInfoFromFilelist
 
 def CreateTwoPtTop(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':AnaProc},Wein=False):
+    if Debug: print 'thisMomList: ', ' , '.join(map(ipTOqstr,thisMomList))
     if Wein:
         logfile = logdir+'LogWein2pt.log'
         errfile = logdir+'LogWein2pt.log'
@@ -36,6 +37,7 @@ def CreateTwoPtTop(thisMomList,thisiSmearList,thisjSmearList,feedin= {'anaproc':
         [data2pt,dataTop,thisTopList,filelist] = ReadSetAlpha(thisiSmearList,thisjSmearList,thisMomList,dirread,Interps=DefInterpList,thistsourceList=PoFtsourceList,Wein=Wein)
 
     thisMomList = GetAvgMomListip(thisMomList)
+    if Debug: print 'thisMomList: ', ' , '.join(map(ipTOqstr,thisMomList))
     data2pt = np.array(PreptwoptCorr(np.array(data2pt)))
     InfoDict = GetInfoFromFilelist(filelist)
     # print 'nboot = ' + str(nboot)
