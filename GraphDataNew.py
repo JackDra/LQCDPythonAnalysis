@@ -2013,7 +2013,8 @@ def GraphchitKappas(Qlist,flowlist):
     # chit = coeff*np.array(Q2boot)**(0.25)
     # chit = GetBootStats(chit)
     # pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q Boot$')
-    tflowindex = flowlist[0].tolist().index(4.01)
+    tflowpicked = 4.01
+    tflowindex = flowlist[0].tolist().index(tflowpicked)
     chitKappa = []
     # MpiList = [DefPionMass['1370000']*hbarc/latspace,DefPionMass['1375400']*hbarc/latspace]
     MpiList = []
@@ -2041,7 +2042,7 @@ def GraphchitKappas(Qlist,flowlist):
     # pl.ylim(0,0.4)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Qdata/'
-    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle Q^2 \rangle^{1/4} $',y=TitleShift)
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle Q^2 \rangle^{1/4} \quad \sqrt{8t_{f}} = '+str(TflowToPhys(tflowpicked))+r'$',y=TitleShift)
     # pl.title(r'$ \chi_{t} = \frac{1}{V} \langle Q^2 \rangle $',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chitKappa.pdf')
@@ -2094,7 +2095,8 @@ def GraphWchitKappas(Wlist,flowlist):
     # chit = coeff*np.array(W2boot)**(0.25)
     # chit = GetBootStats(chit)
     # pl.errorbar(flowlist,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$W Boot$')
-    tflowindex = flowlist[0].tolist().index(4.0)
+    tflowpicked = 4.0
+    tflowindex = flowlist[0].tolist().index(tflowpicked)
     chitKappa = []
     # MpiList = [DefPionMass['1370000']*hbarc/latspace,DefPionMass['1375400']*hbarc/latspace]
     MpiList = []
@@ -2119,7 +2121,7 @@ def GraphWchitKappas(Wlist,flowlist):
     # pl.ylim(0,0.4)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Wdata/'
-    pl.title(r'$ \chi_{t}^{1/8} = \frac{1}{V^{1/8}} \langle W^2 \rangle^{1/8} $',y=TitleShift)
+    pl.title(r'$ \chi_{t}^{1/8} = \frac{1}{V^{1/8}} \langle W^2 \rangle^{1/8} \quad \sqrt{8t_{f}} = '+str(TflowToPhys(tflowpicked))+r'$',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chitKappa.pdf')
     pl.clf()
