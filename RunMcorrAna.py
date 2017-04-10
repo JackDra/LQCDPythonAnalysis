@@ -124,8 +124,11 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
     print '----------------------------------------------------------------------------------'
     if RunType == 'TwoPt':
         print 'Two Point Analysis'
-        thisMomList = Get2ptSetMoms(outputdir[0],RunAvgMomList,tvarlist=PoFTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList,tsrclist=PoFtsourceList)
-        if len(thisMomList) == 0 and not DefWipe:
+        if DefWipe:
+            thisMomList = RunAvgMomList
+        else:
+            thisMomList = Get2ptSetMoms(outputdir[0],RunAvgMomList,tvarlist=PoFTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList,tsrclist=PoFtsourceList)
+        if len(thisMomList) == 0 :
             print 'Already Done, (if you want to overwrite, set DefWipe to True and rerun)'
         else:
             if OverDetRun:
@@ -137,8 +140,11 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         print 'Topological Charge Analysis'
         # Wipe2pt(outputdir[0],tvarlist=TwoPtDefTvarList,smlist=DefSmearList)
         # thisMomList = Get2ptSetMoms(outputdir[0],RunAvgMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
-        thisMomList = GetTopSetMoms(outputdir[0]+'/Top/',RunAvgMomList,tvarlist=PoFTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList,tsrclist=PoFtsourceList)
-        if len(thisMomList) == 0 and not DefWipe:
+        if DefWipe:
+            thisMomList = RunAvgMomList
+        else:
+            thisMomList = GetTopSetMoms(outputdir[0]+'/Top/',RunAvgMomList,tvarlist=PoFTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList,tsrclist=PoFtsourceList)
+        if len(thisMomList) == 0 :
             print 'Already Done, (if you want to overwrite, set DefWipe to True and rerun)'
         else:
             CreateTwoPtTop([qstrTOip(imom) for imom in DragpZstr(thisMomList)],DefiSmearList,DefjSmearList,feedin=feedin)
@@ -147,8 +153,11 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         print 'Weinberg Operator Analysis'
         # Wipe2pt(outputdir[0],tvarlist=TwoPtDefTvarList,smlist=DefSmearList)
         # thisMomList = Get2ptSetMoms(outputdir[0],RunAvgMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
-        thisMomList = GetTopSetMoms(outputdir[0]+'/Wein/',RunAvgMomList,tvarlist=PoFTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList,tsrclist=PoFtsourceList)
-        if len(thisMomList) == 0 and not DefWipe:
+        if DefWipe:
+            thisMomList = RunAvgMomList
+        else:
+            thisMomList = GetTopSetMoms(outputdir[0]+'/Wein/',RunAvgMomList,tvarlist=PoFTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList,tsrclist=PoFtsourceList)
+        if len(thisMomList) == 0 :
             print 'Already Done, (if you want to overwrite, set DefWipe to True and rerun)'
         else:
             CreateTwoPtTop([qstrTOip(imom) for imom in DragpZstr(thisMomList)],DefiSmearList,DefjSmearList,feedin=feedin,Wein=True)

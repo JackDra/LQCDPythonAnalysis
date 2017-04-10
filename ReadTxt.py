@@ -330,6 +330,7 @@ def GetTopSetMoms(thisoutputdir,MomListIn,tvarlist=[],ismlist=[],jsmlist=[],tsrc
             for itvar in tvarlist:
                 for istate in GetStateSet(itvar):
                     ifile = thisdir+'state'+istate+itvar+iflag.replace(flagrep,'')+ip+'.xml'
+                    if Debug: 'checking ' , ifile
                     if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
             for its in tsrclist:
                 for ism in ismlist:
@@ -339,6 +340,7 @@ def GetTopSetMoms(thisoutputdir,MomListIn,tvarlist=[],ismlist=[],jsmlist=[],tsrc
                         if 'ism' not in ismstr: ismstr = 'ism'+ismstr
                         if 'jsm' not in jsmstr: jsmstr = 'jsm'+jsmstr
                         ifile = thisdir+ts+ismstr+jsmstr+iflag.replace(flagrep,'')+ip+'.xml'
+                        if Debug: 'checking ' , ifile
                         if not CheckMomFile(ifile): momlist.add(qcondTOqstr(ip))
     return OrderMomList(momlist)
 
