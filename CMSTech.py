@@ -501,6 +501,9 @@ def CreatePoF2ptCfuns(Cfuns2pt,todtvals,thisMomList,todtvalsLeft=False,printout=
             print 'CM PoF Creation shift'+str(PoFShifts)+' to'+str(todtvals[0])+' dt'+str(todtvals[1])+ ' took: ' , GetTimeStr(time.time()-start)
         else:
             print 'CM Creation to'+str(todtvals[0])+' dt'+str(todtvals[1])+ ' took: ' , GetTimeStr(time.time()-start)
+    if Debug:
+        print np.array(CMCfun2pt).shape
+        print
     return [np.rollaxis(np.array(CMCfun2pt),1),LEvec,REvec,Emass]
 
 
