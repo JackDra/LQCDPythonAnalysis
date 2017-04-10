@@ -217,6 +217,12 @@ def PlotExp(flag,thiscolcyc):
         yval = np.array([ExpValues['NeutronEDMtfm'],ExpValues['NeutronEDMtfm']])
         pl.plot([0.0],[0.0],color=thiscol,label=thislab)
         pl.fill_between([-0.05,0.05],yval,-yval,color=thiscol,alpha=thisalpha,edgecolor='none')
+    if 'chit' in flag:
+        for ileg,ival in ExpValues['TopSuc'].iteritems():
+            thisxvals = ival[r'm_{\pi}']
+            thisyvals = ival[r'\chi_{t}^{1/4}'][:,0]
+            thisyerr = ival[r'\chi_{t}^{1/4}'][:,1]
+            pl.errorbar(thisxvals,thisyvals,thisyerr,color=thiscolcyc.next(),label=ileg)
 
 
 
@@ -2007,6 +2013,7 @@ def GraphWchit(Wlist,flowlist):
 
 def GraphchitKappas(Qlist,flowlist):
     ## Hard coded here....
+    thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     flowlist = np.array(flowlist)
     coeff = (hbarc/(latspace*nx**(0.75)*nt**(0.25)))
     # Qboot,dump = bt.CreateBoot(Qlist,nboot,0)
@@ -2027,8 +2034,9 @@ def GraphchitKappas(Qlist,flowlist):
         chit = GetBootStats(chit)
         chitKappa.append(chit[tflowindex])
     # pl.errorbar(flowlist-0.02,Pullflag(chit,'Avg'),Pullflag(chit,'Std'),fmt='o',label=r'$Q^{2} Boot$')
-    pl.errorbar(MpiList,Pullflag(chitKappa,'Avg'),Pullflag(chitKappa,'Std'),fmt='o')
-
+    pl.errorbar(MpiList,Pullflag(chitKappa,'Avg'),Pullflag(chitKappa,'Std'),fmt='o',color=thiscolcyc.next())
+    
+    PlotExp('chit',thiscolcyc)
     # Qavg = np.mean(np.array(Qlist)**2,axis=0)
     # Qstd = np.std(np.array(Qlist)**2,axis=0,ddof=1)
     # chitAvg = coeff*Qavg**(0.25)

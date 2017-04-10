@@ -142,6 +142,35 @@ ExpValues['NeutronEDMtfm'] = ExpValues['NeutronEDM']*cm_to_fm/ExpValues['Theta']
 ExpValues['ProtonEDMtfm'] =  ExpValues['ProtonEDM']*cm_to_fm/ExpValues['Theta'] # theta fm 
 
 
+ExpValues['TopSuc'] = OrderedDict()
+
+# ExpValues['TopSuc']['Bietenholz et al. 2016 $N_{f}=2$'] = {}
+# ExpValues['TopSuc']['Bietenholz et al. 2016 $N_{f}=2$'][r'm_{\pi}'] = 650 ## MeV
+# ExpValues['TopSuc']['Bietenholz et al. 2016 $N_{f}=2$'][r'a'] = 0.079  ## fm
+# ExpValues['TopSuc']['Bietenholz et al. 2016 $N_{f}=2$'][r'\chi_{t}'] = [7.76*10**-5,0.20*10**-5]  ## fm
+
+# ExpValues['TopSuc']['Slab Bietenholz et al. 2016 $N_{f}=2$'] = {}
+# ExpValues['TopSuc']['Slab Bietenholz et al. 2016 $N_{f}=2$'][r'm_{\pi}'] = 650 ## MeV
+# ExpValues['TopSuc']['Slab Bietenholz et al. 2016 $N_{f}=2$'][r'a'] = 0.079  ## fm
+# ExpValues['TopSuc']['Slab Bietenholz et al. 2016 $N_{f}=2$'][r'\chi_{t}'] = [7.63*10**-5,0.14*10**-5]  ## fm
+
+# ExpValues['TopSuc']['AFHO Bietenholz et al. 2016 $N_{f}=2$'] = {}
+# ExpValues['TopSuc']['AFHO Bietenholz et al. 2016 $N_{f}=2$'][r'm_{\pi}'] = 650 ## MeV
+# ExpValues['TopSuc']['AFHO Bietenholz et al. 2016 $N_{f}=2$'][r'a'] = 0.079  ## fm
+# ExpValues['TopSuc']['AFHO Bietenholz et al. 2016 $N_{f}=2$'][r'\chi_{t}'] = [7.69*10**-5,0.22*10**-5]  ## fm
+
+
+ExpValues['TopSuc']['Chiu et al, 2008 DWF'] = {}
+ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'm_{\pi}'] = [419,554,667] ## MeV
+ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'a'] = 0.12  ## fm
+ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'L'] = [16,16,16,32]  ## fm
+ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'\chi_{t}'] = np.array([[5.51,0.62],[7.74,0.75],[12.3,1.1]])*10**(-5)  ## GeV^4
+ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'\chi_{t}^{1/4}'] = hbarc*ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'\chi_{t}']**(0.25)  ## GeV
+
+
+
+
+
 #############################################################
 
 F3Div2M = True ## Reads in F3 for VectorTop with dividing by the physical mass and multiplying by hbarc in GeV*fm (final result in fm) 
