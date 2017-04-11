@@ -125,7 +125,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
     if RunType == 'TwoPt':
         print 'Two Point Analysis'
         if DefWipe:
-            thisMomList = RunAvgMomList
+            thisMomList = np.array(RunAvgMomList)
         else:
             thisMomList = Get2ptSetMoms(outputdir[0],RunAvgMomList,tvarlist=PoFTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList,tsrclist=PoFtsourceList)
         if len(thisMomList) == 0 :
@@ -141,7 +141,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         # Wipe2pt(outputdir[0],tvarlist=TwoPtDefTvarList,smlist=DefSmearList)
         # thisMomList = Get2ptSetMoms(outputdir[0],RunAvgMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
         if DefWipe:
-            thisMomList = RunAvgMomList
+            thisMomList = np.array(RunAvgMomList)
         else:
             thisMomList = GetTopSetMoms(outputdir[0]+'/Top/',RunAvgMomList,tvarlist=PoFTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList,tsrclist=PoFtsourceList)
         if len(thisMomList) == 0 :
@@ -154,7 +154,7 @@ def RunOffCorrs(thisPool,Curr,RunType,RunTSinkList=None,WipeThisSet=False,feedin
         # Wipe2pt(outputdir[0],tvarlist=TwoPtDefTvarList,smlist=DefSmearList)
         # thisMomList = Get2ptSetMoms(outputdir[0],RunAvgMomList,tvarlist=TwoTotDefTvarList,smlist=DefSmearList,tsrclist=PoFtsourceList)
         if DefWipe:
-            thisMomList = RunAvgMomList
+            thisMomList = np.array(RunAvgMomList)
         else:
             thisMomList = GetTopSetMoms(outputdir[0]+'/Wein/',RunAvgMomList,tvarlist=PoFTvarList,ismlist=DefiSmearList,jsmlist=DefjSmearList,tsrclist=PoFtsourceList)
         if len(thisMomList) == 0 :
