@@ -128,9 +128,12 @@ def DragpZ(momlist,Avg=False):
 
 ## momlist in str indexing
 def DragpZstr(momlist,Avg=False):
+    momlistout = momlist
     if 'q = 0 0 0' in momlist:
-        momlist.insert(0, momlist.pop(momlist.index('q = 0 0 0')))
-    return momlist
+        if isinstance(momlist, np.ndarray):
+            momlistout = np.array(momlist)
+        momlistout.insert(0, momlistout.pop(momlist.index('q = 0 0 0')))
+    return momlistout
 
 qvecSetZfirst = DragpZstr(qvecSet.tolist())
 
