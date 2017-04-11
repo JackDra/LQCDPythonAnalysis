@@ -2015,7 +2015,7 @@ def GraphchitKappas(Qlist,flowlist):
     ## Hard coded here....
     thissymcyc,thiscolcyc,thisshiftcyc = GetPlotIters()
     flowlist = np.array(flowlist)
-    coeff = (hbarc/(latspace*nx**(0.75)*nt**(0.25)))
+    coeff = (hbarcdivlat/(nx**(0.75)*nt**(0.25)))
     # Qboot,dump = bt.CreateBoot(Qlist,nboot,0)
     # Q2boot = np.array(Qboot)**2
     # chit = coeff*np.array(Q2boot)**(0.25)
@@ -2029,7 +2029,7 @@ def GraphchitKappas(Qlist,flowlist):
     for icQ,iQ in enumerate(Qlist):
         if Debug: print 'getting iQ'
         Q2boot,dump = bt.CreateBoot(np.array(iQ)**2,nboot,0)
-        chit = coeff*np.array(Q2boot)*(r0Som[0]/latspace)**4
+        chit = coeff*np.array(Q2boot)**(0.25)
         MpiList.append(GetMpiNoForm(kappalist[icQ]))
         # MpiList.append(GetMpiSom(kappalist[icQ],r0Som)**2)
         chit = GetBootStats(chit)
@@ -2052,7 +2052,7 @@ def GraphchitKappas(Qlist,flowlist):
     # pl.ylim(0,0.4)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Qdata/'
-    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle Q^2 \rangle^{1/4} \quad \sqrt{8t_{f}} = '+str(TflowToPhys(tflowpicked))+r'$',y=TitleShift)
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle Q^2 \rangle^{1/4} \quad \sqrt{8t_{f}} = '+'{:.2f}'.format(TflowToPhys(tflowpicked))+r'$',y=TitleShift)
     # pl.title(r'$ \chi_{t} = \frac{1}{V} \langle Q^2 \rangle $',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chitKappa.pdf')
