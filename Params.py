@@ -166,7 +166,12 @@ ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'a'] = 0.12  ## fm
 ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'L'] = [16,16,16,32]  ## fm
 ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'\chi_{t}'] = np.array([[5.51,0.62],[7.74,0.75],[12.3,1.1]])*10**(-5)  ## GeV^4
 thishbarcdivlat = hbarc/ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'a']
-ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'\chi_{t}^{1/4}'] = thishbarcdivlat*(ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'\chi_{t}'])**(0.25)  ## GeV
+thischit = ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'\chi_{t}']
+ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'\chi_{t}^{1/4}'] = []
+for chit,chiterr in ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'\chi_{t}']:
+    thisval = thishbarcdivlat*(chit**0.25)  ## GeV
+    thiserr = thishbarcdivlat*(chit**-0.75)*chiterr
+    ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'\chi_{t}^{1/4}'].append([thisval,thiserr])
 
 
 
