@@ -165,7 +165,8 @@ ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'm_{\pi}'] = [419,554,667] ## MeV
 ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'a'] = 0.12  ## fm
 ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'L'] = [16,16,16,32]  ## fm
 ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'\chi_{t}'] = np.array([[5.51,0.62],[7.74,0.75],[12.3,1.1]])*10**(-5)  ## GeV^4
-ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'\chi_{t}^{1/4}'] = hbarc*ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'\chi_{t}']**(0.25)  ## GeV
+thishbarcdivlat = hbarc/ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'a']
+ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'\chi_{t}^{1/4}'] = thishbarcdivlat*(ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'\chi_{t}'])**(0.25)  ## GeV
 
 
 
