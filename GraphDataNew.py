@@ -2027,6 +2027,7 @@ def GraphchitKappas(Qlist,flowlist):
     # MpiList = [DefPionMass['1370000']*hbarc/latspace,DefPionMass['1375400']*hbarc/latspace]
     MpiList = []
     for icQ,iQ in enumerate(Qlist):
+        if Debug: print 'getting iQ'
         Q2boot,dump = bt.CreateBoot(np.array(iQ)**2,nboot,0)
         chit = coeff*np.array(Q2boot)*(r0Som[0]/latspace)**4
         MpiList.append(GetMpiNoForm(kappalist[icQ]))
