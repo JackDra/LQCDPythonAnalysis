@@ -170,7 +170,7 @@ thischit = ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'\chi_{t}']
 ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'\chi_{t}^{1/4}'] = []
 for chit,chiterr in ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'\chi_{t}']:
     thisval = thishbarcdivlat*(chit**0.25)  ## GeV
-    thiserr = thishbarcdivlat*(chit**-0.75)*chiterr
+    thiserr = thishbarcdivlat*(chit**-0.75)*chiterr/4.
     ExpValues['TopSuc']['Chiu et al, 2008 DWF'][r'\chi_{t}^{1/4}'].append([thisval,thiserr])
 
 

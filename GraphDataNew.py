@@ -2044,7 +2044,7 @@ def GraphchitKappas(Qlist,flowlist):
     # chitStd = coeff*0.25*Qstd*Qavg**(0.25-1)
     # pl.errorbar(flowlist+0.1,chitAvg,chitStd,fmt='o',label=r'$No Boot$')
     pl.xlim(0,pl.xlim()[1])
-    # pl.ylim(0,0.22)
+    pl.ylim(0,pl.ylim()[1]*1.1)
     pl.xlabel(r'$ m_{\pi} GeV $')
     pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
     # pl.xlabel(r'$ (m_{\pi} r_{0})^{2} $')
