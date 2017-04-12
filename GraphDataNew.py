@@ -220,8 +220,8 @@ def PlotExp(flag,thiscolcyc):
     if 'chit' in flag:
         for ileg,ival in ExpValues['TopSuc'].iteritems():
             thisxvals = ival[r'm_{\pi}']
-            thisyvals = ival[r'\chi_{t}^{1/4}'][:,0]
-            thisyerr = ival[r'\chi_{t}^{1/4}'][:,1]
+            thisyvals = np.array(ival[r'\chi_{t}^{1/4}'])[:,0]
+            thisyerr = np.array(ival[r'\chi_{t}^{1/4}'])[:,1]
             pl.errorbar(thisxvals,thisyvals,thisyerr,fmt='o',color=thiscolcyc.next(),label=ileg)
 
 
