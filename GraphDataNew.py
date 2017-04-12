@@ -1912,7 +1912,7 @@ def Graphchit(Qlist,flowlist):
     pl.ylabel(r'$\chi_{t}^{1/4} GeV$')
     # pl.ylim(0.14,0.3)
     pl.legend()
-    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle Q^2 \rangle^{1/4} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle Q_{t}^2 \rangle^{1/4} \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chit.pdf')
     pl.clf()
@@ -2052,7 +2052,7 @@ def GraphchitKappas(Qlist,flowlist):
     # pl.ylim(0,0.4)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Qdata/'
-    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle Q^2 \rangle^{1/4} \quad \sqrt{8t_{f}} = '+'{:.2f}'.format(TflowToPhys(tflowpicked))+r'$',y=TitleShift)
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle Q^{t}^2 \rangle^{1/4} \quad \sqrt{8t_{f}} = '+'{:.2f}'.format(TflowToPhys(tflowpicked))+r'$',y=TitleShift)
     # pl.title(r'$ \chi_{t} = \frac{1}{V} \langle Q^2 \rangle $',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chitKappa.pdf')
@@ -2089,7 +2089,7 @@ def GraphchitKappasOverFlow(Qlist,flowlist,thiskappalist):
     # pl.ylim(0,0.4)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Qdata/'
-    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle Q^2 \rangle^{1/4} $',y=TitleShift)
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle Q_{t}^2 \rangle^{1/4} $',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chitKappaOverFlow.pdf')
     pl.clf()
@@ -2224,10 +2224,10 @@ def GraphQ2Hist(Qlist,thisflow):
     Q2min,Q2max = 0,300
     pl.hist(Q2list,bins=np.arange(Q2min,Q2max,10),histtype=HistType,normed=False)
     pl.xlim(Q2min,Q2max)
-    pl.xlabel(r'$\langle Q^2 \rangle $')
+    pl.xlabel(r'$\langle Q_{t}^2 \rangle $')
     pl.ylabel(r'$ N $')
     thisdir = outputdir[0] + 'graphs/Qdata/'
-    pl.title(r'$ Histogram\ \langle Q^2 \rangle \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
+    pl.title(r'$ Histogram\ \langle Q_{2}^2 \rangle \ '+GetMpi(kappa,Phys=True)+r'$',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'Q2Hist.pdf')
     pl.clf()
