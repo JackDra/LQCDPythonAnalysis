@@ -436,8 +436,8 @@ def SetTopAxies(torflow,NNQ=False,Dt=2,Wein=False,MpiTitle=True):
             pl.ylabel(r'$ \alpha_{W} $')
             pl.title(r'$\frac{\langle NNW \rangle }{\langle NN\rangle} = \alpha_{W} '+thisMpi+r'$',y=TitleShift)
         else:
-            pl.ylabel(r'$ \alpha_{Q} $')
-            pl.title(r'$\frac{\langle NNQ \rangle }{\langle NN\rangle} = \alpha_{Q} '+thisMpi+r'$',y=TitleShift)
+            pl.ylabel(r'$ \alpha_{Q_{t}} $')
+            pl.title(r'$\frac{\langle NNQ_{t} \rangle }{\langle NN\rangle} = \alpha_{Q_{t}} '+thisMpi+r'$',y=TitleShift)
     
     
 
