@@ -361,7 +361,7 @@ def SetFFAxies(thisCurr):
     pl.xlabel(FFxlab)
     if currnumb == '3':
         if 'Top' in thisCurr:
-            pl.ylabel(FFylab.replace('F','\\frac{a^{2}F_{'+currnumb+'}').replace(') $',r')}{2m_{N,phys}} (e fm) $'))
+            pl.ylabel(FFylab.replace('F','\\frac{F_{'+currnumb+'}').replace(') $',r')}{2m_{N,phys}} (e fm) $'))
         elif 'Wein' in thisCurr:
             pl.ylabel(FFylab.replace('F','\\frac{a^{2}F_{'+currnumb+'}').replace(') $',r')}{2m_{N,phys}} (e fm) $'))            
     else:
@@ -1160,7 +1160,7 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
         if 'Wein' in thisCurr:
             LegVal = '$\\frac{a^{2}F_{3}(0)}{2m_{N}}='+MakeValAndErr(Avg[1],Err[1])+r'\ e fm$'        
         elif 'Top' in thisCurr:
-            LegVal = '$\\frac{a^{2}F_{3}(0)}{2m_{N}}='+MakeValAndErr(Avg[1],Err[1])+r'\ e fm$'        
+            LegVal = '$\\frac{F_{3}(0)}{2m_{N}}='+MakeValAndErr(Avg[1],Err[1])+r'\ e fm$'        
         datf.write(MakeValAndErr(Avg[1],Err[1])+' \n')
 
     # print 'DPFit flip sign', flipsign
