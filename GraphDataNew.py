@@ -1106,20 +1106,20 @@ def PlotFFSet(dataset,thisFF,thisSetFlag,thisCurr,thisDSCurr,graphparams,PandNsh
             qrange = PlotFF(dataset[keyset][thisFF],thiscol,thissymcyc.next(),thisshift,LegLabFF(thisset),skipzero,flipsign,FixZ=FixZ)
             # if 'sm32' in thisset or 'CM' in thisset or 'TSF' in thisset or '12104' in str(thiskappa):
             PlotDPFit(keyset,thisFF,thisDSCurr,thiscol,qrange,thisshift,flipsign,datf,thiskappa,thisPN=PorN)
-    if 'FF1' in thisFF :
-        if 'ProtonGeGm' in thisDSCurr:
-            PlotExp('ChargeRadius',thiscolcyc)
-        elif 'ProtonIsoVector' in thisDSCurr:
-            PlotExp('AxialChargeRadius',thiscolcyc)
-        elif 'NeutronGeGm' in thisDSCurr:
-            PlotExp('NeutronCRad',thiscolcyc)            
-    elif 'FF2' in thisFF and 'GeGm' in thisDSCurr:
-        if 'Neutron' in thisDSCurr:
-            PlotExp('NeutronMagMom',thiscolcyc)
-            PlotExp('MRadNeutron',thiscolcyc)
-        elif 'Proton' in thisDSCurr:
-            PlotExp('ProtonMagMom',thiscolcyc)
-            PlotExp('MRadProton',thiscolcyc)
+    # if 'FF1' in thisFF :
+    #     if 'ProtonGeGm' in thisDSCurr:
+    #         PlotExp('ChargeRadius',thiscolcyc)
+    #     elif 'ProtonIsoVector' in thisDSCurr:
+    #         PlotExp('AxialChargeRadius',thiscolcyc)
+    #     elif 'NeutronGeGm' in thisDSCurr:
+    #         PlotExp('NeutronCRad',thiscolcyc)            
+    # elif 'FF2' in thisFF and 'GeGm' in thisDSCurr:
+    #     if 'Neutron' in thisDSCurr:
+    #         PlotExp('NeutronMagMom',thiscolcyc)
+    #         PlotExp('MRadNeutron',thiscolcyc)
+    #     elif 'Proton' in thisDSCurr:
+    #         PlotExp('ProtonMagMom',thiscolcyc)
+    #         PlotExp('MRadProton',thiscolcyc)
     # if 'FF3' in thisFF and 'Top' in thisDSCurr:
     #     if 'Neutron' in thisDSCurr:
     #         PlotExp('ProtonEDM',thiscolcyc)
