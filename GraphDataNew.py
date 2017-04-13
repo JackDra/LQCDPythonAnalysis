@@ -361,9 +361,9 @@ def SetFFAxies(thisCurr):
     pl.xlabel(FFxlab)
     if currnumb == '3':
         if 'Top' in thisCurr:
-            pl.ylabel(FFylab.replace('F','\\frac{F_{'+currnumb+'}').replace(') $',r')}{2m_{N,phys}} (\theta fm) $'))
+            pl.ylabel(FFylab.replace('F','\\frac{a^{2}F_{'+currnumb+'}').replace(') $',r')}{2m_{N,phys}} (e fm) $'))
         elif 'Wein' in thisCurr:
-            pl.ylabel(FFylab.replace('F','\\frac{F_{'+currnumb+'}').replace(') $',r')}{2m_{N,phys}} (\alpha_{\widetilde{G}} fm) $'))            
+            pl.ylabel(FFylab.replace('F','\\frac{a^{2}F_{'+currnumb+'}').replace(') $',r')}{2m_{N,phys}} (e fm) $'))            
     else:
         if 'GeGm' in thisCurr:
             if currnumb == '1':
