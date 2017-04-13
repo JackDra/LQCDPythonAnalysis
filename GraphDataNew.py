@@ -1158,9 +1158,9 @@ def PlotDPFit(thisset,thisFF,thisCurr,thiscol,qrange,thisshift,flipsign,datf,thi
         datf.write(MakeValAndErr(Avg[0],Err[0])+' \n')
     else:
         if 'Wein' in thisCurr:
-            LegVal = '$\\frac{F_{3}(0)}{2m_{N}}='+MakeValAndErr(Avg[1],Err[1])+r'\ \alpha_{\widetilde{G}} fm$'        
+            LegVal = '$\\frac{a^{2}F_{3}(0)}{2m_{N}}='+MakeValAndErr(Avg[1],Err[1])+r'\ e fm$'        
         elif 'Top' in thisCurr:
-            LegVal = '$\\frac{F_{3}(0)}{2m_{N}}='+MakeValAndErr(Avg[1],Err[1])+r'\ \theta fm$'        
+            LegVal = '$\\frac{a^{2}F_{3}(0)}{2m_{N}}='+MakeValAndErr(Avg[1],Err[1])+r'\ e fm$'        
         datf.write(MakeValAndErr(Avg[1],Err[1])+' \n')
 
     # print 'DPFit flip sign', flipsign
