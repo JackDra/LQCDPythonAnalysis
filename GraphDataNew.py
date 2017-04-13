@@ -2050,7 +2050,7 @@ def GraphchitKappas(Qlist,flowlist):
     # pl.xlabel(r'$ (m_{\pi} r_{0})^{2} $')
     # pl.ylabel(r'$\chi_{t} r_{0}^{4} $')
     # pl.ylim(0,0.4)
-    pl.legend()
+    pl.legend(loc = 'upper left')
     thisdir = outputdir[0] + 'graphs/Qdata/'
     pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle Q_{t}^2 \rangle^{1/4} \quad \sqrt{8t_{f}} = '+'{:.2f}'.format(TflowToPhys(tflowpicked))+r'\ fm$',y=TitleShift)
     # pl.title(r'$ \chi_{t} = \frac{1}{V} \langle Q^2 \rangle $',y=TitleShift)
