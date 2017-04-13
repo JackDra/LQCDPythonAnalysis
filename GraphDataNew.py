@@ -2052,7 +2052,7 @@ def GraphchitKappas(Qlist,flowlist):
     # pl.ylim(0,0.4)
     pl.legend()
     thisdir = outputdir[0] + 'graphs/Qdata/'
-    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle Q_{t}^2 \rangle^{1/4} \quad \sqrt{8t_{f}} = '+'{:.2f}'.format(TflowToPhys(tflowpicked))+r'$',y=TitleShift)
+    pl.title(r'$ \chi_{t}^{1/4} = \frac{1}{V^{1/4}} \langle Q_{t}^2 \rangle^{1/4} \quad \sqrt{8t_{f}} = '+'{:.2f}'.format(TflowToPhys(tflowpicked))+r'\ fm$',y=TitleShift)
     # pl.title(r'$ \chi_{t} = \frac{1}{V} \langle Q^2 \rangle $',y=TitleShift)
     mkdir_p(thisdir)
     pl.savefig(thisdir+'chitKappa.pdf')
